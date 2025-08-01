@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Constructor pirata",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué representa el constructor insensato en Mateo 7:26–27?",
+      "versiculo": "...el que oye estas palabras y no las hace, le compararé a un hombre insensato, que edificó su casa sobre la arena…",
+      "respuestas": [
+        "Un creyente obediente",
+        "Alguien que oye pero no obedece a la Palabra",
+        "Un constructor con experiencia profesional"
+      ],
+      "correcta": "Alguien que oye pero no obedece a la Palabra"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál es el problema del constructor pirata según 2 Timoteo 3:5?",
+      "versiculo": "...que tendrán apariencia de piedad, pero negarán la eficacia de ella.",
+      "respuestas": [
+        "Es alguien que solo finge devoción sin poder real",
+        "Es alguien sin ningún conocimiento religioso",
+        "Es alguien que no asiste a la iglesia"
+      ],
+      "correcta": "Es alguien que solo finge devoción sin poder real"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué principio revela Salmo 127:1 sobre la edificación?",
+      "versiculo": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+      "respuestas": [
+        "Todo esfuerzo humano es suficiente para edificar",
+        "Solo con dirección de Dios la casa permanece",
+        "La experiencia basta para levantar el hogar"
+      ],
+      "correcta": "Solo con dirección de Dios la casa permanece"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué peligro enfrentan los que edifican sin cobertura ni altar?",
+      "versiculo": "...en vano trabajan los que la edifican.",
+      "respuestas": [
+        "Serán protegidos por su experiencia",
+        "Su obra será frágil y vulnerable",
+        "Tendrán éxito si trabajan duro"
+      ],
+      "correcta": "Su obra será frágil y vulnerable"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué principio clave se destaca al final de la enseñanza?",
+      "versiculo": "Lo que el hombre construye sin Dios, el tiempo lo derriba.",
+      "respuestas": [
+        "Todo lo que hagas será eterno",
+        "El tiempo prueba las obras sin diseño divino",
+        "Nada necesita aprobación divina"
+      ],
+      "correcta": "El tiempo prueba las obras sin diseño divino"
+    }
+  ]
+}

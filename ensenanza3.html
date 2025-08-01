@@ -1,0 +1,189 @@
+ensenanza3.html
+html
+Copiar
+Editar
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Constructor pirata</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    header { text-align: center; margin-bottom: 30px; }
+    header img { width: 200px; }
+    h1 { color: #333; }
+    .form-header, .question { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .form-header input { padding: 8px; width: 100%; margin-bottom: 15px; }
+    .form-header label { display: block; margin-bottom: 10px; }
+    .options label { display: block; margin-bottom: 10px; }
+    .downloads, .submit-section, .result-section { text-align: center; margin-top: 30px; }
+    .downloads a, .downloads button { display: inline-block; padding: 10px 20px; margin: 10px; background: #007bff; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Constructor pirata</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué representa el constructor insensato en Mateo 7:26–27?" data-versiculo="...el que oye estas palabras y no las hace, le compararé a un hombre insensato, que edificó su casa sobre la arena…">
+      <p>1. ¿Qué representa el constructor insensato en Mateo 7:26–27?<br>
+        <em>"...el que oye estas palabras y no las hace, le compararé a un hombre insensato, que edificó su casa sobre la arena…"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Un creyente obediente"> Un creyente obediente</label>
+        <label><input type="radio" name="q1" value="Alguien que oye pero no obedece a la Palabra" data-correct="true"> Alguien que oye pero no obedece a la Palabra</label>
+        <label><input type="radio" name="q1" value="Un constructor con experiencia profesional"> Un constructor con experiencia profesional</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el problema del constructor pirata según 2 Timoteo 3:5?" data-versiculo="...que tendrán apariencia de piedad, pero negarán la eficacia de ella.">
+      <p>2. ¿Cuál es el problema del constructor pirata según 2 Timoteo 3:5?<br>
+        <em>"...que tendrán apariencia de piedad, pero negarán la eficacia de ella."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Es alguien que solo finge devoción sin poder real" data-correct="true"> Es alguien que solo finge devoción sin poder real</label>
+        <label><input type="radio" name="q2" value="Es alguien sin ningún conocimiento religioso"> Es alguien sin ningún conocimiento religioso</label>
+        <label><input type="radio" name="q2" value="Es alguien que no asiste a la iglesia"> Es alguien que no asiste a la iglesia</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué principio revela Salmo 127:1 sobre la edificación?" data-versiculo="Si Jehová no edificare la casa, en vano trabajan los que la edifican.">
+      <p>3. ¿Qué principio revela Salmo 127:1 sobre la edificación?<br>
+        <em>"Si Jehová no edificare la casa, en vano trabajan los que la edifican."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Todo esfuerzo humano es suficiente para edificar"> Todo esfuerzo humano es suficiente para edificar</label>
+        <label><input type="radio" name="q3" value="Solo con dirección de Dios la casa permanece" data-correct="true"> Solo con dirección de Dios la casa permanece</label>
+        <label><input type="radio" name="q3" value="La experiencia basta para levantar el hogar"> La experiencia basta para levantar el hogar</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué peligro enfrentan los que edifican sin cobertura ni altar?" data-versiculo="...en vano trabajan los que la edifican.">
+      <p>4. ¿Qué peligro enfrentan los que edifican sin cobertura ni altar?<br>
+        <em>Salmo 127:1 – "...en vano trabajan los que la edifican."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Serán protegidos por su experiencia"> Serán protegidos por su experiencia</label>
+        <label><input type="radio" name="q4" value="Su obra será frágil y vulnerable" data-correct="true"> Su obra será frágil y vulnerable</label>
+        <label><input type="radio" name="q4" value="Tendrán éxito si trabajan duro"> Tendrán éxito si trabajan duro</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué principio clave se destaca al final de la enseñanza?" data-versiculo="Lo que el hombre construye sin Dios, el tiempo lo derriba.">
+      <p>5. ¿Qué principio clave se destaca al final de la enseñanza?<br>
+        <em>"Lo que el hombre construye sin Dios, el tiempo lo derriba."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Todo lo que hagas será eterno"> Todo lo que hagas será eterno</label>
+        <label><input type="radio" name="q5" value="El tiempo prueba las obras sin diseño divino" data-correct="true"> El tiempo prueba las obras sin diseño divino</label>
+        <label><input type="radio" name="q5" value="Nada necesita aprobación divina"> Nada necesita aprobación divina</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza3.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás edificando según el diseño correcto. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen inicio, revisa la enseñanza para profundizar más.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza. No construyas sin el plano del cielo.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
