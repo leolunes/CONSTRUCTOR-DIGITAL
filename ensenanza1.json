@@ -1,0 +1,62 @@
+{
+  "titulo": "Test: El diseño aprobado",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué buscaba Abraham según Hebreos 11:10?",
+      "versiculo": "Porque esperaba la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios.",
+      "respuestas": [
+        "Una tienda confortable",
+        "Una ciudad con fundamentos, cuyo arquitecto y constructor es Dios",
+        "Una tierra con muchos pastos"
+      ],
+      "correcta": "Una ciudad con fundamentos, cuyo arquitecto y constructor es Dios"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué significa vivir según el diseño aprobado por Dios?",
+      "versiculo": "Muchos pensamientos hay en el corazón del hombre; mas el consejo de Jehová permanecerá.",
+      "respuestas": [
+        "Seguir planes humanos con buenas intenciones",
+        "Vivir conforme a la voluntad y propósito eterno de Dios",
+        "Actuar con libertad sin necesidad de dirección"
+      ],
+      "correcta": "Vivir conforme a la voluntad y propósito eterno de Dios"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué papel tiene la fe en el diseño de Dios según Hebreos 11?",
+      "versiculo": "Es, pues, la fe la certeza de lo que se espera, la convicción de lo que no se ve.",
+      "respuestas": [
+        "Es una opción opcional",
+        "Es la evidencia de lo que no se ve y lo que sostiene el diseño",
+        "Es solo un sentimiento personal"
+      ],
+      "correcta": "Es la evidencia de lo que no se ve y lo que sostiene el diseño"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué ocurre cuando seguimos un plano que no es el del Arquitecto eterno?",
+      "versiculo": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+      "respuestas": [
+        "Todo sale igual de bien",
+        "Nos desviamos del propósito eterno y construimos en vano",
+        "Logramos mejores resultados según nuestros deseos"
+      ],
+      "correcta": "Nos desviamos del propósito eterno y construimos en vano"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es la base firme para edificar la vida espiritual?",
+      "versiculo": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
+      "respuestas": [
+        "La experiencia y la lógica humana",
+        "El diseño de Dios revelado en Cristo",
+        "Los consejos de amigos y familiares"
+      ],
+      "correcta": "El diseño de Dios revelado en Cristo"
+    }
+  ]
+}
+

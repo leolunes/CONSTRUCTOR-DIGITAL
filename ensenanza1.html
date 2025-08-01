@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El diseño aprobado</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El diseño aprobado</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Qué buscaba Abraham según Hebreos 11:10?" data-versiculo="Porque esperaba la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios.">
+      <p>1. ¿Qué buscaba Abraham según Hebreos 11:10?<br>
+        <em>"Porque esperaba la ciudad que tiene fundamentos, cuyo arquitecto y constructor es Dios."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Una tienda confortable"> Una tienda confortable</label>
+        <label><input type="radio" name="q1" value="Una ciudad con fundamentos, cuyo arquitecto y constructor es Dios" data-correct="true"> Una ciudad con fundamentos, cuyo arquitecto y constructor es Dios</label>
+        <label><input type="radio" name="q1" value="Una tierra con muchos pastos"> Una tierra con muchos pastos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué significa vivir según el diseño aprobado por Dios?" data-versiculo="Muchos pensamientos hay en el corazón del hombre; mas el consejo de Jehová permanecerá.">
+      <p>2. ¿Qué significa vivir según el diseño aprobado por Dios?<br>
+        <em>Proverbios 19:21 – "Muchos pensamientos hay en el corazón del hombre; mas el consejo de Jehová permanecerá."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Seguir planes humanos con buenas intenciones"> Seguir planes humanos con buenas intenciones</label>
+        <label><input type="radio" name="q2" value="Vivir conforme a la voluntad y propósito eterno de Dios" data-correct="true"> Vivir conforme a la voluntad y propósito eterno de Dios</label>
+        <label><input type="radio" name="q2" value="Actuar con libertad sin necesidad de dirección"> Actuar con libertad sin necesidad de dirección</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué papel tiene la fe en el diseño de Dios según Hebreos 11?" data-versiculo="Es, pues, la fe la certeza de lo que se espera, la convicción de lo que no se ve.">
+      <p>3. ¿Qué papel tiene la fe en el diseño de Dios según Hebreos 11?<br>
+        <em>Hebreos 11:1 – "Es, pues, la fe la certeza de lo que se espera, la convicción de lo que no se ve."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Es una opción opcional"> Es una opción opcional</label>
+        <label><input type="radio" name="q3" value="Es la evidencia de lo que no se ve y lo que sostiene el diseño" data-correct="true"> Es la evidencia de lo que no se ve y lo que sostiene el diseño</label>
+        <label><input type="radio" name="q3" value="Es solo un sentimiento personal"> Es solo un sentimiento personal</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ocurre cuando seguimos un plano que no es el del Arquitecto eterno?" data-versiculo="Si Jehová no edificare la casa, en vano trabajan los que la edifican.">
+      <p>4. ¿Qué ocurre cuando seguimos un plano que no es el del Arquitecto eterno?<br>
+        <em>Salmo 127:1 – "Si Jehová no edificare la casa, en vano trabajan los que la edifican."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Todo sale igual de bien"> Todo sale igual de bien</label>
+        <label><input type="radio" name="q4" value="Nos desviamos del propósito eterno y construimos en vano" data-correct="true"> Nos desviamos del propósito eterno y construimos en vano</label>
+        <label><input type="radio" name="q4" value="Logramos mejores resultados según nuestros deseos"> Logramos mejores resultados según nuestros deseos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la base firme para edificar la vida espiritual?" data-versiculo="Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.">
+      <p>5. ¿Cuál es la base firme para edificar la vida espiritual?<br>
+        <em>1 Corintios 3:11 – "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="La experiencia y la lógica humana"> La experiencia y la lógica humana</label>
+        <label><input type="radio" name="q5" value="El diseño de Dios revelado en Cristo" data-correct="true"> El diseño de Dios revelado en Cristo</label>
+        <label><input type="radio" name="q5" value="Los consejos de amigos y familiares"> Los consejos de amigos y familiares</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza1.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás edificando según el diseño del Arquitecto eterno. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero puedes profundizar más en el diseño divino.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No construyas sin el plano del Cielo!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
+
+
