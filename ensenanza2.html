@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Licencia de obra divina</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header, .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label, .question p {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Licencia de obra divina</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué deseaba hacer David según 2 Samuel 7:1-5?" data-versiculo="¿Tú me has de edificar casa para que yo more?">
+      <p>1. ¿Qué deseaba hacer David según 2 Samuel 7:1-5?<br>
+        <em>"¿Tú me has de edificar casa para que yo more?"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Construir un palacio para él"> Construir un palacio para él</label>
+        <label><input type="radio" name="q1" value="Edificar casa para Dios sin mandato divino" data-correct="true"> Edificar casa para Dios sin mandato divino</label>
+        <label><input type="radio" name="q1" value="Levantar murallas para Jerusalén"> Levantar murallas para Jerusalén</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué principio aprendemos cuando Dios dice 'no ahora'?" data-versiculo="En el Reino, no se avanza por emoción, sino por aprobación.">
+      <p>2. ¿Qué principio aprendemos cuando Dios dice "no ahora"?<br>
+        <em>“En el Reino, no se avanza por emoción, sino por aprobación.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Seguir el impulso es suficiente"> Seguir el impulso es suficiente</label>
+        <label><input type="radio" name="q2" value="Es mejor actuar y luego preguntar"> Es mejor actuar y luego preguntar</label>
+        <label><input type="radio" name="q2" value="Los buenos anhelos deben esperar aprobación divina" data-correct="true"> Los buenos anhelos deben esperar aprobación divina</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué respalda Dios según Proverbios 19:21?" data-versiculo="Muchos pensamientos hay en el corazón del hombre; más el consejo de Jehová permanecerá.">
+      <p>3. ¿Qué respalda Dios según Proverbios 19:21?<br>
+        <em>"Muchos pensamientos hay en el corazón del hombre; más el consejo de Jehová permanecerá."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Nuestros planes bien intencionados"> Nuestros planes bien intencionados</label>
+        <label><input type="radio" name="q3" value="La voluntad de las multitudes"> La voluntad de las multitudes</label>
+        <label><input type="radio" name="q3" value="Su Palabra revelada y aprobada" data-correct="true"> Su Palabra revelada y aprobada</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué puede implicar que otro ejecute la obra?" data-versiculo="Y levantaré después de ti a tu descendencia… él edificará casa a mi nombre.">
+      <p>4. ¿Qué puede implicar que otro ejecute la obra?<br>
+        <em>"Y levantaré después de ti a tu descendencia… él edificará casa a mi nombre."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Que Dios no valora nuestros deseos"> Que Dios no valora nuestros deseos</label>
+        <label><input type="radio" name="q4" value="Que no somos dignos de servir"> Que no somos dignos de servir</label>
+        <label><input type="radio" name="q4" value="Que Dios asigna tareas a tiempos y personas específicas" data-correct="true"> Que Dios asigna tareas a tiempos y personas específicas</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué representa la 'licencia de obra divina'?" data-versiculo="La licencia de obra divina es la Palabra revelada que da inicio, permiso y respaldo.">
+      <p>5. ¿Qué representa la "licencia de obra divina"?<br>
+        <em>"La licencia de obra divina es la Palabra revelada que da inicio, permiso y respaldo."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Una emoción fuerte por hacer algo"> Una emoción fuerte por hacer algo</label>
+        <label><input type="radio" name="q5" value="La experiencia personal acumulada"> La experiencia personal acumulada</label>
+        <label><input type="radio" name="q5" value="La Palabra de Dios que autoriza una obra" data-correct="true"> La Palabra de Dios que autoriza una obra</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza2.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tienes discernimiento para edificar con licencia divina."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen discernimiento, pero sigue afinando tu oído a la aprobación de Dios.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y asegúrate de edificar con permiso del cielo.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

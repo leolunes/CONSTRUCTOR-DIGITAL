@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Licencia de obra divina",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué deseaba hacer David según 2 Samuel 7:1-5?",
+      "versiculo": "¿Tú me has de edificar casa para que yo more?",
+      "respuestas": [
+        "Construir un palacio para él",
+        "Edificar casa para Dios sin mandato divino",
+        "Levantar murallas para Jerusalén"
+      ],
+      "correcta": "Edificar casa para Dios sin mandato divino"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué principio aprendemos cuando Dios dice 'no ahora'?",
+      "versiculo": "En el Reino, no se avanza por emoción, sino por aprobación.",
+      "respuestas": [
+        "Seguir el impulso es suficiente",
+        "Es mejor actuar y luego preguntar",
+        "Los buenos anhelos deben esperar aprobación divina"
+      ],
+      "correcta": "Los buenos anhelos deben esperar aprobación divina"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué respalda Dios según Proverbios 19:21?",
+      "versiculo": "Muchos pensamientos hay en el corazón del hombre; más el consejo de Jehová permanecerá.",
+      "respuestas": [
+        "Nuestros planes bien intencionados",
+        "La voluntad de las multitudes",
+        "Su Palabra revelada y aprobada"
+      ],
+      "correcta": "Su Palabra revelada y aprobada"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué puede implicar que otro ejecute la obra?",
+      "versiculo": "Y levantaré después de ti a tu descendencia… él edificará casa a mi nombre.",
+      "respuestas": [
+        "Que Dios no valora nuestros deseos",
+        "Que no somos dignos de servir",
+        "Que Dios asigna tareas a tiempos y personas específicas"
+      ],
+      "correcta": "Que Dios asigna tareas a tiempos y personas específicas"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué representa la 'licencia de obra divina'?",
+      "versiculo": "La licencia de obra divina es la Palabra revelada que da inicio, permiso y respaldo.",
+      "respuestas": [
+        "Una emoción fuerte por hacer algo",
+        "La experiencia personal acumulada",
+        "La Palabra de Dios que autoriza una obra"
+      ],
+      "correcta": "La Palabra de Dios que autoriza una obra"
+    }
+  ]
+}
