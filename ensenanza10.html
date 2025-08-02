@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Ciudad sobre el monte</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    header { text-align: center; margin-bottom: 30px; }
+    header img { width: 200px; }
+    h1 { color: #333; }
+    .form-header { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .form-header label { display: block; margin-bottom: 10px; }
+    .form-header input { padding: 8px; width: 100%; margin-bottom: 15px; }
+    .question { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .question p { font-weight: bold; }
+    .options label { display: block; margin-bottom: 10px; }
+    .downloads, .submit-section, .result-section { text-align: center; margin-top: 30px; }
+    .downloads a, .downloads button { display: inline-block; padding: 10px 20px; margin: 10px; background: #007bff; color: white; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Ciudad sobre el monte</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué significa que somos una ciudad sobre el monte según Mateo 5:14–16?" data-versiculo="Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.">
+      <p>1. ¿Qué significa que somos una ciudad sobre el monte según Mateo 5:14–16?<br>
+        <em>"Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Debemos vivir sin llamar la atención"> Debemos vivir sin llamar la atención</label>
+        <label><input type="radio" name="q1" value="Debemos vivir como una comunidad visible y referente" data-correct="true"> Debemos vivir como una comunidad visible y referente</label>
+        <label><input type="radio" name="q1" value="Es una metáfora sin aplicación práctica"> Es una metáfora sin aplicación práctica</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué atrae a las naciones al monte del Señor según Isaías 2:2–3?" data-versiculo="...que será confirmado el monte de la casa de Jehová como cabeza de los montes... y correrán a él todas las naciones.">
+      <p>2. ¿Qué atrae a las naciones al monte del Señor según Isaías 2:2–3?<br>
+        <em>"Será confirmado el monte de la casa de Jehová como cabeza de los montes... y correrán a él todas las naciones."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="La publicidad y eventos masivos"> La publicidad y eventos masivos</label>
+        <label><input type="radio" name="q2" value="El diseño visible de una comunidad obediente" data-correct="true"> El diseño visible de una comunidad obediente</label>
+        <label><input type="radio" name="q2" value="El número de seguidores en redes sociales"> El número de seguidores en redes sociales</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué produce el testimonio colectivo según 1 Pedro 2:12?" data-versiculo="...glorifiquen a Dios al considerar vuestras buenas obras.">
+      <p>3. ¿Qué produce el testimonio colectivo según 1 Pedro 2:12?<br>
+        <em>"...para que glorifiquen a Dios al considerar vuestras buenas obras."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Rechazo y aislamiento"> Rechazo y aislamiento</label>
+        <label><input type="radio" name="q3" value="Críticas permanentes"> Críticas permanentes</label>
+        <label><input type="radio" name="q3" value="Gloria a Dios por medio de nuestras acciones" data-correct="true"> Gloria a Dios por medio de nuestras acciones</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué responsabilidad tiene un hogar visible?" data-versiculo="Una ciudad no se puede esconder... así alumbre vuestra luz delante de los hombres.">
+      <p>4. ¿Qué responsabilidad tiene un hogar visible?<br>
+        <em>"...así alumbre vuestra luz delante de los hombres."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Ser perfecto e intocable"> Ser perfecto e intocable</label>
+        <label><input type="radio" name="q4" value="Reflejar con coherencia el diseño de Dios" data-correct="true"> Reflejar con coherencia el diseño de Dios</label>
+        <label><input type="radio" name="q4" value="Ignorar la opinión de los demás"> Ignorar la opinión de los demás</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el objetivo de ser una ciudad espiritual?" data-versiculo="No se enciende una luz y se pone debajo del almud, sino sobre el candelero.">
+      <p>5. ¿Cuál es el objetivo de ser una ciudad espiritual?<br>
+        <em>"No se enciende una luz y se pone debajo del almud, sino sobre el candelero."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Presumir nuestra fe al mundo"> Presumir nuestra fe al mundo</label>
+        <label><input type="radio" name="q5" value="Guiar a otros desde una altura de diseño" data-correct="true"> Guiar a otros desde una altura de diseño</label>
+        <label><input type="radio" name="q5" value="Formar una élite espiritual"> Formar una élite espiritual</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza10.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. ¡Eres parte visible de la ciudad del Reino!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, sigue edificando alto y visible.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡La ciudad necesita tu luz!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
