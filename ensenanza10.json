@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Ciudad sobre el monte",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué significa que somos una ciudad sobre el monte según Mateo 5:14–16?",
+      "versiculo": "Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.",
+      "respuestas": [
+        "Debemos vivir sin llamar la atención",
+        "Debemos vivir como una comunidad visible y referente",
+        "Es una metáfora sin aplicación práctica"
+      ],
+      "correcta": "Debemos vivir como una comunidad visible y referente"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué atrae a las naciones al monte del Señor según Isaías 2:2–3?",
+      "versiculo": "...que será confirmado el monte de la casa de Jehová como cabeza de los montes... y correrán a él todas las naciones.",
+      "respuestas": [
+        "La publicidad y eventos masivos",
+        "El diseño visible de una comunidad obediente",
+        "El número de seguidores en redes sociales"
+      ],
+      "correcta": "El diseño visible de una comunidad obediente"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué produce el testimonio colectivo según 1 Pedro 2:12?",
+      "versiculo": "...glorifiquen a Dios al considerar vuestras buenas obras.",
+      "respuestas": [
+        "Rechazo y aislamiento",
+        "Críticas permanentes",
+        "Gloria a Dios por medio de nuestras acciones"
+      ],
+      "correcta": "Gloria a Dios por medio de nuestras acciones"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué responsabilidad tiene un hogar visible?",
+      "versiculo": "Una ciudad no se puede esconder... así alumbre vuestra luz delante de los hombres.",
+      "respuestas": [
+        "Ser perfecto e intocable",
+        "Reflejar con coherencia el diseño de Dios",
+        "Ignorar la opinión de los demás"
+      ],
+      "correcta": "Reflejar con coherencia el diseño de Dios"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es el objetivo de ser una ciudad espiritual?",
+      "versiculo": "No se enciende una luz y se pone debajo del almud, sino sobre el candelero.",
+      "respuestas": [
+        "Presumir nuestra fe al mundo",
+        "Guiar a otros desde una altura de diseño",
+        "Formar una élite espiritual"
+      ],
+      "correcta": "Guiar a otros desde una altura de diseño"
+    }
+  ]
+}
