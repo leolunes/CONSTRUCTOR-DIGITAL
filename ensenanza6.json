@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Sellado por el Espíritu",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué significa ser sellado por el Espíritu según Efesios 1:13–14?",
+      "versiculo": "...fuisteis sellados con el Espíritu Santo de la promesa, que es las arras de nuestra herencia...",
+      "respuestas": [
+        "Recibir bendiciones materiales",
+        "Obtener una marca de autenticidad y herencia eterna",
+        "Asistir fielmente a la iglesia"
+      ],
+      "correcta": "Obtener una marca de autenticidad y herencia eterna"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál es la condición para que el Espíritu haga morada en una casa según Juan 14:23?",
+      "versiculo": "El que me ama... mi Padre le amará, y vendremos a él, y haremos morada con él.",
+      "respuestas": [
+        "Tener un hogar con buena moral",
+        "Amar y obedecer al Hijo",
+        "Practicar tradiciones familiares"
+      ],
+      "correcta": "Amar y obedecer al Hijo"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué representa el sello del Espíritu según 2 Corintios 1:22?",
+      "versiculo": "...el cual también nos ha sellado, y nos ha dado las arras del Espíritu en nuestros corazones.",
+      "respuestas": [
+        "El permiso para vivir según nuestros deseos",
+        "El aval del Reino sobre una casa firme",
+        "Un símbolo ritual sin valor práctico"
+      ],
+      "correcta": "El aval del Reino sobre una casa firme"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Cuál es el peligro de construir sin el sello del Espíritu?",
+      "versiculo": "El Espíritu no sella lo que no ha sido edificado según Cristo.",
+      "respuestas": [
+        "Puede que la estructura se mantenga siempre",
+        "Todo lo edificado carece de aprobación y firmeza",
+        "Dios se adapta a nuestras decisiones"
+      ],
+      "correcta": "Todo lo edificado carece de aprobación y firmeza"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué hace una casa apta para la presencia constante del Espíritu?",
+      "versiculo": "El hogar que el Espíritu habita es un altar constante, no una visita eventual.",
+      "respuestas": [
+        "Ritos especiales ocasionales",
+        "Rutinas alineadas al Reino y vida rendida al Espíritu",
+        "Buena decoración y música cristiana"
+      ],
+      "correcta": "Rutinas alineadas al Reino y vida rendida al Espíritu"
+    }
+  ]
+}
