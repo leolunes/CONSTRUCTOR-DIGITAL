@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Casas modelo",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué representa una casa modelo en el Reino de Dios?",
+      "versiculo": "En el Reino, Dios también levanta casas que sirvan de referencia. No por perfección, sino por obediencia.",
+      "respuestas": [
+        "Una familia rica y famosa",
+        "Un hogar que refleja el diseño de Dios por medio de la obediencia",
+        "Una casa grande con muchos lujos"
+      ],
+      "correcta": "Un hogar que refleja el diseño de Dios por medio de la obediencia"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál es el poder del ejemplo en un hogar?",
+      "versiculo": "Sé ejemplo de los creyentes en palabra, conducta, amor, espíritu, fe y pureza.",
+      "respuestas": [
+        "Ninguno, lo importante es hablar bien",
+        "El ejemplo transforma y predica sin palabras",
+        "Sirve solo dentro de la iglesia"
+      ],
+      "correcta": "El ejemplo transforma y predica sin palabras"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué actitud deben tener los hogares en diseño?",
+      "versiculo": "Vosotros sois la luz del mundo... no se enciende una luz y se pone debajo del almud...",
+      "respuestas": [
+        "Ocultarse para no llamar la atención",
+        "Brillar con humildad para guiar a otros",
+        "Demostrar que son mejores que otros"
+      ],
+      "correcta": "Brillar con humildad para guiar a otros"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué significa ser refugio en medio del colapso?",
+      "versiculo": "Será cada uno como escondedero contra el viento... como sombra de gran peñasco en tierra calurosa.",
+      "respuestas": [
+        "Cuidar solo de los problemas internos",
+        "Convertirse en protección para otros en medio del caos",
+        "Aislarse para no contaminarse del mundo"
+      ],
+      "correcta": "Convertirse en protección para otros en medio del caos"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué principio debe regir un hogar modelo?",
+      "versiculo": "La casa que obedece el plano no se esconde: ilumina, inspira y edifica.",
+      "respuestas": [
+        "Obedecer el diseño de Dios y brillar con propósito",
+        "Buscar reconocimiento público",
+        "Seguir las modas familiares actuales"
+      ],
+      "correcta": "Obedecer el diseño de Dios y brillar con propósito"
+    }
+  ]
+}
