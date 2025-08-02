@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Sellado por el Espíritu</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Sellado por el Espíritu</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué significa ser sellado por el Espíritu según Efesios 1:13–14?" data-versiculo="...fuisteis sellados con el Espíritu Santo de la promesa, que es las arras de nuestra herencia...">
+      <p>1. ¿Qué significa ser sellado por el Espíritu según Efesios 1:13–14?<br>
+        <em>“...fuisteis sellados con el Espíritu Santo de la promesa, que es las arras de nuestra herencia...”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Recibir bendiciones materiales"> Recibir bendiciones materiales</label>
+        <label><input type="radio" name="q1" value="Obtener una marca de autenticidad y herencia eterna" data-correct="true"> Obtener una marca de autenticidad y herencia eterna</label>
+        <label><input type="radio" name="q1" value="Asistir fielmente a la iglesia"> Asistir fielmente a la iglesia</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la condición para que el Espíritu haga morada en una casa según Juan 14:23?" data-versiculo="El que me ama... mi Padre le amará, y vendremos a él, y haremos morada con él.">
+      <p>2. ¿Cuál es la condición para que el Espíritu haga morada en una casa según Juan 14:23?<br>
+        <em>“El que me ama... mi Padre le amará, y vendremos a él, y haremos morada con él.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Tener un hogar con buena moral"> Tener un hogar con buena moral</label>
+        <label><input type="radio" name="q2" value="Amar y obedecer al Hijo" data-correct="true"> Amar y obedecer al Hijo</label>
+        <label><input type="radio" name="q2" value="Practicar tradiciones familiares"> Practicar tradiciones familiares</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué representa el sello del Espíritu según 2 Corintios 1:22?" data-versiculo="...el cual también nos ha sellado, y nos ha dado las arras del Espíritu en nuestros corazones.">
+      <p>3. ¿Qué representa el sello del Espíritu según 2 Corintios 1:22?<br>
+        <em>“...el cual también nos ha sellado, y nos ha dado las arras del Espíritu en nuestros corazones.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="El permiso para vivir según nuestros deseos"> El permiso para vivir según nuestros deseos</label>
+        <label><input type="radio" name="q3" value="El aval del Reino sobre una casa firme" data-correct="true"> El aval del Reino sobre una casa firme</label>
+        <label><input type="radio" name="q3" value="Un símbolo ritual sin valor práctico"> Un símbolo ritual sin valor práctico</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el peligro de construir sin el sello del Espíritu?" data-versiculo="El Espíritu no sella lo que no ha sido edificado según Cristo.">
+      <p>4. ¿Cuál es el peligro de construir sin el sello del Espíritu?<br>
+        <em>“El Espíritu no sella lo que no ha sido edificado según Cristo.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Puede que la estructura se mantenga siempre"> Puede que la estructura se mantenga siempre</label>
+        <label><input type="radio" name="q4" value="Todo lo edificado carece de aprobación y firmeza" data-correct="true"> Todo lo edificado carece de aprobación y firmeza</label>
+        <label><input type="radio" name="q4" value="Dios se adapta a nuestras decisiones"> Dios se adapta a nuestras decisiones</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué hace una casa apta para la presencia constante del Espíritu?" data-versiculo="El hogar que el Espíritu habita es un altar constante, no una visita eventual.">
+      <p>5. ¿Qué hace una casa apta para la presencia constante del Espíritu?<br>
+        <em>“El hogar que el Espíritu habita es un altar constante, no una visita eventual.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Ritos especiales ocasionales"> Ritos especiales ocasionales</label>
+        <label><input type="radio" name="q5" value="Rutinas alineadas al Reino y vida rendida al Espíritu" data-correct="true"> Rutinas alineadas al Reino y vida rendida al Espíritu</label>
+        <label><input type="radio" name="q5" value="Buena decoración y música cristiana"> Buena decoración y música cristiana</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza6.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu casa ha sido sellada desde el Cielo. ¡Sigue edificando conforme al Espíritu!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero permite que el Espíritu revise cada área de tu diseño.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y busca el aval del Espíritu en cada decisión.`
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
