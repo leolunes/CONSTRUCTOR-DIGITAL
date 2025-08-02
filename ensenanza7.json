@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Inspección final",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué revela el fuego según 1 Corintios 3:13–15?",
+      "versiculo": "...el fuego la probará, y el que sobreviviere recibirá recompensa.",
+      "respuestas": [
+        "El estilo arquitectónico de la obra",
+        "El tipo de material con que fue edificada",
+        "El tiempo que duró la construcción"
+      ],
+      "correcta": "El tipo de material con que fue edificada"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué simboliza el oro, la plata y piedras preciosas?",
+      "versiculo": "1 Corintios 3:13–15",
+      "respuestas": [
+        "Riqueza material y prosperidad",
+        "Fe, pureza y verdades eternas",
+        "Elementos religiosos tradicionales"
+      ],
+      "correcta": "Fe, pureza y verdades eternas"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Por qué es peligrosa la apariencia según Apocalipsis 3:17?",
+      "versiculo": "...y no sabes que eres un desventurado, miserable, pobre, ciego y desnudo.",
+      "respuestas": [
+        "Porque puede engañar a los demás",
+        "Porque puede hacernos confiar en una condición que Dios no aprueba",
+        "Porque reduce el impacto visual de la obra"
+      ],
+      "correcta": "Porque puede hacernos confiar en una condición que Dios no aprueba"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué propósito tiene la disciplina según Apocalipsis 3:19?",
+      "versiculo": "Yo reprendo y castigo a todos los que amo; sé, pues, celoso, y arrepiéntete.",
+      "respuestas": [
+        "Destruir lo defectuoso",
+        "Restaurar y redireccionar con amor",
+        "Castigar de forma permanente"
+      ],
+      "correcta": "Restaurar y redireccionar con amor"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué actitud debemos tener frente a la inspección divina?",
+      "versiculo": "Apocalipsis 3:19",
+      "respuestas": [
+        "Temor paralizante",
+        "Arrepentimiento y celo por obedecer",
+        "Indiferencia mientras se vea bien"
+      ],
+      "correcta": "Arrepentimiento y celo por obedecer"
+    }
+  ]
+}
