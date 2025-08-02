@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Certificado de habitabilidad espiritual",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué condición atrae la gloria de Dios según Isaías 60:1–2?",
+      "versiculo": "Levántate, resplandece; porque ha venido tu luz...",
+      "respuestas": [
+        "Una vida emocional activa",
+        "Una casa levantada en diseño y testimonio",
+        "Tener muchos conocimientos bíblicos"
+      ],
+      "correcta": "Una casa levantada en diseño y testimonio"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué busca Dios según Juan 14:23?",
+      "versiculo": "...vendremos a él, y haremos morada con él.",
+      "respuestas": [
+        "Estructuras religiosas",
+        "Personas obedientes con un altar encendido",
+        "Conocimientos teológicos avanzados"
+      ],
+      "correcta": "Personas obedientes con un altar encendido"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué ocurre con una casa espiritual certificada por Dios según Mateo 5:14–16?",
+      "versiculo": "...una ciudad asentada sobre un monte no se puede esconder...",
+      "respuestas": [
+        "Se oculta por humildad",
+        "Se vuelve un testimonio visible para otros",
+        "Solo vive su proceso personal"
+      ],
+      "correcta": "Se vuelve un testimonio visible para otros"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Cuál es la diferencia entre ser visitado y habitado por Dios?",
+      "versiculo": "...No queremos ser solo visibles, sino habitables.",
+      "respuestas": [
+        "Ser visitado es constante y habitar es ocasional",
+        "Ser visitado es momentáneo, habitar es permanente",
+        "No hay diferencia real"
+      ],
+      "correcta": "Ser visitado es momentáneo, habitar es permanente"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué debe hacer una casa espiritual para ser apta para la gloria?",
+      "versiculo": "Dios no habita en estructuras inestables, sino en casas afirmadas por su Palabra.",
+      "respuestas": [
+        "Esperar una visita divina",
+        "Consagrarse, afirmarse y estar en orden",
+        "Buscar reconocimiento humano"
+      ],
+      "correcta": "Consagrarse, afirmarse y estar en orden"
+    }
+  ]
+}
