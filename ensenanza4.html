@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Casas modelo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Casas modelo</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué representa una casa modelo en el Reino de Dios?" data-versiculo="En el Reino, Dios también levanta casas que sirvan de referencia. No por perfección, sino por obediencia.">
+      <p>1. ¿Qué representa una casa modelo en el Reino de Dios?<br>
+        <em>"En el Reino, Dios también levanta casas que sirvan de referencia. No por perfección, sino por obediencia."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Una familia rica y famosa"> Una familia rica y famosa</label>
+        <label><input type="radio" name="q1" value="Un hogar que refleja el diseño de Dios por medio de la obediencia" data-correct="true"> Un hogar que refleja el diseño de Dios por medio de la obediencia</label>
+        <label><input type="radio" name="q1" value="Una casa grande con muchos lujos"> Una casa grande con muchos lujos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el poder del ejemplo en un hogar?" data-versiculo="Sé ejemplo de los creyentes en palabra, conducta, amor, espíritu, fe y pureza.">
+      <p>2. ¿Cuál es el poder del ejemplo en un hogar?<br>
+        <em>1 Timoteo 4:12 – "Sé ejemplo de los creyentes en palabra, conducta, amor, espíritu, fe y pureza."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Ninguno, lo importante es hablar bien"> Ninguno, lo importante es hablar bien</label>
+        <label><input type="radio" name="q2" value="El ejemplo transforma y predica sin palabras" data-correct="true"> El ejemplo transforma y predica sin palabras</label>
+        <label><input type="radio" name="q2" value="Sirve solo dentro de la iglesia"> Sirve solo dentro de la iglesia</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué actitud deben tener los hogares en diseño?" data-versiculo="Vosotros sois la luz del mundo... no se enciende una luz y se pone debajo del almud...">
+      <p>3. ¿Qué actitud deben tener los hogares en diseño?<br>
+        <em>Mateo 5:14–16 – "Vosotros sois la luz del mundo... no se enciende una luz y se pone debajo del almud..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Ocultarse para no llamar la atención"> Ocultarse para no llamar la atención</label>
+        <label><input type="radio" name="q3" value="Brillar con humildad para guiar a otros" data-correct="true"> Brillar con humildad para guiar a otros</label>
+        <label><input type="radio" name="q3" value="Demostrar que son mejores que otros"> Demostrar que son mejores que otros</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué significa ser refugio en medio del colapso?" data-versiculo="Será cada uno como escondedero contra el viento... como sombra de gran peñasco en tierra calurosa.">
+      <p>4. ¿Qué significa ser refugio en medio del colapso?<br>
+        <em>Isaías 32:2 – "Será cada uno como escondedero contra el viento... como sombra de gran peñasco en tierra calurosa."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Cuidar solo de los problemas internos"> Cuidar solo de los problemas internos</label>
+        <label><input type="radio" name="q4" value="Convertirse en protección para otros en medio del caos" data-correct="true"> Convertirse en protección para otros en medio del caos</label>
+        <label><input type="radio" name="q4" value="Aislarse para no contaminarse del mundo"> Aislarse para no contaminarse del mundo</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué principio debe regir un hogar modelo?" data-versiculo="La casa que obedece el plano no se esconde: ilumina, inspira y edifica.">
+      <p>5. ¿Qué principio debe regir un hogar modelo?<br>
+        <em>"La casa que obedece el plano no se esconde: ilumina, inspira y edifica."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Obedecer el diseño de Dios y brillar con propósito" data-correct="true"> Obedecer el diseño de Dios y brillar con propósito</label>
+        <label><input type="radio" name="q5" value="Buscar reconocimiento público"> Buscar reconocimiento público</label>
+        <label><input type="radio" name="q5" value="Seguir las modas familiares actuales"> Seguir las modas familiares actuales</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza4.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu hogar refleja el diseño del Reino. ¡Sigue siendo luz!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo. Continúa fortaleciendo tu casa como modelo.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡Tu casa puede ser una guía!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
