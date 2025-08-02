@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Inspección final</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Inspección final</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Qué revela el fuego según 1 Corintios 3:13–15?" data-versiculo="...el fuego la probará, y el que sobreviviere recibirá recompensa.">
+      <p>1. ¿Qué revela el fuego según 1 Corintios 3:13–15?<br>
+        <em>"...el fuego la probará, y el que sobreviviere recibirá recompensa."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="El estilo arquitectónico de la obra"> El estilo arquitectónico de la obra</label>
+        <label><input type="radio" name="q1" value="El tipo de material con que fue edificada" data-correct="true"> El tipo de material con que fue edificada</label>
+        <label><input type="radio" name="q1" value="El tiempo que duró la construcción"> El tiempo que duró la construcción</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué simboliza el oro, la plata y piedras preciosas?" data-versiculo="...el fuego la probará...">
+      <p>2. ¿Qué simboliza el oro, la plata y piedras preciosas?<br>
+        <em>1 Corintios 3:13–15</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Riqueza material y prosperidad"> Riqueza material y prosperidad</label>
+        <label><input type="radio" name="q2" value="Fe, pureza y verdades eternas" data-correct="true"> Fe, pureza y verdades eternas</label>
+        <label><input type="radio" name="q2" value="Elementos religiosos tradicionales"> Elementos religiosos tradicionales</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Por qué es peligrosa la apariencia según Apocalipsis 3:17?" data-versiculo="...y no sabes que eres un desventurado, miserable, pobre, ciego y desnudo.">
+      <p>3. ¿Por qué es peligrosa la apariencia según Apocalipsis 3:17?<br>
+        <em>"...y no sabes que eres un desventurado, miserable, pobre, ciego y desnudo."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Porque puede engañar a los demás"> Porque puede engañar a los demás</label>
+        <label><input type="radio" name="q3" value="Porque puede hacernos confiar en una condición que Dios no aprueba" data-correct="true"> Porque puede hacernos confiar en una condición que Dios no aprueba</label>
+        <label><input type="radio" name="q3" value="Porque reduce el impacto visual de la obra"> Porque reduce el impacto visual de la obra</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué propósito tiene la disciplina según Apocalipsis 3:19?" data-versiculo="Yo reprendo y castigo a todos los que amo; sé, pues, celoso, y arrepiéntete.">
+      <p>4. ¿Qué propósito tiene la disciplina según Apocalipsis 3:19?<br>
+        <em>"Yo reprendo y castigo a todos los que amo; sé, pues, celoso, y arrepiéntete."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Destruir lo defectuoso"> Destruir lo defectuoso</label>
+        <label><input type="radio" name="q4" value="Restaurar y redireccionar con amor" data-correct="true"> Restaurar y redireccionar con amor</label>
+        <label><input type="radio" name="q4" value="Castigar de forma permanente"> Castigar de forma permanente</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué actitud debemos tener frente a la inspección divina?" data-versiculo="...sé, pues, celoso, y arrepiéntete.">
+      <p>5. ¿Qué actitud debemos tener frente a la inspección divina?<br>
+        <em>Apocalipsis 3:19</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Temor paralizante"> Temor paralizante</label>
+        <label><input type="radio" name="q5" value="Arrepentimiento y celo por obedecer" data-correct="true"> Arrepentimiento y celo por obedecer</label>
+        <label><input type="radio" name="q5" value="Indiferencia mientras se vea bien"> Indiferencia mientras se vea bien</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza7.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás construyendo con materiales eternos. ¡Sigue firme!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero revisa el diseño y fortalece tu obra.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa los fundamentos y ajusta conforme al plano de Dios.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
