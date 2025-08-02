@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Lote sin legalizar",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué representa un vínculo sin altar?",
+      "versiculo": "...el Señor ha sido testigo entre tú y la mujer de tu juventud... la mujer de tu pacto.",
+      "respuestas": [
+        "Una relación consagrada ante Dios",
+        "Una unión con respaldo espiritual",
+        "Una unión sin respaldo ni cobertura"
+      ],
+      "correcta": "Una unión sin respaldo ni cobertura"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué valida el vínculo ante Dios según la enseñanza?",
+      "versiculo": "La consagración valida el vínculo ante Dios, no solo ante los hombres.",
+      "respuestas": [
+        "El deseo mutuo",
+        "La consagración",
+        "La presión social"
+      ],
+      "correcta": "La consagración"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué implica el pacto según Génesis 2:24?",
+      "versiculo": "...y se unirá a su mujer, y serán una sola carne.",
+      "respuestas": [
+        "Solo convivencia",
+        "Desprendimiento, alianza y unidad espiritual",
+        "Conexión emocional únicamente"
+      ],
+      "correcta": "Desprendimiento, alianza y unidad espiritual"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué sucede cuando se edifica sin respaldo de Dios?",
+      "versiculo": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+      "respuestas": [
+        "Todo se fortalece con esfuerzo",
+        "Se construye bajo diseño divino",
+        "Se desgasta y carece de afirmación espiritual"
+      ],
+      "correcta": "Se desgasta y carece de afirmación espiritual"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué requiere el respaldo de Dios según la enseñanza?",
+      "versiculo": "El respaldo de Dios requiere alineación con su diseño.",
+      "respuestas": [
+        "Buena intención humana",
+        "Alineación con el diseño de Dios",
+        "Compromiso emocional solamente"
+      ],
+      "correcta": "Alineación con el diseño de Dios"
+    }
+  ]
+}
