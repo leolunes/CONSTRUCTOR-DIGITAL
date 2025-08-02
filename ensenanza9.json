@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Vecindario del Reino",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué caracteriza a una verdadera comunidad del Reino?",
+      "versiculo": "Hechos 2:42–44 — '...perseveraban unánimes... tenían todas las cosas en común.'",
+      "respuestas": [
+        "Conocerse por años",
+        "Tener intereses en común",
+        "Obedecer el mismo diseño espiritual"
+      ],
+      "correcta": "Obedecer el mismo diseño espiritual"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Sobre qué fundamento se edifica la comunidad espiritual?",
+      "versiculo": "Efesios 2:20–22 — '...edificados sobre el fundamento de los apóstoles... para ser morada de Dios en el Espíritu.'",
+      "respuestas": [
+        "Relaciones familiares sólidas",
+        "Compromiso social",
+        "El fundamento apostólico y profético"
+      ],
+      "correcta": "El fundamento apostólico y profético"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué revela el Salmo 133 sobre la comunión entre casas?",
+      "versiculo": "Salmo 133:1–3 — '...allí envía Jehová bendición y vida eterna.'",
+      "respuestas": [
+        "No influye mucho en lo espiritual",
+        "Atrae la unción colectiva y la bendición",
+        "Genera solo compañerismo humano"
+      ],
+      "correcta": "Atrae la unción colectiva y la bendición"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué debilita la fuerza del Reino en una ciudad?",
+      "versiculo": "El enemigo no teme casas fuertes, pero sí comunidades sanas.",
+      "respuestas": [
+        "Falta de programas sociales",
+        "Casas desconectadas sin comunión",
+        "Poca asistencia a reuniones"
+      ],
+      "correcta": "Casas desconectadas sin comunión"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es el llamado de cada casa bajo diseño?",
+      "versiculo": "No basta con ser casas modelo, hay que ser casas conexión.",
+      "respuestas": [
+        "Ser independiente en lo espiritual",
+        "Buscar su propio crecimiento primero",
+        "Conectarse en propósito con otras casas"
+      ],
+      "correcta": "Conectarse en propósito con otras casas"
+    }
+  ]
+}
