@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Certificado de habitabilidad espiritual</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Certificado de habitabilidad espiritual</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Qué condición atrae la gloria de Dios según Isaías 60:1–2?" data-versiculo="Levántate, resplandece; porque ha venido tu luz...">
+      <p>1. ¿Qué condición atrae la gloria de Dios según Isaías 60:1–2?<br>
+        <em>"Levántate, resplandece; porque ha venido tu luz..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Una vida emocional activa"> Una vida emocional activa</label>
+        <label><input type="radio" name="q1" value="Una casa levantada en diseño y testimonio" data-correct="true"> Una casa levantada en diseño y testimonio</label>
+        <label><input type="radio" name="q1" value="Tener muchos conocimientos bíblicos"> Tener muchos conocimientos bíblicos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué busca Dios según Juan 14:23?" data-versiculo="...vendremos a él, y haremos morada con él.">
+      <p>2. ¿Qué busca Dios según Juan 14:23?<br>
+        <em>"...vendremos a él, y haremos morada con él."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Estructuras religiosas"> Estructuras religiosas</label>
+        <label><input type="radio" name="q2" value="Personas obedientes con un altar encendido" data-correct="true"> Personas obedientes con un altar encendido</label>
+        <label><input type="radio" name="q2" value="Conocimientos teológicos avanzados"> Conocimientos teológicos avanzados</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ocurre con una casa espiritual certificada por Dios según Mateo 5:14–16?" data-versiculo="Una ciudad asentada sobre un monte no se puede esconder...">
+      <p>3. ¿Qué ocurre con una casa espiritual certificada por Dios según Mateo 5:14–16?<br>
+        <em>"...una ciudad asentada sobre un monte no se puede esconder..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Se oculta por humildad"> Se oculta por humildad</label>
+        <label><input type="radio" name="q3" value="Se vuelve un testimonio visible para otros" data-correct="true"> Se vuelve un testimonio visible para otros</label>
+        <label><input type="radio" name="q3" value="Solo vive su proceso personal"> Solo vive su proceso personal</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la diferencia entre ser visitado y habitado por Dios?" data-versiculo="...No queremos ser solo visibles, sino habitables.">
+      <p>4. ¿Cuál es la diferencia entre ser visitado y habitado por Dios?<br>
+        <em>"No queremos ser solo visibles, sino habitables."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Ser visitado es constante y habitar es ocasional"> Ser visitado es constante y habitar es ocasional</label>
+        <label><input type="radio" name="q4" value="Ser visitado es momentáneo, habitar es permanente" data-correct="true"> Ser visitado es momentáneo, habitar es permanente</label>
+        <label><input type="radio" name="q4" value="No hay diferencia real"> No hay diferencia real</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué debe hacer una casa espiritual para ser apta para la gloria?" data-versiculo="Dios no habita en estructuras inestables, sino en casas afirmadas por su Palabra.">
+      <p>5. ¿Qué debe hacer una casa espiritual para ser apta para la gloria?<br>
+        <em>"Dios no habita en estructuras inestables, sino en casas afirmadas por su Palabra."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Esperar una visita divina"> Esperar una visita divina</label>
+        <label><input type="radio" name="q5" value="Consagrarse, afirmarse y estar en orden" data-correct="true"> Consagrarse, afirmarse y estar en orden</label>
+        <label><input type="radio" name="q5" value="Buscar reconocimiento humano"> Buscar reconocimiento humano</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza8.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu casa está lista para habitar la gloria de Dios. ¡Sigue edificando en diseño!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen camino, pero aún puedes afirmar más tu estructura espiritual.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Evalúa tu edificación y alinea tu casa al diseño celestial.`
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
