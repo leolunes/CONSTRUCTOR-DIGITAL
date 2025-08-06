@@ -1,0 +1,56 @@
+{
+  "titulo": "Raíces en el diseño, frutos en tiempo",
+  "texto_base": "Jeremías 17:7-8 / Salmo 1:3 / Lucas 13:6-9",
+  "preguntas": [
+    {
+      "pregunta": "¿Qué promesa recibe el varón que confía en Dios según Jeremías 17:7-8?",
+      "opciones": [
+        "Será como árbol plantado junto a las aguas",
+        "Será como hoja llevada por el viento",
+        "Vivirá sin dificultades"
+      ],
+      "respuesta_correcta": "Será como árbol plantado junto a las aguas",
+      "cita_biblica": "📖 \"Bendito el varón que confía en Jehová, y cuya confianza es Jehová. Porque será como el árbol plantado junto a las aguas, que junto a la corriente echará sus raíces, y no verá cuando viene el calor, sino que su hoja estará verde; y en el año de sequía no se fatigará, ni dejará de dar fruto.\" – Jeremías 17:7-8"
+    },
+    {
+      "pregunta": "¿Cuál es el resultado de deleitarse en la ley de Dios, según el Salmo 1:3?",
+      "opciones": [
+        "Dará su fruto en su tiempo",
+        "Nunca tendrá problemas",
+        "Será un ángel en la tierra"
+      ],
+      "respuesta_correcta": "Dará su fruto en su tiempo",
+      "cita_biblica": "📖 \"Será como árbol plantado junto a corrientes de aguas, que da su fruto en su tiempo, y su hoja no cae; y todo lo que hace, prosperará.\" – Salmo 1:3"
+    },
+    {
+      "pregunta": "¿Qué hizo el dueño de la higuera que no daba fruto según Lucas 13:6-9?",
+      "opciones": [
+        "Pidió que se cortara",
+        "La regó más",
+        "Le construyó una cerca"
+      ],
+      "respuesta_correcta": "Pidió que se cortara",
+      "cita_biblica": "📖 \"Dijo entonces al viñador: He aquí, hace tres años que vengo a buscar fruto en esta higuera, y no lo hallo; córtala; ¿para qué inutiliza también la tierra?\" – Lucas 13:7"
+    },
+    {
+      "pregunta": "¿Qué representa la intervención del viñador en la parábola de la higuera estéril?",
+      "opciones": [
+        "Una oportunidad más antes del juicio",
+        "Un castigo definitivo",
+        "El abandono del árbol"
+      ],
+      "respuesta_correcta": "Una oportunidad más antes del juicio",
+      "cita_biblica": "📖 \"Él entonces respondiendo, le dijo: Señor, déjala todavía este año, hasta que yo cave alrededor de ella, y la abone.\" – Lucas 13:8"
+    },
+    {
+      "pregunta": "¿Cuál es el peligro de no dar fruto tras recibir cuidado y tiempo según Lucas 13:9?",
+      "opciones": [
+        "Ser cortado",
+        "Ser trasladado a otro campo",
+        "Secarse lentamente"
+      ],
+      "respuesta_correcta": "Ser cortado",
+      "cita_biblica": "📖 \"Y si diere fruto, bien; y si no, la cortarás después.\" – Lucas 13:9"
+    }
+  ]
+}

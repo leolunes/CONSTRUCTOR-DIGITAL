@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Raíces en el diseño, frutos en tiempo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    header { text-align: center; margin-bottom: 30px; }
+    header img { width: 200px; }
+    h1 { color: #333; }
+    .form-header { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .form-header label { display: block; margin-bottom: 10px; }
+    .form-header input { padding: 8px; width: 100%; margin-bottom: 15px; }
+    .question { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .question p { font-weight: bold; }
+    .options label { display: block; margin-bottom: 10px; }
+    .downloads, .submit-section, .result-section { text-align: center; margin-top: 30px; }
+    .downloads a, .downloads button {
+      display: inline-block; padding: 10px 20px; margin: 10px;
+      background: #007bff; color: white; text-decoration: none;
+      border: none; border-radius: 5px; cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Raíces en el diseño, frutos en tiempo</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué debe evitar una casa que quiere dar fruto según el diseño de Dios?" data-versiculo="Bienaventurado el varón que no anduvo en consejo de malos...">
+      <p>1. ¿Qué debe evitar una casa que quiere dar fruto según el diseño de Dios?<br>
+        <em>"Bienaventurado el varón que no anduvo en consejo de malos..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Conversaciones sin importancia"> Conversaciones sin importancia</label>
+        <label><input type="radio" name="q1" value="Consejos de amigos bienintencionados"> Consejos de amigos bienintencionados</label>
+        <label><input type="radio" name="q1" value="El consejo de malos, caminos de pecadores y sillas de escarnecedores" data-correct="true"> El consejo de malos, caminos de pecadores y sillas de escarnecedores</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué caracteriza al justo en su relación con la Palabra según Salmo 1:2?" data-versiculo="En la ley de Jehová está su delicia, y en su ley medita de día y de noche.">
+      <p>2. ¿Qué caracteriza al justo en su relación con la Palabra según Salmo 1:2?<br>
+        <em>"En la ley de Jehová está su delicia, y en su ley medita de día y de noche."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Cumple con leer la Biblia ocasionalmente"> Cumple con leer la Biblia ocasionalmente</label>
+        <label><input type="radio" name="q2" value="Medita en la Palabra como un deber obligatorio"> Medita en la Palabra como un deber obligatorio</label>
+        <label><input type="radio" name="q2" value="Se deleita en la Palabra y medita en ella día y noche" data-correct="true"> Se deleita en la Palabra y medita en ella día y noche</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué revela el salmo sobre el fruto del justo?" data-versiculo="Será como árbol plantado junto a corrientes de aguas, que da su fruto en su tiempo...">
+      <p>3. ¿Qué revela el salmo sobre el fruto del justo?<br>
+        <em>"Será como árbol plantado junto a corrientes de aguas, que da su fruto en su tiempo..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="El fruto viene por esfuerzo humano"> El fruto viene por esfuerzo humano</label>
+        <label><input type="radio" name="q3" value="El fruto aparece en cualquier momento"> El fruto aparece en cualquier momento</label>
+        <label><input type="radio" name="q3" value="El fruto llega en su tiempo como resultado de permanecer plantado" data-correct="true"> El fruto llega en su tiempo como resultado de permanecer plantado</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué le ocurre al impío en el día de la prueba según Salmo 1:4?" data-versiculo="No así los malos, que son como el tamo que arrebata el viento.">
+      <p>4. ¿Qué le ocurre al impío en el día de la prueba según Salmo 1:4?<br>
+        <em>"No así los malos, que son como el tamo que arrebata el viento."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Se mantienen firmes si oran suficiente"> Se mantienen firmes si oran suficiente</label>
+        <label><input type="radio" name="q4" value="Son arrastrados porque no tienen raíz ni peso espiritual" data-correct="true"> Son arrastrados porque no tienen raíz ni peso espiritual</label>
+        <label><input type="radio" name="q4" value="Logran salir adelante por sus propios esfuerzos"> Logran salir adelante por sus propios esfuerzos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué afirma Dios según Salmo 1:6?" data-versiculo="Jehová conoce el camino de los justos; más la senda de los malos perecerá.">
+      <p>5. ¿Qué afirma Dios según Salmo 1:6?<br>
+        <em>"Jehová conoce el camino de los justos; más la senda de los malos perecerá."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Todo lo que se mueve tiene vida"> Todo lo que se mueve tiene vida</label>
+        <label><input type="radio" name="q5" value="El justo será conocido por sus actividades"> El justo será conocido por sus actividades</label>
+        <label><input type="radio" name="q5" value="Dios conoce y afirma lo que fue plantado en su diseño" data-correct="true"> Dios conoce y afirma lo que fue plantado en su diseño</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza11.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás plantado en el diseño eterno. ¡Sigue dando fruto en su tiempo!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, sigue profundizando tus raíces en la Palabra.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡Las raíces firmes preceden al fruto duradero!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
