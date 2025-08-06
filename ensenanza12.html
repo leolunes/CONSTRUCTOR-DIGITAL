@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El Hijo entronizado</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El Hijo entronizado</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Qué revela el Salmo 2 sobre el gobierno del Reino?" data-versiculo="Yo he puesto mi rey sobre Sion, mi santo monte. — Salmo 2:6">
+      <p>1. ¿Qué revela el Salmo 2 sobre el gobierno del Reino?<br>
+        <em>"Yo he puesto mi rey sobre Sion, mi santo monte."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Que el Reino está en construcción por el sistema humano"> Que el Reino está en construcción por el sistema humano</label>
+        <label><input type="radio" name="q1" value="Que el Reino será votado por las naciones"> Que el Reino será votado por las naciones</label>
+        <label><input type="radio" name="q1" value="Que el gobierno ya fue entregado al Hijo, no al sistema" data-correct="true"> Que el gobierno ya fue entregado al Hijo, no al sistema</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál debe ser la actitud de una casa ante el sistema rebelde?" data-versiculo="¿Por qué se amotinan las gentes, y los pueblos piensan cosas vanas? — Salmo 2:1">
+      <p>2. ¿Cuál debe ser la actitud de una casa ante el sistema rebelde?<br>
+        <em>"¿Por qué se amotinan las gentes, y los pueblos piensan cosas vanas?"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Negociar para mantener la paz"> Negociar para mantener la paz</label>
+        <label><input type="radio" name="q2" value="Confrontar la rebelión y no convivir con ella" data-correct="true"> Confrontar la rebelión y no convivir con ella</label>
+        <label><input type="radio" name="q2" value="Adaptarse para no ser excluidos"> Adaptarse para no ser excluidos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué actitud tiene Dios ante la oposición humana?" data-versiculo="El que mora en los cielos se reirá; el Señor se burlará de ellos. — Salmo 2:4">
+      <p>3. ¿Qué actitud tiene Dios ante la oposición humana?<br>
+        <em>"El que mora en los cielos se reirá; el Señor se burlará de ellos."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Preocupación y ajuste de sus planes"> Preocupación y ajuste de sus planes</label>
+        <label><input type="radio" name="q3" value="Risa, porque su trono es inamovible" data-correct="true"> Risa, porque su trono es inamovible</label>
+        <label><input type="radio" name="q3" value="Tristeza y búsqueda de consenso"> Tristeza y búsqueda de consenso</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué significa 'besar al Hijo' según Salmo 2:12?" data-versiculo="Besad al Hijo, para que no se enoje, y perezcáis en el camino... — Salmo 2:12">
+      <p>4. ¿Qué significa 'besar al Hijo' según Salmo 2:12?<br>
+        <em>"Besad al Hijo, para que no se enoje, y perezcáis en el camino..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Negociar con el sistema para sobrevivir"> Negociar con el sistema para sobrevivir</label>
+        <label><input type="radio" name="q4" value="Reconocer su señorío y rendirse con reverencia" data-correct="true"> Reconocer su señorío y rendirse con reverencia</label>
+        <label><input type="radio" name="q4" value="Buscar popularidad religiosa"> Buscar popularidad religiosa</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué principio se establece respecto al Reino en la enseñanza?" data-versiculo="Pídeme, y te daré por herencia las naciones. — Salmo 2:8">
+      <p>5. ¿Qué principio se establece respecto al Reino en la enseñanza?<br>
+        <em>"Pídeme, y te daré por herencia las naciones."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="El Reino es una estrategia eclesiástica"> El Reino es una estrategia eclesiástica</label>
+        <label><input type="radio" name="q5" value="El Reino se hereda al Hijo obediente" data-correct="true"> El Reino se hereda al Hijo obediente</label>
+        <label><input type="radio" name="q5" value="El Reino se construye con influencia humana"> El Reino se construye con influencia humana</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza12.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás reconociendo al Hijo entronizado. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero puedes profundizar más en la autoridad del Reino.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No negocies el Reino, herédalo!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

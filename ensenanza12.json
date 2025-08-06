@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El Hijo entronizado",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué revela el Salmo 2 sobre el gobierno del Reino?",
+      "versiculo": "Yo he puesto mi rey sobre Sion, mi santo monte. — Salmo 2:6",
+      "respuestas": [
+        "Que el Reino está en construcción por el sistema humano",
+        "Que el Reino será votado por las naciones",
+        "Que el gobierno ya fue entregado al Hijo, no al sistema"
+      ],
+      "correcta": "Que el gobierno ya fue entregado al Hijo, no al sistema"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál debe ser la actitud de una casa ante el sistema rebelde?",
+      "versiculo": "¿Por qué se amotinan las gentes, y los pueblos piensan cosas vanas? — Salmo 2:1",
+      "respuestas": [
+        "Negociar para mantener la paz",
+        "Confrontar la rebelión y no convivir con ella",
+        "Adaptarse para no ser excluidos"
+      ],
+      "correcta": "Confrontar la rebelión y no convivir con ella"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué actitud tiene Dios ante la oposición humana?",
+      "versiculo": "El que mora en los cielos se reirá; el Señor se burlará de ellos. — Salmo 2:4",
+      "respuestas": [
+        "Preocupación y ajuste de sus planes",
+        "Risa, porque su trono es inamovible",
+        "Tristeza y búsqueda de consenso"
+      ],
+      "correcta": "Risa, porque su trono es inamovible"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué significa 'besar al Hijo' según Salmo 2:12?",
+      "versiculo": "Besad al Hijo, para que no se enoje, y perezcáis en el camino... — Salmo 2:12",
+      "respuestas": [
+        "Negociar con el sistema para sobrevivir",
+        "Reconocer su señorío y rendirse con reverencia",
+        "Buscar popularidad religiosa"
+      ],
+      "correcta": "Reconocer su señorío y rendirse con reverencia"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué principio se establece respecto al Reino en la enseñanza?",
+      "versiculo": "Pídeme, y te daré por herencia las naciones. — Salmo 2:8",
+      "respuestas": [
+        "El Reino es una estrategia eclesiástica",
+        "El Reino se hereda al Hijo obediente",
+        "El Reino se construye con influencia humana"
+      ],
+      "correcta": "El Reino se hereda al Hijo obediente"
+    }
+  ]
+}
