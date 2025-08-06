@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Tú eres escudo alrededor de mí",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué actitud tuvo David frente a la traición de su hijo Absalón según Salmo 3:1?",
+      "versiculo": "¡Oh Jehová, ¡cuántos se han multiplicado mis adversarios! Muchos son los que se levantan contra mí.",
+      "respuestas": [
+        "La minimizó para no angustiarse",
+        "Reconoció su dolor y lo convirtió en oración",
+        "Buscó apoyo en su ejército"
+      ],
+      "correcta": "Reconoció su dolor y lo convirtió en oración"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué representa Dios para David en Salmo 3:3?",
+      "versiculo": "Mas tú, Jehová, eres escudo alrededor de mí; mi gloria, y el que levanta mi cabeza.",
+      "respuestas": [
+        "Un escudo parcial ante el peligro",
+        "Un símbolo de justicia futura",
+        "Un escudo completo que lo protege y levanta su dignidad"
+      ],
+      "correcta": "Un escudo completo que lo protege y levanta su dignidad"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué demuestra David al dormir durante el exilio según Salmo 3:5?",
+      "versiculo": "Yo me acosté y dormí, y desperté, porque Jehová me sustentaba.",
+      "respuestas": [
+        "Indiferencia ante sus enemigos",
+        "Fatiga extrema por la huida",
+        "Confianza en el sustento divino"
+      ],
+      "correcta": "Confianza en el sustento divino"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Desde dónde respondió Dios al clamor de David según Salmo 3:4?",
+      "versiculo": "Con mi voz clamé a Jehová, y él me respondió desde su monte santo.",
+      "respuestas": [
+        "Desde el campamento de sus aliados",
+        "Desde el monte santo, símbolo de gobierno",
+        "Desde la tienda del sacerdote"
+      ],
+      "correcta": "Desde el monte santo, símbolo de gobierno"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué declara David en medio del sitio según Salmo 3:6?",
+      "versiculo": "No temeré a diez millares de gente, que pusieren sitio contra mí.",
+      "respuestas": [
+        "Que su ejército lo protegerá",
+        "Que su confianza está en el número de aliados",
+        "Que no teme por quien está con él"
+      ],
+      "correcta": "Que no teme por quien está con él"
+    }
+  ]
+}
