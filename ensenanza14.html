@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Cimentación en buen terreno</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Cimentación en buen terreno</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué enseña Salmo 1:1 sobre el consejo de malos?" data-versiculo="Bienaventurado el varón que no anduvo en consejo de malos, ni estuvo en camino de pecadores, ni en silla de escarnecedores se ha sentado.">
+      <p>1. ¿Qué enseña Salmo 1:1 sobre el consejo de malos?<br>
+        <em>"Bienaventurado el varón que no anduvo en consejo de malos..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Que debemos evitar ambientes que deforman el carácter" data-correct="true"> Que debemos evitar ambientes que deforman el carácter</label>
+        <label><input type="radio" name="q1" value="Que podemos escuchar todo consejo sin riesgo"> Que podemos escuchar todo consejo sin riesgo</label>
+        <label><input type="radio" name="q1" value="Que no importa con quién nos sentemos"> Que no importa con quién nos sentemos</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué significa deleitarse en la ley de Jehová según Salmo 1:2?" data-versiculo="Sino que en la ley de Jehová está su delicia, y en su ley medita de día y de noche.">
+      <p>2. ¿Qué significa deleitarse en la ley de Jehová según Salmo 1:2?<br>
+        <em>"Sino que en la ley de Jehová está su delicia..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Excavar profundamente en la Palabra como anclaje firme" data-correct="true"> Excavar profundamente en la Palabra como anclaje firme</label>
+        <label><input type="radio" name="q2" value="Leer la Biblia solo en momentos difíciles"> Leer la Biblia solo en momentos difíciles</label>
+        <label><input type="radio" name="q2" value="Usar la Palabra para corregir a otros"> Usar la Palabra para corregir a otros</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué representa el árbol plantado junto a corrientes de agua en Salmo 1:3?" data-versiculo="Será como árbol plantado junto a corrientes de aguas, que da su fruto en su tiempo, y su hoja no cae.">
+      <p>3. ¿Qué representa el árbol plantado junto a corrientes de agua en Salmo 1:3?<br>
+        <em>"...que da su fruto en su tiempo..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Una vida que soporta presión y da fruto constante" data-correct="true"> Una vida que soporta presión y da fruto constante</label>
+        <label><input type="radio" name="q3" value="Un árbol cualquiera en un bosque"> Un árbol cualquiera en un bosque</label>
+        <label><input type="radio" name="q3" value="Una persona que cambia de opinión con frecuencia"> Una persona que cambia de opinión con frecuencia</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ocurre con los malos según Salmo 1:4?" data-versiculo="No así los malos, que son como el tamo que arrebata el viento.">
+      <p>4. ¿Qué ocurre con los malos según Salmo 1:4?<br>
+        <em>"...que son como el tamo que arrebata el viento."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Son arrastrados por cualquier viento" data-correct="true"> Son arrastrados por cualquier viento</label>
+        <label><input type="radio" name="q4" value="Se mantienen firmes en todo tiempo"> Se mantienen firmes en todo tiempo</label>
+        <label><input type="radio" name="q4" value="Se fortalecen en la adversidad"> Se fortalecen en la adversidad</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la clave para permanecer firmes según Salmo 1:6?" data-versiculo="Porque Jehová conoce el camino de los justos; más la senda de los malos perecerá.">
+      <p>5. ¿Cuál es la clave para permanecer firmes según Salmo 1:6?<br>
+        <em>"Porque Jehová conoce el camino de los justos..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Estar cimentados en Cristo y en su Palabra" data-correct="true"> Estar cimentados en Cristo y en su Palabra</label>
+        <label><input type="radio" name="q5" value="Tener muchos recursos materiales"> Tener muchos recursos materiales</label>
+        <label><input type="radio" name="q5" value="Depender de la opinión pública"> Depender de la opinión pública</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza14.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu cimentación está firme en Cristo."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Vas bien, pero refuerza tu cimentación en la Palabra.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Vuelve a excavar hasta encontrar la Roca firme: Cristo.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

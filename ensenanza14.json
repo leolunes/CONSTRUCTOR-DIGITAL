@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Cimentación en buen terreno",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué enseña Salmo 1:1 sobre el consejo de malos?",
+      "versiculo": "Bienaventurado el varón que no anduvo en consejo de malos, ni estuvo en camino de pecadores, ni en silla de escarnecedores se ha sentado.",
+      "respuestas": [
+        "Que debemos evitar ambientes que deforman el carácter",
+        "Que podemos escuchar todo consejo sin riesgo",
+        "Que no importa con quién nos sentemos"
+      ],
+      "correcta": "Que debemos evitar ambientes que deforman el carácter"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué significa deleitarse en la ley de Jehová según Salmo 1:2?",
+      "versiculo": "Sino que en la ley de Jehová está su delicia, y en su ley medita de día y de noche.",
+      "respuestas": [
+        "Excavar profundamente en la Palabra como anclaje firme",
+        "Leer la Biblia solo en momentos difíciles",
+        "Usar la Palabra para corregir a otros"
+      ],
+      "correcta": "Excavar profundamente en la Palabra como anclaje firme"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué representa el árbol plantado junto a corrientes de agua en Salmo 1:3?",
+      "versiculo": "Será como árbol plantado junto a corrientes de aguas, que da su fruto en su tiempo, y su hoja no cae.",
+      "respuestas": [
+        "Una vida que soporta presión y da fruto constante",
+        "Un árbol cualquiera en un bosque",
+        "Una persona que cambia de opinión con frecuencia"
+      ],
+      "correcta": "Una vida que soporta presión y da fruto constante"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué ocurre con los malos según Salmo 1:4?",
+      "versiculo": "No así los malos, que son como el tamo que arrebata el viento.",
+      "respuestas": [
+        "Son arrastrados por cualquier viento",
+        "Se mantienen firmes en todo tiempo",
+        "Se fortalecen en la adversidad"
+      ],
+      "correcta": "Son arrastrados por cualquier viento"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es la clave para permanecer firmes según Salmo 1:6?",
+      "versiculo": "Porque Jehová conoce el camino de los justos; más la senda de los malos perecerá.",
+      "respuestas": [
+        "Estar cimentados en Cristo y en su Palabra",
+        "Tener muchos recursos materiales",
+        "Depender de la opinión pública"
+      ],
+      "correcta": "Estar cimentados en Cristo y en su Palabra"
+    }
+  ]
+}
