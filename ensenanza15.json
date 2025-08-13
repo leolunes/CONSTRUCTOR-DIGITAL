@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El cemento - la Palabra como ligante de toda la estructura",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué representa el cemento en la enseñanza?",
+      "versiculo": "Así como el cemento une grava y arena en una sola masa firme, la Palabra de Dios mantiene unido el hogar espiritual.",
+      "respuestas": [
+        "Las emociones familiares",
+        "La Palabra de Dios como elemento que une y da firmeza",
+        "El liderazgo del padre"
+      ],
+      "correcta": "La Palabra de Dios como elemento que une y da firmeza"
+    },
+    {
+      "numero": 2,
+      "texto": "Según Mateo 7:24-25, ¿qué hace que una casa no caiga?",
+      "versiculo": "El hombre prudente construyó sobre la roca... vino la tormenta y no cayó, porque estaba cimentada sobre la roca.",
+      "respuestas": [
+        "Tener buenas intenciones",
+        "Edificar sobre la Palabra de Dios, obedeciéndola",
+        "Reunirse con frecuencia en familia"
+      ],
+      "correcta": "Edificar sobre la Palabra de Dios, obedeciéndola"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué función cumple la Palabra según Salmo 119:105?",
+      "versiculo": "Lámpara es a mis pies tu palabra, y lumbrera a mi camino.",
+      "respuestas": [
+        "Motivar emocionalmente",
+        "Dar dirección y guiar los pasos en unidad",
+        "Controlar las decisiones familiares"
+      ],
+      "correcta": "Dar dirección y guiar los pasos en unidad"
+    },
+    {
+      "numero": 4,
+      "texto": "Según Juan 17:17, ¿qué produce la Palabra en la familia?",
+      "versiculo": "Santifícalos en tu verdad: tu palabra es verdad.",
+      "respuestas": [
+        "Divide a los miembros según sus ideas",
+        "Limpia, afirma y une en comunión",
+        "Aumenta las actividades sociales"
+      ],
+      "correcta": "Limpia, afirma y une en comunión"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué ocurre cuando la Palabra no es el 'cemento' del hogar?",
+      "versiculo": "Si la Palabra no es tu cemento, algo más lo está siendo: opiniones, emociones o costumbre.",
+      "respuestas": [
+        "La familia permanece unida igual",
+        "Se pierde la cohesión y la estructura se debilita",
+        "Cada miembro mejora su independencia"
+      ],
+      "correcta": "Se pierde la cohesión y la estructura se debilita"
+    }
+  ]
+}
