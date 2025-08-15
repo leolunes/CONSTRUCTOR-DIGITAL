@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El agua viva: la presencia del Espíritu que activa y da plasticidad",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué produce la Palabra sin el Espíritu y el Espíritu sin la Palabra?",
+      "versiculo": "Juan 7:38–39 — El que cree en mí, como dice la Escritura, de su interior correrán ríos de agua viva.",
+      "respuestas": [
+        "Legalismo y emocionalismo",
+        "Gozo y paz",
+        "Fe y obras"
+      ],
+      "correcta": "Legalismo y emocionalismo"
+    },
+    {
+      "numero": 2,
+      "texto": "Según Isaías 44:3, ¿qué efecto tiene el agua del Espíritu en un hogar?",
+      "versiculo": "Isaías 44:3 — Porque yo derramaré agua sobre el sequedal, y ríos sobre la tierra árida.",
+      "respuestas": [
+        "Lo endurece antes de tiempo",
+        "Lo refresca, forma y da vida",
+        "Lo seca para hacerlo más firme"
+      ],
+      "correcta": "Lo refresca, forma y da vida"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué simboliza el agua en la mezcla espiritual de un hogar?",
+      "versiculo": "2 Corintios 13:14 — La comunión del Espíritu Santo sea con todos vosotros.",
+      "respuestas": [
+        "La unidad que el Espíritu Santo produce",
+        "El esfuerzo humano para mantener la paz",
+        "La firmeza de la tradición"
+      ],
+      "correcta": "La unidad que el Espíritu Santo produce"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué indica la falta de flexibilidad, ternura y capacidad de pedir perdón en la vida personal?",
+      "versiculo": "Juan 7:38 — De su interior correrán ríos de agua viva.",
+      "respuestas": [
+        "Que se está bebiendo del agua viva",
+        "Que no se está bebiendo del agua viva",
+        "Que se ha alcanzado madurez espiritual"
+      ],
+      "correcta": "Que no se está bebiendo del agua viva"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué debe caracterizar al altar familiar para que haya verdadera comunión?",
+      "versiculo": "2 Corintios 13:14 — La comunión del Espíritu Santo sea con todos vosotros.",
+      "respuestas": [
+        "Solo lectura de la Palabra",
+        "Presencia del Espíritu Santo",
+        "Disciplina estricta"
+      ],
+      "correcta": "Presencia del Espíritu Santo"
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El agua viva: la presencia del Espíritu que activa y da plasticidad</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El agua viva: la presencia del Espíritu que activa y da plasticidad</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué produce la Palabra sin el Espíritu y el Espíritu sin la Palabra?" data-versiculo="Juan 7:38–39 — El que cree en mí, como dice la Escritura, de su interior correrán ríos de agua viva.">
+      <p>1. ¿Qué produce la Palabra sin el Espíritu y el Espíritu sin la Palabra?<br>
+        <em>Juan 7:38–39 — "El que cree en mí, como dice la Escritura, de su interior correrán ríos de agua viva."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Legalismo y emocionalismo" data-correct="true"> Legalismo y emocionalismo</label>
+        <label><input type="radio" name="q1" value="Gozo y paz"> Gozo y paz</label>
+        <label><input type="radio" name="q1" value="Fe y obras"> Fe y obras</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="Según Isaías 44:3, ¿qué efecto tiene el agua del Espíritu en un hogar?" data-versiculo="Isaías 44:3 — Porque yo derramaré agua sobre el sequedal, y ríos sobre la tierra árida.">
+      <p>2. Según Isaías 44:3, ¿qué efecto tiene el agua del Espíritu en un hogar?<br>
+        <em>Isaías 44:3 — "Porque yo derramaré agua sobre el sequedal, y ríos sobre la tierra árida."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Lo endurece antes de tiempo"> Lo endurece antes de tiempo</label>
+        <label><input type="radio" name="q2" value="Lo refresca, forma y da vida" data-correct="true"> Lo refresca, forma y da vida</label>
+        <label><input type="radio" name="q2" value="Lo seca para hacerlo más firme"> Lo seca para hacerlo más firme</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué simboliza el agua en la mezcla espiritual de un hogar?" data-versiculo="2 Corintios 13:14 — La comunión del Espíritu Santo sea con todos vosotros.">
+      <p>3. ¿Qué simboliza el agua en la mezcla espiritual de un hogar?<br>
+        <em>2 Corintios 13:14 — "La comunión del Espíritu Santo sea con todos vosotros."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="La unidad que el Espíritu Santo produce" data-correct="true"> La unidad que el Espíritu Santo produce</label>
+        <label><input type="radio" name="q3" value="El esfuerzo humano para mantener la paz"> El esfuerzo humano para mantener la paz</label>
+        <label><input type="radio" name="q3" value="La firmeza de la tradición"> La firmeza de la tradición</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué indica la falta de flexibilidad, ternura y capacidad de pedir perdón en la vida personal?" data-versiculo="Juan 7:38 — De su interior correrán ríos de agua viva.">
+      <p>4. ¿Qué indica la falta de flexibilidad, ternura y capacidad de pedir perdón en la vida personal?<br>
+        <em>Juan 7:38 — "De su interior correrán ríos de agua viva."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Que se está bebiendo del agua viva"> Que se está bebiendo del agua viva</label>
+        <label><input type="radio" name="q4" value="Que no se está bebiendo del agua viva" data-correct="true"> Que no se está bebiendo del agua viva</label>
+        <label><input type="radio" name="q4" value="Que se ha alcanzado madurez espiritual"> Que se ha alcanzado madurez espiritual</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué debe caracterizar al altar familiar para que haya verdadera comunión?" data-versiculo="2 Corintios 13:14 — La comunión del Espíritu Santo sea con todos vosotros.">
+      <p>5. ¿Qué debe caracterizar al altar familiar para que haya verdadera comunión?<br>
+        <em>2 Corintios 13:14 — "La comunión del Espíritu Santo sea con todos vosotros."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Solo lectura de la Palabra"> Solo lectura de la Palabra</label>
+        <label><input type="radio" name="q5" value="Presencia del Espíritu Santo" data-correct="true"> Presencia del Espíritu Santo</label>
+        <label><input type="radio" name="q5" value="Disciplina estricta"> Disciplina estricta</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza16.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu vida fluye con el agua viva del Espíritu. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero abre más tu vida a la presencia del Espíritu.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Necesitas beber más del agua viva para que tu vida espiritual tenga frescura y unidad.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
