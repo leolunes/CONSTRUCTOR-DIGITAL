@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El triturado — el aporte del varón como estructura de soporte",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "Según Efesios 5:25–28, ¿cómo debe amar el varón a su esposa?",
+      "versiculo": "Maridos, amad a vuestras mujeres, así como Cristo amó a la iglesia y se entregó a sí mismo por ella...",
+      "respuestas": [
+        "Con un amor solo emocional y pasajero",
+        "Como Cristo a la Iglesia: entregándose para sostener, proteger y afirmar",
+        "Desde el control y los gritos para imponer orden"
+      ],
+      "correcta": "Como Cristo a la Iglesia: entregándose para sostener, proteger y afirmar"
+    },
+    {
+      "numero": 2,
+      "texto": "En la analogía del triturado, ¿qué representa el varón según la enseñanza?",
+      "versiculo": "El triturado es piedra que ya fue rota: no luce en la superficie, pero da resistencia y soporte.",
+      "respuestas": [
+        "Un adorno visible que embellece la mezcla",
+        "Piedra procesada que aporta volumen, resistencia y soporte al hogar",
+        "Un elemento que se disuelve para no estorbar"
+      ],
+      "correcta": "Piedra procesada que aporta volumen, resistencia y soporte al hogar"
+    },
+    {
+      "numero": 3,
+      "texto": "Según 1 Corintios 16:13, ¿de dónde proviene el verdadero 'peso' del varón?",
+      "versiculo": "Velad, estad firmes en la fe; portaos varonilmente, y esforzaos.",
+      "respuestas": [
+        "De su presencia física y autoridad natural",
+        "Del peso espiritual formado por firmeza en la fe y carácter procesado",
+        "De su capacidad económica y logros laborales"
+      ],
+      "correcta": "Del peso espiritual formado por firmeza en la fe y carácter procesado"
+    },
+    {
+      "numero": 4,
+      "texto": "Con base en Isaías 32:2, ¿cómo se integra el varón maduro en el hogar?",
+      "versiculo": "Cada uno será como escondedero contra el viento… como sombra de gran peñasco en tierra calurosa.",
+      "respuestas": [
+        "Imponiéndose por la fuerza para dominar",
+        "Estabilizando la 'mezcla' con su presencia firme que protege y da descanso",
+        "Delegando todo para evitar conflictos"
+      ],
+      "correcta": "Estabilizando la 'mezcla' con su presencia firme que protege y da descanso"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué decisión práctica te vuelve 'triturado útil' según la aplicación de la enseñanza?",
+      "versiculo": "El triturado debe estar limpio, sin mezcla: permite que Dios procese tu carácter.",
+      "respuestas": [
+        "Aumentar el control y los regaños para imponer respeto",
+        "Permitir que Dios quebrante y limpie el carácter para sostener sin herir",
+        "Enfocarse solo en la provisión económica"
+      ],
+      "correcta": "Permitir que Dios quebrante y limpie el carácter para sostener sin herir"
+    }
+  ]
+}
