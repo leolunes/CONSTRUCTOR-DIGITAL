@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Milagro o Gracia: dos respuestas del mismo Señor",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué dijo Jesús al leproso que pidió ser sanado?",
+      "versiculo": "Jesús extendió la mano y le tocó, diciendo: Quiero; sé limpio. Y al instante su lepra desapareció. (Mateo 8:3)",
+      "respuestas": [
+        "No quiero sanarte",
+        "Quiero; sé limpio",
+        "Debes esperar más tiempo"
+      ],
+      "correcta": "Quiero; sé limpio"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué respuesta recibió Pablo cuando pidió tres veces ser libre del aguijón?",
+      "versiculo": "Y me ha dicho: Bástate mi gracia; porque mi poder se perfecciona en la debilidad. (2 Corintios 12:9)",
+      "respuestas": [
+        "Sí, te lo quitaré ahora mismo",
+        "Debes soportarlo sin ayuda",
+        "Bástate mi gracia"
+      ],
+      "correcta": "Bástate mi gracia"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué diferencia hay entre el milagro y la gracia según la enseñanza?",
+      "versiculo": "El Milagro cambia las circunstancias; la Gracia cambia al hombre en medio de ellas.",
+      "respuestas": [
+        "El milagro cambia al hombre y la gracia cambia a Dios",
+        "El milagro cambia las circunstancias y la gracia cambia al hombre en medio de ellas",
+        "Ambos hacen lo mismo"
+      ],
+      "correcta": "El milagro cambia las circunstancias y la gracia cambia al hombre en medio de ellas"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué nos muestra la gracia cuando la carga permanece?",
+      "versiculo": "Mi poder se perfecciona en la debilidad. (2 Corintios 12:9)",
+      "respuestas": [
+        "Que Dios se olvidó de nosotros",
+        "Que debemos resolver solos",
+        "Que el poder de Cristo se perfecciona en nuestra debilidad"
+      ],
+      "correcta": "Que el poder de Cristo se perfecciona en nuestra debilidad"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué verdad nos recuerda Hebreos 13:8?",
+      "versiculo": "Jesucristo es el mismo ayer, y hoy, y por los siglos.",
+      "respuestas": [
+        "Que Jesús cambia según las épocas",
+        "Que Jesucristo es siempre el mismo",
+        "Que solo actuó en el pasado"
+      ],
+      "correcta": "Que Jesucristo es siempre el mismo"
+    }
+  ]
+}

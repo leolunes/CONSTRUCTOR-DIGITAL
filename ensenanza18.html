@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Milagro o Gracia: dos respuestas del mismo Señor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Milagro o Gracia: dos respuestas del mismo Señor</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Qué dijo Jesús al leproso que pidió ser sanado?" data-versiculo="Jesús extendió la mano y le tocó, diciendo: Quiero; sé limpio. Y al instante su lepra desapareció. (Mateo 8:3)">
+      <p>1. ¿Qué dijo Jesús al leproso que pidió ser sanado?<br>
+        <em>Mateo 8:3 – "Jesús extendió la mano y le tocó, diciendo: Quiero; sé limpio. Y al instante su lepra desapareció."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="No quiero sanarte"> No quiero sanarte</label>
+        <label><input type="radio" name="q1" value="Quiero; sé limpio" data-correct="true"> Quiero; sé limpio</label>
+        <label><input type="radio" name="q1" value="Debes esperar más tiempo"> Debes esperar más tiempo</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué respuesta recibió Pablo cuando pidió tres veces ser libre del aguijón?" data-versiculo="Y me ha dicho: Bástate mi gracia; porque mi poder se perfecciona en la debilidad. (2 Corintios 12:9)">
+      <p>2. ¿Qué respuesta recibió Pablo cuando pidió tres veces ser libre del aguijón?<br>
+        <em>2 Corintios 12:9 – "Y me ha dicho: Bástate mi gracia; porque mi poder se perfecciona en la debilidad."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Sí, te lo quitaré ahora mismo"> Sí, te lo quitaré ahora mismo</label>
+        <label><input type="radio" name="q2" value="Debes soportarlo sin ayuda"> Debes soportarlo sin ayuda</label>
+        <label><input type="radio" name="q2" value="Bástate mi gracia" data-correct="true"> Bástate mi gracia</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué diferencia hay entre el milagro y la gracia según la enseñanza?" data-versiculo="El Milagro cambia las circunstancias; la Gracia cambia al hombre en medio de ellas.">
+      <p>3. ¿Qué diferencia hay entre el milagro y la gracia según la enseñanza?<br>
+        <em>"El Milagro cambia las circunstancias; la Gracia cambia al hombre en medio de ellas."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="El milagro cambia al hombre y la gracia cambia a Dios"> El milagro cambia al hombre y la gracia cambia a Dios</label>
+        <label><input type="radio" name="q3" value="El milagro cambia las circunstancias y la gracia cambia al hombre en medio de ellas" data-correct="true"> El milagro cambia las circunstancias y la gracia cambia al hombre en medio de ellas</label>
+        <label><input type="radio" name="q3" value="Ambos hacen lo mismo"> Ambos hacen lo mismo</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué nos muestra la gracia cuando la carga permanece?" data-versiculo="Mi poder se perfecciona en la debilidad. (2 Corintios 12:9)">
+      <p>4. ¿Qué nos muestra la gracia cuando la carga permanece?<br>
+        <em>2 Corintios 12:9 – "Mi poder se perfecciona en la debilidad."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Que Dios se olvidó de nosotros"> Que Dios se olvidó de nosotros</label>
+        <label><input type="radio" name="q4" value="Que debemos resolver solos"> Que debemos resolver solos</label>
+        <label><input type="radio" name="q4" value="Que el poder de Cristo se perfecciona en nuestra debilidad" data-correct="true"> Que el poder de Cristo se perfecciona en nuestra debilidad</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué verdad nos recuerda Hebreos 13:8?" data-versiculo="Jesucristo es el mismo ayer, y hoy, y por los siglos.">
+      <p>5. ¿Qué verdad nos recuerda Hebreos 13:8?<br>
+        <em>"Jesucristo es el mismo ayer, y hoy, y por los siglos."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Que Jesús cambia según las épocas"> Que Jesús cambia según las épocas</label>
+        <label><input type="radio" name="q5" value="Que Jesucristo es siempre el mismo" data-correct="true"> Que Jesucristo es siempre el mismo</label>
+        <label><input type="radio" name="q5" value="Que solo actuó en el pasado"> Que solo actuó en el pasado</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza18.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Has comprendido que Cristo es suficiente en milagro y en gracia."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, sigue profundizando en cómo Dios responde con milagros y con gracia.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza: Cristo responde siempre, ya sea sanando o sosteniendo.`
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
