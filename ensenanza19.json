@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El altar con Cristo: la verdadera firmeza del hogar",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué enseña Génesis 2:24 sobre el matrimonio?",
+      "versiculo": "Por tanto, dejará el hombre a su padre y a su madre, y se unirá a su mujer, y serán una sola carne.",
+      "respuestas": [
+        "El matrimonio es una tradición cultural",
+        "El hombre debe dejar a sus padres y unirse en pacto con su esposa para ser una sola carne",
+        "La unión es solo física y pasajera"
+      ],
+      "correcta": "El hombre debe dejar a sus padres y unirse en pacto con su esposa para ser una sola carne"
+    },
+    {
+      "numero": 2,
+      "texto": "Según Mateo 19:29, ¿qué prioridad debe tener Cristo en el hogar?",
+      "versiculo": "Y cualquiera que haya dejado casas, o hermanos, o hermanas, o padre, o madre, o mujer, o hijos, o tierras, por mi nombre, recibirá cien veces más, y heredará la vida eterna.",
+      "respuestas": [
+        "Cristo debe ser la prioridad por encima de todo",
+        "La familia está por encima de Cristo",
+        "El hombre debe decidir según su conveniencia"
+      ],
+      "correcta": "Cristo debe ser la prioridad por encima de todo"
+    },
+    {
+      "numero": 3,
+      "texto": "Según 1 Corintios 11:3, ¿cuál es el orden de autoridad espiritual en el hogar?",
+      "versiculo": "Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer, y Dios la cabeza de Cristo.",
+      "respuestas": [
+        "Cristo → varón → mujer",
+        "Varón → mujer → Cristo",
+        "Mujer → varón → Cristo"
+      ],
+      "correcta": "Cristo → varón → mujer"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué produce levantar altar con Cristo en el hogar?",
+      "versiculo": "El altar con Cristo produce cobertura, dirección y firmeza.",
+      "respuestas": [
+        "Cobertura, dirección y firmeza",
+        "Riquezas materiales",
+        "Solo estabilidad emocional"
+      ],
+      "correcta": "Cobertura, dirección y firmeza"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es la aplicación personal más importante del altar con Cristo?",
+      "versiculo": "No puedes ser verdadero esposo ni padre sin primero ser verdadero hijo de Cristo.",
+      "respuestas": [
+        "Ser verdadero hijo de Cristo antes de ser esposo o padre",
+        "Acumular experiencia humana",
+        "Depender de consejos humanos"
+      ],
+      "correcta": "Ser verdadero hijo de Cristo antes de ser esposo o padre"
+    }
+  ]
+}
