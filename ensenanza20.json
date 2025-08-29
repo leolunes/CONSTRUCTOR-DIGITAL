@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Las manos del varón: cinco pasos de provisión en Cristo",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué hizo Pedro primero al obedecer la voz de Cristo?",
+      "versiculo": "Mateo 17:27 — Ve al mar, echa el anzuelo…",
+      "respuestas": [
+        "Guardó silencio",
+        "Lanzó el anzuelo al mar",
+        "Esperó que otro pescara"
+      ],
+      "correcta": "Lanzó el anzuelo al mar"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué representa el hecho de sacar el pez?",
+      "versiculo": "2 Tesalonicenses 3:10 — El que no quiera trabajar, tampoco coma.",
+      "respuestas": [
+        "El esfuerzo y trabajo del varón",
+        "La ociosidad y descanso",
+        "Un acto innecesario porque Dios ya provee"
+      ],
+      "correcta": "El esfuerzo y trabajo del varón"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué simboliza abrir la boca del pez?",
+      "versiculo": "Proverbios 2:4–5 — Si como a la plata la buscares, y la escudriñares como a tesoros…",
+      "respuestas": [
+        "Fuerza física",
+        "Sabiduría y discernimiento para hallar la provisión",
+        "El silencio como disciplina"
+      ],
+      "correcta": "Sabiduría y discernimiento para hallar la provisión"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué enseña sacar las monedas de la boca del pez?",
+      "versiculo": "1 Corintios 4:2 — Se requiere de los administradores, que cada uno sea hallado fiel.",
+      "respuestas": [
+        "La codicia del hombre",
+        "La administración responsable de los recursos",
+        "Un acto innecesario"
+      ],
+      "correcta": "La administración responsable de los recursos"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué muestra el hecho de pagar con las monedas halladas?",
+      "versiculo": "Romanos 13:7 — Pagad a todos lo que debéis.",
+      "respuestas": [
+        "Egoísmo material",
+        "Responsabilidad espiritual y material",
+        "Un simple gesto cultural"
+      ],
+      "correcta": "Responsabilidad espiritual y material"
+    }
+  ]
+}

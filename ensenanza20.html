@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Las manos del varón: cinco pasos de provisión en Cristo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Las manos del varón: cinco pasos de provisión en Cristo</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Qué hizo Pedro primero al obedecer la voz de Cristo?" data-versiculo="Mateo 17:27 — Ve al mar, echa el anzuelo…">
+      <p>1. ¿Qué hizo Pedro primero al obedecer la voz de Cristo?<br>
+        <em>Mateo 17:27 — “Ve al mar, echa el anzuelo…”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Guardó silencio"> Guardó silencio</label>
+        <label><input type="radio" name="q1" value="Lanzó el anzuelo al mar" data-correct="true"> Lanzó el anzuelo al mar</label>
+        <label><input type="radio" name="q1" value="Esperó que otro pescara"> Esperó que otro pescara</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué representa el hecho de sacar el pez?" data-versiculo="2 Tesalonicenses 3:10 — El que no quiera trabajar, tampoco coma.">
+      <p>2. ¿Qué representa el hecho de sacar el pez?<br>
+        <em>2 Tesalonicenses 3:10 — “El que no quiera trabajar, tampoco coma.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="El esfuerzo y trabajo del varón" data-correct="true"> El esfuerzo y trabajo del varón</label>
+        <label><input type="radio" name="q2" value="La ociosidad y descanso"> La ociosidad y descanso</label>
+        <label><input type="radio" name="q2" value="Un acto innecesario porque Dios ya provee"> Un acto innecesario porque Dios ya provee</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué simboliza abrir la boca del pez?" data-versiculo="Proverbios 2:4–5 — Si como a la plata la buscares, y la escudriñares como a tesoros…">
+      <p>3. ¿Qué simboliza abrir la boca del pez?<br>
+        <em>Proverbios 2:4–5 — “Si como a la plata la buscares, y la escudriñares como a tesoros, entonces entenderás el temor de Jehová…”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Fuerza física"> Fuerza física</label>
+        <label><input type="radio" name="q3" value="Sabiduría y discernimiento para hallar la provisión" data-correct="true"> Sabiduría y discernimiento para hallar la provisión</label>
+        <label><input type="radio" name="q3" value="El silencio como disciplina"> El silencio como disciplina</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué enseña sacar las monedas de la boca del pez?" data-versiculo="1 Corintios 4:2 — Se requiere de los administradores, que cada uno sea hallado fiel.">
+      <p>4. ¿Qué enseña sacar las monedas de la boca del pez?<br>
+        <em>1 Corintios 4:2 — “Ahora bien, se requiere de los administradores, que cada uno sea hallado fiel.”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="La codicia del hombre"> La codicia del hombre</label>
+        <label><input type="radio" name="q4" value="La administración responsable de los recursos" data-correct="true"> La administración responsable de los recursos</label>
+        <label><input type="radio" name="q4" value="Un acto innecesario"> Un acto innecesario</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué muestra el hecho de pagar con las monedas halladas?" data-versiculo="Romanos 13:7 — Pagad a todos lo que debéis.">
+      <p>5. ¿Qué muestra el hecho de pagar con las monedas halladas?<br>
+        <em>Romanos 13:7 — “Pagad a todos lo que debéis…”</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Egoísmo material"> Egoísmo material</label>
+        <label><input type="radio" name="q5" value="Responsabilidad espiritual y material" data-correct="true"> Responsabilidad espiritual y material</label>
+        <label><input type="radio" name="q5" value="Un simple gesto cultural"> Un simple gesto cultural</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza20.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tus manos están guiadas por la Palabra de Cristo."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, pero puedes profundizar más en el principio de provisión divina.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No descuides el propósito de tus manos en Cristo!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
