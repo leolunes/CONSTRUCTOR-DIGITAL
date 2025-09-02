@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El altar del hogar: un pastor y una profeta</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El altar del hogar: un pastor y una profeta</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Qué representa el esposo en el diseño del hogar según Efesios 5:23?" data-versiculo="Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia, la cual es su cuerpo, y Él es su Salvador.">
+      <p>1. ¿Qué representa el esposo en el diseño del hogar según Efesios 5:23?<br>
+        <em>"Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia, la cual es su cuerpo, y Él es su Salvador."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Un líder autoritario"> Un líder autoritario</label>
+        <label><input type="radio" name="q1" value="Cabeza, pastor y apóstol del hogar" data-correct="true"> Cabeza, pastor y apóstol del hogar</label>
+        <label><input type="radio" name="q1" value="Un compañero sin responsabilidad espiritual"> Un compañero sin responsabilidad espiritual</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el rol de la esposa según Lucas 2:19?" data-versiculo="Pero María guardaba todas estas cosas, meditándolas en su corazón.">
+      <p>2. ¿Cuál es el rol de la esposa según Lucas 2:19?<br>
+        <em>"Pero María guardaba todas estas cosas, meditándolas en su corazón."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Gobernar sobre el esposo"> Gobernar sobre el esposo</label>
+        <label><input type="radio" name="q2" value="Profeta del hogar, que discierne y proclama la voz de Dios" data-correct="true"> Profeta del hogar, que discierne y proclama la voz de Dios</label>
+        <label><input type="radio" name="q2" value="Una figura sin rol espiritual"> Una figura sin rol espiritual</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ocurre cuando ambos roles funcionan en unidad?" data-versiculo="Pero yo y mi casa serviremos a Jehová.">
+      <p>3. ¿Qué ocurre cuando ambos roles funcionan en unidad?<br>
+        <em>Josué 24:15 – "Pero yo y mi casa serviremos a Jehová."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="El hogar se convierte en un altar vivo para Dios" data-correct="true"> El hogar se convierte en un altar vivo para Dios</label>
+        <label><input type="radio" name="q3" value="El hogar no cambia espiritualmente"> El hogar no cambia espiritualmente</label>
+        <label><input type="radio" name="q3" value="Cada quien vive su fe de forma individual"> Cada quien vive su fe de forma individual</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué sucede si el esposo no cumple su rol pastoral y apostólico?" data-versiculo="Si fueren destruidos los fundamentos, ¿qué ha de hacer el justo?">
+      <p>4. ¿Qué sucede si el esposo no cumple su rol pastoral y apostólico?<br>
+        <em>Salmo 11:3 – "Si fueren destruidos los fundamentos, ¿qué ha de hacer el justo?"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="La familia queda expuesta y sin rumbo espiritual" data-correct="true"> La familia queda expuesta y sin rumbo espiritual</label>
+        <label><input type="radio" name="q4" value="Nada cambia en el hogar"> Nada cambia en el hogar</label>
+        <label><input type="radio" name="q4" value="La esposa automáticamente asume todo el rol"> La esposa automáticamente asume todo el rol</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el principio final del altar del hogar?" data-versiculo="El hogar se convierte en un altar vivo cuando el varón y la mujer asumen sus roles según el diseño de Dios.">
+      <p>5. ¿Cuál es el principio final del altar del hogar?<br>
+        <em>"El hogar se convierte en un altar vivo cuando el varón y la mujer asumen sus roles según el diseño de Dios."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Que solo la mujer tiene rol espiritual"> Que solo la mujer tiene rol espiritual</label>
+        <label><input type="radio" name="q5" value="Que el hogar se convierte en un altar vivo" data-correct="true"> Que el hogar se convierte en un altar vivo</label>
+        <label><input type="radio" name="q5" value="Que los hijos asumen toda la responsabilidad"> Que los hijos asumen toda la responsabilidad</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza21.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu hogar refleja el diseño del altar de Dios."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, sigue fortaleciendo tu altar familiar.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡El altar de tu hogar necesita ser restaurado!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

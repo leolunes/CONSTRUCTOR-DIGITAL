@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El altar del hogar: un pastor y una profeta",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué representa el esposo en el diseño del hogar según Efesios 5:23?",
+      "versiculo": "Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia, la cual es su cuerpo, y Él es su Salvador.",
+      "respuestas": [
+        "Un líder autoritario",
+        "Cabeza, pastor y apóstol del hogar",
+        "Un compañero sin responsabilidad espiritual"
+      ],
+      "correcta": "Cabeza, pastor y apóstol del hogar"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál es el rol de la esposa según Lucas 2:19?",
+      "versiculo": "Pero María guardaba todas estas cosas, meditándolas en su corazón.",
+      "respuestas": [
+        "Gobernar sobre el esposo",
+        "Profeta del hogar, que discierne y proclama la voz de Dios",
+        "Una figura sin rol espiritual"
+      ],
+      "correcta": "Profeta del hogar, que discierne y proclama la voz de Dios"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué ocurre cuando ambos roles funcionan en unidad?",
+      "versiculo": "Pero yo y mi casa serviremos a Jehová.",
+      "respuestas": [
+        "El hogar se convierte en un altar vivo para Dios",
+        "El hogar no cambia espiritualmente",
+        "Cada quien vive su fe de forma individual"
+      ],
+      "correcta": "El hogar se convierte en un altar vivo para Dios"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué sucede si el esposo no cumple su rol pastoral y apostólico?",
+      "versiculo": "Si fueren destruidos los fundamentos, ¿qué ha de hacer el justo?",
+      "respuestas": [
+        "La familia queda expuesta y sin rumbo espiritual",
+        "Nada cambia en el hogar",
+        "La esposa automáticamente asume todo el rol"
+      ],
+      "correcta": "La familia queda expuesta y sin rumbo espiritual"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es el principio final del altar del hogar?",
+      "versiculo": "El hogar se convierte en un altar vivo cuando el varón y la mujer asumen sus roles según el diseño de Dios.",
+      "respuestas": [
+        "Que solo la mujer tiene rol espiritual",
+        "Que el hogar se convierte en un altar vivo",
+        "Que los hijos asumen toda la responsabilidad"
+      ],
+      "correcta": "Que el hogar se convierte en un altar vivo"
+    }
+  ]
+}
