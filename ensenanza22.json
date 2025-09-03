@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: ¿Dónde estás tú?: la responsabilidad del varón en el altar del hogar",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿A quién Dios llamó primero tras la caída?",
+      "versiculo": "Génesis 3:9 — Mas Jehová Dios llamó al hombre, y le dijo: ¿Dónde estás tú?",
+      "respuestas": [
+        "A Eva",
+        "A Adán",
+        "A la serpiente"
+      ],
+      "correcta": "A Adán"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál es la responsabilidad principal del varón en el hogar?",
+      "versiculo": "1 Pedro 5:2 — Apacentad la grey de Dios que está entre vosotros…",
+      "respuestas": [
+        "Ser proveedor económico únicamente",
+        "Ser pastor y apóstol de su hogar",
+        "Delegar toda responsabilidad espiritual a la mujer"
+      ],
+      "correcta": "Ser pastor y apóstol de su hogar"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué ocurre cuando el varón no asegura el fundamento en Cristo?",
+      "versiculo": "Efesios 2:20 — Edificados sobre el fundamento de los apóstoles y profetas…",
+      "respuestas": [
+        "El hogar se derrumba",
+        "El hogar funciona normalmente",
+        "Solo la mujer sufre las consecuencias"
+      ],
+      "correcta": "El hogar se derrumba"
+    },
+    {
+      "numero": 4,
+      "texto": "Según Génesis 3:10, ¿qué pasó con Adán cuando Dios le preguntó?",
+      "versiculo": "Génesis 3:10 — Y él respondió: Oí tu voz en el huerto, y tuve miedo, porque estaba desnudo; y me escondí.",
+      "respuestas": [
+        "Respondió con valentía y cubrió su hogar",
+        "Se escondió y mostró miedo",
+        "Ignoró la pregunta"
+      ],
+      "correcta": "Se escondió y mostró miedo"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es la llamada actual para los varones según Josué 24:15?",
+      "versiculo": "Josué 24:15 — Pero yo y mi casa serviremos a Jehová.",
+      "respuestas": [
+        "Delegar la obediencia a otros",
+        "Responder al llamado de Dios y volver al altar",
+        "Solo preocuparse por la provisión material"
+      ],
+      "correcta": "Responder al llamado de Dios y volver al altar"
+    }
+  ]
+}

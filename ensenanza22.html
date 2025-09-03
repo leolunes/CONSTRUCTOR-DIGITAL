@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: ¿Dónde estás tú?: la responsabilidad del varón en el altar del hogar</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: ¿Dónde estás tú?: la responsabilidad del varón en el altar del hogar</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿A quién Dios llamó primero tras la caída?" data-versiculo="Génesis 3:9 — Mas Jehová Dios llamó al hombre, y le dijo: ¿Dónde estás tú?">
+      <p>1. ¿A quién Dios llamó primero tras la caída?<br>
+        <em>Génesis 3:9 — "Mas Jehová Dios llamó al hombre, y le dijo: ¿Dónde estás tú?"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="A Eva"> A Eva</label>
+        <label><input type="radio" name="q1" value="A Adán" data-correct="true"> A Adán</label>
+        <label><input type="radio" name="q1" value="A la serpiente"> A la serpiente</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la responsabilidad principal del varón en el hogar?" data-versiculo="1 Pedro 5:2 — Apacentad la grey de Dios que está entre vosotros…">
+      <p>2. ¿Cuál es la responsabilidad principal del varón en el hogar?<br>
+        <em>1 Pedro 5:2 — "Apacentad la grey de Dios que está entre vosotros…"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Ser proveedor económico únicamente"> Ser proveedor económico únicamente</label>
+        <label><input type="radio" name="q2" value="Ser pastor y apóstol de su hogar" data-correct="true"> Ser pastor y apóstol de su hogar</label>
+        <label><input type="radio" name="q2" value="Delegar toda responsabilidad espiritual a la mujer"> Delegar toda responsabilidad espiritual a la mujer</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ocurre cuando el varón no asegura el fundamento en Cristo?" data-versiculo="Efesios 2:20 — Edificados sobre el fundamento de los apóstoles y profetas…">
+      <p>3. ¿Qué ocurre cuando el varón no asegura el fundamento en Cristo?<br>
+        <em>Efesios 2:20 — "Edificados sobre el fundamento de los apóstoles y profetas…"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="El hogar se derrumba" data-correct="true"> El hogar se derrumba</label>
+        <label><input type="radio" name="q3" value="El hogar funciona normalmente"> El hogar funciona normalmente</label>
+        <label><input type="radio" name="q3" value="Solo la mujer sufre las consecuencias"> Solo la mujer sufre las consecuencias</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="Según Génesis 3:10, ¿qué pasó con Adán cuando Dios le preguntó?" data-versiculo="Génesis 3:10 — Y él respondió: Oí tu voz en el huerto, y tuve miedo, porque estaba desnudo; y me escondí.">
+      <p>4. Según Génesis 3:10, ¿qué pasó con Adán cuando Dios le preguntó?<br>
+        <em>Génesis 3:10 — "Y él respondió: Oí tu voz en el huerto, y tuve miedo, porque estaba desnudo; y me escondí."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Respondió con valentía y cubrió su hogar"> Respondió con valentía y cubrió su hogar</label>
+        <label><input type="radio" name="q4" value="Se escondió y mostró miedo" data-correct="true"> Se escondió y mostró miedo</label>
+        <label><input type="radio" name="q4" value="Ignoró la pregunta"> Ignoró la pregunta</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la llamada actual para los varones según Josué 24:15?" data-versiculo="Josué 24:15 — Pero yo y mi casa serviremos a Jehová.">
+      <p>5. ¿Cuál es la llamada actual para los varones según Josué 24:15?<br>
+        <em>Josué 24:15 — "Pero yo y mi casa serviremos a Jehová."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Delegar la obediencia a otros"> Delegar la obediencia a otros</label>
+        <label><input type="radio" name="q5" value="Responder al llamado de Dios y volver al altar" data-correct="true"> Responder al llamado de Dios y volver al altar</label>
+        <label><input type="radio" name="q5" value="Solo preocuparse por la provisión material"> Solo preocuparse por la provisión material</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza22.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás edificando según el diseño del Arquitecto eterno. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero puedes profundizar más en el diseño divino.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No construyas sin el plano del Cielo!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
