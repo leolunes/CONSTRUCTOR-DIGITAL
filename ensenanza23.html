@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El primer empresario del altar</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El primer empresario del altar</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Por qué Caín es llamado el primer empresario del altar?" data-versiculo="Y aconteció andando el tiempo, que Caín trajo del fruto de la tierra una ofrenda a Jehová. (Génesis 4:3)">
+      <p>1. ¿Por qué Caín es llamado el primer empresario del altar?<br>
+        <em>"Y aconteció andando el tiempo, que Caín trajo del fruto de la tierra una ofrenda a Jehová." (Génesis 4:3)</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Porque ofreció lo mejor de sus ovejas"> Porque ofreció lo mejor de sus ovejas</label>
+        <label><input type="radio" name="q1" value="Porque introdujo lo material en el altar, ofreciendo del fruto de la tierra" data-correct="true"> Porque introdujo lo material en el altar, ofreciendo del fruto de la tierra</label>
+        <label><input type="radio" name="q1" value="Porque construyó un altar de piedras preciosas"> Porque construyó un altar de piedras preciosas</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál fue el problema con la ofrenda de Caín?" data-versiculo="Y no miró Jehová con agrado a Caín y a la ofrenda suya. (Génesis 4:5)">
+      <p>2. ¿Cuál fue el problema con la ofrenda de Caín?<br>
+        <em>"Y no miró Jehová con agrado a Caín y a la ofrenda suya." (Génesis 4:5)</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="El fruto de la tierra era impuro"> El fruto de la tierra era impuro</label>
+        <label><input type="radio" name="q2" value="Era material y externa, sin comunión con Dios" data-correct="true"> Era material y externa, sin comunión con Dios</label>
+        <label><input type="radio" name="q2" value="No fue presentada en el día correcto"> No fue presentada en el día correcto</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ofreció Abel que agradó a Dios?" data-versiculo="Y Abel trajo también de los primogénitos de sus ovejas, de lo más gordo de ellas. (Génesis 4:4)">
+      <p>3. ¿Qué ofreció Abel que agradó a Dios?<br>
+        <em>"Y Abel trajo también de los primogénitos de sus ovejas, de lo más gordo de ellas." (Génesis 4:4)</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Frutos abundantes de la tierra"> Frutos abundantes de la tierra</label>
+        <label><input type="radio" name="q3" value="De los primogénitos de sus ovejas, lo primero y lo mejor" data-correct="true"> De los primogénitos de sus ovejas, lo primero y lo mejor</label>
+        <label><input type="radio" name="q3" value="Una ofrenda de oro y plata"> Una ofrenda de oro y plata</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="Según Hebreos 11:4, ¿por qué el sacrificio de Abel fue más excelente?" data-versiculo="Por la fe Abel ofreció a Dios más excelente sacrificio que Caín. (Hebreos 11:4)">
+      <p>4. Según Hebreos 11:4, ¿por qué el sacrificio de Abel fue más excelente?<br>
+        <em>"Por la fe Abel ofreció a Dios más excelente sacrificio que Caín." (Hebreos 11:4)</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Porque fue mayor en cantidad"> Porque fue mayor en cantidad</label>
+        <label><input type="radio" name="q4" value="Porque fue ofrecido con fe y comunión con Dios" data-correct="true"> Porque fue ofrecido con fe y comunión con Dios</label>
+        <label><input type="radio" name="q4" value="Porque se presentó en el altar familiar"> Porque se presentó en el altar familiar</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué principio se revela en la historia de Caín y Abel?" data-versiculo="Mía es la plata, y mío es el oro, dice Jehová de los ejércitos. (Hageo 2:8)">
+      <p>5. ¿Qué principio se revela en la historia de Caín y Abel?<br>
+        <em>"Mía es la plata, y mío es el oro, dice Jehová de los ejércitos." (Hageo 2:8)</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Que lo material puede comprar la mirada de Dios"> Que lo material puede comprar la mirada de Dios</label>
+        <label><input type="radio" name="q5" value="Que lo que agrada a Dios es la vida consagrada y la comunión, no lo material" data-correct="true"> Que lo que agrada a Dios es la vida consagrada y la comunión, no lo material</label>
+        <label><input type="radio" name="q5" value="Que Caín no supo escoger la mejor cosecha"> Que Caín no supo escoger la mejor cosecha</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza23.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu altar refleja comunión, no solo ofrendas materiales."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, sigue edificando en comunión, no solo en lo visible.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y recuerda: lo material no compra comunión con Dios.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

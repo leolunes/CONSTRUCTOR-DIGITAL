@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El primer empresario del altar",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Por qué Caín es llamado el primer empresario del altar?",
+      "versiculo": "Y aconteció andando el tiempo, que Caín trajo del fruto de la tierra una ofrenda a Jehová. (Génesis 4:3)",
+      "respuestas": [
+        "Porque ofreció lo mejor de sus ovejas",
+        "Porque introdujo lo material en el altar, ofreciendo del fruto de la tierra",
+        "Porque construyó un altar de piedras preciosas"
+      ],
+      "correcta": "Porque introdujo lo material en el altar, ofreciendo del fruto de la tierra"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál fue el problema con la ofrenda de Caín?",
+      "versiculo": "Y no miró Jehová con agrado a Caín y a la ofrenda suya. (Génesis 4:5)",
+      "respuestas": [
+        "El fruto de la tierra era impuro",
+        "Era material y externa, sin comunión con Dios",
+        "No fue presentada en el día correcto"
+      ],
+      "correcta": "Era material y externa, sin comunión con Dios"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué ofreció Abel que agradó a Dios?",
+      "versiculo": "Y Abel trajo también de los primogénitos de sus ovejas, de lo más gordo de ellas. (Génesis 4:4)",
+      "respuestas": [
+        "Frutos abundantes de la tierra",
+        "De los primogénitos de sus ovejas, lo primero y lo mejor",
+        "Una ofrenda de oro y plata"
+      ],
+      "correcta": "De los primogénitos de sus ovejas, lo primero y lo mejor"
+    },
+    {
+      "numero": 4,
+      "texto": "Según Hebreos 11:4, ¿por qué el sacrificio de Abel fue más excelente?",
+      "versiculo": "Por la fe Abel ofreció a Dios más excelente sacrificio que Caín. (Hebreos 11:4)",
+      "respuestas": [
+        "Porque fue mayor en cantidad",
+        "Porque fue ofrecido con fe y comunión con Dios",
+        "Porque se presentó en el altar familiar"
+      ],
+      "correcta": "Porque fue ofrecido con fe y comunión con Dios"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué principio se revela en la historia de Caín y Abel?",
+      "versiculo": "Mía es la plata, y mío es el oro, dice Jehová de los ejércitos. (Hageo 2:8)",
+      "respuestas": [
+        "Que lo material puede comprar la mirada de Dios",
+        "Que lo que agrada a Dios es la vida consagrada y la comunión, no lo material",
+        "Que Caín no supo escoger la mejor cosecha"
+      ],
+      "correcta": "Que lo que agrada a Dios es la vida consagrada y la comunión, no lo material"
+    }
+  ]
+}
