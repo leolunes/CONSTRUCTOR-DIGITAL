@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Constructores legales del Reino</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Constructores legales del Reino</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Quién es el fundamento de toda construcción legal del Reino?" data-versiculo="Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo. (1 Corintios 3:11)">
+      <p>1. ¿Quién es el fundamento de toda construcción legal del Reino?<br>
+        <em>1 Corintios 3:11 – "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="El varón como director de obra"> El varón como director de obra</label>
+        <label><input type="radio" name="q1" value="Jesucristo como fundamento eterno" data-correct="true"> Jesucristo como fundamento eterno</label>
+        <label><input type="radio" name="q1" value="La experiencia acumulada de la familia"> La experiencia acumulada de la familia</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es la función del Espíritu Santo en la construcción espiritual?" data-versiculo="Pero cuando venga el Espíritu de verdad, Él os guiará a toda la verdad. (Juan 16:13)">
+      <p>2. ¿Cuál es la función del Espíritu Santo en la construcción espiritual?<br>
+        <em>Juan 16:13 – "Pero cuando venga el Espíritu de verdad, Él os guiará a toda la verdad."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Ser un ayudante opcional"> Ser un ayudante opcional</label>
+        <label><input type="radio" name="q2" value="Ser la interventoría divina que aprueba, corrige y guía la obra" data-correct="true"> Ser la interventoría divina que aprueba, corrige y guía la obra</label>
+        <label><input type="radio" name="q2" value="Acompañar solo en tiempos de dificultad"> Acompañar solo en tiempos de dificultad</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué representan las Escrituras en el proceso de construcción espiritual?" data-versiculo="Escrito está: No sólo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios. (Mateo 4:4)">
+      <p>3. ¿Qué representan las Escrituras en el proceso de construcción espiritual?<br>
+        <em>Mateo 4:4 – "Escrito está: No sólo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Ideas útiles para la vida"> Ideas útiles para la vida</label>
+        <label><input type="radio" name="q3" value="Las especificaciones técnicas del Reino" data-correct="true"> Las especificaciones técnicas del Reino</label>
+        <label><input type="radio" name="q3" value="Un manual opcional de sabiduría humana"> Un manual opcional de sabiduría humana</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="Según Efesios 5:23, ¿qué rol tiene el varón en el hogar?" data-versiculo="Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia. (Efesios 5:23)">
+      <p>4. Según Efesios 5:23, ¿qué rol tiene el varón en el hogar?<br>
+        <em>"Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Residente de obra, administrando recursos diarios"> Residente de obra, administrando recursos diarios</label>
+        <label><input type="radio" name="q4" value="Director de obra, responsable legal y espiritual de la construcción" data-correct="true"> Director de obra, responsable legal y espiritual de la construcción</label>
+        <label><input type="radio" name="q4" value="Interventor, supervisando toda la obra"> Interventor, supervisando toda la obra</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué diferencia a un constructor legal de uno pirata?" data-versiculo="Pero cualquiera que me oye estas palabras y no las hace, le compararé a un hombre insensato, que edificó su casa sobre la arena. (Mateo 7:26)">
+      <p>5. ¿Qué diferencia a un constructor legal de uno pirata?<br>
+        <em>Mateo 7:26 – "Pero cualquiera que me oye estas palabras y no las hace, le compararé a un hombre insensato, que edificó su casa sobre la arena."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="El tiempo que tardan en construir"> El tiempo que tardan en construir</label>
+        <label><input type="radio" name="q5" value="El fundamento, la obediencia a la Palabra y la guía del Espíritu" data-correct="true"> El fundamento, la obediencia a la Palabra y la guía del Espíritu</label>
+        <label><input type="radio" name="q5" value="La apariencia externa de la obra"> La apariencia externa de la obra</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza24.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás edificando como constructor legal del Reino. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance, pero aún puedes fortalecer tu obra con la Palabra y el Espíritu.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No construyas como pirata!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

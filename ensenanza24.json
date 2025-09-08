@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Constructores legales del Reino",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Quién es el fundamento de toda construcción legal del Reino?",
+      "versiculo": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo. (1 Corintios 3:11)",
+      "respuestas": [
+        "El varón como director de obra",
+        "Jesucristo como fundamento eterno",
+        "La experiencia acumulada de la familia"
+      ],
+      "correcta": "Jesucristo como fundamento eterno"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Cuál es la función del Espíritu Santo en la construcción espiritual?",
+      "versiculo": "Pero cuando venga el Espíritu de verdad, Él os guiará a toda la verdad. (Juan 16:13)",
+      "respuestas": [
+        "Ser un ayudante opcional",
+        "Ser la interventoría divina que aprueba, corrige y guía la obra",
+        "Acompañar solo en tiempos de dificultad"
+      ],
+      "correcta": "Ser la interventoría divina que aprueba, corrige y guía la obra"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué representan las Escrituras en el proceso de construcción espiritual?",
+      "versiculo": "Escrito está: No sólo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios. (Mateo 4:4)",
+      "respuestas": [
+        "Ideas útiles para la vida",
+        "Las especificaciones técnicas del Reino",
+        "Un manual opcional de sabiduría humana"
+      ],
+      "correcta": "Las especificaciones técnicas del Reino"
+    },
+    {
+      "numero": 4,
+      "texto": "Según Efesios 5:23, ¿qué rol tiene el varón en el hogar?",
+      "versiculo": "Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia. (Efesios 5:23)",
+      "respuestas": [
+        "Residente de obra, administrando recursos diarios",
+        "Director de obra, responsable legal y espiritual de la construcción",
+        "Interventor, supervisando toda la obra"
+      ],
+      "correcta": "Director de obra, responsable legal y espiritual de la construcción"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué diferencia a un constructor legal de uno pirata?",
+      "versiculo": "Pero cualquiera que me oye estas palabras y no las hace, le compararé a un hombre insensato, que edificó su casa sobre la arena. (Mateo 7:26)",
+      "respuestas": [
+        "El tiempo que tardan en construir",
+        "El fundamento, la obediencia a la Palabra y la guía del Espíritu",
+        "La apariencia externa de la obra"
+      ],
+      "correcta": "El fundamento, la obediencia a la Palabra y la guía del Espíritu"
+    }
+  ]
+}
