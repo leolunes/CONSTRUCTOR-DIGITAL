@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: Congregarse en el huerto</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: Congregarse en el huerto</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Dónde se dio la primera reunión sagrada entre Dios y el hombre?" data-versiculo="Y oyeron la voz de Jehová Dios que se paseaba en el huerto, al aire del día… (Génesis 3:8)">
+      <p>1. ¿Dónde se dio la primera reunión sagrada entre Dios y el hombre?<br>
+        <em>Génesis 3:8 – "Y oyeron la voz de Jehová Dios que se paseaba en el huerto, al aire del día…"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="En una sinagoga"> En una sinagoga</label>
+        <label><input type="radio" name="q1" value="En el huerto (hogar)" data-correct="true"> En el huerto (hogar)</label>
+        <label><input type="radio" name="q1" value="En un templo construido por el hombre"> En un templo construido por el hombre</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Quién debe oír primero la voz de Cristo en el hogar?" data-versiculo="Este es mi Hijo amado, en quien tengo complacencia; a él oíd. (Mateo 17:5)">
+      <p>2. ¿Quién debe oír primero la voz de Cristo en el hogar?<br>
+        <em>Mateo 17:5 – "Este es mi Hijo amado, en quien tengo complacencia; a él oíd."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Los hijos"> Los hijos</label>
+        <label><input type="radio" name="q2" value="La esposa"> La esposa</label>
+        <label><input type="radio" name="q2" value="El esposo" data-correct="true"> El esposo</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Cuál es el rol espiritual de la esposa en el altar del hogar?" data-versiculo="Pero María guardaba todas estas cosas, meditándolas en su corazón. (Lucas 2:19)">
+      <p>3. ¿Cuál es el rol espiritual de la esposa en el altar del hogar?<br>
+        <em>Lucas 2:19 – "Pero María guardaba todas estas cosas, meditándolas en su corazón."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Confirmar y profetizar desde lo que recibe de Dios" data-correct="true"> Confirmar y profetizar desde lo que recibe de Dios</label>
+        <label><input type="radio" name="q3" value="Ejercer autoridad apostólica"> Ejercer autoridad apostólica</label>
+        <label><input type="radio" name="q3" value="Dirigir la casa sin necesidad de dirección espiritual"> Dirigir la casa sin necesidad de dirección espiritual</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué sucede con los hijos cuando el hogar se congrega en el huerto?" data-versiculo="Tus hijos como plantas de olivo alrededor de tu mesa. (Salmo 128:3-4)">
+      <p>4. ¿Qué sucede con los hijos cuando el hogar se congrega en el huerto?<br>
+        <em>Salmo 128:3-4 – "Tus hijos como plantas de olivo alrededor de tu mesa."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Aprenden primero en casa a congregarse con Cristo" data-correct="true"> Aprenden primero en casa a congregarse con Cristo</label>
+        <label><input type="radio" name="q4" value="Se forman solo en la iglesia pública"> Se forman solo en la iglesia pública</label>
+        <label><input type="radio" name="q4" value="Creen que no necesitan altar en el hogar"> Creen que no necesitan altar en el hogar</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué ocurre cuando el hogar no se congrega en su altar íntimo?" data-versiculo="Oí tu voz en el huerto, y tuve miedo, porque estaba desnudo; y me escondí. (Génesis 3:10)">
+      <p>5. ¿Qué ocurre cuando el hogar no se congrega en su altar íntimo?<br>
+        <em>Génesis 3:10 – "Oí tu voz en el huerto, y tuve miedo, porque estaba desnudo; y me escondí."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="El hogar permanece espiritualmente desnudo" data-correct="true"> El hogar permanece espiritualmente desnudo</label>
+        <label><input type="radio" name="q5" value="La familia permanece igual"> La familia permanece igual</label>
+        <label><input type="radio" name="q5" value="La iglesia suple completamente la falta del altar en casa"> La iglesia suple completamente la falta del altar en casa</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza26.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu hogar es un altar vivo donde Cristo es la voz central."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen inicio, pero fortalece más tu altar en el huerto familiar.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Vuelve al huerto y restaura el altar del hogar.`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>

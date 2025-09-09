@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Congregarse en el huerto",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Dónde se dio la primera reunión sagrada entre Dios y el hombre?",
+      "versiculo": "Y oyeron la voz de Jehová Dios que se paseaba en el huerto, al aire del día… (Génesis 3:8)",
+      "respuestas": [
+        "En una sinagoga",
+        "En el huerto (hogar)",
+        "En un templo construido por el hombre"
+      ],
+      "correcta": "En el huerto (hogar)"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Quién debe oír primero la voz de Cristo en el hogar?",
+      "versiculo": "Este es mi Hijo amado, en quien tengo complacencia; a él oíd. (Mateo 17:5)",
+      "respuestas": [
+        "Los hijos",
+        "La esposa",
+        "El esposo"
+      ],
+      "correcta": "El esposo"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Cuál es el rol espiritual de la esposa en el altar del hogar?",
+      "versiculo": "Pero María guardaba todas estas cosas, meditándolas en su corazón. (Lucas 2:19)",
+      "respuestas": [
+        "Confirmar y profetizar desde lo que recibe de Dios",
+        "Ejercer autoridad apostólica",
+        "Dirigir la casa sin necesidad de dirección espiritual"
+      ],
+      "correcta": "Confirmar y profetizar desde lo que recibe de Dios"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué sucede con los hijos cuando el hogar se congrega en el huerto?",
+      "versiculo": "Tus hijos como plantas de olivo alrededor de tu mesa. (Salmo 128:3-4)",
+      "respuestas": [
+        "Aprenden primero en casa a congregarse con Cristo",
+        "Se forman solo en la iglesia pública",
+        "Creen que no necesitan altar en el hogar"
+      ],
+      "correcta": "Aprenden primero en casa a congregarse con Cristo"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué ocurre cuando el hogar no se congrega en su altar íntimo?",
+      "versiculo": "Oí tu voz en el huerto, y tuve miedo, porque estaba desnudo; y me escondí. (Génesis 3:10)",
+      "respuestas": [
+        "El hogar permanece espiritualmente desnudo",
+        "La familia permanece igual",
+        "La iglesia suple completamente la falta del altar en casa"
+      ],
+      "correcta": "El hogar permanece espiritualmente desnudo"
+    }
+  ]
+}
