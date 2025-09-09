@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El primer alfolí",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Cuál fue el primer alfolí según el diseño divino?",
+      "versiculo": "Traed todos los diezmos al alfolí y haya alimento en mi casa... (Malaquías 3:10)",
+      "respuestas": [
+        "Un templo físico de piedra",
+        "Cristo, en quien fueron depositadas las primicias",
+        "Un granero lleno de grano"
+      ],
+      "correcta": "Cristo, en quien fueron depositadas las primicias"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué presentaron Adán y Eva como primicias en Génesis 4?",
+      "versiculo": "Caín trajo del fruto de la tierra; Abel trajo de los primogénitos de sus ovejas. (Génesis 4:3-4)",
+      "respuestas": [
+        "Dinero como ofrenda",
+        "Hijos formados y presentados delante de Dios",
+        "Un altar de piedras"
+      ],
+      "correcta": "Hijos formados y presentados delante de Dios"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué diferencia hubo entre la ofrenda de Caín y la de Abel?",
+      "versiculo": "Miró Jehová con agrado a Abel y a su ofrenda, pero no miró con agrado a Caín ni a la suya. (Génesis 4:4-5)",
+      "respuestas": [
+        "Caín ofreció lo material; Abel lo primero y lo mejor en fe",
+        "Ambos ofrecieron lo mismo",
+        "Abel ofreció menos que Caín"
+      ],
+      "correcta": "Caín ofreció lo material; Abel lo primero y lo mejor en fe"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué significa traer el diezmo al alfolí hoy?",
+      "versiculo": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo. (1 Corintios 3:11)",
+      "respuestas": [
+        "Llenar la tesorería de la iglesia",
+        "Entregar nuestras generaciones y vidas a Cristo",
+        "Acumular ofrendas materiales"
+      ],
+      "correcta": "Entregar nuestras generaciones y vidas a Cristo"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué advertencia nos deja la vida de Caín?",
+      "versiculo": "Si Jehová no edificare la casa, en vano trabajan los que la edifican. (Salmo 127:1)",
+      "respuestas": [
+        "Que la ciudad sin altar se convierte en vacío generacional",
+        "Que siempre es mejor traer frutos",
+        "Que Abel fue más listo"
+      ],
+      "correcta": "Que la ciudad sin altar se convierte en vacío generacional"
+    }
+  ]
+}

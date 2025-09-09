@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El primer alfolí</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El primer alfolí</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question" data-pregunta="¿Cuál fue el primer alfolí según el diseño divino?" data-versiculo="Traed todos los diezmos al alfolí y haya alimento en mi casa... (Malaquías 3:10)">
+      <p>1. ¿Cuál fue el primer alfolí según el diseño divino?<br>
+        <em>Malaquías 3:10 – "Traed todos los diezmos al alfolí y haya alimento en mi casa..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Un templo físico de piedra"> Un templo físico de piedra</label>
+        <label><input type="radio" name="q1" value="Cristo, en quien fueron depositadas las primicias" data-correct="true"> Cristo, en quien fueron depositadas las primicias</label>
+        <label><input type="radio" name="q1" value="Un granero lleno de grano"> Un granero lleno de grano</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué presentaron Adán y Eva como primicias en Génesis 4?" data-versiculo="Caín trajo del fruto de la tierra; Abel trajo de los primogénitos de sus ovejas. (Génesis 4:3-4)">
+      <p>2. ¿Qué presentaron Adán y Eva como primicias en Génesis 4?<br>
+        <em>Génesis 4:3-4 – "Caín trajo del fruto de la tierra; Abel trajo de los primogénitos de sus ovejas..."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Dinero como ofrenda"> Dinero como ofrenda</label>
+        <label><input type="radio" name="q2" value="Hijos formados y presentados delante de Dios" data-correct="true"> Hijos formados y presentados delante de Dios</label>
+        <label><input type="radio" name="q2" value="Un altar de piedras"> Un altar de piedras</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué diferencia hubo entre la ofrenda de Caín y la de Abel?" data-versiculo="Miró Jehová con agrado a Abel y a su ofrenda, pero no miró con agrado a Caín ni a la suya. (Génesis 4:4-5)">
+      <p>3. ¿Qué diferencia hubo entre la ofrenda de Caín y la de Abel?<br>
+        <em>Génesis 4:4-5 – "Miró Jehová con agrado a Abel y a su ofrenda, pero no miró con agrado a Caín ni a la suya."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Caín ofreció lo material; Abel lo primero y lo mejor en fe" data-correct="true"> Caín ofreció lo material; Abel lo primero y lo mejor en fe</label>
+        <label><input type="radio" name="q3" value="Ambos ofrecieron lo mismo"> Ambos ofrecieron lo mismo</label>
+        <label><input type="radio" name="q3" value="Abel ofreció menos que Caín"> Abel ofreció menos que Caín</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué significa traer el diezmo al alfolí hoy?" data-versiculo="Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo. (1 Corintios 3:11)">
+      <p>4. ¿Qué significa traer el diezmo al alfolí hoy?<br>
+        <em>1 Corintios 3:11 – "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Llenar la tesorería de la iglesia"> Llenar la tesorería de la iglesia</label>
+        <label><input type="radio" name="q4" value="Entregar nuestras generaciones y vidas a Cristo" data-correct="true"> Entregar nuestras generaciones y vidas a Cristo</label>
+        <label><input type="radio" name="q4" value="Acumular ofrendas materiales"> Acumular ofrendas materiales</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué advertencia nos deja la vida de Caín?" data-versiculo="Si Jehová no edificare la casa, en vano trabajan los que la edifican. (Salmo 127:1)">
+      <p>5. ¿Qué advertencia nos deja la vida de Caín?<br>
+        <em>Salmo 127:1 – "Si Jehová no edificare la casa, en vano trabajan los que la edifican."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Que la ciudad sin altar se convierte en vacío generacional" data-correct="true"> Que la ciudad sin altar se convierte en vacío generacional</label>
+        <label><input type="radio" name="q5" value="Que siempre es mejor traer frutos"> Que siempre es mejor traer frutos</label>
+        <label><input type="radio" name="q5" value="Que Abel fue más listo"> Que Abel fue más listo</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza25.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás edificando según el diseño del Alfolí eterno. ¡Sigue así!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen inicio, pero puedes profundizar más en el misterio del alfolí en Cristo.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No deposites fuera del verdadero alfolí!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
