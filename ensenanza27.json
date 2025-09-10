@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Demolición en el Edén",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿A quién entregó Dios directamente los planos del Edén?",
+      "versiculo": "Y mandó Jehová Dios al hombre, diciendo: De todo árbol del huerto podrás comer.",
+      "respuestas": [
+        "A Eva",
+        "A Adán",
+        "A ambos por igual"
+      ],
+      "correcta": "A Adán"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué hizo la serpiente con Eva?",
+      "versiculo": "Dijo la serpiente a la mujer: ¿Conque Dios os ha dicho...?",
+      "respuestas": [
+        "La animó a consultar el plano original",
+        "La llenó de duda frente a lo que Dios había dicho",
+        "La invitó a reforzar la obediencia"
+      ],
+      "correcta": "La llenó de duda frente a lo que Dios había dicho"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Cuál fue la estrategia del maestro de obra empírico (la serpiente)?",
+      "versiculo": "Entonces la serpiente dijo a la mujer: No moriréis; sino que sabe Dios que seréis como Dios...",
+      "respuestas": [
+        "Usó opinión y mentira para adulterar el plano divino",
+        "Mostró el diseño de Dios con fidelidad",
+        "Actuó como interventor aprobado"
+      ],
+      "correcta": "Usó opinión y mentira para adulterar el plano divino"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué ocurrió cuando Adán y Eva siguieron especificaciones humanas?",
+      "versiculo": "Y Jehová Dios los echó del huerto de Edén...",
+      "respuestas": [
+        "La obra fue clausurada y vino demolición divina",
+        "El Edén se fortaleció",
+        "Nada cambió"
+      ],
+      "correcta": "La obra fue clausurada y vino demolición divina"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué enseñanza práctica recibimos hoy?",
+      "versiculo": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+      "respuestas": [
+        "El cielo no paga ni recibe obras sin plano aprobado",
+        "Podemos mezclar planos humanos y divinos",
+        "Lo importante es la intención"
+      ],
+      "correcta": "El cielo no paga ni recibe obras sin plano aprobado"
+    }
+  ]
+}
