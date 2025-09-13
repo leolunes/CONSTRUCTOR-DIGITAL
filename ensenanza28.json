@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El Edén – La primera congregación",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Cuál fue la primera congregación según la enseñanza del Edén?",
+      "versiculo": "El huerto del Edén fue el altar original: un hogar con voces autorizadas por Dios.",
+      "respuestas": [
+        "El tabernáculo construido por Moisés",
+        "El hogar de Adán y Eva como altar y templo original",
+        "La primera sinagoga de Israel"
+      ],
+      "correcta": "El hogar de Adán y Eva como altar y templo original"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué voz extraña se infiltró en el Edén y rompió la congregación original?",
+      "versiculo": "Génesis 3:1 – Pero la serpiente era astuta… y dijo a la mujer: ¿Conque Dios os ha dicho...?",
+      "respuestas": [
+        "La voz de un profeta de Dios",
+        "La voz de la serpiente como consejero empírico",
+        "La voz de los ángeles"
+      ],
+      "correcta": "La voz de la serpiente como consejero empírico"
+    },
+    {
+      "numero": 3,
+      "texto": "Según la enseñanza, ¿qué representa el adulterio espiritual en el Edén?",
+      "versiculo": "Juan 10:5 – Las ovejas no oirán la voz del extraño.",
+      "respuestas": [
+        "Tener varios lugares de culto",
+        "Permitir que una voz no autorizada gobierne el altar del hogar",
+        "No ir a la sinagoga los sábados"
+      ],
+      "correcta": "Permitir que una voz no autorizada gobierne el altar del hogar"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué significa congregarse según Hebreos 10:25 aplicado al Edén?",
+      "versiculo": "Hebreos 10:25 – No dejando de congregarnos…",
+      "respuestas": [
+        "Asistir siempre al templo físico",
+        "Mantener el altar familiar bajo las voces autorizadas por Dios",
+        "Reunirse con cualquier voz consejera"
+      ],
+      "correcta": "Mantener el altar familiar bajo las voces autorizadas por Dios"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Quién es la base firme y fundamento de todo altar aprobado?",
+      "versiculo": "1 Corintios 3:11 – Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
+      "respuestas": [
+        "La experiencia humana",
+        "Jesucristo como fundamento del diseño divino",
+        "La tradición familiar"
+      ],
+      "correcta": "Jesucristo como fundamento del diseño divino"
+    }
+  ]
+}

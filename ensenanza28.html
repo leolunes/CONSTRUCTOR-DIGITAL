@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: El Edén – La primera congregación</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: El Edén – La primera congregación</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="question" data-pregunta="¿Cuál fue la primera congregación según la enseñanza del Edén?" data-versiculo="El huerto del Edén fue el altar original: un hogar con voces autorizadas por Dios.">
+      <p>1. ¿Cuál fue la primera congregación según la enseñanza del Edén?</p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="El tabernáculo construido por Moisés"> El tabernáculo construido por Moisés</label>
+        <label><input type="radio" name="q1" value="El hogar de Adán y Eva como altar y templo original" data-correct="true"> El hogar de Adán y Eva como altar y templo original</label>
+        <label><input type="radio" name="q1" value="La primera sinagoga de Israel"> La primera sinagoga de Israel</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué voz extraña se infiltró en el Edén y rompió la congregación original?" data-versiculo="Génesis 3:1 – Pero la serpiente era astuta… y dijo a la mujer: ¿Conque Dios os ha dicho...?">
+      <p>2. ¿Qué voz extraña se infiltró en el Edén y rompió la congregación original?</p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="La voz de un profeta de Dios"> La voz de un profeta de Dios</label>
+        <label><input type="radio" name="q2" value="La voz de la serpiente como consejero empírico" data-correct="true"> La voz de la serpiente como consejero empírico</label>
+        <label><input type="radio" name="q2" value="La voz de los ángeles"> La voz de los ángeles</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="Según la enseñanza, ¿qué representa el adulterio espiritual en el Edén?" data-versiculo="Juan 10:5 – Las ovejas no oirán la voz del extraño.">
+      <p>3. Según la enseñanza, ¿qué representa el adulterio espiritual en el Edén?</p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="Tener varios lugares de culto"> Tener varios lugares de culto</label>
+        <label><input type="radio" name="q3" value="Permitir que una voz no autorizada gobierne el altar del hogar" data-correct="true"> Permitir que una voz no autorizada gobierne el altar del hogar</label>
+        <label><input type="radio" name="q3" value="No ir a la sinagoga los sábados"> No ir a la sinagoga los sábados</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Qué significa congregarse según Hebreos 10:25 aplicado al Edén?" data-versiculo="Hebreos 10:25 – No dejando de congregarnos…">
+      <p>4. ¿Qué significa congregarse según Hebreos 10:25 aplicado al Edén?</p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="Asistir siempre al templo físico"> Asistir siempre al templo físico</label>
+        <label><input type="radio" name="q4" value="Mantener el altar familiar bajo las voces autorizadas por Dios" data-correct="true"> Mantener el altar familiar bajo las voces autorizadas por Dios</label>
+        <label><input type="radio" name="q4" value="Reunirse con cualquier voz consejera"> Reunirse con cualquier voz consejera</label>
+      </div>
+    </div>
+
+    <div class="question" data-pregunta="¿Quién es la base firme y fundamento de todo altar aprobado?" data-versiculo="1 Corintios 3:11 – Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.">
+      <p>5. ¿Quién es la base firme y fundamento de todo altar aprobado?</p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="La experiencia humana"> La experiencia humana</label>
+        <label><input type="radio" name="q5" value="Jesucristo como fundamento del diseño divino" data-correct="true"> Jesucristo como fundamento del diseño divino</label>
+        <label><input type="radio" name="q5" value="La tradición familiar"> La tradición familiar</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza28.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Tu altar está edificado según el diseño divino."
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen comienzo, pero revisa más la enseñanza del Edén.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡No permitas voces extrañas en tu altar!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_Eden_${nombre || "sin_nombre"}.pdf`);
+    }
+  </script>
+</body>
+</html>
