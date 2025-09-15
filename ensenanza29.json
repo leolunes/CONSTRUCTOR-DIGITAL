@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: David y su iglesia primitiva",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Cuál fue la primera iglesia de David según el Salmo 22:4?",
+      "versiculo": "En ti esperaron nuestros padres; esperaron, y tú los libraste.",
+      "respuestas": [
+        "El tabernáculo en Jerusalén",
+        "Su propio hogar, donde heredó la fe de sus padres",
+        "Las escuelas de profetas"
+      ],
+      "correcta": "Su propio hogar, donde heredó la fe de sus padres"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué papel cumplió el padre de David en su hogar?",
+      "versiculo": "El padre transmite fundamentos y afirma la fe de sus hijos.",
+      "respuestas": [
+        "Un profeta que daba visiones",
+        "Un apóstol de la casa que transmitía fe y fundamentos",
+        "Un juez que corregía con dureza"
+      ],
+      "correcta": "Un apóstol de la casa que transmitía fe y fundamentos"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Cómo transmitió la madre de David la fe?",
+      "versiculo": "La madre como voz profética confirma y anima con esperanza.",
+      "respuestas": [
+        "Con disciplina rígida",
+        "Con ternura, oración y palabra profética de esperanza",
+        "Con enseñanzas filosóficas"
+      ],
+      "correcta": "Con ternura, oración y palabra profética de esperanza"
+    },
+    {
+      "numero": 4,
+      "texto": "Según la enseñanza, ¿qué es la herencia más valiosa que un hogar puede dejar?",
+      "versiculo": "La fe se convierte en legado: memoria de confianza en Dios.",
+      "respuestas": [
+        "El dinero y las posesiones",
+        "La memoria de fe y confianza en Dios",
+        "El reconocimiento social"
+      ],
+      "correcta": "La memoria de fe y confianza en Dios"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Qué peligro enfrentan los hijos cuando no reciben fe en casa?",
+      "versiculo": "El hogar que no transmite fe expone a los hijos a voces extrañas.",
+      "respuestas": [
+        "Se vuelven autosuficientes y más fuertes",
+        "Buscan voces extrañas y consejeros no autorizados",
+        "Se convierten en maestros más rápido"
+      ],
+      "correcta": "Buscan voces extrañas y consejeros no autorizados"
+    }
+  ]
+}
