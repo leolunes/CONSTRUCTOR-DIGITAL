@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: El varón cojo",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué simboliza la cojera en la enseñanza?",
+      "versiculo": "Hechos 3:2 — 'Y era traído un hombre cojo de nacimiento, a quien ponían cada día a la puerta del templo...'",
+      "respuestas": [
+        "Una dificultad física sin significado espiritual",
+        "Una incapacidad para caminar en plenitud del diseño de Dios",
+        "Un signo de bendición automática"
+      ],
+      "correcta": "Una incapacidad para caminar en plenitud del diseño de Dios"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué representa el 'pan' según la enseñanza?",
+      "versiculo": "Mateo 4:4 — 'No solo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios.'",
+      "respuestas": [
+        "Solo alimento físico",
+        "Alimento espiritual: Palabra, enseñanza y dirección",
+        "Solo entretenimiento religioso"
+      ],
+      "correcta": "Alimento espiritual: Palabra, enseñanza y dirección"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué significa 'carne' en la enseñanza?",
+      "versiculo": "1 Timoteo 5:8 — 'Porque si alguno no provee para los suyos, y mayormente para los de su casa, ha negado la fe...' ",
+      "respuestas": [
+        "Solo sacrificios religiosos",
+        "Provisión material: comida, cuidado y responsabilidad práctica",
+        "Solo apariencia de atención"
+      ],
+      "correcta": "Provisión material: comida, cuidado y responsabilidad práctica"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Qué aprendizaje se destaca del arroyo donde Elías fue formado?",
+      "versiculo": "1 Reyes 17:6 — 'Y los cuervos le traían pan y carne por la mañana, y pan y carne por la tarde...' ",
+      "respuestas": [
+        "Dios solo da pan o solo carne, no ambos",
+        "Dios forma integralmente: pan y carne para capacitar al varón",
+        "La formación es irrelevante para el sustento"
+      ],
+      "correcta": "Dios forma integralmente: pan y carne para capacitar al varón"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es la meta final de la restauración del varón según Efesios?",
+      "versiculo": "Efesios 5:23 — 'Porque el marido es cabeza de la mujer, así como Cristo es cabeza de la iglesia...' ",
+      "respuestas": [
+        "Que el varón tenga solo autoridad sin cuidado",
+        "Que el varón camine integralmente en pan y carne para sustentar su hogar",
+        "Que la familia dependa únicamente de ayudas externas"
+      ],
+      "correcta": "Que el varón camine integralmente en pan y carne para sustentar su hogar"
+    }
+  ]
+}
