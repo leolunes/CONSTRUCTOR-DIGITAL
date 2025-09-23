@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: Miedo y fe - los gemelos invisibles",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "¿Qué revelan los gemelos invisibles, miedo y fe?",
+      "versiculo": "Mateo 14:31 — '¡Hombre de poca fe! ¿Por qué dudaste?'",
+      "respuestas": [
+        "El miedo revela debilidad humana y la fe manifiesta el poder de Dios",
+        "Ambos siempre se eliminan entre sí",
+        "No tienen importancia en la vida espiritual"
+      ],
+      "correcta": "El miedo revela debilidad humana y la fe manifiesta el poder de Dios"
+    },
+    {
+      "numero": 2,
+      "texto": "¿Qué le ocurrió a Pedro cuando permitió que el miedo gobernara?",
+      "versiculo": "Mateo 14:30 — 'Al ver el fuerte viento, tuvo miedo; y comenzando a hundirse dio voces, diciendo: ¡Señor, sálvame!'",
+      "respuestas": [
+        "Caminó más firme sobre el agua",
+        "Comenzó a hundirse porque el miedo tomó control",
+        "Se fortaleció automáticamente sin ayuda"
+      ],
+      "correcta": "Comenzó a hundirse porque el miedo tomó control"
+    },
+    {
+      "numero": 3,
+      "texto": "¿Qué nos enseña el miedo según la enseñanza?",
+      "versiculo": "Salmo 56:3 — 'En el día que temo, yo en ti confío.'",
+      "respuestas": [
+        "Que somos autosuficientes",
+        "Que necesitamos depender más de Dios",
+        "Que podemos vivir sin oración"
+      ],
+      "correcta": "Que necesitamos depender más de Dios"
+    },
+    {
+      "numero": 4,
+      "texto": "¿Cómo se fortalece la fe en la vida del creyente?",
+      "versiculo": "Romanos 4:18 — 'Abraham creyó en esperanza contra esperanza.'",
+      "respuestas": [
+        "Negando los miedos por completo",
+        "Obedeciendo y confiando en la Palabra de Dios",
+        "Imitando a otros sin convicción personal"
+      ],
+      "correcta": "Obedeciendo y confiando en la Palabra de Dios"
+    },
+    {
+      "numero": 5,
+      "texto": "¿Cuál es el principio final sobre miedo y fe?",
+      "versiculo": "2 Corintios 10:5 — 'Llevando cautivo todo pensamiento a la obediencia a Cristo.'",
+      "respuestas": [
+        "Que ambos gobiernan al mismo tiempo",
+        "Que el miedo debe ser eliminado con esfuerzo humano",
+        "Que el miedo y la fe coexisten, pero solo la fe debe gobernar"
+      ],
+      "correcta": "Que el miedo y la fe coexisten, pero solo la fe debe gobernar"
+    }
+  ]
+}
