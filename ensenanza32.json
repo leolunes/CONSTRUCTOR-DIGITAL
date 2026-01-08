@@ -1,0 +1,61 @@
+{
+  "titulo": "Test: La vida no se improvisa",
+  "logo": "logo.png",
+  "preguntas": [
+    {
+      "numero": 1,
+      "texto": "Según Lucas 14:28, ¿qué enseña Jesús antes de edificar?",
+      "versiculo": "Porque ¿quién de vosotros, queriendo edificar una torre, no se sienta primero y calcula los gastos, a ver si tiene lo que necesita para acabarla?",
+      "respuestas": [
+        "Actuar rápido y corregir sobre la marcha",
+        "Sentarse primero y calcular, es decir, actuar con diseño",
+        "Evitar planificar para depender solo de la emoción"
+      ],
+      "correcta": "Sentarse primero y calcular, es decir, actuar con diseño"
+    },
+    {
+      "numero": 2,
+      "texto": "Según Oseas 4:6, ¿por qué fue destruido el pueblo?",
+      "versiculo": "Mi pueblo fue destruido, porque le faltó conocimiento.",
+      "respuestas": [
+        "Porque no tenían recursos materiales suficientes",
+        "Porque les faltó conocimiento del diseño de Dios",
+        "Porque no tuvieron emociones positivas"
+      ],
+      "correcta": "Porque les faltó conocimiento del diseño de Dios"
+    },
+    {
+      "numero": 3,
+      "texto": "Según Zacarías 4:6, ¿qué NO es lo que sostiene la obra de Dios?",
+      "versiculo": "No con ejército, ni con fuerza, sino con mi Espíritu, ha dicho Jehová.",
+      "respuestas": [
+        "La fuerza humana y el control como sustituto del diseño",
+        "El Espíritu de Dios guiando y sosteniendo",
+        "La dependencia de Dios para edificar con alineación"
+      ],
+      "correcta": "La fuerza humana y el control como sustituto del diseño"
+    },
+    {
+      "numero": 4,
+      "texto": "Según 1 Corintios 14:40, ¿cómo deben hacerse las cosas?",
+      "versiculo": "Todo debe hacerse decentemente y con orden.",
+      "respuestas": [
+        "De forma improvisada, priorizando lo urgente",
+        "Decentemente y con orden, conforme al diseño",
+        "Según la presión del momento y sin estructura"
+      ],
+      "correcta": "Decentemente y con orden, conforme al diseño"
+    },
+    {
+      "numero": 5,
+      "texto": "Según Mateo 11:30, ¿qué caracteriza el yugo de Jesús?",
+      "versiculo": "Porque mi yugo es fácil, y ligera mi carga.",
+      "respuestas": [
+        "Es pesado y exige agotamiento constante",
+        "Es fácil y la carga es ligera cuando hay alineación",
+        "Depende totalmente del sacrificio humano sin orden"
+      ],
+      "correcta": "Es fácil y la carga es ligera cuando hay alineación"
+    }
+  ]
+}
