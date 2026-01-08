@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test: La vida no se improvisa</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      width: 200px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-header {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .form-header label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-header input {
+      padding: 8px;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .question {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .downloads, .submit-section, .result-section {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .downloads a, .downloads button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .correct { color: green; font-weight: bold; }
+    .incorrect { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>Test: La vida no se improvisa</h1>
+  </header>
+
+  <form id="testForm">
+    <div class="form-header">
+      <label>Nombre del encuestado:
+        <input type="text" id="nombreEncuestado" required />
+      </label>
+      <label>Fecha:
+        <input type="date" id="fechaEncuesta" required />
+      </label>
+    </div>
+
+    <!-- Preguntas -->
+
+    <div class="question"
+         data-pregunta="Según Lucas 14:28, ¿qué enseña Jesús antes de edificar?"
+         data-versiculo="Porque ¿quién de vosotros, queriendo edificar una torre, no se sienta primero y calcula los gastos, a ver si tiene lo que necesita para acabarla?">
+      <p>1. Según Lucas 14:28, ¿qué enseña Jesús antes de edificar?<br>
+        <em>"Porque ¿quién de vosotros, queriendo edificar una torre, no se sienta primero y calcula los gastos, a ver si tiene lo que necesita para acabarla?"</em></p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="Actuar rápido y corregir sobre la marcha"> Actuar rápido y corregir sobre la marcha</label>
+        <label><input type="radio" name="q1" value="Sentarse primero y calcular, es decir, actuar con diseño" data-correct="true"> Sentarse primero y calcular, es decir, actuar con diseño</label>
+        <label><input type="radio" name="q1" value="Evitar planificar para depender solo de la emoción"> Evitar planificar para depender solo de la emoción</label>
+      </div>
+    </div>
+
+    <div class="question"
+         data-pregunta="Según Oseas 4:6, ¿por qué fue destruido el pueblo?"
+         data-versiculo="Mi pueblo fue destruido, porque le faltó conocimiento.">
+      <p>2. Según Oseas 4:6, ¿por qué fue destruido el pueblo?<br>
+        <em>Oseas 4:6 – "Mi pueblo fue destruido, porque le faltó conocimiento."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="Porque no tenían recursos materiales suficientes"> Porque no tenían recursos materiales suficientes</label>
+        <label><input type="radio" name="q2" value="Porque les faltó conocimiento del diseño de Dios" data-correct="true"> Porque les faltó conocimiento del diseño de Dios</label>
+        <label><input type="radio" name="q2" value="Porque no tuvieron emociones positivas"> Porque no tuvieron emociones positivas</label>
+      </div>
+    </div>
+
+    <div class="question"
+         data-pregunta="Según Zacarías 4:6, ¿qué NO es lo que sostiene la obra de Dios?"
+         data-versiculo="No con ejército, ni con fuerza, sino con mi Espíritu, ha dicho Jehová.">
+      <p>3. Según Zacarías 4:6, ¿qué NO es lo que sostiene la obra de Dios?<br>
+        <em>Zacarías 4:6 – "No con ejército, ni con fuerza, sino con mi Espíritu, ha dicho Jehová."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="La fuerza humana y el control como sustituto del diseño" data-correct="true"> La fuerza humana y el control como sustituto del diseño</label>
+        <label><input type="radio" name="q3" value="El Espíritu de Dios guiando y sosteniendo"> El Espíritu de Dios guiando y sosteniendo</label>
+        <label><input type="radio" name="q3" value="La dependencia de Dios para edificar con alineación"> La dependencia de Dios para edificar con alineación</label>
+      </div>
+    </div>
+
+    <div class="question"
+         data-pregunta="Según 1 Corintios 14:40, ¿cómo deben hacerse las cosas?"
+         data-versiculo="Todo debe hacerse decentemente y con orden.">
+      <p>4. Según 1 Corintios 14:40, ¿cómo deben hacerse las cosas?<br>
+        <em>1 Corintios 14:40 – "Todo debe hacerse decentemente y con orden."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q4" value="De forma improvisada, priorizando lo urgente"> De forma improvisada, priorizando lo urgente</label>
+        <label><input type="radio" name="q4" value="Decentemente y con orden, conforme al diseño" data-correct="true"> Decentemente y con orden, conforme al diseño</label>
+        <label><input type="radio" name="q4" value="Según la presión del momento y sin estructura"> Según la presión del momento y sin estructura</label>
+      </div>
+    </div>
+
+    <div class="question"
+         data-pregunta="Según Mateo 11:30, ¿qué caracteriza el yugo de Jesús?"
+         data-versiculo="Porque mi yugo es fácil, y ligera mi carga.">
+      <p>5. Según Mateo 11:30, ¿qué caracteriza el yugo de Jesús?<br>
+        <em>Mateo 11:30 – "Porque mi yugo es fácil, y ligera mi carga."</em></p>
+      <div class="options">
+        <label><input type="radio" name="q5" value="Es pesado y exige agotamiento constante"> Es pesado y exige agotamiento constante</label>
+        <label><input type="radio" name="q5" value="Es fácil y la carga es ligera cuando hay alineación" data-correct="true"> Es fácil y la carga es ligera cuando hay alineación</label>
+        <label><input type="radio" name="q5" value="Depende totalmente del sacrificio humano sin orden"> Depende totalmente del sacrificio humano sin orden</label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button type="button" onclick="evaluateAnswers()">📝 Evaluar Respuestas</button>
+      <button type="button" onclick="descargarPDF()">📥 Resumen de Evaluación en PDF</button>
+    </div>
+
+    <div class="result-section" id="result"></div>
+  </form>
+
+  <div class="downloads">
+    <a href="ensenanza32.pdf" download>📄 Descargar Enseñanza PDF</a>
+  </div>
+
+  <script>
+    let resultadoTexto = "";
+
+    function evaluateAnswers() {
+      let correct = 0;
+      const form = document.getElementById('testForm');
+      const resultDiv = document.getElementById('result');
+      const questions = form.querySelectorAll('.question');
+
+      questions.forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const labels = question.querySelectorAll('label');
+        labels.forEach(l => l.classList.remove('correct', 'incorrect'));
+
+        if (selected) {
+          if (selected.hasAttribute('data-correct')) {
+            correct++;
+            selected.parentElement.classList.add('correct');
+          } else {
+            selected.parentElement.classList.add('incorrect');
+            labels.forEach(label => {
+              const input = label.querySelector('input');
+              if (input && input.hasAttribute('data-correct')) {
+                label.classList.add('correct');
+              }
+            });
+          }
+        }
+      });
+
+      resultadoTexto = correct === 5
+        ? "🎉 ¡Excelente! Obtuviste 5 de 5 respuestas correctas. Estás viviendo con diseño y no por reacción. ¡Sigue edificando con orden!"
+        : correct >= 3
+          ? `✅ Obtuviste ${correct} de 5 respuestas correctas. Buen avance. Refuerza el principio: el diseño precede al esfuerzo.`
+          : `⚠️ Solo ${correct} de 5 respuestas correctas. Revisa la enseñanza y vuelve a intentarlo. ¡El diseño sostiene por generaciones!`;
+
+      resultDiv.innerHTML = `<p><strong>Resultado:</strong> ${resultadoTexto}</p>`;
+    }
+
+    async function descargarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const nombre = document.getElementById("nombreEncuestado").value;
+      const fecha = document.getElementById("fechaEncuesta").value;
+      const preguntas = document.querySelectorAll(".question");
+
+      let y = 10;
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${nombre}`, 10, y);
+      y += 7;
+      doc.text(`Fecha: ${fecha}`, 10, y);
+      y += 10;
+
+      preguntas.forEach((q, i) => {
+        const num = i + 1;
+        const texto = q.getAttribute("data-pregunta");
+        const vers = q.getAttribute("data-versiculo");
+        const selected = q.querySelector("input[type=radio]:checked");
+        const correcta = q.querySelector("input[data-correct]").value;
+        const respuesta = selected ? selected.value : "No respondida";
+
+        doc.text(`${num}. ${texto}`, 10, y);
+        y += 6;
+        doc.setFont("times", "italic");
+        doc.text(`Versículo: ${vers}`, 10, y);
+        doc.setFont("helvetica", "normal");
+        y += 6;
+        doc.text(`- Tu respuesta: ${respuesta}`, 10, y);
+        y += 6;
+        doc.text(`- Respuesta correcta: ${correcta}`, 10, y);
+        y += 10;
+
+        if (y > 270) {
+          doc.addPage();
+          y = 10;
+        }
+      });
+
+      doc.save(`Evaluacion_${nombre || "sin_nombre"}_ensenanza32.pdf`);
+    }
+  </script>
+</body>
+</html>
