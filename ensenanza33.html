@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Auditoría del Hogar — Sistema Estructural</title>
+  <style>
+    :root { --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6; --accent:#5eead4; --danger:#fb7185; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+    .hero { background: linear-gradient(135deg, rgba(94,234,212,.12), rgba(99,102,241,.10)); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 20px; }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    .sub { margin:0; color:var(--muted); }
+    .card { margin-top: 16px; background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 16px; }
+    .row { display:flex; gap:12px; flex-wrap: wrap; }
+    .pill { display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); color:var(--muted); font-size: 12px; }
+    .sec-title { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+    .sec-title h2 { margin: 0; font-size: 18px; }
+    .sec-title .pill { white-space: nowrap; }
+    .q { padding: 12px 0; border-top: 1px solid rgba(255,255,255,.08); }
+    .q:first-of-type { border-top: none; }
+    .q label { display:block; font-weight: 600; }
+    .q .hint { color:var(--muted); font-size: 13px; margin-top: 6px; }
+    .opts { margin-top: 10px; display:flex; gap:10px; flex-wrap:wrap; }
+    .opt { display:flex; align-items:center; gap:8px; padding: 8px 10px; border-radius: 12px; border:1px solid rgba(255,255,255,.12); cursor:pointer; user-select:none; }
+    .opt input { cursor:pointer; }
+    .actions { margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap; }
+    button { border:0; border-radius: 14px; padding: 12px 14px; font-weight: 700; cursor:pointer; }
+    .primary { background: var(--accent); color:#081018; }
+    .ghost { background: transparent; color: var(--text); border:1px solid rgba(255,255,255,.14); }
+    .muted { color: var(--muted); }
+    .result { margin-top: 16px; border-radius: 18px; padding: 16px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04); }
+    .badge { display:inline-block; padding:6px 10px; border-radius:999px; font-weight:800; font-size: 12px; letter-spacing: .4px; }
+    .b-green { background: rgba(94,234,212,.18); color: var(--accent); border:1px solid rgba(94,234,212,.35); }
+    .b-yellow { background: rgba(250,204,21,.14); color:#fde68a; border:1px solid rgba(250,204,21,.30); }
+    .b-orange { background: rgba(251,146,60,.14); color:#fdba74; border:1px solid rgba(251,146,60,.30); }
+    .b-red { background: rgba(251,113,133,.14); color: var(--danger); border:1px solid rgba(251,113,133,.30); }
+    .teach h3 { margin: 12px 0 8px; }
+    .teach p { margin: 8px 0; line-height: 1.5; }
+    .teach blockquote { margin: 10px 0; padding: 10px 12px; border-left: 3px solid rgba(94,234,212,.45); background: rgba(94,234,212,.06); border-radius: 10px; }
+    .small { font-size: 13px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Auditoría del Hogar — Sistema Estructural</h1>
+      <p class="sub">Este test no juzga personas. Lee el hogar como sistema: cargas, uniones y alineación.</p>
+      <div class="row" style="margin-top:10px">
+        <span class="pill">Escala: 0 Nunca · 1 Ocasional · 2 Frecuente · 3 Casi siempre</span>
+        <span class="pill">Total máx: 135</span>
+      </div>
+    </div>
+
+    <div id="form"></div>
+
+    <div class="actions">
+      <button class="primary" id="btnResult">Ver resultado</button>
+      <button class="ghost" id="btnReset">Reiniciar</button>
+      <span class="muted" id="liveScore" style="align-self:center;">Puntaje actual: 0</span>
+    </div>
+
+    <div id="result" class="result" style="display:none;"></div>
+
+    <p class="small" style="margin-top:14px;">
+      Recomendación pastoral: interpreta el resultado acompañado. No entregues el número como sentencia; tradúcelo a lenguaje de diseño.
+    </p>
+  </div>
+
+<script>
+  // ====== Configuración del test ======
+  const SCALE = [
+    {label:"Nunca", value:0},
+    {label:"Ocasionalmente", value:1},
+    {label:"Frecuentemente", value:2},
+    {label:"Casi siempre / Siempre", value:3},
+  ];
+
+  const SECTIONS = [
+    { id:"s1", title:"Lente inicial", subtitle:"Cómo estamos leyendo nuestro hogar", items:[
+      "Vivimos reaccionando a problemas más que edificando procesos.",
+      "El cansancio es constante aun cuando no hay crisis grandes.",
+      "El esfuerzo es alto y el reposo es bajo.",
+      "Sentimos culpa cuando algo no funciona.",
+      "Hemos normalizado situaciones que nos pesan."
+    ]},
+    { id:"s2", title:"Modelo del pórtico", subtitle:"Comprensión del diseño del hogar", items:[
+      "No tenemos claro quién debe sostener qué.",
+      "Las cargas emocionales recaen siempre en la misma persona.",
+      "Competimos más de lo que transferimos.",
+      "Cristo es referencia espiritual, pero no fundamento práctico.",
+      "Los conflictos se repiten sin aprendizaje."
+    ]},
+    { id:"s3", title:"Columna (varón)", subtitle:"Función del eje estructural", items:[
+      "El varón evita o posterga decisiones importantes.",
+      "No hay comunión activa con Cristo.",
+      "Las cargas no se transfieren al fundamento.",
+      "Hay desconexión emocional o espiritual.",
+      "Se tiende a la pasividad o al control."
+    ]},
+    { id:"s4", title:"Viga (mujer)", subtitle:"Función del alma del hogar", items:[
+      "Absorbo cargas emocionales constantemente.",
+      "Percibo tensiones, pero no sé dónde descargarlas.",
+      "Vivo cansancio emocional recurrente.",
+      "Me siento responsable de que todo funcione.",
+      "Me cuesta reposar interiormente."
+    ]},
+    { id:"s5", title:"Uniones críticas", subtitle:"Puntos donde el sistema se sostiene o se pierde", items:[
+      "La oración es ritual, no transferencia real.",
+      "Falta dirección espiritual clara.",
+      "La comunicación es reactiva o defensiva.",
+      "Evitamos conversaciones importantes.",
+      "No hay reposo emocional."
+    ]},
+    { id:"s6", title:"Cargas y fuerzas", subtitle:"Peso y presión en el hogar", items:[
+      "Las crisis desestabilizan todo el sistema.",
+      "No distinguimos cargas normales de sobrecargas.",
+      "Las presiones externas generan conflicto interno.",
+      "Todo se siente urgente.",
+      "No redistribuimos el peso."
+    ]},
+    { id:"s7", title:"Respuesta del sistema", subtitle:"Cómo responde el hogar bajo presión", items:[
+      "Hay inclinación emocional constante.",
+      "Tomamos decisiones por presión.",
+      "El cansancio es acumulativo.",
+      "Se perciben fisuras relacionales.",
+      "Hay desgaste sin causa clara."
+    ]},
+    { id:"s8", title:"Material y mezcla", subtitle:"Con qué estamos construyendo", items:[
+      "Usamos fe para justificar desorden.",
+      "Hay Palabra, pero poca vida.",
+      "Evitamos procesos difíciles.",
+      "Aceleramos etapas.",
+      "La vida se activa desde la carne."
+    ]},
+    { id:"s9", title:"Fuente del agua", subtitle:"Desde dónde activamos la vida", items:[
+      "Decidimos desde el temor o el control.",
+      "La lógica gobierna sobre la comunión.",
+      "Hay estancamiento espiritual.",
+      "Falta gozo sostenido.",
+      "Cristo no es la fuente diaria."
+    ]},
+  ];
+
+  // Enseñanzas por rango (las mismas que definimos)
+  const TEACHINGS = [
+    {
+      min:0, max:30, key:"alineado",
+      badgeClass:"b-green", label:"Hogar alineado (0–30)",
+      content: `
+        <h3>🟢 Hogar alineado</h3>
+        <p>Un hogar alineado no es un hogar sin peso, sino un hogar donde el peso encuentra soporte. La estabilidad no nace de hacer más, sino de funcionar conforme al diseño.</p>
+        <blockquote>“Porque mi yugo es fácil, y ligera mi carga.” (Mateo 11:30)</blockquote>
+        <p><b>Llamado:</b> mantener lo que funciona. La alineación se cuida; no se asume.</p>
+        <p><b>Advertencia:</b> no confundir reposo con autosuficiencia.</p>
+      `
+    },
+    {
+      min:31, max:60, key:"ajuste",
+      badgeClass:"b-yellow", label:"Hogar en ajuste (31–60)",
+      content: `
+        <h3>🟡 Hogar en ajuste</h3>
+        <p>El sistema funciona, pero hay tensiones acumuladas. No estás roto: estás pidiendo alineación. Ajustar a tiempo evita fisuras futuras.</p>
+        <blockquote>“Enderezad las sendas torcidas.” (Hebreos 12:13)</blockquote>
+        <p><b>Llamado:</b> corregir antes de que duela más. Pequeños ajustes hoy previenen grandes reparaciones mañana.</p>
+      `
+    },
+    {
+      min:61, max:95, key:"riesgo",
+      badgeClass:"b-orange", label:"Hogar en riesgo (61–95)",
+      content: `
+        <h3>🟠 Hogar en riesgo</h3>
+        <p>La estructura sigue en pie, pero está sosteniéndose por sacrificio constante. Aquí el problema no es falta de amor: es mala distribución de carga.</p>
+        <blockquote>“Si el fundamento se destruye, ¿qué ha de hacer el justo?” (Salmos 11:3)</blockquote>
+        <p><b>Llamado:</b> detener el ritmo para rediseñar. No empujes más: revisa el plano.</p>
+      `
+    },
+    {
+      min:96, max:135, key:"critico",
+      badgeClass:"b-red", label:"Hogar crítico (96–135)",
+      content: `
+        <h3>🔴 Hogar crítico</h3>
+        <p>Este nivel no pide corrección dura; pide proceso. No necesita presión, necesita acompañamiento y tiempo. Dios no grita: reconstruye.</p>
+        <blockquote>“No quebrará la caña cascada, ni apagará el pábilo que humea.” (Isaías 42:3)</blockquote>
+        <p><b>Llamado:</b> proceso, no urgencia. Acompañamiento, no juicio.</p>
+      `
+    },
+  ];
+
+  // ====== Render ======
+  const formEl = document.getElementById("form");
+  const state = {}; // key: questionId => value
+
+  function qId(sectionId, idx){ return `${sectionId}_q${idx+1}`; }
+
+  function render(){
+    formEl.innerHTML = "";
+    SECTIONS.forEach(sec => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const header = document.createElement("div");
+      header.className = "sec-title";
+      header.innerHTML = `<div>
+          <h2>${sec.title}</h2>
+          <div class="muted">${sec.subtitle}</div>
+        </div>
+        <span class="pill">Máx sección: 15</span>`;
+      card.appendChild(header);
+
+      sec.items.forEach((text, idx) => {
+        const id = qId(sec.id, idx);
+        const q = document.createElement("div");
+        q.className = "q";
+        q.innerHTML = `
+          <label>${idx+1}. ${text}</label>
+          <div class="opts" role="radiogroup" aria-label="${text}">
+            ${SCALE.map(s => `
+              <label class="opt">
+                <input type="radio" name="${id}" value="${s.value}">
+                <span>${s.label} (${s.value})</span>
+              </label>
+            `).join("")}
+          </div>
+        `;
+        card.appendChild(q);
+
+        // bind
+        q.querySelectorAll(`input[name="${id}"]`).forEach(inp => {
+          inp.addEventListener("change", e => {
+            state[id] = Number(e.target.value);
+            updateLiveScore();
+          });
+        });
+      });
+
+      formEl.appendChild(card);
+    });
+  }
+
+  function totalScore(){
+    // unanswered => 0
+    let sum = 0;
+    SECTIONS.forEach(sec => {
+      sec.items.forEach((_, idx) => {
+        const id = qId(sec.id, idx);
+        sum += (state[id] ?? 0);
+      });
+    });
+    return sum;
+  }
+
+  function updateLiveScore(){
+    document.getElementById("liveScore").textContent = `Puntaje actual: ${totalScore()}`;
+  }
+
+  function getTeaching(score){
+    return TEACHINGS.find(t => score >= t.min && score <= t.max) || TEACHINGS[TEACHINGS.length-1];
+  }
+
+  function showResult(){
+    const score = totalScore();
+    const t = getTeaching(score);
+
+    const res = document.getElementById("result");
+    res.style.display = "block";
+    res.innerHTML = `
+      <div class="row" style="justify-content:space-between; align-items:center;">
+        <div>
+          <div class="badge ${t.badgeClass}">${t.label}</div>
+          <div class="muted" style="margin-top:6px;">Puntaje total: <b>${score}</b> / 135</div>
+        </div>
+        <div class="small">Recuerda: esto es una lectura de sistema, no un juicio de personas.</div>
+      </div>
+      <div class="teach">${t.content}</div>
+    `;
+    res.scrollIntoView({behavior:"smooth"});
+  }
+
+  function resetAll(){
+    Object.keys(state).forEach(k => delete state[k]);
+    document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+    updateLiveScore();
+    const res = document.getElementById("result");
+    res.style.display = "none";
+    res.innerHTML = "";
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  render();
+  updateLiveScore();
+</script>
+</body>
+</html>

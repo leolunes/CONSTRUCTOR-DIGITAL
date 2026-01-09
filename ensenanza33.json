@@ -1,0 +1,234 @@
+{
+  "meta": {
+    "id": "auditoria-hogar",
+    "title": "Auditoría del Hogar — Sistema Estructural",
+    "subtitle": "Sistema de Test de Auditoría del Hogar",
+    "description": "Este test no juzga personas. Lee el hogar como un sistema espiritual y estructural para identificar cargas, uniones y alineación. No hay respuestas “buenas” o “malas”; solo respuestas honestas.",
+    "maxScore": 135,
+    "version": "1.0.0",
+    "language": "es"
+  },
+  "scale": {
+    "type": "likert",
+    "note": "A mayor puntaje, mayor desalineación. Puntaje bajo = diseño más saludable.",
+    "options": [
+      { "label": "Nunca", "value": 0 },
+      { "label": "Ocasionalmente", "value": 1 },
+      { "label": "Frecuentemente", "value": 2 },
+      { "label": "Casi siempre / Siempre", "value": 3 }
+    ]
+  },
+  "sections": [
+    {
+      "id": "s1",
+      "title": "Lente inicial",
+      "subtitle": "Cómo estamos leyendo nuestro hogar",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s1_q1", "text": "Vivimos reaccionando a problemas más que edificando procesos." },
+        { "id": "s1_q2", "text": "El cansancio es constante aun cuando no hay crisis grandes." },
+        { "id": "s1_q3", "text": "El esfuerzo es alto y el reposo es bajo." },
+        { "id": "s1_q4", "text": "Sentimos culpa cuando algo no funciona." },
+        { "id": "s1_q5", "text": "Hemos normalizado situaciones que nos pesan." }
+      ]
+    },
+    {
+      "id": "s2",
+      "title": "Modelo del pórtico",
+      "subtitle": "Comprensión del diseño del hogar",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s2_q1", "text": "No tenemos claro quién debe sostener qué." },
+        { "id": "s2_q2", "text": "Las cargas emocionales recaen siempre en la misma persona." },
+        { "id": "s2_q3", "text": "Competimos más de lo que transferimos." },
+        { "id": "s2_q4", "text": "Cristo es referencia espiritual, pero no fundamento práctico." },
+        { "id": "s2_q5", "text": "Los conflictos se repiten sin aprendizaje." }
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "Columna (varón)",
+      "subtitle": "Función del eje estructural",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s3_q1", "text": "El varón evita o posterga decisiones importantes." },
+        { "id": "s3_q2", "text": "No hay comunión activa con Cristo." },
+        { "id": "s3_q3", "text": "Las cargas no se transfieren al fundamento." },
+        { "id": "s3_q4", "text": "Hay desconexión emocional o espiritual." },
+        { "id": "s3_q5", "text": "Se tiende a la pasividad o al control." }
+      ]
+    },
+    {
+      "id": "s4",
+      "title": "Viga (mujer)",
+      "subtitle": "Función del alma del hogar",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s4_q1", "text": "Absorbo cargas emocionales constantemente." },
+        { "id": "s4_q2", "text": "Percibo tensiones, pero no sé dónde descargarlas." },
+        { "id": "s4_q3", "text": "Vivo cansancio emocional recurrente." },
+        { "id": "s4_q4", "text": "Me siento responsable de que todo funcione." },
+        { "id": "s4_q5", "text": "Me cuesta reposar interiormente." }
+      ]
+    },
+    {
+      "id": "s5",
+      "title": "Uniones críticas",
+      "subtitle": "Comunión, Congregación e Intersección",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s5_q1", "text": "La oración es ritual, no transferencia real." },
+        { "id": "s5_q2", "text": "Falta dirección espiritual clara." },
+        { "id": "s5_q3", "text": "La comunicación es reactiva o defensiva." },
+        { "id": "s5_q4", "text": "Evitamos conversaciones importantes." },
+        { "id": "s5_q5", "text": "No hay reposo emocional." }
+      ]
+    },
+    {
+      "id": "s6",
+      "title": "Cargas y fuerzas",
+      "subtitle": "Peso y presión en el hogar",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s6_q1", "text": "Las crisis desestabilizan todo el sistema." },
+        { "id": "s6_q2", "text": "No distinguimos cargas normales de sobrecargas." },
+        { "id": "s6_q3", "text": "Las presiones externas generan conflicto interno." },
+        { "id": "s6_q4", "text": "Todo se siente urgente." },
+        { "id": "s6_q5", "text": "No redistribuimos el peso." }
+      ]
+    },
+    {
+      "id": "s7",
+      "title": "Respuesta del sistema",
+      "subtitle": "Cómo responde el hogar bajo presión",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s7_q1", "text": "Hay inclinación emocional constante." },
+        { "id": "s7_q2", "text": "Tomamos decisiones por presión." },
+        { "id": "s7_q3", "text": "El cansancio es acumulativo." },
+        { "id": "s7_q4", "text": "Se perciben fisuras relacionales." },
+        { "id": "s7_q5", "text": "Hay desgaste sin causa clara." }
+      ]
+    },
+    {
+      "id": "s8",
+      "title": "Material y mezcla",
+      "subtitle": "Con qué estamos construyendo",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s8_q1", "text": "Usamos fe para justificar desorden." },
+        { "id": "s8_q2", "text": "Hay Palabra, pero poca vida." },
+        { "id": "s8_q3", "text": "Evitamos procesos difíciles." },
+        { "id": "s8_q4", "text": "Aceleramos etapas." },
+        { "id": "s8_q5", "text": "La vida se activa desde la carne." }
+      ]
+    },
+    {
+      "id": "s9",
+      "title": "Fuente del agua",
+      "subtitle": "Desde dónde activamos la vida",
+      "maxScore": 15,
+      "questions": [
+        { "id": "s9_q1", "text": "Decidimos desde el temor o el control." },
+        { "id": "s9_q2", "text": "La lógica gobierna sobre la comunión." },
+        { "id": "s9_q3", "text": "Hay estancamiento espiritual." },
+        { "id": "s9_q4", "text": "Falta gozo sostenido." },
+        { "id": "s9_q5", "text": "Cristo no es la fuente diaria." }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "r1",
+      "min": 0,
+      "max": 30,
+      "label": "Hogar alineado",
+      "shortLabel": "Alineado",
+      "summary": "No por ausencia de peso, sino por correcto diseño.",
+      "teaching": {
+        "title": "🟢 Hogar alineado",
+        "text": [
+          "Un hogar alineado no es un hogar sin peso, sino un hogar donde el peso encuentra soporte.",
+          "La estabilidad no nace de hacer más, sino de funcionar conforme al diseño."
+        ],
+        "verse": {
+          "reference": "Mateo 11:30",
+          "quote": "“Porque mi yugo es fácil, y ligera mi carga.”"
+        },
+        "callToAction": [
+          "Cuidar lo que funciona: la alineación se preserva.",
+          "No confundir reposo con autosuficiencia."
+        ]
+      }
+    },
+    {
+      "id": "r2",
+      "min": 31,
+      "max": 60,
+      "label": "Hogar en ajuste",
+      "shortLabel": "En ajuste",
+      "summary": "Funciona, pero con tensiones acumuladas.",
+      "teaching": {
+        "title": "🟡 Hogar en ajuste",
+        "text": [
+          "El sistema funciona, pero hay tensiones acumuladas.",
+          "Ajustar a tiempo evita fisuras futuras."
+        ],
+        "verse": {
+          "reference": "Hebreos 12:13",
+          "quote": "“Enderezad las sendas para vuestros pies, para que lo cojo no se salga del camino, sino que sea sanado.”"
+        },
+        "callToAction": [
+          "Ajustar antes de que el desgaste avance.",
+          "Corregir estructura (cargas/uniones) antes que conductas."
+        ]
+      }
+    },
+    {
+      "id": "r3",
+      "min": 61,
+      "max": 95,
+      "label": "Hogar en riesgo",
+      "shortLabel": "En riesgo",
+      "summary": "La estructura avisa antes de colapsar.",
+      "teaching": {
+        "title": "🟠 Hogar en riesgo",
+        "text": [
+          "La estructura todavía está en pie, pero ya avisa.",
+          "El problema no es falta de amor: es mala distribución de carga."
+        ],
+        "verse": {
+          "reference": "Salmos 11:3",
+          "quote": "“Si fueren destruidos los fundamentos, ¿Qué ha de hacer el justo?”"
+        },
+        "callToAction": [
+          "Detener el ritmo para revisar el diseño.",
+          "Reubicar cargas: no empujar más, realinear."
+        ]
+      }
+    },
+    {
+      "id": "r4",
+      "min": 96,
+      "max": 135,
+      "label": "Hogar crítico",
+      "shortLabel": "Crítico",
+      "summary": "Requiere proceso, no corrección.",
+      "teaching": {
+        "title": "🔴 Hogar crítico",
+        "text": [
+          "Este nivel no pide corrección dura; pide proceso.",
+          "No necesita presión, necesita acompañamiento y tiempo."
+        ],
+        "verse": {
+          "reference": "Isaías 42:3",
+          "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare; por medio de la verdad traerá justicia.”"
+        },
+        "callToAction": [
+          "Proceso, no urgencia. Acompañamiento, no juicio.",
+          "Restaurar uniones y fuente antes de exigir desempeño."
+        ]
+      }
+    }
+  ]
+}
