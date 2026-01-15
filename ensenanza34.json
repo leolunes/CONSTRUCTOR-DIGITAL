@@ -2,7 +2,7 @@
   "meta": {
     "id": "ensenanza34",
     "title": "Auditoría del Hogar — Sistema Estructural",
-    "subtitle": "Test de auditoría por secciones + diagnóstico global",
+    "subtitle": "Test por secciones + diagnóstico global + manual pastoral",
     "description": "Este test no juzga personas. Lee el hogar como un sistema espiritual y estructural para identificar alineación, transferencia de cargas, uniones críticas y estabilidad en el tiempo."
   },
   "scale": {
@@ -26,9 +26,9 @@
           "quote": "“Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.”"
         },
         "recommendation": [
-          "Preservar hábitos que sostienen esta área.",
-          "Hacer mantenimiento: no descuidar lo que hoy está firme.",
-          "Aumentar gratitud y reconocimiento por lo que está funcionando."
+          "Mantener lo que está funcionando (no asumirlo).",
+          "Hacer mantenimiento: hábitos pequeños, constantes.",
+          "Cuidar la humildad: estabilidad no es autosuficiencia."
         ]
       },
       {
@@ -40,9 +40,9 @@
           "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”"
         },
         "recommendation": [
-          "Identificar la carga principal que está sobre esta área.",
-          "Hacer 1–2 ajustes prácticos esta semana y volver a medir.",
-          "Reducir urgencias y restaurar orden básico."
+          "Identificar qué está fuera de diseño (no quién tiene la culpa).",
+          "Hacer 1–2 ajustes prácticos esta semana.",
+          "Volver a medir en 2–4 semanas."
         ]
       },
       {
@@ -54,10 +54,9 @@
           "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”"
         },
         "recommendation": [
-          "Detener el ritmo reactivo y volver al diseño.",
-          "Restaurar uniones antes de exigir desempeño.",
-          "Buscar acompañamiento pastoral/discipulado por un periodo (plan semanal).",
-          "No corregir con presión: restaurar con proceso."
+          "No presionar: restaurar uniones antes de exigir rendimiento.",
+          "Detener escaladas y volver al fundamento (comunión real).",
+          "Buscar acompañamiento pastoral/discipulado con plan semanal."
         ]
       }
     ],
@@ -71,9 +70,9 @@
           "quote": "“Porque mi yugo es fácil, y ligera mi carga.”"
         },
         "actions": [
-          "Mantener comunión y transferencia de cargas al fundamento.",
-          "Cuidar uniones: comunicación, culto y reposo.",
-          "No descuidar mantenimiento: lo estable también se cuida."
+          "Cuidar comunión diaria con Cristo.",
+          "Mantener el nudo (congregación): comunicación + altar.",
+          "Hacer mantenimiento antes de que aparezcan fisuras."
         ]
       },
       {
@@ -85,7 +84,7 @@
           "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”"
         },
         "actions": [
-          "Detectar la sección más alta y trabajarla primero.",
+          "Trabajar primero la sección con mayor puntaje.",
           "Ajustar hábitos (no solo conversaciones).",
           "Volver a medir en 2–4 semanas."
         ]
@@ -100,8 +99,8 @@
         },
         "actions": [
           "Detener escaladas de conflicto y restaurar uniones.",
-          "Buscar acompañamiento pastoral/discipulado con plan semanal.",
-          "Reducir cargas no esenciales por un tiempo."
+          "Buscar acompañamiento pastoral/discipulado (plan semanal).",
+          "Reducir cargas no esenciales por una temporada."
         ]
       },
       {
@@ -114,10 +113,222 @@
         },
         "actions": [
           "Priorizar restauración de uniones antes de exigir desempeño.",
-          "Establecer proceso pastoral con metas pequeñas y consistentes.",
-          "Proteger el hogar de sobrecargas: bajar demandas y subir cobertura.",
-          "Volver al fundamento: comunión real, no ritual."
+          "Proceso pastoral con metas pequeñas y consistentes.",
+          "Bajar demandas y subir cobertura.",
+          "Volver a comunión real: transferencia de cargas al fundamento."
         ]
+      }
+    ]
+  },
+  "pastoralManual": {
+    "note": "Este manual es una guía pastoral para interpretar resultados sin culpa y con enfoque de diseño. No reemplaza acompañamiento espiritual.",
+    "sections": [
+      {
+        "id": "s1",
+        "miniTeaching": {
+          "title": "1) Ver distinto — del juicio al diseño",
+          "text": [
+            "El primer paso no es corregir: es ver distinto.",
+            "Cuando el hogar se lee desde culpa, todo se vuelve acusación.",
+            "Cuando el hogar se lee como sistema, aparece sabiduría para ajustar."
+          ],
+          "verse": {
+            "reference": "Oseas 4:6",
+            "quote": "“Mi pueblo fue destruido, porque le faltó conocimiento…”"
+          },
+          "keys": [
+            "Culpa paraliza; diseño ordena.",
+            "Discernir antes de exigir."
+          ],
+          "oneWeekPlan": [
+            "Reunión de 20 min: “¿Qué está fuera de diseño?” (sin culpas).",
+            "Escribir 2 cargas que se están sosteniendo mal y definir transferencia."
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "miniTeaching": {
+          "title": "2) Cimiento y comunión — transferencia real",
+          "text": [
+            "El cimiento no es un concepto: es un anclaje.",
+            "Si el hogar no descarga en Cristo, descargará en el alma (y se fatiga).",
+            "Comunión no es ritual: es dependencia y obediencia."
+          ],
+          "verse": {
+            "reference": "Juan 15:5",
+            "quote": "“Separados de mí nada podéis hacer.”"
+          },
+          "keys": [
+            "Sin comunión, la columna queda desanclada.",
+            "Oración sin entrega no transfiere carga."
+          ],
+          "oneWeekPlan": [
+            "7 días: 10 minutos de altar (oración + obediencia concreta).",
+            "Identificar una carga y “entregarla” con una decisión práctica."
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "miniTeaching": {
+          "title": "3) Columna (varón) — verticalidad y responsabilidad",
+          "text": [
+            "La columna no domina: sostiene y alinea.",
+            "La verticalidad se expresa como identidad sana, dirección y servicio.",
+            "Dos inclinaciones dañan: baja autoestima (evasión) y ego (control)."
+          ],
+          "verse": {
+            "reference": "1 Corintios 11:3",
+            "quote": "“Cristo es la cabeza del varón, y el varón es la cabeza de la mujer…”"
+          },
+          "keys": [
+            "El varón transfiere cargas al fundamento.",
+            "Control no es liderazgo; obediencia sí."
+          ],
+          "oneWeekPlan": [
+            "El varón toma 1 responsabilidad clara (con mansedumbre).",
+            "Oración diaria: “Señor, alíname; hazme columna, no carga.”"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "miniTeaching": {
+          "title": "4) Viga (mujer) — sensibilidad funcional",
+          "text": [
+            "La viga percibe primero la carga, pero no fue hecha para cargar sola.",
+            "Su función es distribuir y transferir correctamente.",
+            "Cuando no hay transferencia, aparece fatiga emocional."
+          ],
+          "verse": {
+            "reference": "Génesis 2:18",
+            "quote": "“No es bueno que el hombre esté solo; le haré ayuda idónea…”"
+          },
+          "keys": [
+            "Sensibilidad no es debilidad; es diseño.",
+            "La carga debe moverse: viga → columna → cimiento."
+          ],
+          "oneWeekPlan": [
+            "La mujer escribe 3 tensiones y define a quién se transfieren.",
+            "Un acuerdo: “No cargo sola lo que debe transferirse.”"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "miniTeaching": {
+          "title": "5) Congregación (nudo) — donde se gana estabilidad",
+          "text": [
+            "La congregación es el punto de unión: ahí se sostienen fuerzas horizontales.",
+            "La comunicación no es solo hablar: es alinear, pactar y descargar tensiones.",
+            "Donde faltan acuerdos, crecen momentos negativos."
+          ],
+          "verse": {
+            "reference": "Mateo 18:20",
+            "quote": "“Porque donde están dos o tres congregados en mi nombre, allí estoy yo…”"
+          },
+          "keys": [
+            "El nudo se cuida con altar efectivo.",
+            "Evitar conversaciones importantes debilita el sistema."
+          ],
+          "oneWeekPlan": [
+            "1 culto de pareja (20–30 min): palabra + oración + acuerdos.",
+            "Regla: una conversación pendiente por semana (sin ataque)."
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "miniTeaching": {
+          "title": "6) Intersección (apoyo móvil) — reposo con cobertura",
+          "text": [
+            "El apoyo móvil sostiene sin aprisionar.",
+            "El Espíritu Santo da reposo, dirección y flexibilidad.",
+            "Un sistema demasiado rígido se fisura."
+          ],
+          "verse": {
+            "reference": "2 Corintios 3:17",
+            "quote": "“Donde está el Espíritu del Señor, allí hay libertad.”"
+          },
+          "keys": [
+            "Cobertura no es control; es sostén.",
+            "El reposo es parte del diseño."
+          ],
+          "oneWeekPlan": [
+            "Practicar reposo: 2 momentos sin discusión (solo presencia).",
+            "Oración: “Espíritu Santo, sostén el alma del hogar.”"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "miniTeaching": {
+          "title": "7) Cargas verticales — peso normal bien distribuido",
+          "text": [
+            "Las cargas verticales son normales: hijos, provisión, responsabilidades.",
+            "El problema no es el peso; es dónde cae.",
+            "Sin transferencia correcta, el peso se vuelve opresión."
+          ],
+          "verse": {
+            "reference": "Gálatas 6:2",
+            "quote": "“Sobrellevad los unos las cargas de los otros…”"
+          },
+          "keys": [
+            "Distribución evita sobrecarga.",
+            "Cargas vivas y muertas requieren orden, no culpa."
+          ],
+          "oneWeekPlan": [
+            "Lista de cargas: ¿quién sostiene qué y por qué?",
+            "Reasignar 1 carga pesada esta semana."
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "miniTeaching": {
+          "title": "8) Cargas sísmicas — fuerzas horizontales",
+          "text": [
+            "El sismo no destruye solo: revela debilidades en el nudo.",
+            "Estrés, crisis y presiones externas prueban la estabilidad.",
+            "Un hogar alineado no evita sismos: los atraviesa sin colapsar."
+          ],
+          "verse": {
+            "reference": "Proverbios 24:10",
+            "quote": "“Si fueres flojo en el día de trabajo, tu fuerza será reducida.”"
+          },
+          "keys": [
+            "El problema es la deriva, no el evento.",
+            "Bajar reactividad y subir dirección."
+          ],
+          "oneWeekPlan": [
+            "Definir “protocolo de crisis”: no discutir en pico emocional.",
+            "1 acción de unidad ante una presión externa."
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "miniTeaching": {
+          "title": "9) Respuesta del sistema — fisuras y mantenimiento",
+          "text": [
+            "Las fisuras son advertencias, no condena.",
+            "Un hogar se cuida con mantenimiento, no solo con reparaciones.",
+            "Si no se repara a tiempo, el desgaste se acumula."
+          ],
+          "verse": {
+            "reference": "Cantares 2:15",
+            "quote": "“Cazadnos las zorras, las zorras pequeñas, que echan a perder las viñas…”"
+          },
+          "keys": [
+            "Lo pequeño ignorado se vuelve grande.",
+            "Mantenimiento semanal evita procesos largos."
+          ],
+          "oneWeekPlan": [
+            "Reparación pequeña: pedir perdón por algo concreto.",
+            "Crear un hábito de mantenimiento: 20 min/semana."
+          ]
+        }
       }
     ]
   },
@@ -138,7 +349,7 @@
       "id": "s2",
       "title": "Cimiento y comunión",
       "subtitle": "Anclaje real en Cristo",
-      "diagnosticFocus": "Transferencia de cargas al fundamento",
+      "diagnosticFocus": "Transferencia al fundamento",
       "questions": [
         { "id": "s2_q1", "text": "La oración es más ritual que comunión real (transferencia de carga y obediencia)." },
         { "id": "s2_q2", "text": "La Palabra está presente como información, pero no como dirección diaria." },
@@ -150,7 +361,7 @@
       "id": "s3",
       "title": "La columna (varón)",
       "subtitle": "Alineación, identidad y transferencia",
-      "diagnosticFocus": "Verticalidad: sin ego y sin baja autoestima",
+      "diagnosticFocus": "Verticalidad: sin ego y sin evasión",
       "questions": [
         { "id": "s3_q1", "text": "El varón evita responsabilidad espiritual o emocional en la casa." },
         { "id": "s3_q2", "text": "El varón responde desde control/ego más que desde servicio/alineación." },
@@ -174,20 +385,20 @@
       "id": "s5",
       "title": "Congregación (nudo crítico)",
       "subtitle": "La unión donde se gana o se pierde estabilidad",
-      "diagnosticFocus": "Comunicación, pacto, culto efectivo",
+      "diagnosticFocus": "Comunicación, pacto y culto efectivo",
       "questions": [
         { "id": "s5_q1", "text": "La comunicación se vuelve defensiva o reactiva cuando hay tensión." },
         { "id": "s5_q2", "text": "Evitamos conversaciones importantes para “no pelear”." },
         { "id": "s5_q3", "text": "Se toman decisiones sin unidad (uno decide y el otro se adapta)." },
-        { "id": "s5_q4", "text": "No hay un “culto efectivo” como pareja: altar que alinee y ordene." },
-        { "id": "s5_q5", "text": "Las fuerzas cotidianas (estrés, finanzas, crianza) golpean el vínculo más de lo que el vínculo sostiene." }
+        { "id": "s5_q4", "text": "No hay un “culto efectivo” como pareja: palabra + oración + acuerdos." },
+        { "id": "s5_q5", "text": "Las fuerzas cotidianas golpean el vínculo más de lo que el vínculo sostiene." }
       ]
     },
     {
       "id": "s6",
       "title": "Intersección (apoyo móvil)",
       "subtitle": "Cobertura del Espíritu Santo al alma del hogar",
-      "diagnosticFocus": "Sostener sin aprisionar (reposo, deslizamiento, libertad)",
+      "diagnosticFocus": "Reposo, flexibilidad y cobertura",
       "questions": [
         { "id": "s6_q1", "text": "No hay reposo interno: el hogar se vive en tensión continua." },
         { "id": "s6_q2", "text": "Hay rigidez emocional: cuesta ceder, perdonar o flexibilizar." },
@@ -198,25 +409,25 @@
     {
       "id": "s7",
       "title": "Cargas verticales",
-      "subtitle": "Peso normal: hijos, provisión, responsabilidades",
-      "diagnosticFocus": "Distribución de carga (viga→columna→cimiento)",
+      "subtitle": "Peso normal bien distribuido",
+      "diagnosticFocus": "Distribución de carga: viga→columna→cimiento",
       "questions": [
-        { "id": "s7_q1", "text": "El hogar siente que el peso de la vida cotidiana es insoportable." },
+        { "id": "s7_q1", "text": "El hogar siente que el peso cotidiano es insoportable." },
         { "id": "s7_q2", "text": "Las responsabilidades recaen de forma desigual y generan resentimiento." },
         { "id": "s7_q3", "text": "Los hijos/cargas descansan sobre la pareja, pero la pareja no descansa en el fundamento." },
-        { "id": "s7_q4", "text": "Las cargas permanentes (cargas muertas) están siendo tratadas como crisis." },
-        { "id": "s7_q5", "text": "No existe una estrategia espiritual/práctica para sostener temporadas exigentes (cargas vivas)." }
+        { "id": "s7_q4", "text": "Cargas permanentes (muertas) están siendo tratadas como crisis." },
+        { "id": "s7_q5", "text": "No hay estrategia para temporadas exigentes (cargas vivas)." }
       ]
     },
     {
       "id": "s8",
       "title": "Cargas sísmicas (horizontales)",
-      "subtitle": "Estrés, conflictos y presiones externas",
-      "diagnosticFocus": "Resistencia a fuerzas naturales de la vida",
+      "subtitle": "Presión natural de la vida cotidiana",
+      "diagnosticFocus": "Resistencia a fuerzas horizontales",
       "questions": [
-        { "id": "s8_q1", "text": "Las presiones externas (trabajo, economía, familia extendida) desestabilizan el hogar con facilidad." },
+        { "id": "s8_q1", "text": "Presiones externas desestabilizan el hogar con facilidad." },
         { "id": "s8_q2", "text": "En discusiones, el hogar “deriva”: se sale del tema y termina peor." },
-        { "id": "s8_q3", "text": "Cualquier tensión pequeña produce reacciones grandes." },
+        { "id": "s8_q3", "text": "Tensiones pequeñas producen reacciones grandes." },
         { "id": "s8_q4", "text": "Las crisis rompen el vínculo en vez de acercarlo al fundamento." }
       ]
     },
@@ -227,8 +438,8 @@
       "diagnosticFocus": "Señales antes del colapso",
       "questions": [
         { "id": "s9_q1", "text": "Hay señales persistentes de fisura: frialdad, distancia, sarcasmo, apatía o silencios prolongados." },
-        { "id": "s9_q2", "text": "Se han normalizado rupturas pequeñas (faltas, promesas incumplidas, desconexión) sin reparación." },
-        { "id": "s9_q3", "text": "No existe mantenimiento: solo se actúa cuando hay crisis." },
+        { "id": "s9_q2", "text": "Se han normalizado rupturas pequeñas sin reparación." },
+        { "id": "s9_q3", "text": "No hay mantenimiento: solo se actúa cuando hay crisis." },
         { "id": "s9_q4", "text": "El hogar está más enfocado en “funcionar” que en “permanecer sano”." }
       ]
     }
