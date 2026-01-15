@@ -2,8 +2,8 @@
   "meta": {
     "id": "ensenanza34",
     "title": "Auditoría del Hogar — Sistema Estructural",
-    "subtitle": "Evaluación por secciones + diagnóstico global",
-    "description": "Este test no juzga personas. Lee el hogar como un sistema espiritual y estructural para identificar cargas, uniones y alineación."
+    "subtitle": "Test de auditoría por secciones + diagnóstico global",
+    "description": "Este test no juzga personas. Lee el hogar como un sistema espiritual y estructural para identificar alineación, transferencia de cargas, uniones críticas y estabilidad en el tiempo."
   },
   "scale": {
     "type": "likert",
@@ -27,7 +27,8 @@
         },
         "recommendation": [
           "Preservar hábitos que sostienen esta área.",
-          "Hacer mantenimiento: no descuidar lo que hoy está firme."
+          "Hacer mantenimiento: no descuidar lo que hoy está firme.",
+          "Aumentar gratitud y reconocimiento por lo que está funcionando."
         ]
       },
       {
@@ -39,8 +40,9 @@
           "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”"
         },
         "recommendation": [
-          "Identificar la carga principal en esta área.",
-          "Hacer 1–2 ajustes prácticos esta semana y volver a medir."
+          "Identificar la carga principal que está sobre esta área.",
+          "Hacer 1–2 ajustes prácticos esta semana y volver a medir.",
+          "Reducir urgencias y restaurar orden básico."
         ]
       },
       {
@@ -54,7 +56,8 @@
         "recommendation": [
           "Detener el ritmo reactivo y volver al diseño.",
           "Restaurar uniones antes de exigir desempeño.",
-          "Buscar acompañamiento pastoral/discipulado por un periodo."
+          "Buscar acompañamiento pastoral/discipulado por un periodo (plan semanal).",
+          "No corregir con presión: restaurar con proceso."
         ]
       }
     ],
@@ -69,7 +72,8 @@
         },
         "actions": [
           "Mantener comunión y transferencia de cargas al fundamento.",
-          "Cuidar uniones: comunicación, culto y reposo."
+          "Cuidar uniones: comunicación, culto y reposo.",
+          "No descuidar mantenimiento: lo estable también se cuida."
         ]
       },
       {
@@ -82,7 +86,8 @@
         },
         "actions": [
           "Detectar la sección más alta y trabajarla primero.",
-          "Hacer ajustes concretos esta semana y volver a medir."
+          "Ajustar hábitos (no solo conversaciones).",
+          "Volver a medir en 2–4 semanas."
         ]
       },
       {
@@ -94,8 +99,9 @@
           "quote": "“Si fueren destruidos los fundamentos, ¿Qué ha de hacer el justo?”"
         },
         "actions": [
-          "Detener el ritmo reactivo y volver al diseño.",
-          "Buscar acompañamiento pastoral/discipulado con plan semanal."
+          "Detener escaladas de conflicto y restaurar uniones.",
+          "Buscar acompañamiento pastoral/discipulado con plan semanal.",
+          "Reducir cargas no esenciales por un tiempo."
         ]
       },
       {
@@ -108,7 +114,9 @@
         },
         "actions": [
           "Priorizar restauración de uniones antes de exigir desempeño.",
-          "Establecer proceso pastoral con metas pequeñas y consistentes."
+          "Establecer proceso pastoral con metas pequeñas y consistentes.",
+          "Proteger el hogar de sobrecargas: bajar demandas y subir cobertura.",
+          "Volver al fundamento: comunión real, no ritual."
         ]
       }
     ]
@@ -116,28 +124,112 @@
   "sections": [
     {
       "id": "s1",
-      "title": "Lente inicial",
-      "subtitle": "Cómo estamos leyendo nuestro hogar",
-      "diagnosticFocus": "Culpa vs diseño",
+      "title": "Ver distinto",
+      "subtitle": "Cuando el diseño reemplaza la culpa",
+      "diagnosticFocus": "Lente: culpa vs alineación",
       "questions": [
-        { "id": "s1_q1", "text": "Vivimos reaccionando a problemas más que edificando procesos." },
-        { "id": "s1_q2", "text": "El cansancio es constante aun cuando no hay crisis grandes." },
-        { "id": "s1_q3", "text": "El esfuerzo es alto y el reposo es bajo." },
-        { "id": "s1_q4", "text": "Sentimos culpa cuando algo no funciona." },
-        { "id": "s1_q5", "text": "Hemos normalizado situaciones que nos pesan." }
+        { "id": "s1_q1", "text": "Interpretamos los problemas del hogar como culpa personal más que como desajuste de diseño." },
+        { "id": "s1_q2", "text": "Vivimos apagando incendios en vez de edificar procesos." },
+        { "id": "s1_q3", "text": "Hay cansancio constante aun sin crisis grandes." },
+        { "id": "s1_q4", "text": "Las decisiones se toman por urgencia más que por dirección." }
       ]
     },
     {
       "id": "s2",
-      "title": "Uniones críticas",
-      "subtitle": "Comunión, Congregación e Intersección",
-      "diagnosticFocus": "Anclaje, comunicación y cobertura",
+      "title": "Cimiento y comunión",
+      "subtitle": "Anclaje real en Cristo",
+      "diagnosticFocus": "Transferencia de cargas al fundamento",
       "questions": [
-        { "id": "s2_q1", "text": "La oración es ritual, no transferencia real." },
-        { "id": "s2_q2", "text": "Falta dirección espiritual clara." },
-        { "id": "s2_q3", "text": "La comunicación es reactiva o defensiva." },
-        { "id": "s2_q4", "text": "Evitamos conversaciones importantes." },
-        { "id": "s2_q5", "text": "No hay reposo emocional." }
+        { "id": "s2_q1", "text": "La oración es más ritual que comunión real (transferencia de carga y obediencia)." },
+        { "id": "s2_q2", "text": "La Palabra está presente como información, pero no como dirección diaria." },
+        { "id": "s2_q3", "text": "Cuando hay presión, buscamos soluciones humanas antes que volver al fundamento." },
+        { "id": "s2_q4", "text": "Hay decisiones clave del hogar sin consulta espiritual (sin altar)." }
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "La columna (varón)",
+      "subtitle": "Alineación, identidad y transferencia",
+      "diagnosticFocus": "Verticalidad: sin ego y sin baja autoestima",
+      "questions": [
+        { "id": "s3_q1", "text": "El varón evita responsabilidad espiritual o emocional en la casa." },
+        { "id": "s3_q2", "text": "El varón responde desde control/ego más que desde servicio/alineación." },
+        { "id": "s3_q3", "text": "El varón se aísla en crisis en vez de sostener y transferir al fundamento." },
+        { "id": "s3_q4", "text": "Falta dirección clara en el hogar por falta de verticalidad del varón." }
+      ]
+    },
+    {
+      "id": "s4",
+      "title": "La viga (mujer)",
+      "subtitle": "Sensibilidad, distribución y transferencia",
+      "diagnosticFocus": "Percibir cargas sin cargarlas sola",
+      "questions": [
+        { "id": "s4_q1", "text": "La mujer carga emocionalmente sola lo que debería transferirse." },
+        { "id": "s4_q2", "text": "La sensibilidad de la mujer es interpretada como debilidad en vez de función." },
+        { "id": "s4_q3", "text": "La mujer acumula tensión porque no hay canal claro de descarga hacia el fundamento." },
+        { "id": "s4_q4", "text": "La mujer se ve obligada a sostener decisiones por falta de soporte estructural." }
+      ]
+    },
+    {
+      "id": "s5",
+      "title": "Congregación (nudo crítico)",
+      "subtitle": "La unión donde se gana o se pierde estabilidad",
+      "diagnosticFocus": "Comunicación, pacto, culto efectivo",
+      "questions": [
+        { "id": "s5_q1", "text": "La comunicación se vuelve defensiva o reactiva cuando hay tensión." },
+        { "id": "s5_q2", "text": "Evitamos conversaciones importantes para “no pelear”." },
+        { "id": "s5_q3", "text": "Se toman decisiones sin unidad (uno decide y el otro se adapta)." },
+        { "id": "s5_q4", "text": "No hay un “culto efectivo” como pareja: altar que alinee y ordene." },
+        { "id": "s5_q5", "text": "Las fuerzas cotidianas (estrés, finanzas, crianza) golpean el vínculo más de lo que el vínculo sostiene." }
+      ]
+    },
+    {
+      "id": "s6",
+      "title": "Intersección (apoyo móvil)",
+      "subtitle": "Cobertura del Espíritu Santo al alma del hogar",
+      "diagnosticFocus": "Sostener sin aprisionar (reposo, deslizamiento, libertad)",
+      "questions": [
+        { "id": "s6_q1", "text": "No hay reposo interno: el hogar se vive en tensión continua." },
+        { "id": "s6_q2", "text": "Hay rigidez emocional: cuesta ceder, perdonar o flexibilizar." },
+        { "id": "s6_q3", "text": "La mujer no siente “cobertura” espiritual para procesar y descansar." },
+        { "id": "s6_q4", "text": "Las crisis activan ansiedad más que confianza en la ayuda del Espíritu Santo." }
+      ]
+    },
+    {
+      "id": "s7",
+      "title": "Cargas verticales",
+      "subtitle": "Peso normal: hijos, provisión, responsabilidades",
+      "diagnosticFocus": "Distribución de carga (viga→columna→cimiento)",
+      "questions": [
+        { "id": "s7_q1", "text": "El hogar siente que el peso de la vida cotidiana es insoportable." },
+        { "id": "s7_q2", "text": "Las responsabilidades recaen de forma desigual y generan resentimiento." },
+        { "id": "s7_q3", "text": "Los hijos/cargas descansan sobre la pareja, pero la pareja no descansa en el fundamento." },
+        { "id": "s7_q4", "text": "Las cargas permanentes (cargas muertas) están siendo tratadas como crisis." },
+        { "id": "s7_q5", "text": "No existe una estrategia espiritual/práctica para sostener temporadas exigentes (cargas vivas)." }
+      ]
+    },
+    {
+      "id": "s8",
+      "title": "Cargas sísmicas (horizontales)",
+      "subtitle": "Estrés, conflictos y presiones externas",
+      "diagnosticFocus": "Resistencia a fuerzas naturales de la vida",
+      "questions": [
+        { "id": "s8_q1", "text": "Las presiones externas (trabajo, economía, familia extendida) desestabilizan el hogar con facilidad." },
+        { "id": "s8_q2", "text": "En discusiones, el hogar “deriva”: se sale del tema y termina peor." },
+        { "id": "s8_q3", "text": "Cualquier tensión pequeña produce reacciones grandes." },
+        { "id": "s8_q4", "text": "Las crisis rompen el vínculo en vez de acercarlo al fundamento." }
+      ]
+    },
+    {
+      "id": "s9",
+      "title": "Respuesta del sistema",
+      "subtitle": "Fisuras, deriva y mantenimiento",
+      "diagnosticFocus": "Señales antes del colapso",
+      "questions": [
+        { "id": "s9_q1", "text": "Hay señales persistentes de fisura: frialdad, distancia, sarcasmo, apatía o silencios prolongados." },
+        { "id": "s9_q2", "text": "Se han normalizado rupturas pequeñas (faltas, promesas incumplidas, desconexión) sin reparación." },
+        { "id": "s9_q3", "text": "No existe mantenimiento: solo se actúa cuando hay crisis." },
+        { "id": "s9_q4", "text": "El hogar está más enfocado en “funcionar” que en “permanecer sano”." }
       ]
     }
   ]
