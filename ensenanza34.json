@@ -22,8 +22,8 @@
         "label": "Alineado",
         "summary": "La sección está estable. Mantener y cuidar lo que funciona.",
         "verse": {
-          "reference": "Proverbios 4:23",
-          "quote": "“Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.”"
+          "reference": "Proverbios 24:3",
+          "quote": "“Con sabiduría se edificará la casa, y con prudencia se afirmará.”"
         },
         "recommendation": [
           "Mantener lo que está funcionando (no asumirlo).",
@@ -50,13 +50,13 @@
         "label": "En riesgo",
         "summary": "Zona crítica. Se recomienda acompañamiento y proceso.",
         "verse": {
-          "reference": "Isaías 42:3",
-          "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”"
+          "reference": "Gálatas 6:1",
+          "quote": "“Si alguno fuere sorprendido en alguna falta, vosotros que sois espirituales, restauradle con espíritu de mansedumbre…”"
         },
         "recommendation": [
           "No presionar: restaurar uniones antes de exigir rendimiento.",
           "Detener escaladas y volver al fundamento (comunión real).",
-          "Buscar acompañamiento pastoral/discipulado con plan semanal."
+          "Buscar acompañamiento pastoral/disciplado con plan semanal."
         ]
       }
     ],
@@ -80,8 +80,8 @@
         "label": "Hogar en ajuste",
         "summary": "Funciona, pero con tensiones acumuladas.",
         "verse": {
-          "reference": "Hebreos 12:13",
-          "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”"
+          "reference": "Proverbios 3:6",
+          "quote": "“Reconócelo en todos tus caminos, y él enderezará tus veredas.”"
         },
         "actions": [
           "Trabajar primero la sección con mayor puntaje.",
@@ -94,12 +94,12 @@
         "label": "Hogar en riesgo",
         "summary": "La estructura avisa antes de colapsar.",
         "verse": {
-          "reference": "Salmos 11:3",
-          "quote": "“Si fueren destruidos los fundamentos, ¿Qué ha de hacer el justo?”"
+          "reference": "Proverbios 27:12",
+          "quote": "“El avisado ve el mal y se esconde; mas los simples pasan y reciben el daño.”"
         },
         "actions": [
           "Detener escaladas de conflicto y restaurar uniones.",
-          "Buscar acompañamiento pastoral/discipulado (plan semanal).",
+          "Buscar acompañamiento pastoral/disciplado (plan semanal).",
           "Reducir cargas no esenciales por una temporada."
         ]
       },
@@ -108,8 +108,8 @@
         "label": "Hogar crítico (requiere proceso)",
         "summary": "Requiere proceso, no corrección inmediata.",
         "verse": {
-          "reference": "Isaías 42:3",
-          "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”"
+          "reference": "Salmos 147:3",
+          "quote": "“El sana a los quebrantados de corazón, y venda sus heridas.”"
         },
         "actions": [
           "Priorizar restauración de uniones antes de exigir desempeño.",
@@ -121,7 +121,7 @@
     ]
   },
   "pastoralManual": {
-    "note": "Este manual es una guía pastoral para interpretar resultados sin culpa y con enfoque de diseño. No reemplaza acompañamiento espiritual.",
+    "note": "Este manual es una guía pastoral para interpretar resultados sin culpa y con enfoque de diseño.",
     "sections": [
       {
         "id": "s1",
@@ -142,7 +142,7 @@
           ],
           "oneWeekPlan": [
             "Reunión de 20 min: “¿Qué está fuera de diseño?” (sin culpas).",
-            "Escribir 2 cargas que se están sosteniendo mal y definir transferencia."
+            "Escribir 2 cargas mal sostenidas y definir transferencia."
           ]
         }
       },
@@ -164,8 +164,8 @@
             "Oración sin entrega no transfiere carga."
           ],
           "oneWeekPlan": [
-            "7 días: 10 minutos de altar (oración + obediencia concreta).",
-            "Identificar una carga y “entregarla” con una decisión práctica."
+            "7 días: 10 min de altar (oración + obediencia concreta).",
+            "Identificar una carga y entregarla con una decisión práctica."
           ]
         }
       },
@@ -175,19 +175,19 @@
           "title": "3) Columna (varón) — verticalidad y responsabilidad",
           "text": [
             "La columna no domina: sostiene y alinea.",
-            "La verticalidad se expresa como identidad sana, dirección y servicio.",
-            "Dos inclinaciones dañan: baja autoestima (evasión) y ego (control)."
+            "Dos inclinaciones dañan: evasión (baja autoestima) y control (ego).",
+            "La verticalidad se expresa como identidad sana, dirección y servicio."
           ],
           "verse": {
-            "reference": "1 Corintios 11:3",
-            "quote": "“Cristo es la cabeza del varón, y el varón es la cabeza de la mujer…”"
+            "reference": "Efesios 5:25",
+            "quote": "“Maridos, amad a vuestras mujeres, así como Cristo amó a la iglesia…”"
           },
           "keys": [
-            "El varón transfiere cargas al fundamento.",
-            "Control no es liderazgo; obediencia sí."
+            "Liderazgo bíblico es servicio con dirección.",
+            "Transferir cargas al fundamento protege el sistema."
           ],
           "oneWeekPlan": [
-            "El varón toma 1 responsabilidad clara (con mansedumbre).",
+            "El varón asume 1 responsabilidad clara (con mansedumbre).",
             "Oración diaria: “Señor, alíname; hazme columna, no carga.”"
           ]
         }
@@ -202,15 +202,15 @@
             "Cuando no hay transferencia, aparece fatiga emocional."
           ],
           "verse": {
-            "reference": "Génesis 2:18",
-            "quote": "“No es bueno que el hombre esté solo; le haré ayuda idónea…”"
+            "reference": "Proverbios 14:1",
+            "quote": "“La mujer sabia edifica su casa…”"
           },
           "keys": [
             "Sensibilidad no es debilidad; es diseño.",
             "La carga debe moverse: viga → columna → cimiento."
           ],
           "oneWeekPlan": [
-            "La mujer escribe 3 tensiones y define a quién se transfieren.",
+            "Escribir 3 tensiones y definir transferencia concreta.",
             "Un acuerdo: “No cargo sola lo que debe transferirse.”"
           ]
         }
@@ -220,13 +220,13 @@
         "miniTeaching": {
           "title": "5) Congregación (nudo) — donde se gana estabilidad",
           "text": [
-            "La congregación es el punto de unión: ahí se sostienen fuerzas horizontales.",
+            "La congregación es el nudo: ahí se sostienen fuerzas horizontales.",
             "La comunicación no es solo hablar: es alinear, pactar y descargar tensiones.",
             "Donde faltan acuerdos, crecen momentos negativos."
           ],
           "verse": {
-            "reference": "Mateo 18:20",
-            "quote": "“Porque donde están dos o tres congregados en mi nombre, allí estoy yo…”"
+            "reference": "Eclesiastés 4:12",
+            "quote": "“Y cordón de tres dobleces no se rompe pronto.”"
           },
           "keys": [
             "El nudo se cuida con altar efectivo.",
@@ -234,7 +234,7 @@
           ],
           "oneWeekPlan": [
             "1 culto de pareja (20–30 min): palabra + oración + acuerdos.",
-            "Regla: una conversación pendiente por semana (sin ataque)."
+            "Una conversación pendiente por semana (sin ataque)."
           ]
         }
       },
@@ -248,16 +248,16 @@
             "Un sistema demasiado rígido se fisura."
           ],
           "verse": {
-            "reference": "2 Corintios 3:17",
-            "quote": "“Donde está el Espíritu del Señor, allí hay libertad.”"
+            "reference": "Mateo 11:28",
+            "quote": "“Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.”"
           },
           "keys": [
             "Cobertura no es control; es sostén.",
             "El reposo es parte del diseño."
           ],
           "oneWeekPlan": [
-            "Practicar reposo: 2 momentos sin discusión (solo presencia).",
-            "Oración: “Espíritu Santo, sostén el alma del hogar.”"
+            "2 momentos de reposo sin discusión (solo presencia).",
+            "Oración: “Espíritu Santo, sostiene el alma del hogar.”"
           ]
         }
       },
@@ -276,7 +276,7 @@
           },
           "keys": [
             "Distribución evita sobrecarga.",
-            "Cargas vivas y muertas requieren orden, no culpa."
+            "Orden reduce fricción."
           ],
           "oneWeekPlan": [
             "Lista de cargas: ¿quién sostiene qué y por qué?",
@@ -290,20 +290,20 @@
           "title": "8) Cargas sísmicas — fuerzas horizontales",
           "text": [
             "El sismo no destruye solo: revela debilidades en el nudo.",
-            "Estrés, crisis y presiones externas prueban la estabilidad.",
+            "Estrés y presiones externas prueban estabilidad.",
             "Un hogar alineado no evita sismos: los atraviesa sin colapsar."
           ],
           "verse": {
-            "reference": "Proverbios 24:10",
-            "quote": "“Si fueres flojo en el día de trabajo, tu fuerza será reducida.”"
+            "reference": "Isaías 26:3",
+            "quote": "“Tú guardarás en completa paz a aquel cuyo pensamiento en ti persevera…”"
           },
           "keys": [
-            "El problema es la deriva, no el evento.",
-            "Bajar reactividad y subir dirección."
+            "Bajar reactividad y subir dirección.",
+            "Unidad ante presión externa."
           ],
           "oneWeekPlan": [
             "Definir “protocolo de crisis”: no discutir en pico emocional.",
-            "1 acción de unidad ante una presión externa."
+            "Una acción de unidad frente a una presión externa."
           ]
         }
       },
@@ -314,15 +314,15 @@
           "text": [
             "Las fisuras son advertencias, no condena.",
             "Un hogar se cuida con mantenimiento, no solo con reparaciones.",
-            "Si no se repara a tiempo, el desgaste se acumula."
+            "Lo pequeño ignorado se vuelve grande."
           ],
           "verse": {
             "reference": "Cantares 2:15",
             "quote": "“Cazadnos las zorras, las zorras pequeñas, que echan a perder las viñas…”"
           },
           "keys": [
-            "Lo pequeño ignorado se vuelve grande.",
-            "Mantenimiento semanal evita procesos largos."
+            "Mantenimiento semanal evita procesos largos.",
+            "Reparar pronto evita colapso."
           ],
           "oneWeekPlan": [
             "Reparación pequeña: pedir perdón por algo concreto.",
@@ -338,6 +338,10 @@
       "title": "Ver distinto",
       "subtitle": "Cuando el diseño reemplaza la culpa",
       "diagnosticFocus": "Lente: culpa vs alineación",
+      "sectionVerse": {
+        "reference": "Romanos 12:2",
+        "quote": "“Transformaos por medio de la renovación de vuestro entendimiento…”"
+      },
       "questions": [
         { "id": "s1_q1", "text": "Interpretamos los problemas del hogar como culpa personal más que como desajuste de diseño." },
         { "id": "s1_q2", "text": "Vivimos apagando incendios en vez de edificar procesos." },
@@ -350,6 +354,10 @@
       "title": "Cimiento y comunión",
       "subtitle": "Anclaje real en Cristo",
       "diagnosticFocus": "Transferencia al fundamento",
+      "sectionVerse": {
+        "reference": "Salmos 62:6",
+        "quote": "“Él solamente es mi roca y mi salvación… no resbalaré.”"
+      },
       "questions": [
         { "id": "s2_q1", "text": "La oración es más ritual que comunión real (transferencia de carga y obediencia)." },
         { "id": "s2_q2", "text": "La Palabra está presente como información, pero no como dirección diaria." },
@@ -362,6 +370,10 @@
       "title": "La columna (varón)",
       "subtitle": "Alineación, identidad y transferencia",
       "diagnosticFocus": "Verticalidad: sin ego y sin evasión",
+      "sectionVerse": {
+        "reference": "1 Corintios 16:13",
+        "quote": "“Velad, estad firmes en la fe; portaos varonilmente, y esforzaos.”"
+      },
       "questions": [
         { "id": "s3_q1", "text": "El varón evita responsabilidad espiritual o emocional en la casa." },
         { "id": "s3_q2", "text": "El varón responde desde control/ego más que desde servicio/alineación." },
@@ -374,6 +386,10 @@
       "title": "La viga (mujer)",
       "subtitle": "Sensibilidad, distribución y transferencia",
       "diagnosticFocus": "Percibir cargas sin cargarlas sola",
+      "sectionVerse": {
+        "reference": "1 Pedro 3:4",
+        "quote": "“El incorruptible ornato de un espíritu afable y apacible…”"
+      },
       "questions": [
         { "id": "s4_q1", "text": "La mujer carga emocionalmente sola lo que debería transferirse." },
         { "id": "s4_q2", "text": "La sensibilidad de la mujer es interpretada como debilidad en vez de función." },
@@ -386,6 +402,10 @@
       "title": "Congregación (nudo crítico)",
       "subtitle": "La unión donde se gana o se pierde estabilidad",
       "diagnosticFocus": "Comunicación, pacto y culto efectivo",
+      "sectionVerse": {
+        "reference": "Amós 3:3",
+        "quote": "“¿Andarán dos juntos, si no estuvieren de acuerdo?”"
+      },
       "questions": [
         { "id": "s5_q1", "text": "La comunicación se vuelve defensiva o reactiva cuando hay tensión." },
         { "id": "s5_q2", "text": "Evitamos conversaciones importantes para “no pelear”." },
@@ -399,6 +419,10 @@
       "title": "Intersección (apoyo móvil)",
       "subtitle": "Cobertura del Espíritu Santo al alma del hogar",
       "diagnosticFocus": "Reposo, flexibilidad y cobertura",
+      "sectionVerse": {
+        "reference": "Juan 14:26",
+        "quote": "“Mas el Consolador… él os enseñará todas las cosas…”"
+      },
       "questions": [
         { "id": "s6_q1", "text": "No hay reposo interno: el hogar se vive en tensión continua." },
         { "id": "s6_q2", "text": "Hay rigidez emocional: cuesta ceder, perdonar o flexibilizar." },
@@ -411,6 +435,10 @@
       "title": "Cargas verticales",
       "subtitle": "Peso normal bien distribuido",
       "diagnosticFocus": "Distribución de carga: viga→columna→cimiento",
+      "sectionVerse": {
+        "reference": "Mateo 6:34",
+        "quote": "“Basta a cada día su propio mal.”"
+      },
       "questions": [
         { "id": "s7_q1", "text": "El hogar siente que el peso cotidiano es insoportable." },
         { "id": "s7_q2", "text": "Las responsabilidades recaen de forma desigual y generan resentimiento." },
@@ -424,6 +452,10 @@
       "title": "Cargas sísmicas (horizontales)",
       "subtitle": "Presión natural de la vida cotidiana",
       "diagnosticFocus": "Resistencia a fuerzas horizontales",
+      "sectionVerse": {
+        "reference": "Salmos 46:1",
+        "quote": "“Dios es nuestro amparo y fortaleza, nuestro pronto auxilio en las tribulaciones.”"
+      },
       "questions": [
         { "id": "s8_q1", "text": "Presiones externas desestabilizan el hogar con facilidad." },
         { "id": "s8_q2", "text": "En discusiones, el hogar “deriva”: se sale del tema y termina peor." },
@@ -436,6 +468,10 @@
       "title": "Respuesta del sistema",
       "subtitle": "Fisuras, deriva y mantenimiento",
       "diagnosticFocus": "Señales antes del colapso",
+      "sectionVerse": {
+        "reference": "Proverbios 27:23",
+        "quote": "“Sé diligente en conocer el estado de tus ovejas…”"
+      },
       "questions": [
         { "id": "s9_q1", "text": "Hay señales persistentes de fisura: frialdad, distancia, sarcasmo, apatía o silencios prolongados." },
         { "id": "s9_q2", "text": "Se han normalizado rupturas pequeñas sin reparación." },

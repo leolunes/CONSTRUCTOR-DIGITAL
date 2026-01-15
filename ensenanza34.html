@@ -14,7 +14,7 @@
       --orange:rgba(251,146,60,.14); --red:rgba(251,113,133,.14);
     }
     body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); }
-    .wrap{ max-width: 1050px; margin: 0 auto; padding: 24px; }
+    .wrap{ max-width: 1100px; margin: 0 auto; padding: 24px; }
     .hero{ background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08)); border:1px solid var(--line); border-radius:18px; padding:18px; }
     h1{ margin:0 0 6px; font-size:28px; }
     .sub{ margin:0; color:var(--muted); line-height:1.4; }
@@ -62,6 +62,8 @@
     .field textarea{ min-height: 90px; resize: vertical; }
     .toggleRow{ margin-top:10px; display:flex; align-items:center; gap:10px; }
     .toggleRow input{ transform: scale(1.2); }
+    .plan{ margin-top:16px; padding:12px; border-radius:16px; border:1px solid var(--line); background:rgba(255,255,255,.03); }
+    .plan h3{ margin:0 0 8px; }
   </style>
 </head>
 
@@ -155,11 +157,9 @@
   function maxOptionValue(){
     return Math.max(...DATA.scale.options.map(o => Number(o.value)));
   }
-
   function totalQuestions(){
     return DATA.sections.reduce((acc, sec) => acc + sec.questions.length, 0);
   }
-
   function totalMaxScore(){
     return totalQuestions() * maxOptionValue();
   }
@@ -173,7 +173,6 @@
     });
     return sum;
   }
-
   function sectionScore(sec){
     return sec.questions.reduce((acc, q)=> acc + (state[q.id] ?? 0), 0);
   }
@@ -190,14 +189,12 @@
     liveScoreEl.textContent = `Puntaje actual: ${totalScore()}`;
   }
 
-  // Bandas por porcentaje para que funcione con cualquier max real
   function bandSection(score, secMax){
     const pct = secMax === 0 ? 0 : (score / secMax) * 100;
     if (pct <= 26.6667) return DATA.rubrics.sectionBands.find(b=>b.key==="alineado");
     if (pct <= 60) return DATA.rubrics.sectionBands.find(b=>b.key==="ajuste");
     return DATA.rubrics.sectionBands.find(b=>b.key==="riesgo");
   }
-
   function bandGlobal(score, max){
     const pct = max === 0 ? 0 : (score / max) * 100;
     if (pct <= 22.2222) return DATA.rubrics.globalBands.find(b=>b.key==="g_alineado");
@@ -221,7 +218,6 @@
 
   function renderForm(){
     formEl.innerHTML = "";
-
     DATA.sections.forEach(sec=>{
       const card = document.createElement("div");
       card.className = "card";
@@ -245,7 +241,6 @@
       sec.questions.forEach((q, idx)=>{
         const qDiv = document.createElement("div");
         qDiv.className = "q";
-
         const optionsHTML = DATA.scale.options.map(opt => `
           <label class="opt">
             <input type="radio" name="${q.id}" value="${opt.value}">
@@ -273,7 +268,95 @@
     });
   }
 
-  function reportText(globalScore, globalBand, sectionsBreakdown, includeDetails){
+  function build7DayPlan(topA, topB){
+    const days = [];
+    const A = topA;
+    const B = topB;
+
+    const Ateach = A.manual?.miniTeaching;
+    const Bteach = B.manual?.miniTeaching;
+
+    const Aplan = (Ateach?.oneWeekPlan || []).slice(0, 2);
+    const Bplan = (Bteach?.oneWeekPlan || []).slice(0, 2);
+
+    days.push({
+      day: 1,
+      title: "Volver al diseño (sin culpa)",
+      items: [
+        `Leer y orar: ${A.sectionVerse?.quote || Ateach?.verse?.quote || ""} (${A.sectionVerse?.reference || Ateach?.verse?.reference || ""})`,
+        `Definir: “¿Qué está fuera de diseño en ${A.title}?” (20 min, sin acusación).`,
+        "Escribir 1 carga principal y decidir cómo se transferirá al fundamento."
+      ].filter(Boolean)
+    });
+
+    days.push({
+      day: 2,
+      title: `Restauración enfocada: ${A.title}`,
+      items: [
+        ...(Aplan.length ? Aplan : [
+          "Aplicar una acción pequeña concreta en esta área.",
+          "Cerrar el día con oración de alineación."
+        ]),
+        "Evitar discusiones largas: priorizar acuerdos cortos."
+      ]
+    });
+
+    days.push({
+      day: 3,
+      title: `Consolidar el ajuste: ${A.title}`,
+      items: [
+        "Repetir el ajuste del Día 2 (consistencia).",
+        "Preguntar: “¿Qué tensión bajó hoy?”",
+        "Orar 10 min: entrega de la carga al fundamento."
+      ]
+    });
+
+    days.push({
+      day: 4,
+      title: `Restauración enfocada: ${B.title}`,
+      items: [
+        `Leer y orar: ${B.sectionVerse?.quote || Bteach?.verse?.quote || ""} (${B.sectionVerse?.reference || Bteach?.verse?.reference || ""})`,
+        ...(Bplan.length ? Bplan : [
+          "Aplicar una acción pequeña concreta en esta área.",
+          "Cerrar el día con oración de reposo."
+        ])
+      ].filter(Boolean)
+    });
+
+    days.push({
+      day: 5,
+      title: `Consolidar el ajuste: ${B.title}`,
+      items: [
+        "Repetir el ajuste del Día 4 (consistencia).",
+        "Conversación corta: 1 acuerdo práctico (no reproche).",
+        "Oración: pedir ayuda al Espíritu Santo para sostener sin rigidez."
+      ]
+    });
+
+    days.push({
+      day: 6,
+      title: "Culto efectivo (Congregación del hogar)",
+      items: [
+        "20–30 min: palabra + oración + acuerdos de la semana.",
+        "Un acto de honra mutua: reconocer 1 esfuerzo del otro.",
+        "Definir 1 mantenimiento semanal fijo (día y hora)."
+      ]
+    });
+
+    days.push({
+      day: 7,
+      title: "Revisión y mantenimiento",
+      items: [
+        "Revisar: ¿qué cambió en 7 días? ¿qué no cambió?",
+        "Elegir 1 práctica que se queda como mantenimiento.",
+        "Repetir el test en las 2 secciones más críticas (solo esas preguntas)."
+      ]
+    });
+
+    return days;
+  }
+
+  function reportText(globalScore, globalBand, sectionsBreakdown, plan7, includeDetails){
     const max = totalMaxScore();
     const lines = [];
 
@@ -301,10 +384,14 @@
     sectionsBreakdown.forEach(sb=>{
       lines.push(`${sb.title} — ${sb.score}/${sb.max} — ${sb.band.label}`);
       if(sb.focus) lines.push(`Enfoque: ${sb.focus}`);
+      if(sb.sectionVerse){
+        lines.push(`Texto sección: ${sb.sectionVerse.quote} (${sb.sectionVerse.reference})`);
+      }
       lines.push(`Resumen: ${sb.band.summary}`);
-      lines.push(`${sb.band.verse.quote} (${sb.band.verse.reference})`);
+      lines.push(`Texto diagnóstico: ${sb.band.verse.quote} (${sb.band.verse.reference})`);
       lines.push("Recomendaciones:");
       sb.band.recommendation.forEach(r => lines.push("• " + r));
+
       if(sb.manual){
         lines.push("");
         lines.push("Mini-enseñanza pastoral (sección):");
@@ -313,9 +400,18 @@
         lines.push(`${sb.manual.miniTeaching.verse.quote} (${sb.manual.miniTeaching.verse.reference})`);
         lines.push("Claves:");
         sb.manual.miniTeaching.keys.forEach(k => lines.push("• " + k));
-        lines.push("Plan 1 semana:");
+        lines.push("Plan (sugerido) 1 semana:");
         sb.manual.miniTeaching.oneWeekPlan.forEach(p => lines.push("• " + p));
       }
+
+      lines.push("");
+    });
+
+    lines.push("PLAN SEMANAL AUTOMÁTICO (7 DÍAS) — BASADO EN LAS 2 SECCIONES MÁS CRÍTICAS");
+    lines.push("--------------------------------------------------");
+    plan7.forEach(d=>{
+      lines.push(`Día ${d.day} — ${d.title}`);
+      d.items.forEach(it => lines.push(`• ${it}`));
       lines.push("");
     });
 
@@ -348,7 +444,7 @@
     const gBand = bandGlobal(gScore, gMax);
     const globalBadge = badgeClass(gBand.label);
 
-    const sectionsBreakdown = DATA.sections.map(sec=>{
+    let sectionsBreakdown = DATA.sections.map(sec=>{
       const sScore = sectionScore(sec);
       const sMax = sec.questions.length * maxOptionValue();
       const sBand = bandSection(sScore, sMax);
@@ -359,17 +455,20 @@
         focus: sec.diagnosticFocus || "",
         score: sScore,
         max: sMax,
+        pct: sMax ? (sScore/sMax) : 0,
         band: sBand,
-        manual: manual
+        manual: manual,
+        sectionVerse: sec.sectionVerse || null
       };
     });
 
-    // Ordenar: sección más crítica primero (mayor score %)
-    sectionsBreakdown.sort((a,b)=>{
-      const ap = a.max ? a.score/a.max : 0;
-      const bp = b.max ? b.score/b.max : 0;
-      return bp - ap;
-    });
+    // Ordenar por criticidad (mayor % primero)
+    sectionsBreakdown.sort((a,b)=> b.pct - a.pct);
+
+    const topA = sectionsBreakdown[0];
+    const topB = sectionsBreakdown[1] || sectionsBreakdown[0];
+
+    const plan7 = build7DayPlan(topA, topB);
 
     const sectionCards = sectionsBreakdown.map(sb => {
       const mt = sb.manual?.miniTeaching;
@@ -381,8 +480,22 @@
           </div>
           <div class="small"><b>Puntaje:</b> ${sb.score}/${sb.max}</div>
           ${sb.focus ? `<div class="small"><b>Enfoque:</b> ${sb.focus}</div>` : ""}
+
+          ${sb.sectionVerse ? `
+            <blockquote>
+              <b>Texto sección:</b><br>
+              ${sb.sectionVerse.quote}<br>
+              <span class="muted">(${sb.sectionVerse.reference})</span>
+            </blockquote>
+          ` : ""}
+
           <div class="small" style="margin-top:6px;"><b>Resumen:</b> ${sb.band.summary}</div>
-          <blockquote>${sb.band.verse.quote}<br><span class="muted">(${sb.band.verse.reference})</span></blockquote>
+          <blockquote>
+            <b>Texto diagnóstico:</b><br>
+            ${sb.band.verse.quote}<br>
+            <span class="muted">(${sb.band.verse.reference})</span>
+          </blockquote>
+
           <div class="small"><b>Recomendaciones:</b>
             <ul style="margin:6px 0 0 18px; padding:0;">
               ${sb.band.recommendation.map(r => `<li>${r}</li>`).join("")}
@@ -396,22 +509,28 @@
             <ul style="margin:6px 0 0 18px; padding:0;">
               ${mt.text.map(t => `<li>${t}</li>`).join("")}
             </ul>
-            <blockquote>${mt.verse.quote}<br><span class="muted">(${mt.verse.reference})</span></blockquote>
-            <div class="small"><b>Claves:</b>
-              <ul style="margin:6px 0 0 18px; padding:0;">
-                ${mt.keys.map(k => `<li>${k}</li>`).join("")}
-              </ul>
-            </div>
-            <div class="small" style="margin-top:6px;"><b>Plan 1 semana:</b>
-              <ul style="margin:6px 0 0 18px; padding:0;">
-                ${mt.oneWeekPlan.map(p => `<li>${p}</li>`).join("")}
-              </ul>
-            </div>
           </div>
           ` : ""}
         </div>
       `;
     }).join("");
+
+    const planHTML = `
+      <div class="plan">
+        <h3>Plan semanal automático (7 días)</h3>
+        <div class="small">Basado en: <b>${topA.title}</b> y <b>${topB.title}</b> (secciones más críticas)</div>
+        <div style="margin-top:10px;" class="small">
+          ${plan7.map(d => `
+            <div style="margin:10px 0; padding:10px; border:1px solid rgba(255,255,255,.10); border-radius:12px;">
+              <b>Día ${d.day} — ${d.title}</b>
+              <ul style="margin:6px 0 0 18px; padding:0;">
+                ${d.items.map(it => `<li>${it}</li>`).join("")}
+              </ul>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
 
     resultEl.style.display = "block";
     resultEl.innerHTML = `
@@ -433,11 +552,13 @@
         </div>
       </div>
 
+      ${planHTML}
+
       <h3 style="margin-top:18px;">Diagnóstico por secciones (más crítico primero)</h3>
       <div class="grid">${sectionCards}</div>
     `;
 
-    lastReportText = reportText(gScore, gBand, sectionsBreakdown, includeDetailsEl.checked);
+    lastReportText = reportText(gScore, gBand, sectionsBreakdown, plan7, includeDetailsEl.checked);
     btnDownload.disabled = false;
     resultEl.scrollIntoView({behavior:"smooth"});
   }
