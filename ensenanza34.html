@@ -9,17 +9,16 @@
     :root{
       --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
       --accent:#5eead4; --line:rgba(255,255,255,.10);
+      --danger:#fb7185;
       --green:rgba(94,234,212,.18); --yellow:rgba(250,204,21,.14);
       --orange:rgba(251,146,60,.14); --red:rgba(251,113,133,.14);
-      --danger:#fb7185;
     }
     body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); }
     .wrap{ max-width: 1000px; margin: 0 auto; padding: 24px; }
     .hero{ background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08)); border:1px solid var(--line); border-radius:18px; padding:18px; }
     h1{ margin:0 0 6px; font-size:28px; }
     .sub{ margin:0; color:var(--muted); line-height:1.4; }
-    .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-    .pill{ display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:var(--muted); font-size:12px; }
+    .pill{ display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:var(--muted); font-size:12px; margin-right:8px; }
     .card{ margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; }
     .sec-head{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
     .sec-head h2{ margin:0; font-size:18px; }
@@ -29,8 +28,7 @@
     .q label{ display:block; font-weight:650; }
     .opts{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
     .opt{ display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.14); cursor:pointer; user-select:none; }
-    .opt input{ cursor:pointer; }
-    .actions{ margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap; }
+    .actions{ margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     button{ border:0; border-radius:14px; padding:12px 14px; font-weight:800; cursor:pointer; }
     .primary{ background:var(--accent); color:#071018; }
     .ghost{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18); }
@@ -51,7 +49,7 @@
     .fieldgrid{ display:grid; grid-template-columns: 1fr; gap:12px; margin-top:12px; }
     @media(min-width:800px){ .fieldgrid{ grid-template-columns: 1fr 1fr; } }
     .field{ display:flex; flex-direction:column; gap:6px; }
-    .field label{ font-weight:700; font-size:13px; color: var(--text); }
+    .field label{ font-weight:700; font-size:13px; }
     .field input, .field textarea{
       background: rgba(255,255,255,.04);
       color: var(--text);
@@ -62,28 +60,27 @@
       font-size: 14px;
     }
     .field textarea{ min-height: 90px; resize: vertical; }
-    .hint{ font-size:12px; color: var(--muted); }
     .toggleRow{ margin-top:10px; display:flex; align-items:center; gap:10px; }
     .toggleRow input{ transform: scale(1.2); }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="hero">
       <h1 id="title">Auditoría del Hogar — Sistema Estructural</h1>
       <p class="sub" id="desc"></p>
-      <div class="row" style="margin-top:10px;">
+      <div style="margin-top:10px;">
         <span class="pill" id="scalePill"></span>
         <span class="pill" id="maxPill"></span>
       </div>
     </div>
 
-    <!-- CABECERA -->
     <div class="card">
       <div class="sec-head">
         <div>
           <h2>Datos de auditoría</h2>
-          <div class="sec-sub">Se incluirán en el informe descargable. No se envían a ningún servidor.</div>
+          <div class="sec-sub">Se incluyen en el informe descargable. No se envían a ningún servidor.</div>
         </div>
         <span class="pill">Cabecera</span>
       </div>
@@ -92,28 +89,27 @@
         <div class="field">
           <label for="patientName">Nombre del paciente</label>
           <input id="patientName" type="text" placeholder="Ej: Juan y María Pérez" />
-          <div class="hint">Puede ser el nombre del hogar o de la pareja.</div>
         </div>
 
         <div class="field">
           <label for="auditorName">Nombre del auditor</label>
-          <input id="auditorName" type="text" placeholder="Ej: Pastor / Consejero / Auditor" />
+          <input id="auditorName" type="text" placeholder="Ej: Pastor / Consejero" />
         </div>
 
         <div class="field">
-          <label for="auditDate">Fecha</label>
+          <label for="auditDate">Fecha (editable)</label>
           <input id="auditDate" type="date" />
         </div>
 
         <div class="field">
           <label for="freeNotes">Observaciones libres</label>
-          <textarea id="freeNotes" placeholder="Contexto, motivo de consulta, acuerdos, etc."></textarea>
+          <textarea id="freeNotes" placeholder="Contexto, motivo, acuerdos, etc."></textarea>
         </div>
       </div>
 
       <div class="toggleRow">
         <input type="checkbox" id="includeDetails" checked />
-        <label for="includeDetails" class="small">Incluir respuestas por pregunta al final del informe descargado</label>
+        <label for="includeDetails" class="small">Incluir respuestas por pregunta al final del informe</label>
       </div>
     </div>
 
@@ -127,14 +123,9 @@
     </div>
 
     <div id="result" class="result"></div>
-
-    <p class="small" style="margin-top:14px;">
-      Recomendación pastoral: interpreta el resultado acompañado. No entregues el número como sentencia; tradúcelo a lenguaje de diseño.
-    </p>
   </div>
 
 <script>
-  // ✅ OPCIÓN A: el JSON se llama exactamente como el archivo local
   const JSON_PATH = "ensenanza34.json";
 
   let DATA = null;
@@ -146,14 +137,14 @@
   const liveScoreEl = document.getElementById("liveScore");
   const btnDownload = document.getElementById("btnDownload");
 
-  // Inputs cabecera
   const patientNameEl = document.getElementById("patientName");
   const auditorNameEl = document.getElementById("auditorName");
   const auditDateEl = document.getElementById("auditDate");
   const freeNotesEl = document.getElementById("freeNotes");
   const includeDetailsEl = document.getElementById("includeDetails");
 
-  function setDefaultDate(){
+  function setDefaultDateOnlyIfEmpty(){
+    if (auditDateEl.value) return; // ✅ editable: solo setea si está vacío
     const now = new Date();
     const yyyy = now.getFullYear();
     const mm = String(now.getMonth()+1).padStart(2,"0");
@@ -161,45 +152,55 @@
     auditDateEl.value = `${yyyy}-${mm}-${dd}`;
   }
 
-  function safeFilePart(str){
-    return (str || "")
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g,"_")
-      .replace(/[^a-z0-9_\-áéíóúüñ]/gi,"")
-      .slice(0,40) || "paciente";
+  function maxOptionValue(){
+    return Math.max(...DATA.scale.options.map(o => Number(o.value)));
   }
 
-  function badgeForBandLabel(label){
-    const s = (label || "").toLowerCase();
+  function totalQuestions(){
+    return DATA.sections.reduce((acc, sec) => acc + sec.questions.length, 0);
+  }
+
+  function totalMaxScore(){
+    return totalQuestions() * maxOptionValue();
+  }
+
+  function totalScore(){
+    let sum = 0;
+    DATA.sections.forEach(sec=>{
+      sec.questions.forEach(q=>{
+        sum += (state[q.id] ?? 0);
+      });
+    });
+    return sum;
+  }
+
+  function sectionScore(sec){
+    return sec.questions.reduce((acc, q)=> acc + (state[q.id] ?? 0), 0);
+  }
+
+  // ✅ Bandas por porcentaje (sirve si tu total max es 115, 135, o el que sea)
+  function bandSection(score, secMax){
+    const pct = secMax === 0 ? 0 : (score / secMax) * 100;
+    if (pct <= 26.6667) return DATA.rubrics.sectionBands.find(b=>b.key==="alineado");
+    if (pct <= 60) return DATA.rubrics.sectionBands.find(b=>b.key==="ajuste");
+    return DATA.rubrics.sectionBands.find(b=>b.key==="riesgo");
+  }
+
+  function bandGlobal(score, max){
+    const pct = max === 0 ? 0 : (score / max) * 100;
+    // Equivalente a 0–30, 31–60, 61–95, 96–135 pero proporcional
+    if (pct <= 22.2222) return DATA.rubrics.globalBands.find(b=>b.key==="g_alineado");
+    if (pct <= 44.4444) return DATA.rubrics.globalBands.find(b=>b.key==="g_ajuste");
+    if (pct <= 70.3704) return DATA.rubrics.globalBands.find(b=>b.key==="g_riesgo");
+    return DATA.rubrics.globalBands.find(b=>b.key==="g_critico");
+  }
+
+  function badgeClass(label){
+    const s = (label||"").toLowerCase();
     if(s.includes("aline")) return "b-green";
     if(s.includes("ajus")) return "b-yellow";
     if(s.includes("ries")) return "b-orange";
     return "b-red";
-  }
-
-  function totalScore(){
-    let sumScore = 0;
-    DATA.sections.forEach(sec=>{
-      sec.questions.forEach(q=>{
-        sumScore += (state[q.id] ?? 0);
-      });
-    });
-    return sumScore;
-  }
-
-  function sectionScore(section){
-    return section.questions.reduce((acc, q)=> acc + (state[q.id] ?? 0), 0);
-  }
-
-  function getBandForSection(score){
-    const bands = DATA.sectionRubric.bands;
-    return bands.find(b => score >= b.min && score <= b.max) || bands[bands.length-1];
-  }
-
-  function getGlobalResult(score){
-    const arr = DATA.globalResults;
-    return arr.find(r => score >= r.min && score <= r.max) || arr[arr.length-1];
   }
 
   function updateLiveScore(){
@@ -207,11 +208,11 @@
   }
 
   function renderHeader(){
-    document.getElementById("title").textContent = DATA.meta.title;
-    document.getElementById("desc").textContent = DATA.meta.description;
+    document.getElementById("title").textContent = DATA.meta.title || "Auditoría del Hogar";
+    document.getElementById("desc").textContent = DATA.meta.description || "";
     const scaleText = DATA.scale.options.map(o => `${o.value} ${o.label}`).join(" · ");
     document.getElementById("scalePill").textContent = `Escala: ${scaleText}`;
-    document.getElementById("maxPill").textContent = `Total máx: ${DATA.meta.maxScore}`;
+    document.getElementById("maxPill").textContent = `Total máx: ${totalMaxScore()}`;
   }
 
   function renderForm(){
@@ -221,15 +222,19 @@
       const card = document.createElement("div");
       card.className = "card";
 
+      const subtitle = sec.subtitle || "";               // ✅ evita undefined
+      const focus = sec.diagnosticFocus || "";           // ✅ evita undefined
+      const secMax = sec.questions.length * maxOptionValue();
+
       const head = document.createElement("div");
       head.className = "sec-head";
       head.innerHTML = `
         <div>
-          <h2>${sec.title}</h2>
-          <div class="sec-sub">${sec.subtitle}</div>
-          <div class="sec-sub"><b>Enfoque:</b> ${sec.diagnosticFocus}</div>
+          <h2>${sec.title || "Sección"}</h2>
+          ${subtitle ? `<div class="sec-sub">${subtitle}</div>` : ""}
+          ${focus ? `<div class="sec-sub"><b>Enfoque:</b> ${focus}</div>` : ""}
         </div>
-        <span class="pill">Máx sección: ${sec.maxScore}</span>
+        <span class="pill">Máx sección: ${secMax}</span>
       `;
       card.appendChild(head);
 
@@ -237,6 +242,7 @@
         const qDiv = document.createElement("div");
         qDiv.className = "q";
 
+        // ✅ SOLO RADIO: no se puede escribir números
         const optionsHTML = DATA.scale.options.map(opt => `
           <label class="opt">
             <input type="radio" name="${q.id}" value="${opt.value}">
@@ -245,14 +251,14 @@
         `).join("");
 
         qDiv.innerHTML = `
-          <label>${idx+1}. ${q.text}</label>
-          <div class="opts" role="radiogroup" aria-label="${q.text}">
+          <label>${idx+1}. ${q.text || ""}</label>
+          <div class="opts" role="radiogroup" aria-label="${q.text || ""}">
             ${optionsHTML}
           </div>
         `;
         card.appendChild(qDiv);
 
-        qDiv.querySelectorAll(\`input[name="\${q.id}"]\`).forEach(inp=>{
+        qDiv.querySelectorAll(`input[name="${q.id}"]`).forEach(inp=>{
           inp.addEventListener("change", e=>{
             state[q.id] = Number(e.target.value);
             updateLiveScore();
@@ -264,69 +270,46 @@
     });
   }
 
-  function buildReportText(globalScore, globalResult, sectionsBreakdown, details){
-    const header = {
-      paciente: patientNameEl.value.trim(),
-      auditor: auditorNameEl.value.trim(),
-      fecha: auditDateEl.value,
-      observaciones: freeNotesEl.value.trim()
-    };
-
-    const now = new Date();
-    const dt = now.toLocaleString("es-CO", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
-
-    let lines = [];
+  function reportText(globalScore, globalBand, sectionsBreakdown, includeDetails){
+    const max = totalMaxScore();
+    const lines = [];
     lines.push("EVALUACIÓN — AUDITORÍA DEL HOGAR (SISTEMA ESTRUCTURAL)");
-    lines.push(`Generado: ${dt}`);
     lines.push("");
-
-    lines.push("DATOS DE AUDITORÍA");
-    lines.push(`Paciente: ${header.paciente || "(no especificado)"}`);
-    lines.push(`Auditor: ${header.auditor || "(no especificado)"}`);
-    lines.push(`Fecha: ${header.fecha || "(no especificada)"}`);
+    lines.push("DATOS");
+    lines.push(`Paciente: ${patientNameEl.value.trim() || "(no especificado)"}`);
+    lines.push(`Auditor: ${auditorNameEl.value.trim() || "(no especificado)"}`);
+    lines.push(`Fecha: ${auditDateEl.value || "(no especificada)"}`);
     lines.push("Observaciones:");
-    lines.push(header.observaciones ? header.observaciones : "(sin observaciones)");
+    lines.push(freeNotesEl.value.trim() || "(sin observaciones)");
     lines.push("");
-    lines.push("--------------------------------------------------");
-    lines.push("");
-
-    // Global
-    lines.push(`PUNTAJE TOTAL: ${globalScore} / ${DATA.meta.maxScore}`);
-    lines.push(`RESULTADO GLOBAL: ${globalResult.label} (${globalResult.min}–${globalResult.max})`);
-    lines.push(`Resumen: ${globalResult.summary}`);
-    lines.push("");
-
-    lines.push("ENSEÑANZA GLOBAL");
-    lines.push(`${globalResult.teaching.verse.quote} (${globalResult.teaching.verse.reference})`);
-    globalResult.teaching.text.forEach(t => lines.push("- " + t));
+    lines.push("RESULTADO GLOBAL");
+    lines.push(`Puntaje: ${globalScore} / ${max}`);
+    lines.push(`Diagnóstico: ${globalBand.label}`);
+    lines.push(`Resumen: ${globalBand.summary}`);
+    lines.push(`${globalBand.verse.quote} (${globalBand.verse.reference})`);
     lines.push("Acciones sugeridas:");
-    globalResult.teaching.actions.forEach(a => lines.push("• " + a));
+    globalBand.actions.forEach(a => lines.push("• " + a));
     lines.push("");
-
-    // Sections
-    lines.push("DIAGNÓSTICO POR SECCIONES (INDEPENDIENTE)");
+    lines.push("DIAGNÓSTICO POR SECCIONES");
     lines.push("--------------------------------------------------");
     sectionsBreakdown.forEach(sb=>{
-      lines.push(`${sb.title} — Puntaje: ${sb.score}/15 — ${sb.band.label}`);
-      lines.push(`Enfoque: ${sb.focus}`);
+      lines.push(`${sb.title} — ${sb.score}/${sb.max} — ${sb.band.label}`);
+      if(sb.focus) lines.push(`Enfoque: ${sb.focus}`);
       lines.push(`Resumen: ${sb.band.summary}`);
+      lines.push(`${sb.band.verse.quote} (${sb.band.verse.reference})`);
       lines.push("Recomendaciones:");
       sb.band.recommendation.forEach(r => lines.push("• " + r));
-      lines.push("Enseñanza sección:");
-      lines.push(`${sb.band.teaching.verse.quote} (${sb.band.teaching.verse.reference})`);
-      sb.band.teaching.points.forEach(p => lines.push("- " + p));
       lines.push("");
     });
 
-    // Details
-    if(details){
+    if(includeDetails){
       lines.push("RESPUESTAS POR PREGUNTA");
       lines.push("--------------------------------------------------");
       DATA.sections.forEach(sec=>{
-        lines.push(sec.title.toUpperCase());
-        sec.questions.forEach((q,i)=>{
+        lines.push((sec.title || "Sección").toUpperCase());
+        sec.questions.forEach((q, i)=>{
           const val = (state[q.id] ?? 0);
-          const opt = DATA.scale.options.find(o=>o.value===val);
+          const opt = DATA.scale.options.find(o=>Number(o.value)===val);
           const lab = opt ? opt.label : "Sin respuesta";
           lines.push(`${i+1}. ${q.text}`);
           lines.push(`   Respuesta: ${lab} (${val})`);
@@ -335,114 +318,86 @@
       });
     }
 
-    lines.push("NOTA PASTORAL");
-    lines.push("Este resultado no juzga personas; describe el sistema. El objetivo es orientar proceso, no imponer culpa.");
-    lines.push("");
-
     return lines.join("\n");
   }
 
   function showResult(){
-    const globalScore = totalScore();
-    const globalResult = getGlobalResult(globalScore);
+    const gScore = totalScore();
+    const gMax = totalMaxScore();
+    const gBand = bandGlobal(gScore, gMax);
+
+    const globalBadge = badgeClass(gBand.label);
 
     const sectionsBreakdown = DATA.sections.map(sec=>{
-      const score = sectionScore(sec);
-      const band = getBandForSection(score);
-      return { id: sec.id, title: sec.title, focus: sec.diagnosticFocus, score, band };
+      const sScore = sectionScore(sec);
+      const sMax = sec.questions.length * maxOptionValue();
+      const sBand = bandSection(sScore, sMax);
+      return {
+        title: sec.title || "Sección",
+        focus: sec.diagnosticFocus || "",
+        score: sScore,
+        max: sMax,
+        band: sBand
+      };
     });
 
-    const globalBadgeClass =
-      globalScore <= 30 ? "b-green" :
-      globalScore <= 60 ? "b-yellow" :
-      globalScore <= 95 ? "b-orange" : "b-red";
-
-    // Render section cards
-    const sectionCardsHTML = sectionsBreakdown.map(sb => {
-      const badgeClass = badgeForBandLabel(sb.band.label);
-      return `
-        <div class="mini">
-          <div class="row" style="justify-content:space-between;">
-            <h4 style="margin:0;">${sb.title}</h4>
-            <span class="badge ${badgeClass}">${sb.band.label}</span>
-          </div>
-          <div class="small"><b>Puntaje:</b> ${sb.score}/15</div>
-          <div class="small"><b>Enfoque:</b> ${sb.focus}</div>
-          <div class="small" style="margin-top:6px;"><b>Diagnóstico:</b> ${sb.band.summary}</div>
-
-          <div class="small" style="margin-top:8px;"><b>Recomendaciones:</b>
-            <ul style="margin:6px 0 0 18px; padding:0;">
-              ${sb.band.recommendation.map(r => `<li>${r}</li>`).join("")}
-            </ul>
-          </div>
-
-          <div class="small" style="margin-top:8px;">
-            <b>Enseñanza:</b><br>
-            <em>${sb.band.teaching.title}</em><br>
-            <span>${sb.band.teaching.verse.quote}</span>
-            <span class="muted">(${sb.band.teaching.verse.reference})</span>
-            <ul style="margin:6px 0 0 18px; padding:0;">
-              ${sb.band.teaching.points.map(p => `<li>${p}</li>`).join("")}
-            </ul>
-          </div>
+    const sectionCards = sectionsBreakdown.map(sb => `
+      <div class="mini">
+        <div style="display:flex; justify-content:space-between; gap:10px;">
+          <h4>${sb.title}</h4>
+          <span class="badge ${badgeClass(sb.band.label)}">${sb.band.label}</span>
         </div>
-      `;
-    }).join("");
+        <div class="small"><b>Puntaje:</b> ${sb.score}/${sb.max}</div>
+        ${sb.focus ? `<div class="small"><b>Enfoque:</b> ${sb.focus}</div>` : ""}
+        <div class="small" style="margin-top:6px;"><b>Resumen:</b> ${sb.band.summary}</div>
+        <blockquote>${sb.band.verse.quote}<br><span class="muted">(${sb.band.verse.reference})</span></blockquote>
+        <div class="small"><b>Recomendaciones:</b>
+          <ul style="margin:6px 0 0 18px; padding:0;">
+            ${sb.band.recommendation.map(r => `<li>${r}</li>`).join("")}
+          </ul>
+        </div>
+      </div>
+    `).join("");
 
     resultEl.style.display = "block";
     resultEl.innerHTML = `
-      <div class="row" style="justify-content:space-between; align-items:flex-start;">
+      <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start;">
         <div>
-          <span class="badge ${globalBadgeClass}">${globalResult.label}</span>
-          <div class="muted" style="margin-top:6px;">Puntaje total: <b>${globalScore}</b> / ${DATA.meta.maxScore}</div>
-          <div class="muted" style="margin-top:4px;">${globalResult.summary}</div>
+          <span class="badge ${globalBadge}">${gBand.label}</span>
+          <div class="muted" style="margin-top:6px;">Puntaje total: <b>${gScore}</b> / ${gMax}</div>
+          <div class="muted" style="margin-top:4px;">${gBand.summary}</div>
         </div>
-        <div class="small">Diagnóstico global + por secciones (independiente).</div>
       </div>
 
       <div style="margin-top:14px;">
         <h3 style="margin:0 0 8px;">Enseñanza global</h3>
-        <blockquote>${globalResult.teaching.verse.quote}<br><span class="muted">(${globalResult.teaching.verse.reference})</span></blockquote>
-        ${globalResult.teaching.text.map(t => `<div class="small" style="margin-top:6px;">• ${t}</div>`).join("")}
-        <div class="small" style="margin-top:8px;"><b>Acciones sugeridas:</b>
+        <blockquote>${gBand.verse.quote}<br><span class="muted">(${gBand.verse.reference})</span></blockquote>
+        <div class="small"><b>Acciones sugeridas:</b>
           <ul style="margin:6px 0 0 18px; padding:0;">
-            ${globalResult.teaching.actions.map(a => `<li>${a}</li>`).join("")}
+            ${gBand.actions.map(a => `<li>${a}</li>`).join("")}
           </ul>
         </div>
       </div>
 
-      <h3 style="margin-top:18px;">Diagnóstico por secciones (independiente)</h3>
-      <div class="grid">${sectionCardsHTML}</div>
+      <h3 style="margin-top:18px;">Diagnóstico por secciones</h3>
+      <div class="grid">${sectionCards}</div>
     `;
 
-    lastReportText = buildReportText(
-      globalScore,
-      globalResult,
-      sectionsBreakdown,
-      includeDetailsEl.checked
-    );
-
+    lastReportText = reportText(gScore, gBand, sectionsBreakdown, includeDetailsEl.checked);
     btnDownload.disabled = false;
     resultEl.scrollIntoView({behavior:"smooth"});
   }
 
   function downloadReport(){
     if(!lastReportText) return;
-
-    const patientPart = safeFilePart(patientNameEl.value);
-    const datePart = (auditDateEl.value || "").replaceAll("-","") || "sinfecha";
-    const filename = `evaluacion_${patientPart}_${datePart}.txt`;
-
     const blob = new Blob([lastReportText], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = url;
-    a.download = filename;
+    a.download = "evaluacion_hogar.txt";
     document.body.appendChild(a);
     a.click();
     a.remove();
-
     URL.revokeObjectURL(url);
   }
 
@@ -463,11 +418,11 @@
       if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
       DATA = await res.json();
       renderHeader();
-      setDefaultDate();
+      setDefaultDateOnlyIfEmpty();
       renderForm();
       updateLiveScore();
     }catch(err){
-      formEl.innerHTML = `<div class="card"><div class="error"><b>Error:</b> ${err.message}</div><div class="small">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta que este HTML.</div></div>`;
+      formEl.innerHTML = `<div class="card"><div class="error"><b>Error:</b> ${err.message}</div></div>`;
     }
   }
 

@@ -3,10 +3,7 @@
     "id": "ensenanza34",
     "title": "Auditoría del Hogar — Sistema Estructural",
     "subtitle": "Evaluación por secciones + diagnóstico global",
-    "description": "Este test no juzga personas. Lee el hogar como un sistema espiritual y estructural para identificar cargas, uniones y alineación. No hay respuestas “buenas” o “malas”; solo respuestas honestas.",
-    "maxScore": 135,
-    "version": "2.0.0",
-    "language": "es"
+    "description": "Este test no juzga personas. Lee el hogar como un sistema espiritual y estructural para identificar cargas, uniones y alineación."
   },
   "scale": {
     "type": "likert",
@@ -18,63 +15,101 @@
       { "label": "Casi siempre / Siempre", "value": 3 }
     ]
   },
-  "sectionRubric": {
-    "maxPerSection": 15,
-    "bands": [
+  "rubrics": {
+    "sectionBands": [
       {
-        "min": 0,
-        "max": 4,
+        "key": "alineado",
         "label": "Alineado",
         "summary": "La sección está estable. Mantener y cuidar lo que funciona.",
+        "verse": {
+          "reference": "Proverbios 4:23",
+          "quote": "“Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.”"
+        },
         "recommendation": [
           "Preservar hábitos que sostienen esta área.",
           "Hacer mantenimiento: no descuidar lo que hoy está firme."
-        ],
-        "teaching": {
-          "title": "Alineado: mantener el diseño",
-          "verse": { "reference": "Proverbios 4:23", "quote": "“Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.”" },
-          "points": [
-            "Lo que está estable debe guardarse, no asumirse.",
-            "La estabilidad también requiere mantenimiento."
-          ]
-        }
+        ]
       },
       {
-        "min": 5,
-        "max": 9,
+        "key": "ajuste",
         "label": "En ajuste",
         "summary": "Hay tensiones manejables. Requiere ajustes antes de que se acumule desgaste.",
+        "verse": {
+          "reference": "Hebreos 12:13",
+          "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”"
+        },
         "recommendation": [
           "Identificar la carga principal en esta área.",
           "Hacer 1–2 ajustes prácticos esta semana y volver a medir."
-        ],
-        "teaching": {
-          "title": "En ajuste: corregir a tiempo",
-          "verse": { "reference": "Hebreos 12:13", "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”" },
-          "points": [
-            "Ajustar a tiempo evita fisuras futuras.",
-            "Un pequeño ajuste hoy evita un gran proceso mañana."
-          ]
-        }
+        ]
       },
       {
-        "min": 10,
-        "max": 15,
+        "key": "riesgo",
         "label": "En riesgo",
-        "summary": "Zona crítica. Hay sobrecarga o ruptura de transferencia. Se recomienda acompañamiento y proceso.",
+        "summary": "Zona crítica. Se recomienda acompañamiento y proceso.",
+        "verse": {
+          "reference": "Isaías 42:3",
+          "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”"
+        },
         "recommendation": [
           "Detener el ritmo reactivo y volver al diseño.",
-          "Priorizar restauración de uniones antes de exigir desempeño.",
+          "Restaurar uniones antes de exigir desempeño.",
           "Buscar acompañamiento pastoral/discipulado por un periodo."
-        ],
-        "teaching": {
-          "title": "En riesgo: proceso antes de presión",
-          "verse": { "reference": "Isaías 42:3", "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”" },
-          "points": [
-            "No se corrige con fuerza lo que necesita restauración.",
-            "La presión sobre una zona en riesgo acelera la fractura."
-          ]
-        }
+        ]
+      }
+    ],
+    "globalBands": [
+      {
+        "key": "g_alineado",
+        "label": "Hogar alineado",
+        "summary": "No por ausencia de peso, sino por correcto diseño.",
+        "verse": {
+          "reference": "Mateo 11:30",
+          "quote": "“Porque mi yugo es fácil, y ligera mi carga.”"
+        },
+        "actions": [
+          "Mantener comunión y transferencia de cargas al fundamento.",
+          "Cuidar uniones: comunicación, culto y reposo."
+        ]
+      },
+      {
+        "key": "g_ajuste",
+        "label": "Hogar en ajuste",
+        "summary": "Funciona, pero con tensiones acumuladas.",
+        "verse": {
+          "reference": "Hebreos 12:13",
+          "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”"
+        },
+        "actions": [
+          "Detectar la sección más alta y trabajarla primero.",
+          "Hacer ajustes concretos esta semana y volver a medir."
+        ]
+      },
+      {
+        "key": "g_riesgo",
+        "label": "Hogar en riesgo",
+        "summary": "La estructura avisa antes de colapsar.",
+        "verse": {
+          "reference": "Salmos 11:3",
+          "quote": "“Si fueren destruidos los fundamentos, ¿Qué ha de hacer el justo?”"
+        },
+        "actions": [
+          "Detener el ritmo reactivo y volver al diseño.",
+          "Buscar acompañamiento pastoral/discipulado con plan semanal."
+        ]
+      },
+      {
+        "key": "g_critico",
+        "label": "Hogar crítico (requiere proceso)",
+        "summary": "Requiere proceso, no corrección inmediata.",
+        "verse": {
+          "reference": "Isaías 42:3",
+          "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”"
+        },
+        "actions": [
+          "Priorizar restauración de uniones antes de exigir desempeño.",
+          "Establecer proceso pastoral con metas pequeñas y consistentes."
+        ]
       }
     ]
   },
@@ -83,8 +118,7 @@
       "id": "s1",
       "title": "Lente inicial",
       "subtitle": "Cómo estamos leyendo nuestro hogar",
-      "maxScore": 15,
-      "diagnosticFocus": "Lente: culpa vs diseño",
+      "diagnosticFocus": "Culpa vs diseño",
       "questions": [
         { "id": "s1_q1", "text": "Vivimos reaccionando a problemas más que edificando procesos." },
         { "id": "s1_q2", "text": "El cansancio es constante aun cuando no hay crisis grandes." },
@@ -95,185 +129,16 @@
     },
     {
       "id": "s2",
-      "title": "Modelo del pórtico",
-      "subtitle": "Comprensión del diseño del hogar",
-      "maxScore": 15,
-      "diagnosticFocus": "Modelo: funciones y transferencia",
-      "questions": [
-        { "id": "s2_q1", "text": "No tenemos claro quién debe sostener qué." },
-        { "id": "s2_q2", "text": "Las cargas emocionales recaen siempre en la misma persona." },
-        { "id": "s2_q3", "text": "Competimos más de lo que transferimos." },
-        { "id": "s2_q4", "text": "Cristo es referencia espiritual, pero no fundamento práctico." },
-        { "id": "s2_q5", "text": "Los conflictos se repiten sin aprendizaje." }
-      ]
-    },
-    {
-      "id": "s3",
-      "title": "Columna (varón)",
-      "subtitle": "Alineación y transferencia al fundamento",
-      "maxScore": 15,
-      "diagnosticFocus": "Columna: verticalidad, responsabilidad, comunión",
-      "questions": [
-        { "id": "s3_q1", "text": "El varón evita o posterga decisiones importantes." },
-        { "id": "s3_q2", "text": "No hay comunión activa con Cristo." },
-        { "id": "s3_q3", "text": "Las cargas no se transfieren al fundamento." },
-        { "id": "s3_q4", "text": "Hay desconexión emocional o espiritual." },
-        { "id": "s3_q5", "text": "Se tiende a la pasividad o al control." }
-      ]
-    },
-    {
-      "id": "s4",
-      "title": "Viga (mujer)",
-      "subtitle": "Percepción, canalización y reposo",
-      "maxScore": 15,
-      "diagnosticFocus": "Viga: sensibilidad funcional, descanso y transferencia",
-      "questions": [
-        { "id": "s4_q1", "text": "Absorbo cargas emocionales constantemente." },
-        { "id": "s4_q2", "text": "Percibo tensiones, pero no sé dónde descargarlas." },
-        { "id": "s4_q3", "text": "Vivo cansancio emocional recurrente." },
-        { "id": "s4_q4", "text": "Me siento responsable de que todo funcione." },
-        { "id": "s4_q5", "text": "Me cuesta reposar interiormente." }
-      ]
-    },
-    {
-      "id": "s5",
       "title": "Uniones críticas",
       "subtitle": "Comunión, Congregación e Intersección",
-      "maxScore": 15,
-      "diagnosticFocus": "Uniones: anclaje, comunicación y cobertura",
+      "diagnosticFocus": "Anclaje, comunicación y cobertura",
       "questions": [
-        { "id": "s5_q1", "text": "La oración es ritual, no transferencia real." },
-        { "id": "s5_q2", "text": "Falta dirección espiritual clara." },
-        { "id": "s5_q3", "text": "La comunicación es reactiva o defensiva." },
-        { "id": "s5_q4", "text": "Evitamos conversaciones importantes." },
-        { "id": "s5_q5", "text": "No hay reposo emocional." }
+        { "id": "s2_q1", "text": "La oración es ritual, no transferencia real." },
+        { "id": "s2_q2", "text": "Falta dirección espiritual clara." },
+        { "id": "s2_q3", "text": "La comunicación es reactiva o defensiva." },
+        { "id": "s2_q4", "text": "Evitamos conversaciones importantes." },
+        { "id": "s2_q5", "text": "No hay reposo emocional." }
       ]
-    },
-    {
-      "id": "s6",
-      "title": "Cargas y fuerzas",
-      "subtitle": "Peso y presión en el hogar",
-      "maxScore": 15,
-      "diagnosticFocus": "Cargas: distribución y sobrecarga",
-      "questions": [
-        { "id": "s6_q1", "text": "Las crisis desestabilizan todo el sistema." },
-        { "id": "s6_q2", "text": "No distinguimos cargas normales de sobrecargas." },
-        { "id": "s6_q3", "text": "Las presiones externas generan conflicto interno." },
-        { "id": "s6_q4", "text": "Todo se siente urgente." },
-        { "id": "s6_q5", "text": "No redistribuimos el peso." }
-      ]
-    },
-    {
-      "id": "s7",
-      "title": "Respuesta del sistema",
-      "subtitle": "Cómo responde el hogar bajo presión",
-      "maxScore": 15,
-      "diagnosticFocus": "Respuesta: deriva y fisuras",
-      "questions": [
-        { "id": "s7_q1", "text": "Hay inclinación emocional constante." },
-        { "id": "s7_q2", "text": "Tomamos decisiones por presión." },
-        { "id": "s7_q3", "text": "El cansancio es acumulativo." },
-        { "id": "s7_q4", "text": "Se perciben fisuras relacionales." },
-        { "id": "s7_q5", "text": "Hay desgaste sin causa clara." }
-      ]
-    },
-    {
-      "id": "s8",
-      "title": "Material y mezcla",
-      "subtitle": "Con qué estamos construyendo",
-      "maxScore": 15,
-      "diagnosticFocus": "Material: concreto vs atajos",
-      "questions": [
-        { "id": "s8_q1", "text": "Usamos fe para justificar desorden." },
-        { "id": "s8_q2", "text": "Hay Palabra, pero poca vida." },
-        { "id": "s8_q3", "text": "Evitamos procesos difíciles." },
-        { "id": "s8_q4", "text": "Aceleramos etapas." },
-        { "id": "s8_q5", "text": "La vida se activa desde la carne." }
-      ]
-    },
-    {
-      "id": "s9",
-      "title": "Fuente del agua",
-      "subtitle": "Desde dónde activamos la vida",
-      "maxScore": 15,
-      "diagnosticFocus": "Fuente: Cristo vs cisterna",
-      "questions": [
-        { "id": "s9_q1", "text": "Decidimos desde el temor o el control." },
-        { "id": "s9_q2", "text": "La lógica gobierna sobre la comunión." },
-        { "id": "s9_q3", "text": "Hay estancamiento espiritual." },
-        { "id": "s9_q4", "text": "Falta gozo sostenido." },
-        { "id": "s9_q5", "text": "Cristo no es la fuente diaria." }
-      ]
-    }
-  ],
-  "globalResults": [
-    {
-      "min": 0,
-      "max": 30,
-      "label": "Hogar alineado",
-      "summary": "No por ausencia de peso, sino por correcto diseño.",
-      "teaching": {
-        "verse": { "reference": "Mateo 11:30", "quote": "“Porque mi yugo es fácil, y ligera mi carga.”" },
-        "text": [
-          "Un hogar alineado no es un hogar sin peso, sino un hogar donde el peso encuentra soporte.",
-          "La estabilidad no nace de hacer más, sino de funcionar conforme al diseño."
-        ],
-        "actions": [
-          "Mantener comunión y transferencia de cargas al fundamento.",
-          "Cuidar uniones: comunicación, culto y reposo."
-        ]
-      }
-    },
-    {
-      "min": 31,
-      "max": 60,
-      "label": "Hogar en ajuste",
-      "summary": "Funciona, pero con tensiones acumuladas.",
-      "teaching": {
-        "verse": { "reference": "Hebreos 12:13", "quote": "“Enderezad las sendas para vuestros pies… para que… sea sanado.”" },
-        "text": [
-          "El sistema funciona, pero hay tensiones acumuladas.",
-          "Ajustar a tiempo evita fisuras futuras."
-        ],
-        "actions": [
-          "Detectar la sección más alta y trabajarla primero.",
-          "Hacer ajustes concretos esta semana y volver a medir."
-        ]
-      }
-    },
-    {
-      "min": 61,
-      "max": 95,
-      "label": "Hogar en riesgo",
-      "summary": "La estructura avisa antes de colapsar.",
-      "teaching": {
-        "verse": { "reference": "Salmos 11:3", "quote": "“Si fueren destruidos los fundamentos, ¿Qué ha de hacer el justo?”" },
-        "text": [
-          "La estructura todavía está en pie, pero ya avisa.",
-          "El problema no es falta de amor: es mala distribución de carga y ruptura de uniones."
-        ],
-        "actions": [
-          "Detener el ritmo reactivo y volver al diseño.",
-          "Buscar acompañamiento pastoral/discipulado con plan semanal."
-        ]
-      }
-    },
-    {
-      "min": 96,
-      "max": 135,
-      "label": "Hogar crítico (requiere proceso)",
-      "summary": "Requiere proceso, no corrección inmediata.",
-      "teaching": {
-        "verse": { "reference": "Isaías 42:3", "quote": "“No quebrará la caña cascada, ni apagará el pábilo que humeare…”" },
-        "text": [
-          "Este nivel no pide corrección dura; pide proceso.",
-          "No necesita presión; necesita acompañamiento, tiempo, restauración y reposo."
-        ],
-        "actions": [
-          "Priorizar restauración de uniones antes de exigir desempeño.",
-          "Establecer un proceso pastoral con metas pequeñas y consistentes."
-        ]
-      }
     }
   ]
 }
