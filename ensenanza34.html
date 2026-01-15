@@ -51,6 +51,21 @@
     .small{ font-size:13px; color:var(--muted); }
     .error{ color:var(--danger); }
     .topnote{ margin-top:10px; }
+    .fieldgrid{ display:grid; grid-template-columns: 1fr; gap:12px; margin-top:12px; }
+    @media(min-width:800px){ .fieldgrid{ grid-template-columns: 1fr 1fr; } }
+    .field{ display:flex; flex-direction:column; gap:6px; }
+    .field label{ font-weight:700; font-size:13px; color: var(--text); }
+    .field input, .field textarea{
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
+    }
+    .field textarea{ min-height: 90px; resize: vertical; }
+    .hint{ font-size:12px; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -61,6 +76,40 @@
       <div class="row topnote">
         <span class="pill" id="scalePill"></span>
         <span class="pill" id="maxPill"></span>
+      </div>
+    </div>
+
+    <!-- DATOS DE AUDITORÍA -->
+    <div class="card" id="auditHeaderCard">
+      <div class="sec-head">
+        <div>
+          <h2>Datos de auditoría</h2>
+          <div class="sec-sub">Estos datos se incluirán en el archivo descargable. No se envían a ningún servidor.</div>
+        </div>
+        <span class="pill">Cabecera</span>
+      </div>
+
+      <div class="fieldgrid">
+        <div class="field">
+          <label for="patientName">Nombre del paciente</label>
+          <input id="patientName" type="text" placeholder="Ej: Juan y María Pérez" />
+          <div class="hint">Puede ser el nombre del hogar o de la pareja.</div>
+        </div>
+
+        <div class="field">
+          <label for="auditorName">Nombre del auditor</label>
+          <input id="auditorName" type="text" placeholder="Ej: Pastor / Consejero / Auditor" />
+        </div>
+
+        <div class="field">
+          <label for="auditDate">Fecha</label>
+          <input id="auditDate" type="date" />
+        </div>
+
+        <div class="field">
+          <label for="freeNotes">Observaciones libres</label>
+          <textarea id="freeNotes" placeholder="Escriba aquí observaciones, contexto, motivo de consulta, acuerdos, etc."></textarea>
+        </div>
       </div>
     </div>
 
@@ -84,13 +133,36 @@
   const JSON_PATH = "auditoria-hogar.json";
 
   let DATA = null;
-  const state = {}; // questionId -> value
-  let lastReportText = ""; // para descarga
+  const state = {};
+  let lastReportText = "";
 
   const formEl = document.getElementById("form");
   const resultEl = document.getElementById("result");
   const liveScoreEl = document.getElementById("liveScore");
   const btnDownload = document.getElementById("btnDownload");
+
+  // Inputs cabecera
+  const patientNameEl = document.getElementById("patientName");
+  const auditorNameEl = document.getElementById("auditorName");
+  const auditDateEl = document.getElementById("auditDate");
+  const freeNotesEl = document.getElementById("freeNotes");
+
+  function setDefaultDate(){
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth()+1).padStart(2,"0");
+    const dd = String(now.getDate()).padStart(2,"0");
+    auditDateEl.value = `${yyyy}-${mm}-${dd}`;
+  }
+
+  function safeFilePart(str){
+    return (str || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-áéíóúüñ]/gi,"")
+      .slice(0,40) || "paciente";
+  }
 
   function badgeForBandLabel(label){
     const s = (label || "").toLowerCase();
@@ -99,8 +171,6 @@
     if(s.includes("ries")) return "b-orange";
     return "b-red";
   }
-
-  function sum(values){ return values.reduce((a,b)=>a+b,0); }
 
   function totalScore(){
     let sumScore = 0;
@@ -176,7 +246,7 @@
         `;
         card.appendChild(qDiv);
 
-        qDiv.querySelectorAll(`input[name="${q.id}"]`).forEach(inp=>{
+        qDiv.querySelectorAll(\`input[name="\${q.id}"]\`).forEach(inp=>{
           inp.addEventListener("change", e=>{
             state[q.id] = Number(e.target.value);
             updateLiveScore();
@@ -189,20 +259,38 @@
   }
 
   function buildReportText(globalScore, globalResult, sectionsBreakdown){
+    const header = {
+      paciente: patientNameEl.value.trim(),
+      auditor: auditorNameEl.value.trim(),
+      fecha: auditDateEl.value,
+      observaciones: freeNotesEl.value.trim()
+    };
+
     const now = new Date();
     const dt = now.toLocaleString("es-CO", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
 
     let lines = [];
     lines.push("EVALUACIÓN — AUDITORÍA DEL HOGAR (SISTEMA ESTRUCTURAL)");
-    lines.push(`Fecha/Hora: ${dt}`);
+    lines.push(`Generado: ${dt}`);
     lines.push("");
+
+    lines.push("DATOS DE AUDITORÍA");
+    lines.push(`Paciente: ${header.paciente || "(no especificado)"}`);
+    lines.push(`Auditor: ${header.auditor || "(no especificado)"}`);
+    lines.push(`Fecha: ${header.fecha || "(no especificada)"}`);
+    lines.push("Observaciones:");
+    lines.push(header.observaciones ? header.observaciones : "(sin observaciones)");
+    lines.push("");
+    lines.push("--------------------------------------------------");
+    lines.push("");
+
     lines.push(`PUNTAJE TOTAL: ${globalScore} / ${DATA.meta.maxScore}`);
     lines.push(`RESULTADO GLOBAL: ${globalResult.label} (${globalResult.min}–${globalResult.max})`);
     lines.push(`Resumen: ${globalResult.summary}`);
     lines.push("");
 
     lines.push("ENSEÑANZA GLOBAL");
-    lines.push(globalResult.teaching.verse.quote + " (" + globalResult.teaching.verse.reference + ")");
+    lines.push(`${globalResult.teaching.verse.quote} (${globalResult.teaching.verse.reference})`);
     globalResult.teaching.text.forEach(t => lines.push("- " + t));
     lines.push("Llamado:");
     globalResult.teaching.callToAction.forEach(a => lines.push("• " + a));
@@ -230,20 +318,12 @@
     const globalScore = totalScore();
     const globalResult = getGlobalResult(globalScore);
 
-    // secciones
     const sectionsBreakdown = DATA.sections.map(sec=>{
       const score = sectionScore(sec);
       const band = getBandForSection(score);
-      return {
-        id: sec.id,
-        title: sec.title,
-        focus: sec.diagnosticFocus,
-        score,
-        band
-      };
+      return { id: sec.id, title: sec.title, focus: sec.diagnosticFocus, score, band };
     });
 
-    // UI: tarjetas por sección
     const sectionCardsHTML = sectionsBreakdown.map(sb => {
       const badgeClass = badgeForBandLabel(sb.band.label);
       return `
@@ -264,7 +344,6 @@
       `;
     }).join("");
 
-    // UI: global
     const globalBadgeClass =
       globalScore <= 30 ? "b-green" :
       globalScore <= 60 ? "b-yellow" :
@@ -286,16 +365,13 @@
         <blockquote>${globalResult.teaching.verse.quote}<br><span class="muted">(${globalResult.teaching.verse.reference})</span></blockquote>
         ${globalResult.teaching.text.map(t => `<p>${t}</p>`).join("")}
         <p><b>Llamado:</b></p>
-        <ul>
-          ${globalResult.teaching.callToAction.map(a => `<li>${a}</li>`).join("")}
-        </ul>
+        <ul>${globalResult.teaching.callToAction.map(a => `<li>${a}</li>`).join("")}</ul>
       </div>
 
       <h3 style="margin-top:18px;">Diagnóstico por secciones</h3>
       <div class="grid">${sectionCardsHTML}</div>
     `;
 
-    // construir reporte descargable
     lastReportText = buildReportText(globalScore, globalResult, sectionsBreakdown);
     btnDownload.disabled = false;
 
@@ -305,14 +381,12 @@
   function downloadReport(){
     if(!lastReportText) return;
 
+    const patientPart = safeFilePart(patientNameEl.value);
+    const datePart = (auditDateEl.value || "").replaceAll("-","") || "sinfecha";
+    const filename = `evaluacion_${patientPart}_${datePart}.txt`;
+
     const blob = new Blob([lastReportText], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth()+1).padStart(2,"0");
-    const d = String(now.getDate()).padStart(2,"0");
-    const filename = `evaluacion_auditoria_hogar_${y}${m}${d}.txt`;
 
     const a = document.createElement("a");
     a.href = url;
@@ -332,6 +406,8 @@
     resultEl.innerHTML = "";
     btnDownload.disabled = true;
     lastReportText = "";
+
+    // no borro cabecera automáticamente para no perder datos
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
@@ -341,6 +417,7 @@
       if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
       DATA = await res.json();
       renderHeader();
+      setDefaultDate();
       renderForm();
       updateLiveScore();
     }catch(err){
