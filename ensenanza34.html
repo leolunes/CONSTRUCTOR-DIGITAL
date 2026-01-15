@@ -1,263 +1,481 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Auditoría del Hogar — Sistema Estructural</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="estilo.css">
 
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      margin: 0;
-      padding: 20px;
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --accent:#5eead4; --line:rgba(255,255,255,.10);
+      --green:rgba(94,234,212,.18); --yellow:rgba(250,204,21,.14);
+      --orange:rgba(251,146,60,.14); --red:rgba(251,113,133,.14);
+      --danger:#fb7185;
     }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      background: #020617;
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); }
+    .wrap{ max-width: 1000px; margin: 0 auto; padding: 24px; }
+    .hero{ background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08)); border:1px solid var(--line); border-radius:18px; padding:18px; }
+    h1{ margin:0 0 6px; font-size:28px; }
+    .sub{ margin:0; color:var(--muted); line-height:1.4; }
+    .row{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .pill{ display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:var(--muted); font-size:12px; }
+    .card{ margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; }
+    .sec-head{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .sec-head h2{ margin:0; font-size:18px; }
+    .sec-sub{ color:var(--muted); font-size:13px; margin-top:4px; }
+    .q{ padding:12px 0; border-top:1px solid var(--line); }
+    .q:first-of-type{ border-top:none; }
+    .q label{ display:block; font-weight:650; }
+    .opts{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+    .opt{ display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.14); cursor:pointer; user-select:none; }
+    .opt input{ cursor:pointer; }
+    .actions{ margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap; }
+    button{ border:0; border-radius:14px; padding:12px 14px; font-weight:800; cursor:pointer; }
+    .primary{ background:var(--accent); color:#071018; }
+    .ghost{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18); }
+    .muted{ color:var(--muted); }
+    .result{ margin-top:16px; border:1px solid var(--line); border-radius:18px; padding:16px; background:rgba(255,255,255,.04); display:none; }
+    .badge{ display:inline-block; padding:6px 10px; border-radius:999px; font-weight:900; font-size:12px; letter-spacing:.4px; border:1px solid rgba(255,255,255,.12); }
+    .b-green{ background:var(--green); color:var(--accent); border-color:rgba(94,234,212,.35); }
+    .b-yellow{ background:var(--yellow); color:#fde68a; border-color:rgba(250,204,21,.30); }
+    .b-orange{ background:var(--orange); color:#fdba74; border-color:rgba(251,146,60,.30); }
+    .b-red{ background:var(--red); color:var(--danger); border-color:rgba(251,113,133,.30); }
+    blockquote{ margin:10px 0; padding:10px 12px; border-left:3px solid rgba(94,234,212,.45); background:rgba(94,234,212,.06); border-radius:10px; }
+    .grid{ display:grid; grid-template-columns: 1fr; gap:12px; }
+    @media(min-width:900px){ .grid{ grid-template-columns: 1fr 1fr; } }
+    .mini{ border:1px solid var(--line); border-radius:16px; padding:12px; background:rgba(255,255,255,.03); }
+    .mini h4{ margin:0 0 6px; }
+    .small{ font-size:13px; color:var(--muted); line-height:1.4; }
+    .error{ color:var(--danger); }
+    .fieldgrid{ display:grid; grid-template-columns: 1fr; gap:12px; margin-top:12px; }
+    @media(min-width:800px){ .fieldgrid{ grid-template-columns: 1fr 1fr; } }
+    .field{ display:flex; flex-direction:column; gap:6px; }
+    .field label{ font-weight:700; font-size:13px; color: var(--text); }
+    .field input, .field textarea{
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.14);
       border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 0 30px rgba(0,0,0,.4);
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
     }
-
-    h1 {
-      margin-top: 0;
-      text-align: center;
-    }
-
-    .meta {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .meta input, .meta textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      background: #020617;
-      color: #e5e7eb;
-      border: 1px solid #334155;
-    }
-
-    .section {
-      margin-bottom: 28px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #334155;
-    }
-
-    .question {
-      margin: 12px 0;
-    }
-
-    .question label {
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .question input {
-      width: 80px;
-    }
-
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .primary { background: #22c55e; color: #020617; }
-    .secondary { background: #38bdf8; color: #020617; }
-    .danger { background: #ef4444; color: white; }
-
-    .result {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: 10px;
-      background: #020617;
-      border: 1px solid #334155;
-      display: none;
-    }
-
-    .error {
-      background: #7f1d1d;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
+    .field textarea{ min-height: 90px; resize: vertical; }
+    .hint{ font-size:12px; color: var(--muted); }
+    .toggleRow{ margin-top:10px; display:flex; align-items:center; gap:10px; }
+    .toggleRow input{ transform: scale(1.2); }
   </style>
 </head>
-
 <body>
-<div class="container">
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="title">Auditoría del Hogar — Sistema Estructural</h1>
+      <p class="sub" id="desc"></p>
+      <div class="row" style="margin-top:10px;">
+        <span class="pill" id="scalePill"></span>
+        <span class="pill" id="maxPill"></span>
+      </div>
+    </div>
 
-  <h1>Auditoría del Hogar — Sistema Estructural</h1>
+    <!-- CABECERA -->
+    <div class="card">
+      <div class="sec-head">
+        <div>
+          <h2>Datos de auditoría</h2>
+          <div class="sec-sub">Se incluirán en el informe descargable. No se envían a ningún servidor.</div>
+        </div>
+        <span class="pill">Cabecera</span>
+      </div>
 
-  <div class="meta">
-    <input id="paciente" placeholder="Nombre del hogar / paciente">
-    <input id="auditor" placeholder="Nombre del auditor">
-    <input id="fecha" type="date">
-    <textarea id="observaciones" rows="3" placeholder="Observaciones generales"></textarea>
+      <div class="fieldgrid">
+        <div class="field">
+          <label for="patientName">Nombre del paciente</label>
+          <input id="patientName" type="text" placeholder="Ej: Juan y María Pérez" />
+          <div class="hint">Puede ser el nombre del hogar o de la pareja.</div>
+        </div>
+
+        <div class="field">
+          <label for="auditorName">Nombre del auditor</label>
+          <input id="auditorName" type="text" placeholder="Ej: Pastor / Consejero / Auditor" />
+        </div>
+
+        <div class="field">
+          <label for="auditDate">Fecha</label>
+          <input id="auditDate" type="date" />
+        </div>
+
+        <div class="field">
+          <label for="freeNotes">Observaciones libres</label>
+          <textarea id="freeNotes" placeholder="Contexto, motivo de consulta, acuerdos, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="toggleRow">
+        <input type="checkbox" id="includeDetails" checked />
+        <label for="includeDetails" class="small">Incluir respuestas por pregunta al final del informe descargado</label>
+      </div>
+    </div>
+
+    <div id="form"></div>
+
+    <div class="actions">
+      <button class="primary" id="btnResult">Ver resultado</button>
+      <button class="ghost" id="btnDownload" disabled>Descargar evaluación</button>
+      <button class="ghost" id="btnReset">Reiniciar</button>
+      <span class="muted" id="liveScore">Puntaje actual: 0</span>
+    </div>
+
+    <div id="result" class="result"></div>
+
+    <p class="small" style="margin-top:14px;">
+      Recomendación pastoral: interpreta el resultado acompañado. No entregues el número como sentencia; tradúcelo a lenguaje de diseño.
+    </p>
   </div>
-
-  <div id="error" class="error" style="display:none"></div>
-
-  <div id="form"></div>
-
-  <div class="buttons">
-    <button class="primary" onclick="verResultado()">Ver resultado</button>
-    <button class="secondary" onclick="descargarEvaluacion()">Descargar evaluación</button>
-    <button class="danger" onclick="reiniciar()">Reiniciar</button>
-    <strong>Puntaje actual: <span id="score">0</span></strong>
-  </div>
-
-  <div id="resultado" class="result"></div>
-
-  <p style="margin-top:16px; font-size:0.9em; opacity:.8">
-    Recomendación pastoral: interprete el resultado acompañado.  
-    No entregue el número como sentencia; tradúzcalo a lenguaje de diseño.
-  </p>
-
-</div>
 
 <script>
-/* =========================================================
-   CONFIGURACIÓN CLAVE — OPCIÓN A
-   ========================================================= */
-const JSON_PATH = "ensenanza34.json";
+  // ✅ OPCIÓN A: el JSON se llama exactamente como el archivo local
+  const JSON_PATH = "ensenanza34.json";
 
-/* ========================================================= */
+  let DATA = null;
+  const state = {};
+  let lastReportText = "";
 
-let DATA = null;
-let lastReportText = "";
+  const formEl = document.getElementById("form");
+  const resultEl = document.getElementById("result");
+  const liveScoreEl = document.getElementById("liveScore");
+  const btnDownload = document.getElementById("btnDownload");
 
-async function init(){
-  try{
-    const res = await fetch(JSON_PATH);
-    if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
-    DATA = await res.json();
-    renderForm();
-    setDefaultDate();
-  }catch(e){
-    showError(e.message);
+  // Inputs cabecera
+  const patientNameEl = document.getElementById("patientName");
+  const auditorNameEl = document.getElementById("auditorName");
+  const auditDateEl = document.getElementById("auditDate");
+  const freeNotesEl = document.getElementById("freeNotes");
+  const includeDetailsEl = document.getElementById("includeDetails");
+
+  function setDefaultDate(){
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth()+1).padStart(2,"0");
+    const dd = String(now.getDate()).padStart(2,"0");
+    auditDateEl.value = `${yyyy}-${mm}-${dd}`;
   }
-}
 
-function showError(msg){
-  const el = document.getElementById("error");
-  el.style.display = "block";
-  el.textContent = "Error: " + msg;
-}
+  function safeFilePart(str){
+    return (str || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-áéíóúüñ]/gi,"")
+      .slice(0,40) || "paciente";
+  }
 
-function setDefaultDate(){
-  document.getElementById("fecha").valueAsDate = new Date();
-}
+  function badgeForBandLabel(label){
+    const s = (label || "").toLowerCase();
+    if(s.includes("aline")) return "b-green";
+    if(s.includes("ajus")) return "b-yellow";
+    if(s.includes("ries")) return "b-orange";
+    return "b-red";
+  }
 
-function renderForm(){
-  const form = document.getElementById("form");
-  form.innerHTML = "";
+  function totalScore(){
+    let sumScore = 0;
+    DATA.sections.forEach(sec=>{
+      sec.questions.forEach(q=>{
+        sumScore += (state[q.id] ?? 0);
+      });
+    });
+    return sumScore;
+  }
 
-  DATA.sections.forEach((sec, si)=>{
-    const div = document.createElement("div");
-    div.className = "section";
-    div.innerHTML = `<h3>${sec.title}</h3><p>${sec.description}</p>`;
+  function sectionScore(section){
+    return section.questions.reduce((acc, q)=> acc + (state[q.id] ?? 0), 0);
+  }
 
-    sec.questions.forEach((q, qi)=>{
-      const qDiv = document.createElement("div");
-      qDiv.className = "question";
-      qDiv.innerHTML = `
-        <label>${q.text}</label>
-        <input type="number" min="0" max="${q.max}" value="0"
-          onchange="updateScore()" 
-          data-section="${si}" 
-          data-question="${qi}">
+  function getBandForSection(score){
+    const bands = DATA.sectionRubric.bands;
+    return bands.find(b => score >= b.min && score <= b.max) || bands[bands.length-1];
+  }
+
+  function getGlobalResult(score){
+    const arr = DATA.globalResults;
+    return arr.find(r => score >= r.min && score <= r.max) || arr[arr.length-1];
+  }
+
+  function updateLiveScore(){
+    liveScoreEl.textContent = `Puntaje actual: ${totalScore()}`;
+  }
+
+  function renderHeader(){
+    document.getElementById("title").textContent = DATA.meta.title;
+    document.getElementById("desc").textContent = DATA.meta.description;
+    const scaleText = DATA.scale.options.map(o => `${o.value} ${o.label}`).join(" · ");
+    document.getElementById("scalePill").textContent = `Escala: ${scaleText}`;
+    document.getElementById("maxPill").textContent = `Total máx: ${DATA.meta.maxScore}`;
+  }
+
+  function renderForm(){
+    formEl.innerHTML = "";
+
+    DATA.sections.forEach(sec=>{
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const head = document.createElement("div");
+      head.className = "sec-head";
+      head.innerHTML = `
+        <div>
+          <h2>${sec.title}</h2>
+          <div class="sec-sub">${sec.subtitle}</div>
+          <div class="sec-sub"><b>Enfoque:</b> ${sec.diagnosticFocus}</div>
+        </div>
+        <span class="pill">Máx sección: ${sec.maxScore}</span>
       `;
-      div.appendChild(qDiv);
+      card.appendChild(head);
+
+      sec.questions.forEach((q, idx)=>{
+        const qDiv = document.createElement("div");
+        qDiv.className = "q";
+
+        const optionsHTML = DATA.scale.options.map(opt => `
+          <label class="opt">
+            <input type="radio" name="${q.id}" value="${opt.value}">
+            <span>${opt.label} (${opt.value})</span>
+          </label>
+        `).join("");
+
+        qDiv.innerHTML = `
+          <label>${idx+1}. ${q.text}</label>
+          <div class="opts" role="radiogroup" aria-label="${q.text}">
+            ${optionsHTML}
+          </div>
+        `;
+        card.appendChild(qDiv);
+
+        qDiv.querySelectorAll(\`input[name="\${q.id}"]\`).forEach(inp=>{
+          inp.addEventListener("change", e=>{
+            state[q.id] = Number(e.target.value);
+            updateLiveScore();
+          });
+        });
+      });
+
+      formEl.appendChild(card);
+    });
+  }
+
+  function buildReportText(globalScore, globalResult, sectionsBreakdown, details){
+    const header = {
+      paciente: patientNameEl.value.trim(),
+      auditor: auditorNameEl.value.trim(),
+      fecha: auditDateEl.value,
+      observaciones: freeNotesEl.value.trim()
+    };
+
+    const now = new Date();
+    const dt = now.toLocaleString("es-CO", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
+
+    let lines = [];
+    lines.push("EVALUACIÓN — AUDITORÍA DEL HOGAR (SISTEMA ESTRUCTURAL)");
+    lines.push(`Generado: ${dt}`);
+    lines.push("");
+
+    lines.push("DATOS DE AUDITORÍA");
+    lines.push(`Paciente: ${header.paciente || "(no especificado)"}`);
+    lines.push(`Auditor: ${header.auditor || "(no especificado)"}`);
+    lines.push(`Fecha: ${header.fecha || "(no especificada)"}`);
+    lines.push("Observaciones:");
+    lines.push(header.observaciones ? header.observaciones : "(sin observaciones)");
+    lines.push("");
+    lines.push("--------------------------------------------------");
+    lines.push("");
+
+    // Global
+    lines.push(`PUNTAJE TOTAL: ${globalScore} / ${DATA.meta.maxScore}`);
+    lines.push(`RESULTADO GLOBAL: ${globalResult.label} (${globalResult.min}–${globalResult.max})`);
+    lines.push(`Resumen: ${globalResult.summary}`);
+    lines.push("");
+
+    lines.push("ENSEÑANZA GLOBAL");
+    lines.push(`${globalResult.teaching.verse.quote} (${globalResult.teaching.verse.reference})`);
+    globalResult.teaching.text.forEach(t => lines.push("- " + t));
+    lines.push("Acciones sugeridas:");
+    globalResult.teaching.actions.forEach(a => lines.push("• " + a));
+    lines.push("");
+
+    // Sections
+    lines.push("DIAGNÓSTICO POR SECCIONES (INDEPENDIENTE)");
+    lines.push("--------------------------------------------------");
+    sectionsBreakdown.forEach(sb=>{
+      lines.push(`${sb.title} — Puntaje: ${sb.score}/15 — ${sb.band.label}`);
+      lines.push(`Enfoque: ${sb.focus}`);
+      lines.push(`Resumen: ${sb.band.summary}`);
+      lines.push("Recomendaciones:");
+      sb.band.recommendation.forEach(r => lines.push("• " + r));
+      lines.push("Enseñanza sección:");
+      lines.push(`${sb.band.teaching.verse.quote} (${sb.band.teaching.verse.reference})`);
+      sb.band.teaching.points.forEach(p => lines.push("- " + p));
+      lines.push("");
     });
 
-    form.appendChild(div);
-  });
-}
+    // Details
+    if(details){
+      lines.push("RESPUESTAS POR PREGUNTA");
+      lines.push("--------------------------------------------------");
+      DATA.sections.forEach(sec=>{
+        lines.push(sec.title.toUpperCase());
+        sec.questions.forEach((q,i)=>{
+          const val = (state[q.id] ?? 0);
+          const opt = DATA.scale.options.find(o=>o.value===val);
+          const lab = opt ? opt.label : "Sin respuesta";
+          lines.push(`${i+1}. ${q.text}`);
+          lines.push(`   Respuesta: ${lab} (${val})`);
+        });
+        lines.push("");
+      });
+    }
 
-function updateScore(){
-  let total = 0;
-  document.querySelectorAll("input[type=number]").forEach(i=>{
-    total += Number(i.value || 0);
-  });
-  document.getElementById("score").textContent = total;
-}
+    lines.push("NOTA PASTORAL");
+    lines.push("Este resultado no juzga personas; describe el sistema. El objetivo es orientar proceso, no imponer culpa.");
+    lines.push("");
 
-function verResultado(){
-  const total = Number(document.getElementById("score").textContent);
-  let nivel = "";
-  let mensaje = "";
-
-  if(total <= 30){
-    nivel = "Hogar alineado";
-    mensaje = "La estructura está funcionando conforme al diseño.";
-  } else if(total <= 60){
-    nivel = "Hogar en ajuste";
-    mensaje = "Existen desalineaciones corregibles con acompañamiento.";
-  } else if(total <= 95){
-    nivel = "Hogar en riesgo";
-    mensaje = "El sistema presenta fallas estructurales visibles.";
-  } else {
-    nivel = "Hogar crítico";
-    mensaje = "Requiere proceso pastoral, no corrección inmediata.";
+    return lines.join("\n");
   }
 
-  lastReportText = `
-HOGAR: ${paciente.value}
-AUDITOR: ${auditor.value}
-FECHA: ${fecha.value}
+  function showResult(){
+    const globalScore = totalScore();
+    const globalResult = getGlobalResult(globalScore);
 
-PUNTAJE TOTAL: ${total}
-DIAGNÓSTICO: ${nivel}
+    const sectionsBreakdown = DATA.sections.map(sec=>{
+      const score = sectionScore(sec);
+      const band = getBandForSection(score);
+      return { id: sec.id, title: sec.title, focus: sec.diagnosticFocus, score, band };
+    });
 
-${mensaje}
+    const globalBadgeClass =
+      globalScore <= 30 ? "b-green" :
+      globalScore <= 60 ? "b-yellow" :
+      globalScore <= 95 ? "b-orange" : "b-red";
 
-OBSERVACIONES:
-${observaciones.value}
-  `;
+    // Render section cards
+    const sectionCardsHTML = sectionsBreakdown.map(sb => {
+      const badgeClass = badgeForBandLabel(sb.band.label);
+      return `
+        <div class="mini">
+          <div class="row" style="justify-content:space-between;">
+            <h4 style="margin:0;">${sb.title}</h4>
+            <span class="badge ${badgeClass}">${sb.band.label}</span>
+          </div>
+          <div class="small"><b>Puntaje:</b> ${sb.score}/15</div>
+          <div class="small"><b>Enfoque:</b> ${sb.focus}</div>
+          <div class="small" style="margin-top:6px;"><b>Diagnóstico:</b> ${sb.band.summary}</div>
 
-  const res = document.getElementById("resultado");
-  res.style.display = "block";
-  res.innerHTML = `<h3>${nivel}</h3><p>${mensaje}</p>`;
-}
+          <div class="small" style="margin-top:8px;"><b>Recomendaciones:</b>
+            <ul style="margin:6px 0 0 18px; padding:0;">
+              ${sb.band.recommendation.map(r => `<li>${r}</li>`).join("")}
+            </ul>
+          </div>
 
-function descargarEvaluacion(){
-  if(!lastReportText){
-    alert("Primero genere el resultado.");
-    return;
+          <div class="small" style="margin-top:8px;">
+            <b>Enseñanza:</b><br>
+            <em>${sb.band.teaching.title}</em><br>
+            <span>${sb.band.teaching.verse.quote}</span>
+            <span class="muted">(${sb.band.teaching.verse.reference})</span>
+            <ul style="margin:6px 0 0 18px; padding:0;">
+              ${sb.band.teaching.points.map(p => `<li>${p}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    resultEl.style.display = "block";
+    resultEl.innerHTML = `
+      <div class="row" style="justify-content:space-between; align-items:flex-start;">
+        <div>
+          <span class="badge ${globalBadgeClass}">${globalResult.label}</span>
+          <div class="muted" style="margin-top:6px;">Puntaje total: <b>${globalScore}</b> / ${DATA.meta.maxScore}</div>
+          <div class="muted" style="margin-top:4px;">${globalResult.summary}</div>
+        </div>
+        <div class="small">Diagnóstico global + por secciones (independiente).</div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <h3 style="margin:0 0 8px;">Enseñanza global</h3>
+        <blockquote>${globalResult.teaching.verse.quote}<br><span class="muted">(${globalResult.teaching.verse.reference})</span></blockquote>
+        ${globalResult.teaching.text.map(t => `<div class="small" style="margin-top:6px;">• ${t}</div>`).join("")}
+        <div class="small" style="margin-top:8px;"><b>Acciones sugeridas:</b>
+          <ul style="margin:6px 0 0 18px; padding:0;">
+            ${globalResult.teaching.actions.map(a => `<li>${a}</li>`).join("")}
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px;">Diagnóstico por secciones (independiente)</h3>
+      <div class="grid">${sectionCardsHTML}</div>
+    `;
+
+    lastReportText = buildReportText(
+      globalScore,
+      globalResult,
+      sectionsBreakdown,
+      includeDetailsEl.checked
+    );
+
+    btnDownload.disabled = false;
+    resultEl.scrollIntoView({behavior:"smooth"});
   }
-  const blob = new Blob([lastReportText], {type:"text/plain"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "evaluacion-hogar.txt";
-  a.click();
-}
 
-function reiniciar(){
-  location.reload();
-}
+  function downloadReport(){
+    if(!lastReportText) return;
 
-init();
+    const patientPart = safeFilePart(patientNameEl.value);
+    const datePart = (auditDateEl.value || "").replaceAll("-","") || "sinfecha";
+    const filename = `evaluacion_${patientPart}_${datePart}.txt`;
+
+    const blob = new Blob([lastReportText], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function resetAll(){
+    Object.keys(state).forEach(k => delete state[k]);
+    document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+    updateLiveScore();
+    resultEl.style.display = "none";
+    resultEl.innerHTML = "";
+    btnDownload.disabled = true;
+    lastReportText = "";
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
+      DATA = await res.json();
+      renderHeader();
+      setDefaultDate();
+      renderForm();
+      updateLiveScore();
+    }catch(err){
+      formEl.innerHTML = `<div class="card"><div class="error"><b>Error:</b> ${err.message}</div><div class="small">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta que este HTML.</div></div>`;
+    }
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+  document.getElementById("btnDownload").addEventListener("click", downloadReport);
+
+  init();
 </script>
-
 </body>
 </html>
