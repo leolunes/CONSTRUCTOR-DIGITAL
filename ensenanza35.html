@@ -1,176 +1,873 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Auditoría del Hogar — Sistema Estructural</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Auditoría del Hogar — Sistema Estructural</title>
 
-<script src="jspdf.min.js"></script>
-
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f4f6f8;
-  padding:20px;
-}
-h1{color:#2c3e50}
-.section{
-  background:#fff;
-  padding:15px;
-  margin-bottom:15px;
-  border-radius:6px;
-}
-.question{
-  margin-bottom:8px;
-}
-input[type=number]{
-  width:60px;
-}
-button{
-  margin:8px 5px;
-  padding:8px 14px;
-  cursor:pointer;
-}
-.result{
-  background:#eef2f5;
-  padding:15px;
-  border-radius:6px;
-  margin-top:15px;
-}
-</style>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --accent:#5eead4; --line:rgba(255,255,255,.10);
+      --danger:#fb7185;
+      --green:rgba(94,234,212,.18); --yellow:rgba(250,204,21,.14);
+      --orange:rgba(251,146,60,.14); --red:rgba(251,113,133,.14);
+    }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); }
+    .wrap{ max-width: 1100px; margin: 0 auto; padding: 24px; }
+    .hero{ background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08)); border:1px solid var(--line); border-radius:18px; padding:18px; }
+    h1{ margin:0 0 6px; font-size:28px; }
+    .sub{ margin:0; color:var(--muted); line-height:1.4; }
+    .pill{ display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:var(--muted); font-size:12px; margin-right:8px; }
+    .card{ margin-top:16px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; }
+    .sec-head{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .sec-head h2{ margin:0; font-size:18px; }
+    .sec-sub{ color:var(--muted); font-size:13px; margin-top:4px; }
+    .q{ padding:12px 0; border-top:1px solid var(--line); }
+    .q:first-of-type{ border-top:none; }
+    .q label{ display:block; font-weight:650; }
+    .opts{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+    .opt{ display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.14); cursor:pointer; user-select:none; }
+    .actions{ margin-top: 16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    button{ border:0; border-radius:14px; padding:12px 14px; font-weight:800; cursor:pointer; }
+    .primary{ background:var(--accent); color:#071018; }
+    .ghost{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18); }
+    .muted{ color:var(--muted); }
+    .result{ margin-top:16px; border:1px solid var(--line); border-radius:18px; padding:16px; background:rgba(255,255,255,.04); display:none; }
+    .badge{ display:inline-block; padding:6px 10px; border-radius:999px; font-weight:900; font-size:12px; letter-spacing:.4px; border:1px solid rgba(255,255,255,.12); }
+    .b-green{ background:var(--green); color:var(--accent); border-color:rgba(94,234,212,.35); }
+    .b-yellow{ background:var(--yellow); color:#fde68a; border-color:rgba(250,204,21,.30); }
+    .b-orange{ background:var(--orange); color:#fdba74; border-color:rgba(251,146,60,.30); }
+    .b-red{ background:var(--red); color:var(--danger); border-color:rgba(251,113,133,.30); }
+    blockquote{ margin:10px 0; padding:10px 12px; border-left:3px solid rgba(94,234,212,.45); background:rgba(94,234,212,.06); border-radius:10px; }
+    .grid{ display:grid; grid-template-columns: 1fr; gap:12px; }
+    @media(min-width:980px){ .grid{ grid-template-columns: 1fr 1fr; } }
+    .mini{ border:1px solid var(--line); border-radius:16px; padding:12px; background:rgba(255,255,255,.03); }
+    .mini h4{ margin:0 0 6px; }
+    .small{ font-size:13px; color:var(--muted); line-height:1.45; }
+    .error{ color:var(--danger); }
+    .fieldgrid{ display:grid; grid-template-columns: 1fr; gap:12px; margin-top:12px; }
+    @media(min-width:800px){ .fieldgrid{ grid-template-columns: 1fr 1fr; } }
+    .field{ display:flex; flex-direction:column; gap:6px; }
+    .field label{ font-weight:700; font-size:13px; }
+    .field input, .field textarea{
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
+    }
+    .field textarea{ min-height: 90px; resize: vertical; }
+    .toggleRow{ margin-top:10px; display:flex; align-items:center; gap:10px; }
+    .toggleRow input{ transform: scale(1.2); }
+    .plan{ margin-top:16px; padding:12px; border-radius:16px; border:1px solid var(--line); background:rgba(255,255,255,.03); }
+    .plan h3{ margin:0 0 8px; }
+    .warn{ margin-top:10px; padding:10px 12px; border-radius:12px; border:1px solid rgba(251,146,60,.30); background:rgba(251,146,60,.10); color:#fdba74; display:none; }
+  </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="title">Auditoría del Hogar — Sistema Estructural</h1>
+      <p class="sub" id="desc"></p>
+      <div style="margin-top:10px;">
+        <span class="pill" id="scalePill"></span>
+        <span class="pill" id="maxPill"></span>
+      </div>
+      <div id="pdfWarn" class="warn">
+        No se pudo cargar la librería de PDF (jsPDF / AutoTable). Verifica conexión a internet o el CDN.
+      </div>
+    </div>
 
-<h1>Auditoría del Hogar — Sistema Estructural</h1>
+    <div class="card">
+      <div class="sec-head">
+        <div>
+          <h2>Datos de auditoría</h2>
+          <div class="sec-sub">Se incluyen en el informe descargable. No se envían a ningún servidor.</div>
+        </div>
+        <span class="pill">Cabecera</span>
+      </div>
 
-<div class="section">
-  <strong>Datos del hogar auditado</strong><br><br>
-  Paciente: <input id="paciente"><br><br>
-  Auditor: <input id="auditor"><br><br>
-  Fecha: <input type="date" id="fecha"><br><br>
-  Observaciones:<br>
-  <textarea id="observaciones" rows="4" style="width:100%"></textarea>
-</div>
+      <div class="fieldgrid">
+        <div class="field">
+          <label for="patientName">Nombre del paciente</label>
+          <input id="patientName" type="text" placeholder="Ej: Juan y María Pérez" />
+        </div>
 
-<div id="formulario"></div>
+        <div class="field">
+          <label for="auditorName">Nombre del auditor</label>
+          <input id="auditorName" type="text" placeholder="Ej: Pastor / Consejero" />
+        </div>
 
-<button onclick="verResultado()">Ver resultado</button>
-<button onclick="descargarTXT()">Descargar TXT</button>
-<button onclick="descargarPDF()">Descargar PDF</button>
+        <div class="field">
+          <label for="auditDate">Fecha (editable)</label>
+          <input id="auditDate" type="date" />
+        </div>
 
-<div id="resultado" class="result" style="display:none"></div>
+        <div class="field">
+          <label for="freeNotes">Observaciones libres</label>
+          <textarea id="freeNotes" placeholder="Contexto, motivo, acuerdos, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="toggleRow">
+        <input type="checkbox" id="includeDetails" checked />
+        <label for="includeDetails" class="small">Incluir respuestas por pregunta al final del informe</label>
+      </div>
+    </div>
+
+    <div id="form"></div>
+
+    <div class="actions">
+      <button class="primary" id="btnResult">Ver resultado</button>
+      <button class="ghost" id="btnDownloadTxt" disabled>Descargar TXT</button>
+      <button class="ghost" id="btnDownloadPdfPretty" disabled>Descargar PDF bonito</button>
+      <button class="ghost" id="btnReset">Reiniciar</button>
+      <span class="muted" id="liveScore">Puntaje actual: 0</span>
+    </div>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <!-- jsPDF + AutoTable (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-let DATA;
-let respuestas = {};
+  const JSON_PATH = "ensenanza34.json";
 
-fetch("ensenanza34.json")
-.then(res=>res.json())
-.then(json=>{
-  DATA = json;
-  renderForm();
-});
+  let DATA = null;
+  const state = {};
+  let lastPayload = null; // guardamos datos estructurados para PDF bonito
 
-function renderForm(){
-  const cont = document.getElementById("formulario");
-  DATA.sections.forEach(sec=>{
-    let html = `<div class="section"><h3>${sec.title}</h3>`;
-    sec.questions.forEach((q,i)=>{
-      const id = sec.id+"_"+i;
-      html += `
-        <div class="question">
-          ${q.text}
-          <input type="number" min="0" max="${q.max}" value="0"
-            onchange="respuestas['${id}']=this.value">
-        </div>`;
-      respuestas[id]=0;
+  const formEl = document.getElementById("form");
+  const resultEl = document.getElementById("result");
+  const liveScoreEl = document.getElementById("liveScore");
+  const btnTxt = document.getElementById("btnDownloadTxt");
+  const btnPdfPretty = document.getElementById("btnDownloadPdfPretty");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientNameEl = document.getElementById("patientName");
+  const auditorNameEl = document.getElementById("auditorName");
+  const auditDateEl = document.getElementById("auditDate");
+  const freeNotesEl = document.getElementById("freeNotes");
+  const includeDetailsEl = document.getElementById("includeDetails");
+
+  function setDefaultDateOnlyIfEmpty(){
+    if (auditDateEl.value) return;
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth()+1).padStart(2,"0");
+    const dd = String(now.getDate()).padStart(2,"0");
+    auditDateEl.value = `${yyyy}-${mm}-${dd}`;
+  }
+
+  function maxOptionValue(){
+    return Math.max(...DATA.scale.options.map(o => Number(o.value)));
+  }
+  function totalQuestions(){
+    return DATA.sections.reduce((acc, sec) => acc + sec.questions.length, 0);
+  }
+  function totalMaxScore(){
+    return totalQuestions() * maxOptionValue();
+  }
+  function totalScore(){
+    let sum = 0;
+    DATA.sections.forEach(sec=>{
+      sec.questions.forEach(q=>{
+        sum += (state[q.id] ?? 0);
+      });
     });
-    html += "</div>";
-    cont.innerHTML += html;
-  });
-}
+    return sum;
+  }
+  function sectionScore(sec){
+    return sec.questions.reduce((acc, q)=> acc + (state[q.id] ?? 0), 0);
+  }
 
-function evaluarSeccion(sec){
-  let total=0, max=0;
-  sec.questions.forEach((q,i)=>{
-    total += Number(respuestas[sec.id+"_"+i]);
-    max += q.max;
-  });
-  let estado="Alineado";
-  if(total>max*0.25) estado="En ajuste";
-  if(total>max*0.5) estado="En riesgo";
-  if(total>max*0.75) estado="Crítico";
-  return {total,max,estado};
-}
+  function updateLiveScore(){
+    liveScoreEl.textContent = `Puntaje actual: ${totalScore()}`;
+  }
 
-function verResultado(){
-  let html="";
-  DATA.sections.forEach(sec=>{
-    const r = evaluarSeccion(sec);
-    html += `<strong>${sec.title}</strong><br>
-    Puntaje: ${r.total}/${r.max}<br>
-    Diagnóstico: ${r.estado}<br>
-    📖 ${sec.verse}<br><br>`;
-  });
-  document.getElementById("resultado").innerHTML = html;
-  document.getElementById("resultado").style.display="block";
-}
+  // Escalas por porcentaje (robusto)
+  function bandSection(score, secMax){
+    const pct = secMax === 0 ? 0 : (score / secMax) * 100;
+    if (pct <= 26.6667) return DATA.rubrics.sectionBands.find(b=>b.key==="alineado");
+    if (pct <= 60) return DATA.rubrics.sectionBands.find(b=>b.key==="ajuste");
+    return DATA.rubrics.sectionBands.find(b=>b.key==="riesgo");
+  }
+  function bandGlobal(score, max){
+    const pct = max === 0 ? 0 : (score / max) * 100;
+    if (pct <= 22.2222) return DATA.rubrics.globalBands.find(b=>b.key==="g_alineado");
+    if (pct <= 44.4444) return DATA.rubrics.globalBands.find(b=>b.key==="g_ajuste");
+    if (pct <= 70.3704) return DATA.rubrics.globalBands.find(b=>b.key==="g_riesgo");
+    return DATA.rubrics.globalBands.find(b=>b.key==="g_critico");
+  }
 
-function descargarTXT(){
-  let txt = "AUDITORÍA DEL HOGAR\n\n";
-  txt += `Paciente: ${paciente.value}\nAuditor: ${auditor.value}\nFecha: ${fecha.value}\n\n`;
-  DATA.sections.forEach(sec=>{
-    const r = evaluarSeccion(sec);
-    txt += `${sec.title}\nPuntaje: ${r.total}/${r.max}\nEstado: ${r.estado}\n${sec.verse}\n\n`;
-  });
-  txt += "Observaciones:\n"+observaciones.value;
-  const blob = new Blob([txt],{type:"text/plain"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "auditoria_hogar.txt";
-  a.click();
-}
+  function manualForSection(sectionId){
+    if(!DATA.pastoralManual || !DATA.pastoralManual.sections) return null;
+    return DATA.pastoralManual.sections.find(s => s.id === sectionId) || null;
+  }
 
-function descargarPDF(){
-  const pdf = new jspdf.jsPDF();
+  function renderHeader(){
+    document.getElementById("title").textContent = DATA.meta.title || "Auditoría del Hogar";
+    document.getElementById("desc").textContent = DATA.meta.description || "";
+    const scaleText = DATA.scale.options.map(o => `${o.value} ${o.label}`).join(" · ");
+    document.getElementById("scalePill").textContent = `Escala: ${scaleText}`;
+    document.getElementById("maxPill").textContent = `Total máx: ${totalMaxScore()}`;
+  }
 
-  // PORTADA
-  pdf.addImage("logo.png","PNG",55,20,100,100);
-  pdf.setFontSize(18);
-  pdf.text("AUDITORÍA DEL HOGAR",105,135,{align:"center"});
-  pdf.setFontSize(12);
-  pdf.text("Sistema Estructural Espiritual",105,145,{align:"center"});
+  function renderForm(){
+    formEl.innerHTML = "";
+    DATA.sections.forEach(sec=>{
+      const card = document.createElement("div");
+      card.className = "card";
 
-  pdf.addPage();
+      const subtitle = sec.subtitle || "";
+      const focus = sec.diagnosticFocus || "";
+      const secMax = sec.questions.length * maxOptionValue();
 
-  // ENCABEZADO CON LOGO
-  pdf.addImage("logo.png","PNG",10,10,30,30);
-  pdf.setFontSize(14);
-  pdf.text("Auditoría del Hogar",105,20,{align:"center"});
+      const head = document.createElement("div");
+      head.className = "sec-head";
+      head.innerHTML = `
+        <div>
+          <h2>${sec.title || "Sección"}</h2>
+          ${subtitle ? `<div class="sec-sub">${subtitle}</div>` : ""}
+          ${focus ? `<div class="sec-sub"><b>Enfoque:</b> ${focus}</div>` : ""}
+        </div>
+        <span class="pill">Máx sección: ${secMax}</span>
+      `;
+      card.appendChild(head);
 
-  let y=45;
-  pdf.setFontSize(11);
-  pdf.text(`Paciente: ${paciente.value}`,10,y); y+=6;
-  pdf.text(`Auditor: ${auditor.value}`,10,y); y+=6;
-  pdf.text(`Fecha: ${fecha.value}`,10,y); y+=10;
+      sec.questions.forEach((q, idx)=>{
+        const qDiv = document.createElement("div");
+        qDiv.className = "q";
+        const optionsHTML = DATA.scale.options.map(opt => `
+          <label class="opt">
+            <input type="radio" name="${q.id}" value="${opt.value}">
+            <span>${opt.label} (${opt.value})</span>
+          </label>
+        `).join("");
 
-  DATA.sections.forEach(sec=>{
-    const r = evaluarSeccion(sec);
-    pdf.setFontSize(12);
-    pdf.text(sec.title,10,y); y+=6;
-    pdf.setFontSize(10);
-    pdf.text(`Puntaje: ${r.total}/${r.max}`,10,y); y+=5;
-    pdf.text(`Diagnóstico: ${r.estado}`,10,y); y+=5;
-    pdf.text(`Biblia: ${sec.verse}`,10,y,{maxWidth:180}); y+=10;
-    if(y>260){pdf.addPage();y=20;}
-  });
+        qDiv.innerHTML = `
+          <label>${idx+1}. ${q.text || ""}</label>
+          <div class="opts" role="radiogroup" aria-label="${q.text || ""}">
+            ${optionsHTML}
+          </div>
+        `;
+        card.appendChild(qDiv);
 
-  pdf.text("Observaciones:",10,y); y+=6;
-  pdf.text(observaciones.value,10,y,{maxWidth:180});
+        qDiv.querySelectorAll(`input[name="${q.id}"]`).forEach(inp=>{
+          inp.addEventListener("change", e=>{
+            state[q.id] = Number(e.target.value);
+            updateLiveScore();
+          });
+        });
+      });
 
-  pdf.save("auditoria_hogar.pdf");
-}
+      formEl.appendChild(card);
+    });
+  }
+
+  function build7DayPlan(topA, topB){
+    const days = [];
+    const A = topA;
+    const B = topB;
+
+    const Ateach = A.manual?.miniTeaching;
+    const Bteach = B.manual?.miniTeaching;
+
+    const Aplan = (Ateach?.oneWeekPlan || []).slice(0, 2);
+    const Bplan = (Bteach?.oneWeekPlan || []).slice(0, 2);
+
+    days.push({ day: 1, title: "Volver al diseño (sin culpa)", items: [
+      `Leer y orar: ${A.sectionVerse?.quote || Ateach?.verse?.quote || ""} (${A.sectionVerse?.reference || Ateach?.verse?.reference || ""})`,
+      `Definir: “¿Qué está fuera de diseño en ${A.title}?” (20 min, sin acusación).`,
+      "Escribir 1 carga principal y decidir cómo se transferirá al fundamento."
+    ].filter(Boolean)});
+
+    days.push({ day: 2, title: `Restauración enfocada: ${A.title}`, items: [
+      ...(Aplan.length ? Aplan : ["Aplicar una acción pequeña concreta en esta área.", "Cerrar el día con oración de alineación."]),
+      "Evitar discusiones largas: priorizar acuerdos cortos."
+    ]});
+
+    days.push({ day: 3, title: `Consolidar el ajuste: ${A.title}`, items: [
+      "Repetir el ajuste del Día 2 (consistencia).",
+      "Preguntar: “¿Qué tensión bajó hoy?”",
+      "Orar 10 min: entrega de la carga al fundamento."
+    ]});
+
+    days.push({ day: 4, title: `Restauración enfocada: ${B.title}`, items: [
+      `Leer y orar: ${B.sectionVerse?.quote || Bteach?.verse?.quote || ""} (${B.sectionVerse?.reference || Bteach?.verse?.reference || ""})`,
+      ...(Bplan.length ? Bplan : ["Aplicar una acción pequeña concreta en esta área.", "Cerrar el día con oración de reposo."])
+    ].filter(Boolean)});
+
+    days.push({ day: 5, title: `Consolidar el ajuste: ${B.title}`, items: [
+      "Repetir el ajuste del Día 4 (consistencia).",
+      "Conversación corta: 1 acuerdo práctico (no reproche).",
+      "Oración: pedir ayuda al Espíritu Santo para sostener sin rigidez."
+    ]});
+
+    days.push({ day: 6, title: "Culto efectivo (Congregación del hogar)", items: [
+      "20–30 min: palabra + oración + acuerdos de la semana.",
+      "Un acto de honra mutua: reconocer 1 esfuerzo del otro.",
+      "Definir 1 mantenimiento semanal fijo (día y hora)."
+    ]});
+
+    days.push({ day: 7, title: "Revisión y mantenimiento", items: [
+      "Revisar: ¿qué cambió en 7 días? ¿qué no cambió?",
+      "Elegir 1 práctica que se queda como mantenimiento.",
+      "Repetir el test en las 2 secciones más críticas (solo esas preguntas)."
+    ]});
+
+    return days;
+  }
+
+  function buildTxtReport(payload){
+    // solo para mantener el TXT simple (si lo quieres)
+    const lines = [];
+    lines.push("EVALUACIÓN — AUDITORÍA DEL HOGAR (SISTEMA ESTRUCTURAL)");
+    lines.push("");
+    lines.push("DATOS");
+    lines.push(`Paciente: ${payload.header.patient}`);
+    lines.push(`Auditor: ${payload.header.auditor}`);
+    lines.push(`Fecha: ${payload.header.date}`);
+    lines.push("Observaciones:");
+    lines.push(payload.header.notes || "(sin observaciones)");
+    lines.push("");
+
+    lines.push("RESULTADO GLOBAL");
+    lines.push(`Puntaje: ${payload.global.score} / ${payload.global.max}`);
+    lines.push(`Diagnóstico: ${payload.global.band.label}`);
+    lines.push(`Resumen: ${payload.global.band.summary}`);
+    lines.push(`${payload.global.band.verse.quote} (${payload.global.band.verse.reference})`);
+    lines.push("");
+
+    lines.push("DIAGNÓSTICO POR SECCIONES");
+    lines.push("--------------------------------------------------");
+    payload.sections.forEach(s=>{
+      lines.push(`${s.title}: ${s.score}/${s.max} (${Math.round(s.pct*100)}%) — ${s.band.label}`);
+    });
+    lines.push("");
+
+    lines.push("PLAN SEMANAL 7 DÍAS");
+    lines.push("--------------------------------------------------");
+    payload.plan7.forEach(d=>{
+      lines.push(`Día ${d.day}: ${d.title}`);
+      d.items.forEach(it=> lines.push("• " + it));
+      lines.push("");
+    });
+
+    if(payload.includeDetails){
+      lines.push("RESPUESTAS POR PREGUNTA");
+      lines.push("--------------------------------------------------");
+      payload.answers.forEach(row=>{
+        lines.push(`[${row.section}] ${row.q}`);
+        lines.push(`   ${row.answerLabel} (${row.value})`);
+      });
+      lines.push("");
+    }
+
+    return lines.join("\n");
+  }
+
+  function showResult(){
+    const header = {
+      patient: patientNameEl.value.trim() || "(no especificado)",
+      auditor: auditorNameEl.value.trim() || "(no especificado)",
+      date: auditDateEl.value || "(no especificada)",
+      notes: freeNotesEl.value.trim() || ""
+    };
+
+    const gScore = totalScore();
+    const gMax = totalMaxScore();
+    const gBand = bandGlobal(gScore, gMax);
+
+    let sections = DATA.sections.map(sec=>{
+      const score = sectionScore(sec);
+      const max = sec.questions.length * maxOptionValue();
+      const pct = max ? (score/max) : 0;
+      return {
+        id: sec.id,
+        title: sec.title || "Sección",
+        subtitle: sec.subtitle || "",
+        focus: sec.diagnosticFocus || "",
+        score, max, pct,
+        band: bandSection(score, max),
+        sectionVerse: sec.sectionVerse || null,
+        manual: manualForSection(sec.id)
+      };
+    });
+
+    sections.sort((a,b)=> b.pct - a.pct);
+    const topA = sections[0];
+    const topB = sections[1] || sections[0];
+    const plan7 = build7DayPlan(topA, topB);
+
+    // Respuestas por pregunta (si se quiere incluir)
+    const answers = [];
+    DATA.sections.forEach(sec=>{
+      sec.questions.forEach((q)=>{
+        const value = (state[q.id] ?? 0);
+        const opt = DATA.scale.options.find(o=>Number(o.value)===value);
+        answers.push({
+          section: sec.title || "Sección",
+          q: q.text || "",
+          value,
+          answerLabel: opt ? opt.label : "Sin respuesta"
+        });
+      });
+    });
+
+    // payload “bonito” para PDF
+    lastPayload = {
+      header,
+      global: { score: gScore, max: gMax, band: gBand },
+      sections,
+      topA, topB,
+      plan7,
+      includeDetails: includeDetailsEl.checked,
+      answers
+    };
+
+    // UI (simple)
+    resultEl.style.display = "block";
+    resultEl.innerHTML = `
+      <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start;">
+        <div>
+          <span class="badge">${gBand.label}</span>
+          <div class="muted" style="margin-top:6px;">Puntaje total: <b>${gScore}</b> / ${gMax}</div>
+          <div class="muted" style="margin-top:4px;">${gBand.summary}</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <blockquote>${gBand.verse.quote}<br><span class="muted">(${gBand.verse.reference})</span></blockquote>
+      </div>
+    `;
+
+    // habilitar botones
+    btnTxt.disabled = false;
+
+    const okPdf = !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+    btnPdfPretty.disabled = !okPdf;
+    pdfWarn.style.display = okPdf ? "none" : "block";
+
+    resultEl.scrollIntoView({behavior:"smooth"});
+  }
+
+  function downloadTxt(){
+    if(!lastPayload) return;
+    const txt = buildTxtReport(lastPayload);
+    const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "evaluacion_hogar.txt";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function sanitizeFileName(name){
+    return (name || "evaluacion_hogar")
+      .toLowerCase()
+      .replace(/\s+/g, "_")
+      .replace(/[^a-z0-9_\-]/g, "")
+      .slice(0, 60);
+  }
+
+  // ============================
+  // PDF BONITO (Portada + Tablas)
+  // ============================
+  function downloadPdfPretty(){
+    if(!lastPayload) return;
+    if(!(window.jspdf && window.jspdf.jsPDF)){
+      pdfWarn.style.display = "block";
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: "pt", format: "letter" });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 44;
+
+    // Helpers
+    const COLORS = {
+      dark: [12, 18, 32],
+      ink: [22, 33, 58],
+      accent: [94, 234, 212],
+      muted: [90, 102, 130],
+      white: [255,255,255],
+      green: [16, 185, 129],
+      yellow: [245, 158, 11],
+      orange: [249, 115, 22],
+      red: [244, 63, 94]
+    };
+
+    function levelColor(label){
+      const s = (label||"").toLowerCase();
+      if(s.includes("aline")) return COLORS.green;
+      if(s.includes("ajus")) return COLORS.yellow;
+      if(s.includes("ries")) return COLORS.orange;
+      return COLORS.red;
+    }
+
+    function addFooter(){
+      const pageCount = doc.getNumberOfPages();
+      for(let i=1; i<=pageCount; i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...COLORS.muted);
+        doc.text(`Auditoría del Hogar — Sistema Estructural`, margin, pageH - 18);
+        doc.text(`Página ${i} de ${pageCount}`, pageW - margin, pageH - 18, { align:"right" });
+      }
+    }
+
+    function sectionTitle(text, y){
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...COLORS.ink);
+      doc.text(text, margin, y);
+      doc.setDrawColor(220);
+      doc.setLineWidth(0.8);
+      doc.line(margin, y+8, pageW - margin, y+8);
+      return y + 22;
+    }
+
+    function addQuoteBlock(quote, ref){
+      const x = margin;
+      const w = pageW - margin*2;
+      const y = doc.lastAutoTable ? doc.lastAutoTable.finalY + 12 : 160;
+
+      // Fondo suave
+      doc.setFillColor(240, 253, 250);
+      doc.roundedRect(x, y, w, 52, 10, 10, "F");
+
+      doc.setFont("times","italic");
+      doc.setFontSize(11);
+      doc.setTextColor(20, 60, 70);
+      const lines = doc.splitTextToSize(quote, w - 20);
+      doc.text(lines, x+10, y+18);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(9);
+      doc.setTextColor(70, 90, 110);
+      doc.text(`(${ref})`, x+10, y+44);
+
+      return y + 66;
+    }
+
+    // ========== PORTADA ==========
+    // Fondo barra superior
+    doc.setFillColor(...COLORS.ink);
+    doc.rect(0,0,pageW,92,"F");
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(...COLORS.white);
+    doc.text("AUDITORÍA DEL HOGAR", margin, 46);
+    doc.setFontSize(13);
+    doc.setTextColor(210, 230, 255);
+    doc.text("Sistema estructural — diagnóstico por secciones + plan semanal", margin, 70);
+
+    // Caja datos
+    doc.setFillColor(245, 247, 255);
+    doc.roundedRect(margin, 120, pageW - margin*2, 110, 12, 12, "F");
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Datos de auditoría", margin+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+
+    const h = lastPayload.header;
+    doc.text(`Paciente: ${h.patient}`, margin+14, 170);
+    doc.text(`Auditor: ${h.auditor}`, margin+14, 190);
+    doc.text(`Fecha: ${h.date}`, margin+14, 210);
+
+    // Resultado global (tarjeta)
+    const g = lastPayload.global;
+    const gColor = levelColor(g.band.label);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(margin, 250, pageW - margin*2, 170, 12, 12, "F");
+
+    // Badge global
+    doc.setFillColor(...gColor);
+    doc.roundedRect(margin+14, 270, 170, 26, 10, 10, "F");
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(11);
+    doc.setTextColor(255,255,255);
+    doc.text(g.band.label.toUpperCase(), margin+14+85, 288, { align:"center" });
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.setTextColor(...COLORS.ink);
+    doc.text(`Puntaje global: ${g.score} / ${g.max}`, margin+14, 322);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const summaryLines = doc.splitTextToSize(g.band.summary, pageW - margin*2 - 28);
+    doc.text(summaryLines, margin+14, 344);
+
+    // Texto bíblico global
+    let yAfter = 380;
+    yAfter = addQuoteBlock(g.band.verse.quote, g.band.verse.reference);
+
+    // Nueva página
+    doc.addPage();
+
+    // ========== SECCIONES ==========
+    let y = sectionTitle("Diagnóstico por secciones", 64);
+
+    // Tabla secciones
+    const rows = lastPayload.sections.map(s => ([
+      s.title,
+      `${s.score}/${s.max}`,
+      `${Math.round(s.pct*100)}%`,
+      s.band.label
+    ]));
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Puntaje", "%", "Diagnóstico"]],
+      body: rows,
+      theme: "grid",
+      styles: {
+        font: "helvetica",
+        fontSize: 10,
+        cellPadding: 6,
+        textColor: [20, 30, 50],
+        lineColor: [230, 234, 245]
+      },
+      headStyles: {
+        fillColor: COLORS.ink,
+        textColor: [255,255,255],
+        fontStyle: "bold"
+      },
+      didParseCell: function(data){
+        if(data.section === "body" && data.column.index === 3){
+          const val = data.cell.raw || "";
+          const c = levelColor(val);
+          data.cell.styles.fillColor = c;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: { left: margin, right: margin }
+    });
+
+    // ========== TOP 2 CRÍTICAS ==========
+    y = doc.lastAutoTable.finalY + 18;
+    y = sectionTitle("Enfoque pastoral (2 secciones más críticas)", y);
+
+    const topA = lastPayload.topA;
+    const topB = lastPayload.topB;
+
+    function addCriticalSection(s){
+      const boxX = margin;
+      const boxW = pageW - margin*2;
+
+      // si no cabe, página nueva
+      if(y + 210 > pageH - 70){
+        doc.addPage();
+        y = 64;
+      }
+
+      // caja
+      doc.setFillColor(255,255,255);
+      doc.roundedRect(boxX, y, boxW, 200, 12, 12, "F");
+
+      // título + badge
+      const c = levelColor(s.band.label);
+      doc.setFillColor(...c);
+      doc.roundedRect(boxX+14, y+14, 150, 24, 10, 10, "F");
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(10);
+      doc.setTextColor(255,255,255);
+      doc.text(s.band.label.toUpperCase(), boxX+14+75, y+30, { align:"center" });
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text(s.title, boxX+180, y+30);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(10);
+      doc.setTextColor(...COLORS.muted);
+      doc.text(`Puntaje: ${s.score}/${s.max}  (${Math.round(s.pct*100)}%)`, boxX+180, y+48);
+
+      // verso sección
+      if(s.sectionVerse){
+        doc.setFont("times","italic");
+        doc.setFontSize(10);
+        doc.setTextColor(15, 70, 80);
+        const vLines = doc.splitTextToSize(`${s.sectionVerse.quote} (${s.sectionVerse.reference})`, boxW - 28);
+        doc.text(vLines, boxX+14, y+74);
+      }
+
+      // mini-enseñanza
+      const mt = s.manual?.miniTeaching;
+      let baseY = y + 108;
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(11);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Mini-enseñanza:", boxX+14, baseY);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(10);
+      doc.setTextColor(...COLORS.ink);
+
+      const t = mt ? [mt.title, ...mt.text] : ["(Sin mini-enseñanza definida en JSON)"];
+      const tLines = doc.splitTextToSize(t.join("  • "), boxW - 28);
+      doc.text(tLines, boxX+14, baseY+18);
+
+      y += 220;
+    }
+
+    addCriticalSection(topA);
+    if(topB.id !== topA.id) addCriticalSection(topB);
+
+    // ========== PLAN 7 DÍAS ==========
+    if(y + 80 > pageH - 70){
+      doc.addPage();
+      y = 64;
+    }
+    y = sectionTitle("Plan semanal automático (7 días)", y);
+
+    const planRows = lastPayload.plan7.map(d => ([
+      `Día ${d.day}`,
+      d.title,
+      d.items.join(" • ")
+    ]));
+
+    doc.autoTable({
+      startY: y,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme: "grid",
+      styles: {
+        font: "helvetica",
+        fontSize: 9.5,
+        cellPadding: 6,
+        textColor: [20, 30, 50],
+        lineColor: [230, 234, 245],
+        valign: "top"
+      },
+      headStyles: {
+        fillColor: COLORS.ink,
+        textColor: [255,255,255],
+        fontStyle: "bold"
+      },
+      columnStyles: {
+        0: { cellWidth: 70 },
+        1: { cellWidth: 170 },
+        2: { cellWidth: pageW - margin*2 - 70 - 170 }
+      },
+      margin: { left: margin, right: margin }
+    });
+
+    // Observaciones
+    let obsY = doc.lastAutoTable.finalY + 18;
+    if(obsY + 90 > pageH - 70){
+      doc.addPage();
+      obsY = 64;
+    }
+    obsY = sectionTitle("Observaciones del auditor", obsY);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(margin, obsY, pageW - margin*2, 90, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.setTextColor(...COLORS.ink);
+
+    const notes = (lastPayload.header.notes || "(sin observaciones)");
+    const noteLines = doc.splitTextToSize(notes, pageW - margin*2 - 28);
+    doc.text(noteLines, margin+14, obsY+22);
+
+    // Detalles por pregunta (opcional)
+    if(lastPayload.includeDetails){
+      doc.addPage();
+      let yy = 64;
+      yy = sectionTitle("Respuestas por pregunta (detalle)", yy);
+
+      const detRows = lastPayload.answers.map(a => ([
+        a.section,
+        a.q,
+        `${a.answerLabel} (${a.value})`
+      ]));
+
+      doc.autoTable({
+        startY: yy,
+        head: [["Sección", "Pregunta", "Respuesta"]],
+        body: detRows,
+        theme: "grid",
+        styles: {
+          font: "helvetica",
+          fontSize: 9,
+          cellPadding: 5,
+          textColor: [20, 30, 50],
+          lineColor: [230, 234, 245],
+          valign: "top"
+        },
+        headStyles: {
+          fillColor: COLORS.ink,
+          textColor: [255,255,255],
+          fontStyle: "bold"
+        },
+        margin: { left: margin, right: margin }
+      });
+    }
+
+    // Footer (paginación)
+    addFooter();
+
+    const baseName = sanitizeFileName(lastPayload.header.patient || "evaluacion_hogar");
+    doc.save(`${baseName}_bonito.pdf`);
+  }
+
+  function resetAll(){
+    Object.keys(state).forEach(k => delete state[k]);
+    document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+    updateLiveScore();
+    resultEl.style.display = "none";
+    resultEl.innerHTML = "";
+    btnTxt.disabled = true;
+    btnPdfPretty.disabled = true;
+    lastPayload = null;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
+      DATA = await res.json();
+      renderHeader();
+      setDefaultDateOnlyIfEmpty();
+      renderForm();
+      updateLiveScore();
+
+      const okPdf = !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+      pdfWarn.style.display = okPdf ? "none" : "block";
+    }catch(err){
+      formEl.innerHTML = `<div class="card"><div class="error"><b>Error:</b> ${err.message}</div><div class="small">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta del HTML.</div></div>`;
+    }
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+  document.getElementById("btnDownloadTxt").addEventListener("click", downloadTxt);
+  document.getElementById("btnDownloadPdfPretty").addEventListener("click", downloadPdfPretty);
+
+  init();
 </script>
-
 </body>
 </html>
