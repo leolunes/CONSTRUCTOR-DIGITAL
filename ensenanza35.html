@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Auditoría del Hogar — Sistema Estructural</title>
+
+<script src="jspdf.min.js"></script>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f8;
+  padding:20px;
+}
+h1{color:#2c3e50}
+.section{
+  background:#fff;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:6px;
+}
+.question{
+  margin-bottom:8px;
+}
+input[type=number]{
+  width:60px;
+}
+button{
+  margin:8px 5px;
+  padding:8px 14px;
+  cursor:pointer;
+}
+.result{
+  background:#eef2f5;
+  padding:15px;
+  border-radius:6px;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Auditoría del Hogar — Sistema Estructural</h1>
+
+<div class="section">
+  <strong>Datos del hogar auditado</strong><br><br>
+  Paciente: <input id="paciente"><br><br>
+  Auditor: <input id="auditor"><br><br>
+  Fecha: <input type="date" id="fecha"><br><br>
+  Observaciones:<br>
+  <textarea id="observaciones" rows="4" style="width:100%"></textarea>
+</div>
+
+<div id="formulario"></div>
+
+<button onclick="verResultado()">Ver resultado</button>
+<button onclick="descargarTXT()">Descargar TXT</button>
+<button onclick="descargarPDF()">Descargar PDF</button>
+
+<div id="resultado" class="result" style="display:none"></div>
+
+<script>
+let DATA;
+let respuestas = {};
+
+fetch("ensenanza34.json")
+.then(res=>res.json())
+.then(json=>{
+  DATA = json;
+  renderForm();
+});
+
+function renderForm(){
+  const cont = document.getElementById("formulario");
+  DATA.sections.forEach(sec=>{
+    let html = `<div class="section"><h3>${sec.title}</h3>`;
+    sec.questions.forEach((q,i)=>{
+      const id = sec.id+"_"+i;
+      html += `
+        <div class="question">
+          ${q.text}
+          <input type="number" min="0" max="${q.max}" value="0"
+            onchange="respuestas['${id}']=this.value">
+        </div>`;
+      respuestas[id]=0;
+    });
+    html += "</div>";
+    cont.innerHTML += html;
+  });
+}
+
+function evaluarSeccion(sec){
+  let total=0, max=0;
+  sec.questions.forEach((q,i)=>{
+    total += Number(respuestas[sec.id+"_"+i]);
+    max += q.max;
+  });
+  let estado="Alineado";
+  if(total>max*0.25) estado="En ajuste";
+  if(total>max*0.5) estado="En riesgo";
+  if(total>max*0.75) estado="Crítico";
+  return {total,max,estado};
+}
+
+function verResultado(){
+  let html="";
+  DATA.sections.forEach(sec=>{
+    const r = evaluarSeccion(sec);
+    html += `<strong>${sec.title}</strong><br>
+    Puntaje: ${r.total}/${r.max}<br>
+    Diagnóstico: ${r.estado}<br>
+    📖 ${sec.verse}<br><br>`;
+  });
+  document.getElementById("resultado").innerHTML = html;
+  document.getElementById("resultado").style.display="block";
+}
+
+function descargarTXT(){
+  let txt = "AUDITORÍA DEL HOGAR\n\n";
+  txt += `Paciente: ${paciente.value}\nAuditor: ${auditor.value}\nFecha: ${fecha.value}\n\n`;
+  DATA.sections.forEach(sec=>{
+    const r = evaluarSeccion(sec);
+    txt += `${sec.title}\nPuntaje: ${r.total}/${r.max}\nEstado: ${r.estado}\n${sec.verse}\n\n`;
+  });
+  txt += "Observaciones:\n"+observaciones.value;
+  const blob = new Blob([txt],{type:"text/plain"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "auditoria_hogar.txt";
+  a.click();
+}
+
+function descargarPDF(){
+  const pdf = new jspdf.jsPDF();
+
+  // PORTADA
+  pdf.addImage("logo.png","PNG",55,20,100,100);
+  pdf.setFontSize(18);
+  pdf.text("AUDITORÍA DEL HOGAR",105,135,{align:"center"});
+  pdf.setFontSize(12);
+  pdf.text("Sistema Estructural Espiritual",105,145,{align:"center"});
+
+  pdf.addPage();
+
+  // ENCABEZADO CON LOGO
+  pdf.addImage("logo.png","PNG",10,10,30,30);
+  pdf.setFontSize(14);
+  pdf.text("Auditoría del Hogar",105,20,{align:"center"});
+
+  let y=45;
+  pdf.setFontSize(11);
+  pdf.text(`Paciente: ${paciente.value}`,10,y); y+=6;
+  pdf.text(`Auditor: ${auditor.value}`,10,y); y+=6;
+  pdf.text(`Fecha: ${fecha.value}`,10,y); y+=10;
+
+  DATA.sections.forEach(sec=>{
+    const r = evaluarSeccion(sec);
+    pdf.setFontSize(12);
+    pdf.text(sec.title,10,y); y+=6;
+    pdf.setFontSize(10);
+    pdf.text(`Puntaje: ${r.total}/${r.max}`,10,y); y+=5;
+    pdf.text(`Diagnóstico: ${r.estado}`,10,y); y+=5;
+    pdf.text(`Biblia: ${sec.verse}`,10,y,{maxWidth:180}); y+=10;
+    if(y>260){pdf.addPage();y=20;}
+  });
+
+  pdf.text("Observaciones:",10,y); y+=6;
+  pdf.text(observaciones.value,10,y,{maxWidth:180});
+
+  pdf.save("auditoria_hogar.pdf");
+}
+</script>
+
+</body>
+</html>

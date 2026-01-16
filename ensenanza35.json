@@ -1,0 +1,85 @@
+{
+  "sections": [
+    {
+      "id": "lente",
+      "title": "Lente inicial (Diseño)",
+      "verse": "Mi pueblo fue destruido, porque le faltó conocimiento. (Oseas 4:6)",
+      "questions": [
+        {"text":"¿El hogar funciona por diseño o reacción?", "max":5},
+        {"text":"¿Las decisiones se toman con entendimiento?", "max":5}
+      ]
+    },
+    {
+      "id": "comunion",
+      "title": "Comunión",
+      "verse": "Permaneced en mí, y yo en vosotros. (Juan 15:4)",
+      "questions": [
+        {"text":"¿Existe altar espiritual en el hogar?", "max":5},
+        {"text":"¿Hay tiempos reales con Dios?", "max":5}
+      ]
+    },
+    {
+      "id": "congregacion",
+      "title": "Congregación",
+      "verse": "Donde dos o tres se congregan en mi nombre… (Mateo 18:20)",
+      "questions": [
+        {"text":"¿El hogar camina unido?", "max":5},
+        {"text":"¿Hay acuerdos espirituales?", "max":5}
+      ]
+    },
+    {
+      "id": "interseccion",
+      "title": "Intersección",
+      "verse": "Exhortaos unos a otros cada día. (Hebreos 3:13)",
+      "questions": [
+        {"text":"¿Se intercede mutuamente?", "max":5},
+        {"text":"¿Se cubren espiritualmente?", "max":5}
+      ]
+    },
+    {
+      "id": "cargas",
+      "title": "Cargas",
+      "verse": "Sobrellevad los unos las cargas de los otros. (Gálatas 6:2)",
+      "questions": [
+        {"text":"¿Las cargas están distribuidas?", "max":5},
+        {"text":"¿Uno carga más de lo debido?", "max":5}
+      ]
+    },
+    {
+      "id": "cimientos",
+      "title": "Fundamento",
+      "verse": "Nadie puede poner otro fundamento… (1 Corintios 3:11)",
+      "questions": [
+        {"text":"¿Cristo es el centro real?", "max":5},
+        {"text":"¿El hogar descansa en Él?", "max":5}
+      ]
+    },
+    {
+      "id": "material",
+      "title": "Material espiritual",
+      "verse": "Cada uno mire cómo sobreedifica. (1 Corintios 3:10)",
+      "questions": [
+        {"text":"¿Hay mezcla espiritual sana?", "max":5},
+        {"text":"¿Cada rol aporta lo suyo?", "max":5}
+      ]
+    },
+    {
+      "id": "fuego",
+      "title": "Fuego y proceso",
+      "verse": "El fuego probará la obra de cada uno. (1 Corintios 3:13)",
+      "questions": [
+        {"text":"¿Las pruebas producen madurez?", "max":5},
+        {"text":"¿El hogar resiste presión?", "max":5}
+      ]
+    },
+    {
+      "id": "reposo",
+      "title": "Reposo estructural",
+      "verse": "Mi yugo es fácil, y ligera mi carga. (Mateo 11:30)",
+      "questions": [
+        {"text":"¿Hay descanso verdadero?", "max":5},
+        {"text":"¿La vida fluye sin agotamiento crónico?", "max":5}
+      ]
+    }
+  ]
+}
