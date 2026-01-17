@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "title": "Plan de Restauración — 30 Días",
+    "description": "Ruta diaria basada en diagnóstico por secciones del hogar como pórtico isostático espiritual."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0 },
+    { "key": "ajuste", "label": "En ajuste", "value": 1 },
+    { "key": "riesgo", "label": "En riesgo", "value": 2 },
+    { "key": "critico", "label": "Crítico", "value": 3 }
+  ],
+  "sections": [
+    {
+      "id": "comunion",
+      "title": "Comunión (Columna ↔ Cimiento)",
+      "verse": {
+        "quote": "Permaneced en mí, y yo en vosotros. Como el pámpano no puede llevar fruto por sí mismo, si no permanece en la vid, así tampoco vosotros, si no permanecéis en mí.",
+        "reference": "Juan 15:4 (RVR1960)"
+      },
+      "altar": [
+        "Leer Juan 15:1–8.",
+        "Orar 10 min: rendición y dependencia.",
+        "Escribir 1 decisión de obediencia para hoy."
+      ],
+      "practice": [
+        "Cortar 1 distracción que roba altar (30 min menos).",
+        "Hacer 1 acto de obediencia concreto (medible).",
+        "Cerrar el día con 2 min de gratitud."
+      ],
+      "relational": [
+        "Decir una verdad con mansedumbre (sin acusar).",
+        "Pedir perdón si hubo desconexión espiritual.",
+        "Proponer un horario fijo de altar."
+      ]
+    },
+    {
+      "id": "columna",
+      "title": "Columna (Varón: verticalidad)",
+      "verse": {
+        "quote": "Esforzaos y cobrad ánimo; no temáis, ni tengáis miedo... porque Jehová tu Dios es el que va contigo; no te dejará, ni te desamparará.",
+        "reference": "Deuteronomio 31:6 (RVR1960)"
+      },
+      "altar": [
+        "Orar por identidad sana (sin ego, sin baja autoestima).",
+        "Leer Salmo 27.",
+        "Pedir dirección antes de decidir."
+      ],
+      "practice": [
+        "Identificar inclinación: evasión o autosuficiencia.",
+        "Asumir 1 responsabilidad que estabas evitando.",
+        "Hacer 1 ajuste de límites (menos impulsos, más dirección)."
+      ],
+      "relational": [
+        "Hablar con calma: ‘quiero sostener, no controlar’.",
+        "Preguntar: ‘¿qué carga estás llevando sola?’",
+        "Acordar una forma práctica de apoyo."
+      ]
+    },
+    {
+      "id": "congregacion",
+      "title": "Congregación (Nudo: Columna ↔ Viga)",
+      "verse": {
+        "quote": "Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.",
+        "reference": "Mateo 18:20 (RVR1960)"
+      },
+      "altar": [
+        "Lectura corta en pareja (10 min).",
+        "Oración de alineación (5–10 min).",
+        "Declarar: ‘Cristo en medio del nudo’."
+      ],
+      "practice": [
+        "Hacer 1 acuerdo por escrito (simple).",
+        "Evitar discusiones largas: usar ‘pausa y volver’.",
+        "Practicar honra (1 reconocimiento)."
+      ],
+      "relational": [
+        "Conversación de 15 min: sin reproche, solo diseño.",
+        "Decidir 1 hábito semanal de congregación en casa.",
+        "Cerrar con abrazo / gesto de paz."
+      ]
+    },
+    {
+      "id": "viga",
+      "title": "Viga (Mujer: sensibilidad y transferencia)",
+      "verse": {
+        "quote": "Mejor son dos que uno; porque tienen mejor paga de su trabajo. Porque si cayeren, el uno levantará a su compañero.",
+        "reference": "Eclesiastés 4:9–10 (RVR1960)"
+      },
+      "altar": [
+        "Pedir al Espíritu Santo claridad y reposo.",
+        "Leer Proverbios 31:10–12 (identidad sin carga sola).",
+        "Orar: ‘Señor, enséñame a transferir’."
+      ],
+      "practice": [
+        "Nombrar 1 carga específica que te está agotando.",
+        "Decidir cómo transferirla (paso práctico).",
+        "Evitar cargar ‘en silencio’: pedir ayuda."
+      ],
+      "relational": [
+        "Pedir con claridad (no indirectas).",
+        "Reconocer un esfuerzo del varón (si aplica).",
+        "Acordar un método de comunicación (corto y diario)."
+      ]
+    },
+    {
+      "id": "interseccion",
+      "title": "Intersección (Apoyo móvil: Espíritu Santo ↔ Viga)",
+      "verse": {
+        "quote": "Asimismo el Espíritu nos ayuda en nuestra debilidad... el Espíritu mismo intercede por nosotros con gemidos indecibles.",
+        "reference": "Romanos 8:26 (RVR1960)"
+      },
+      "altar": [
+        "Orar 10 min: intercesión (no control).",
+        "Leer Romanos 8:26–28.",
+        "Pedir mansedumbre en la respuesta."
+      ],
+      "practice": [
+        "Aplicar ‘pausa santa’: 30 segundos antes de responder.",
+        "Cambiar control por oración (1 situación).",
+        "Practicar descanso emocional (respirar, bajar tensión)."
+      ],
+      "relational": [
+        "Pedir espacio sin desconexión (apoyo móvil).",
+        "Expresar necesidad sin amenaza.",
+        "Acordar un ‘tiempo de calma’ para volver a hablar."
+      ]
+    },
+    {
+      "id": "cargas",
+      "title": "Cargas (muertas, vivas y sísmicas)",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      },
+      "altar": [
+        "Orar entregando 1 ansiedad concreta.",
+        "Leer Mateo 6:25–34.",
+        "Escribir: ‘esta carga le pertenece al fundamento’."
+      ],
+      "practice": [
+        "Listar cargas muertas, vivas, sísmicas (10 min).",
+        "Redistribuir 1 carga esta semana.",
+        "Eliminar 1 sobrecarga innecesaria."
+      ],
+      "relational": [
+        "Reunión breve para repartir cargas (15 min).",
+        "Acordar ‘quién hace qué’ por 7 días.",
+        "Cuidar el tono: hablar como equipo."
+      ]
+    },
+    {
+      "id": "equilibrio",
+      "title": "Equilibrio (∑Fy=0, ∑Fx=0, ∑M=0)",
+      "verse": {
+        "quote": "Dios no es Dios de confusión, sino de paz.",
+        "reference": "1 Corintios 14:33 (RVR1960)"
+      },
+      "altar": [
+        "Orar por paz (no confusión).",
+        "Leer Santiago 1:5–8 (sabiduría).",
+        "Decidir desde altar, no desde urgencia."
+      ],
+      "practice": [
+        "Identificar 1 fuerza horizontal (estrés/decisión).",
+        "Reforzar el nudo con un acuerdo.",
+        "Quitar 1 fuente de ‘giro’ (reacción impulsiva)."
+      ],
+      "relational": [
+        "Hablar con frase guía: ‘busquemos equilibrio, no culpa’.",
+        "Reducir tensión con pausa y oración breve.",
+        "Acordar un ‘protocolo de conflicto’."
+      ]
+    },
+    {
+      "id": "material",
+      "title": "Material (Palabra + Espíritu + fe + aportes)",
+      "verse": {
+        "quote": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+        "reference": "Salmo 127:1 (RVR1960)"
+      },
+      "altar": [
+        "Leer Salmo 127.",
+        "Orar: ‘Señor, edifica Tú’.",
+        "Pedir fe real (aunque sea pequeña)."
+      ],
+      "practice": [
+        "Aumentar ‘cemento’: 10 min de Palabra diaria.",
+        "Cuidar ‘agua’: depender del Espíritu en decisiones.",
+        "Eliminar ‘mezcla barata’: hábitos que debilitan."
+      ],
+      "relational": [
+        "Elegir 1 hábito espiritual familiar (semanal).",
+        "Acordar ‘horario de mezcla’: tiempo de altar juntos.",
+        "Celebrar un avance pequeño."
+      ]
+    },
+    {
+      "id": "mantenimiento",
+      "title": "Mantenimiento (refuerzo, curado y hábitos)",
+      "verse": {
+        "quote": "Examinadlo todo; retened lo bueno.",
+        "reference": "1 Tesalonicenses 5:21 (RVR1960)"
+      },
+      "altar": [
+        "Orar por perseverancia.",
+        "Leer Filipenses 1:6.",
+        "Declarar: ‘Dios termina lo que empieza’."
+      ],
+      "practice": [
+        "Definir mantenimiento semanal fijo (día/hora).",
+        "Revisión mensual (10 min): ¿qué bajó tensión?",
+        "Buscar acompañamiento si hay riesgo/criticidad."
+      ],
+      "relational": [
+        "Cerrar semana con gratitud y acuerdos.",
+        "Reparar rápido: pedir perdón pronto.",
+        "Honra mutua: proteger el vínculo."
+      ]
+    }
+  ]
+}

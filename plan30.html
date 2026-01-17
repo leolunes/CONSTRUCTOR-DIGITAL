@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Plan 30 Días — Restauración</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1150px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;margin-right:8px;}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:420px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    label{font-weight:800;font-size:13px;}
+    input, textarea{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .dayCard{border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
+    .dayHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+    .dayTitle{font-weight:950}
+    .tag{font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.14);padding:5px 9px;border-radius:999px;}
+    .list{margin:8px 0 0;padding-left:18px;color:var(--text);line-height:1.45;}
+    .checkRow{display:flex;gap:10px;align-items:center;margin-top:10px;}
+    .checkRow input{transform:scale(1.2)}
+    .small{font-size:13px; color:var(--muted); line-height:1.45;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1 id="t">Plan de Restauración — 30 Días</h1>
+    <p class="sub" id="d"></p>
+    <div style="margin-top:10px">
+      <span class="pill">Sin servidor · Guarda avance local</span>
+      <span class="pill" id="pInfo">Secciones: —</span>
+    </div>
+    <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+  </div>
+
+  <div class="grid">
+    <!-- Panel izquierdo -->
+    <div class="card">
+      <div class="row">
+        <b>Diagnóstico base (0–3)</b>
+        <span class="pill" id="sumPill">Total: 0</span>
+      </div>
+      <div class="muted" style="font-size:13px;margin-top:6px">
+        0=Alineado · 1=Ajuste · 2=Riesgo · 3=Crítico. (Solo selección, no números libres)
+      </div>
+
+      <div class="fieldgrid">
+        <div>
+          <label>Nombre del paciente</label>
+          <input id="patient" placeholder="Ej: Juan y María Pérez">
+        </div>
+        <div>
+          <label>Nombre del auditor</label>
+          <input id="auditor" placeholder="Ej: Consejero / Pastor">
+        </div>
+        <div>
+          <label>Fecha (editable)</label>
+          <input id="date" type="date">
+        </div>
+        <div>
+          <label>Observaciones libres</label>
+          <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="sec" id="secForm"></div>
+
+      <div class="btns">
+        <button class="primary" id="btnBuild">Generar plan 30 días</button>
+        <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+        <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+        <button class="ghost" id="btnClear">Borrar avance</button>
+      </div>
+
+      <div class="small" style="margin-top:10px">
+        ✅ El checklist diario se guarda en tu navegador (LocalStorage).  
+        Si cambias de dispositivo/navegador, el avance no se copia automáticamente.
+      </div>
+    </div>
+
+    <!-- Plan 30 días -->
+    <div class="card">
+      <div class="row">
+        <b>Plan diario (30 días)</b>
+        <span class="pill" id="progress">Progreso: 0/30</span>
+      </div>
+      <div class="muted" style="font-size:13px;margin-top:6px" id="planHint">
+        Genera el plan para ver tareas diarias y marcar checklist.
+      </div>
+
+      <div id="plan"></div>
+    </div>
+  </div>
+</div>
+
+<!-- jsPDF + AutoTable -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "plan30.json";
+  const LOGO_PATH = "logo.png";
+  const STORAGE_KEY = "plan30_restauracion_v1";
+
+  let DATA=null;
+  let logoDataUrl=null;
+  let last=null;
+
+  const secForm = document.getElementById("secForm");
+  const planEl = document.getElementById("plan");
+  const progressEl = document.getElementById("progress");
+  const sumPill = document.getElementById("sumPill");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
+
+  const btnTxt = document.getElementById("btnTxt");
+  const btnPdf = document.getElementById("btnPdf");
+
+  const state = {
+    sectionLevels: {},  // sectionId -> 0..3
+    checklist: {}       // dayIndex (1..30) -> true/false
+  };
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function total(){
+    return DATA.sections.reduce((acc,s)=> acc + (state.sectionLevels[s.id] ?? 0), 0);
+  }
+
+  function save(){
+    const payload = {
+      header: {
+        patient: patientEl.value || "",
+        auditor: auditorEl.value || "",
+        date: dateEl.value || "",
+        notes: notesEl.value || ""
+      },
+      sectionLevels: state.sectionLevels,
+      checklist: state.checklist
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  }
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const payload = JSON.parse(raw);
+      patientEl.value = payload.header?.patient || "";
+      auditorEl.value = payload.header?.auditor || "";
+      dateEl.value = payload.header?.date || "";
+      notesEl.value = payload.header?.notes || "";
+      state.sectionLevels = payload.sectionLevels || {};
+      state.checklist = payload.checklist || {};
+    }catch(e){}
+  }
+
+  function clearAll(){
+    localStorage.removeItem(STORAGE_KEY);
+    state.sectionLevels = {};
+    state.checklist = {};
+    patientEl.value = "";
+    auditorEl.value = "";
+    notesEl.value = "";
+    setDefaultDateIfEmpty();
+    renderForm();
+    planEl.innerHTML = "";
+    document.getElementById("planHint").textContent = "Genera el plan para ver tareas diarias y marcar checklist.";
+    progressEl.textContent = "Progreso: 0/30";
+    btnTxt.disabled = true;
+    btnPdf.disabled = true;
+    last = null;
+  }
+
+  function renderForm(){
+    secForm.innerHTML = "";
+    DATA.sections.forEach(sec=>{
+      if(state.sectionLevels[sec.id] == null) state.sectionLevels[sec.id] = 0;
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${sec.title}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">
+              📖 ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+            </div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">${levelLabel(state.sectionLevels[sec.id])}</span>
+        </div>
+        <div class="opts">
+          ${DATA.levels.map(l=>`
+            <label class="opt">
+              <input type="radio" name="${sec.id}" value="${l.value}" ${Number(l.value)===Number(state.sectionLevels[sec.id]) ? "checked":""}>
+              <span>${l.label} (${l.value})</span>
+            </label>
+          `).join("")}
+        </div>
+      `;
+
+      div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+        inp.addEventListener("change",(e)=>{
+          state.sectionLevels[sec.id] = Number(e.target.value);
+          document.getElementById(`pill_${sec.id}`).textContent = levelLabel(state.sectionLevels[sec.id]);
+          sumPill.textContent = `Total: ${total()}`;
+          save();
+        });
+      });
+
+      secForm.appendChild(div);
+    });
+
+    sumPill.textContent = `Total: ${total()}`;
+  }
+
+  function levelLabel(v){
+    const l = DATA.levels.find(x=>Number(x.value)===Number(v));
+    return l ? l.label : "Alineado";
+  }
+
+  function topSections(){
+    // retorna secciones ordenadas por tensión (3..0)
+    const arr = DATA.sections.map(sec=>({
+      ...sec,
+      v: state.sectionLevels[sec.id] ?? 0
+    }));
+    arr.sort((a,b)=> b.v - a.v);
+    return arr;
+  }
+
+  function pickRotation(topArr){
+    // Pool priorizado: tensión alta aparece más veces
+    const pool = [];
+    topArr.forEach(s=>{
+      const times = 1 + s.v; // 1..4
+      for(let i=0;i<times;i++) pool.push(s);
+    });
+    // Garantía: mínimo una vez cada sección
+    DATA.sections.forEach(s=> pool.push(s));
+    return pool;
+  }
+
+  function buildDayTask(dayIndex, sec){
+    // Selecciones simples para no saturar: 1 altar + 1 práctica + 1 relacional
+    const altar = sec.altar || [];
+    const practice = sec.practice || [];
+    const relational = sec.relational || [];
+    const a = altar[(dayIndex-1) % altar.length] || altar[0] || "Orar 10 min.";
+    const p = practice[(dayIndex-1) % practice.length] || practice[0] || "Aplicar un ajuste pequeño.";
+    const r = relational[(dayIndex-1) % relational.length] || relational[0] || "Honrar al otro con una palabra.";
+
+    return {
+      day: dayIndex,
+      sectionId: sec.id,
+      sectionTitle: sec.title,
+      verse: sec.verse,
+      blocks: [
+        { title: "Altar", items: [a] },
+        { title: "Acción práctica", items: [p] },
+        { title: "Acción relacional", items: [r] }
+      ]
+    };
+  }
+
+  function buildPlan30(){
+    const ordered = topSections();
+    const pool = pickRotation(ordered);
+
+    const days = [];
+    for(let d=1; d<=30; d++){
+      const sec = pool[(d-1) % pool.length];
+      days.push(buildDayTask(d, sec));
+    }
+    return days;
+  }
+
+  function renderPlan(days){
+    planEl.innerHTML = "";
+    document.getElementById("planHint").textContent = "Marca cada día completado. El avance se guarda automáticamente.";
+
+    days.forEach(day=>{
+      const done = !!state.checklist[day.day];
+      const div = document.createElement("div");
+      div.className = "dayCard";
+      div.style.marginTop = "12px";
+      div.innerHTML = `
+        <div class="dayHead">
+          <div>
+            <div class="dayTitle">Día ${day.day} — ${day.sectionTitle}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              📖 ${day.verse.quote} <span class="muted">(${day.verse.reference})</span>
+            </div>
+          </div>
+          <span class="tag">${done ? "Completado" : "Pendiente"}</span>
+        </div>
+
+        ${day.blocks.map(b=>`
+          <div style="margin-top:10px;">
+            <b>${b.title}</b>
+            <ul class="list">
+              ${b.items.map(i=>`<li>${escapeHtml(i)}</li>`).join("")}
+            </ul>
+          </div>
+        `).join("")}
+
+        <div class="checkRow">
+          <input type="checkbox" id="chk_${day.day}" ${done?"checked":""}/>
+          <label for="chk_${day.day}">Marcar día como completado</label>
+        </div>
+      `;
+      planEl.appendChild(div);
+
+      div.querySelector(`#chk_${day.day}`).addEventListener("change",(e)=>{
+        state.checklist[day.day] = !!e.target.checked;
+        save();
+        updateProgress();
+        // actualizar tag
+        const tag = div.querySelector(".tag");
+        tag.textContent = e.target.checked ? "Completado" : "Pendiente";
+      });
+    });
+
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const done = Object.keys(state.checklist).filter(k=>state.checklist[k]).length;
+    progressEl.textContent = `Progreso: ${done}/30`;
+  }
+
+  function escapeHtml(str){
+    return String(str||"").replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[s]));
+  }
+
+  function buildPayload(days){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      notes: notesEl.value.trim() || ""
+    };
+
+    const secScores = DATA.sections.map(s=>({
+      id: s.id,
+      title: s.title,
+      level: state.sectionLevels[s.id] ?? 0,
+      levelLabel: levelLabel(state.sectionLevels[s.id] ?? 0),
+      verse: s.verse
+    })).sort((a,b)=> b.level - a.level);
+
+    return {
+      meta: DATA.meta,
+      header,
+      total: total(),
+      secScores,
+      days,
+      doneCount: Object.keys(state.checklist).filter(k=>state.checklist[k]).length
+    };
+  }
+
+  function downloadTXT(){
+    if(!last) return;
+    const L = [];
+    L.push(last.meta.title.toUpperCase());
+    L.push("");
+    L.push("DATOS");
+    L.push(`Paciente: ${last.header.patient}`);
+    L.push(`Auditor: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
+    L.push("");
+    L.push("DIAGNÓSTICO BASE POR SECCIONES (0–3)");
+    L.push("--------------------------------------------------");
+    last.secScores.forEach(s=>{
+      L.push(`${s.title}: ${s.levelLabel} (${s.level})`);
+    });
+    L.push("");
+    L.push("PLAN 30 DÍAS");
+    L.push("--------------------------------------------------");
+    last.days.forEach(d=>{
+      L.push(`Día ${d.day} — ${d.sectionTitle}`);
+      L.push(`📖 ${d.verse.quote} (${d.verse.reference})`);
+      d.blocks.forEach(b=>{
+        L.push(`- ${b.title}:`);
+        b.items.forEach(i=> L.push(`  • ${i}`));
+      });
+      L.push(`Estado: ${state.checklist[d.day] ? "Completado" : "Pendiente"}`);
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "plan_30_dias.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise(resolve=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){ return null; }
+  }
+
+  function safeName(name){
+    return (name||"plan_30_dias")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  function downloadPDF(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+
+    (async ()=>{
+      if(logoDataUrl===null){
+        logoDataUrl = await loadLogo();
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({unit:"pt", format:"letter"});
+      const W = doc.internal.pageSize.getWidth();
+      const H = doc.internal.pageSize.getHeight();
+      const M = 44;
+
+      const INK = [22,33,58];
+      const MUTED = [90,102,130];
+
+      function addLogo(x,y,w,h){
+        if(!logoDataUrl) return;
+        try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+      }
+
+      function header(){
+        addLogo(M, 16, 32, 32);
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(12);
+        doc.setTextColor(...INK);
+        doc.text("Plan de Restauración — 30 Días", W/2, 36, {align:"center"});
+        doc.setDrawColor(230);
+        doc.line(M, 52, W-M, 52);
+        return 74;
+      }
+
+      function footer(){
+        const n = doc.getNumberOfPages();
+        for(let i=1;i<=n;i++){
+          doc.setPage(i);
+          doc.setFont("helvetica","normal");
+          doc.setFontSize(9);
+          doc.setTextColor(...MUTED);
+          doc.text("Constructores del Reino — Plan 30 días", M, H-18);
+          doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+        }
+      }
+
+      // PORTADA
+      doc.setFillColor(22,33,58);
+      doc.rect(0,0,W,96,"F");
+      addLogo(W-M-56, 18, 56, 56);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(22);
+      doc.setTextColor(255,255,255);
+      doc.text("PLAN DE RESTAURACIÓN", M, 50);
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(12);
+      doc.setTextColor(210,230,255);
+      doc.text("30 días — altar + acción + vínculo", M, 72);
+
+      doc.setFillColor(245,247,255);
+      doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
+      doc.setTextColor(...INK);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.text("Datos", M+14, 145);
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
+      doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
+      doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+
+      doc.setFillColor(255,255,255);
+      doc.roundedRect(M, 260, W-M*2, 120, 12, 12, "F");
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...INK);
+      doc.text(`Total de tensión (base): ${last.total}`, M+14, 290);
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.setTextColor(...INK);
+      doc.text(`Progreso actual: ${last.doneCount}/30 días completados`, M+14, 312);
+
+      // Tabla secciones base
+      doc.text("Diagnóstico base por secciones", M+14, 350);
+      doc.autoTable({
+        startY: 360,
+        head: [["Sección", "Nivel", "Porción bíblica"]],
+        body: last.secScores.map(s=>[
+          s.title,
+          `${s.levelLabel} (${s.level})`,
+          `${s.verse.quote} (${s.verse.reference})`
+        ]),
+        theme: "grid",
+        styles: {font:"helvetica", fontSize:9, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+        headStyles: {fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+        margin: {left:M, right:M}
+      });
+
+      // PLAN 30 (en varias páginas)
+      doc.addPage();
+      let y = header();
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...INK);
+      doc.text("Plan 30 días (resumen)", M, y);
+      y += 12; doc.setDrawColor(230); doc.line(M, y, W-M, y); y += 12;
+
+      const rows = last.days.map(d=>[
+        `Día ${d.day}`,
+        d.sectionTitle,
+        d.blocks.map(b=>`${b.title}: ${b.items.join(" / ")}`).join(" | "),
+        state.checklist[d.day] ? "Completado" : "Pendiente"
+      ]);
+
+      doc.autoTable({
+        startY: y,
+        head: [["Día", "Enfoque", "Acciones", "Estado"]],
+        body: rows,
+        theme: "grid",
+        styles: {font:"helvetica", fontSize:8.8, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+        headStyles: {fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+        columnStyles: {0:{cellWidth:60},1:{cellWidth:150},2:{cellWidth:W-M*2-60-150-80},3:{cellWidth:80}},
+        margin: {left:M, right:M}
+      });
+
+      // Observaciones
+      doc.addPage();
+      y = header();
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...INK);
+      doc.text("Observaciones del auditor", M, y);
+      y += 12; doc.setDrawColor(230); doc.line(M, y, W-M, y); y += 14;
+
+      doc.setFillColor(255,255,255);
+      doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.setTextColor(...INK);
+      const notes = last.header.notes || "(sin observaciones)";
+      doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+      footer();
+
+      const name = safeName(last.header.patient || "plan_30_dias");
+      doc.save(`${name}_plan_30_dias.pdf`);
+    })();
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+
+      document.getElementById("t").textContent = DATA.meta.title;
+      document.getElementById("d").textContent = DATA.meta.description;
+      document.getElementById("pInfo").textContent = `Secciones: ${DATA.sections.length}`;
+
+      setDefaultDateIfEmpty();
+      load();
+      if(!dateEl.value) setDefaultDateIfEmpty();
+      renderForm();
+
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    }catch(e){
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>`;
+    }
+  }
+
+  document.getElementById("btnBuild").addEventListener("click", ()=>{
+    const days = buildPlan30();
+    renderPlan(days);
+    last = buildPayload(days);
+    btnTxt.disabled = false;
+    btnPdf.disabled = !okPdfLib();
+    save();
+  });
+
+  document.getElementById("btnTxt").addEventListener("click", ()=>{
+    last = last || buildPayload(buildPlan30());
+    downloadTXT();
+  });
+
+  document.getElementById("btnPdf").addEventListener("click", ()=>{
+    last = last || buildPayload(buildPlan30());
+    downloadPDF();
+  });
+
+  document.getElementById("btnClear").addEventListener("click", clearAll);
+
+  // Guardar cuando cambian campos
+  [patientEl, auditorEl, dateEl, notesEl].forEach(el=>{
+    el.addEventListener("input", save);
+    el.addEventListener("change", save);
+  });
+
+  init();
+</script>
+</body>
+</html>
