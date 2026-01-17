@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Radar del Pórtico — Auditoría</title>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1150px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:520px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Radar del Pórtico — Auditoría Estructural Espiritual</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px">
+        <span class="pill" id="pMax"></span>
+        <span class="pill" id="pHow">Niveles: 0–3 (Alineado → Crítico)</span>
+      </div>
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+    </div>
+
+    <div class="grid">
+      <!-- IZQ: DIAGRAMA -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Diagrama del pórtico</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              Columna = varón (vertical) · Viga = mujer (horizontal) · Nudos = comunión / congregación / intersección
+            </div>
+          </div>
+          <span class="pill" id="liveGlobal">Global: —</span>
+        </div>
+
+        <div class="svgBox" style="margin-top:10px;">
+          <!-- Portico SVG -->
+          <svg id="portico" viewBox="0 0 520 360" width="100%" height="auto" aria-label="Pórtico isostático espiritual">
+            <!-- ground -->
+            <rect x="0" y="320" width="520" height="40" fill="rgba(255,255,255,.05)"></rect>
+
+            <!-- foundation block -->
+            <rect id="foundation" x="75" y="280" width="120" height="40" rx="8" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
+            <text x="135" y="305" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO</text>
+
+            <!-- column -->
+            <rect id="column" x="125" y="95" width="20" height="185" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="135" y="88" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA (VARÓN)</text>
+
+            <!-- beam -->
+            <rect id="beam" x="135" y="95" width="250" height="18" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="260" y="82" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA (MUJER)</text>
+
+            <!-- roller support -->
+            <circle id="rollerBase" cx="395" cy="123" r="10" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
+            <rect x="375" y="133" width="40" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
+            <text x="395" y="162" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">APOYO MÓVIL</text>
+
+            <!-- nodes -->
+            <circle id="N1" cx="135" cy="280" r="10" fill="#64748b"></circle>
+            <text x="150" y="284" font-size="12" fill="rgba(255,255,255,.75)">1</text>
+            <text x="135" y="270" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COMUNIÓN</text>
+
+            <circle id="N2" cx="135" cy="104" r="10" fill="#64748b"></circle>
+            <text x="150" y="108" font-size="12" fill="rgba(255,255,255,.75)">2</text>
+            <text x="135" y="130" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CONGREGACIÓN</text>
+
+            <circle id="N3" cx="395" cy="123" r="10" fill="#64748b"></circle>
+            <text x="410" y="127" font-size="12" fill="rgba(255,255,255,.75)">3</text>
+            <text x="395" y="175" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
+
+            <!-- loads -->
+            <g id="loads" opacity="0.9">
+              <line x1="210" y1="40" x2="210" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="210,95 203,84 217,84" fill="rgba(255,255,255,.55)"/>
+              <line x1="260" y1="40" x2="260" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="260,95 253,84 267,84" fill="rgba(255,255,255,.55)"/>
+              <line x1="310" y1="40" x2="310" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="310,95 303,84 317,84" fill="rgba(255,255,255,.55)"/>
+              <text x="260" y="30" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CARGAS (vivas + muertas)</text>
+            </g>
+          </svg>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Alineado</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Crítico</div>
+          </div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+      </div>
+
+      <!-- DER: FORMULARIO -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de auditoría</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">Se incluyen en el informe. No se envía a servidor.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Nombre del paciente</label>
+            <input id="patient" placeholder="Ej: Juan y María Pérez">
+          </div>
+          <div>
+            <label>Nombre del auditor</label>
+            <input id="auditor" placeholder="Ej: Consejero / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Observaciones libres</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="muted" style="font-size:13px;">Incluir detalle por sección en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+          <span class="muted" id="live">Puntaje: 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "radar-portico.json";
+  const LOGO_PATH = "logo.png";
+
+  let DATA=null;
+  let logoDataUrl=null;
+  const scores = {}; // sectionId -> levelValue(0..3)
+  let last=null;
+
+  const secForm = document.getElementById("secForm");
+  const resBox = document.getElementById("resBox");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
+  const detailsEl = document.getElementById("details");
+
+  const liveEl = document.getElementById("live");
+  const liveGlobal = document.getElementById("liveGlobal");
+  const btnTxt = document.getElementById("btnTxt");
+  const btnPdf = document.getElementById("btnPdf");
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function levelByValue(v){
+    return DATA.levels.find(x=>Number(x.value)===Number(v)) || DATA.levels[0];
+  }
+
+  function badgeClassForKey(key){
+    if(key==="alineado") return "bG";
+    if(key==="ajuste") return "bY";
+    if(key==="riesgo") return "bO";
+    return "bR";
+  }
+
+  function totalScore(){
+    return DATA.sections.reduce((acc,s)=> acc + (scores[s.id] ?? 0), 0);
+  }
+
+  function globalBand(sum){
+    // 9 secciones, cada una 0..3 => total 0..27
+    const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
+    return b || DATA.globalBands[0];
+  }
+
+  function updateSVG(){
+    // Mapeo de sección -> elemento/nodo del SVG
+    // Si varias secciones apuntan a mismo elemento, gana el peor (max)
+    const elementWorst = {};
+
+    DATA.sections.forEach(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const key = levelByValue(v).key;
+      const color = levelByValue(v).color;
+
+      // Nodo (N1,N2,N3, etc)
+      if(sec.node){
+        const nodeEl = document.getElementById(sec.node);
+        if(nodeEl) nodeEl.setAttribute("fill", color);
+      }
+
+      // Elemento (foundation/column/beam/joint/roller/loads etc)
+      if(sec.element){
+        elementWorst[sec.element] = Math.max(elementWorst[sec.element] ?? 0, v);
+      }
+    });
+
+    const paint = (id, v)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      const col = levelByValue(v).color;
+      el.setAttribute("fill", col);
+      el.setAttribute("stroke", "rgba(255,255,255,.20)");
+    };
+
+    // Pintar elementos del pórtico
+    if(elementWorst.foundation!=null) paint("foundation", elementWorst.foundation);
+    if(elementWorst.column!=null) paint("column", elementWorst.column);
+    if(elementWorst.beam!=null) paint("beam", elementWorst.beam);
+
+    // roller base
+    if(elementWorst.roller!=null){
+      const rb = document.getElementById("rollerBase");
+      if(rb) rb.setAttribute("fill", levelByValue(elementWorst.roller).color);
+    }
+
+    // loads (opacidad según tensión)
+    if(elementWorst.loads!=null){
+      const g = document.getElementById("loads");
+      if(g) g.setAttribute("opacity", String(0.55 + (elementWorst.loads/3)*0.45));
+    }
+  }
+
+  function updateLive(){
+    const sum = totalScore();
+    liveEl.textContent = `Puntaje: ${sum}`;
+    const g = globalBand(sum);
+    liveGlobal.textContent = `Global: ${g.label}`;
+    updateSVG();
+  }
+
+  function renderForm(){
+    secForm.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px;">
+      Selecciona el nivel por sección. 0=Alineado, 1=Ajuste, 2=Riesgo, 3=Crítico.
+    </div>`;
+
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = 0;
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${sec.title}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">${sec.diagnosticFocus || ""}</div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">Alineado</span>
+        </div>
+        <div class="opts" role="radiogroup" aria-label="${sec.title}">
+          ${DATA.levels.map(l=>`
+            <label class="opt">
+              <input type="radio" name="${sec.id}" value="${l.value}" ${l.value===0?"checked":""}>
+              <span>${l.label} (${l.value})</span>
+            </label>
+          `).join("")}
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:10px;">
+          <b>📖</b> ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+        </div>
+      `;
+
+      div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+        inp.addEventListener("change", (e)=>{
+          const v = Number(e.target.value);
+          scores[sec.id] = v;
+          const lev = levelByValue(v);
+          const pill = document.getElementById(`pill_${sec.id}`);
+          if(pill) pill.textContent = lev.label;
+          updateLive();
+        });
+      });
+
+      secForm.appendChild(div);
+    });
+
+    updateLive();
+  }
+
+  function buildPayload(){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      notes: notesEl.value.trim() || ""
+    };
+
+    const sum = totalScore();
+    const g = globalBand(sum);
+
+    const sections = DATA.sections.map(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const level = levelByValue(v);
+      return {
+        id: sec.id,
+        title: sec.title,
+        levelValue: v,
+        levelKey: level.key,
+        levelLabel: level.label,
+        color: level.color,
+        verse: sec.verse,
+        focus: sec.diagnosticFocus || "",
+        miniTeaching: sec.miniTeaching || [],
+        actions: sec.actions || []
+      };
+    });
+
+    // ordenar por peor a mejor (crítico arriba)
+    sections.sort((a,b)=> b.levelValue - a.levelValue);
+
+    // plan 7 días: prioriza top 3 tensiones, pero cubre mantenimiento
+    const top = sections.slice(0,3);
+    const plan7 = [
+      { day:1, title:`Volver al fundamento (${top[0]?.title || "Sección"})`, items:[
+        `Leer y orar: ${top[0]?.verse?.quote || ""} (${top[0]?.verse?.reference || ""})`,
+        "Conversación sin culpa: ¿qué está fuera de diseño?",
+        "Entregar una carga a Cristo en oración."
+      ].filter(Boolean)},
+      { day:2, title:`Ajuste dirigido: ${top[0]?.title || "Sección"}`, items:[
+        ...(top[0]?.actions?.slice(0,2) || []),
+        "Cierre del día: oración breve de alineación."
+      ]},
+      { day:3, title:`Ajuste dirigido: ${top[1]?.title || top[0]?.title || "Sección"}`, items:[
+        ...(top[1]?.actions?.slice(0,2) || []),
+        "Un acuerdo práctico: corto, claro, sin debate largo."
+      ]},
+      { day:4, title:`Ajuste dirigido: ${top[2]?.title || top[0]?.title || "Sección"}`, items:[
+        ...(top[2]?.actions?.slice(0,2) || []),
+        "Ejercicio: ‘pausa antes de reaccionar’ (2 veces hoy)."
+      ]},
+      { day:5, title:"Culto efectivo (Congregación del hogar)", items:[
+        "20–30 min: Palabra + oración + acuerdos.",
+        "Honra mutua: reconocer 1 esfuerzo del otro.",
+        "Definir mantenimiento semanal fijo."
+      ]},
+      { day:6, title:"Mantenimiento del sistema (todas las áreas)", items:[
+        "Revisión rápida por sección: ¿subió o bajó la tensión?",
+        "Elegir 1 microajuste por sección.",
+        "Oración: entrega de cargas al fundamento."
+      ]},
+      { day:7, title:"Revisión y continuidad", items:[
+        "¿Qué cambió en 7 días? ¿Qué permanece?",
+        "Elegir 1 práctica que se sostendrá por 4 semanas.",
+        "Repetir el Radar para comparar."
+      ]}
+    ];
+
+    return {
+      meta: DATA.meta,
+      header,
+      global: { sum, band: g },
+      sections,
+      includeDetails: detailsEl.checked,
+      plan7
+    };
+  }
+
+  function showResult(){
+    last = buildPayload();
+    const b = last.global.band;
+
+    const badge =
+      b.key==="g_alineado" ? "bG" :
+      b.key==="g_ajuste" ? "bY" :
+      b.key==="g_riesgo" ? "bO" : "bR";
+
+    resBox.style.display = "block";
+    resBox.innerHTML = `
+      <div class="row">
+        <div>
+          <span class="badge ${badge}">${b.label}</span>
+          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / 27</div>
+          <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
+        <div style="font-style:italic;">${b.verse.quote}</div>
+        <div class="muted" style="margin-top:6px;">(${b.verse.reference})</div>
+      </div>
+    `;
+
+    btnTxt.disabled = false;
+
+    const ok = okPdfLib();
+    btnPdf.disabled = !ok;
+    pdfWarn.style.display = ok ? "none" : "block";
+  }
+
+  function downloadTXT(){
+    if(!last) return;
+    const L = [];
+    L.push(last.meta.title.toUpperCase());
+    L.push("");
+    L.push("DATOS");
+    L.push(`Paciente: ${last.header.patient}`);
+    L.push(`Auditor: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
+    L.push("");
+    L.push("RESULTADO GLOBAL");
+    L.push(`Puntaje: ${last.global.sum}/27`);
+    L.push(`Diagnóstico: ${last.global.band.label}`);
+    L.push(last.global.band.summary);
+    L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
+    L.push("");
+    L.push("ENFOQUE PASTORAL POR SECCIONES");
+    L.push("--------------------------------------------------");
+    last.sections.slice().reverse().forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+      L.push(`Enfoque: ${s.focus}`);
+      L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+      if(last.includeDetails){
+        if(s.miniTeaching?.length){
+          L.push("Mini-enseñanza:");
+          s.miniTeaching.forEach(x=> L.push("• "+x));
+        }
+        if(s.actions?.length){
+          L.push("Acciones sugeridas:");
+          s.actions.forEach(x=> L.push("• "+x));
+        }
+      }
+      L.push("");
+    });
+
+    L.push("PLAN SEMANAL 7 DÍAS");
+    L.push("--------------------------------------------------");
+    last.plan7.forEach(d=>{
+      L.push(`Día ${d.day}: ${d.title}`);
+      d.items.forEach(i=> L.push("• "+i));
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "radar_portico.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise((resolve,reject)=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){
+      return null;
+    }
+  }
+
+  function levelColor(label){
+    const s = (label||"").toLowerCase();
+    if(s.includes("aline")) return [16,185,129];
+    if(s.includes("ajus")) return [245,158,11];
+    if(s.includes("ries")) return [249,115,22];
+    return [244,63,94];
+  }
+
+  function safeName(name){
+    return (name||"radar_portico")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  async function downloadPDF(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+
+    if(logoDataUrl===null){
+      logoDataUrl = await loadLogo();
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const COLORS = { ink:[22,33,58], muted:[90,102,130], white:[255,255,255] };
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(){
+      addLogo(M, 16, 34, 34);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Radar del Pórtico — Auditoría", W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...COLORS.muted);
+        doc.text("Constructores del Reino — Auditoría del Hogar", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // ===== PORTADA =====
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W - M - 56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(255,255,255);
+    doc.text("RADAR DEL PÓRTICO", M, 50);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Diagnóstico por secciones + plan semanal", M, 72);
+
+    // datos
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
+    doc.setTextColor(...COLORS.ink);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos de auditoría", M+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
+    doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+
+    // tarjeta global
+    const band = last.global.band;
+    const c = levelColor(band.label);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 260, W-M*2, 185, 12, 12, "F");
+
+    // BADGE auto-ajustado (no se sale)
+    const badgeText = (band.label||"").toUpperCase();
+    doc.setFont("helvetica","bold");
+    let fs = 10;
+    doc.setFontSize(fs);
+    const maxW = 240;
+    while(doc.getTextWidth(badgeText) > maxW && fs > 8){
+      fs -= 1; doc.setFontSize(fs);
+    }
+    const pad = 18;
+    const bw = Math.min(maxW, doc.getTextWidth(badgeText) + pad*2);
+    const bh = 26;
+
+    doc.setFillColor(...c);
+    doc.roundedRect(M+14, 282, bw, bh, 12, 12, "F");
+    doc.setTextColor(255,255,255);
+    doc.text(badgeText, M+14 + bw/2, 300, {align:"center"});
+
+    doc.setTextColor(...COLORS.ink);
+    doc.setFontSize(12);
+    doc.text(`Puntaje global: ${last.global.sum}/27`, M+14, 332);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    const sumLines = doc.splitTextToSize(band.summary, W-M*2-28);
+    doc.text(sumLines, M+14, 354);
+
+    // verso global
+    doc.setFillColor(240,253,250);
+    doc.roundedRect(M, 392, W-M*2, 58, 10, 10, "F");
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 412);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${band.verse.reference})`, M+10, 438);
+
+    // ===== Tabla secciones =====
+    doc.addPage();
+    let y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico por secciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const rows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      String(s.levelValue),
+      `${s.verse.quote} (${s.verse.reference})`
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: rows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Enfoque pastoral TODAS las secciones =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Enfoque pastoral por secciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const pRows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+      (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Guía pastoral (mini-enseñanza)", "Acciones sugeridas"]],
+      body: pRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0:{cellWidth:140},
+        1:{cellWidth:90},
+        2:{cellWidth: (W - M*2 - 140 - 90)/2},
+        3:{cellWidth: (W - M*2 - 140 - 90)/2}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Plan 7 días =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Plan semanal automático (7 días)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const planRows = last.plan7.map(d=>[
+      `Día ${d.day}`,
+      d.title,
+      d.items.join(" • ")
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles: {
+        0:{cellWidth:70},
+        1:{cellWidth:190},
+        2:{cellWidth: (W - M*2 - 70 - 190)}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Observaciones =====
+    doc.addPage();
+    y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Observaciones del auditor", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const notes = last.header.notes || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+    footer();
+
+    const name = safeName(last.header.patient || "radar_portico");
+    doc.save(`${name}_radar_portico.pdf`);
+  }
+
+  function resetAll(){
+    DATA.sections.forEach(s=> scores[s.id]=0);
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      if(i.value==="0") i.checked=true;
+      else i.checked=false;
+    });
+    document.querySelectorAll('[id^="pill_"]').forEach(p=> p.textContent="Alineado");
+    updateLive();
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled=true;
+    btnPdf.disabled=true;
+    last=null;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+      document.getElementById("t").textContent = DATA.meta.title || "Radar del Pórtico";
+      document.getElementById("d").textContent = DATA.meta.description || "";
+      document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
+
+      setDefaultDateIfEmpty();
+      renderForm();
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    }catch(e){
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+      <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>`;
+    }
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  init();
+</script>
+</body>
+</html>
