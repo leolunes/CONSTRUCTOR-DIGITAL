@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "title": "Simulador de Deriva — Efecto P–Δ (Hogar como Pórtico)",
+    "description": "Una desalineación pequeña puede amplificar el peso. Este simulador traduce el fenómeno P–Δ a lenguaje espiritual (equilibrio, anclaje, nudo y apoyo)."
+  },
+  "verses": {
+    "base": {
+      "quote": "El que oye estas palabras mías y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca.",
+      "reference": "Mateo 7:24 (RVR1960)"
+    },
+    "alineacion": {
+      "quote": "Reconócelo en todos tus caminos, y él enderezará tus veredas.",
+      "reference": "Proverbios 3:6 (RVR1960)"
+    },
+    "ansiedad": {
+      "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+      "reference": "1 Pedro 5:7 (RVR1960)"
+    },
+    "paz": {
+      "quote": "Y la paz de Dios... guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.",
+      "reference": "Filipenses 4:7 (RVR1960)"
+    },
+    "restauracion": {
+      "quote": "Vuélveme el gozo de tu salvación, y espíritu noble me sustente.",
+      "reference": "Salmo 51:12 (RVR1960)"
+    }
+  },
+  "model": {
+    "notes": "Modelo pedagógico: P_eff = P + P*(Δ/100)*k. k baja con anclaje, nudo y apoyo móvil. No es ingeniería real: es herramienta espiritual.",
+    "kWeights": {
+      "anclaje": 0.45,
+      "nudo": 0.35,
+      "apoyo": 0.20
+    },
+    "kMin": 0.35,
+    "kMax": 1.35
+  },
+  "bands": [
+    {
+      "key": "estable",
+      "label": "Estable (peso gobernable)",
+      "minPct": 0,
+      "maxPct": 15,
+      "summary": "El sistema está respondiendo bien. Hay carga, pero no se multiplica por desalineación. Mantén hábitos de mantenimiento.",
+      "verse": {
+        "quote": "Y él es antes de todas las cosas, y todas las cosas en él subsisten.",
+        "reference": "Colosenses 1:17 (RVR1960)"
+      },
+      "focus": [
+        "Mantenimiento semanal fijo",
+        "Congregación del hogar (culto efectivo)",
+        "Cargas compartidas y transferidas"
+      ]
+    },
+    {
+      "key": "ajuste",
+      "label": "En ajuste (deriva moderada)",
+      "minPct": 15,
+      "maxPct": 35,
+      "summary": "El peso se está amplificando. No es falta de amor: es necesidad de alineación. Ajusta antes de que aparezcan fisuras.",
+      "verse": {
+        "quote": "Me mostrarás la senda de la vida; en tu presencia hay plenitud de gozo.",
+        "reference": "Salmo 16:11 (RVR1960)"
+      },
+      "focus": [
+        "Volver al altar (comunión)",
+        "Reducir reacciones impulsivas",
+        "Asegurar el nudo (acuerdos cortos)"
+      ]
+    },
+    {
+      "key": "riesgo",
+      "label": "En riesgo (P–Δ activo)",
+      "minPct": 35,
+      "maxPct": 60,
+      "summary": "El sistema está en fatiga. La desalineación hace que todo pese más. Requiere proceso guiado y restauración por secciones.",
+      "verse": {
+        "quote": "Fortaleced las manos cansadas, afirmad las rodillas débiles.",
+        "reference": "Hebreos 12:12 (RVR1960)"
+      },
+      "focus": [
+        "Plan semanal obligatorio (7 días)",
+        "Reforzar anclaje y apoyo móvil",
+        "Redistribuir cargas ya"
+      ]
+    },
+    {
+      "key": "critico",
+      "label": "Crítico (riesgo de colapso)",
+      "minPct": 60,
+      "maxPct": 1000,
+      "summary": "No es momento de corrección; es momento de contención y proceso. El peso percibido ya está fuera de rango. Requiere acompañamiento pastoral.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      },
+      "focus": [
+        "Acompañamiento (no aislamiento)",
+        "Pausar decisiones grandes 7 días",
+        "Restaurar altar + nudo + apoyo"
+      ]
+    }
+  ],
+  "plan7": {
+    "stable": [
+      "Mantenimiento: 20 min de altar familiar (2 veces).",
+      "1 acuerdo semanal escrito (simple).",
+      "Revisión: una carga se transfiere al fundamento."
+    ],
+    "ajuste": [
+      "Día 1: altar + rendición (Juan 15:4).",
+      "Día 2: acuerdo corto (nudo).",
+      "Día 3: redistribuir 1 carga.",
+      "Día 4: pausa y volver (apoyo móvil).",
+      "Día 5: honra mutua (baja tensión).",
+      "Día 6: culto efectivo del hogar.",
+      "Día 7: revisar deriva y repetir ajustes."
+    ],
+    "riesgo": [
+      "Día 1: contención + oración (Fil 4:7).",
+      "Día 2: eliminar 1 fuente de conflicto repetitivo.",
+      "Día 3: reasignar tareas / cargas (por escrito).",
+      "Día 4: acompañamiento (llamada / mentoría).",
+      "Día 5: restaurar altar (30 min).",
+      "Día 6: sanar conversación (15 min, sin reproches).",
+      "Día 7: repetir simulación y comparar."
+    ],
+    "critico": [
+      "Día 1: no discutir — solo contención.",
+      "Día 2: buscar acompañamiento pastoral.",
+      "Día 3: pausar decisiones grandes (7 días).",
+      "Día 4: altar mínimo diario (10–15 min).",
+      "Día 5: eliminar exposición tóxica / ruido.",
+      "Día 6: acuerdos de seguridad emocional.",
+      "Día 7: plan de proceso (no corrección)."
+    ]
+  }
+}
