@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Simulador de Deriva — P–Δ Espiritual</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;margin-right:8px;}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:420px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    label{font-weight:900;font-size:13px;}
+    input, textarea{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:90px;resize:vertical;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:950;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:950;font-size:12px;border:1px solid rgba(255,255,255,.14);}
+    .bG{background:rgba(16,185,129,.14);color:#6ee7b7;border-color:rgba(16,185,129,.30);}
+    .bY{background:rgba(245,158,11,.14);color:#fcd34d;border-color:rgba(245,158,11,.30);}
+    .bO{background:rgba(249,115,22,.14);color:#fdba74;border-color:rgba(249,115,22,.30);}
+    .bR{background:rgba(244,63,94,.14);color:#fda4af;border-color:rgba(244,63,94,.30);}
+    .mini{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
+    .mini h3{margin:0 0 8px;font-size:14px;}
+    ul{margin:8px 0 0;padding-left:18px;line-height:1.45;}
+    .kpi{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px;}
+    @media(min-width:800px){.kpi{grid-template-columns:1fr 1fr 1fr;}}
+    .k{border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
+    .k b{font-size:12px;color:var(--muted);}
+    .k .v{font-size:20px;font-weight:1000;margin-top:6px;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1 id="t">Simulador de Deriva — P–Δ</h1>
+    <p class="sub" id="d"></p>
+    <div style="margin-top:10px">
+      <span class="pill">Modelo pedagógico · sin servidor</span>
+      <span class="pill" id="pillModel">P_eff = —</span>
+    </div>
+    <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+  </div>
+
+  <div class="grid">
+    <!-- INPUTS -->
+    <div class="card">
+      <div class="row">
+        <b>Variables del sistema</b>
+        <span class="pill" id="pillBand">—</span>
+      </div>
+
+      <div class="fieldgrid">
+        <div>
+          <label>Paciente / hogar</label>
+          <input id="patient" placeholder="Ej: Hogar X">
+        </div>
+        <div>
+          <label>Auditor</label>
+          <input id="auditor" placeholder="Ej: Consejero / Pastor">
+        </div>
+        <div>
+          <label>Fecha (editable)</label>
+          <input id="date" type="date">
+        </div>
+        <div>
+          <label>Observaciones libres</label>
+          <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="mini">
+        <h3>Entradas (0–100)</h3>
+        <div class="fieldgrid">
+          <div>
+            <label>P (carga vertical total) — 0 a 100</label>
+            <input id="P" type="number" min="0" max="100" value="50">
+          </div>
+          <div>
+            <label>Δ (deriva/desalineación %) — 0 a 30</label>
+            <input id="D" type="number" min="0" max="30" value="8">
+          </div>
+          <div>
+            <label>Anclaje (Comunión al Cimiento) — 0 a 100</label>
+            <input id="A" type="number" min="0" max="100" value="60">
+          </div>
+          <div>
+            <label>Nudo (Congregación efectiva) — 0 a 100</label>
+            <input id="N" type="number" min="0" max="100" value="55">
+          </div>
+          <div>
+            <label>Apoyo móvil (Intersección) — 0 a 100</label>
+            <input id="S" type="number" min="0" max="100" value="55">
+          </div>
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:8px">
+          📖 <span id="verseBase"></span>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="primary" id="btnCalc">Calcular</button>
+        <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+        <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+      </div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div class="card">
+      <div class="row">
+        <b>Resultado</b>
+        <span class="pill" id="pillRisk">—</span>
+      </div>
+
+      <div class="kpi">
+        <div class="k">
+          <b>P (carga)</b>
+          <div class="v" id="kP">—</div>
+        </div>
+        <div class="k">
+          <b>Δ (deriva)</b>
+          <div class="v" id="kD">—</div>
+        </div>
+        <div class="k">
+          <b>P_eff (peso percibido)</b>
+          <div class="v" id="kPe">—</div>
+        </div>
+      </div>
+
+      <div class="mini" id="box"></div>
+
+      <div class="mini">
+        <h3>Plan semanal automático (7 días)</h3>
+        <div id="plan"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jsPDF + AutoTable -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "simulador-deriva.json";
+  const LOGO_PATH = "logo.png";
+
+  let DATA=null;
+  let logoDataUrl=null;
+  let last=null;
+
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl=document.getElementById("patient");
+  const auditorEl=document.getElementById("auditor");
+  const dateEl=document.getElementById("date");
+  const notesEl=document.getElementById("notes");
+
+  const PEl=document.getElementById("P");
+  const DEl=document.getElementById("D");
+  const AEl=document.getElementById("A");
+  const NEl=document.getElementById("N");
+  const SEl=document.getElementById("S");
+
+  const pillModel=document.getElementById("pillModel");
+  const pillBand=document.getElementById("pillBand");
+  const pillRisk=document.getElementById("pillRisk");
+  const verseBase=document.getElementById("verseBase");
+
+  const kP=document.getElementById("kP");
+  const kD=document.getElementById("kD");
+  const kPe=document.getElementById("kPe");
+
+  const box=document.getElementById("box");
+  const plan=document.getElementById("plan");
+
+  const btnTxt=document.getElementById("btnTxt");
+  const btnPdf=document.getElementById("btnPdf");
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function clamp(n,min,max){
+    n = Number(n);
+    if(Number.isNaN(n)) n=min;
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function computeK(A,N,S){
+    const w = DATA.model.kWeights;
+    // entre más alto A/N/S, más baja k (menos amplificación)
+    const normA = 1 - (A/100);
+    const normN = 1 - (N/100);
+    const normS = 1 - (S/100);
+
+    let k = DATA.model.kMin + (normA*w.anclaje + normN*w.nudo + normS*w.apoyo) * (DATA.model.kMax - DATA.model.kMin);
+    k = clamp(k, DATA.model.kMin, DATA.model.kMax);
+    return k;
+  }
+
+  function compute(P, D, A, N, S){
+    const k = computeK(A,N,S);
+    const Peff = P + P * (D/100) * k;
+
+    // % de amplificación respecto a P
+    const pct = P===0 ? 0 : ((Peff - P) / P) * 100;
+
+    // banda por pct (minPct/maxPct en JSON)
+    const band = DATA.bands.find(b => pct >= b.minPct && pct < b.maxPct) || DATA.bands[DATA.bands.length-1];
+    return { P, D, A, N, S, k, Peff, pct, band };
+  }
+
+  function badgeClass(label){
+    const s=(label||"").toLowerCase();
+    if(s.includes("estable")) return "badge bG";
+    if(s.includes("ajuste")) return "badge bY";
+    if(s.includes("riesgo")) return "badge bO";
+    return "badge bR";
+  }
+
+  function renderResult(r){
+    pillModel.textContent = `P_eff = ${r.Peff.toFixed(1)}`;
+    pillBand.textContent = r.band.label;
+    pillRisk.textContent = `Amplificación: ${r.pct.toFixed(1)}%`;
+
+    kP.textContent = r.P.toFixed(0);
+    kD.textContent = r.D.toFixed(0) + "%";
+    kPe.textContent = r.Peff.toFixed(1);
+
+    box.innerHTML = `
+      <h3><span class="${badgeClass(r.band.label)}">${r.band.label}</span></h3>
+      <div class="muted" style="margin-top:6px;line-height:1.45">${r.band.summary}</div>
+      <div class="mini" style="margin-top:10px">
+        <b>Porción bíblica</b>
+        <div style="margin-top:6px">${r.band.verse.quote}<br><span class="muted">(${r.band.verse.reference})</span></div>
+      </div>
+      <div class="mini" style="margin-top:10px">
+        <b>Enfoque</b>
+        <ul>${r.band.focus.map(x=>`<li>${x}</li>`).join("")}</ul>
+      </div>
+      <div class="muted" style="margin-top:10px;font-size:13px">
+        k (amplificación) = ${r.k.toFixed(2)} · Anclaje=${r.A} · Nudo=${r.N} · Apoyo=${r.S}
+      </div>
+    `;
+
+    // plan 7 según banda
+    let key = r.band.key;
+    let items = [];
+    if(key==="estable") items = DATA.plan7.stable;
+    else if(key==="ajuste") items = DATA.plan7.ajuste;
+    else if(key==="riesgo") items = DATA.plan7.riesgo;
+    else items = DATA.plan7.critico;
+
+    plan.innerHTML = `<ul>${items.map(i=>`<li>${i}</li>`).join("")}</ul>`;
+
+    btnTxt.disabled = false;
+    btnPdf.disabled = !okPdfLib();
+    pdfWarn.style.display = okPdfLib() ? "none" : "block";
+  }
+
+  function buildTxt(r){
+    const L=[];
+    L.push("SIMULADOR DE DERIVA — EFECTO P–Δ (HOGAR COMO PÓRTICO)");
+    L.push("");
+    L.push(`Paciente: ${patientEl.value || "(no especificado)"}`);
+    L.push(`Auditor: ${auditorEl.value || "(no especificado)"}`);
+    L.push(`Fecha: ${dateEl.value || "(no especificada)"}`);
+    L.push("Observaciones:");
+    L.push(notesEl.value || "(sin observaciones)");
+    L.push("");
+    L.push("ENTRADAS");
+    L.push(`P = ${r.P}`);
+    L.push(`Δ = ${r.D}%`);
+    L.push(`Anclaje (Comunión) = ${r.A}`);
+    L.push(`Nudo (Congregación) = ${r.N}`);
+    L.push(`Apoyo móvil (Intersección) = ${r.S}`);
+    L.push("");
+    L.push("RESULTADOS");
+    L.push(`k = ${r.k.toFixed(2)}`);
+    L.push(`P_eff = ${r.Peff.toFixed(1)}`);
+    L.push(`Amplificación = ${r.pct.toFixed(1)}%`);
+    L.push(`Diagnóstico = ${r.band.label}`);
+    L.push("");
+    L.push("PORCIÓN BÍBLICA");
+    L.push(`${r.band.verse.quote} (${r.band.verse.reference})`);
+    L.push("");
+    L.push("ENFOQUE");
+    r.band.focus.forEach(x=> L.push("• " + x));
+    L.push("");
+    L.push("PLAN 7 DÍAS");
+    const items = (r.band.key==="estable") ? DATA.plan7.stable :
+      (r.band.key==="ajuste") ? DATA.plan7.ajuste :
+      (r.band.key==="riesgo") ? DATA.plan7.riesgo : DATA.plan7.critico;
+    items.forEach(x=> L.push("• " + x));
+    return L.join("\n");
+  }
+
+  function downloadTxt(){
+    if(!last) return;
+    const txt = buildTxt(last);
+    const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "simulador_deriva.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise(resolve=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){ return null; }
+  }
+
+  function safeName(name){
+    return (name||"simulador")
+      .toLowerCase().replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  async function downloadPdf(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+    if(logoDataUrl===null) logoDataUrl = await loadLogo();
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:"pt", format:"letter"});
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const INK = [22,33,58];
+    const MUTED = [90,102,130];
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...MUTED);
+        doc.text("Simulador de Deriva — P–Δ Espiritual", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // Portada
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W-M-56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(255,255,255);
+    doc.text("SIMULADOR DE DERIVA", M, 52);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Efecto P–Δ — cuando todo empieza a pesar más", M, 74);
+
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 130, 12, 12, "F");
+    doc.setTextColor(...INK);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos", M+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`Paciente: ${patientEl.value || "(no especificado)"}`, M+14, 172);
+    doc.text(`Auditor: ${auditorEl.value || "(no especificado)"}`, M+14, 192);
+    doc.text(`Fecha: ${dateEl.value || "(no especificada)"}`, M+14, 212);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 270, W-M*2, 140, 12, 12, "F");
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text(`Diagnóstico: ${last.band.label}`, M+14, 300);
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    doc.text(`P_eff: ${last.Peff.toFixed(1)}  |  Amplificación: ${last.pct.toFixed(1)}%  |  k=${last.k.toFixed(2)}`, M+14, 322);
+    doc.text(`Entradas: P=${last.P}, Δ=${last.D}% · Anclaje=${last.A} · Nudo=${last.N} · Apoyo=${last.S}`, M+14, 344);
+
+    // Porción bíblica + enfoque
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("Porción bíblica", M+14, 384);
+    doc.setFont("times","italic"); doc.setFontSize(11);
+    const vLines = doc.splitTextToSize(`${last.band.verse.quote} (${last.band.verse.reference})`, W-M*2-28);
+    doc.text(vLines, M+14, 404);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Enfoque", M+14, 455);
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    let y = 475;
+    last.band.focus.forEach(f=>{
+      doc.text("• " + f, M+14, y);
+      y += 16;
+    });
+
+    // Plan 7 días (tabla)
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text("Plan semanal (7 días)", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    const items = (last.band.key==="estable") ? DATA.plan7.stable :
+      (last.band.key==="ajuste") ? DATA.plan7.ajuste :
+      (last.band.key==="riesgo") ? DATA.plan7.riesgo : DATA.plan7.critico;
+
+    doc.autoTable({
+      startY: 92,
+      head: [["Día", "Acción"]],
+      body: items.map((it, idx)=>[`Día ${idx+1}`, it]),
+      theme:"grid",
+      styles:{font:"helvetica", fontSize:10, cellPadding:7, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+      headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles:{0:{cellWidth:80},1:{cellWidth:W-M*2-80}},
+      margin:{left:M, right:M}
+    });
+
+    // Observaciones
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text("Observaciones", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 96, W-M*2, 520, 12, 12, "F");
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
+    const notes = notesEl.value || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, 122);
+
+    footer();
+
+    doc.save(`${safeName(patientEl.value||"hogar")}_simulador_deriva.pdf`);
+  }
+
+  function validateInputs(){
+    PEl.value = clamp(PEl.value, 0, 100);
+    DEl.value = clamp(DEl.value, 0, 30);
+    AEl.value = clamp(AEl.value, 0, 100);
+    NEl.value = clamp(NEl.value, 0, 100);
+    SEl.value = clamp(SEl.value, 0, 100);
+  }
+
+  async function init(){
+    const res = await fetch(JSON_PATH, {cache:"no-store"});
+    if(!res.ok) throw new Error("No se pudo cargar JSON.");
+    DATA = await res.json();
+
+    document.getElementById("t").textContent = DATA.meta.title;
+    document.getElementById("d").textContent = DATA.meta.description;
+
+    setDefaultDateIfEmpty();
+    verseBase.textContent = `${DATA.verses.base.quote} (${DATA.verses.base.reference})`;
+
+    pillModel.textContent = "P_eff = —";
+    pillBand.textContent = "—";
+    pillRisk.textContent = "—";
+
+    pdfWarn.style.display = okPdfLib() ? "none" : "block";
+  }
+
+  document.getElementById("btnCalc").addEventListener("click", ()=>{
+    validateInputs();
+    const r = compute(
+      Number(PEl.value),
+      Number(DEl.value),
+      Number(AEl.value),
+      Number(NEl.value),
+      Number(SEl.value)
+    );
+    last = r;
+    renderResult(r);
+  });
+
+  btnTxt.addEventListener("click", downloadTxt);
+  btnPdf.addEventListener("click", downloadPdf);
+
+  init().catch(err=>{
+    document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${err.message}<br><span style="color:#a7b4d6">Asegúrate de que ${JSON_PATH} esté en la misma carpeta.</span></div>`;
+  });
+</script>
+</body>
+</html>
