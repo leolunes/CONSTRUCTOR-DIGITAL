@@ -1,0 +1,390 @@
+{
+  "meta": {
+    "title": "Detector de Fisuras — Auditoría del Hogar (Sistema Estructural)",
+    "description": "Identifica fisuras del hogar antes del colapso: diagnóstico por secciones, mini-enseñanzas y plan semanal con PDF bonito."
+  },
+  "scale": {
+    "name": "0–20 por pregunta",
+    "options": [
+      { "value": 0, "label": "0 — No existe" },
+      { "value": 5, "label": "5 — Muy débil / ocasional" },
+      { "value": 10, "label": "10 — Presente pero inestable" },
+      { "value": 15, "label": "15 — Estable pero inconsistente" },
+      { "value": 20, "label": "20 — Firme y constante" }
+    ]
+  },
+  "verses": {
+    "base": {
+      "quote": "Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.",
+      "reference": "Proverbios 4:23 (RVR1960)"
+    }
+  },
+  "bands": [
+    {
+      "key": "b_verde",
+      "label": "Verde (microfisuras controladas)",
+      "min": 0,
+      "max": 30,
+      "summary": "Hay señales leves. Mantén mantenimiento y prevención: pequeñas correcciones ahora evitan grietas después.",
+      "verse": {
+        "quote": "El prudente ve el mal y se esconde; mas los simples pasan y reciben el daño.",
+        "reference": "Proverbios 22:3 (RVR1960)"
+      }
+    },
+    {
+      "key": "b_amarillo",
+      "label": "Amarillo (fisura en desarrollo)",
+      "min": 31,
+      "max": 60,
+      "summary": "La fisura está creciendo. No es condena: es advertencia. Se requiere ajuste intencional y acuerdos prácticos.",
+      "verse": {
+        "quote": "Examinadlo todo; retened lo bueno.",
+        "reference": "1 Tesalonicenses 5:21 (RVR1960)"
+      }
+    },
+    {
+      "key": "b_naranja",
+      "label": "Naranja (fisura activa / riesgo)",
+      "min": 61,
+      "max": 85,
+      "summary": "La fisura está activa. El sistema pierde capacidad. Requiere proceso: contención, restauración por etapas y acompañamiento.",
+      "verse": {
+        "quote": "Fortaleced las manos cansadas, afirmad las rodillas débiles.",
+        "reference": "Hebreos 12:12 (RVR1960)"
+      }
+    },
+    {
+      "key": "b_rojo",
+      "label": "Rojo (grieta crítica / requiere proceso, no corrección)",
+      "min": 86,
+      "max": 100,
+      "summary": "Estado crítico. No se corrige en caliente. Se prioriza seguridad emocional, límites y acompañamiento pastoral.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "fisura_comunicacion",
+      "title": "Fisura 1 — Comunicación (nudo debilitado)",
+      "subtitle": "Cuando hablar no une, sino hiere o se evita",
+      "diagnosticFocus": "Estado del nudo: claridad, tono, acuerdos",
+      "sectionVerse": {
+        "quote": "La blanda respuesta quita la ira; mas la palabra áspera hace subir el furor.",
+        "reference": "Proverbios 15:1 (RVR1960)"
+      },
+      "questions": [
+        { "id": "fc_q1", "text": "Podemos hablar de temas sensibles sin gritos, burlas o desprecio." },
+        { "id": "fc_q2", "text": "Cuando discutimos, volvemos a conversar para cerrar el tema con acuerdos." },
+        { "id": "fc_q3", "text": "No usamos silencio castigador para controlar o manipular." },
+        { "id": "fc_q4", "text": "Pedimos perdón con claridad cuando fallamos (sin justificar)." },
+        { "id": "fc_q5", "text": "Tenemos un tiempo semanal para conversar (aunque sea corto)." }
+      ],
+      "teachings": {
+        "verde": {
+          "title": "Mantenimiento del nudo",
+          "text": [
+            "La comunicación no se mide por cantidad, sino por seguridad.",
+            "Pequeños ajustes constantes fortalecen el nudo."
+          ],
+          "verse": { "quote": "Sea vuestra palabra siempre con gracia.", "reference": "Colosenses 4:6 (RVR1960)" }
+        },
+        "amarillo": {
+          "title": "La fisura crece por repetición",
+          "text": [
+            "Si el mismo conflicto se repite, el sistema pide un acuerdo nuevo.",
+            "Primero baja la tensión; luego resuelve el contenido."
+          ],
+          "verse": { "quote": "Todo hombre sea pronto para oír, tardo para hablar, tardo para airarse.", "reference": "Santiago 1:19 (RVR1960)" }
+        },
+        "naranja": {
+          "title": "Fisura activa: contención primero",
+          "text": [
+            "Evita conversaciones largas en caliente.",
+            "Acordar reglas de seguridad es prioridad."
+          ],
+          "verse": { "quote": "Seguid la paz con todos.", "reference": "Hebreos 12:14 (RVR1960)" }
+        },
+        "rojo": {
+          "title": "Grieta crítica: seguridad y ayuda",
+          "text": [
+            "Si hay agresión verbal constante, no se corrige con más discusión.",
+            "Se requiere acompañamiento y límites claros."
+          ],
+          "verse": { "quote": "Jehová está cerca de los quebrantados de corazón.", "reference": "Salmo 34:18 (RVR1960)" }
+        }
+      }
+    },
+    {
+      "id": "fisura_agotamiento",
+      "title": "Fisura 2 — Agotamiento (sobrecarga y mala transferencia)",
+      "subtitle": "Cuando el peso normal se vuelve insoportable",
+      "diagnosticFocus": "Distribución de cargas: viga → columna → cimiento",
+      "sectionVerse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      },
+      "questions": [
+        { "id": "fa_q1", "text": "El hogar distribuye responsabilidades sin que recaigan siempre en uno." },
+        { "id": "fa_q2", "text": "Sabemos detenernos y descansar sin culpa." },
+        { "id": "fa_q3", "text": "Cuando uno está saturado, el otro ajusta y apoya." },
+        { "id": "fa_q4", "text": "No confundimos sacrificio constante con madurez." },
+        { "id": "fa_q5", "text": "Buscamos ayuda cuando el peso supera la capacidad." }
+      ],
+      "teachings": {
+        "verde": {
+          "title": "Peso gobernable",
+          "text": [
+            "La carga existe, pero está distribuida.",
+            "El reposo es parte del diseño, no premio."
+          ],
+          "verse": { "quote": "Porque mi yugo es fácil, y ligera mi carga.", "reference": "Mateo 11:30 (RVR1960)" }
+        },
+        "amarillo": {
+          "title": "Señal de alerta: fatiga repetida",
+          "text": [
+            "Cuando el cansancio es crónico, hay funciones fuera de diseño.",
+            "Redistribuir no es debilidad: es sabiduría."
+          ],
+          "verse": { "quote": "Sobrellevad los unos las cargas de los otros.", "reference": "Gálatas 6:2 (RVR1960)" }
+        },
+        "naranja": {
+          "title": "Fatiga activa: riesgo de fisuras emocionales",
+          "text": [
+            "El hogar necesita bajar carga y aumentar transferencia al fundamento.",
+            "Se ajusta agenda, expectativas y roles."
+          ],
+          "verse": { "quote": "Echando toda vuestra ansiedad sobre él.", "reference": "1 Pedro 5:7 (RVR1960)" }
+        },
+        "rojo": {
+          "title": "Agotamiento crítico: contención y proceso",
+          "text": [
+            "No se exige más: se contiene y se reordena.",
+            "Buscar acompañamiento pastoral y acuerdos de emergencia."
+          ],
+          "verse": { "quote": "Bástate mi gracia; porque mi poder se perfecciona en la debilidad.", "reference": "2 Corintios 12:9 (RVR1960)" }
+        }
+      }
+    },
+    {
+      "id": "fisura_altar",
+      "title": "Fisura 3 — Altar (anclaje débil)",
+      "subtitle": "Cuando la casa funciona sin fundamento activo",
+      "diagnosticFocus": "Comunión real vs. espiritualidad decorativa",
+      "sectionVerse": {
+        "quote": "Separados de mí nada podéis hacer.",
+        "reference": "Juan 15:5 (RVR1960)"
+      },
+      "questions": [
+        { "id": "ft_q1", "text": "Oramos antes de decisiones importantes (no solo después)." },
+        { "id": "ft_q2", "text": "La Palabra corrige nuestras posturas (no solo confirma lo que queremos)." },
+        { "id": "ft_q3", "text": "Hay momentos de altar familiar/pareja (aunque breves)." },
+        { "id": "ft_q4", "text": "En crisis, corremos a Dios antes que a reacciones humanas." },
+        { "id": "ft_q5", "text": "La obediencia es práctica, no solo intención." }
+      ],
+      "teachings": {
+        "verde": {
+          "title": "Anclaje funcional",
+          "text": [
+            "El fundamento recibe la carga final.",
+            "La comunión mantiene verticalidad."
+          ],
+          "verse": { "quote": "Jehová es mi roca y mi castillo.", "reference": "Salmo 18:2 (RVR1960)" }
+        },
+        "amarillo": {
+          "title": "Altar intermitente",
+          "text": [
+            "El altar existe, pero no gobierna decisiones.",
+            "Un hábito pequeño diario vale más que picos ocasionales."
+          ],
+          "verse": { "quote": "Encomienda a Jehová tu camino, y confía en él.", "reference": "Salmo 37:5 (RVR1960)" }
+        },
+        "naranja": {
+          "title": "Desanclaje activo",
+          "text": [
+            "Sin anclaje, la vida pesa más de lo normal.",
+            "Primero se restaura rendición; luego dirección."
+          ],
+          "verse": { "quote": "Permaneced en mí, y yo en vosotros.", "reference": "Juan 15:4 (RVR1960)" }
+        },
+        "rojo": {
+          "title": "Fundamento ausente en la práctica",
+          "text": [
+            "No es tiempo de exigir; es tiempo de volver al fundamento.",
+            "Acompañamiento y restauración del altar."
+          ],
+          "verse": { "quote": "Reconócelo en todos tus caminos, y él enderezará tus veredas.", "reference": "Proverbios 3:6 (RVR1960)" }
+        }
+      }
+    },
+    {
+      "id": "fisura_respeto",
+      "title": "Fisura 4 — Honra y respeto (erosión interna)",
+      "subtitle": "Cuando la casa funciona, pero sin cobertura de honra",
+      "diagnosticFocus": "Desprecio, sarcasmo, comparación, humillación",
+      "sectionVerse": {
+        "quote": "Ninguna palabra corrompida salga de vuestra boca, sino la que sea buena para la necesaria edificación.",
+        "reference": "Efesios 4:29 (RVR1960)"
+      },
+      "questions": [
+        { "id": "fr_q1", "text": "No usamos sarcasmo o burla para dominar o corregir." },
+        { "id": "fr_q2", "text": "Evitamos comparaciones humillantes (con otros hogares/personas)." },
+        { "id": "fr_q3", "text": "Reconocemos esfuerzos del otro con frecuencia." },
+        { "id": "fr_q4", "text": "No discutimos para ganar, sino para entender y acordar." },
+        { "id": "fr_q5", "text": "Mantenemos honra incluso en desacuerdo." }
+      ],
+      "teachings": {
+        "verde": {
+          "title": "Cobertura de honra",
+          "text": [
+            "La honra protege el sistema de corrosión silenciosa.",
+            "Respeto no es emoción: es práctica."
+          ],
+          "verse": { "quote": "Honrad a todos.", "reference": "1 Pedro 2:17 (RVR1960)" }
+        },
+        "amarillo": {
+          "title": "Erosión en desarrollo",
+          "text": [
+            "El desprecio pequeño se acumula como óxido.",
+            "Se restaura con verdad + honra."
+          ],
+          "verse": { "quote": "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.", "reference": "Colosenses 3:14 (RVR1960)" }
+        },
+        "naranja": {
+          "title": "Erosión activa",
+          "text": [
+            "Si el respeto cae, todo acuerdo se vuelve frágil.",
+            "Se requiere pausa, límites y restauración del trato."
+          ],
+          "verse": { "quote": "Seguid la paz con todos.", "reference": "Hebreos 12:14 (RVR1960)" }
+        },
+        "rojo": {
+          "title": "Ambiente corrosivo",
+          "text": [
+            "La casa no se edifica bajo desprecio constante.",
+            "Prioriza seguridad emocional y ayuda pastoral."
+          ],
+          "verse": { "quote": "El amor es sufrido, es benigno; no se irrita, no guarda rencor.", "reference": "1 Corintios 13:4–5 (RVR1960)" }
+        }
+      }
+    },
+    {
+      "id": "fisura_confianza",
+      "title": "Fisura 5 — Confianza (microfracturas del pacto)",
+      "subtitle": "Cuando se pierde claridad y aparece sospecha",
+      "diagnosticFocus": "Verdad, transparencia y lealtad práctica",
+      "sectionVerse": {
+        "quote": "El que anda en integridad anda confiado.",
+        "reference": "Proverbios 10:9 (RVR1960)"
+      },
+      "questions": [
+        { "id": "fco_q1", "text": "Existe transparencia básica (dinero, decisiones, relaciones)." },
+        { "id": "fco_q2", "text": "No vivimos ocultando información relevante." },
+        { "id": "fco_q3", "text": "Podemos preguntar sin ser atacados o ridiculizados." },
+        { "id": "fco_q4", "text": "Cumplimos lo que prometemos en lo cotidiano." },
+        { "id": "fco_q5", "text": "Cuando hay fallas, se repara con verdad y proceso." }
+      ],
+      "teachings": {
+        "verde": {
+          "title": "Integridad que sostiene",
+          "text": [
+            "La confianza se mantiene con consistencia pequeña.",
+            "La lealtad cotidiana protege el pacto."
+          ],
+          "verse": { "quote": "El amor... todo lo cree, todo lo espera, todo lo soporta.", "reference": "1 Corintios 13:7 (RVR1960)" }
+        },
+        "amarillo": {
+          "title": "Señal: sospecha creciente",
+          "text": [
+            "La sospecha es síntoma: falta de claridad y reparación.",
+            "Restaurar confianza requiere tiempo y verdad."
+          ],
+          "verse": { "quote": "Hablando la verdad en amor.", "reference": "Efesios 4:15 (RVR1960)" }
+        },
+        "naranja": {
+          "title": "Confianza activa en riesgo",
+          "text": [
+            "Evita acusaciones: busca hechos, acuerdos y límites.",
+            "La reparación es proceso, no discurso."
+          ],
+          "verse": { "quote": "El que encubre sus pecados no prosperará; mas el que los confiesa y se aparta alcanzará misericordia.", "reference": "Proverbios 28:13 (RVR1960)" }
+        },
+        "rojo": {
+          "title": "Pacto fracturado: proceso pastoral",
+          "text": [
+            "No se arregla con promesas: se reconstruye con actos y acompañamiento.",
+            "Prioriza restauración y protección del hogar."
+          ],
+          "verse": { "quote": "Guarda tu lengua del mal.", "reference": "Salmo 34:13 (RVR1960)" }
+        }
+      }
+    },
+    {
+      "id": "fisura_sistema",
+      "title": "Fisura 6 — Orden del sistema (roles y transferencia)",
+      "subtitle": "Cuando el diseño se confunde y el peso se concentra",
+      "diagnosticFocus": "Función, no jerarquía: transferencia correcta de cargas",
+      "sectionVerse": {
+        "quote": "Todo debe hacerse decentemente y con orden.",
+        "reference": "1 Corintios 14:40 (RVR1960)"
+      },
+      "questions": [
+        { "id": "fs_q1", "text": "Cada uno cumple su función sin invadir o abandonar." },
+        { "id": "fs_q2", "text": "La mujer no carga sola; transfiere al hombre y al fundamento." },
+        { "id": "fs_q3", "text": "El hombre transmite la carga al cimiento (Cristo), no a su ego o evasión." },
+        { "id": "fs_q4", "text": "Hay acuerdos claros sobre prioridades del hogar." },
+        { "id": "fs_q5", "text": "El hogar sostiene peso sin perder estabilidad emocional." }
+      ],
+      "teachings": {
+        "verde": {
+          "title": "Sistema ordenado",
+          "text": [
+            "El peso no desaparece: se transfiere correctamente.",
+            "La estabilidad viene de función alineada."
+          ],
+          "verse": { "quote": "Con sabiduría se edificará la casa.", "reference": "Proverbios 24:3 (RVR1960)" }
+        },
+        "amarillo": {
+          "title": "Confusión de funciones",
+          "text": [
+            "Cuando el rol se confunde, aparece fricción innecesaria.",
+            "Volver al diseño reduce desgaste."
+          ],
+          "verse": { "quote": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.", "reference": "Salmo 127:1 (RVR1960)" }
+        },
+        "naranja": {
+          "title": "Transferencia rota",
+          "text": [
+            "La carga se queda en el alma y aparecen fisuras.",
+            "Se requiere reordenar prioridades y pactos."
+          ],
+          "verse": { "quote": "Echando toda vuestra ansiedad sobre él.", "reference": "1 Pedro 5:7 (RVR1960)" }
+        },
+        "rojo": {
+          "title": "Sistema crítico: riesgo de colapso",
+          "text": [
+            "No es tiempo de corrección fuerte: es tiempo de proceso.",
+            "Acompañamiento y acuerdos de emergencia."
+          ],
+          "verse": { "quote": "Dios es nuestro amparo y fortaleza.", "reference": "Salmo 46:1 (RVR1960)" }
+        }
+      }
+    }
+  ],
+  "planFramework": {
+    "day6Title": "Culto efectivo (Congregación del hogar)",
+    "day6Items": [
+      "20–30 min: Palabra + oración + acuerdos cortos.",
+      "Un acto de honra mutua: reconocer 1 esfuerzo del otro.",
+      "Definir 1 mantenimiento semanal fijo (día y hora)."
+    ],
+    "day7Title": "Revisión y mantenimiento",
+    "day7Items": [
+      "¿Qué fisura bajó? ¿Cuál sigue activa?",
+      "Elegir 1 hábito de mantenimiento por 30 días.",
+      "Repetir el test en las 2 fisuras más críticas."
+    ]
+  }
+}
