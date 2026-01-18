@@ -4,925 +4,762 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Simulador de Cargas del Hogar</title>
+
   <style>
     :root{
       --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
       --line:rgba(255,255,255,.10); --accent:#5eead4;
-      --good:#10b981; --warn:#f59e0b; --risk:#f97316; --crit:#f43f5e;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
     }
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
-    .wrap{max-width:1300px;margin:0 auto;padding:18px;}
-    .hero{border:1px solid var(--line);border-radius:18px;padding:14px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
     h1{margin:0 0 6px;font-size:26px;}
     .sub{margin:0;color:var(--muted);line-height:1.4}
     .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;margin-right:8px;}
     .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
-    @media(min-width:1040px){.grid{grid-template-columns:360px 1fr 360px;}}
+    @media(min-width:980px){.grid{grid-template-columns:420px 1fr;}}
     .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
-    button{border:0;border-radius:14px;padding:11px 14px;font-weight:950;cursor:pointer;}
-    .primary{background:var(--accent);color:#071018;}
-    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
-    .dangerBtn{background:rgba(244,63,94,.14);border:1px solid rgba(244,63,94,.35);color:#fecdd3;}
-    .mini{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
-    .mini h3{margin:0 0 8px;font-size:14px;}
-    .small{font-size:13px;color:var(--muted);line-height:1.45;}
-    .tag{display:inline-block;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);}
-    label{font-weight:850;font-size:13px;}
-    input, select, textarea{
+    label{font-weight:800;font-size:13px;}
+    input, textarea, select{
       width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
       border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
     }
-    textarea{min-height:78px;resize:vertical;}
+    textarea{min-height:92px;resize:vertical;}
     .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
-    .palette{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
-    .loadCard{
-      border:1px dashed rgba(255,255,255,.22);
-      border-radius:14px;padding:10px;background:rgba(255,255,255,.02);
-      cursor:grab;
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .mini{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
+    .mini h3{margin:0 0 8px;font-size:14px;}
+    .chip{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);cursor:grab;user-select:none;
     }
-    .loadCard:active{cursor:grabbing;}
-    .loadTitle{font-weight:950;margin:0 0 4px;font-size:13px;}
-    .hint{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
-    .canvasWrap{position:relative;}
-    canvas{width:100%;height:auto;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.02);}
-    .overlayHelp{
-      position:absolute;left:12px;top:12px;right:12px;
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
-      pointer-events:none;
-    }
-    .badge{
-      pointer-events:none;
-      font-size:12px;padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);color:var(--muted);background:rgba(0,0,0,.18)
-    }
-    .statusRow{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px;}
-    .meter{
-      border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:10px;background:rgba(255,255,255,.02);
-      display:flex;justify-content:space-between;align-items:center;gap:8px;
-    }
-    .dot{width:10px;height:10px;border-radius:999px;background:var(--good);box-shadow:0 0 0 3px rgba(16,185,129,.16);}
-    .dot.warn{background:var(--warn);box-shadow:0 0 0 3px rgba(245,158,11,.16);}
-    .dot.risk{background:var(--risk);box-shadow:0 0 0 3px rgba(249,115,22,.16);}
-    .dot.crit{background:var(--crit);box-shadow:0 0 0 3px rgba(244,63,94,.16);}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-    .warnBar{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .chip:active{cursor:grabbing;}
+    .tag{display:inline-block;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);}
+    .canvasBox{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    table{width:100%;border-collapse:collapse;}
+    th,td{padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+    th{font-size:12px;text-align:left;color:var(--muted);background:rgba(255,255,255,.03);}
+    td{font-size:13px;}
+    .danger{color:#fda4af;}
   </style>
 </head>
+
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1 id="t">Simulador</h1>
+    <h1 id="t">Simulador de Cargas del Hogar</h1>
     <p class="sub" id="d"></p>
     <div style="margin-top:10px">
-      <span class="pill" id="pSaved">Estado: —</span>
-      <span class="pill" id="pWeek">Escenario: laboratorio</span>
-      <span class="pill">Arrastra cargas → suelta sobre viga/columna/nudo</span>
+      <span class="pill">Arrastrar y soltar</span>
+      <span class="pill">Transferida / No transferida</span>
+      <span class="pill" id="pCount">Cargas activas: 0</span>
     </div>
-    <div id="pdfWarn" class="warnBar">No se pudo cargar jsPDF (CDN). Verifica conexión.</div>
+    <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
   </div>
 
   <div class="grid">
-    <!-- Izquierda: paleta -->
+    <!-- IZQ -->
     <div class="card">
       <div class="row">
-        <b id="paletteTitle">Paleta de cargas</b>
-        <span class="tag" id="saveHint">Se guarda localmente</span>
+        <b>Cabecera</b>
+        <span class="pill">LocalStorage</span>
+      </div>
+
+      <div class="fieldgrid">
+        <div>
+          <label>Paciente / hogar</label>
+          <input id="patient" placeholder="Ej: Hogar Abraham y Sara">
+        </div>
+        <div>
+          <label>Auditor</label>
+          <input id="auditor" placeholder="Ej: Consejero / Pastor">
+        </div>
+        <div>
+          <label>Fecha</label>
+          <input id="date" type="date">
+        </div>
+        <div>
+          <label>Observaciones</label>
+          <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+        </div>
       </div>
 
       <div class="mini">
-        <div class="small">
-          Arrastra una carga y suéltala en una zona del pórtico. Luego selecciónala para editar magnitud, dirección y estado de transferencia.
-        </div>
-      </div>
-
-      <div class="palette" id="palette"></div>
-
-      <div class="btns">
-        <button class="ghost" id="btnExportScenario">Exportar escenario (JSON)</button>
-        <button class="dangerBtn" id="btnReset">Borrar escenario</button>
-      </div>
-    </div>
-
-    <!-- Centro: simulación -->
-    <div class="card">
-      <div class="row">
-        <b>Laboratorio — Pórtico</b>
-        <span class="pill">Momentos + Fisuras + Transferencia</span>
-      </div>
-
-      <div class="canvasWrap">
-        <canvas id="cv" width="980" height="640"></canvas>
-        <div class="overlayHelp">
-          <span class="badge" id="badgeEq">∑Fy=0 · ∑Fx=0 · ∑M=0 (ideal)</span>
-          <span class="badge" id="badgeHint">Selecciona una carga: clic sobre ficha</span>
-        </div>
+        <h3>Biblioteca de cargas (arrástralas al pórtico)</h3>
+        <div class="muted" style="font-size:13px;margin-bottom:10px" id="libHint"></div>
+        <div id="library" style="display:grid;gap:10px;"></div>
       </div>
 
       <div class="btns">
-        <button class="primary" id="btnPdf">Capturar PDF del escenario</button>
-        <button class="ghost" id="btnClearLoads">Quitar todas las cargas</button>
+        <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+        <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+        <button class="ghost" id="btnClear">Quitar todas</button>
+        <button class="ghost" id="btnReset">Borrar todo</button>
       </div>
 
       <div class="mini">
-        <h3 id="metricsTitle">Indicadores (pedagógicos)</h3>
-        <div class="small">
-          Estos números no son “ingeniería real”: son una traducción pedagógica del libro (peso, empuje, momento y concentración).
-        </div>
-        <div class="fieldgrid" style="margin-top:10px">
-          <div class="meter">
-            <div>
-              <b>∑Fy (peso vertical)</b><div class="small">Suma de cargas verticales activas</div>
-            </div>
-            <div class="mono" id="mFy">0</div>
-          </div>
-          <div class="meter">
-            <div>
-              <b>∑Fx (empuje horizontal)</b><div class="small">Suma de cargas horizontales activas</div>
-            </div>
-            <div class="mono" id="mFx">0</div>
-          </div>
-          <div class="meter">
-            <div>
-              <b>∑M (momento)</b><div class="small">Rotación por mala alineación/transferencia</div>
-            </div>
-            <div class="mono" id="mM">0</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mini" id="reportBox">
-        <h3>Reporte del escenario</h3>
-        <div class="small" id="reportText">—</div>
-        <div class="small" style="margin-top:10px">
-          📖 <span id="v1q"></span> <span class="muted" id="v1r"></span>
-        </div>
+        <h3>Notas del laboratorio</h3>
+        <ul class="muted" id="tips" style="margin:0;padding-left:18px;line-height:1.45;"></ul>
       </div>
     </div>
 
-    <!-- Derecha: carga seleccionada -->
+    <!-- DER -->
     <div class="card">
       <div class="row">
-        <b id="selectedTitle">Carga seleccionada</b>
-        <span class="tag" id="selTag">Ninguna</span>
-      </div>
-
-      <div class="mini" id="selEmpty">
-        <div class="small">Haz clic en una ficha de carga dentro del pórtico para ver y editar sus parámetros.</div>
-      </div>
-
-      <div class="mini" id="selPanel" style="display:none">
-        <div class="fieldgrid">
-          <div>
-            <label>Nombre</label>
-            <input id="sName" />
-          </div>
-          <div>
-            <label>Zona (dónde cayó)</label>
-            <select id="sZone"></select>
-          </div>
-          <div>
-            <label>Tipo</label>
-            <select id="sType"></select>
-          </div>
-          <div>
-            <label>Dirección</label>
-            <select id="sDir"></select>
-          </div>
-          <div>
-            <label>Magnitud (1–20)</label>
-            <input id="sMag" type="number" min="1" max="20" />
-          </div>
-          <div>
-            <label>Transferencia</label>
-            <select id="sTransfer"></select>
-          </div>
-          <div style="grid-column:1/-1">
-            <label>Nota</label>
-            <textarea id="sNote" placeholder="Qué lo detona / cómo se manifiesta / qué se repite"></textarea>
-          </div>
+        <div>
+          <b>Escenario del pórtico</b>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Suelta cargas sobre zonas: Viga / Columna / Nudo / Cimiento / Apoyo.</div>
         </div>
+        <span class="pill" id="globalPill">Global: —</span>
+      </div>
 
-        <div class="btns">
-          <button class="ghost" id="btnTransferFix">Marcar “transferencia correcta”</button>
-          <button class="dangerBtn" id="btnDeleteSel">Eliminar carga</button>
+      <div class="canvasBox" style="margin-top:10px;">
+        <canvas id="sim" width="720" height="420" style="width:100%;height:auto;display:block;"></canvas>
+
+        <div class="legend">
+          <div class="k"><span class="dot" style="background:var(--g)"></span>Estable</div>
+          <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
+          <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
+          <div class="k"><span class="dot" style="background:var(--r)"></span>Crítico</div>
+        </div>
+      </div>
+
+      <div class="mini" id="metrics"></div>
+
+      <div class="mini">
+        <h3>Cargas activas</h3>
+        <div style="overflow:auto;border:1px solid var(--line);border-radius:14px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Carga</th>
+                <th>Dir.</th>
+                <th>Magnitud</th>
+                <th>Destino</th>
+                <th>Transferencia</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:8px;">
+          Tip: “No transferida” aumenta momento/deriva/fisura (concentración de esfuerzo).
         </div>
       </div>
 
       <div class="mini">
-        <h3>Fisuras (por concentración)</h3>
-        <div class="statusRow" id="fisuras"></div>
-        <div class="small" style="margin-top:8px">
-          Lectura: microfisura → grieta activa → crítica. No es condena: es **alerta**.
-        </div>
+        <h3>Recomendaciones automáticas</h3>
+        <div class="muted" id="reco"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- jsPDF -->
+<!-- jsPDF + AutoTable -->
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
   const JSON_PATH = "simulador.json";
   const LOGO_PATH = "logo.png";
-  const STORAGE_KEY = "simulador_cargas_hogar_v1";
+  const STORAGE_KEY = "simulador_cargas_v1";
 
   let DATA=null;
   let logoDataUrl=null;
 
-  const cv = document.getElementById("cv");
-  const ctx = cv.getContext("2d");
+  const state = {
+    header: { patient:"", auditor:"", date:"", notes:"" },
+    loads: [] // instances: {id,key,label,direction,magnitude,target,transfer,x,y,createdAt}
+  };
 
-  // UI elements
+  // UI
   const tEl = document.getElementById("t");
   const dEl = document.getElementById("d");
-  const paletteEl = document.getElementById("palette");
-  const pSaved = document.getElementById("pSaved");
+  const pCount = document.getElementById("pCount");
+  const globalPill = document.getElementById("globalPill");
   const pdfWarn = document.getElementById("pdfWarn");
 
-  const mFy = document.getElementById("mFy");
-  const mFx = document.getElementById("mFx");
-  const mM  = document.getElementById("mM");
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
 
-  const reportText = document.getElementById("reportText");
-  const v1q = document.getElementById("v1q");
-  const v1r = document.getElementById("v1r");
+  const libraryEl = document.getElementById("library");
+  const tipsEl = document.getElementById("tips");
+  const libHintEl = document.getElementById("libHint");
+  const metricsEl = document.getElementById("metrics");
+  const rowsEl = document.getElementById("rows");
+  const recoEl = document.getElementById("reco");
 
-  const selTag = document.getElementById("selTag");
-  const selEmpty = document.getElementById("selEmpty");
-  const selPanel = document.getElementById("selPanel");
-
-  const sName = document.getElementById("sName");
-  const sZone = document.getElementById("sZone");
-  const sType = document.getElementById("sType");
-  const sDir  = document.getElementById("sDir");
-  const sMag  = document.getElementById("sMag");
-  const sTransfer = document.getElementById("sTransfer");
-  const sNote = document.getElementById("sNote");
-
-  const fisurasEl = document.getElementById("fisuras");
-
+  const btnTxt = document.getElementById("btnTxt");
   const btnPdf = document.getElementById("btnPdf");
-  const btnReset = document.getElementById("btnReset");
-  const btnClearLoads = document.getElementById("btnClearLoads");
-  const btnExportScenario = document.getElementById("btnExportScenario");
-  const btnDeleteSel = document.getElementById("btnDeleteSel");
-  const btnTransferFix = document.getElementById("btnTransferFix");
 
-  // State
-  const state = {
-    loads: [], // placed loads
-    selectedId: null
+  // Canvas
+  const canvas = document.getElementById("sim");
+  const ctx = canvas.getContext("2d");
+
+  // Zones (canvas coords)
+  const Z = {
+    foundation: {id:"foundation", label:"Cimiento", x:120,y:340,w:180,h:50},
+    column:     {id:"column", label:"Columna", x:190,y:140,w:26,h:200},
+    beam:       {id:"beam", label:"Viga", x:205,y:140,w:310,h:24},
+    joint:      {id:"joint", label:"Nudo", x:188,y:136,w:40,h:40},
+    roller:     {id:"roller", label:"Apoyo móvil", x:520,y:155,w:60,h:55}
   };
 
-  // Geometry: zones (in canvas coordinates)
-  const ZONES = {
-    viga:        { key:"viga",        x:190, y:220, w:600, h:60  },
-    columna:     { key:"columna",     x:240, y:290, w:80,  h:280 },
-    nudo:        { key:"nudo",        x:240, y:220, w:120, h:120 },
-    interseccion:{ key:"interseccion",x:680, y:520, w:120, h:60  },
-    cimiento:    { key:"cimiento",    x:140, y:570, w:700, h:40  }
-  };
-
-  function uid(){
-    return (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+"_"+Math.random().toString(16).slice(2)));
-  }
-
-  function save(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    pSaved.textContent = "Estado: guardado";
-    setTimeout(()=> pSaved.textContent = "Estado: local (sin servidor)", 800);
-  }
-
-  function load(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return;
-      const payload = JSON.parse(raw);
-      if(Array.isArray(payload.loads)) state.loads = payload.loads;
-      state.selectedId = payload.selectedId || null;
-    }catch(e){}
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
   }
 
   function okPdfLib(){
-    return !!(window.jspdf && window.jspdf.jsPDF);
+    return !!(window.jspdf && window.jspdf.jsPDF) &&
+      !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function save(){
+    state.header.patient = patientEl.value || "";
+    state.header.auditor = auditorEl.value || "";
+    state.header.date = dateEl.value || "";
+    state.header.notes = notesEl.value || "";
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function loadLocal(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const p = JSON.parse(raw);
+      if(p.header) state.header = p.header;
+      if(Array.isArray(p.loads)) state.loads = p.loads;
+    }catch(e){}
+  }
+
+  function fillHeaderUI(){
+    patientEl.value = state.header.patient || "";
+    auditorEl.value = state.header.auditor || "";
+    dateEl.value = state.header.date || "";
+    notesEl.value = state.header.notes || "";
+  }
+
+  function uid(){
+    return (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"_"+Math.random().toString(16).slice(2));
   }
 
   function enumLabel(list, key){
-    const item = (list||[]).find(x=>x.key===key);
-    return item ? item.label : key;
+    const it = list.find(x=>x.key===key);
+    return it ? it.label : key;
   }
 
-  function setupSelect(sel, list){
-    sel.innerHTML = list.map(x=>`<option value="${x.key}">${x.label}</option>`).join("");
+  function dirArrow(dir){
+    return dir==="horizontal" ? "→" : "↓";
   }
 
-  function setupUI(){
-    tEl.textContent = DATA.meta.title;
-    dEl.textContent = DATA.meta.description;
-
-    setupSelect(sZone, DATA.enums.zone);
-    setupSelect(sType, DATA.enums.loadType);
-    setupSelect(sDir,  DATA.enums.direction);
-    setupSelect(sTransfer, DATA.enums.transferStatus);
-
-    document.getElementById("paletteTitle").textContent = DATA.ui.paletteTitle;
-    document.getElementById("saveHint").textContent = DATA.ui.saveHint;
-    document.getElementById("selectedTitle").textContent = DATA.ui.selectedTitle;
-    document.getElementById("metricsTitle").textContent = DATA.ui.metricsTitle;
-
-    // verse
-    v1q.textContent = DATA.verses.fundamento.quote;
-    v1r.textContent = `(${DATA.verses.fundamento.reference})`;
-
-    // palette items
-    paletteEl.innerHTML = "";
-    DATA.palette.forEach(item=>{
-      const div = document.createElement("div");
-      div.className = "loadCard";
-      div.draggable = true;
-      div.dataset.paletteKey = item.key;
-      div.innerHTML = `
-        <p class="loadTitle">${escapeHtml(item.name)}</p>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">
-          <span class="tag">${escapeHtml(enumLabel(DATA.enums.loadType,item.type))}</span>
-          <span class="tag">${escapeHtml(enumLabel(DATA.enums.direction,item.direction))}</span>
-          <span class="tag">Magnitud ${item.magnitude}</span>
-        </div>
-        <p class="hint">${escapeHtml(item.hint||"")}</p>
-      `;
-      div.addEventListener("dragstart", (e)=>{
-        e.dataTransfer.setData("text/plain", JSON.stringify({ paletteKey:item.key }));
-      });
-      paletteEl.appendChild(div);
-    });
-
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
-    pSaved.textContent = "Estado: local (sin servidor)";
-  }
-
-  // Drop handling on canvas
-  cv.addEventListener("dragover", (e)=>{ e.preventDefault(); });
-  cv.addEventListener("drop", (e)=>{
-    e.preventDefault();
-    const rect = cv.getBoundingClientRect();
-    const x = (e.clientX - rect.left) * (cv.width / rect.width);
-    const y = (e.clientY - rect.top)  * (cv.height / rect.height);
-
-    let payload=null;
-    try{ payload = JSON.parse(e.dataTransfer.getData("text/plain")); }catch(err){}
-
-    if(!payload || !payload.paletteKey) return;
-
-    const proto = DATA.palette.find(p=>p.key===payload.paletteKey);
-    if(!proto) return;
-
-    const zoneKey = hitZone(x,y);
-    if(!zoneKey){
-      alert("Suelta la carga dentro del pórtico (viga, columna o nudo).");
-      return;
-    }
-
-    const placed = {
+  function addInstance(loadKey){
+    const base = DATA.loadsLibrary.find(x=>x.key===loadKey);
+    if(!base) return;
+    const inst = {
       id: uid(),
-      name: proto.name,
-      type: proto.type,
-      direction: proto.direction,
-      magnitude: clamp(proto.magnitude,1,20),
-      transfer: proto.transfer,
-      zone: zoneKey,
-      note: "",
-      // position for chip display (jitter inside zone)
-      px: x,
-      py: y
+      key: base.key,
+      label: base.label,
+      direction: base.direction,
+      magnitude: Number(base.magnitude||1),
+      target: base.defaultTarget || "beam",
+      transfer: true,
+      x: 60 + Math.random()*80,
+      y: 80 + Math.random()*220,
+      createdAt: new Date().toISOString()
     };
 
-    // Snap to zone center-ish to keep readable
-    const z = ZONES[zoneKey];
-    placed.px = clamp(x, z.x+16, z.x+z.w-16);
-    placed.py = clamp(y, z.y+16, z.y+z.h-16);
-
-    state.loads.unshift(placed);
-    state.selectedId = placed.id;
+    snapToTarget(inst, inst.target);
+    state.loads.unshift(inst);
     save();
-    syncSelectedUI();
     render();
-  });
-
-  // Click select / drag chips inside
-  let draggingChip = null;
-  let dragOffset = {x:0,y:0};
-
-  cv.addEventListener("mousedown", (e)=>{
-    const {x,y} = canvasXY(e);
-    const hit = hitChip(x,y);
-    if(hit){
-      state.selectedId = hit.id;
-      draggingChip = hit.id;
-      dragOffset.x = x - hit.px;
-      dragOffset.y = y - hit.py;
-      save();
-      syncSelectedUI();
-      render();
-      return;
-    }
-    state.selectedId = null;
-    draggingChip = null;
-    save();
-    syncSelectedUI();
-    render();
-  });
-
-  window.addEventListener("mousemove", (e)=>{
-    if(!draggingChip) return;
-    const {x,y} = canvasXY(e);
-    const load = state.loads.find(l=>l.id===draggingChip);
-    if(!load) return;
-
-    const zoneKey = load.zone;
-    const z = ZONES[zoneKey];
-    load.px = clamp(x - dragOffset.x, z.x+16, z.x+z.w-16);
-    load.py = clamp(y - dragOffset.y, z.y+16, z.y+z.h-16);
-
-    render();
-  });
-
-  window.addEventListener("mouseup", ()=>{
-    if(draggingChip){
-      save();
-    }
-    draggingChip = null;
-  });
-
-  function canvasXY(e){
-    const rect = cv.getBoundingClientRect();
-    const x = (e.clientX - rect.left) * (cv.width / rect.width);
-    const y = (e.clientY - rect.top)  * (cv.height / rect.height);
-    return {x,y};
   }
 
-  function hitZone(x,y){
-    // For drop: only viga/columna/nudo (core)
-    for(const k of ["viga","nudo","columna"]){
-      const z = ZONES[k];
-      if(x>=z.x && x<=z.x+z.w && y>=z.y && y<=z.y+z.h) return k;
+  function snapToTarget(inst, target){
+    const z = Z[target] || Z.beam;
+    inst.target = target;
+    inst.x = z.x + z.w/2;
+    inst.y = z.y + z.h/2;
+  }
+
+  function deleteInstance(id){
+    if(!confirm("¿Quitar esta carga del escenario?")) return;
+    state.loads = state.loads.filter(x=>x.id!==id);
+    save();
+    render();
+  }
+
+  function toggleTransfer(id){
+    const l = state.loads.find(x=>x.id===id);
+    if(!l) return;
+    l.transfer = !l.transfer;
+    save();
+    render();
+  }
+
+  function detectTarget(x,y){
+    for(const k of Object.keys(Z)){
+      const z = Z[k];
+      if(x>=z.x && x<=z.x+z.w && y>=z.y && y<=z.y+z.h) return z.id;
     }
     return null;
   }
 
-  function hitChip(x,y){
-    // chip rects are computed similarly in draw; approximate by checking near px/py
-    for(const l of state.loads){
-      const w = 160, h = 32;
-      const rx = l.px - w/2, ry = l.py - h/2;
-      if(x>=rx && x<=rx+w && y>=ry && y<=ry+h) return l;
-    }
-    return null;
-  }
-
-  // Selected panel
-  function getSelected(){
-    return state.loads.find(l=>l.id===state.selectedId) || null;
-  }
-
-  function syncSelectedUI(){
-    const sel = getSelected();
-    if(!sel){
-      selTag.textContent = "Ninguna";
-      selEmpty.style.display = "block";
-      selPanel.style.display = "none";
-      return;
-    }
-    selTag.textContent = "Activa";
-    selEmpty.style.display = "none";
-    selPanel.style.display = "block";
-
-    sName.value = sel.name || "";
-    sZone.value = sel.zone;
-    sType.value = sel.type;
-    sDir.value  = sel.direction;
-    sMag.value  = sel.magnitude;
-    sTransfer.value = sel.transfer;
-    sNote.value = sel.note || "";
-  }
-
-  function applySelectedFromUI(){
-    const sel = getSelected();
-    if(!sel) return;
-
-    sel.name = (sName.value||"").trim() || sel.name;
-    sel.zone = sZone.value;
-    sel.type = sType.value;
-    sel.direction = sDir.value;
-    sel.magnitude = clamp(Number(sMag.value||1), 1, 20);
-    sel.transfer = sTransfer.value;
-    sel.note = (sNote.value||"").trim();
-
-    // Keep chip inside its new zone bounds
-    const z = ZONES[sel.zone];
-    sel.px = clamp(sel.px, z.x+16, z.x+z.w-16);
-    sel.py = clamp(sel.py, z.y+16, z.y+z.h-16);
-
-    save();
-    render();
-  }
-
-  [sName,sZone,sType,sDir,sMag,sTransfer,sNote].forEach(el=>{
-    el.addEventListener("input", applySelectedFromUI);
-    el.addEventListener("change", applySelectedFromUI);
-  });
-
-  btnDeleteSel.addEventListener("click", ()=>{
-    const sel = getSelected();
-    if(!sel) return;
-    if(!confirm("¿Eliminar esta carga?")) return;
-    state.loads = state.loads.filter(l=>l.id!==sel.id);
-    state.selectedId = null;
-    save();
-    syncSelectedUI();
-    render();
-  });
-
-  btnTransferFix.addEventListener("click", ()=>{
-    const sel = getSelected();
-    if(!sel) return;
-    sel.transfer = "correcta";
-    save();
-    syncSelectedUI();
-    render();
-  });
-
-  // Scenario buttons
-  btnClearLoads.addEventListener("click", ()=>{
-    if(!confirm("¿Quitar todas las cargas del pórtico?")) return;
-    state.loads = [];
-    state.selectedId = null;
-    save();
-    syncSelectedUI();
-    render();
-  });
-
-  btnReset.addEventListener("click", ()=>{
-    if(!confirm("¿Borrar escenario completo (incluye selección)?")) return;
-    localStorage.removeItem(STORAGE_KEY);
-    state.loads = [];
-    state.selectedId = null;
-    save();
-    syncSelectedUI();
-    render();
-  });
-
-  btnExportScenario.addEventListener("click", ()=>{
-    const payload = {
-      meta: { exportedAt: new Date().toISOString(), app: DATA.meta.title },
-      loads: state.loads
-    };
-    const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json;charset=utf-8"});
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "escenario_simulador.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-
-  // Metrics + fisuras model (pedagógico)
+  // ===== Physics-ish scoring (simple but pedagogical) =====
   function compute(){
-    const fyLoads = state.loads.filter(l=>l.direction==="vertical");
-    const fxLoads = state.loads.filter(l=>l.direction==="horizontal");
+    let V=0, H=0, M=0, drift=0;
+    const stress = {foundation:0,column:0,beam:0,joint:0,roller:0};
+    let cracks = 0;
 
-    const sumFy = fyLoads.reduce((a,l)=>a+l.magnitude,0);
-    const sumFx = fxLoads.reduce((a,l)=>a+l.magnitude,0);
+    state.loads.forEach(l=>{
+      const mag = Number(l.magnitude||0);
+      const penalty = l.transfer ? 1.0 : 1.6; // no transfer -> concentrate
+      const t = l.target;
 
-    // Moment model:
-    // - vertical load creates moment if transferred incorrectly (eccentricity factor)
-    // - horizontal load creates moment proportional to "height" of zone
-    let sumM = 0;
+      if(l.direction==="vertical"){
+        V += mag;
+        // moment depends on how far on beam side (simulate lever)
+        const lever = (t==="beam"||t==="roller") ? 1.0 : (t==="joint" ? 0.6 : 0.3);
+        M += mag * 6 * lever * penalty;
 
-    const zoneHeightFactor = {
-      viga: 3.0, nudo: 2.4, columna: 2.0, interseccion: 1.0, cimiento: 0.5
-    };
-    const transferFactor = {
-      correcta: 0.35,
-      cortada_viga: 1.25,
-      cortada_columna: 1.10,
-      nudo_tenso: 1.18,
-      sin_apoyo: 1.05
-    };
-
-    for(const l of state.loads){
-      const tf = transferFactor[l.transfer] || 1.0;
-      const hf = zoneHeightFactor[l.zone] || 2.0;
-
-      if(l.direction === "horizontal"){
-        sumM += l.magnitude * hf * tf;
+        stress[t] += mag * 6 * penalty;
+        if(!l.transfer && (t==="beam"||t==="column")) cracks += 1;
       }else{
-        // vertical: if transferencia no correcta, genera momento adicional por desalineación (P–Δ pedagógico)
-        const extra = (l.transfer==="correcta") ? 0.25 : 0.85;
-        sumM += l.magnitude * extra * tf;
+        H += mag;
+        drift += mag * (t==="joint" ? 1.2 : (t==="beam" ? 1.0 : 0.7)) * penalty;
+        M += mag * 10 * (t==="beam" ? 1.0 : 0.7) * penalty;
+
+        stress[t] += mag * 7 * penalty;
+        if(!l.transfer) cracks += 1;
+        if(t==="roller" && !l.transfer) cracks += 1; // rigidez en apoyo móvil
       }
-    }
 
-    // Concentration per element (fisuras index):
-    // distribute differently based on transfer status.
-    // Idea: if cut at viga -> viga gets more; if cut at columna -> columna gets more; if nudo tenso -> nudo gets more; sin_apoyo -> interseccion gets more.
-    const stress = { viga:0, columna:0, nudo:0, interseccion:0, cimiento:0 };
-
-    for(const l of state.loads){
-      const base = l.magnitude * (l.direction==="horizontal" ? 1.2 : 1.0);
-
-      // Where it "lands" increases local stress
-      stress[l.zone] += base * 0.55;
-
-      // Transfer logic adds concentration
-      switch(l.transfer){
-        case "correcta":
-          stress.cimiento += base * 0.50;
-          stress.columna += base * 0.20;
-          stress.viga    += base * 0.15;
-          break;
-        case "cortada_viga":
-          stress.viga += base * 0.85;
-          stress.nudo += base * 0.15;
-          break;
-        case "cortada_columna":
-          stress.columna += base * 0.80;
-          stress.nudo    += base * 0.20;
-          break;
-        case "nudo_tenso":
-          stress.nudo += base * 0.85;
-          stress.viga += base * 0.15;
-          break;
-        case "sin_apoyo":
-          stress.interseccion += base * 0.75;
-          stress.viga += base * 0.25;
-          break;
+      // transfer reduces column/foundation stress by design
+      if(l.transfer){
+        if(t==="beam"||t==="joint") stress.column += mag * 2;
+        if(t==="beam"||t==="joint"||t==="column") stress.foundation += mag * 1.5;
+        if(t==="roller") stress.roller += mag * 1.2;
+      }else{
+        // if not transferred, foundation receives less and system drifts more
+        drift += mag * 0.8;
       }
-    }
-
-    // Normalize stress into 0..100-ish scale for readable semáforo
-    const scale = 2.0; // tune
-    for(const k of Object.keys(stress)) stress[k] = Math.round(stress[k] * scale);
-
-    return { sumFy:Math.round(sumFy), sumFx:Math.round(sumFx), sumM:Math.round(sumM), stress };
-  }
-
-  function levelFromStress(v){
-    const th = DATA.thresholds.fisura;
-    if(v >= th.critica) return { key:"critica", label:"Crítica", cls:"crit" };
-    if(v >= th.activa)  return { key:"activa",  label:"Activa",  cls:"risk" };
-    if(v >= th.micro)   return { key:"micro",   label:"Microfisura", cls:"warn" };
-    return { key:"ok", label:"Sano", cls:"" };
-  }
-
-  function renderFisuras(stress){
-    const order = ["cimiento","nudo","interseccion","columna","viga"];
-    fisurasEl.innerHTML = "";
-    order.forEach(k=>{
-      const lvl = levelFromStress(stress[k]);
-      const div = document.createElement("div");
-      div.className = "meter";
-      div.innerHTML = `
-        <div style="display:flex;align-items:center;gap:10px">
-          <span class="dot ${lvl.cls}"></span>
-          <div>
-            <b>${escapeHtml(enumLabel(DATA.enums.zone,k))}</b>
-            <div class="small">${lvl.label} · Índice ${stress[k]}</div>
-          </div>
-        </div>
-        <span class="tag">${lvl.key.toUpperCase()}</span>
-      `;
-      fisurasEl.appendChild(div);
     });
+
+    // normalize some indicators
+    M = Math.round(M);
+    drift = Math.round(drift);
+    cracks = Math.min(12, cracks);
+
+    // global band by worst indicator
+    const T = DATA.thresholds;
+    const riskPoints =
+      (V>=T.verticalRisk?2: V>=T.verticalWarn?1:0) +
+      (H>=T.horizontalRisk?2: H>=T.horizontalWarn?1:0) +
+      (M>=T.momentRisk?2: M>=T.momentWarn?1:0) +
+      (drift>=T.driftRisk?2: drift>=T.driftWarn?1:0) +
+      (cracks>=6?2: cracks>=3?1:0);
+
+    let global = {key:"low", label:"Estable", color:getCss("--g")};
+    if(riskPoints>=7) global = {key:"high", label:"Crítico", color:getCss("--r")};
+    else if(riskPoints>=4) global = {key:"mid2", label:"En riesgo", color:getCss("--o")};
+    else if(riskPoints>=2) global = {key:"mid1", label:"En ajuste", color:getCss("--y")};
+
+    // stress caps
+    Object.keys(stress).forEach(k=> stress[k] = Math.min(100, Math.round(stress[k])));
+
+    return {V,H,M,drift,cracks,stress,global};
   }
 
-  function renderReport(metrics){
-    const s = metrics.stress;
-    const worst = Object.entries(s).sort((a,b)=>b[1]-a[1])[0];
-    const worstKey = worst ? worst[0] : "nudo";
-    const worstLvl = worst ? levelFromStress(worst[1]) : levelFromStress(0);
-
-    const recommendations = [];
-
-    if(worstKey === "cimiento"){
-      recommendations.push("Volver al fundamento: comunión real, descarga de peso en Cristo.");
-      recommendations.push("Alinear decisiones con el altar (no solo lógica o emoción).");
-    }else if(worstKey === "nudo"){
-      recommendations.push("Reforzar congregación: conversación guiada + acuerdo breve.");
-      recommendations.push("Evitar discutir bajo tensión: pausa + volver + oración.");
-    }else if(worstKey === "interseccion"){
-      recommendations.push("Honrar intersección: permitir al Espíritu sostener el alma (reposo, libertad).");
-      recommendations.push("Reducir control humano que reemplaza apoyo móvil.");
-    }else if(worstKey === "columna"){
-      recommendations.push("Columna: transferir al fundamento (no absorber en silencio).");
-      recommendations.push("Comunión diaria y decisiones desde el altar (no control/evasión).");
-    }else if(worstKey === "viga"){
-      recommendations.push("Viga: expresar para canalizar (no retener).");
-      recommendations.push("Nombrar la carga sin culpa y transferirla: viga→columna→cimiento.");
-    }
-
-    // Also interpret equations
-    const eq = [];
-    eq.push(`∑Fy=${metrics.sumFy} (peso) · ∑Fx=${metrics.sumFx} (empuje) · ∑M=${metrics.sumM} (rotación)`);
-    if(metrics.sumM > 90) eq.push("Lectura: hay rotación alta → falta de anclaje/alineación o mala transferencia.");
-    else if(metrics.sumM > 50) eq.push("Lectura: momento moderado → revisar nudo y ruta de descarga.");
-    else eq.push("Lectura: momento bajo → el sistema está absorbiendo con orden (mantener).");
-
-    reportText.innerHTML = `
-      <div><b>Zona más exigida:</b> <span class="tag">${escapeHtml(enumLabel(DATA.enums.zone, worstKey))}</span> → <b class="${worstLvl.cls==='crit'?'': ''}">${worstLvl.label}</b> (Índice ${worst[1]||0})</div>
-      <div style="margin-top:8px" class="mono">${escapeHtml(eq.join("  |  "))}</div>
-      <div style="margin-top:10px"><b>Recomendaciones:</b></div>
-      <ul style="margin:8px 0 0;padding-left:18px;line-height:1.45;color:var(--text)">
-        ${recommendations.map(r=>`<li>${escapeHtml(r)}</li>`).join("")}
-      </ul>
-      <div class="small" style="margin-top:8px;color:var(--muted)">
-        📖 ${escapeHtml(DATA.verses.equilibrio.quote)} (${escapeHtml(DATA.verses.equilibrio.reference)})
-      </div>
-    `;
+  function getCss(varName){
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
   }
 
-  // Drawing
-  function drawPórtico(metrics){
-    ctx.clearRect(0,0,cv.width,cv.height);
+  // ===== Draw =====
+  function drawScene(){
+    const m = compute();
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // Background grid subtle
-    ctx.save();
-    ctx.globalAlpha = 0.08;
-    ctx.strokeStyle = "#ffffff";
-    for(let x=0;x<cv.width;x+=40){
-      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,cv.height); ctx.stroke();
-    }
-    for(let y=0;y<cv.height;y+=40){
-      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cv.width,y); ctx.stroke();
-    }
-    ctx.restore();
-
-    // Draw foundation
-    drawZone(ZONES.cimiento, "CIMIENTO (Cristo)", metrics.stress.cimiento);
-
-    // Draw column + beam + node + interseccion
-    drawZone(ZONES.columna, "COLUMNA (Varón)", metrics.stress.columna);
-    drawZone(ZONES.viga, "VIGA (Mujer)", metrics.stress.viga);
-    drawZone(ZONES.nudo, "NUDO (Congregación)", metrics.stress.nudo);
-    drawZone(ZONES.interseccion, "INTERSECCIÓN (Espíritu)", metrics.stress.interseccion);
-
-    // Connectors (visual)
-    ctx.save();
-    ctx.strokeStyle = "rgba(255,255,255,.18)";
-    ctx.lineWidth = 4;
-    // column to foundation
-    ctx.beginPath();
-    ctx.moveTo(ZONES.columna.x+ZONES.columna.w/2, ZONES.columna.y+ZONES.columna.h);
-    ctx.lineTo(ZONES.columna.x+ZONES.columna.w/2, ZONES.cimiento.y);
-    ctx.stroke();
-    // beam to node
-    ctx.beginPath();
-    ctx.moveTo(ZONES.viga.x, ZONES.viga.y+ZONES.viga.h/2);
-    ctx.lineTo(ZONES.nudo.x+ZONES.nudo.w, ZONES.nudo.y+ZONES.nudo.h/2);
-    ctx.stroke();
-    // node to column
-    ctx.beginPath();
-    ctx.moveTo(ZONES.nudo.x+ZONES.nudo.w/2, ZONES.nudo.y+ZONES.nudo.h);
-    ctx.lineTo(ZONES.columna.x+ZONES.columna.w/2, ZONES.columna.y);
-    ctx.stroke();
-    // interseccion under beam (support)
-    ctx.beginPath();
-    ctx.moveTo(ZONES.interseccion.x+ZONES.interseccion.w/2, ZONES.interseccion.y);
-    ctx.lineTo(ZONES.interseccion.x+ZONES.interseccion.w/2, ZONES.viga.y+ZONES.viga.h);
-    ctx.stroke();
-    ctx.restore();
-
-    // Draw transfer arrows (hint)
-    ctx.save();
-    ctx.globalAlpha = 0.35;
-    ctx.strokeStyle = "rgba(94,234,212,.9)";
-    ctx.lineWidth = 2;
-    arrow(ZONES.viga.x+ZONES.viga.w*0.25, ZONES.viga.y+ZONES.viga.h+10, ZONES.nudo.x+ZONES.nudo.w/2, ZONES.nudo.y+ZONES.nudo.h+10);
-    arrow(ZONES.nudo.x+ZONES.nudo.w/2, ZONES.nudo.y+ZONES.nudo.h+10, ZONES.columna.x+ZONES.columna.w/2, ZONES.columna.y+ZONES.columna.h*0.6);
-    arrow(ZONES.columna.x+ZONES.columna.w/2, ZONES.cimiento.y-10, ZONES.columna.x+ZONES.columna.w/2, ZONES.cimiento.y+ZONES.cimiento.h/2);
-    ctx.restore();
-
-    // Draw placed load chips
-    for(const l of state.loads){
-      drawChip(l, l.id===state.selectedId);
-    }
-  }
-
-  function drawZone(z, label, stressValue){
-    const lvl = levelFromStress(stressValue||0);
-
-    // zone bg
-    ctx.save();
+    // background
     ctx.fillStyle = "rgba(255,255,255,.03)";
-    ctx.strokeStyle = "rgba(255,255,255,.14)";
-    ctx.lineWidth = 2;
-    roundRect(z.x,z.y,z.w,z.h,16,true,true);
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    // stress border color
-    let col = "rgba(16,185,129,.55)";
-    if(lvl.cls==="warn") col = "rgba(245,158,11,.65)";
-    if(lvl.cls==="risk") col = "rgba(249,115,22,.70)";
-    if(lvl.cls==="crit") col = "rgba(244,63,94,.70)";
-    ctx.strokeStyle = col;
-    ctx.lineWidth = 3;
-    roundRect(z.x+2,z.y+2,z.w-4,z.h-4,16,false,true);
+    // ground
+    ctx.fillStyle = "rgba(255,255,255,.05)";
+    ctx.fillRect(0,380,canvas.width,40);
+
+    // helper: zone color by stress
+    function stressColor(s){
+      if(s>=75) return getCss("--r");
+      if(s>=55) return getCss("--o");
+      if(s>=35) return getCss("--y");
+      return "rgba(255,255,255,.12)";
+    }
+
+    // foundation
+    fillRoundRect(Z.foundation.x, Z.foundation.y, Z.foundation.w, Z.foundation.h, 10, stressColor(m.stress.foundation));
+    label(Z.foundation.x+Z.foundation.w/2, Z.foundation.y+32, "CIMIENTO");
+
+    // column
+    fillRoundRect(Z.column.x, Z.column.y, Z.column.w, Z.column.h, 10, stressColor(m.stress.column));
+    label(Z.column.x+Z.column.w/2, Z.column.y-12, "COLUMNA (VARÓN)");
+
+    // beam
+    fillRoundRect(Z.beam.x, Z.beam.y, Z.beam.w, Z.beam.h, 10, stressColor(m.stress.beam));
+    label(Z.beam.x+Z.beam.w/2, Z.beam.y-12, "VIGA (MUJER)");
+
+    // roller
+    ctx.fillStyle = stressColor(m.stress.roller);
+    ctx.strokeStyle = "rgba(255,255,255,.22)";
+    ctx.lineWidth = 2;
+    circle(Z.roller.x+30, Z.roller.y+20, 14, true);
+    fillRoundRect(Z.roller.x+10, Z.roller.y+38, 40, 10, 6, "rgba(255,255,255,.08)");
+    label(Z.roller.x+30, Z.roller.y+70, "APOYO MÓVIL");
+
+    // joint (visual marker)
+    ctx.fillStyle = stressColor(m.stress.joint);
+    ctx.strokeStyle = "rgba(255,255,255,.18)";
+    fillRoundRect(Z.joint.x, Z.joint.y, Z.joint.w, Z.joint.h, 10, ctx.fillStyle);
+    label(Z.joint.x+Z.joint.w/2, Z.joint.y+58, "NUDO");
+
+    // nodes circles
+    node(Z.foundation.x+70, Z.foundation.y-6, "1");
+    node(Z.joint.x+20, Z.joint.y+10, "2");
+    node(Z.roller.x+30, Z.roller.y+20, "3");
+
+    // global label
+    ctx.font = "bold 16px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.fillStyle = m.global.color;
+    ctx.fillText("GLOBAL: " + m.global.label, 24, 34);
+
+    // metrics quick
+    ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.fillStyle = "rgba(231,238,252,.85)";
+    ctx.fillText(`V=${m.V}  H=${m.H}  M=${m.M}  Deriva=${m.drift}  Fisuras=${m.cracks}`, 24, 58);
+
+    // draw loads instances
+    state.loads.forEach(l=>{
+      drawLoadToken(l);
+    });
+
+    // fisuras indicator
+    if(m.cracks>0){
+      ctx.fillStyle = "rgba(244,63,94,.12)";
+      fillRoundRect(520, 16, 180, 46, 12, ctx.fillStyle);
+      ctx.fillStyle = getCss("--r");
+      ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillText("FISURAS DETECTADAS: " + m.cracks, 534, 44);
+    }
+
+    function fillRoundRect(x,y,w,h,r,fill){
+      ctx.fillStyle = fill;
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);
+      ctx.arcTo(x,y,x+w,y,r);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,.18)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    function label(x,y,text){
+      ctx.textAlign = "center";
+      ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillStyle = "rgba(231,238,252,.75)";
+      ctx.fillText(text, x, y);
+      ctx.textAlign = "left";
+    }
+
+    function circle(cx,cy,r,stroke){
+      ctx.beginPath();
+      ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.closePath();
+      ctx.fill();
+      if(stroke) ctx.stroke();
+    }
+
+    function node(cx,cy,num){
+      ctx.fillStyle = "rgba(100,116,139,.85)";
+      ctx.strokeStyle = "rgba(255,255,255,.18)";
+      ctx.lineWidth = 2;
+      circle(cx,cy,12,true);
+      ctx.fillStyle = "rgba(231,238,252,.92)";
+      ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(num, cx, cy+4);
+      ctx.textAlign = "left";
+    }
+  }
+
+  function drawLoadToken(l){
+    const isH = l.direction==="horizontal";
+    const base = isH ? "rgba(94,234,212,.20)" : "rgba(255,255,255,.10)";
+    const strong = l.transfer ? "rgba(16,185,129,.85)" : "rgba(244,63,94,.85)";
+
+    // token
+    ctx.fillStyle = base;
+    ctx.strokeStyle = "rgba(255,255,255,.18)";
+    ctx.lineWidth = 1;
+    roundToken(l.x, l.y, 120, 34, 12);
 
     // label
+    ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
     ctx.fillStyle = "rgba(231,238,252,.95)";
-    ctx.font = "700 14px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    ctx.fillText(label, z.x+14, z.y+24);
+    ctx.fillText(`${dirArrow(l.direction)} ${l.label}`, l.x-52, l.y+4);
 
+    // magnitude + transfer dot
+    ctx.font = "11px system-ui, -apple-system, Segoe UI, Roboto, Arial";
     ctx.fillStyle = "rgba(167,180,214,.95)";
-    ctx.font = "600 12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace";
-    ctx.fillText(`Índice ${stressValue||0} · ${lvl.label}`, z.x+14, z.y+44);
+    ctx.fillText(`Mag ${l.magnitude}`, l.x+40, l.y+4);
 
-    ctx.restore();
-  }
-
-  function drawChip(l, selected){
-    const w = 160, h = 32;
-    const x = l.px - w/2, y = l.py - h/2;
-
-    // color by direction
-    let chip = "rgba(94,234,212,.20)";
-    if(l.direction==="horizontal") chip = "rgba(99,102,241,.18)";
-
-    // border by transfer
-    let border = "rgba(255,255,255,.18)";
-    if(l.transfer==="correcta") border = "rgba(16,185,129,.60)";
-    if(l.transfer==="nudo_tenso") border = "rgba(245,158,11,.60)";
-    if(l.transfer==="cortada_viga" || l.transfer==="cortada_columna") border = "rgba(249,115,22,.62)";
-    if(l.transfer==="sin_apoyo") border = "rgba(244,63,94,.62)";
-
-    ctx.save();
-    ctx.fillStyle = chip;
-    ctx.strokeStyle = border;
-    ctx.lineWidth = selected ? 3 : 2;
-    roundRect(x,y,w,h,12,true,true);
-
-    ctx.fillStyle = "rgba(231,238,252,.95)";
-    ctx.font = "800 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    const name = truncate(l.name, 18);
-    ctx.fillText(name, x+10, y+20);
-
-    ctx.fillStyle = "rgba(167,180,214,.95)";
-    ctx.font = "700 11px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace";
-    ctx.fillText(String(l.magnitude), x+w-26, y+20);
-
-    ctx.restore();
-  }
-
-  function arrow(x1,y1,x2,y2){
-    const head = 8;
-    const dx = x2-x1, dy = y2-y1;
-    const ang = Math.atan2(dy,dx);
+    ctx.fillStyle = strong;
     ctx.beginPath();
-    ctx.moveTo(x1,y1);
-    ctx.lineTo(x2,y2);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x2,y2);
-    ctx.lineTo(x2 - head*Math.cos(ang - Math.PI/6), y2 - head*Math.sin(ang - Math.PI/6));
-    ctx.lineTo(x2 - head*Math.cos(ang + Math.PI/6), y2 - head*Math.sin(ang + Math.PI/6));
-    ctx.closePath();
-    ctx.stroke();
+    ctx.arc(l.x+58, l.y-10, 6, 0, Math.PI*2);
+    ctx.fill();
+
+    function roundToken(cx,cy,w,h,r){
+      const x = cx - w/2, y = cy - h/2;
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);
+      ctx.arcTo(x,y,x+w,y,r);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
   }
 
-  function roundRect(x,y,w,h,r,fill,stroke){
-    const rr = Math.min(r, w/2, h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+rr, y);
-    ctx.arcTo(x+w, y, x+w, y+h, rr);
-    ctx.arcTo(x+w, y+h, x, y+h, rr);
-    ctx.arcTo(x, y+h, x, y, rr);
-    ctx.arcTo(x, y, x+w, y, rr);
-    ctx.closePath();
-    if(fill) ctx.fill();
-    if(stroke) ctx.stroke();
+  // ===== Dragging on canvas =====
+  let draggingId=null;
+  let dragOffset = {dx:0, dy:0};
+
+  function hitToken(mx,my){
+    // tokens are about 120x34
+    for(const l of state.loads){
+      const x0 = l.x - 60, x1 = l.x + 60;
+      const y0 = l.y - 17, y1 = l.y + 17;
+      if(mx>=x0 && mx<=x1 && my>=y0 && my<=y1) return l.id;
+    }
+    return null;
   }
 
-  function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
-  function truncate(s,n){ s=String(s||""); return s.length>n ? s.slice(0,n-1)+"…" : s; }
+  function pointerPos(evt){
+    const rect = canvas.getBoundingClientRect();
+    const sx = canvas.width / rect.width;
+    const sy = canvas.height / rect.height;
+    return {x:(evt.clientX-rect.left)*sx, y:(evt.clientY-rect.top)*sy};
+  }
+
+  canvas.addEventListener("pointerdown", (e)=>{
+    const p = pointerPos(e);
+    const id = hitToken(p.x,p.y);
+    if(!id) return;
+    const l = state.loads.find(x=>x.id===id);
+    draggingId = id;
+    dragOffset.dx = p.x - l.x;
+    dragOffset.dy = p.y - l.y;
+    canvas.setPointerCapture(e.pointerId);
+  });
+
+  canvas.addEventListener("pointermove", (e)=>{
+    if(!draggingId) return;
+    const p = pointerPos(e);
+    const l = state.loads.find(x=>x.id===draggingId);
+    if(!l) return;
+    l.x = p.x - dragOffset.dx;
+    l.y = p.y - dragOffset.dy;
+    drawScene();
+  });
+
+  canvas.addEventListener("pointerup", (e)=>{
+    if(!draggingId) return;
+    const p = pointerPos(e);
+    const l = state.loads.find(x=>x.id===draggingId);
+    draggingId = null;
+    if(!l){ drawScene(); return; }
+
+    const t = detectTarget(p.x,p.y);
+    if(t) snapToTarget(l, t);
+
+    save();
+    render();
+  });
+
+  // ===== Library (drag from list => create instance) =====
+  function renderLibrary(){
+    libraryEl.innerHTML = "";
+    DATA.loadsLibrary.forEach(item=>{
+      const div = document.createElement("div");
+      div.className = "chip";
+      div.draggable = true;
+      div.innerHTML = `
+        <div style="font-weight:900">${dirArrow(item.direction)} ${item.label}</div>
+        <span class="tag">${enumLabel(DATA.enums.direction, item.direction)}</span>
+        <span class="tag">Mag ${item.magnitude}</span>
+      `;
+      div.addEventListener("dragstart", (e)=>{
+        e.dataTransfer.setData("text/plain", item.key);
+      });
+      div.title = item.hint || "";
+      libraryEl.appendChild(div);
+    });
+
+    // drop onto canvas = add instance near cursor, snap to default target
+    canvas.addEventListener("dragover", (e)=> e.preventDefault());
+    canvas.addEventListener("drop", (e)=>{
+      e.preventDefault();
+      const key = e.dataTransfer.getData("text/plain");
+      if(!key) return;
+      addInstance(key);
+    });
+  }
+
+  function bandForMetric(val, warn, risk){
+    if(val>=risk) return {k:"crit", label:"Crítico", color:getCss("--r")};
+    if(val>=warn) return {k:"risk", label:"En riesgo", color:getCss("--o")};
+    if(val>0) return {k:"adj", label:"En ajuste", color:getCss("--y")};
+    return {k:"ok", label:"Estable", color:getCss("--g")};
+  }
+
+  function renderMetrics(){
+    const m = compute();
+    pCount.textContent = `Cargas activas: ${state.loads.length}`;
+
+    const T = DATA.thresholds;
+    const bV = bandForMetric(m.V, T.verticalWarn, T.verticalRisk);
+    const bH = bandForMetric(m.H, T.horizontalWarn, T.horizontalRisk);
+    const bM = bandForMetric(m.M, T.momentWarn, T.momentRisk);
+    const bD = bandForMetric(m.drift, T.driftWarn, T.driftRisk);
+
+    globalPill.textContent = `Global: ${m.global.label}`;
+
+    metricsEl.innerHTML = `
+      <h3>Indicadores</h3>
+      <div class="muted" style="line-height:1.6">
+        <b style="color:${bV.color}">Peso vertical:</b> ${m.V} &nbsp;·&nbsp;
+        <b style="color:${bH.color}">Fuerza horizontal:</b> ${m.H} &nbsp;·&nbsp;
+        <b style="color:${bM.color}">Momento:</b> ${m.M} &nbsp;·&nbsp;
+        <b style="color:${bD.color}">Deriva:</b> ${m.drift} &nbsp;·&nbsp;
+        <b class="${m.cracks>=6?'danger':''}">Fisuras:</b> ${m.cracks}
+      </div>
+      <div class="muted" style="margin-top:8px;font-size:13px;">
+        Stress (0–100): Cimiento ${m.stress.foundation} · Columna ${m.stress.column} · Viga ${m.stress.beam} · Nudo ${m.stress.joint} · Apoyo ${m.stress.roller}
+      </div>
+    `;
+
+    // recommendations
+    const R = DATA.texts.recommendations;
+    const list = (m.global.key==="high") ? R.high : (m.global.key==="mid2"||m.global.key==="mid1") ? R.mid : R.low;
+    recoEl.innerHTML = "<ul style='margin:0;padding-left:18px;line-height:1.45'>" + list.map(x=>`<li>${escapeHtml(x)}</li>`).join("") + "</ul>";
+  }
+
+  function renderRows(){
+    rowsEl.innerHTML = "";
+    const has = state.loads.length>0;
+    btnTxt.disabled = !has;
+    btnPdf.disabled = !has || !okPdfLib();
+    pdfWarn.style.display = okPdfLib() ? "none" : "block";
+
+    state.loads.forEach(l=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><b>${escapeHtml(l.label)}</b><div class="muted" style="font-size:12px;margin-top:4px">${escapeHtml(l.key)}</div></td>
+        <td><span class="tag">${escapeHtml(enumLabel(DATA.enums.direction,l.direction))}</span></td>
+        <td><b>${l.magnitude}</b></td>
+        <td><span class="tag">${escapeHtml(enumLabel(DATA.enums.targets, l.target))}</span></td>
+        <td>
+          <button class="ghost" style="padding:6px 10px;border-radius:10px;font-weight:900" data-t="${l.id}">
+            ${l.transfer ? "Transferida ✅" : "No transferida ⚠️"}
+          </button>
+        </td>
+        <td>
+          <button class="ghost" style="padding:6px 10px;border-radius:10px;font-weight:900" data-del="${l.id}">Quitar</button>
+        </td>
+      `;
+      rowsEl.appendChild(tr);
+    });
+
+    rowsEl.querySelectorAll("[data-del]").forEach(b=>{
+      b.addEventListener("click", ()=> deleteInstance(b.getAttribute("data-del")));
+    });
+    rowsEl.querySelectorAll("[data-t]").forEach(b=>{
+      b.addEventListener("click", ()=> toggleTransfer(b.getAttribute("data-t")));
+    });
+  }
+
   function escapeHtml(str){
     return String(str||"").replace(/[&<>"']/g, s => ({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[s]));
   }
 
-  // Render loop
   function render(){
-    const metrics = compute();
-    mFy.textContent = metrics.sumFy;
-    mFx.textContent = metrics.sumFx;
-    mM.textContent  = metrics.sumM;
-
-    renderFisuras(metrics.stress);
-    renderReport(metrics);
-    drawPórtico(metrics);
+    drawScene();
+    renderMetrics();
+    renderRows();
   }
 
-  // PDF capture
+  function buildTXT(){
+    const m = compute();
+    const L = [];
+    L.push((DATA.meta.title||"SIMULADOR DE CARGAS").toUpperCase());
+    L.push("");
+    L.push(`Paciente: ${patientEl.value || "(no especificado)"}`);
+    L.push(`Auditor: ${auditorEl.value || "(no especificado)"}`);
+    L.push(`Fecha: ${dateEl.value || "(no especificada)"}`);
+    L.push("");
+    L.push("INDICADORES");
+    L.push(`Global: ${m.global.label}`);
+    L.push(`Peso vertical: ${m.V}`);
+    L.push(`Fuerza horizontal: ${m.H}`);
+    L.push(`Momento: ${m.M}`);
+    L.push(`Deriva: ${m.drift}`);
+    L.push(`Fisuras: ${m.cracks}`);
+    L.push("");
+    L.push("CARGAS ACTIVAS");
+    L.push("--------------------------------------------------");
+    state.loads.forEach(l=>{
+      L.push(`- ${l.label} (${l.key})`);
+      L.push(`  Dirección: ${enumLabel(DATA.enums.direction,l.direction)} | Magnitud: ${l.magnitude}`);
+      L.push(`  Destino: ${enumLabel(DATA.enums.targets,l.target)} | Transferencia: ${l.transfer ? "Transferida" : "No transferida"}`);
+      L.push("");
+    });
+    L.push("OBSERVACIONES");
+    L.push(notesEl.value || "(sin observaciones)");
+    return L.join("\n");
+  }
+
+  function downloadTxt(){
+    const txt = buildTXT();
+    const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "simulador_cargas.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
   async function loadLogo(){
     try{
       const res = await fetch(LOGO_PATH, { cache:"no-store" });
@@ -937,12 +774,18 @@
     }catch(e){ return null; }
   }
 
-  async function exportPdf(){
+  function safeName(name){
+    return (name||"simulador")
+      .toLowerCase().replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  async function downloadPdf(){
     if(!okPdfLib()){
-      pdfWarn.style.display = "block";
+      pdfWarn.style.display="block";
       return;
     }
-    const metrics = compute();
     if(logoDataUrl===null) logoDataUrl = await loadLogo();
 
     const { jsPDF } = window.jspdf;
@@ -951,78 +794,179 @@
     const H = doc.internal.pageSize.getHeight();
     const M = 44;
 
-    // Title band
-    doc.setFillColor(22,33,58);
-    doc.rect(0,0,W,90,"F");
-    doc.setTextColor(255,255,255);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(18);
-    doc.text("SIMULADOR DE CARGAS DEL HOGAR — Escenario", M, 52);
+    const m = compute();
+    const scenarioImg = canvas.toDataURL("image/png", 1.0);
 
-    if(logoDataUrl){
-      try{ doc.addImage(logoDataUrl,"PNG", W-M-48, 22, 48, 48); }catch(e){}
+    const INK = [22,33,58];
+    const MUTED = [90,102,130];
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
     }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...MUTED);
+        doc.text("Simulador de Cargas del Hogar — Laboratorio", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // portada
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W-M-56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(20);
+    doc.setTextColor(255,255,255);
+    doc.text("SIMULADOR DE CARGAS DEL HOGAR", M, 52);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Captura del escenario + indicadores + listado", M, 74);
+
+    // datos
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
+    doc.setTextColor(...INK);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos", M+14, 145);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    doc.setTextColor(210,230,255);
-    doc.text("Captura del pórtico + indicadores (pedagógicos)", M, 74);
+    doc.text(`Paciente: ${patientEl.value || "(no especificado)"}`, M+14, 172);
+    doc.text(`Auditor: ${auditorEl.value || "(no especificado)"}`, M+14, 192);
+    doc.text(`Fecha: ${dateEl.value || "(no especificada)"}`, M+14, 212);
 
-    // Canvas image
-    const img = cv.toDataURL("image/png", 1.0);
-    const imgW = W - M*2;
-    const imgH = imgW * (cv.height / cv.width);
+    // indicadores
     doc.setFillColor(255,255,255);
-    doc.roundedRect(M, 110, imgW, imgH+18, 12, 12, "F");
-    doc.addImage(img, "PNG", M, 120, imgW, imgH);
-
-    // Indicators box
-    const y2 = 130 + imgH + 18;
-    doc.setFillColor(245,247,255);
-    doc.roundedRect(M, y2, imgW, 120, 12, 12, "F");
-    doc.setTextColor(22,33,58);
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("Indicadores (pedagógicos)", M+14, y2+28);
-    doc.setFont("helvetica","normal"); doc.setFontSize(11);
-    doc.text(`∑Fy (peso): ${metrics.sumFy}`, M+14, y2+52);
-    doc.text(`∑Fx (empuje): ${metrics.sumFx}`, M+14, y2+72);
-    doc.text(`∑M (momento): ${metrics.sumM}`, M+14, y2+92);
-
-    // Fisuras summary
-    const s = metrics.stress;
-    const worst = Object.entries(s).sort((a,b)=>b[1]-a[1])[0];
-    const worstKey = worst[0];
-    const worstVal = worst[1];
+    doc.roundedRect(M, 255, W-M*2, 90, 12, 12, "F");
     doc.setFont("helvetica","bold");
-    doc.text(`Zona más exigida: ${enumLabel(DATA.enums.zone, worstKey)} (Índice ${worstVal})`, M+14, y2+112);
+    doc.setFontSize(12);
+    doc.setTextColor(...INK);
+    doc.text(`Global: ${m.global.label}`, M+14, 282);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`V=${m.V}  H=${m.H}  Momento=${m.M}  Deriva=${m.drift}  Fisuras=${m.cracks}`, M+14, 306);
 
-    // Footer verse
-    doc.setTextColor(90,102,130);
-    doc.setFont("helvetica","normal"); doc.setFontSize(9);
-    doc.text(`📖 ${DATA.verses.fundamento.quote} (${DATA.verses.fundamento.reference})`, M, H-18);
+    // escenario (imagen)
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.setTextColor(...INK);
+    doc.text("Captura del escenario", M, 372);
 
-    doc.save("simulador_cargas_escenario.pdf");
+    const imgW = W - M*2;
+    const imgH = imgW * (canvas.height / canvas.width);
+    doc.addImage(scenarioImg, "PNG", M, 385, imgW, Math.min(imgH, 320));
+
+    // tabla cargas
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text("Listado de cargas activas", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    doc.autoTable({
+      startY: 90,
+      head: [["Carga", "Dir.", "Mag", "Destino", "Transferencia"]],
+      body: state.loads.map(l=>[
+        l.label,
+        enumLabel(DATA.enums.direction, l.direction),
+        String(l.magnitude),
+        enumLabel(DATA.enums.targets, l.target),
+        l.transfer ? "Transferida" : "No transferida"
+      ]),
+      theme:"grid",
+      styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+      headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      margin:{left:M, right:M}
+    });
+
+    // observaciones
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text("Observaciones", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 96, W-M*2, 520, 12, 12, "F");
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
+    const notes = notesEl.value || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, 122);
+
+    footer();
+    doc.save(`${safeName(patientEl.value||"hogar")}_simulador.pdf`);
   }
 
-  btnPdf.addEventListener("click", exportPdf);
-
-  // Init
-  async function init(){
-    const res = await fetch(JSON_PATH, {cache:"no-store"});
-    if(!res.ok) throw new Error("No se pudo cargar simulador.json");
-    DATA = await res.json();
-
-    setupUI();
-    load();
-    syncSelectedUI();
+  function clearLoads(){
+    if(!confirm("¿Quitar todas las cargas del escenario?")) return;
+    state.loads = [];
+    save();
     render();
-
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
   }
 
-  init().catch(err=>{
-    document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${err.message}<br><span style="color:#a7b4d6">Asegúrate de que simulador.json esté en la misma carpeta.</span></div>`;
+  function resetAll(){
+    if(!confirm("¿Borrar TODO (cabecera + cargas guardadas)?")) return;
+    localStorage.removeItem(STORAGE_KEY);
+    state.header = {patient:"",auditor:"",date:"",notes:""};
+    state.loads = [];
+    fillHeaderUI();
+    setDefaultDateIfEmpty();
+    save();
+    render();
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+
+      tEl.textContent = DATA.meta.title || "Simulador de Cargas";
+      dEl.textContent = DATA.meta.description || "";
+      libHintEl.textContent = "Arrastra una carga hacia el pórtico. Luego puedes moverla y cambiar si está transferida o no.";
+
+      tipsEl.innerHTML = "";
+      (DATA.texts.notes||[]).forEach(x=>{
+        const li = document.createElement("li");
+        li.textContent = x;
+        tipsEl.appendChild(li);
+      });
+
+      setDefaultDateIfEmpty();
+      loadLocal();
+      fillHeaderUI();
+      if(!dateEl.value) setDefaultDateIfEmpty();
+
+      renderLibrary();
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+      render();
+
+    }catch(e){
+      document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${e.message}<br><span style="color:#a7b4d6">Asegúrate de que ${JSON_PATH} esté en la misma carpeta.</span></div>`;
+    }
+  }
+
+  // events
+  document.getElementById("btnTxt").addEventListener("click", downloadTxt);
+  document.getElementById("btnPdf").addEventListener("click", downloadPdf);
+  document.getElementById("btnClear").addEventListener("click", clearLoads);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  [patientEl,auditorEl,dateEl,notesEl].forEach(el=>{
+    el.addEventListener("input", save);
+    el.addEventListener("change", save);
   });
+
+  init();
 </script>
 </body>
 </html>

@@ -1,97 +1,117 @@
 {
   "meta": {
-    "title": "Simulador de Cargas del Hogar — Laboratorio del Pórtico",
-    "description": "Arrastra cargas al sistema (viga/columna/nudo) y observa transferencia, momentos y fisuras. Herramienta pedagógica para talleres, jóvenes, novios y líderes."
-  },
-  "ui": {
-    "paletteTitle": "Paleta de cargas",
-    "zonesTitle": "Zonas del pórtico",
-    "selectedTitle": "Carga seleccionada",
-    "metricsTitle": "Indicadores (pedagógicos)",
-    "reportTitle": "Reporte del escenario",
-    "saveHint": "Se guarda localmente (sin servidor)."
+    "title": "Simulador de Cargas del Hogar — Laboratorio",
+    "description": "Arrastra cargas al pórtico (viga/columna/nudo/cimiento/apoyo) y observa transferencia, momentos, deriva y fisuras. Sin servidor."
   },
   "enums": {
-    "loadType": [
-      { "key": "muerta", "label": "Carga muerta (permanente)" },
-      { "key": "viva", "label": "Carga viva (temporal)" },
-      { "key": "sismica", "label": "Carga sísmica (empuje lateral)" }
+    "targets": [
+      { "key": "beam", "label": "Viga (Mujer)" },
+      { "key": "column", "label": "Columna (Varón)" },
+      { "key": "joint", "label": "Nudo (Congregación)" },
+      { "key": "foundation", "label": "Cimiento (Cristo)" },
+      { "key": "roller", "label": "Apoyo móvil (Espíritu Santo)" }
     ],
     "direction": [
-      { "key": "vertical", "label": "Vertical (peso / responsabilidad)" },
-      { "key": "horizontal", "label": "Horizontal (tensión / presión)" }
-    ],
-    "zone": [
-      { "key": "viga", "label": "Viga (mujer)" },
-      { "key": "columna", "label": "Columna (varón)" },
-      { "key": "nudo", "label": "Nudo (congregación)" },
-      { "key": "interseccion", "label": "Intersección (apoyo móvil)" },
-      { "key": "cimiento", "label": "Cimiento (Cristo)" }
-    ],
-    "transferStatus": [
-      { "key": "correcta", "label": "Transferencia correcta (Viga→Columna→Cimiento)" },
-      { "key": "cortada_viga", "label": "Cortada en la viga (ella la carga sola)" },
-      { "key": "cortada_columna", "label": "Cortada en la columna (él no transmite al fundamento)" },
-      { "key": "nudo_tenso", "label": "Nudo tenso (congregación debilitada)" },
-      { "key": "sin_apoyo", "label": "Sin apoyo móvil (no hay intersección / reposo)" }
+      { "key": "vertical", "label": "Vertical (peso/responsabilidad)" },
+      { "key": "horizontal", "label": "Horizontal (tensión/presión)" }
     ]
   },
   "thresholds": {
-    "fisura": { "micro": 35, "activa": 55, "critica": 75 }
+    "verticalWarn": 35,
+    "verticalRisk": 55,
+    "horizontalWarn": 18,
+    "horizontalRisk": 28,
+    "momentWarn": 220,
+    "momentRisk": 340,
+    "driftWarn": 22,
+    "driftRisk": 35
   },
-  "verses": {
-    "fundamento": { "quote": "Separados de mí nada podéis hacer.", "reference": "Juan 15:5" },
-    "congregacion": {
-      "quote": "Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.",
-      "reference": "Mateo 18:20"
-    },
-    "equilibrio": { "quote": "Dios no es Dios de confusión, sino de paz.", "reference": "1 Corintios 14:33" }
+  "texts": {
+    "notes": [
+      "Transferida = la carga baja por el diseño (viga→columna→cimiento / apoyo móvil sostiene).",
+      "No transferida = se concentra en el elemento y aumenta momento/deriva/fisura."
+    ],
+    "recommendations": {
+      "low": [
+        "Mantener hábitos: altar, acuerdos cortos, descanso santo.",
+        "Registrar cargas solo si cambian (no ruido)."
+      ],
+      "mid": [
+        "Ajustar transferencia: nombrar cargas sin culpa y asignarlas.",
+        "Reforzar nudo: culto del hogar + acuerdos claros.",
+        "Pausar reactividad: oración antes de hablar."
+      ],
+      "high": [
+        "Reducir presión: no sumar exigencias, ordenar prioridades.",
+        "Proceso pastoral: acompañamiento, restauración, límites sanos.",
+        "Cimiento primero: rendición real, luego acuerdos."
+      ]
+    }
   },
-  "palette": [
+  "loadsLibrary": [
     {
       "key": "finanzas",
-      "name": "Presión financiera",
-      "type": "viva",
+      "label": "Presión financiera",
       "direction": "vertical",
-      "magnitude": 12,
-      "transfer": "nudo_tenso",
-      "hint": "Si no se conversa, se acumula en el nudo."
+      "magnitude": 10,
+      "defaultTarget": "beam",
+      "hint": "Peso constante: provisión, cuentas, incertidumbre."
+    },
+    {
+      "key": "conflicto",
+      "label": "Conflicto recurrente",
+      "direction": "horizontal",
+      "magnitude": 8,
+      "defaultTarget": "joint",
+      "hint": "Empuje lateral sobre el nudo (discusión, tensión, orgullo)."
     },
     {
       "key": "agotamiento",
-      "name": "Agotamiento emocional",
-      "type": "viva",
+      "label": "Agotamiento / carga mental",
       "direction": "vertical",
-      "magnitude": 10,
-      "transfer": "cortada_viga",
-      "hint": "Suele concentrarse en la viga cuando no hay descarga."
+      "magnitude": 7,
+      "defaultTarget": "beam",
+      "hint": "Sobrecarga silenciosa: tareas, gestión, cansancio."
     },
     {
-      "key": "control",
-      "name": "Control / dureza",
-      "type": "muerta",
+      "key": "crisis",
+      "label": "Crisis externa (familia/trabajo)",
       "direction": "horizontal",
       "magnitude": 9,
-      "transfer": "cortada_columna",
-      "hint": "Empuje lateral: genera momentos si el eje está torcido."
+      "defaultTarget": "beam",
+      "hint": "Evento sísmico: decisiones rápidas, presión, miedo."
     },
     {
-      "key": "familia_ext",
-      "name": "Presión familiar externa",
-      "type": "sismica",
-      "direction": "horizontal",
-      "magnitude": 14,
-      "transfer": "nudo_tenso",
-      "hint": "Carga sísmica: ataca el nudo primero."
+      "key": "hijos",
+      "label": "Demanda por hijos",
+      "direction": "vertical",
+      "magnitude": 6,
+      "defaultTarget": "beam",
+      "hint": "Carga viva: energía, horarios, disciplina."
     },
     {
       "key": "silencio",
-      "name": "Silencios prolongados",
-      "type": "muerta",
+      "label": "Silencio / evasión",
       "direction": "horizontal",
+      "magnitude": 6,
+      "defaultTarget": "column",
+      "hint": "Deriva: evita conversación, no transmite al fundamento."
+    },
+    {
+      "key": "sin_altar",
+      "label": "Falta de altar",
+      "direction": "vertical",
       "magnitude": 8,
-      "transfer": "sin_apoyo",
-      "hint": "Sin apoyo móvil, la tensión no se disipa."
+      "defaultTarget": "foundation",
+      "hint": "Cuando el cimiento no es activado, todo pesa más."
+    },
+    {
+      "key": "control",
+      "label": "Control / rigidez",
+      "direction": "horizontal",
+      "magnitude": 7,
+      "defaultTarget": "roller",
+      "hint": "Bloquea deslizamiento: aumenta fisura por rigidez."
     }
   ]
 }
