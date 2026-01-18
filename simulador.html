@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Simulador de Cargas del Hogar</title>
+  <title>Simulador de Cargas — Laboratorio</title>
 
   <style>
     :root{
@@ -12,213 +12,232 @@
       --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
     }
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
-    .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+    .wrap{max-width:1150px;margin:0 auto;padding:22px;}
     .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
     h1{margin:0 0 6px;font-size:26px;}
     .sub{margin:0;color:var(--muted);line-height:1.4}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;margin-right:8px;}
     .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
-    @media(min-width:980px){.grid{grid-template-columns:420px 1fr;}}
+    @media(min-width:980px){.grid{grid-template-columns:520px 1fr;}}
     .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
-    label{font-weight:800;font-size:13px;}
-    input, textarea, select{
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea{
       width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
       border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
     }
-    textarea{min-height:92px;resize:vertical;}
-    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
-    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
     .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
     button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
     .primary{background:var(--accent);color:#071018;}
     .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
     .muted{color:var(--muted);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
     .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
-    .mini{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
-    .mini h3{margin:0 0 8px;font-size:14px;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
     .chip{
-      display:flex;align-items:center;gap:8px;
-      padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.14);
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+      border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:10px 12px;
       background:rgba(255,255,255,.04);cursor:grab;user-select:none;
     }
     .chip:active{cursor:grabbing;}
     .tag{display:inline-block;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);}
-    .canvasBox{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:10px;}
-    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
-    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
     table{width:100%;border-collapse:collapse;}
     th,td{padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
     th{font-size:12px;text-align:left;color:var(--muted);background:rgba(255,255,255,.03);}
     td{font-size:13px;}
-    .danger{color:#fda4af;}
   </style>
 </head>
 
 <body>
-<div class="wrap">
-  <div class="hero">
-    <h1 id="t">Simulador de Cargas del Hogar</h1>
-    <p class="sub" id="d"></p>
-    <div style="margin-top:10px">
-      <span class="pill">Arrastrar y soltar</span>
-      <span class="pill">Transferida / No transferida</span>
-      <span class="pill" id="pCount">Cargas activas: 0</span>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Simulador de Cargas — Laboratorio</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px">
+        <span class="pill" id="pMax"></span>
+        <span class="pill" id="pHow">Niveles: 0–3 (Alineado → Crítico)</span>
+      </div>
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
     </div>
-    <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+
+    <div class="grid">
+      <!-- IZQ: DIAGRAMA + LIBRERÍA -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Laboratorio del pórtico</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              Arrastra cargas al pórtico. Click en una carga para alternar Transferida/No transferida.
+            </div>
+          </div>
+          <span class="pill" id="liveGlobal">Global: —</span>
+        </div>
+
+        <div class="svgBox" style="margin-top:10px;">
+          <canvas id="sim" width="520" height="360" style="width:100%;height:auto;display:block;border-radius:14px;"></canvas>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Alineado</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Crítico</div>
+          </div>
+        </div>
+
+        <div class="sec">
+          <div class="row">
+            <b>Biblioteca de cargas</b>
+            <span class="pill" id="pLoads">Cargas: 0</span>
+          </div>
+          <div class="muted" style="font-size:13px;margin-top:6px;">
+            Arrastra un chip al canvas (drop). Luego puedes moverlo dentro del canvas.
+          </div>
+          <div id="library" style="display:grid;gap:10px;margin-top:10px;"></div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+      </div>
+
+      <!-- DER: FORMULARIO (igual que Radar) -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de auditoría</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">Se incluyen en el informe. No se envía a servidor.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Nombre del paciente</label>
+            <input id="patient" placeholder="Ej: Juan y María Pérez">
+          </div>
+          <div>
+            <label>Nombre del auditor</label>
+            <input id="auditor" placeholder="Ej: Consejero / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Observaciones libres</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="muted" style="font-size:13px;">Incluir detalle por sección y listado de cargas en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="sec">
+          <b>Listado de cargas activas</b>
+          <div class="muted" style="font-size:13px;margin-top:6px;">Click en “Transferida” para alternar estado.</div>
+          <div style="margin-top:10px;overflow:auto;border:1px solid var(--line);border-radius:14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Carga</th>
+                  <th>Dir</th>
+                  <th>Mag</th>
+                  <th>Destino</th>
+                  <th>Transferencia</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnClear">Quitar cargas</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+          <span class="muted" id="live">Puntaje: 0</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="grid">
-    <!-- IZQ -->
-    <div class="card">
-      <div class="row">
-        <b>Cabecera</b>
-        <span class="pill">LocalStorage</span>
-      </div>
-
-      <div class="fieldgrid">
-        <div>
-          <label>Paciente / hogar</label>
-          <input id="patient" placeholder="Ej: Hogar Abraham y Sara">
-        </div>
-        <div>
-          <label>Auditor</label>
-          <input id="auditor" placeholder="Ej: Consejero / Pastor">
-        </div>
-        <div>
-          <label>Fecha</label>
-          <input id="date" type="date">
-        </div>
-        <div>
-          <label>Observaciones</label>
-          <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
-        </div>
-      </div>
-
-      <div class="mini">
-        <h3>Biblioteca de cargas (arrástralas al pórtico)</h3>
-        <div class="muted" style="font-size:13px;margin-bottom:10px" id="libHint"></div>
-        <div id="library" style="display:grid;gap:10px;"></div>
-      </div>
-
-      <div class="btns">
-        <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
-        <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
-        <button class="ghost" id="btnClear">Quitar todas</button>
-        <button class="ghost" id="btnReset">Borrar todo</button>
-      </div>
-
-      <div class="mini">
-        <h3>Notas del laboratorio</h3>
-        <ul class="muted" id="tips" style="margin:0;padding-left:18px;line-height:1.45;"></ul>
-      </div>
-    </div>
-
-    <!-- DER -->
-    <div class="card">
-      <div class="row">
-        <div>
-          <b>Escenario del pórtico</b>
-          <div class="muted" style="font-size:13px;margin-top:4px;">Suelta cargas sobre zonas: Viga / Columna / Nudo / Cimiento / Apoyo.</div>
-        </div>
-        <span class="pill" id="globalPill">Global: —</span>
-      </div>
-
-      <div class="canvasBox" style="margin-top:10px;">
-        <canvas id="sim" width="720" height="420" style="width:100%;height:auto;display:block;"></canvas>
-
-        <div class="legend">
-          <div class="k"><span class="dot" style="background:var(--g)"></span>Estable</div>
-          <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
-          <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
-          <div class="k"><span class="dot" style="background:var(--r)"></span>Crítico</div>
-        </div>
-      </div>
-
-      <div class="mini" id="metrics"></div>
-
-      <div class="mini">
-        <h3>Cargas activas</h3>
-        <div style="overflow:auto;border:1px solid var(--line);border-radius:14px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Carga</th>
-                <th>Dir.</th>
-                <th>Magnitud</th>
-                <th>Destino</th>
-                <th>Transferencia</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody id="rows"></tbody>
-          </table>
-        </div>
-        <div class="muted" style="font-size:13px;margin-top:8px;">
-          Tip: “No transferida” aumenta momento/deriva/fisura (concentración de esfuerzo).
-        </div>
-      </div>
-
-      <div class="mini">
-        <h3>Recomendaciones automáticas</h3>
-        <div class="muted" id="reco"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- jsPDF + AutoTable -->
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
   const JSON_PATH = "simulador.json";
   const LOGO_PATH = "logo.png";
-  const STORAGE_KEY = "simulador_cargas_v1";
+  const STORAGE_KEY = "simulador_portico_v1";
 
   let DATA=null;
   let logoDataUrl=null;
 
+  const scores = {}; // sectionId -> levelValue(0..3)
+  let last=null;
+
+  // Local state for loads (saved)
   const state = {
     header: { patient:"", auditor:"", date:"", notes:"" },
-    loads: [] // instances: {id,key,label,direction,magnitude,target,transfer,x,y,createdAt}
+    loads: [] // {id,key,label,direction,magnitude,target,transfer,x,y,createdAt}
   };
 
   // UI
-  const tEl = document.getElementById("t");
-  const dEl = document.getElementById("d");
-  const pCount = document.getElementById("pCount");
-  const globalPill = document.getElementById("globalPill");
+  const secForm = document.getElementById("secForm");
+  const resBox = document.getElementById("resBox");
   const pdfWarn = document.getElementById("pdfWarn");
 
   const patientEl = document.getElementById("patient");
   const auditorEl = document.getElementById("auditor");
   const dateEl = document.getElementById("date");
   const notesEl = document.getElementById("notes");
+  const detailsEl = document.getElementById("details");
 
-  const libraryEl = document.getElementById("library");
-  const tipsEl = document.getElementById("tips");
-  const libHintEl = document.getElementById("libHint");
-  const metricsEl = document.getElementById("metrics");
-  const rowsEl = document.getElementById("rows");
-  const recoEl = document.getElementById("reco");
-
+  const liveEl = document.getElementById("live");
+  const liveGlobal = document.getElementById("liveGlobal");
   const btnTxt = document.getElementById("btnTxt");
   const btnPdf = document.getElementById("btnPdf");
+
+  const libraryEl = document.getElementById("library");
+  const rowsEl = document.getElementById("rows");
+  const pLoads = document.getElementById("pLoads");
 
   // Canvas
   const canvas = document.getElementById("sim");
   const ctx = canvas.getContext("2d");
 
-  // Zones (canvas coords)
-  const Z = {
-    foundation: {id:"foundation", label:"Cimiento", x:120,y:340,w:180,h:50},
-    column:     {id:"column", label:"Columna", x:190,y:140,w:26,h:200},
-    beam:       {id:"beam", label:"Viga", x:205,y:140,w:310,h:24},
-    joint:      {id:"joint", label:"Nudo", x:188,y:136,w:40,h:40},
-    roller:     {id:"roller", label:"Apoyo móvil", x:520,y:155,w:60,h:55}
-  };
+  // Targets (match radar elements)
+  const TARGETS = [
+    { key:"foundation", label:"Cimiento" },
+    { key:"column", label:"Columna" },
+    { key:"joint", label:"Nudo" },
+    { key:"beam", label:"Viga" },
+    { key:"roller", label:"Apoyo móvil" },
+    { key:"loads", label:"Zona de cargas" }
+  ];
 
   function setDefaultDateIfEmpty(){
     if(dateEl.value) return;
@@ -229,6 +248,29 @@
   function okPdfLib(){
     return !!(window.jspdf && window.jspdf.jsPDF) &&
       !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function levelByValue(v){
+    return DATA.levels.find(x=>Number(x.value)===Number(v)) || DATA.levels[0];
+  }
+
+  function totalScore(){
+    return DATA.sections.reduce((acc,s)=> acc + (scores[s.id] ?? 0), 0);
+  }
+
+  function globalBand(sum){
+    const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
+    return b || DATA.globalBands[0];
+  }
+
+  function escapeHtml(str){
+    return String(str||"").replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[s]));
+  }
+
+  function uid(){
+    return (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2));
   }
 
   function save(){
@@ -256,21 +298,102 @@
     notesEl.value = state.header.notes || "";
   }
 
-  function uid(){
-    return (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"_"+Math.random().toString(16).slice(2));
+  // ===== Rendering sections (igual Radar) =====
+  function renderForm(){
+    secForm.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px;">
+      Selecciona el nivel por sección (0–3). Este puntaje genera el diagnóstico global del escenario.
+    </div>`;
+
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = 0;
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${escapeHtml(sec.title)}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">${escapeHtml(sec.diagnosticFocus || "")}</div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">Alineado</span>
+        </div>
+        <div class="opts" role="radiogroup" aria-label="${escapeHtml(sec.title)}">
+          ${DATA.levels.map(l=>`
+            <label class="opt">
+              <input type="radio" name="${sec.id}" value="${l.value}" ${l.value===0?"checked":""}>
+              <span>${escapeHtml(l.label)} (${l.value})</span>
+            </label>
+          `).join("")}
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:10px;">
+          <b>📖</b> ${escapeHtml(sec.verse.quote)} <span class="muted">(${escapeHtml(sec.verse.reference)})</span>
+        </div>
+      `;
+
+      div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+        inp.addEventListener("change", (e)=>{
+          scores[sec.id] = Number(e.target.value);
+          const lev = levelByValue(scores[sec.id]);
+          const pill = document.getElementById(`pill_${sec.id}`);
+          if(pill) pill.textContent = lev.label;
+          updateLive();
+          draw();
+        });
+      });
+
+      secForm.appendChild(div);
+    });
+
+    updateLive();
   }
 
-  function enumLabel(list, key){
-    const it = list.find(x=>x.key===key);
-    return it ? it.label : key;
+  function updateLive(){
+    const sum = totalScore();
+    liveEl.textContent = `Puntaje: ${sum}`;
+    const g = globalBand(sum);
+    liveGlobal.textContent = `Global: ${g.label}`;
+    document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
   }
 
-  function dirArrow(dir){
-    return dir==="horizontal" ? "→" : "↓";
+  // ===== Canvas: pórtico + cargas =====
+  const Z = {
+    foundation: {x:75,y:280,w:120,h:40},
+    column: {x:125,y:95,w:20,h:185},
+    beam: {x:135,y:95,w:250,h:18},
+    joint: {x:125,y:95,w:28,h:28},
+    roller: {x:385,y:113,w:20,h:20},
+    loads: {x:200,y:40,w:140,h:60}
+  };
+
+  function sectionLevelForElement(elementKey){
+    // si varias secciones apuntan al mismo element, gana el peor
+    let worst = 0;
+    DATA.sections.forEach(s=>{
+      if(s.element===elementKey){
+        worst = Math.max(worst, scores[s.id] ?? 0);
+      }
+    });
+    return worst;
+  }
+
+  function loadTargetAt(x,y){
+    const keys = ["foundation","column","joint","beam","roller","loads"];
+    for(const k of keys){
+      const z = Z[k];
+      if(x>=z.x && x<=z.x+z.w && y>=z.y && y<=z.y+z.h) return k;
+    }
+    return null;
+  }
+
+  function snapToTarget(l, t){
+    const z = Z[t] || Z.beam;
+    l.target = t;
+    l.x = z.x + z.w/2;
+    l.y = z.y + z.h/2;
   }
 
   function addInstance(loadKey){
-    const base = DATA.loadsLibrary.find(x=>x.key===loadKey);
+    const base = (DATA.loadsLibrary||[]).find(x=>x.key===loadKey);
     if(!base) return;
     const inst = {
       id: uid(),
@@ -280,29 +403,15 @@
       magnitude: Number(base.magnitude||1),
       target: base.defaultTarget || "beam",
       transfer: true,
-      x: 60 + Math.random()*80,
-      y: 80 + Math.random()*220,
+      x: 120,
+      y: 160,
       createdAt: new Date().toISOString()
     };
-
     snapToTarget(inst, inst.target);
     state.loads.unshift(inst);
     save();
-    render();
-  }
-
-  function snapToTarget(inst, target){
-    const z = Z[target] || Z.beam;
-    inst.target = target;
-    inst.x = z.x + z.w/2;
-    inst.y = z.y + z.h/2;
-  }
-
-  function deleteInstance(id){
-    if(!confirm("¿Quitar esta carga del escenario?")) return;
-    state.loads = state.loads.filter(x=>x.id!==id);
-    save();
-    render();
+    renderRows();
+    draw();
   }
 
   function toggleTransfer(id){
@@ -310,255 +419,27 @@
     if(!l) return;
     l.transfer = !l.transfer;
     save();
-    render();
+    renderRows();
+    draw();
   }
 
-  function detectTarget(x,y){
-    for(const k of Object.keys(Z)){
-      const z = Z[k];
-      if(x>=z.x && x<=z.x+z.w && y>=z.y && y<=z.y+z.h) return z.id;
-    }
-    return null;
+  function deleteLoad(id){
+    if(!confirm("¿Quitar esta carga?")) return;
+    state.loads = state.loads.filter(x=>x.id!==id);
+    save();
+    renderRows();
+    draw();
   }
 
-  // ===== Physics-ish scoring (simple but pedagogical) =====
-  function compute(){
-    let V=0, H=0, M=0, drift=0;
-    const stress = {foundation:0,column:0,beam:0,joint:0,roller:0};
-    let cracks = 0;
-
-    state.loads.forEach(l=>{
-      const mag = Number(l.magnitude||0);
-      const penalty = l.transfer ? 1.0 : 1.6; // no transfer -> concentrate
-      const t = l.target;
-
-      if(l.direction==="vertical"){
-        V += mag;
-        // moment depends on how far on beam side (simulate lever)
-        const lever = (t==="beam"||t==="roller") ? 1.0 : (t==="joint" ? 0.6 : 0.3);
-        M += mag * 6 * lever * penalty;
-
-        stress[t] += mag * 6 * penalty;
-        if(!l.transfer && (t==="beam"||t==="column")) cracks += 1;
-      }else{
-        H += mag;
-        drift += mag * (t==="joint" ? 1.2 : (t==="beam" ? 1.0 : 0.7)) * penalty;
-        M += mag * 10 * (t==="beam" ? 1.0 : 0.7) * penalty;
-
-        stress[t] += mag * 7 * penalty;
-        if(!l.transfer) cracks += 1;
-        if(t==="roller" && !l.transfer) cracks += 1; // rigidez en apoyo móvil
-      }
-
-      // transfer reduces column/foundation stress by design
-      if(l.transfer){
-        if(t==="beam"||t==="joint") stress.column += mag * 2;
-        if(t==="beam"||t==="joint"||t==="column") stress.foundation += mag * 1.5;
-        if(t==="roller") stress.roller += mag * 1.2;
-      }else{
-        // if not transferred, foundation receives less and system drifts more
-        drift += mag * 0.8;
-      }
-    });
-
-    // normalize some indicators
-    M = Math.round(M);
-    drift = Math.round(drift);
-    cracks = Math.min(12, cracks);
-
-    // global band by worst indicator
-    const T = DATA.thresholds;
-    const riskPoints =
-      (V>=T.verticalRisk?2: V>=T.verticalWarn?1:0) +
-      (H>=T.horizontalRisk?2: H>=T.horizontalWarn?1:0) +
-      (M>=T.momentRisk?2: M>=T.momentWarn?1:0) +
-      (drift>=T.driftRisk?2: drift>=T.driftWarn?1:0) +
-      (cracks>=6?2: cracks>=3?1:0);
-
-    let global = {key:"low", label:"Estable", color:getCss("--g")};
-    if(riskPoints>=7) global = {key:"high", label:"Crítico", color:getCss("--r")};
-    else if(riskPoints>=4) global = {key:"mid2", label:"En riesgo", color:getCss("--o")};
-    else if(riskPoints>=2) global = {key:"mid1", label:"En ajuste", color:getCss("--y")};
-
-    // stress caps
-    Object.keys(stress).forEach(k=> stress[k] = Math.min(100, Math.round(stress[k])));
-
-    return {V,H,M,drift,cracks,stress,global};
-  }
-
-  function getCss(varName){
-    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
-  }
-
-  // ===== Draw =====
-  function drawScene(){
-    const m = compute();
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    // background
-    ctx.fillStyle = "rgba(255,255,255,.03)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    // ground
-    ctx.fillStyle = "rgba(255,255,255,.05)";
-    ctx.fillRect(0,380,canvas.width,40);
-
-    // helper: zone color by stress
-    function stressColor(s){
-      if(s>=75) return getCss("--r");
-      if(s>=55) return getCss("--o");
-      if(s>=35) return getCss("--y");
-      return "rgba(255,255,255,.12)";
-    }
-
-    // foundation
-    fillRoundRect(Z.foundation.x, Z.foundation.y, Z.foundation.w, Z.foundation.h, 10, stressColor(m.stress.foundation));
-    label(Z.foundation.x+Z.foundation.w/2, Z.foundation.y+32, "CIMIENTO");
-
-    // column
-    fillRoundRect(Z.column.x, Z.column.y, Z.column.w, Z.column.h, 10, stressColor(m.stress.column));
-    label(Z.column.x+Z.column.w/2, Z.column.y-12, "COLUMNA (VARÓN)");
-
-    // beam
-    fillRoundRect(Z.beam.x, Z.beam.y, Z.beam.w, Z.beam.h, 10, stressColor(m.stress.beam));
-    label(Z.beam.x+Z.beam.w/2, Z.beam.y-12, "VIGA (MUJER)");
-
-    // roller
-    ctx.fillStyle = stressColor(m.stress.roller);
-    ctx.strokeStyle = "rgba(255,255,255,.22)";
-    ctx.lineWidth = 2;
-    circle(Z.roller.x+30, Z.roller.y+20, 14, true);
-    fillRoundRect(Z.roller.x+10, Z.roller.y+38, 40, 10, 6, "rgba(255,255,255,.08)");
-    label(Z.roller.x+30, Z.roller.y+70, "APOYO MÓVIL");
-
-    // joint (visual marker)
-    ctx.fillStyle = stressColor(m.stress.joint);
-    ctx.strokeStyle = "rgba(255,255,255,.18)";
-    fillRoundRect(Z.joint.x, Z.joint.y, Z.joint.w, Z.joint.h, 10, ctx.fillStyle);
-    label(Z.joint.x+Z.joint.w/2, Z.joint.y+58, "NUDO");
-
-    // nodes circles
-    node(Z.foundation.x+70, Z.foundation.y-6, "1");
-    node(Z.joint.x+20, Z.joint.y+10, "2");
-    node(Z.roller.x+30, Z.roller.y+20, "3");
-
-    // global label
-    ctx.font = "bold 16px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    ctx.fillStyle = m.global.color;
-    ctx.fillText("GLOBAL: " + m.global.label, 24, 34);
-
-    // metrics quick
-    ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    ctx.fillStyle = "rgba(231,238,252,.85)";
-    ctx.fillText(`V=${m.V}  H=${m.H}  M=${m.M}  Deriva=${m.drift}  Fisuras=${m.cracks}`, 24, 58);
-
-    // draw loads instances
-    state.loads.forEach(l=>{
-      drawLoadToken(l);
-    });
-
-    // fisuras indicator
-    if(m.cracks>0){
-      ctx.fillStyle = "rgba(244,63,94,.12)";
-      fillRoundRect(520, 16, 180, 46, 12, ctx.fillStyle);
-      ctx.fillStyle = getCss("--r");
-      ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-      ctx.fillText("FISURAS DETECTADAS: " + m.cracks, 534, 44);
-    }
-
-    function fillRoundRect(x,y,w,h,r,fill){
-      ctx.fillStyle = fill;
-      ctx.beginPath();
-      ctx.moveTo(x+r,y);
-      ctx.arcTo(x+w,y,x+w,y+h,r);
-      ctx.arcTo(x+w,y+h,x,y+h,r);
-      ctx.arcTo(x,y+h,x,y,r);
-      ctx.arcTo(x,y,x+w,y,r);
-      ctx.closePath();
-      ctx.fill();
-      ctx.strokeStyle = "rgba(255,255,255,.18)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-
-    function label(x,y,text){
-      ctx.textAlign = "center";
-      ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-      ctx.fillStyle = "rgba(231,238,252,.75)";
-      ctx.fillText(text, x, y);
-      ctx.textAlign = "left";
-    }
-
-    function circle(cx,cy,r,stroke){
-      ctx.beginPath();
-      ctx.arc(cx,cy,r,0,Math.PI*2);
-      ctx.closePath();
-      ctx.fill();
-      if(stroke) ctx.stroke();
-    }
-
-    function node(cx,cy,num){
-      ctx.fillStyle = "rgba(100,116,139,.85)";
-      ctx.strokeStyle = "rgba(255,255,255,.18)";
-      ctx.lineWidth = 2;
-      circle(cx,cy,12,true);
-      ctx.fillStyle = "rgba(231,238,252,.92)";
-      ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(num, cx, cy+4);
-      ctx.textAlign = "left";
-    }
-  }
-
-  function drawLoadToken(l){
-    const isH = l.direction==="horizontal";
-    const base = isH ? "rgba(94,234,212,.20)" : "rgba(255,255,255,.10)";
-    const strong = l.transfer ? "rgba(16,185,129,.85)" : "rgba(244,63,94,.85)";
-
-    // token
-    ctx.fillStyle = base;
-    ctx.strokeStyle = "rgba(255,255,255,.18)";
-    ctx.lineWidth = 1;
-    roundToken(l.x, l.y, 120, 34, 12);
-
-    // label
-    ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    ctx.fillStyle = "rgba(231,238,252,.95)";
-    ctx.fillText(`${dirArrow(l.direction)} ${l.label}`, l.x-52, l.y+4);
-
-    // magnitude + transfer dot
-    ctx.font = "11px system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    ctx.fillStyle = "rgba(167,180,214,.95)";
-    ctx.fillText(`Mag ${l.magnitude}`, l.x+40, l.y+4);
-
-    ctx.fillStyle = strong;
-    ctx.beginPath();
-    ctx.arc(l.x+58, l.y-10, 6, 0, Math.PI*2);
-    ctx.fill();
-
-    function roundToken(cx,cy,w,h,r){
-      const x = cx - w/2, y = cy - h/2;
-      ctx.beginPath();
-      ctx.moveTo(x+r,y);
-      ctx.arcTo(x+w,y,x+w,y+h,r);
-      ctx.arcTo(x+w,y+h,x,y+h,r);
-      ctx.arcTo(x,y+h,x,y,r);
-      ctx.arcTo(x,y,x+w,y,r);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-    }
-  }
-
-  // ===== Dragging on canvas =====
+  // Drag in canvas
   let draggingId=null;
-  let dragOffset = {dx:0, dy:0};
+  let dragOffset={dx:0,dy:0};
 
   function hitToken(mx,my){
-    // tokens are about 120x34
+    // tokens ~ 120x30
     for(const l of state.loads){
-      const x0 = l.x - 60, x1 = l.x + 60;
-      const y0 = l.y - 17, y1 = l.y + 17;
+      const x0=l.x-60, x1=l.x+60;
+      const y0=l.y-15, y1=l.y+15;
       if(mx>=x0 && mx<=x1 && my>=y0 && my<=y1) return l.id;
     }
     return null;
@@ -589,7 +470,7 @@
     if(!l) return;
     l.x = p.x - dragOffset.dx;
     l.y = p.y - dragOffset.dy;
-    drawScene();
+    draw();
   });
 
   canvas.addEventListener("pointerup", (e)=>{
@@ -597,97 +478,182 @@
     const p = pointerPos(e);
     const l = state.loads.find(x=>x.id===draggingId);
     draggingId = null;
-    if(!l){ drawScene(); return; }
-
-    const t = detectTarget(p.x,p.y);
-    if(t) snapToTarget(l, t);
-
+    if(!l){ draw(); return; }
+    const t = loadTargetAt(p.x,p.y);
+    if(t) snapToTarget(l,t);
     save();
-    render();
+    renderRows();
+    draw();
   });
 
-  // ===== Library (drag from list => create instance) =====
+  // Click token to toggle transfer
+  canvas.addEventListener("click", (e)=>{
+    const p = pointerPos(e);
+    const id = hitToken(p.x,p.y);
+    if(!id) return;
+    toggleTransfer(id);
+  });
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // background
+    ctx.fillStyle = "rgba(255,255,255,.03)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // ground
+    ctx.fillStyle = "rgba(255,255,255,.05)";
+    ctx.fillRect(0,320,520,40);
+
+    // levels colors for elements (from section scores)
+    function colForElement(key){
+      const v = sectionLevelForElement(key);
+      return levelByValue(v).color;
+    }
+
+    // foundation
+    rectR(Z.foundation.x,Z.foundation.y,Z.foundation.w,Z.foundation.h,8,colForElement("foundation"));
+    txt(Z.foundation.x+Z.foundation.w/2, Z.foundation.y+26, "CIMIENTO");
+
+    // column
+    rectR(Z.column.x,Z.column.y,Z.column.w,Z.column.h,8,colForElement("column"));
+    txt(Z.column.x+Z.column.w/2, Z.column.y-10, "COLUMNA");
+
+    // beam
+    rectR(Z.beam.x,Z.beam.y,Z.beam.w,Z.beam.h,8,colForElement("beam"));
+    txt(Z.beam.x+Z.beam.w/2, Z.beam.y-10, "VIGA");
+
+    // roller
+    ctx.fillStyle = colForElement("roller");
+    ctx.strokeStyle = "rgba(255,255,255,.22)";
+    ctx.lineWidth = 2;
+    circle(395,123,10,true);
+    ctx.fillStyle = "rgba(255,255,255,.08)";
+    rectR(375,133,40,10,4,"rgba(255,255,255,.08)");
+    txt(395,162,"APOYO");
+
+    // nodes (color by section)
+    node(135,280, "1", levelByValue(scores["comunion"] ?? 0).color);
+    node(135,104, "2", levelByValue(scores["congregacion"] ?? 0).color);
+    node(395,123, "3", levelByValue(scores["interseccion"] ?? 0).color);
+
+    // loads zone label
+    ctx.fillStyle = "rgba(255,255,255,.06)";
+    rectR(Z.loads.x, Z.loads.y, Z.loads.w, Z.loads.h, 10, "rgba(255,255,255,.05)");
+    txt(Z.loads.x+Z.loads.w/2, Z.loads.y+22, "DROP ZONA");
+    ctx.fillStyle = "rgba(231,238,252,.70)";
+    ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("CARGAS", Z.loads.x+Z.loads.w/2, Z.loads.y+44);
+
+    // draw load tokens
+    state.loads.forEach(l=>{
+      drawToken(l);
+    });
+
+    function rectR(x,y,w,h,r,fill){
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = "rgba(255,255,255,.18)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x+r,y);
+      ctx.arcTo(x+w,y,x+w,y+h,r);
+      ctx.arcTo(x+w,y+h,x,y+h,r);
+      ctx.arcTo(x,y+h,x,y,r);
+      ctx.arcTo(x,y,x+w,y,r);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function circle(cx,cy,r,stroke){
+      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.closePath(); ctx.fill();
+      if(stroke) ctx.stroke();
+    }
+
+    function txt(x,y,t){
+      ctx.fillStyle = "rgba(231,238,252,.75)";
+      ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(t,x,y);
+      ctx.textAlign = "left";
+    }
+
+    function node(cx,cy,num,color){
+      ctx.fillStyle = color || "#64748b";
+      ctx.strokeStyle = "rgba(255,255,255,.18)";
+      ctx.lineWidth = 2;
+      circle(cx,cy,10,true);
+      ctx.fillStyle = "rgba(231,238,252,.85)";
+      ctx.font = "bold 12px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(num,cx,cy+4);
+      ctx.textAlign = "left";
+    }
+
+    function drawToken(l){
+      const w=130, h=32;
+      const x=l.x-w/2, y=l.y-h/2;
+      const base = l.direction==="horizontal" ? "rgba(94,234,212,.14)" : "rgba(255,255,255,.10)";
+      rectR(x,y,w,h,12,base);
+
+      // transfer dot
+      ctx.fillStyle = l.transfer ? "rgba(16,185,129,.9)" : "rgba(244,63,94,.9)";
+      ctx.beginPath(); ctx.arc(x+w-12, y+10, 6, 0, Math.PI*2); ctx.fill();
+
+      ctx.fillStyle = "rgba(231,238,252,.92)";
+      ctx.font = "bold 11px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.textAlign = "left";
+      ctx.fillText((l.direction==="horizontal"?"→ ":"↓ ")+l.label, x+10, y+20);
+
+      ctx.fillStyle = "rgba(167,180,214,.92)";
+      ctx.font = "11px system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillText("Mag "+l.magnitude, x+10, y+30);
+    }
+  }
+
+  // ===== Library UI =====
   function renderLibrary(){
     libraryEl.innerHTML = "";
-    DATA.loadsLibrary.forEach(item=>{
+    (DATA.loadsLibrary||[]).forEach(item=>{
       const div = document.createElement("div");
       div.className = "chip";
       div.draggable = true;
+      div.title = item.hint || "";
       div.innerHTML = `
-        <div style="font-weight:900">${dirArrow(item.direction)} ${item.label}</div>
-        <span class="tag">${enumLabel(DATA.enums.direction, item.direction)}</span>
-        <span class="tag">Mag ${item.magnitude}</span>
+        <div style="font-weight:900">${escapeHtml(item.label)}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="tag">${escapeHtml(item.direction)}</span>
+          <span class="tag">Mag ${Number(item.magnitude||1)}</span>
+        </div>
       `;
       div.addEventListener("dragstart", (e)=>{
         e.dataTransfer.setData("text/plain", item.key);
       });
-      div.title = item.hint || "";
       libraryEl.appendChild(div);
     });
 
-    // drop onto canvas = add instance near cursor, snap to default target
     canvas.addEventListener("dragover", (e)=> e.preventDefault());
     canvas.addEventListener("drop", (e)=>{
       e.preventDefault();
       const key = e.dataTransfer.getData("text/plain");
       if(!key) return;
+
       addInstance(key);
     });
   }
 
-  function bandForMetric(val, warn, risk){
-    if(val>=risk) return {k:"crit", label:"Crítico", color:getCss("--r")};
-    if(val>=warn) return {k:"risk", label:"En riesgo", color:getCss("--o")};
-    if(val>0) return {k:"adj", label:"En ajuste", color:getCss("--y")};
-    return {k:"ok", label:"Estable", color:getCss("--g")};
-  }
-
-  function renderMetrics(){
-    const m = compute();
-    pCount.textContent = `Cargas activas: ${state.loads.length}`;
-
-    const T = DATA.thresholds;
-    const bV = bandForMetric(m.V, T.verticalWarn, T.verticalRisk);
-    const bH = bandForMetric(m.H, T.horizontalWarn, T.horizontalRisk);
-    const bM = bandForMetric(m.M, T.momentWarn, T.momentRisk);
-    const bD = bandForMetric(m.drift, T.driftWarn, T.driftRisk);
-
-    globalPill.textContent = `Global: ${m.global.label}`;
-
-    metricsEl.innerHTML = `
-      <h3>Indicadores</h3>
-      <div class="muted" style="line-height:1.6">
-        <b style="color:${bV.color}">Peso vertical:</b> ${m.V} &nbsp;·&nbsp;
-        <b style="color:${bH.color}">Fuerza horizontal:</b> ${m.H} &nbsp;·&nbsp;
-        <b style="color:${bM.color}">Momento:</b> ${m.M} &nbsp;·&nbsp;
-        <b style="color:${bD.color}">Deriva:</b> ${m.drift} &nbsp;·&nbsp;
-        <b class="${m.cracks>=6?'danger':''}">Fisuras:</b> ${m.cracks}
-      </div>
-      <div class="muted" style="margin-top:8px;font-size:13px;">
-        Stress (0–100): Cimiento ${m.stress.foundation} · Columna ${m.stress.column} · Viga ${m.stress.beam} · Nudo ${m.stress.joint} · Apoyo ${m.stress.roller}
-      </div>
-    `;
-
-    // recommendations
-    const R = DATA.texts.recommendations;
-    const list = (m.global.key==="high") ? R.high : (m.global.key==="mid2"||m.global.key==="mid1") ? R.mid : R.low;
-    recoEl.innerHTML = "<ul style='margin:0;padding-left:18px;line-height:1.45'>" + list.map(x=>`<li>${escapeHtml(x)}</li>`).join("") + "</ul>";
-  }
-
+  // ===== Loads table =====
   function renderRows(){
+    pLoads.textContent = `Cargas: ${state.loads.length}`;
     rowsEl.innerHTML = "";
-    const has = state.loads.length>0;
-    btnTxt.disabled = !has;
-    btnPdf.disabled = !has || !okPdfLib();
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
-
     state.loads.forEach(l=>{
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><b>${escapeHtml(l.label)}</b><div class="muted" style="font-size:12px;margin-top:4px">${escapeHtml(l.key)}</div></td>
-        <td><span class="tag">${escapeHtml(enumLabel(DATA.enums.direction,l.direction))}</span></td>
+        <td><span class="tag">${escapeHtml(l.direction)}</span></td>
         <td><b>${l.magnitude}</b></td>
-        <td><span class="tag">${escapeHtml(enumLabel(DATA.enums.targets, l.target))}</span></td>
+        <td><span class="tag">${escapeHtml(l.target)}</span></td>
         <td>
           <button class="ghost" style="padding:6px 10px;border-radius:10px;font-weight:900" data-t="${l.id}">
             ${l.transfer ? "Transferida ✅" : "No transferida ⚠️"}
@@ -700,62 +666,142 @@
       rowsEl.appendChild(tr);
     });
 
-    rowsEl.querySelectorAll("[data-del]").forEach(b=>{
-      b.addEventListener("click", ()=> deleteInstance(b.getAttribute("data-del")));
-    });
     rowsEl.querySelectorAll("[data-t]").forEach(b=>{
       b.addEventListener("click", ()=> toggleTransfer(b.getAttribute("data-t")));
     });
+    rowsEl.querySelectorAll("[data-del]").forEach(b=>{
+      b.addEventListener("click", ()=> deleteLoad(b.getAttribute("data-del")));
+    });
   }
 
-  function escapeHtml(str){
-    return String(str||"").replace(/[&<>"']/g, s => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[s]));
+  // ===== Result payload (igual Radar, pero incluye loads + captura) =====
+  function buildPayload(){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      notes: notesEl.value.trim() || ""
+    };
+
+    const sum = totalScore();
+    const g = globalBand(sum);
+
+    const sections = DATA.sections.map(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const level = levelByValue(v);
+      return {
+        id: sec.id,
+        title: sec.title,
+        levelValue: v,
+        levelKey: level.key,
+        levelLabel: level.label,
+        color: level.color,
+        verse: sec.verse,
+        focus: sec.diagnosticFocus || "",
+        miniTeaching: sec.miniTeaching || [],
+        actions: sec.actions || []
+      };
+    });
+
+    sections.sort((a,b)=> b.levelValue - a.levelValue);
+
+    const scenarioPng = canvas.toDataURL("image/png", 1.0);
+
+    return {
+      meta: DATA.meta,
+      header,
+      global: { sum, band: g },
+      sections,
+      loads: state.loads.slice(),
+      includeDetails: detailsEl.checked,
+      scenarioPng
+    };
   }
 
-  function render(){
-    drawScene();
-    renderMetrics();
-    renderRows();
+  function showResult(){
+    last = buildPayload();
+    const b = last.global.band;
+
+    const badge =
+      b.key==="g_alineado" ? "bG" :
+      b.key==="g_ajuste" ? "bY" :
+      b.key==="g_riesgo" ? "bO" : "bR";
+
+    resBox.style.display = "block";
+    resBox.innerHTML = `
+      <div class="row">
+        <div>
+          <span class="badge ${badge}">${escapeHtml(b.label)}</span>
+          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / ${DATA.sections.length*3}</div>
+          <div class="muted" style="margin-top:4px;font-size:13px;">${escapeHtml(b.summary)}</div>
+        </div>
+        <div class="pill">Cargas: ${last.loads.length}</div>
+      </div>
+      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
+        <div style="font-style:italic;">${escapeHtml(b.verse.quote)}</div>
+        <div class="muted" style="margin-top:6px;">(${escapeHtml(b.verse.reference)})</div>
+      </div>
+      <div class="muted" style="margin-top:10px;font-size:13px;">
+        Tip: si una carga está <b>no transferida</b>, su concentración se representa con el punto rojo en el token.
+      </div>
+    `;
+
+    btnTxt.disabled = false;
+    btnPdf.disabled = !okPdfLib();
+    pdfWarn.style.display = okPdfLib() ? "none" : "block";
   }
 
-  function buildTXT(){
-    const m = compute();
+  function downloadTXT(){
+    if(!last) return;
     const L = [];
-    L.push((DATA.meta.title||"SIMULADOR DE CARGAS").toUpperCase());
+    L.push(last.meta.title.toUpperCase());
     L.push("");
-    L.push(`Paciente: ${patientEl.value || "(no especificado)"}`);
-    L.push(`Auditor: ${auditorEl.value || "(no especificado)"}`);
-    L.push(`Fecha: ${dateEl.value || "(no especificada)"}`);
+    L.push("DATOS");
+    L.push(`Paciente: ${last.header.patient}`);
+    L.push(`Auditor: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
     L.push("");
-    L.push("INDICADORES");
-    L.push(`Global: ${m.global.label}`);
-    L.push(`Peso vertical: ${m.V}`);
-    L.push(`Fuerza horizontal: ${m.H}`);
-    L.push(`Momento: ${m.M}`);
-    L.push(`Deriva: ${m.drift}`);
-    L.push(`Fisuras: ${m.cracks}`);
+    L.push("RESULTADO GLOBAL");
+    L.push(`Puntaje: ${last.global.sum}/${DATA.sections.length*3}`);
+    L.push(`Diagnóstico: ${last.global.band.label}`);
+    L.push(last.global.band.summary);
+    L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
     L.push("");
-    L.push("CARGAS ACTIVAS");
+
+    L.push("ENFOQUE POR SECCIONES");
     L.push("--------------------------------------------------");
-    state.loads.forEach(l=>{
-      L.push(`- ${l.label} (${l.key})`);
-      L.push(`  Dirección: ${enumLabel(DATA.enums.direction,l.direction)} | Magnitud: ${l.magnitude}`);
-      L.push(`  Destino: ${enumLabel(DATA.enums.targets,l.target)} | Transferencia: ${l.transfer ? "Transferida" : "No transferida"}`);
+    last.sections.slice().reverse().forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+      L.push(`Enfoque: ${s.focus}`);
+      L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+      if(last.includeDetails){
+        if(s.miniTeaching?.length){
+          L.push("Mini-enseñanza:");
+          s.miniTeaching.forEach(x=> L.push("• "+x));
+        }
+        if(s.actions?.length){
+          L.push("Acciones sugeridas:");
+          s.actions.forEach(x=> L.push("• "+x));
+        }
+      }
       L.push("");
     });
-    L.push("OBSERVACIONES");
-    L.push(notesEl.value || "(sin observaciones)");
-    return L.join("\n");
-  }
 
-  function downloadTxt(){
-    const txt = buildTXT();
-    const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
+    L.push("CARGAS ACTIVAS (SIMULACIÓN)");
+    L.push("--------------------------------------------------");
+    last.loads.forEach(l=>{
+      L.push(`- ${l.label} (${l.key})`);
+      L.push(`  Dirección: ${l.direction} | Magnitud: ${l.magnitude}`);
+      L.push(`  Destino: ${l.target} | Transferencia: ${l.transfer ? "Transferida" : "No transferida"}`);
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "simulador_cargas.txt";
+    a.download = "simulador_portico.txt";
     a.click();
     URL.revokeObjectURL(a.href);
   }
@@ -774,14 +820,24 @@
     }catch(e){ return null; }
   }
 
+  function levelColor(label){
+    const s = (label||"").toLowerCase();
+    if(s.includes("aline")) return [16,185,129];
+    if(s.includes("ajus")) return [245,158,11];
+    if(s.includes("ries")) return [249,115,22];
+    return [244,63,94];
+  }
+
   function safeName(name){
-    return (name||"simulador")
-      .toLowerCase().replace(/\s+/g,"_")
+    return (name||"simulador_portico")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
       .replace(/[^a-z0-9_\-]/g,"")
       .slice(0,60);
   }
 
-  async function downloadPdf(){
+  async function downloadPDF(){
+    if(!last) return;
     if(!okPdfLib()){
       pdfWarn.style.display="block";
       return;
@@ -789,20 +845,27 @@
     if(logoDataUrl===null) logoDataUrl = await loadLogo();
 
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({unit:"pt", format:"letter"});
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
     const W = doc.internal.pageSize.getWidth();
     const H = doc.internal.pageSize.getHeight();
     const M = 44;
 
-    const m = compute();
-    const scenarioImg = canvas.toDataURL("image/png", 1.0);
-
-    const INK = [22,33,58];
-    const MUTED = [90,102,130];
+    const COLORS = { ink:[22,33,58], muted:[90,102,130] };
 
     function addLogo(x,y,w,h){
       if(!logoDataUrl) return;
       try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(){
+      addLogo(M, 16, 34, 34);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Simulador de Cargas — Laboratorio", W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
     }
 
     function footer(){
@@ -811,117 +874,244 @@
         doc.setPage(i);
         doc.setFont("helvetica","normal");
         doc.setFontSize(9);
-        doc.setTextColor(...MUTED);
-        doc.text("Simulador de Cargas del Hogar — Laboratorio", M, H-18);
+        doc.setTextColor(...COLORS.muted);
+        doc.text("Constructores del Reino — Simulación del Hogar", M, H-18);
         doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
       }
     }
 
-    // portada
+    // PORTADA
     doc.setFillColor(22,33,58);
     doc.rect(0,0,W,96,"F");
-    addLogo(W-M-56, 18, 56, 56);
+    addLogo(W - M - 56, 18, 56, 56);
 
     doc.setFont("helvetica","bold");
     doc.setFontSize(20);
     doc.setTextColor(255,255,255);
     doc.text("SIMULADOR DE CARGAS DEL HOGAR", M, 52);
+
     doc.setFont("helvetica","normal");
     doc.setFontSize(12);
     doc.setTextColor(210,230,255);
-    doc.text("Captura del escenario + indicadores + listado", M, 74);
+    doc.text("Captura del escenario + diagnóstico por secciones + cargas", M, 74);
 
     // datos
     doc.setFillColor(245,247,255);
     doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
-    doc.setTextColor(...INK);
+    doc.setTextColor(...COLORS.ink);
     doc.setFont("helvetica","bold");
     doc.setFontSize(12);
-    doc.text("Datos", M+14, 145);
+    doc.text("Datos de auditoría", M+14, 145);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    doc.text(`Paciente: ${patientEl.value || "(no especificado)"}`, M+14, 172);
-    doc.text(`Auditor: ${auditorEl.value || "(no especificado)"}`, M+14, 192);
-    doc.text(`Fecha: ${dateEl.value || "(no especificada)"}`, M+14, 212);
+    doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
+    doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Fecha: ${last.header.date}`, M+14, 212);
 
-    // indicadores
+    // global
+    const band = last.global.band;
+    const c = levelColor(band.label);
+
     doc.setFillColor(255,255,255);
-    doc.roundedRect(M, 255, W-M*2, 90, 12, 12, "F");
+    doc.roundedRect(M, 255, W-M*2, 160, 12, 12, "F");
+
     doc.setFont("helvetica","bold");
     doc.setFontSize(12);
-    doc.setTextColor(...INK);
-    doc.text(`Global: ${m.global.label}`, M+14, 282);
+    doc.setTextColor(...COLORS.ink);
+    doc.text(`Diagnóstico global: ${band.label}`, M+14, 286);
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    doc.text(`V=${m.V}  H=${m.H}  Momento=${m.M}  Deriva=${m.drift}  Fisuras=${m.cracks}`, M+14, 306);
+    doc.text(`Puntaje: ${last.global.sum}/${DATA.sections.length*3}`, M+14, 308);
 
-    // escenario (imagen)
+    doc.setFillColor(...c);
+    doc.roundedRect(M+14, 322, 220, 24, 12, 12, "F");
+    doc.setTextColor(255,255,255);
     doc.setFont("helvetica","bold");
-    doc.setFontSize(12);
-    doc.setTextColor(...INK);
-    doc.text("Captura del escenario", M, 372);
+    doc.setFontSize(10);
+    doc.text(band.label.toUpperCase(), M+14 + 110, 339, {align:"center"});
+
+    doc.setTextColor(...COLORS.ink);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(doc.splitTextToSize(band.summary, W-M*2-28), M+14, 366);
+
+    // Captura escenario
+    doc.addPage();
+    let y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Captura del escenario (canvas)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 16;
 
     const imgW = W - M*2;
     const imgH = imgW * (canvas.height / canvas.width);
-    doc.addImage(scenarioImg, "PNG", M, 385, imgW, Math.min(imgH, 320));
+    doc.addImage(last.scenarioPng, "PNG", M, y, imgW, Math.min(imgH, 420));
 
-    // tabla cargas
+    // Tabla secciones
     doc.addPage();
-    addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-    doc.text("Listado de cargas activas", M, 64);
-    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+    y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico por secciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const rows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      String(s.levelValue),
+      `${s.verse.quote} (${s.verse.reference})`
+    ]);
 
     doc.autoTable({
-      startY: 90,
-      head: [["Carga", "Dir.", "Mag", "Destino", "Transferencia"]],
-      body: state.loads.map(l=>[
-        l.label,
-        enumLabel(DATA.enums.direction, l.direction),
-        String(l.magnitude),
-        enumLabel(DATA.enums.targets, l.target),
-        l.transfer ? "Transferida" : "No transferida"
-      ]),
-      theme:"grid",
-      styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
-      headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
-      margin:{left:M, right:M}
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: rows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: {left:M, right:M}
     });
 
-    // observaciones
+    // Detalle + cargas
     doc.addPage();
-    addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-    doc.text("Observaciones", M, 64);
-    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+    y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Cargas activas (simulación)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    doc.autoTable({
+      startY: y,
+      head: [["Carga", "Dir", "Mag", "Destino", "Transferencia"]],
+      body: last.loads.map(l=>[
+        l.label,
+        l.direction,
+        String(l.magnitude),
+        l.target,
+        l.transfer ? "Transferida" : "No transferida"
+      ]),
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      margin: {left:M, right:M}
+    });
+
+    if(last.includeDetails){
+      doc.addPage();
+      y = header();
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Guía pastoral por secciones (detalle)", M, y);
+      y += 12;
+      doc.setDrawColor(230);
+      doc.line(M, y, W-M, y);
+      y += 12;
+
+      const pRows = last.sections.slice().reverse().map(s=>[
+        s.title,
+        s.levelLabel,
+        (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+        (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+      ]);
+
+      doc.autoTable({
+        startY: y,
+        head: [["Sección", "Diagnóstico", "Mini-enseñanza", "Acciones sugeridas"]],
+        body: pRows,
+        theme: "grid",
+        styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+        headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+        didParseCell: function(data){
+          if(data.section==="body" && data.column.index===1){
+            const v = data.cell.raw || "";
+            const cc = levelColor(v);
+            data.cell.styles.fillColor = cc;
+            data.cell.styles.textColor = [255,255,255];
+            data.cell.styles.fontStyle = "bold";
+          }
+        },
+        margin: {left:M, right:M}
+      });
+    }
+
+    // Observaciones
+    doc.addPage();
+    y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Observaciones del auditor", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
 
     doc.setFillColor(255,255,255);
-    doc.roundedRect(M, 96, W-M*2, 520, 12, 12, "F");
-    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
-    const notes = notesEl.value || "(sin observaciones)";
-    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, 122);
+    doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const notes = last.header.notes || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
 
     footer();
-    doc.save(`${safeName(patientEl.value||"hogar")}_simulador.pdf`);
+
+    const name = safeName(last.header.patient || "simulador_portico");
+    doc.save(`${name}_simulador_portico.pdf`);
+  }
+
+  function resetAll(){
+    DATA.sections.forEach(s=> scores[s.id]=0);
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      if(i.value==="0") i.checked=true;
+      else i.checked=false;
+    });
+    document.querySelectorAll('[id^="pill_"]').forEach(p=> p.textContent="Alineado");
+
+    state.loads = [];
+    save();
+
+    updateLive();
+    renderRows();
+    draw();
+
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled=true;
+    btnPdf.disabled=true;
+    last=null;
+    window.scrollTo({top:0, behavior:"smooth"});
   }
 
   function clearLoads(){
     if(!confirm("¿Quitar todas las cargas del escenario?")) return;
     state.loads = [];
     save();
-    render();
-  }
-
-  function resetAll(){
-    if(!confirm("¿Borrar TODO (cabecera + cargas guardadas)?")) return;
-    localStorage.removeItem(STORAGE_KEY);
-    state.header = {patient:"",auditor:"",date:"",notes:""};
-    state.loads = [];
-    fillHeaderUI();
-    setDefaultDateIfEmpty();
-    save();
-    render();
+    renderRows();
+    draw();
   }
 
   async function init(){
@@ -930,34 +1120,30 @@
       if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
       DATA = await res.json();
 
-      tEl.textContent = DATA.meta.title || "Simulador de Cargas";
-      dEl.textContent = DATA.meta.description || "";
-      libHintEl.textContent = "Arrastra una carga hacia el pórtico. Luego puedes moverla y cambiar si está transferida o no.";
-
-      tipsEl.innerHTML = "";
-      (DATA.texts.notes||[]).forEach(x=>{
-        const li = document.createElement("li");
-        li.textContent = x;
-        tipsEl.appendChild(li);
-      });
+      document.getElementById("t").textContent = DATA.meta.title || "Simulador de Cargas";
+      document.getElementById("d").textContent = DATA.meta.description || "";
 
       setDefaultDateIfEmpty();
       loadLocal();
       fillHeaderUI();
-      if(!dateEl.value) setDefaultDateIfEmpty();
 
+      renderForm();
       renderLibrary();
-      pdfWarn.style.display = okPdfLib() ? "none" : "block";
-      render();
+      renderRows();
+      draw();
 
+      btnPdf.disabled = !okPdfLib();
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
     }catch(e){
-      document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${e.message}<br><span style="color:#a7b4d6">Asegúrate de que ${JSON_PATH} esté en la misma carpeta.</span></div>`;
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+      <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>`;
     }
   }
 
   // events
-  document.getElementById("btnTxt").addEventListener("click", downloadTxt);
-  document.getElementById("btnPdf").addEventListener("click", downloadPdf);
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
   document.getElementById("btnClear").addEventListener("click", clearLoads);
   document.getElementById("btnReset").addEventListener("click", resetAll);
 

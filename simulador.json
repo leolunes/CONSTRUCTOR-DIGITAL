@@ -1,53 +1,188 @@
 {
   "meta": {
-    "title": "Simulador de Cargas del Hogar — Laboratorio",
-    "description": "Arrastra cargas al pórtico (viga/columna/nudo/cimiento/apoyo) y observa transferencia, momentos, deriva y fisuras. Sin servidor."
+    "title": "Simulador de Cargas del Hogar — Laboratorio (Modelo Pórtico)",
+    "description": "Laboratorio visual: arrastra cargas al pórtico (viga/columna/nudo/cimiento/apoyo). Evalúa tensiones (0–3), transferencia y genera reporte (TXT/PDF)."
   },
-  "enums": {
-    "targets": [
-      { "key": "beam", "label": "Viga (Mujer)" },
-      { "key": "column", "label": "Columna (Varón)" },
-      { "key": "joint", "label": "Nudo (Congregación)" },
-      { "key": "foundation", "label": "Cimiento (Cristo)" },
-      { "key": "roller", "label": "Apoyo móvil (Espíritu Santo)" }
-    ],
-    "direction": [
-      { "key": "vertical", "label": "Vertical (peso/responsabilidad)" },
-      { "key": "horizontal", "label": "Horizontal (tensión/presión)" }
-    ]
-  },
-  "thresholds": {
-    "verticalWarn": 35,
-    "verticalRisk": 55,
-    "horizontalWarn": 18,
-    "horizontalRisk": 28,
-    "momentWarn": 220,
-    "momentRisk": 340,
-    "driftWarn": 22,
-    "driftRisk": 35
-  },
-  "texts": {
-    "notes": [
-      "Transferida = la carga baja por el diseño (viga→columna→cimiento / apoyo móvil sostiene).",
-      "No transferida = se concentra en el elemento y aumenta momento/deriva/fisura."
-    ],
-    "recommendations": {
-      "low": [
-        "Mantener hábitos: altar, acuerdos cortos, descanso santo.",
-        "Registrar cargas solo si cambian (no ruido)."
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Escenario estable",
+      "min": 0,
+      "max": 4,
+      "summary": "El sistema está funcionando con estabilidad pedagógica. Mantener hábitos y distribución de cargas.",
+      "verse": {
+        "quote": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+        "reference": "Salmo 127:1 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Escenario en ajuste",
+      "min": 5,
+      "max": 8,
+      "summary": "Hay tensiones visibles. Ajustar transferencia y reforzar el nudo antes de que aparezca desgaste.",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Escenario en riesgo",
+      "min": 9,
+      "max": 13,
+      "summary": "La carga se está concentrando o hay fuerzas horizontales sin contención. Reforzar comunión, acuerdos y descanso.",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Escenario crítico (requiere proceso)",
+      "min": 14,
+      "max": 18,
+      "summary": "No es corrección rápida: es proceso. Bajar presión, ordenar prioridades, acompañamiento pastoral y restauración.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "comunion",
+      "title": "1. Comunión (Columna ↔ Cimiento)",
+      "node": "N1",
+      "element": "foundation",
+      "diagnosticFocus": "¿El fundamento está activo (Cristo) o el sistema opera por esfuerzo humano?",
+      "verse": {
+        "quote": "Permaneced en mí, y yo en vosotros.",
+        "reference": "Juan 15:4 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Sin comunión, todo pesa más.",
+        "El fundamento no se reemplaza con técnica.",
+        "El altar no es ritual: es anclaje real."
       ],
-      "mid": [
-        "Ajustar transferencia: nombrar cargas sin culpa y asignarlas.",
-        "Reforzar nudo: culto del hogar + acuerdos claros.",
-        "Pausar reactividad: oración antes de hablar."
+      "actions": [
+        "10–15 min diarios: Palabra + oración.",
+        "Identificar 1 ansiedad y entregarla a Cristo.",
+        "Cortar una distracción que roba altar."
+      ]
+    },
+    {
+      "id": "columna",
+      "title": "2. Columna (Varón: verticalidad y transmisión)",
+      "node": "COL",
+      "element": "column",
+      "diagnosticFocus": "¿Hay verticalidad (dirección) o inclinación (evasión / autosuficiencia)?",
+      "verse": {
+        "quote": "Esforzaos y cobrad ánimo... Jehová tu Dios es el que va contigo.",
+        "reference": "Deuteronomio 31:6 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La columna sostiene y alinea (no domina).",
+        "Si la columna no transmite, la viga se sobrecarga.",
+        "La verticalidad es orientación, no perfección."
       ],
-      "high": [
-        "Reducir presión: no sumar exigencias, ordenar prioridades.",
-        "Proceso pastoral: acompañamiento, restauración, límites sanos.",
-        "Cimiento primero: rendición real, luego acuerdos."
+      "actions": [
+        "Asumir una responsabilidad concreta esta semana.",
+        "Pedir perdón por una omisión (si aplica).",
+        "Definir un límite sano: menos reacción, más dirección."
+      ]
+    },
+    {
+      "id": "congregacion",
+      "title": "3. Congregación (Nudo: unión y pacto)",
+      "node": "N2",
+      "element": "joint",
+      "diagnosticFocus": "¿El nudo está firme (culto, honra, acuerdos) o suelto (desconexión)?",
+      "verse": {
+        "quote": "Donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.",
+        "reference": "Mateo 18:20 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El nudo recibe fuerzas horizontales primero.",
+        "Sin nudo firme, aparece fisura por repetición.",
+        "Congregación del hogar = unión real diaria."
+      ],
+      "actions": [
+        "Hacer 1 culto en casa (20–30 min).",
+        "Un acuerdo corto por escrito (simple y medible).",
+        "Honra mutua diaria: 1 reconocimiento."
+      ]
+    },
+    {
+      "id": "viga",
+      "title": "4. Viga (Mujer: sensibilidad y transferencia)",
+      "node": "BEAM",
+      "element": "beam",
+      "diagnosticFocus": "¿La viga transfiere o está cargando sola (sobrecarga emocional/mental)?",
+      "verse": {
+        "quote": "Mejor son dos que uno... si cayeren, el uno levantará a su compañero.",
+        "reference": "Eclesiastés 4:9–10 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La viga percibe primero: es diseño.",
+        "No fue diseñada para sostener sola: fue diseñada para transferir.",
+        "Sobrecarga constante = agotamiento y fisura."
+      ],
+      "actions": [
+        "Nombrar 1 carga que estás sosteniendo sola.",
+        "Transferirla con una petición clara.",
+        "Pausa + oración antes de reaccionar."
+      ]
+    },
+    {
+      "id": "interseccion",
+      "title": "5. Intersección (Apoyo móvil: reposo y sostén)",
+      "node": "N3",
+      "element": "roller",
+      "diagnosticFocus": "¿Hay sostén con libertad (reposo) o rigidez/abandono que fisura?",
+      "verse": {
+        "quote": "El Espíritu nos ayuda en nuestra debilidad... intercede por nosotros.",
+        "reference": "Romanos 8:26 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El apoyo móvil sostiene sin aprisionar.",
+        "La rigidez excesiva genera grietas.",
+        "El reposo santo reduce deriva."
+      ],
+      "actions": [
+        "Practicar ‘descanso santo’ (pausa antes de responder).",
+        "Cambiar control por intercesión (orar antes de exigir).",
+        "Bloquear un espacio semanal de reposo emocional."
+      ]
+    },
+    {
+      "id": "cargas",
+      "title": "6. Cargas (verticales/horizontales) + Transferencia",
+      "node": "LOAD",
+      "element": "loads",
+      "diagnosticFocus": "¿Se distribuyen las cargas o se concentran (no transferidas) generando momento y fisura?",
+      "verse": {
+        "quote": "Bástate mi gracia; porque mi poder se perfecciona en la debilidad.",
+        "reference": "2 Corintios 12:9 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Vertical = peso/responsabilidad. Horizontal = presión/tensión.",
+        "No transferida = concentración de esfuerzo.",
+        "Transferencia correcta baja momento y deriva."
+      ],
+      "actions": [
+        "Listar 3–7 cargas reales (no ruido).",
+        "Marcar cuáles NO se están transfiriendo.",
+        "Definir 1 paso de transferencia por carga crítica."
       ]
     }
-  },
+  ],
   "loadsLibrary": [
     {
       "key": "finanzas",
@@ -79,7 +214,7 @@
       "direction": "horizontal",
       "magnitude": 9,
       "defaultTarget": "beam",
-      "hint": "Evento sísmico: decisiones rápidas, presión, miedo."
+      "hint": "Evento tipo sísmico: presión rápida, miedo, urgencia."
     },
     {
       "key": "hijos",
@@ -95,7 +230,7 @@
       "direction": "horizontal",
       "magnitude": 6,
       "defaultTarget": "column",
-      "hint": "Deriva: evita conversación, no transmite al fundamento."
+      "hint": "Deriva por no hablar: no transmite al fundamento."
     },
     {
       "key": "sin_altar",
@@ -103,11 +238,11 @@
       "direction": "vertical",
       "magnitude": 8,
       "defaultTarget": "foundation",
-      "hint": "Cuando el cimiento no es activado, todo pesa más."
+      "hint": "Si el cimiento no está activo, todo pesa más."
     },
     {
-      "key": "control",
-      "label": "Control / rigidez",
+      "key": "rigidez",
+      "label": "Rigidez / control",
       "direction": "horizontal",
       "magnitude": 7,
       "defaultTarget": "roller",
