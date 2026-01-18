@@ -1,138 +1,635 @@
 {
   "meta": {
-    "title": "Simulador de Deriva — Efecto P–Δ (Hogar como Pórtico)",
-    "description": "Una desalineación pequeña puede amplificar el peso. Este simulador traduce el fenómeno P–Δ a lenguaje espiritual (equilibrio, anclaje, nudo y apoyo)."
+    "title": "Simulador de Deriva — Radar del Pórtico (P–Δ espiritual)",
+    "description": "Diagnóstico por criterios (Anclaje, Nudo, Apoyo, Carga P, Deriva Δ) con radar visual, mini-enseñanzas automáticas y PDF bonito con logo."
   },
+  "scale": {
+    "name": "0–20 por pregunta",
+    "options": [
+      { "value": 0, "label": "0 — No existe" },
+      { "value": 5, "label": "5 — Muy débil / ocasional" },
+      { "value": 10, "label": "10 — Presente pero inestable" },
+      { "value": 15, "label": "15 — Estable pero inconsistente" },
+      { "value": 20, "label": "20 — Firme y funcional" }
+    ]
+  },
+  "porticoAxes": [
+    { "id": "anclaje", "label": "Anclaje (Comunión)" },
+    { "id": "nudo", "label": "Nudo (Congregación)" },
+    { "id": "apoyo", "label": "Apoyo (Intersección)" },
+    { "id": "carga", "label": "Carga P" },
+    { "id": "deriva", "label": "Deriva Δ" }
+  ],
   "verses": {
     "base": {
       "quote": "El que oye estas palabras mías y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca.",
       "reference": "Mateo 7:24 (RVR1960)"
-    },
-    "alineacion": {
-      "quote": "Reconócelo en todos tus caminos, y él enderezará tus veredas.",
-      "reference": "Proverbios 3:6 (RVR1960)"
-    },
-    "ansiedad": {
-      "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
-      "reference": "1 Pedro 5:7 (RVR1960)"
-    },
-    "paz": {
-      "quote": "Y la paz de Dios... guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.",
-      "reference": "Filipenses 4:7 (RVR1960)"
-    },
-    "restauracion": {
-      "quote": "Vuélveme el gozo de tu salvación, y espíritu noble me sustente.",
-      "reference": "Salmo 51:12 (RVR1960)"
     }
   },
   "model": {
-    "notes": "Modelo pedagógico: P_eff = P + P*(Δ/100)*k. k baja con anclaje, nudo y apoyo móvil. No es ingeniería real: es herramienta espiritual.",
-    "kWeights": {
-      "anclaje": 0.45,
-      "nudo": 0.35,
-      "apoyo": 0.20
-    },
+    "notes": "Modelo pedagógico: P_eff = P + P*(Δ/100)*k. k baja cuando anclaje/nudo/apoyo suben. Δ se estima como (scoreDeriva*0.3) para mapear 0–100 → 0–30%.",
+    "kWeights": { "anclaje": 0.45, "nudo": 0.35, "apoyo": 0.2 },
     "kMin": 0.35,
-    "kMax": 1.35
+    "kMax": 1.35,
+    "deltaMapFactor": 0.3
   },
-  "bands": [
+  "globalBandsByAmplificationPct": [
     {
-      "key": "estable",
+      "key": "g_estable",
       "label": "Estable (peso gobernable)",
       "minPct": 0,
       "maxPct": 15,
-      "summary": "El sistema está respondiendo bien. Hay carga, pero no se multiplica por desalineación. Mantén hábitos de mantenimiento.",
+      "summary": "Hay carga, pero no se está multiplicando por deriva. Mantén el diseño: anclaje, nudo y apoyo.",
       "verse": {
         "quote": "Y él es antes de todas las cosas, y todas las cosas en él subsisten.",
         "reference": "Colosenses 1:17 (RVR1960)"
-      },
-      "focus": [
-        "Mantenimiento semanal fijo",
-        "Congregación del hogar (culto efectivo)",
-        "Cargas compartidas y transferidas"
-      ]
+      }
     },
     {
-      "key": "ajuste",
+      "key": "g_ajuste",
       "label": "En ajuste (deriva moderada)",
       "minPct": 15,
       "maxPct": 35,
-      "summary": "El peso se está amplificando. No es falta de amor: es necesidad de alineación. Ajusta antes de que aparezcan fisuras.",
+      "summary": "El peso se está amplificando. No es falta de amor; es necesidad de alineación.",
       "verse": {
-        "quote": "Me mostrarás la senda de la vida; en tu presencia hay plenitud de gozo.",
-        "reference": "Salmo 16:11 (RVR1960)"
-      },
-      "focus": [
-        "Volver al altar (comunión)",
-        "Reducir reacciones impulsivas",
-        "Asegurar el nudo (acuerdos cortos)"
-      ]
+        "quote": "Reconócelo en todos tus caminos, y él enderezará tus veredas.",
+        "reference": "Proverbios 3:6 (RVR1960)"
+      }
     },
     {
-      "key": "riesgo",
+      "key": "g_riesgo",
       "label": "En riesgo (P–Δ activo)",
       "minPct": 35,
       "maxPct": 60,
-      "summary": "El sistema está en fatiga. La desalineación hace que todo pese más. Requiere proceso guiado y restauración por secciones.",
+      "summary": "El sistema muestra fatiga. Requiere proceso, redistribución de cargas y fortalecimiento por secciones.",
       "verse": {
         "quote": "Fortaleced las manos cansadas, afirmad las rodillas débiles.",
         "reference": "Hebreos 12:12 (RVR1960)"
-      },
-      "focus": [
-        "Plan semanal obligatorio (7 días)",
-        "Reforzar anclaje y apoyo móvil",
-        "Redistribuir cargas ya"
-      ]
+      }
     },
     {
-      "key": "critico",
-      "label": "Crítico (riesgo de colapso)",
+      "key": "g_critico",
+      "label": "Crítico (requiere proceso, no corrección)",
       "minPct": 60,
-      "maxPct": 1000,
-      "summary": "No es momento de corrección; es momento de contención y proceso. El peso percibido ya está fuera de rango. Requiere acompañamiento pastoral.",
+      "maxPct": 9999,
+      "summary": "No es tiempo de corrección sino de contención y acompañamiento. La carga percibida está fuera de rango.",
       "verse": {
         "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare.",
         "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "criteria": [
+    {
+      "id": "anclaje",
+      "title": "Anclaje",
+      "subtitle": "Comunión al Cimiento (Cristo)",
+      "diagnosticFocus": "Transferencia de cargas al fundamento",
+      "sectionVerse": {
+        "quote": "Permaneced en mí, y yo en vosotros.",
+        "reference": "Juan 15:4 (RVR1960)"
       },
-      "focus": [
-        "Acompañamiento (no aislamiento)",
-        "Pausar decisiones grandes 7 días",
-        "Restaurar altar + nudo + apoyo"
+      "questions": [
+        { "id": "anclaje_q1", "text": "¿Existe un tiempo real y constante de comunión con Dios (no solo ocasional)?" },
+        { "id": "anclaje_q2", "text": "¿Las decisiones importantes se llevan primero a la oración?" },
+        { "id": "anclaje_q3", "text": "¿La Palabra gobierna las decisiones del hogar o solo se cita?" },
+        { "id": "anclaje_q4", "text": "¿En crisis, el hogar corre a Dios antes que a soluciones humanas?" },
+        { "id": "anclaje_q5", "text": "¿Cristo es fundamento activo (obediencia), no solo doctrinal?" }
+      ],
+      "bands": [
+        {
+          "key": "critico",
+          "label": "Crítico (desanclado)",
+          "min": 0,
+          "max": 30,
+          "miniTeaching": {
+            "title": "Sin anclaje, todo pesa más",
+            "text": [
+              "El problema no es la carga: es la ausencia de transferencia al fundamento.",
+              "El altar no es ritual: es anclaje real."
+            ],
+            "verse": {
+              "quote": "Separados de mí nada podéis hacer.",
+              "reference": "Juan 15:5 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: 10–15 min altar (rendición).",
+              "Día 2: orar antes de una decisión pequeña.",
+              "Día 3: confesar un área de autosuficiencia.",
+              "Día 4: lectura breve + obediencia práctica.",
+              "Día 5: pedir ayuda (mentoría).",
+              "Día 6: culto efectivo (20 min).",
+              "Día 7: repetir auditoría solo de Anclaje."
+            ]
+          }
+        },
+        {
+          "key": "ajuste",
+          "label": "En ajuste",
+          "min": 31,
+          "max": 60,
+          "miniTeaching": {
+            "title": "El altar existe, pero no gobierna",
+            "text": [
+              "Hay comunión, pero aún no es el centro de decisión.",
+              "La estabilidad crece cuando la obediencia se vuelve hábito."
+            ],
+            "verse": {
+              "quote": "Encomienda a Jehová tu camino, y confía en él; y él hará.",
+              "reference": "Salmo 37:5 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: oración breve antes de hablar de un tema difícil.",
+              "Día 2: 1 decisión guiada por Palabra.",
+              "Día 3: agradecer (gratitud) en altar.",
+              "Día 4: ajustar hábito (hora fija).",
+              "Día 5: cerrar el día con rendición.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisar avance."
+            ]
+          }
+        },
+        {
+          "key": "estable",
+          "label": "Estable",
+          "min": 61,
+          "max": 100,
+          "miniTeaching": {
+            "title": "Anclaje funcional",
+            "text": [
+              "La carga se transfiere al fundamento y no se queda en el alma.",
+              "El altar sostiene el sistema en temporadas pesadas."
+            ],
+            "verse": {
+              "quote": "Jehová es mi roca y mi castillo.",
+              "reference": "Salmo 18:2 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: mantener altar 10 min.",
+              "Día 2: decisión en oración.",
+              "Día 3: culto breve.",
+              "Día 4: agradecimiento.",
+              "Día 5: obediencia práctica.",
+              "Día 6: culto efectivo.",
+              "Día 7: mantenimiento."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "nudo",
+      "title": "Nudo",
+      "subtitle": "Congregación efectiva (columna–viga)",
+      "diagnosticFocus": "Unión crítica donde atacan fuerzas horizontales",
+      "sectionVerse": {
+        "quote": "Mejores son dos que uno; porque tienen mejor paga de su trabajo.",
+        "reference": "Eclesiastés 4:9 (RVR1960)"
+      },
+      "questions": [
+        { "id": "nudo_q1", "text": "¿Existe un espacio real de diálogo espiritual en el hogar?" },
+        { "id": "nudo_q2", "text": "¿Las diferencias se procesan juntos o se evitan?" },
+        { "id": "nudo_q3", "text": "¿Hay acuerdos claros sobre fe, valores y dirección del hogar?" },
+        { "id": "nudo_q4", "text": "¿Se ora juntos cuando hay tensión?" },
+        { "id": "nudo_q5", "text": "¿La relación une o cada uno opera como elemento independiente?" }
+      ],
+      "bands": [
+        {
+          "key": "critico",
+          "label": "Crítico (nudo fracturado)",
+          "min": 0,
+          "max": 30,
+          "miniTeaching": {
+            "title": "Donde no hay nudo, la fuerza horizontal separa",
+            "text": [
+              "Sin acuerdos, la tensión se concentra y rompe.",
+              "Primero se restaura conversación segura; luego se corrige."
+            ],
+            "verse": {
+              "quote": "La blanda respuesta quita la ira; mas la palabra áspera hace subir el furor.",
+              "reference": "Proverbios 15:1 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: acuerdo de seguridad (sin gritos/insultos).",
+              "Día 2: 10 min diálogo con regla: 1 tema.",
+              "Día 3: oración corta juntos.",
+              "Día 4: 1 acuerdo escrito.",
+              "Día 5: honra (reconocer 1 esfuerzo).",
+              "Día 6: culto efectivo.",
+              "Día 7: revisar nudo."
+            ]
+          }
+        },
+        {
+          "key": "ajuste",
+          "label": "En ajuste",
+          "min": 31,
+          "max": 60,
+          "miniTeaching": {
+            "title": "El nudo sostiene, pero se afloja con tensión",
+            "text": [
+              "Hay comunicación, pero falta consistencia en acuerdos.",
+              "El nudo se fortalece con rituales simples y constantes."
+            ],
+            "verse": {
+              "quote": "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.",
+              "reference": "Colosenses 3:14 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: 1 acuerdo corto.",
+              "Día 2: 10 min conversación sin acusar.",
+              "Día 3: orar juntos por una carga.",
+              "Día 4: repetir acuerdo.",
+              "Día 5: ajuste de expectativas.",
+              "Día 6: culto efectivo.",
+              "Día 7: mantenimiento."
+            ]
+          }
+        },
+        {
+          "key": "estable",
+          "label": "Estable",
+          "min": 61,
+          "max": 100,
+          "miniTeaching": {
+            "title": "Nudo funcional",
+            "text": [
+              "La tensión no separa: se procesa y se traduce en acuerdos.",
+              "El hogar camina como un solo sistema."
+            ],
+            "verse": {
+              "quote": "Cordón de tres dobleces no se rompe pronto.",
+              "reference": "Eclesiastés 4:12 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: mantenimiento.",
+              "Día 2: conversación breve.",
+              "Día 3: oración conjunta.",
+              "Día 4: ajuste.",
+              "Día 5: honra.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisión."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "apoyo",
+      "title": "Apoyo móvil",
+      "subtitle": "Intersección (reposo y ajuste por el Espíritu Santo)",
+      "diagnosticFocus": "Movimiento sin ruptura: sostener sin aprisionar",
+      "sectionVerse": {
+        "quote": "Y yo rogaré al Padre, y os dará otro Consolador, para que esté con vosotros para siempre.",
+        "reference": "Juan 14:16 (RVR1960)"
+      },
+      "questions": [
+        { "id": "apoyo_q1", "text": "¿El hogar sabe detenerse antes de reaccionar?" },
+        { "id": "apoyo_q2", "text": "¿Se permite el ajuste sin rigidez ni control?" },
+        { "id": "apoyo_q3", "text": "¿Hay descanso emocional real en la relación?" },
+        { "id": "apoyo_q4", "text": "¿Se discierne cuándo hablar y cuándo callar?" },
+        { "id": "apoyo_q5", "text": "¿Se consulta al Espíritu para el timing, no solo para el contenido?" }
+      ],
+      "bands": [
+        {
+          "key": "critico",
+          "label": "Crítico (sin reposo)",
+          "min": 0,
+          "max": 30,
+          "miniTeaching": {
+            "title": "Sin apoyo, la viga se fisura por tensión acumulada",
+            "text": [
+              "No todo se resuelve hablando más.",
+              "El reposo con dirección evita colapso."
+            ],
+            "verse": {
+              "quote": "Estad quietos, y conoced que yo soy Dios.",
+              "reference": "Salmo 46:10 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: pausa (no discutir en caliente).",
+              "Día 2: oración de reposo 10 min.",
+              "Día 3: identificar detonantes.",
+              "Día 4: límites sanos (tiempo y tono).",
+              "Día 5: descanso intencional.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisar apoyo."
+            ]
+          }
+        },
+        {
+          "key": "ajuste",
+          "label": "En ajuste",
+          "min": 31,
+          "max": 60,
+          "miniTeaching": {
+            "title": "El apoyo existe, pero no se usa a tiempo",
+            "text": [
+              "Se reconoce el Consolador, pero se llega tarde al reposo.",
+              "Aprender timing reduce la tensión."
+            ],
+            "verse": {
+              "quote": "Mi paz os dejo, mi paz os doy; yo no os la doy como el mundo la da.",
+              "reference": "Juan 14:27 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: practicar pausa.",
+              "Día 2: oración breve antes de conversar.",
+              "Día 3: descanso programado.",
+              "Día 4: conversación corta.",
+              "Día 5: agradecimiento.",
+              "Día 6: culto efectivo.",
+              "Día 7: mantenimiento."
+            ]
+          }
+        },
+        {
+          "key": "estable",
+          "label": "Estable",
+          "min": 61,
+          "max": 100,
+          "miniTeaching": {
+            "title": "Apoyo móvil funcional",
+            "text": [
+              "Hay flexibilidad con cobertura; el sistema no se quiebra por rigidez.",
+              "El Espíritu sostiene y guía el ajuste."
+            ],
+            "verse": {
+              "quote": "Donde está el Espíritu del Señor, allí hay libertad.",
+              "reference": "2 Corintios 3:17 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: mantenimiento.",
+              "Día 2: reposo.",
+              "Día 3: ajuste.",
+              "Día 4: descanso.",
+              "Día 5: honra.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisión."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "carga",
+      "title": "Carga (P)",
+      "subtitle": "Cargas vivas y muertas",
+      "diagnosticFocus": "Peso real de temporada (no condena, diagnóstico)",
+      "sectionVerse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      },
+      "questions": [
+        { "id": "carga_q1", "text": "¿Las responsabilidades están equilibradas o recaen en uno solo?" },
+        { "id": "carga_q2", "text": "¿Se reconocen cargas invisibles (emocionales/mentales)?" },
+        { "id": "carga_q3", "text": "¿El hogar distingue carga necesaria vs peso innecesario?" },
+        { "id": "carga_q4", "text": "¿Se sabe pedir ayuda cuando el peso aumenta?" },
+        { "id": "carga_q5", "text": "¿El sistema sostiene el peso o alguien lo soporta solo?" }
+      ],
+      "bands": [
+        {
+          "key": "liviana",
+          "label": "Carga liviana",
+          "min": 0,
+          "max": 30,
+          "miniTeaching": {
+            "title": "Temporada liviana: se construye mantenimiento",
+            "text": [
+              "Este es el mejor tiempo para fortalecer hábitos.",
+              "El mantenimiento se hace cuando el peso es bajo."
+            ],
+            "verse": {
+              "quote": "Con sabiduría se edificará la casa.",
+              "reference": "Proverbios 24:3 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: definir hábito semanal.",
+              "Día 2: acordar roles.",
+              "Día 3: ordenar agenda.",
+              "Día 4: tiempo de pareja.",
+              "Día 5: gratitud.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisión."
+            ]
+          }
+        },
+        {
+          "key": "normal",
+          "label": "Carga normal",
+          "min": 31,
+          "max": 60,
+          "miniTeaching": {
+            "title": "Peso normal: la clave es distribuir",
+            "text": [
+              "La carga se sostiene cuando se transfiere y se comparte.",
+              "Sin diseño, lo normal se vuelve agotador."
+            ],
+            "verse": {
+              "quote": "Mi yugo es fácil, y ligera mi carga.",
+              "reference": "Mateo 11:30 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: redistribuir 1 tarea.",
+              "Día 2: ajustar expectativas.",
+              "Día 3: pedir ayuda.",
+              "Día 4: descanso.",
+              "Día 5: conversación breve.",
+              "Día 6: culto efectivo.",
+              "Día 7: mantenimiento."
+            ]
+          }
+        },
+        {
+          "key": "alta",
+          "label": "Carga alta",
+          "min": 61,
+          "max": 85,
+          "miniTeaching": {
+            "title": "Carga alta: se requiere orden y apoyo",
+            "text": [
+              "No se corrige: se organiza.",
+              "El hogar necesita reposo y transferencia al fundamento."
+            ],
+            "verse": {
+              "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+              "reference": "1 Pedro 5:7 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: priorizar 3 cosas.",
+              "Día 2: pausar lo secundario.",
+              "Día 3: delegar/compartir.",
+              "Día 4: descanso real.",
+              "Día 5: oración por provisión.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisar carga."
+            ]
+          }
+        },
+        {
+          "key": "extrema",
+          "label": "Carga extrema",
+          "min": 86,
+          "max": 100,
+          "miniTeaching": {
+            "title": "Carga extrema: contención y acompañamiento",
+            "text": [
+              "No es un tiempo de exigir más: es tiempo de sostener.",
+              "Se requiere apoyo pastoral y acuerdos de emergencia."
+            ],
+            "verse": {
+              "quote": "Fortaleza mía y canto es JAH, y él me ha sido por salvación.",
+              "reference": "Salmo 118:14 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: contención emocional.",
+              "Día 2: pedir ayuda externa.",
+              "Día 3: reducir conflictos.",
+              "Día 4: descanso mínimo.",
+              "Día 5: oración y provisión.",
+              "Día 6: culto efectivo breve.",
+              "Día 7: plan de proceso."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "deriva",
+      "title": "Deriva (Δ)",
+      "subtitle": "Desalineación progresiva",
+      "diagnosticFocus": "Pérdida de verticalidad: todo se vuelve más pesado",
+      "sectionVerse": {
+        "quote": "Mirad, pues, con diligencia cómo andéis, no como necios sino como sabios.",
+        "reference": "Efesios 5:15 (RVR1960)"
+      },
+      "questions": [
+        { "id": "deriva_q1", "text": "¿El hogar ha perdido dirección sin notarlo?" },
+        { "id": "deriva_q2", "text": "¿Se vive más reaccionando que caminando con propósito?" },
+        { "id": "deriva_q3", "text": "¿Los conflictos se repiten sin resolverse?" },
+        { "id": "deriva_q4", "text": "¿Se decide por urgencia y no por diseño?" },
+        { "id": "deriva_q5", "text": "¿Existe distancia emocional creciente aunque ‘todo funcione’?" }
+      ],
+      "bands": [
+        {
+          "key": "alineado",
+          "label": "Deriva baja (alineado)",
+          "min": 0,
+          "max": 30,
+          "miniTeaching": {
+            "title": "Alineación visible",
+            "text": [
+              "El sistema no está torcido; el peso no se amplifica por desalineación.",
+              "Mantener alineación requiere mantenimiento, no perfección."
+            ],
+            "verse": {
+              "quote": "Endereza tu camino.",
+              "reference": "Proverbios 4:26 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: mantenimiento.",
+              "Día 2: revisar decisiones.",
+              "Día 3: oración breve.",
+              "Día 4: conversación corta.",
+              "Día 5: gratitud.",
+              "Día 6: culto efectivo.",
+              "Día 7: revisión."
+            ]
+          }
+        },
+        {
+          "key": "moderada",
+          "label": "Deriva moderada",
+          "min": 31,
+          "max": 60,
+          "miniTeaching": {
+            "title": "Pequeña desalineación ya amplifica el peso",
+            "text": [
+              "No esperes fisuras: ajusta ahora.",
+              "Ajustar es volver al diseño, no culpar."
+            ],
+            "verse": {
+              "quote": "Vuélvete a Jehová tu Dios; guarda misericordia y juicio, y en tu Dios confía siempre.",
+              "reference": "Oseas 12:6 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: volver al altar.",
+              "Día 2: acuerdo corto.",
+              "Día 3: redistribuir carga.",
+              "Día 4: descanso.",
+              "Día 5: honra.",
+              "Día 6: culto efectivo.",
+              "Día 7: repetir auditoría."
+            ]
+          }
+        },
+        {
+          "key": "activa",
+          "label": "Deriva activa (P–Δ en aumento)",
+          "min": 61,
+          "max": 85,
+          "miniTeaching": {
+            "title": "Deriva activa: la vida pesa más de lo normal",
+            "text": [
+              "Todo se siente ‘demasiado’ porque el sistema está torcido.",
+              "La restauración se hace por secciones (anclaje, nudo, apoyo)."
+            ],
+            "verse": {
+              "quote": "El camino de los transgresores es duro.",
+              "reference": "Proverbios 13:15 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: contención.",
+              "Día 2: eliminar detonante principal.",
+              "Día 3: acompañamiento.",
+              "Día 4: reposo.",
+              "Día 5: altar 20 min.",
+              "Día 6: culto efectivo.",
+              "Día 7: plan de proceso."
+            ]
+          }
+        },
+        {
+          "key": "critica",
+          "label": "Deriva crítica",
+          "min": 86,
+          "max": 100,
+          "miniTeaching": {
+            "title": "Deriva crítica: alto riesgo de fisuras",
+            "text": [
+              "No se corrige en caliente; se contiene.",
+              "Prioriza seguridad emocional y acompañamiento."
+            ],
+            "verse": {
+              "quote": "Dios es nuestro amparo y fortaleza, nuestro pronto auxilio en las tribulaciones.",
+              "reference": "Salmo 46:1 (RVR1960)"
+            },
+            "oneWeekPlan": [
+              "Día 1: contención.",
+              "Día 2: buscar ayuda pastoral.",
+              "Día 3: pausar decisiones grandes.",
+              "Día 4: descanso mínimo diario.",
+              "Día 5: acuerdos de seguridad.",
+              "Día 6: culto breve.",
+              "Día 7: plan de proceso."
+            ]
+          }
+        }
       ]
     }
   ],
-  "plan7": {
-    "stable": [
-      "Mantenimiento: 20 min de altar familiar (2 veces).",
-      "1 acuerdo semanal escrito (simple).",
-      "Revisión: una carga se transfiere al fundamento."
+  "planFramework": {
+    "day6Title": "Culto efectivo (Congregación del hogar)",
+    "day6Items": [
+      "20–30 min: Palabra + oración + acuerdos cortos.",
+      "Un acto de honra mutua: reconocer 1 esfuerzo del otro.",
+      "Definir 1 mantenimiento semanal fijo (día y hora)."
     ],
-    "ajuste": [
-      "Día 1: altar + rendición (Juan 15:4).",
-      "Día 2: acuerdo corto (nudo).",
-      "Día 3: redistribuir 1 carga.",
-      "Día 4: pausa y volver (apoyo móvil).",
-      "Día 5: honra mutua (baja tensión).",
-      "Día 6: culto efectivo del hogar.",
-      "Día 7: revisar deriva y repetir ajustes."
-    ],
-    "riesgo": [
-      "Día 1: contención + oración (Fil 4:7).",
-      "Día 2: eliminar 1 fuente de conflicto repetitivo.",
-      "Día 3: reasignar tareas / cargas (por escrito).",
-      "Día 4: acompañamiento (llamada / mentoría).",
-      "Día 5: restaurar altar (30 min).",
-      "Día 6: sanar conversación (15 min, sin reproches).",
-      "Día 7: repetir simulación y comparar."
-    ],
-    "critico": [
-      "Día 1: no discutir — solo contención.",
-      "Día 2: buscar acompañamiento pastoral.",
-      "Día 3: pausar decisiones grandes (7 días).",
-      "Día 4: altar mínimo diario (10–15 min).",
-      "Día 5: eliminar exposición tóxica / ruido.",
-      "Día 6: acuerdos de seguridad emocional.",
-      "Día 7: plan de proceso (no corrección)."
+    "day7Title": "Revisión y mantenimiento",
+    "day7Items": [
+      "¿Qué cambió esta semana? ¿Qué no cambió?",
+      "Elegir 1 práctica que se queda como mantenimiento.",
+      "Repetir auditoría solo en los 2 criterios más débiles."
     ]
   }
 }
