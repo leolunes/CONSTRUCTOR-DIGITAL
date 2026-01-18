@@ -37,25 +37,15 @@
     ]
   },
   "thresholds": {
-    "fisura": {
-      "micro": 35,
-      "activa": 55,
-      "critica": 75
-    }
+    "fisura": { "micro": 35, "activa": 55, "critica": 75 }
   },
   "verses": {
-    "fundamento": {
-      "quote": "Separados de mí nada podéis hacer.",
-      "reference": "Juan 15:5"
-    },
+    "fundamento": { "quote": "Separados de mí nada podéis hacer.", "reference": "Juan 15:5" },
     "congregacion": {
       "quote": "Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.",
       "reference": "Mateo 18:20"
     },
-    "equilibrio": {
-      "quote": "Dios no es Dios de confusión, sino de paz.",
-      "reference": "1 Corintios 14:33"
-    }
+    "equilibrio": { "quote": "Dios no es Dios de confusión, sino de paz.", "reference": "1 Corintios 14:33" }
   },
   "palette": [
     {
@@ -103,5 +93,5 @@
       "transfer": "sin_apoyo",
       "hint": "Sin apoyo móvil, la tensión no se disipa."
     }
-  }
+  ]
 }
