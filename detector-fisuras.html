@@ -154,7 +154,8 @@
   const btnPdf=document.getElementById("btnPdf");
 
   function okPdfLib(){
-    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+    return !!(window.jspdf && window.jspdf.jsPDF) &&
+           !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
   }
 
   function setDefaultDateIfEmpty(){
@@ -172,9 +173,8 @@
     return "badge bR";
   }
 
+  // score 0–100 = salud; riesgo = 100-score
   function bandForScore(score){
-    // score 0–100 por sección (a mayor score, más sano, pero aquí detectamos “fisura” como falta de salud)
-    // Para “fisura”: invertimos a riesgo = 100 - score, y lo mapeamos a bandas.
     const risk = 100 - score;
     if(risk <= 30) return DATA.bands.find(b=>b.key==="b_verde");
     if(risk <= 60) return DATA.bands.find(b=>b.key==="b_amarillo");
@@ -183,12 +183,7 @@
   }
 
   function teachingFor(section, bandKey){
-    const map = {
-      b_verde: "verde",
-      b_amarillo: "amarillo",
-      b_naranja: "naranja",
-      b_rojo: "rojo"
-    };
+    const map = { b_verde:"verde", b_amarillo:"amarillo", b_naranja:"naranja", b_rojo:"rojo" };
     const k = map[bandKey] || "amarillo";
     return section.teachings[k];
   }
@@ -264,8 +259,8 @@
     };
 
     const sections = DATA.sections.map(sec=>{
-      const score = sectionScore(sec); // 0–100 (salud)
-      const band = bandForScore(score); // por riesgo invertido
+      const score = sectionScore(sec); // 0–100 salud
+      const band = bandForScore(score);
       const teaching = teachingFor(sec, band.key);
       const risk = 100 - score;
       return {
@@ -279,7 +274,6 @@
       };
     });
 
-    // Global: promedio de riesgo
     const avgRisk = sections.reduce((a,s)=>a+s.risk,0) / sections.length;
     let gBand;
     if(avgRisk <= 30) gBand = DATA.bands.find(b=>b.key==="b_verde");
@@ -287,21 +281,25 @@
     else if(avgRisk <= 85) gBand = DATA.bands.find(b=>b.key==="b_naranja");
     else gBand = DATA.bands.find(b=>b.key==="b_rojo");
 
-    // Top 2 fisuras críticas (mayor riesgo)
     const sorted = [...sections].sort((a,b)=> b.risk - a.risk);
     const topA = sorted[0];
     const topB = sorted[1] || sorted[0];
 
-    // Plan 7 días
-    const plan = [];
-    const A = topA.teaching?.oneWeekPlan || [];
-    const B = topB.teaching?.oneWeekPlan || [];
+    // Acciones reales (día 1–5) — ya definidas (sin placeholders)
+    const defaultActions = {
+      day1: "Orar juntos 10–15 minutos pidiendo luz, sin discutir el problema (solo rendición).",
+      day2: "Identificar 1 fisura concreta y hacer 1 acuerdo corto: “¿Qué haremos distinto esta semana?”",
+      day3: "Practicar conversación breve con reglas: tono suave, no interrumpir, cerrar con 1 acuerdo.",
+      day4: "Restaurar honra: cada uno reconoce 1 virtud/esfuerzo del otro (sin sarcasmo).",
+      day5: "Transferir 1 carga al fundamento: oración final + decisión práctica (agenda/rol/límite)."
+    };
 
-    plan.push({day:1, title:`Enfoque: ${topA.title}`, items:[A[0] || "Acción 1"]});
-    plan.push({day:2, title:`Enfoque: ${topA.title}`, items:[A[1] || "Acción 2"]});
-    plan.push({day:3, title:`Enfoque: ${topA.title}`, items:[A[2] || "Acción 3"]});
-    plan.push({day:4, title:`Enfoque: ${topB.title}`, items:[B[0] || "Acción 4"]});
-    plan.push({day:5, title:`Enfoque: ${topB.title}`, items:[B[1] || "Acción 5"]});
+    const plan = [];
+    plan.push({day:1, title:`Enfoque: ${topA.title}`, items:[defaultActions.day1]});
+    plan.push({day:2, title:`Enfoque: ${topA.title}`, items:[defaultActions.day2]});
+    plan.push({day:3, title:`Enfoque: ${topA.title}`, items:[defaultActions.day3]});
+    plan.push({day:4, title:`Enfoque: ${topB.title}`, items:[defaultActions.day4]});
+    plan.push({day:5, title:`Enfoque: ${topB.title}`, items:[defaultActions.day5]});
     plan.push({day:6, title:DATA.planFramework.day6Title, items:DATA.planFramework.day6Items});
     plan.push({day:7, title:DATA.planFramework.day7Title, items:DATA.planFramework.day7Items});
 
@@ -451,7 +449,7 @@
       return y+22;
     }
 
-    // Portada
+    // PORTADA
     doc.setFillColor(22,33,58);
     doc.rect(0,0,W,96,"F");
     addLogo(W-M-56,18,56,56);
@@ -479,7 +477,7 @@
     doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
     doc.text(`Fecha: ${last.header.date}`, M+14, 212);
 
-    // Global
+    // GLOBAL
     const gb=last.globalBand;
     doc.setFillColor(255,255,255);
     doc.roundedRect(M,270,W-M*2,170,12,12,"F");
@@ -488,31 +486,35 @@
     doc.setTextColor(...INK);
     doc.text("Diagnóstico global", M+14, 300);
 
-    // Pill
-    const pillW=300, pillH=26;
+    // Pill global (AUTO-FIT)
+    const pillW = 260, pillH = 24;
     doc.setFillColor(22,33,58);
     doc.roundedRect(M+14,312,pillW,pillH,10,10,"F");
-    doc.setTextColor(255,255,255);
-    let fs=11;
+
     doc.setFont("helvetica","bold");
+    doc.setTextColor(255,255,255);
+    let fs = 10;
     doc.setFontSize(fs);
-    while(doc.getTextWidth(gb.label) > pillW-16 && fs>8){ fs-=1; doc.setFontSize(fs); }
-    doc.text(gb.label.toUpperCase(), M+14+pillW/2, 330, {align:"center"});
+    while (doc.getTextWidth(gb.label.toUpperCase()) > pillW - 20 && fs > 7) {
+      fs -= 0.5;
+      doc.setFontSize(fs);
+    }
+    doc.text(gb.label.toUpperCase(), M+14+pillW/2, 328, {align:"center", baseline:"middle"});
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
     doc.setTextColor(...INK);
     doc.text(`Riesgo promedio estimado: ${last.avgRisk.toFixed(1)}%`, M+14, 362);
 
-    const sumLines=doc.splitTextToSize(gb.summary, W-M*2-28);
-    doc.text(sumLines, M+14, 384);
+    const sumLines = doc.splitTextToSize(gb.summary, W - M*2 - 40);
+    doc.text(sumLines, M+14, 380, {maxWidth: W - M*2 - 40});
 
     doc.setFont("times","italic");
     doc.setFontSize(11);
-    const vLines=doc.splitTextToSize(`${gb.verse.quote} (${gb.verse.reference})`, W-M*2-28);
-    doc.text(vLines, M+14, 420);
+    const vLines=doc.splitTextToSize(`${gb.verse.quote} (${gb.verse.reference})`, W-M*2-40);
+    doc.text(vLines, M+14, 430);
 
-    // Secciones
+    // TABLA RESUMEN
     doc.addPage();
     addLogo(M,16,32,32);
     let y=sectionTitle("Resumen por fisuras",64);
@@ -534,42 +536,55 @@
       margin:{left:M,right:M}
     });
 
-    // Enfoque pastoral por sección
+    // ENFOQUE PASTORAL (TODAS) — texto dinámico
     doc.addPage();
     addLogo(M,16,32,32);
     y=sectionTitle("Enfoque pastoral por fisura (todas)",64);
 
     last.sections.forEach(s=>{
-      const blockH=150;
-      if(y + blockH > H - 70){
+      const width = W - M*2 - 28;
+
+      const headerLine = `${s.title} — ${s.band.label} · Salud ${s.score}/100`;
+      const bulletsStr = s.teaching.text.map(x => "• " + x).join("\n");
+      const verseStr = `${s.teaching.verse.quote} (${s.teaching.verse.reference})`;
+
+      const headerLines = doc.splitTextToSize(headerLine, width);
+      const titleLines  = doc.splitTextToSize(s.teaching.title, width);
+      const bulletLines = doc.splitTextToSize(bulletsStr, width);
+      const verseLines  = doc.splitTextToSize(verseStr, width);
+
+      const dynamicH = Math.max(140, 34 + (headerLines.length+titleLines.length+bulletLines.length+verseLines.length)*12 + 20);
+
+      if(y + dynamicH > H - 70){
         doc.addPage();
         addLogo(M,16,32,32);
-        y=64;
+        y = 64;
       }
+
       doc.setFillColor(255,255,255);
-      doc.roundedRect(M,y,W-M*2,blockH,12,12,"F");
+      doc.roundedRect(M, y, W - M*2, dynamicH, 12, 12, "F");
 
       doc.setFont("helvetica","bold");
       doc.setFontSize(12);
       doc.setTextColor(...INK);
-      doc.text(`${s.title} — ${s.band.label} · Salud ${s.score}/100`, M+14, y+26);
+      doc.text(headerLines, M+14, y+24);
 
       doc.setFont("helvetica","normal");
       doc.setFontSize(10);
       doc.setTextColor(...INK);
-      doc.text(doc.splitTextToSize(s.teaching.title, W-M*2-28), M+14, y+46);
+      doc.text(titleLines, M+14, y+24 + (headerLines.length*12) + 10);
 
-      const bullets = s.teaching.text.map(x=>"• "+x).join("\n");
-      doc.text(doc.splitTextToSize(bullets, W-M*2-28), M+14, y+66);
+      const afterTitleY = y+24 + (headerLines.length*12) + 10 + (titleLines.length*12) + 10;
+      doc.text(bulletLines, M+14, afterTitleY);
 
       doc.setFont("times","italic");
       doc.setFontSize(10);
-      doc.text(doc.splitTextToSize(`${s.teaching.verse.quote} (${s.teaching.verse.reference})`, W-M*2-28), M+14, y+122);
+      doc.text(verseLines, M+14, afterTitleY + (bulletLines.length*12) + 12);
 
-      y += blockH + 14;
+      y += dynamicH + 14;
     });
 
-    // Plan semanal
+    // PLAN SEMANAL
     doc.addPage();
     addLogo(M,16,32,32);
     y=sectionTitle("Plan semanal automático (7 días)",64);
@@ -585,7 +600,7 @@
       margin:{left:M,right:M}
     });
 
-    // Observaciones
+    // OBSERVACIONES
     doc.addPage();
     addLogo(M,16,32,32);
     y=sectionTitle("Observaciones",64);
