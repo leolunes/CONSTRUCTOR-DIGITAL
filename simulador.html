@@ -67,19 +67,19 @@
     <div style="margin-top:10px">
       <span class="pill" id="pTotal">Magnitud total: 0</span>
       <span class="pill" id="pState">Estado: —</span>
-      <span class="pill">Arrastra cargas al pórtico</span>
+      <span class="pill">Sísmica = flecha horizontal (en el NUDO)</span>
     </div>
     <div id="pdfWarn" class="warn">No se pudo cargar jsPDF. Verifica internet/CDN.</div>
   </div>
 
   <div class="grid">
-    <!-- IZQ: PÓRTICO + ZONAS -->
+    <!-- IZQ -->
     <div class="card">
       <div class="row">
         <div>
           <b>Laboratorio visual</b>
           <div class="muted" style="font-size:13px;margin-top:4px">
-            Coloca flechas por elemento. Al transferir, solo se mueve la flecha con su magnitud.
+            Simula el “movimiento” del pórtico según cargas NO transferidas vs cargas transferidas al Cimiento (Cristo).
           </div>
         </div>
         <span class="pill" id="liveBand">—</span>
@@ -90,31 +90,39 @@
           <!-- ground -->
           <rect x="0" y="335" width="560" height="45" fill="rgba(255,255,255,.05)"></rect>
 
-          <!-- foundation -->
-          <rect id="foundation" x="80" y="290" width="140" height="45" rx="10"
-            fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
-          <text x="150" y="318" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO</text>
+          <!-- ===== ESTRUCTURA AGRUPADA PARA SIMULACIÓN ===== -->
+          <g id="frame" style="transform-origin: 150px 312px; transition: transform 650ms cubic-bezier(.2,.9,.2,1);">
+            <!-- foundation -->
+            <rect id="foundation" x="80" y="290" width="140" height="45" rx="10"
+              fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
+            <text x="150" y="318" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO</text>
 
-          <!-- column -->
-          <rect id="column" x="140" y="90" width="22" height="200" rx="10"
-            fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
-          <text x="151" y="78" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA</text>
+            <!-- column -->
+            <rect id="column" x="140" y="90" width="22" height="200" rx="10"
+              fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="151" y="78" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA</text>
 
-          <!-- beam -->
-          <rect id="beam" x="151" y="90" width="285" height="18" rx="9"
-            fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
-          <text x="294" y="78" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA</text>
+            <!-- beam -->
+            <rect id="beam" x="151" y="90" width="285" height="18" rx="9"
+              fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="294" y="78" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA</text>
 
-          <!-- roller support -->
-          <circle id="rollerBase" cx="445" cy="118" r="11"
-            fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
-          <rect id="roller" x="423" y="131" width="44" height="12" rx="5"
-            fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.20)"></rect>
-          <text x="445" y="167" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">APOYO</text>
+            <!-- roller support -->
+            <circle id="rollerBase" cx="445" cy="118" r="11"
+              fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
+            <rect id="roller" x="423" y="131" width="44" height="12" rx="5"
+              fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="445" y="167" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">APOYO</text>
 
-          <!-- joint (node) visual marker -->
-          <circle id="joint" cx="151" cy="99" r="8"
-            fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)"></circle>
+            <!-- joint marker -->
+            <circle id="joint" cx="151" cy="99" r="8"
+              fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)"></circle>
+
+            <!-- "fisura" visual -->
+            <path id="crack" d="M151 99 L146 112 L154 125 L148 140"
+                  stroke="rgba(251,113,133,.0)" stroke-width="3" fill="none"
+                  style="transition: stroke 650ms ease;"/>
+          </g>
 
           <!-- Drop zones (transparent hit areas) -->
           <rect class="drop" data-zone="beam" x="151" y="70" width="285" height="55" fill="transparent"></rect>
@@ -132,22 +140,23 @@
         </svg>
 
         <div class="legend">
-          <div class="k"><span class="dot" style="background:#60a5fa"></span>Carga muerta</div>
-          <div class="k"><span class="dot" style="background:#34d399"></span>Carga viva</div>
-          <div class="k"><span class="dot" style="background:#fb7185"></span>Carga sísmica</div>
+          <div class="k"><span class="dot" style="background:#60a5fa"></span>Carga muerta (↓)</div>
+          <div class="k"><span class="dot" style="background:#34d399"></span>Carga viva (↓)</div>
+          <div class="k"><span class="dot" style="background:#fb7185"></span>Carga sísmica (→ en NUDO)</div>
         </div>
       </div>
 
       <div class="mini" id="diagBox" style="margin-top:12px;"></div>
 
       <div class="btns">
-        <button class="ghost" id="btnSnapshot" disabled>Captura PDF del escenario</button>
+        <button class="primary" id="btnSimNo">Simular SIN transferencia</button>
+        <button class="ghost" id="btnSimYes">Simular CON transferencia</button>
         <button class="ghost" id="btnClear">Vaciar escenario</button>
       </div>
-      <div class="hint">Tip: si hay muchas flechas en un elemento, es “concentración de carga”.</div>
+      <div class="hint">La simulación es pedagógica: deriva/rotación crecen según magnitudes NO descargadas al cimiento.</div>
     </div>
 
-    <!-- DER: CREAR CARGAS + LISTADO -->
+    <!-- DER -->
     <div class="card">
       <div class="row">
         <div>
@@ -173,7 +182,7 @@
         <div>
           <label>Magnitud</label>
           <input id="mag" type="number" min="1" max="10" step="1">
-          <div class="hint">Rango configurable en el JSON.</div>
+          <div class="hint">Sísmica usa magnitud como “empuje horizontal”.</div>
         </div>
 
         <div style="grid-column:1/-1">
@@ -189,8 +198,8 @@
 
       <div class="mini">
         <h3>Biblioteca de cargas (arrastra al pórtico)</h3>
-        <div class="small" id="libHint">Crea cargas y arrástralas a Beam/Column/Joint/Roller/Foundation.</div>
-        <div id="library" class="opts" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;"></div>
+        <div class="small" id="libHint">Nota: si es SÍSMICA, al soltarla se ancla al NUDO automáticamente.</div>
+        <div id="library" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;"></div>
       </div>
 
       <div class="mini">
@@ -215,31 +224,27 @@
   </div>
 </div>
 
-<!-- jsPDF (solo para captura sencilla) -->
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
 <script>
   const JSON_PATH = "simulador.json";
-  const LOGO_PATH = "logo.png"; // opcional
-  const STORAGE_KEY = "simulador_cargas_v1";
+  const STORAGE_KEY = "simulador_cargas_v2";
 
   let DATA=null;
-  let logoDataUrl=null;
 
   const state = {
     library: [],   // {id,name,type,mag,note,createdAt}
-    placed: []     // {id, refId, zone}  refId->library item id
+    placed: []     // {id, refId, zone}
   };
 
-  // UI refs
   const tEl = document.getElementById("t");
   const dEl = document.getElementById("d");
   const pTotal = document.getElementById("pTotal");
   const pState = document.getElementById("pState");
   const liveBand = document.getElementById("liveBand");
-  const pdfWarn = document.getElementById("pdfWarn");
   const diagBox = document.getElementById("diagBox");
   const verseBox = document.getElementById("verseBox");
+
+  const frameEl = document.getElementById("frame");
+  const crackEl = document.getElementById("crack");
 
   const nameEl = document.getElementById("name");
   const typeEl = document.getElementById("type");
@@ -248,7 +253,6 @@
 
   const libraryEl = document.getElementById("library");
   const rowsEl = document.getElementById("rows");
-  const btnSnapshot = document.getElementById("btnSnapshot");
 
   const zoneLayers = {
     beam: document.getElementById("layer_beam"),
@@ -260,10 +264,6 @@
 
   function uid(){
     return (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"_"+Math.random().toString(16).slice(2));
-  }
-
-  function okPdfLib(){
-    return !!(window.jspdf && window.jspdf.jsPDF);
   }
 
   function save(){
@@ -297,7 +297,6 @@
 
   function setDefaults(){
     magEl.value = String(DATA.magnitude.default);
-    // build type select
     typeEl.innerHTML = DATA.loadTypes.map(t=>`<option value="${t.key}">${t.label}</option>`).join("");
   }
 
@@ -337,8 +336,13 @@
   }
 
   function placeFromLibrary(refId, zone){
-    // si ya está colocada, permitir múltiples instancias: ok (cada colocación es flecha independiente)
-    state.placed.unshift({ id: uid(), refId, zone });
+    const lib = state.library.find(x=>x.id===refId);
+    if(!lib) return;
+
+    // ✅ Regla: si es SÍSMICA, se ancla al NUDO sí o sí
+    const finalZone = (lib.type === "sismica") ? "joint" : zone;
+
+    state.placed.unshift({ id: uid(), refId, zone: finalZone });
     save();
     render();
   }
@@ -354,7 +358,7 @@
     if(!p) return;
     const z = zoneInfo(p.zone);
     if(!z || !z.transferTo){
-      alert("Esta carga ya está en el cimiento (no se transfiere más).");
+      alert("Ya está en el cimiento (Cristo).");
       return;
     }
     p.zone = z.transferTo;
@@ -362,14 +366,19 @@
     render();
   }
 
-  // ==== SVG arrows (NO name, only magnitude) ====
+  // ===== ARROWS (vertical vs horizontal) =====
   function clearLayers(){
     Object.values(zoneLayers).forEach(g=> g.innerHTML="");
   }
 
-  function arrowSvg(x, y, color, mag){
-    // flecha vertical corta con etiqueta encima
+  function arrowVertical(x, y, color, mag){
     const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+
+    const halo = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    halo.setAttribute("cx", x);
+    halo.setAttribute("cy", y-16);
+    halo.setAttribute("r", "18");
+    halo.setAttribute("fill", "rgba(0,0,0,.18)");
 
     const text = document.createElementNS("http://www.w3.org/2000/svg","text");
     text.setAttribute("x", x);
@@ -393,12 +402,46 @@
     tri.setAttribute("points", `${x},${y} ${x-8},${y-12} ${x+8},${y-12}`);
     tri.setAttribute("fill", color);
 
-    // halo suave (mejora legibilidad)
-    const halo = document.createElementNS("http://www.w3.org/2000/svg","circle");
-    halo.setAttribute("cx", x);
-    halo.setAttribute("cy", y-16);
-    halo.setAttribute("r", "18");
+    g.appendChild(halo);
+    g.appendChild(text);
+    g.appendChild(line);
+    g.appendChild(tri);
+    return g;
+  }
+
+  function arrowHorizontal(x, y, color, mag){
+    // flecha apuntando → con magnitud arriba
+    const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+
+    const halo = document.createElementNS("http://www.w3.org/2000/svg","rect");
+    halo.setAttribute("x", x-22);
+    halo.setAttribute("y", y-22);
+    halo.setAttribute("width", "84");
+    halo.setAttribute("height", "40");
+    halo.setAttribute("rx", "14");
     halo.setAttribute("fill", "rgba(0,0,0,.18)");
+
+    const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+    text.setAttribute("x", x+20);
+    text.setAttribute("y", y - 6);
+    text.setAttribute("text-anchor","middle");
+    text.setAttribute("font-size","12");
+    text.setAttribute("font-weight","900");
+    text.setAttribute("fill", "rgba(255,255,255,.92)");
+    text.textContent = String(mag);
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+    line.setAttribute("x1", x);
+    line.setAttribute("y1", y);
+    line.setAttribute("x2", x+52);
+    line.setAttribute("y2", y);
+    line.setAttribute("stroke", color);
+    line.setAttribute("stroke-width","4");
+    line.setAttribute("stroke-linecap","round");
+
+    const tri = document.createElementNS("http://www.w3.org/2000/svg","polygon");
+    tri.setAttribute("points", `${x+62},${y} ${x+48},${y-8} ${x+48},${y+8}`);
+    tri.setAttribute("fill", color);
 
     g.appendChild(halo);
     g.appendChild(text);
@@ -408,12 +451,11 @@
   }
 
   function zoneAnchor(zoneKey){
-    // puntos base para colocar flechas en fila (con offsets)
-    // (x,y) es la punta inferior de la flecha (triángulo)
-    if(zoneKey==="beam") return { x: 240, y: 88 };
+    // (x,y) base. Para sismica (horizontal) se ve mejor en el nudo.
+    if(zoneKey==="beam") return { x: 250, y: 88 };
     if(zoneKey==="column") return { x: 151, y: 160 };
-    if(zoneKey==="joint") return { x: 151, y: 108 };
-    if(zoneKey==="roller") return { x: 445, y: 120 };
+    if(zoneKey==="joint") return { x: 155, y: 108 };
+    if(zoneKey==="roller") return { x: 438, y: 120 };
     return { x: 150, y: 300 }; // foundation
   }
 
@@ -429,50 +471,67 @@
       if(!layer) return;
 
       const base = zoneAnchor(zoneKey);
-      const dx = 36; // separación horizontal entre flechas
+      const dx = 38;
       const maxRow = 6;
 
       arr.forEach((p, idx)=>{
         const lib = state.library.find(x=>x.id===p.refId);
         if(!lib) return;
         const t = typeInfo(lib.type);
-        const col = t.color;
         const mag = clampMag(lib.mag);
 
-        // acomodar flechas: fila principal y si excede, segunda fila
         const row = Math.floor(idx / maxRow);
         const colIdx = idx % maxRow;
-        const x = base.x + (colIdx - (Math.min(arr.length, maxRow)-1)/2) * dx;
-        const y = base.y + row*48;
 
-        layer.appendChild(arrowSvg(x, y, col, mag));
+        const x = base.x + (colIdx - (Math.min(arr.length, maxRow)-1)/2) * dx;
+        const y = base.y + row*50;
+
+        // ✅ SÍSMICA = flecha horizontal
+        if(lib.type === "sismica"){
+          layer.appendChild(arrowHorizontal(x, y, t.color, mag));
+        }else{
+          layer.appendChild(arrowVertical(x, y, t.color, mag));
+        }
       });
     });
   }
 
-  function totalMagnitude(){
-    // suma magnitud de flechas colocadas (instancias)
-    let sum = 0;
+  // ===== MÉTRICAS =====
+  function totals(){
+    let total=0, onFoundation=0, notFoundation=0;
+    let hNot=0, vNot=0; // horizontal no transferida / vertical no transferida
+
     state.placed.forEach(p=>{
       const lib = state.library.find(x=>x.id===p.refId);
-      if(lib) sum += clampMag(lib.mag);
+      if(!lib) return;
+      const m = clampMag(lib.mag);
+      total += m;
+
+      if(p.zone === "foundation") onFoundation += m;
+      else notFoundation += m;
+
+      if(p.zone !== "foundation"){
+        if(lib.type === "sismica") hNot += m;
+        else vNot += m;
+      }
     });
-    return sum;
+
+    return { total, onFoundation, notFoundation, hNot, vNot };
   }
 
   function stateBand(sum){
     const r = DATA.rules;
-    if(sum >= r.criticalThreshold) return { key:"crit", label:"Crítico", cls:"bR" };
-    if(sum >= r.riskThreshold) return { key:"risk", label:"En riesgo", cls:"bO" };
-    if(sum > 0) return { key:"adj", label:"En ajuste", cls:"bY" };
-    return { key:"ok", label:"Alineado", cls:"bG" };
+    if(sum >= r.criticalThreshold) return { label:"Crítico", cls:"bR" };
+    if(sum >= r.riskThreshold) return { label:"En riesgo", cls:"bO" };
+    if(sum > 0) return { label:"En ajuste", cls:"bY" };
+    return { label:"Alineado", cls:"bG" };
   }
 
   function renderDiagnostics(){
-    const sum = totalMagnitude();
-    const band = stateBand(sum);
+    const t = totals();
+    const band = stateBand(t.total);
 
-    pTotal.textContent = `Magnitud total: ${sum}`;
+    pTotal.textContent = `Magnitud total: ${t.total}`;
     pState.textContent = `Estado: ${band.label}`;
     liveBand.innerHTML = `<span class="badge ${band.cls}">${band.label}</span>`;
 
@@ -489,45 +548,79 @@
 
     diagBox.innerHTML = `
       <h3>Diagnóstico rápido</h3>
-      <div class="small">Suma de magnitudes de flechas colocadas. Si se concentran muchas flechas en un mismo elemento, hay riesgo de fisura.</div>
-      <ul style="margin:8px 0 0;padding-left:18px;line-height:1.45">${zoneLines}</ul>
-      <div class="small" style="margin-top:10px">
-        <b>📖</b> ${DATA.verses.cargas.quote} <span class="muted">(${DATA.verses.cargas.reference})</span>
+      <div class="small">
+        <b>No transferido al cimiento:</b> ${t.notFoundation} &nbsp;|&nbsp;
+        <b>Transferido al cimiento:</b> ${t.onFoundation}
+        <br>
+        <b>Empuje sísmico no transferido (→):</b> ${t.hNot} &nbsp;|&nbsp;
+        <b>Peso vertical no transferido (↓):</b> ${t.vNot}
       </div>
+      <ul style="margin:8px 0 0;padding-left:18px;line-height:1.45">${zoneLines}</ul>
     `;
 
     verseBox.innerHTML = `<b>📖</b> ${DATA.verses.transferencia.quote} <span class="muted">(${DATA.verses.transferencia.reference})</span>`;
-
-    btnSnapshot.disabled = !(okPdfLib() && state.placed.length>0);
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
   }
 
+  // ===== SIMULACIÓN =====
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+  function simulate(mode){
+    // mode: "no" = sin transferencia, "yes" = con transferencia
+    const t = totals();
+
+    if(mode === "yes"){
+      // si está “con transferencia”, visualmente mostramos el sistema estable
+      frameEl.style.transform = `translate(0px,0px) rotate(0deg)`;
+      crackEl.setAttribute("stroke", "rgba(251,113,133,.0)");
+      return;
+    }
+
+    // "no": deriva por cargas NO transferidas
+    // Horizontal no transferida => desplazamiento + rotación
+    // Vertical no transferida => “asentamiento” + ligera rotación (pedagógico)
+    const h = t.hNot;
+    const v = t.vNot;
+
+    // Escalas pedagógicas (ajustables)
+    const driftX = clamp(h * 2.2, 0, 48);     // px
+    const driftY = clamp(v * 0.55, 0, 18);    // px (asentamiento)
+    const rotDeg = clamp(h * 0.22 + v * 0.05, 0, 8); // grados
+
+    frameEl.style.transform = `translate(${driftX}px,${driftY}px) rotate(${rotDeg}deg)`;
+
+    // fisura: aparece si hay mucho no transferido, especialmente sísmico
+    const crackAlpha = clamp((t.notFoundation / 30), 0, 1) * clamp((h / 12), 0, 1);
+    crackEl.setAttribute("stroke", `rgba(251,113,133,${(0.15 + crackAlpha*0.85).toFixed(3)})`);
+  }
+
+  // ===== UI =====
   function renderLibrary(){
     libraryEl.innerHTML = "";
     state.library.forEach(item=>{
       const t = typeInfo(item.type);
-      const pill = document.createElement("div");
-      pill.style.cssText = `
+
+      const card = document.createElement("div");
+      card.style.cssText = `
         border:1px solid rgba(255,255,255,.14);
         border-radius:14px;padding:10px 12px;cursor:grab;
-        background:rgba(255,255,255,.03);min-width:160px;
+        background:rgba(255,255,255,.03);min-width:170px;
       `;
-      pill.setAttribute("draggable","true");
-      pill.dataset.refId = item.id;
-      pill.innerHTML = `
+      card.setAttribute("draggable","true");
+      card.dataset.refId = item.id;
+      card.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
           <b style="font-size:13px">${escapeHtml(item.name)}</b>
           <span class="tag" style="border-color:${t.color};color:${t.color}">M${item.mag}</span>
         </div>
         <div class="muted" style="font-size:12px;margin-top:6px">${escapeHtml(t.label)}</div>
-        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+        <div style="margin-top:8px">
           <button class="ghost" style="padding:6px 10px;border-radius:10px;font-weight:900" data-del-lib="${item.id}">Eliminar</button>
         </div>
       `;
-      pill.addEventListener("dragstart", (e)=>{
+      card.addEventListener("dragstart", (e)=>{
         e.dataTransfer.setData("text/plain", item.id);
       });
-      libraryEl.appendChild(pill);
+      libraryEl.appendChild(card);
     });
 
     libraryEl.querySelectorAll("[data-del-lib]").forEach(btn=>{
@@ -554,7 +647,7 @@
         </td>
         <td><span class="tag" style="border-color:${t.color};color:${t.color}">${escapeHtml(t.label)}</span></td>
         <td><b>${clampMag(lib.mag)}</b></td>
-        <td>${escapeHtml(z ? z.label : p.zone)}</td>
+        <td>${escapeHtml(z ? z.label : p.zone)} ${lib.type==="sismica" ? "<div class='muted' style='font-size:12px;margin-top:4px'>(sísmica anclada al nudo)</div>" : ""}</td>
         <td>
           <button class="primary" style="padding:8px 10px;border-radius:12px;font-weight:950"
             data-transfer="${p.id}" ${(!z || !z.transferTo) ? "disabled" : ""}>
@@ -581,6 +674,8 @@
     renderArrows();
     renderRows();
     renderDiagnostics();
+    // por defecto, deja “estable”
+    simulate("yes");
   }
 
   function escapeHtml(str){
@@ -589,7 +684,6 @@
     }[s]));
   }
 
-  // ==== Drag/drop zones on SVG ====
   function setupDrops(){
     document.querySelectorAll(".drop").forEach(el=>{
       el.addEventListener("dragover", (e)=>{ e.preventDefault(); });
@@ -609,103 +703,6 @@
     render();
   }
 
-  async function loadLogo(){
-    try{
-      const res = await fetch(LOGO_PATH, { cache:"no-store" });
-      if(!res.ok) return null;
-      const blob = await res.blob();
-      return await new Promise(resolve=>{
-        const fr = new FileReader();
-        fr.onload = ()=> resolve(fr.result);
-        fr.onerror = ()=> resolve(null);
-        fr.readAsDataURL(blob);
-      });
-    }catch(e){ return null; }
-  }
-
-  // Captura PDF sencilla (no “screenshot real” del SVG; lo reproduce como resumen + lista)
-  async function snapshotPDF(){
-    if(!okPdfLib()) return;
-    const sum = totalMagnitude();
-    const band = stateBand(sum);
-
-    if(logoDataUrl===null) logoDataUrl = await loadLogo();
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({unit:"pt", format:"letter"});
-    const W = doc.internal.pageSize.getWidth();
-    const H = doc.internal.pageSize.getHeight();
-    const M = 44;
-
-    const ink = [22,33,58];
-    const muted = [90,102,130];
-
-    function addLogo(x,y,w,h){
-      if(!logoDataUrl) return;
-      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
-    }
-
-    // header bar
-    doc.setFillColor(22,33,58);
-    doc.rect(0,0,W,90,"F");
-    addLogo(W-M-52, 18, 52, 52);
-
-    doc.setFont("helvetica","bold"); doc.setFontSize(18);
-    doc.setTextColor(255,255,255);
-    doc.text("SIMULADOR DE CARGAS — ESCENARIO", M, 48);
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(11);
-    doc.setTextColor(210,230,255);
-    doc.text("Flechas por tipo + magnitud (sin nombres en el diagrama)", M, 68);
-
-    doc.setTextColor(...ink);
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text(`Magnitud total: ${sum}`, M, 120);
-    doc.text(`Estado: ${band.label}`, M, 140);
-
-    // resumen por zona
-    const byZone = {};
-    state.placed.forEach(p=> byZone[p.zone] = (byZone[p.zone]||0) + 1);
-
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("Flechas por elemento", M, 175);
-    doc.setFont("helvetica","normal"); doc.setFontSize(11);
-
-    let y = 195;
-    DATA.zones.forEach(z=>{
-      doc.setTextColor(...ink);
-      doc.text(`${z.label}:`, M, y);
-      doc.setTextColor(...muted);
-      doc.text(`${byZone[z.key]||0} flecha(s)`, M+260, y);
-      y += 18;
-    });
-
-    // lista de cargas colocadas
-    y += 10;
-    doc.setTextColor(...ink);
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("Listado de flechas colocadas (nombre solo aquí)", M, y);
-    y += 14;
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(10);
-    state.placed.slice(0,20).forEach(p=>{
-      const lib = state.library.find(x=>x.id===p.refId);
-      if(!lib) return;
-      const z = zoneInfo(p.zone);
-      doc.setTextColor(...ink);
-      doc.text(`• ${lib.name}`, M, y);
-      doc.setTextColor(...muted);
-      doc.text(`Tipo: ${typeInfo(lib.type).label} | M${clampMag(lib.mag)} | Zona: ${z?z.label:p.zone}`, M, y+12);
-      y += 28;
-      if(y > H - 60){
-        doc.addPage();
-        y = 60;
-      }
-    });
-
-    doc.save("simulador_escenario.pdf");
-  }
-
   async function init(){
     const res = await fetch(JSON_PATH, {cache:"no-store"});
     if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
@@ -718,14 +715,14 @@
     load();
     setupDrops();
     render();
-
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
   }
 
   document.getElementById("btnAdd").addEventListener("click", addToLibrary);
   document.getElementById("btnResetForm").addEventListener("click", resetForm);
   document.getElementById("btnClear").addEventListener("click", clearScenario);
-  document.getElementById("btnSnapshot").addEventListener("click", snapshotPDF);
+
+  document.getElementById("btnSimNo").addEventListener("click", ()=> simulate("no"));
+  document.getElementById("btnSimYes").addEventListener("click", ()=> simulate("yes"));
 
   init().catch(err=>{
     document.body.innerHTML = `<div style="padding:22px;color:#fda4af">
