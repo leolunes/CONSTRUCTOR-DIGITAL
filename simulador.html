@@ -34,321 +34,302 @@
     .primary{background:var(--accent);color:#071018;}
     .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
     .muted{color:var(--muted);}
-    button[disabled]{opacity:.55;cursor:not-allowed}
-
-    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
-    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
-    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
-
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
     .mini{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
     .mini h3{margin:0 0 8px;font-size:14px;}
-    .table{margin-top:10px;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+    ul{margin:8px 0 0;padding-left:18px;line-height:1.45;}
+    .table{margin-top:12px;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
     table{width:100%;border-collapse:collapse;}
     th,td{padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
     th{font-size:12px;text-align:left;color:var(--muted);background:rgba(255,255,255,.03);}
     td{font-size:13px;}
     .tag{display:inline-block;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);}
-    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
-    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
-    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
-    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
-    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
-    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
-    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
-
-    .eqGrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
-    @media(min-width:520px){.eqGrid{grid-template-columns:1fr 1fr 1fr;}}
-    .eqCard{border:1px solid var(--line);border-radius:16px;padding:10px;background:rgba(255,255,255,.03);}
-    .eqLabel{color:var(--muted);font-size:12px;}
-    .eqValue{font-weight:950;font-size:20px;margin-top:4px;}
-    .eqHint{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.35;}
-
-    .helpLine{stroke:rgba(94,234,212,.35);stroke-width:3;stroke-linecap:round;stroke-dasharray:8 8;opacity:0;}
-    .helpDot{fill:rgba(94,234,212,.55);opacity:0;}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .premium{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:10px; margin-top:10px;
+    }
+    .premiumBox{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:16px; padding:10px 12px;
+      background:rgba(0,0,0,.10);
+    }
+    .big{font-weight:950; font-size:18px;}
+    .bigNum{font-weight:950; font-size:22px; letter-spacing:.3px;}
+    .stateBad{color:#fda4af;}
+    .stateGood{color:#34d399;}
+    .stateWarn{color:#fcd34d;}
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <h1 id="t">Simulador de Cargas del Hogar</h1>
-      <p class="sub" id="d"></p>
-      <div style="margin-top:10px">
-        <span class="pill" id="pGlobal">Global: —</span>
-        <span class="pill" id="pUn">No transferido: 0</span>
-        <span class="pill" id="pEq">∑Fy / ∑Fx / ∑M</span>
+<div class="wrap">
+  <div class="hero">
+    <h1 id="t">Simulador de Cargas del Hogar</h1>
+    <p class="sub" id="d"></p>
+    <div style="margin-top:10px">
+      <span class="pill">Laboratorio didáctico (sin servidor)</span>
+      <span class="pill" id="pCount">Cargas: 0</span>
+      <span class="pill" id="modePill">Modo: —</span>
+    </div>
+    <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+  </div>
+
+  <div class="grid">
+    <!-- IZQ: DIAGRAMA / SIMULACION -->
+    <div class="card">
+      <div class="row">
+        <div>
+          <b>Simulación del pórtico</b>
+          <div class="muted" style="font-size:13px;margin-top:4px;">
+            Flechas por carga (color por tipo + magnitud). Sísmica = flecha horizontal en el nudo.
+          </div>
+        </div>
+        <span class="pill" id="liveState">Estado: —</span>
       </div>
-      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF. Verifica internet/CDN.</div>
+
+      <div class="svgBox" style="margin-top:10px;">
+        <svg id="svg" viewBox="0 0 560 390" width="100%" height="auto" aria-label="Pórtico simulable">
+          <!-- base -->
+          <rect x="0" y="340" width="560" height="50" fill="rgba(255,255,255,.05)"></rect>
+
+          <!-- frame group (we transform this for “deriva”) -->
+          <g id="frame">
+            <!-- foundation -->
+            <rect id="foundation" x="70" y="300" width="150" height="40" rx="10"
+              fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
+            <text x="145" y="325" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO (CRISTO)</text>
+
+            <!-- column -->
+            <rect id="column" x="135" y="90" width="22" height="210" rx="10"
+              fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="146" y="80" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA (VARÓN)</text>
+
+            <!-- beam -->
+            <rect id="beam" x="146" y="90" width="290" height="18" rx="9"
+              fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="290" y="75" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA (MUJER)</text>
+
+            <!-- roller support -->
+            <circle id="rollerBase" cx="436" cy="110" r="11"
+              fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
+            <rect x="412" y="123" width="48" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
+            <text x="436" y="155" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
+
+            <!-- joint node -->
+            <circle id="joint" cx="146" cy="99" r="10" fill="#64748b"></circle>
+            <text x="162" y="103" font-size="12" fill="rgba(255,255,255,.75)">NUDO</text>
+
+            <!-- crack (fisura) -->
+            <path id="crack" d="" stroke="#fb7185" stroke-width="3" fill="none" opacity="0"></path>
+          </g>
+
+          <!-- load arrows -->
+          <g id="loadLayer"></g>
+
+          <!-- transfer “travel lines” -->
+          <g id="travelLayer"></g>
+        </svg>
+
+        <div class="legend">
+          <div class="k"><span class="dot" style="background:#a78bfa"></span>Muerta</div>
+          <div class="k"><span class="dot" style="background:#5eead4"></span>Viva</div>
+          <div class="k"><span class="dot" style="background:#fb7185"></span>Sísmica</div>
+        </div>
+
+        <!-- PREMIUM SUMMARY (big) -->
+        <div class="premium">
+          <div class="premiumBox">
+            <div class="muted">Estado</div>
+            <div class="big" id="premiumState">—</div>
+            <div class="muted" style="margin-top:6px;font-size:12px;" id="premiumSub">—</div>
+          </div>
+          <div class="premiumBox">
+            <div class="muted">Equilibrio</div>
+            <div class="bigNum">∑Fy: <span id="sumFy">0</span></div>
+            <div class="bigNum">∑Fx: <span id="sumFx">0</span></div>
+            <div class="bigNum">∑M: <span id="sumM">0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini">
+        <h3>Reglas rápidas</h3>
+        <ul id="rules"></ul>
+      </div>
+
+      <div class="btns">
+        <button class="ghost" id="btnNoTransfer">Ver SIN transferencia</button>
+        <button class="ghost" id="btnWithTransfer">Ver CON transferencia</button>
+      </div>
+
     </div>
 
-    <div class="grid">
-      <!-- IZQ: ESCENARIO -->
-      <div class="card">
-        <div class="row">
-          <div>
-            <b>Escenario del pórtico</b>
-            <div class="muted" style="font-size:13px;margin-top:4px;">
-              Flechas = cargas · Magnitud sobre la flecha · Transferencia mueve la flecha (no el nombre).
-            </div>
-          </div>
-          <span class="pill" id="liveMode">Modo: —</span>
+    <!-- DER: FORM + LISTADO -->
+    <div class="card">
+      <div class="row">
+        <div>
+          <b>Crear cargas</b>
+          <div class="muted" style="font-size:13px;margin-top:4px;">Se guarda localmente. Exporta TXT y PDF premium.</div>
         </div>
+        <span class="pill">Form</span>
+      </div>
 
-        <div class="mini">
-          <h3>Ecuaciones espirituales (panel pedagógico)</h3>
-          <div class="eqGrid">
-            <div class="eqCard">
-              <div class="eqLabel">∑Fy (vertical no descargado)</div>
-              <div class="eqValue" id="eqFy">0</div>
-              <div class="eqHint">Muertas + vivas fuera del cimiento.</div>
-            </div>
-            <div class="eqCard">
-              <div class="eqLabel">∑Fx (horizontal no descargado)</div>
-              <div class="eqValue" id="eqFx">0</div>
-              <div class="eqHint">Sísmicas fuera del cimiento.</div>
-            </div>
-            <div class="eqCard">
-              <div class="eqLabel">∑M (momento)</div>
-              <div class="eqValue" id="eqM">0</div>
-              <div class="eqHint">Aumenta con sísmica + cargas altas.</div>
-            </div>
-          </div>
+      <div class="fieldgrid">
+        <div>
+          <label>Paciente / hogar</label>
+          <input id="patient" placeholder="Ej: Hogar Abraham y Sara">
         </div>
-
-        <div class="svgBox" style="margin-top:10px;">
-          <svg id="svg" viewBox="0 0 560 380" width="100%" height="auto" aria-label="Simulador pórtico">
-            <!-- ground -->
-            <rect x="0" y="340" width="560" height="40" fill="rgba(255,255,255,.05)"></rect>
-
-            <!-- crack -->
-            <path id="crack" d="" fill="none" stroke="rgba(244,63,94,.9)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0"></path>
-
-            <!-- guide routes -->
-            <g id="routes">
-              <line id="route_beam_column" class="helpLine" x1="285" y1="105" x2="140" y2="200"></line>
-              <line id="route_joint_column" class="helpLine" x1="140" y1="114" x2="140" y2="200"></line>
-              <line id="route_roller_beam" class="helpLine" x1="430" y1="132" x2="285" y2="105"></line>
-              <line id="route_column_foundation" class="helpLine" x1="140" y1="200" x2="140" y2="300"></line>
-
-              <circle id="dot_beam" class="helpDot" cx="285" cy="105" r="6"></circle>
-              <circle id="dot_joint" class="helpDot" cx="140" cy="114" r="6"></circle>
-              <circle id="dot_roller" class="helpDot" cx="430" cy="132" r="6"></circle>
-              <circle id="dot_column" class="helpDot" cx="140" cy="200" r="6"></circle>
-              <circle id="dot_foundation" class="helpDot" cx="140" cy="300" r="6"></circle>
-            </g>
-
-            <!-- GROUP that we will transform -->
-            <g id="frame">
-              <!-- foundation -->
-              <rect id="foundation" x="70" y="295" width="140" height="45" rx="10" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
-              <text x="140" y="323" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO</text>
-
-              <!-- column -->
-              <rect id="column" x="130" y="105" width="20" height="190" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
-              <text x="140" y="96" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA</text>
-
-              <!-- beam -->
-              <rect id="beam" x="140" y="105" width="290" height="18" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
-              <text x="285" y="92" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA</text>
-
-              <!-- roller support -->
-              <circle id="rollerBase" cx="430" cy="132" r="10" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
-              <rect x="410" y="142" width="40" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
-              <text x="430" y="173" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">APOYO MÓVIL</text>
-
-              <!-- nodes -->
-              <circle id="N1" cx="140" cy="295" r="10" fill="#64748b"></circle>
-              <text x="155" y="299" font-size="12" fill="rgba(255,255,255,.75)">1</text>
-              <text x="140" y="283" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COMUNIÓN</text>
-
-              <circle id="N2" cx="140" cy="114" r="10" fill="#64748b"></circle>
-              <text x="155" y="118" font-size="12" fill="rgba(255,255,255,.75)">2</text>
-              <text x="140" y="141" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">NUDO</text>
-
-              <circle id="N3" cx="430" cy="132" r="10" fill="#64748b"></circle>
-              <text x="445" y="136" font-size="12" fill="rgba(255,255,255,.75)">3</text>
-              <text x="430" y="186" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
-            </g>
-
-            <!-- arrows layer -->
-            <g id="arrows"></g>
-          </svg>
-
-          <div class="legend" id="typeLegend"></div>
+        <div>
+          <label>Auditor</label>
+          <input id="auditor" placeholder="Ej: Consejero / Pastor">
         </div>
-
-        <div class="result" id="resBox"></div>
-
-        <div class="btns">
-          <button class="primary" id="btnSimNo">Simular SIN transferencia</button>
-          <button class="ghost" id="btnSimYes">Simular CON transferencia</button>
-          <button class="primary" id="btnTransferAll">Transferir TODO al cimiento (Cristo)</button>
-          <button class="ghost" id="btnClear">Vaciar escenario</button>
+        <div>
+          <label>Fecha (editable)</label>
+          <input id="date" type="date">
         </div>
-
-        <div class="btns">
-          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
-          <button class="ghost" id="btnPdf" disabled>Descargar PDF (captura)</button>
+        <div>
+          <label>Observaciones</label>
+          <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
         </div>
       </div>
 
-      <!-- DER: FORM + LISTA -->
-      <div class="card">
-        <div class="row">
-          <div>
-            <b>Crear carga</b>
-            <div class="muted" style="font-size:13px;margin-top:4px;">
-              Crea la flecha (tipo + magnitud) y ubícala en una zona.
-            </div>
-          </div>
-          <span class="pill">Laboratorio</span>
-        </div>
-
+      <div class="mini">
+        <h3>Nueva carga</h3>
         <div class="fieldgrid">
-          <div>
-            <label>Paciente / hogar</label>
-            <input id="patient" placeholder="Ej: Hogar Abraham y Sara">
+          <div style="grid-column:1/-1">
+            <label>Nombre (solo para listado / PDF)</label>
+            <input id="loadName" placeholder="Ej: Presión financiera / Discusión / Falta de altar">
           </div>
+
           <div>
-            <label>Auditor</label>
-            <input id="auditor" placeholder="Ej: Consejero / Pastor">
+            <label>Tipo</label>
+            <select id="loadType"></select>
           </div>
+
           <div>
-            <label>Fecha</label>
-            <input id="date" type="date">
+            <label>Ubicación</label>
+            <select id="target"></select>
           </div>
+
           <div>
-            <label>Observaciones</label>
-            <textarea id="notes" placeholder="Contexto, acuerdos, detonantes, etc."></textarea>
+            <label>Magnitud (1–100)</label>
+            <input id="mag" type="number" min="1" max="100" value="20">
+          </div>
+
+          <div style="grid-column:1/-1">
+            <label>Detalle</label>
+            <textarea id="detail" placeholder="Qué lo detona / qué se repite / qué se siente"></textarea>
           </div>
         </div>
 
-        <div class="mini">
-          <h3>Nueva flecha (carga)</h3>
-
-          <div class="fieldgrid">
-            <div>
-              <label>Tipo</label>
-              <select id="type"></select>
-            </div>
-            <div>
-              <label>Magnitud</label>
-              <input id="mag" type="number" min="1" step="1" placeholder="Ej: 15">
-            </div>
-
-            <div style="grid-column:1/-1">
-              <label>Nombre (solo para la lista; NO viaja en la transferencia)</label>
-              <input id="name" placeholder="Ej: Presión financiera / Discusión / Falta de altar">
-            </div>
-
-            <div style="grid-column:1/-1">
-              <label>Zona inicial</label>
-              <select id="zone"></select>
-            </div>
-          </div>
-
-          <div class="btns">
-            <button class="primary" id="btnAdd">Crear flecha</button>
-            <button class="ghost" id="btnResetForm">Limpiar</button>
-          </div>
-
-          <div class="muted" style="font-size:13px;margin-top:8px;">
-            Sísmica = flecha horizontal (recomendado en Nudo).
-          </div>
+        <div class="btns">
+          <button class="primary" id="btnAdd">Agregar carga</button>
+          <button class="ghost" id="btnClear">Limpiar</button>
         </div>
 
-        <div class="mini">
-          <h3>Flechas colocadas</h3>
-          <div class="table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Flecha</th>
-                  <th>Zona</th>
-                  <th>Tipo</th>
-                  <th>Magnitud</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody id="rows"></tbody>
-            </table>
-          </div>
-          <div class="muted" style="font-size:13px;margin-top:8px;">
-            La guía de transferencia aparece cuando transfieres (línea punteada). “Transferir” mueve flechas por pasos.
-          </div>
+        <div class="muted" style="margin-top:10px;font-size:13px;">
+          Nota: en el pórtico NO se transfiere el nombre; se transfiere la flecha con su magnitud.
         </div>
+      </div>
 
+      <div class="btns">
+        <button class="ghost" id="btnTransfer">Transferir cargas (animación)</button>
+        <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+        <button class="ghost" id="btnPdf" disabled>Descargar PDF premium</button>
+        <button class="ghost" id="btnReset">Borrar todo</button>
+      </div>
+
+      <div class="mini">
+        <h3>Listado de cargas</h3>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>Carga</th>
+                <th>Tipo</th>
+                <th>Ubicación</th>
+                <th>Magnitud</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<!-- jsPDF + AutoTable -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
   const JSON_PATH = "simulador.json";
   const LOGO_PATH = "logo.png";
-  const STORAGE_KEY = "simulador_cargas_v2";
+  const STORAGE_KEY = "simulador_cargas_v1";
 
   let DATA=null;
   let logoDataUrl=null;
 
   const state = {
     header: { patient:"", auditor:"", date:"", notes:"" },
-    placed: [] // {id, name, type, mag, zone, createdAt}
+    loads: [],          // {id,name,type,target,mag,detail,createdAt}
+    transferred: false  // global mode for simulation
   };
 
-  // UI
+  // ====== Elements ======
   const tEl = document.getElementById("t");
   const dEl = document.getElementById("d");
-  const pGlobal = document.getElementById("pGlobal");
-  const pUn = document.getElementById("pUn");
-  const liveMode = document.getElementById("liveMode");
-  const rowsEl = document.getElementById("rows");
-  const arrowsEl = document.getElementById("arrows");
-  const resBox = document.getElementById("resBox");
-  const crackEl = document.getElementById("crack");
-  const frameEl = document.getElementById("frame");
-  const typeLegend = document.getElementById("typeLegend");
-  const pdfWarn = document.getElementById("pdfWarn");
+  const rulesEl = document.getElementById("rules");
 
-  const eqFyEl = document.getElementById("eqFy");
-  const eqFxEl = document.getElementById("eqFx");
-  const eqMEl  = document.getElementById("eqM");
+  const pCount = document.getElementById("pCount");
+  const modePill = document.getElementById("modePill");
+  const liveState = document.getElementById("liveState");
+
+  const premiumState = document.getElementById("premiumState");
+  const premiumSub = document.getElementById("premiumSub");
+  const sumFyEl = document.getElementById("sumFy");
+  const sumFxEl = document.getElementById("sumFx");
+  const sumMEl = document.getElementById("sumM");
 
   const patientEl = document.getElementById("patient");
   const auditorEl = document.getElementById("auditor");
   const dateEl = document.getElementById("date");
   const notesEl = document.getElementById("notes");
 
-  const typeEl = document.getElementById("type");
+  const loadNameEl = document.getElementById("loadName");
+  const loadTypeEl = document.getElementById("loadType");
+  const targetEl = document.getElementById("target");
   const magEl = document.getElementById("mag");
-  const nameEl = document.getElementById("name");
-  const zoneEl = document.getElementById("zone");
+  const detailEl = document.getElementById("detail");
 
+  const rowsEl = document.getElementById("rows");
   const btnTxt = document.getElementById("btnTxt");
   const btnPdf = document.getElementById("btnPdf");
+  const pdfWarn = document.getElementById("pdfWarn");
 
-  // route elements
-  const route = {
-    beam_column: document.getElementById("route_beam_column"),
-    joint_column: document.getElementById("route_joint_column"),
-    roller_beam: document.getElementById("route_roller_beam"),
-    column_foundation: document.getElementById("route_column_foundation"),
-    dot_beam: document.getElementById("dot_beam"),
-    dot_joint: document.getElementById("dot_joint"),
-    dot_roller: document.getElementById("dot_roller"),
-    dot_column: document.getElementById("dot_column"),
-    dot_foundation: document.getElementById("dot_foundation")
-  };
+  // SVG elements
+  const svgEl = document.getElementById("svg");
+  const frameEl = document.getElementById("frame");
+  const crackEl = document.getElementById("crack");
+  const jointEl = document.getElementById("joint");
+  const loadLayer = document.getElementById("loadLayer");
+  const travelLayer = document.getElementById("travelLayer");
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
 
   function setDefaultDateIfEmpty(){
     if(dateEl.value) return;
     const d = new Date();
     dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
   }
-
-  function okPdfLib(){ return !!(window.jspdf && window.jspdf.jsPDF); }
 
   function save(){
     state.header.patient = patientEl.value || "";
@@ -364,7 +345,8 @@
       if(!raw) return;
       const payload = JSON.parse(raw);
       state.header = payload.header || state.header;
-      state.placed = Array.isArray(payload.placed) ? payload.placed : [];
+      state.loads = Array.isArray(payload.loads) ? payload.loads : [];
+      state.transferred = !!payload.transferred;
     }catch(e){}
   }
 
@@ -375,497 +357,383 @@
     notesEl.value = state.header.notes || "";
   }
 
+  function enumItem(list, key){
+    return list.find(x=>x.key===key) || null;
+  }
+  function enumLabel(list, key){
+    const it = enumItem(list, key);
+    return it ? it.label : key;
+  }
+
+  function setupEnums(){
+    loadTypeEl.innerHTML = DATA.enums.loadType.map(x=>`<option value="${x.key}">${x.label}</option>`).join("");
+    targetEl.innerHTML = DATA.enums.target.map(x=>`<option value="${x.key}">${x.label}</option>`).join("");
+  }
+
+  // ====== SIM MATH (Fy / Fx / M) ======
+  function sums(){
+    // Fy: sum of muerta+viva magnitudes
+    // Fx: sum of sismica magnitudes
+    // M: a didactic moment proxy = Fx*2 + (Fy if untransferred from beam)*1.2 + (Fy on column if not to foundation)*0.8
+    let Fy=0, Fx=0, M=0;
+
+    state.loads.forEach(L=>{
+      const mag = Number(L.mag||0);
+      if(L.type === "sismica"){
+        Fx += mag;
+      }else{
+        Fy += mag;
+      }
+      // moment proxy
+      if(!state.transferred){
+        if(L.type === "sismica") M += mag * 2.0;
+        if(L.target === "viga" && L.type !== "sismica") M += mag * 1.2;
+        if(L.target === "columna" && L.type !== "sismica") M += mag * 0.8;
+      }else{
+        // with transfer, residual moment small
+        if(L.type === "sismica") M += mag * 0.25;
+      }
+    });
+
+    Fy = Math.round(Fy);
+    Fx = Math.round(Fx);
+    M  = Math.round(M);
+    return {Fy,Fx,M};
+  }
+
+  // ====== SVG DRAWING (arrows with magnitudes) ======
+  function clearLayer(g){
+    while(g.firstChild) g.removeChild(g.firstChild);
+  }
+
+  function svgElNS(tag){
+    return document.createElementNS("http://www.w3.org/2000/svg", tag);
+  }
+
+  function addArrow({x,y,dir,color,mag,scale=1}){
+    // dir: "down" or "right"
+    // returns group
+    const g = svgElNS("g");
+    g.setAttribute("opacity","0.95");
+
+    const w = Math.max(14, Math.min(42, 14 + mag*0.28)) * scale; // arrow visual size by mag
+    const h = Math.max(30, Math.min(95, 30 + mag*0.60)) * scale;
+
+    // line + head
+    const line = svgElNS("line");
+    line.setAttribute("stroke", color);
+    line.setAttribute("stroke-width", "4");
+    line.setAttribute("stroke-linecap","round");
+
+    const head = svgElNS("polygon");
+    head.setAttribute("fill", color);
+
+    // label
+    const txt = svgElNS("text");
+    txt.setAttribute("fill", "rgba(255,255,255,.88)");
+    txt.setAttribute("font-size","12");
+    txt.setAttribute("font-weight","900");
+    txt.setAttribute("text-anchor","middle");
+    txt.textContent = String(mag);
+
+    if(dir === "down"){
+      line.setAttribute("x1", x);
+      line.setAttribute("y1", y);
+      line.setAttribute("x2", x);
+      line.setAttribute("y2", y + h);
+
+      const p = `${x},${y+h+10} ${x-9},${y+h-2} ${x+9},${y+h-2}`;
+      head.setAttribute("points", p);
+
+      txt.setAttribute("x", x);
+      txt.setAttribute("y", y - 8);
+    }else{
+      line.setAttribute("x1", x);
+      line.setAttribute("y1", y);
+      line.setAttribute("x2", x + h);
+      line.setAttribute("y2", y);
+
+      const p = `${x+h+10},${y} ${x+h-2},${y-9} ${x+h-2},${y+9}`;
+      head.setAttribute("points", p);
+
+      txt.setAttribute("x", x + (h/2));
+      txt.setAttribute("y", y - 10);
+    }
+
+    g.appendChild(line);
+    g.appendChild(head);
+    g.appendChild(txt);
+    loadLayer.appendChild(g);
+    return g;
+  }
+
+  function layoutLoads(){
+    clearLayer(loadLayer);
+
+    // positions:
+    // beam top region ~ x: 250..420, y: 35
+    // column top region ~ x: 120, y: 35
+    // joint for seismic ~ x: 150, y: 130
+    const beamXs = [250, 320, 390, 460];
+    const colXs  = [110, 140];
+    let bI=0, cI=0, nI=0;
+
+    state.loads.forEach(L=>{
+      const lt = enumItem(DATA.enums.loadType, L.type);
+      const color = lt ? lt.color : "#e5e7eb";
+      const mag = Math.max(1, Math.min(100, Number(L.mag||1)));
+
+      if(L.type === "sismica" || L.target === "nudo"){
+        // always horizontal at joint
+        const x = 160;
+        const y = 118 + (nI*22);
+        nI++;
+        addArrow({x,y,dir:"right",color,mag});
+      }else if(L.target === "columna"){
+        const x = colXs[cI % colXs.length];
+        const y = 34;
+        cI++;
+        addArrow({x,y,dir:"down",color,mag});
+      }else{
+        const x = beamXs[bI % beamXs.length];
+        const y = 34;
+        bI++;
+        addArrow({x,y,dir:"down",color,mag});
+      }
+    });
+  }
+
+  // ====== Simulation states: unstable vs stable ======
+  function setUnstable(){
+    // Deriva & rotation based on sums (didactic)
+    const {Fy,Fx,M} = sums();
+    const dx = Math.min(55, Fx * 0.35 + M * 0.08);
+    const rot = Math.min(12, Fx * 0.05 + M * 0.012);
+    frameEl.setAttribute("transform", `translate(${dx},0) rotate(${rot} 146 300)`);
+
+    // crack appears
+    crackEl.setAttribute("opacity","1");
+    crackEl.setAttribute("d", "M120 300 L140 285 L132 270 L150 252 L142 236 L165 220");
+
+    // joint “stressed” color
+    jointEl.setAttribute("fill", "#fb7185");
+  }
+
+  function setStable(){
+    frameEl.setAttribute("transform", `translate(0,0) rotate(0 146 300)`);
+    crackEl.setAttribute("opacity","0");
+    crackEl.setAttribute("d", "");
+    jointEl.setAttribute("fill", "#10b981");
+  }
+
+  function applyMode(){
+    if(state.transferred){
+      setStable();
+      liveState.textContent = "Estado: Estable (transferido)";
+      premiumState.textContent = "CON transferencia";
+      premiumState.className = "big stateGood";
+      premiumSub.textContent = "Cargas descargadas al Cimiento (Cristo). Menos deriva y fisuras.";
+      modePill.textContent = "Modo: CON transferencia";
+    }else{
+      setUnstable();
+      liveState.textContent = "Estado: Deriva + fisuras (no transferido)";
+      premiumState.textContent = "SIN transferencia";
+      premiumState.className = "big stateBad";
+      premiumSub.textContent = "Cargas retenidas: aumenta ∑M (rotación), deriva y fisuras.";
+      modePill.textContent = "Modo: SIN transferencia";
+    }
+  }
+
+  function updatePremiumNumbers(){
+    const {Fy,Fx,M} = sums();
+    sumFyEl.textContent = Fy;
+    sumFxEl.textContent = Fx;
+    sumMEl.textContent = M;
+  }
+
+  // ====== Transfer animation: traveling arrows ======
+  function animateTransfer(){
+    // Create ghost arrows traveling along the path:
+    // viga -> columna -> foundation (vertical+diagonal), nudo(sismo) -> foundation (diagonal)
+    clearLayer(travelLayer);
+
+    const duration = 850; // ms per segment
+    const now = performance.now();
+
+    function makeGhost(color){
+      const g = svgElNS("g");
+      g.setAttribute("opacity","0.95");
+      const c = svgElNS("circle");
+      c.setAttribute("r","8");
+      c.setAttribute("fill", color);
+      g.appendChild(c);
+      travelLayer.appendChild(g);
+      return {g,c};
+    }
+
+    const ghosts = state.loads.map(L=>{
+      const lt = enumItem(DATA.enums.loadType, L.type);
+      return { L, color: (lt?lt.color:"#e5e7eb"), ghost: makeGhost(lt?lt.color:"#e5e7eb") };
+    });
+
+    // Paths (start->mid->end)
+    function pathsFor(L){
+      // end at foundation center
+      const end = {x:145, y:320};
+
+      if(L.type==="sismica" || L.target==="nudo"){
+        // from joint area
+        const start = {x:170, y:120};
+        const mid = {x:145, y:170};
+        return [start, mid, end];
+      }
+      if(L.target==="columna"){
+        const start = {x:125, y:60};
+        const mid = {x:145, y:180};
+        return [start, mid, end];
+      }
+      // viga
+      const start = {x:320, y:60};
+      const mid = {x:170, y:110};
+      return [start, mid, end];
+    }
+
+    function lerp(a,b,t){ return a + (b-a)*t; }
+
+    function tick(ts){
+      const t = ts - now;
+      const segT = t / duration; // 0..?
+      ghosts.forEach(({L,color,ghost})=>{
+        const pts = pathsFor(L);
+        const seg = Math.min(1.999, Math.max(0, segT)); // up to second segment
+        const idx = seg < 1 ? 0 : 1;
+        const local = seg < 1 ? seg : (seg-1);
+        const A = pts[idx];
+        const B = pts[idx+1];
+        const x = lerp(A.x, B.x, local);
+        const y = lerp(A.y, B.y, local);
+        ghost.g.setAttribute("transform", `translate(${x} ${y})`);
+      });
+
+      if(t < duration*2){
+        requestAnimationFrame(tick);
+      }else{
+        // end: set transferred and rerender
+        state.transferred = true;
+        save();
+        render();
+        // fade travel layer
+        travelLayer.setAttribute("opacity","0.0");
+        setTimeout(()=>{ travelLayer.setAttribute("opacity","1"); clearLayer(travelLayer); }, 180);
+      }
+    }
+
+    // show guide lines
+    travelLayer.setAttribute("opacity","1");
+    const guide = svgElNS("path");
+    guide.setAttribute("stroke","rgba(255,255,255,.25)");
+    guide.setAttribute("stroke-width","2");
+    guide.setAttribute("fill","none");
+    guide.setAttribute("stroke-dasharray","6 6");
+    guide.setAttribute("d","M320 60 L170 110 L145 320 M125 60 L145 180 L145 320 M170 120 L145 170 L145 320");
+    travelLayer.appendChild(guide);
+
+    requestAnimationFrame(tick);
+  }
+
+  // ====== CRUD loads ======
+  function clearForm(){
+    loadNameEl.value = "";
+    detailEl.value = "";
+    loadTypeEl.value = "viva";
+    targetEl.value = "viga";
+    magEl.value = "20";
+  }
+
+  function addLoad(){
+    const name = (loadNameEl.value||"").trim() || "Carga";
+    const type = loadTypeEl.value;
+    let target = targetEl.value;
+    const mag = Math.max(1, Math.min(100, Number(magEl.value||1)));
+
+    // enforce: sismica must be at nudo, and drawn horizontal
+    if(type === "sismica") target = "nudo";
+
+    const L = {
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2),
+      name,
+      type,
+      target,
+      mag,
+      detail: (detailEl.value||"").trim(),
+      createdAt: new Date().toISOString()
+    };
+
+    state.loads.unshift(L);
+    // whenever loads change, keep current transfer mode (do not auto-transfer)
+    save();
+    clearForm();
+    render();
+  }
+
+  function deleteLoad(id){
+    if(!confirm("¿Eliminar esta carga?")) return;
+    state.loads = state.loads.filter(x=>x.id !== id);
+    save();
+    render();
+  }
+
+  function renderRows(){
+    rowsEl.innerHTML = "";
+    state.loads.forEach(L=>{
+      const tr = document.createElement("tr");
+      const lt = enumItem(DATA.enums.loadType, L.type);
+      const color = lt ? lt.color : "#e5e7eb";
+      tr.innerHTML = `
+        <td><b>${escapeHtml(L.name)}</b><div class="muted" style="font-size:12px;margin-top:4px">${escapeHtml(L.detail||"")}</div></td>
+        <td><span class="tag" style="border-color:${color};color:${color}">${escapeHtml(enumLabel(DATA.enums.loadType, L.type))}</span></td>
+        <td><span class="tag">${escapeHtml(enumLabel(DATA.enums.target, L.target))}</span></td>
+        <td><b>${L.mag}</b></td>
+        <td><button class="ghost" style="padding:6px 10px;border-radius:10px;font-weight:900" data-del="${L.id}">Eliminar</button></td>
+      `;
+      rowsEl.appendChild(tr);
+    });
+
+    rowsEl.querySelectorAll("[data-del]").forEach(btn=>{
+      btn.addEventListener("click", ()=> deleteLoad(btn.getAttribute("data-del")));
+    });
+  }
+
+  function renderRules(){
+    rulesEl.innerHTML = "";
+    (DATA.texts.rules || []).forEach(r=>{
+      const li = document.createElement("li");
+      li.textContent = r;
+      rulesEl.appendChild(li);
+    });
+  }
+
+  function render(){
+    pCount.textContent = `Cargas: ${state.loads.length}`;
+    btnTxt.disabled = state.loads.length === 0;
+    btnPdf.disabled = state.loads.length === 0 || !okPdfLib();
+    pdfWarn.style.display = okPdfLib() ? "none" : "block";
+
+    layoutLoads();
+    updatePremiumNumbers();
+    applyMode();
+    renderRows();
+  }
+
   function escapeHtml(str){
     return String(str||"").replace(/[&<>"']/g, s => ({
       "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[s]));
   }
 
-  function uid(){
-    return (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"_"+Math.random().toString(16).slice(2));
-  }
-
-  function loadTypeByKey(k){
-    return DATA.loadTypes.find(x=>x.key===k) || DATA.loadTypes[0];
-  }
-
-  function zoneTitle(zoneKey){
-    const z = DATA.sections.find(s=>s.id===zoneKey);
-    return z ? z.title : zoneKey;
-  }
-
-  function renderLegend(){
-    typeLegend.innerHTML = DATA.loadTypes.map(t=>`
-      <div class="k">
-        <span class="dot" style="background:${t.color}"></span>${escapeHtml(t.label)}
-      </div>
-    `).join("");
-  }
-
-  function setupSelects(){
-    typeEl.innerHTML = DATA.loadTypes.map(x=>`<option value="${x.key}">${escapeHtml(x.label)}</option>`).join("");
-    zoneEl.innerHTML = DATA.sections.map(s=>`<option value="${s.id}">${escapeHtml(s.title)}</option>`).join("");
-  }
-
-  function resetForm(){
-    typeEl.value = "viva";
-    const t = loadTypeByKey(typeEl.value);
-    magEl.value = String(t.defaultMagnitude || 10);
-    nameEl.value = "";
-    zoneEl.value = "beam";
-  }
-
-  // anchor points in SVG
-  function zoneAnchor(zoneKey){
-    if(zoneKey==="foundation") return {x:140, y:300};
-    if(zoneKey==="column") return {x:140, y:200};
-    if(zoneKey==="beam") return {x:285, y:105};
-    if(zoneKey==="joint") return {x:140, y:114};
-    if(zoneKey==="roller") return {x:430, y:132};
-    return {x:280,y:180};
-  }
-
-  function addArrowEl(p, idxInZone){
-    const t = loadTypeByKey(p.type);
-    const a = zoneAnchor(p.zone);
-
-    const sw = DATA.render.arrow.strokeWidth || 3;
-    const head = DATA.render.arrow.headSize || 9;
-    const offset = (idxInZone - 1) * 18;
-
-    const g = document.createElementNS("http://www.w3.org/2000/svg","g");
-    g.setAttribute("data-id", p.id);
-
-    const mag = Number(p.mag||0);
-
-    if(t.direction === "horizontal"){
-      // horizontal arrow (sísmica)
-      const y = a.y - 26 + offset;
-      const x1 = a.x - 80;
-      const x2 = a.x + 80;
-
-      const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-      line.setAttribute("x1", x1);
-      line.setAttribute("y1", y);
-      line.setAttribute("x2", x2);
-      line.setAttribute("y2", y);
-      line.setAttribute("stroke", t.color);
-      line.setAttribute("stroke-width", sw);
-      line.setAttribute("stroke-linecap","round");
-
-      const poly = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-      poly.setAttribute("points", `${x2},${y} ${x2-head},${y-head*0.7} ${x2-head},${y+head*0.7}`);
-      poly.setAttribute("fill", t.color);
-
-      const txt = document.createElementNS("http://www.w3.org/2000/svg","text");
-      txt.setAttribute("x", (x1+x2)/2);
-      txt.setAttribute("y", y-10);
-      txt.setAttribute("text-anchor","middle");
-      txt.setAttribute("font-size","12");
-      txt.setAttribute("fill","rgba(255,255,255,.92)");
-      txt.textContent = String(mag);
-
-      g.appendChild(line); g.appendChild(poly); g.appendChild(txt);
-    } else {
-      // vertical arrow
-      const x = a.x + offset;
-      const yTop = (p.zone==="foundation") ? 250 : (a.y - 65);
-      const yBottom = (p.zone==="foundation") ? 290 : (a.y - 15);
-
-      const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-      line.setAttribute("x1", x);
-      line.setAttribute("y1", yTop);
-      line.setAttribute("x2", x);
-      line.setAttribute("y2", yBottom);
-      line.setAttribute("stroke", t.color);
-      line.setAttribute("stroke-width", sw);
-      line.setAttribute("stroke-linecap","round");
-
-      const poly = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-      poly.setAttribute("points", `${x},${yBottom+head} ${x-head*0.7},${yBottom} ${x+head*0.7},${yBottom}`);
-      poly.setAttribute("fill", t.color);
-
-      const txt = document.createElementNS("http://www.w3.org/2000/svg","text");
-      txt.setAttribute("x", x);
-      txt.setAttribute("y", yTop-8);
-      txt.setAttribute("text-anchor","middle");
-      txt.setAttribute("font-size","12");
-      txt.setAttribute("fill","rgba(255,255,255,.92)");
-      txt.textContent = String(mag);
-
-      g.appendChild(line); g.appendChild(poly); g.appendChild(txt);
-    }
-
-    arrowsEl.appendChild(g);
-  }
-
-  function renderArrows(){
-    arrowsEl.innerHTML = "";
-    const groups = {};
-    state.placed.forEach(p=>{
-      const t = loadTypeByKey(p.type);
-      const key = p.zone + "|" + t.direction;
-      groups[key] = groups[key] || [];
-      groups[key].push(p);
-    });
-    Object.keys(groups).forEach(k=>{
-      groups[k].forEach((p, i)=> addArrowEl(p, i));
-    });
-  }
-
-  function renderRows(){
-    rowsEl.innerHTML = "";
-    const sorted = state.placed.slice().sort((a,b)=> (a.zone>b.zone?1:-1));
-    sorted.forEach(p=>{
-      const t = loadTypeByKey(p.type);
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>
-          <b>${escapeHtml(p.name || "(sin nombre)")}</b>
-          <div style="margin-top:6px"><span class="tag" style="border-color:${t.color};color:${t.color}">● ${escapeHtml(t.key)}</span></div>
-        </td>
-        <td>${escapeHtml(zoneTitle(p.zone))}</td>
-        <td>${escapeHtml(t.label)}</td>
-        <td><b>${Number(p.mag||0)}</b></td>
-        <td>
-          <button class="ghost" style="padding:7px 10px;border-radius:10px;font-weight:900" data-step="${p.id}">Transferir 1 paso</button>
-          <button class="ghost" style="padding:7px 10px;border-radius:10px;font-weight:900;margin-top:6px" data-del="${p.id}">Eliminar</button>
-        </td>
-      `;
-      rowsEl.appendChild(tr);
-    });
-
-    rowsEl.querySelectorAll("[data-del]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const id = btn.getAttribute("data-del");
-        state.placed = state.placed.filter(x=>x.id!==id);
-        save(); render();
-      });
-    });
-
-    rowsEl.querySelectorAll("[data-step]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const id = btn.getAttribute("data-step");
-        transferOneStep(id, true);
-      });
-    });
-  }
-
-  // ====== ECUACIONES (∑Fy, ∑Fx, ∑M) ======
-  function computeEquations(){
-    const fyF = DATA.equations?.fyFactor ?? 1;
-    const fxF = DATA.equations?.fxFactor ?? 1;
-    const mF  = DATA.equations?.momentFactor ?? 0.55;
-    const arms = DATA.equations?.momentArm || {};
-
-    let Fy = 0;
-    let Fx = 0;
-    let M  = 0;
-
-    state.placed.forEach(p=>{
-      if(p.zone==="foundation") return; // descargado
-      const t = loadTypeByKey(p.type);
-      const mag = Number(p.mag||0);
-
-      if(t.direction==="vertical") Fy += mag * fyF;
-      if(t.direction==="horizontal") Fx += mag * fxF;
-
-      const arm = arms[p.zone] ?? 0.8;
-      // pedagógico: momento suma vertical+horizontal ponderados por brazo, sísmica pesa más en giro
-      const seismicBoost = (t.direction==="horizontal") ? 1.6 : 1.0;
-      M += (mag * arm * mF * seismicBoost);
-    });
-
-    // redondeos
-    Fy = Math.round(Fy);
-    Fx = Math.round(Fx);
-    M  = Math.round(M);
-
-    return {Fy, Fx, M};
-  }
-
-  function updateEqPanel(){
-    const eq = computeEquations();
-    eqFyEl.textContent = String(eq.Fy);
-    eqFxEl.textContent = String(eq.Fx);
-    eqMEl.textContent  = String(eq.M);
-    return eq;
-  }
-
-  // ====== GLOBAL / BANDAS ======
-  function totalUntransferred(){
-    return state.placed.reduce((acc,p)=> acc + (p.zone==="foundation" ? 0 : Number(p.mag||0)), 0);
-  }
-
-  function globalBand(un){
-    const b = DATA.globalBands.find(x=> un>=x.min && un<=x.max);
-    return b || DATA.globalBands[DATA.globalBands.length-1];
-  }
-
-  function badgeForBand(key){
-    if(key==="g_alineado") return "bG";
-    if(key==="g_ajuste") return "bY";
-    if(key==="g_riesgo") return "bO";
-    return "bR";
-  }
-
-  function paintNodesByLoad(){
-    const worst = { N1:0, N2:0, N3:0 };
-
-    state.placed.forEach(p=>{
-      if(p.zone==="foundation") return;
-      const mag = Number(p.mag||0);
-      if(p.zone==="joint") worst.N2 = Math.max(worst.N2, mag);
-      if(p.zone==="beam") worst.N2 = Math.max(worst.N2, mag);
-      if(p.zone==="column") worst.N1 = Math.max(worst.N1, mag);
-      if(p.zone==="roller") worst.N3 = Math.max(worst.N3, mag);
-    });
-
-    const colorFor = (m)=>{
-      if(m<=0) return "#64748b";
-      if(m<20) return DATA.levels[1].color;
-      if(m<45) return DATA.levels[2].color;
-      return DATA.levels[3].color;
-    };
-
-    ["N1","N2","N3"].forEach(n=>{
-      const el = document.getElementById(n);
-      if(el) el.setAttribute("fill", colorFor(worst[n]));
-    });
-  }
-
-  function renderGlobal(){
-    const un = totalUntransferred();
-    const b = globalBand(un);
-    pGlobal.textContent = `Global: ${b.label}`;
-    pUn.textContent = `No transferido: ${un}`;
-
-    const badge = badgeForBand(b.key);
-
-    resBox.style.display = "block";
-    resBox.innerHTML = `
-      <div class="row">
-        <div>
-          <span class="badge ${badge}">${escapeHtml(b.label)}</span>
-          <div class="muted" style="margin-top:6px;font-size:13px;">Carga no transferida: <b>${un}</b></div>
-          <div class="muted" style="margin-top:4px;font-size:13px;">${escapeHtml(b.summary)}</div>
-        </div>
-      </div>
-      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
-        <div style="font-style:italic;">${escapeHtml(b.verse.quote)}</div>
-        <div class="muted" style="margin-top:6px;">(${escapeHtml(b.verse.reference)})</div>
-      </div>
-    `;
-
-    btnTxt.disabled = (state.placed.length===0);
-    btnPdf.disabled = (state.placed.length===0) || !okPdfLib();
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
-  }
-
-  function render(){
-    renderLegend();
-    renderRows();
-    renderArrows();
-    paintNodesByLoad();
-    updateEqPanel();
-    renderGlobal();
-    save();
-  }
-
-  // ====== TRANSFERENCIA DIDÁCTICA (líneas guía) ======
-  function hideAllRoutes(){
-    Object.values(route).forEach(el=>{
-      if(!el) return;
-      el.style.opacity = "0";
-    });
-  }
-
-  function showRouteForStep(from, to){
-    hideAllRoutes();
-
-    // show dots
-    const dotMap = {
-      beam: route.dot_beam,
-      joint: route.dot_joint,
-      roller: route.dot_roller,
-      column: route.dot_column,
-      foundation: route.dot_foundation
-    };
-
-    const d1 = dotMap[from];
-    const d2 = dotMap[to];
-    if(d1) d1.style.opacity = "1";
-    if(d2) d2.style.opacity = "1";
-
-    // show corresponding line
-    if(from==="beam" && to==="column" && route.beam_column) route.beam_column.style.opacity="1";
-    if(from==="joint" && to==="column" && route.joint_column) route.joint_column.style.opacity="1";
-    if(from==="roller" && to==="beam" && route.roller_beam) route.roller_beam.style.opacity="1";
-    if(from==="column" && to==="foundation" && route.column_foundation) route.column_foundation.style.opacity="1";
-  }
-
-  async function blinkRoute(from,to){
-    showRouteForStep(from,to);
-    await new Promise(r=>setTimeout(r, 520));
-    hideAllRoutes();
-  }
-
-  // ====== SIMULACIÓN (deformación) ======
-  function setStable(){
-    frameEl.setAttribute("transform", "translate(0 0) rotate(0 140 300)");
-    crackEl.setAttribute("opacity","0");
-    crackEl.setAttribute("d","");
-  }
-
-  function setUnstable(){
-    const eq = computeEquations();
-
-    // deriva horizontal: depende de Fx
-    const dx = Math.min(30, eq.Fx * 0.25);
-
-    // rotación/momento: depende de M (sísmica pesa más porque M la incluye con boost)
-    const rot = Math.max(-9, Math.min(9, eq.M * 0.03));
-
-    frameEl.setAttribute("transform", `translate(${dx} 0) rotate(${rot} 140 300)`);
-
-    // fisura: depende de M + Fy
-    const intensity = (eq.M + eq.Fy*0.35);
-    const show = intensity >= 40 ? 1 : (intensity>=22 ? 0.6 : 0);
-    crackEl.setAttribute("opacity", String(show));
-    if(show>0){
-      crackEl.setAttribute("d", "M 110 340 L 130 320 L 120 305 L 150 290 L 140 275");
-    } else {
-      crackEl.setAttribute("d","");
-    }
-  }
-
-  function simulate(mode){
-    if(mode==="no"){
-      liveMode.textContent = "Modo: SIN transferencia (deriva + fisuras)";
-      setUnstable();
-    }else{
-      liveMode.textContent = "Modo: CON transferencia (estable)";
-      setStable();
-    }
-  }
-
-  // ====== CRUD ======
-  function addLoad(){
-    const type = typeEl.value;
-    const t = loadTypeByKey(type);
-
-    let zone = zoneEl.value;
-    if(type==="sismica" && !zone) zone = (t.defaultZone || "joint");
-
-    const min = DATA.render.magnitudes.min;
-    const max = DATA.render.magnitudes.max;
-    const mag = Math.max(min, Math.min(max, Number(magEl.value || t.defaultMagnitude || 10)));
-    const name = (nameEl.value || "").trim();
-
-    state.placed.unshift({
-      id: uid(),
-      name,
-      type,
-      mag,
-      zone,
-      createdAt: new Date().toISOString()
-    });
-
-    resetForm();
-    render();
-  }
-
-  function clearScenario(){
-    if(!confirm("¿Vaciar escenario completo?")) return;
-    state.placed = [];
-    hideAllRoutes();
-    setStable();
-    render();
-    simulate("yes");
-  }
-
-  async function transferOneStep(id, showGuide){
-    const p = state.placed.find(x=>x.id===id);
-    if(!p) return;
-    if(p.zone==="foundation") return;
-
-    const from = p.zone;
-    const to = DATA.transferGraph[p.zone] || null;
-    if(!to) return;
-
-    if(showGuide) await blinkRoute(from,to);
-
-    p.zone = to;
-    renderArrows();
-    paintNodesByLoad();
-    updateEqPanel();
-    renderGlobal();
-    save();
-  }
-
-  function lockUI(isLocked){
-    ["btnAdd","btnResetForm","btnSimNo","btnSimYes","btnTransferAll","btnClear","btnTxt","btnPdf"]
-      .forEach(id=>{
-        const el = document.getElementById(id);
-        if(el) el.disabled = !!isLocked;
-      });
-  }
-
-  async function transferAllAnimated(){
-    if(state.placed.length===0){
-      alert("No hay flechas colocadas.");
-      return;
-    }
-
-    lockUI(true);
-    liveMode.textContent = "Modo: Transferencia (guía + animación)";
-
-    // animación por rondas
-    for(let round=0; round<12; round++){
-      let moved = 0;
-
-      // mostrar guía por cada tipo de paso presente (didáctico)
-      const stepsPresent = new Set();
-      state.placed.forEach(p=>{
-        if(p.zone==="foundation") return;
-        const to = DATA.transferGraph[p.zone];
-        if(to) stepsPresent.add(p.zone + "->" + to);
-      });
-
-      // reproducir guías principales presentes
-      for(const s of stepsPresent){
-        const [from,to] = s.split("->");
-        await blinkRoute(from,to);
-      }
-
-      // mover todos 1 paso
-      state.placed.forEach(p=>{
-        if(p.zone==="foundation") return;
-        const to = DATA.transferGraph[p.zone];
-        if(to){
-          p.zone = to;
-          moved++;
-        }
-      });
-
-      renderArrows();
-      paintNodesByLoad();
-      updateEqPanel();
-      renderGlobal();
-      save();
-
-      if(moved===0) break;
-      await new Promise(r=>setTimeout(r, 520));
-    }
-
-    hideAllRoutes();
-    simulate("yes");
-    lockUI(false);
-  }
-
-  // ====== TXT/PDF (se mantiene como antes, TXT incluido) ======
+  // ====== TXT export ======
   function buildTXT(){
-    const L = [];
+    const L=[];
     L.push((DATA.meta.title||"SIMULADOR").toUpperCase());
     L.push("");
     L.push("DATOS");
@@ -876,28 +744,34 @@
     L.push(notesEl.value || "(sin observaciones)");
     L.push("");
 
-    const un = totalUntransferred();
-    const eq = computeEquations();
-    const b = globalBand(un);
-
-    L.push("ECUACIONES");
-    L.push(`∑Fy: ${eq.Fy}`);
-    L.push(`∑Fx: ${eq.Fx}`);
-    L.push(`∑M : ${eq.M}`);
+    const S = sums();
+    L.push("RESUMEN PREMIUM");
+    L.push(`Estado: ${state.transferred ? "CON transferencia" : "SIN transferencia"}`);
+    L.push(`∑Fy: ${S.Fy} | ∑Fx: ${S.Fx} | ∑M: ${S.M}`);
     L.push("");
 
-    L.push("RESULTADO GLOBAL");
-    L.push(`No transferido: ${un}`);
-    L.push(`Banda: ${b.label}`);
-    L.push(b.summary);
-    L.push(`${b.verse.quote} (${b.verse.reference})`);
-    L.push("");
-
-    L.push("FLECHAS COLOCADAS");
+    L.push("CARGAS");
     L.push("--------------------------------------------------");
-    state.placed.forEach(p=>{
-      const t = loadTypeByKey(p.type);
-      L.push(`- ${p.name || "(sin nombre)"} | Tipo: ${t.label} | Magnitud: ${p.mag} | Zona: ${zoneTitle(p.zone)}`);
+    state.loads.forEach(x=>{
+      L.push(`- ${x.name}`);
+      L.push(`  Tipo: ${enumLabel(DATA.enums.loadType,x.type)} | Ubicación: ${enumLabel(DATA.enums.target,x.target)} | Magnitud: ${x.mag}`);
+      if(x.detail) L.push(`  Detalle: ${x.detail}`);
+      L.push("");
+    });
+
+    L.push("VERSO FUNDAMENTO");
+    L.push(`${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`);
+    L.push("");
+
+    L.push("PLAN DE TRANSFERENCIA (pasos)");
+    (DATA.planTemplates.transferSteps||[]).forEach(s=> L.push("• "+s));
+    L.push("");
+
+    L.push("PLAN 7 DÍAS");
+    (DATA.planTemplates.plan7||[]).forEach(d=>{
+      L.push(`Día ${d.day}: ${d.title}`);
+      (d.items||[]).forEach(it=> L.push("• "+it));
+      L.push("");
     });
 
     return L.join("\n");
@@ -913,6 +787,7 @@
     URL.revokeObjectURL(a.href);
   }
 
+  // ====== PDF helpers ======
   async function loadLogo(){
     try{
       const res = await fetch(LOGO_PATH, { cache:"no-store" });
@@ -927,12 +802,165 @@
     }catch(e){ return null; }
   }
 
-  function svgToDataUrl(svgEl){
-    const clone = svgEl.cloneNode(true);
-    clone.setAttribute("xmlns","http://www.w3.org/2000/svg");
-    const svgText = new XMLSerializer().serializeToString(clone);
-    const blob = new Blob([svgText], {type:"image/svg+xml;charset=utf-8"});
-    return URL.createObjectURL(blob);
+  function safeName(name){
+    return (name||"simulador")
+      .toLowerCase().replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  function waitFrame(){
+    return new Promise(r => requestAnimationFrame(() => r()));
+  }
+
+  // Convert SVG to PNG (dataURL)
+  async function svgToPngData(svg, w, h){
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(unescape(encodeURIComponent(xml)));
+    const imgSrc = "data:image/svg+xml;base64," + svg64;
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    await new Promise((resolve,reject)=>{
+      img.onload = ()=> resolve();
+      img.onerror = ()=> reject(new Error("No se pudo renderizar el SVG a imagen."));
+      img.src = imgSrc;
+    });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext("2d");
+
+    // fondo sólido para PDF
+    ctx.fillStyle = "#0b1220";
+    ctx.fillRect(0,0,w,h);
+
+    ctx.drawImage(img, 0, 0, w, h);
+    return canvas.toDataURL("image/png");
+  }
+
+  // capture before/after + return snapshot and premium numbers
+  async function captureScenarioMode(mode){
+    const prevTransferred = state.transferred;
+    state.transferred = (mode === "yes");
+    render();
+    await waitFrame();
+
+    const snap = await svgToPngData(svgEl, 1500, 1050);
+    const S = sums();
+
+    // restore
+    state.transferred = prevTransferred;
+    render();
+    await waitFrame();
+    return { snap, S };
+  }
+
+  // Draw the premium header box in PDF
+  function drawPremiumBox(doc, x, y, w, h, modeLabel, S){
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(x, y, w, h, 10, 10, "F");
+    doc.setTextColor(22,33,58);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Resumen premium", x+12, y+20);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    const isYes = modeLabel.toLowerCase().includes("con");
+    doc.setTextColor(isYes ? 16 : 244, isYes ? 185 : 63, isYes ? 129 : 94);
+    doc.text(modeLabel, x+12, y+42);
+
+    doc.setTextColor(22,33,58);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
+    doc.text(`∑Fy: ${S.Fy}`, x+12, y+68);
+    doc.text(`∑Fx: ${S.Fx}`, x+12, y+92);
+    doc.text(`∑M: ${S.M}`, x+12, y+116);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.setTextColor(90,102,130);
+    doc.text(DATA.texts.premiumLegend || "", x+12, y+h-12);
+  }
+
+  // Build didactic images inside hidden SVGs and convert to PNG
+  async function buildDidacticBeamDeflectionPNG(){
+    const s = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
+        <rect width="100%" height="100%" fill="#0b1220"/>
+        <text x="60" y="80" font-family="Arial" font-size="42" fill="#e7eefc" font-weight="800">Deflexión de la Viga (sin transferir a la columna)</text>
+        <text x="60" y="125" font-family="Arial" font-size="22" fill="#a7b4d6">La carga se queda en la viga → curvatura y fatiga</text>
+
+        <!-- supports -->
+        <circle cx="180" cy="470" r="18" fill="#64748b"/>
+        <circle cx="1020" cy="470" r="18" fill="#64748b"/>
+
+        <!-- beam (deflected) -->
+        <path d="M180 420 C 420 520, 780 520, 1020 420" stroke="#5eead4" stroke-width="18" fill="none" stroke-linecap="round"/>
+
+        <!-- loads -->
+        <line x1="430" y1="210" x2="430" y2="360" stroke="#a78bfa" stroke-width="8"/>
+        <polygon points="430,380 412,352 448,352" fill="#a78bfa"/>
+        <line x1="610" y1="210" x2="610" y2="360" stroke="#5eead4" stroke-width="8"/>
+        <polygon points="610,380 592,352 628,352" fill="#5eead4"/>
+        <text x="520" y="190" font-family="Arial" font-size="24" fill="#e7eefc" font-weight="700">Cargas (↓)</text>
+
+        <!-- note -->
+        <rect x="60" y="540" width="1080" height="110" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+        <text x="90" y="585" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="700">Lectura:</text>
+        <text x="190" y="585" font-family="Arial" font-size="20" fill="#a7b4d6">cuando la viga no transfiere, el sistema entra en “agotamiento” y aparece fisura.</text>
+      </svg>
+    `;
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
+    const img = new Image();
+    await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; img.src=url; });
+
+    const c = document.createElement("canvas");
+    c.width = 1200; c.height = 700;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(img,0,0);
+    return c.toDataURL("image/png");
+  }
+
+  async function buildDidacticColumnBucklingPNG(){
+    const s = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
+        <rect width="100%" height="100%" fill="#0b1220"/>
+        <text x="60" y="80" font-family="Arial" font-size="42" fill="#e7eefc" font-weight="800">Pandeo de la Columna (sin transferir al cimiento)</text>
+        <text x="60" y="125" font-family="Arial" font-size="22" fill="#a7b4d6">La carga no descarga al fundamento → inclinación y momento</text>
+
+        <!-- foundation -->
+        <rect x="420" y="560" width="360" height="70" rx="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)"/>
+        <text x="600" y="604" text-anchor="middle" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="800">CIMIENTO</text>
+
+        <!-- buckled column -->
+        <path d="M600 520 C 560 420, 660 320, 600 220" stroke="#fb7185" stroke-width="22" fill="none" stroke-linecap="round"/>
+
+        <!-- top load -->
+        <line x1="600" y1="120" x2="600" y2="190" stroke="#a78bfa" stroke-width="10"/>
+        <polygon points="600,210 578,182 622,182" fill="#a78bfa"/>
+        <text x="640" y="150" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="700">Peso sin descarga</text>
+
+        <!-- horizontal push -->
+        <line x1="300" y1="320" x2="460" y2="320" stroke="#fb7185" stroke-width="10"/>
+        <polygon points="480,320 452,298 452,342" fill="#fb7185"/>
+        <text x="260" y="310" font-family="Arial" font-size="22" fill="#a7b4d6">Empuje (→)</text>
+
+        <rect x="60" y="540" width="1080" height="110" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
+        <text x="90" y="585" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="700">Lectura:</text>
+        <text x="190" y="585" font-family="Arial" font-size="20" fill="#a7b4d6">cuando la columna no transfiere al cimiento, pierde verticalidad y crece el momento.</text>
+      </svg>
+    `;
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
+    const img = new Image();
+    await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; img.src=url; });
+
+    const c = document.createElement("canvas");
+    c.width = 1200; c.height = 700;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(img,0,0);
+    return c.toDataURL("image/png");
   }
 
   async function downloadPDF(){
@@ -956,153 +984,271 @@
       try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
     }
 
-    // portada
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...MUTED);
+        doc.text("Simulador de Cargas del Hogar — Transferencia al Cimiento", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // ===== PORTADA =====
     doc.setFillColor(22,33,58);
-    doc.rect(0,0,W,90,"F");
-    addLogo(W-M-54, 18, 54, 54);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W-M-56, 18, 56, 56);
 
     doc.setFont("helvetica","bold");
     doc.setFontSize(20);
     doc.setTextColor(255,255,255);
-    doc.text("SIMULADOR DE CARGAS DEL HOGAR", M, 52);
+    doc.text("SIMULADOR DE CARGAS DEL HOGAR", M, 50);
 
     doc.setFont("helvetica","normal");
-    doc.setFontSize(11);
+    doc.setFontSize(12);
     doc.setTextColor(210,230,255);
-    doc.text("Captura del escenario + ∑Fy/∑Fx/∑M", M, 74);
+    doc.text("Antes vs Después + Equilibrio (∑Fy, ∑Fx, ∑M) + Plan de Transferencia", M, 72);
 
-    // datos
     doc.setFillColor(245,247,255);
-    doc.roundedRect(M, 110, W-M*2, 118, 12, 12, "F");
+    doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
     doc.setTextColor(...INK);
     doc.setFont("helvetica","bold");
     doc.setFontSize(12);
-    doc.text("Datos", M+14, 135);
+    doc.text("Datos", M+14, 145);
+
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    doc.text(`Paciente: ${patientEl.value || "(no especificado)"}`, M+14, 160);
-    doc.text(`Auditor: ${auditorEl.value || "(no especificado)"}`, M+14, 180);
-    doc.text(`Fecha: ${dateEl.value || "(no especificada)"}`, M+14, 200);
-
-    const un = totalUntransferred();
-    const eq = computeEquations();
-    const band = globalBand(un);
+    doc.text(`Paciente: ${patientEl.value || "(no especificado)"}`, M+14, 172);
+    doc.text(`Auditor: ${auditorEl.value || "(no especificado)"}`, M+14, 192);
+    doc.text(`Fecha: ${dateEl.value || "(no especificada)"}`, M+14, 212);
 
     doc.setFillColor(255,255,255);
-    doc.roundedRect(M, 240, W-M*2, 110, 12, 12, "F");
+    doc.roundedRect(M, 260, W-M*2, 140, 12, 12, "F");
     doc.setFont("helvetica","bold");
-    doc.setFontSize(12);
     doc.setTextColor(...INK);
-    doc.text(`Global: ${band.label}`, M+14, 268);
+    doc.text("Verso fundamento", M+14, 288);
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(DATA.verses.foundation.quote, W-M*2-28), M+14, 310);
     doc.setFont("helvetica","normal");
-    doc.setFontSize(10.5);
-    doc.text(doc.splitTextToSize(`No transferido: ${un} · ∑Fy=${eq.Fy} · ∑Fx=${eq.Fx} · ∑M=${eq.M}`, W-M*2-28), M+14, 288);
-    doc.text(doc.splitTextToSize(band.summary, W-M*2-28), M+14, 312);
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${DATA.verses.foundation.reference})`, M+14, 384);
 
-    // captura
-    const svg = document.getElementById("svg");
-    const url = svgToDataUrl(svg);
-
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    await new Promise(resolve=>{
-      img.onload = resolve;
-      img.onerror = resolve;
-      img.src = url;
-    });
-
-    const canvas = document.createElement("canvas");
-    canvas.width = 1200;
-    canvas.height = 800;
-    const ctx = canvas.getContext("2d");
-
-    ctx.fillStyle = "#0b1220";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    URL.revokeObjectURL(url);
-
-    const png = canvas.toDataURL("image/png");
-
+    // ===== PAGE 2: ANTES =====
     doc.addPage();
     addLogo(M, 16, 32, 32);
     doc.setFont("helvetica","bold");
     doc.setFontSize(14);
     doc.setTextColor(...INK);
-    doc.text("Captura del escenario", M, 64);
+    doc.text("ANTES — Sin transferencia (deriva + fisuras)", M, 64);
     doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
 
+    const before = await captureScenarioMode("no");
+    drawPremiumBox(doc, M, 90, W-M*2, 135, "SIN transferencia", before.S);
+
     const imgW = W - M*2;
-    const imgH = (imgW * canvas.height) / canvas.width;
-    doc.addImage(png, "PNG", M, 90, imgW, Math.min(imgH, H-140));
+    const imgH = (imgW * 1050) / 1500;
+    doc.addImage(before.snap, "PNG", M, 240, imgW, Math.min(imgH, H-300));
 
-    const n = doc.getNumberOfPages();
-    for(let i=1;i<=n;i++){
-      doc.setPage(i);
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(9);
-      doc.setTextColor(...MUTED);
-      doc.text("Simulador de Cargas — Hogar como Sistema Estructural", M, H-18);
-      doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
-    }
+    // ===== PAGE 3: DESPUÉS =====
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...INK);
+    doc.text("DESPUÉS — Con transferencia al Cimiento (Cristo)", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
 
-    doc.save("simulador_cargas.pdf");
+    const after = await captureScenarioMode("yes");
+    drawPremiumBox(doc, M, 90, W-M*2, 135, "CON transferencia", after.S);
+
+    doc.addImage(after.snap, "PNG", M, 240, imgW, Math.min(imgH, H-300));
+
+    // ===== PAGE 4: Imagen Deflexión + lectura =====
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text(DATA.readings.beamDeflection.title, M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    const defPng = await buildDidacticBeamDeflectionPNG();
+    doc.addImage(defPng, "PNG", M, 92, imgW, (imgW*700)/1200);
+
+    let y = 92 + (imgW*700)/1200 + 14;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Lectura espiritual", M, y); y += 14;
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10.5); doc.setTextColor(...INK);
+    const beamSp = (DATA.readings.beamDeflection.spiritual||[]).join(" • ");
+    doc.text(doc.splitTextToSize(beamSp, W-M*2), M, y);
+
+    // ===== PAGE 5: Imagen Pandeo + lectura =====
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text(DATA.readings.columnBuckling.title, M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    const buckPng = await buildDidacticColumnBucklingPNG();
+    doc.addImage(buckPng, "PNG", M, 92, imgW, (imgW*700)/1200);
+
+    y = 92 + (imgW*700)/1200 + 14;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Lectura espiritual", M, y); y += 14;
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10.5); doc.setTextColor(...INK);
+    const colSp = (DATA.readings.columnBuckling.spiritual||[]).join(" • ");
+    doc.text(doc.splitTextToSize(colSp, W-M*2), M, y);
+
+    // ===== PAGE 6: Plan de transferencia + cargas =====
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text("Plan de transferencia de cargas", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
+    doc.text(doc.splitTextToSize(`${DATA.verses.transfer.quote} (${DATA.verses.transfer.reference})`, W-M*2), M, 96);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("Pasos (prácticos)", M, 126);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10.5);
+    const steps = (DATA.planTemplates.transferSteps||[]).map(x=>"• "+x).join("\n");
+    doc.text(steps, M, 146);
+
+    // Tabla de cargas
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("Cargas registradas", M, 260);
+
+    doc.autoTable({
+      startY: 270,
+      head: [["Carga", "Tipo", "Ubicación", "Magnitud"]],
+      body: state.loads.map(L=>[
+        L.name,
+        enumLabel(DATA.enums.loadType, L.type),
+        enumLabel(DATA.enums.target, L.target),
+        String(L.mag)
+      ]),
+      theme:"grid",
+      styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+      headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      margin:{left:M, right:M}
+    });
+
+    // ===== PAGE 7: Plan 7 días + Observaciones =====
+    doc.addPage();
+    addLogo(M, 16, 32, 32);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
+    doc.text("Plan semanal automático (7 días)", M, 64);
+    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+
+    const planRows = (DATA.planTemplates.plan7||[]).map(d=>[
+      `Día ${d.day}`,
+      d.title,
+      (d.items||[]).join(" • ")
+    ]);
+
+    doc.autoTable({
+      startY: 92,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme:"grid",
+      styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+      headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles:{0:{cellWidth:70},1:{cellWidth:170},2:{cellWidth:W-M*2-70-170}},
+      margin:{left:M, right:M}
+    });
+
+    // Observaciones
+    const lastY = doc.lastAutoTable ? doc.lastAutoTable.finalY : 520;
+    const boxY = Math.min(lastY + 18, 560);
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Observaciones", M, boxY);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, boxY+10, W-M*2, 140, 12, 12, "F");
+    doc.setFont("helvetica","normal"); doc.setFontSize(10.5);
+    doc.text(doc.splitTextToSize(notesEl.value || "(sin observaciones)", W-M*2-28), M+14, boxY+34);
+
+    footer();
+
+    const name = safeName(patientEl.value || "hogar");
+    doc.save(`${name}_simulador_cargas.pdf`);
   }
 
-  function resetHeaderSave(){
+  // ====== Reset ======
+  function resetAll(){
+    if(!confirm("¿Borrar TODO el simulador?")) return;
+    localStorage.removeItem(STORAGE_KEY);
+    state.header = { patient:"", auditor:"", date:"", notes:"" };
+    state.loads = [];
+    state.transferred = false;
+    fillHeaderUI();
+    setDefaultDateIfEmpty();
+    clearForm();
     save();
-    renderGlobal();
+    render();
   }
 
+  // ====== Init ======
   async function init(){
     try{
       const res = await fetch(JSON_PATH, {cache:"no-store"});
       if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
       DATA = await res.json();
 
-      tEl.textContent = DATA.meta.title || "Simulador de Cargas del Hogar";
+      tEl.textContent = DATA.meta.title || "Simulador";
       dEl.textContent = DATA.meta.description || "";
-
-      setupSelects();
-      setDefaultDateIfEmpty();
+      renderRules();
+      setupEnums();
 
       load();
       fillHeaderUI();
-
-      renderLegend();
-      resetForm();
-      hideAllRoutes();
-      setStable();
+      setDefaultDateIfEmpty();
+      clearForm();
       render();
-      simulate("yes");
 
       pdfWarn.style.display = okPdfLib() ? "none" : "block";
     }catch(e){
-      document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${escapeHtml(e.message)}<br>
-        <span style="color:#a7b4d6">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</span></div>`;
+      document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${e.message}<br><span style="color:#a7b4d6">Asegúrate de que ${JSON_PATH} esté en la misma carpeta.</span></div>`;
     }
   }
 
-  // events
+  // ====== Events ======
   document.getElementById("btnAdd").addEventListener("click", addLoad);
-  document.getElementById("btnResetForm").addEventListener("click", resetForm);
-  document.getElementById("btnClear").addEventListener("click", clearScenario);
+  document.getElementById("btnClear").addEventListener("click", clearForm);
+  document.getElementById("btnTransfer").addEventListener("click", ()=>{
+    if(state.loads.length===0) return alert("Primero agrega cargas.");
+    animateTransfer();
+  });
 
-  document.getElementById("btnSimNo").addEventListener("click", ()=> simulate("no"));
-  document.getElementById("btnSimYes").addEventListener("click", ()=> simulate("yes"));
-  document.getElementById("btnTransferAll").addEventListener("click", transferAllAnimated);
+  document.getElementById("btnNoTransfer").addEventListener("click", ()=>{
+    state.transferred = false;
+    save(); render();
+  });
+
+  document.getElementById("btnWithTransfer").addEventListener("click", ()=>{
+    state.transferred = true;
+    save(); render();
+  });
 
   document.getElementById("btnTxt").addEventListener("click", downloadTXT);
   document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
 
   [patientEl,auditorEl,dateEl,notesEl].forEach(el=>{
-    el.addEventListener("input", resetHeaderSave);
-    el.addEventListener("change", resetHeaderSave);
+    el.addEventListener("input", save);
+    el.addEventListener("change", save);
   });
 
-  typeEl.addEventListener("change", ()=>{
-    const t = loadTypeByKey(typeEl.value);
-    magEl.value = String(t.defaultMagnitude || 10);
-    if(typeEl.value==="sismica") zoneEl.value = (t.defaultZone || "joint");
+  // enforce: if type becomes sismica, force target to nudo
+  loadTypeEl.addEventListener("change", ()=>{
+    if(loadTypeEl.value==="sismica") targetEl.value = "nudo";
   });
 
   init();
