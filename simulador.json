@@ -1,34 +1,111 @@
 {
   "meta": {
-    "title": "Simulador de Cargas del Hogar — Laboratorio",
-    "description": "Arrastra cargas (muertas/vivas/sísmicas) al pórtico. Asigna magnitud. Transfiere flechas (no nombres) y observa concentración de tensiones."
+    "title": "Simulador de Cargas del Hogar — Laboratorio Visual",
+    "description": "Arrastra/ubica cargas (muertas, vivas, sísmicas), observa ∑Fy/∑Fx/∑M, deriva/fisuras y transfiérelas al cimiento (Cristo)."
   },
-  "loadTypes": [
-    { "key": "muerta", "label": "Carga muerta (permanente)", "color": "#60a5fa" },
-    { "key": "viva", "label": "Carga viva (temporal/variable)", "color": "#34d399" },
-    { "key": "sismica", "label": "Carga sísmica (horizontal)", "color": "#fb7185" }
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
   ],
-  "zones": [
-    { "key": "beam", "label": "Viga (Mujer)", "transferTo": "column" },
-    { "key": "column", "label": "Columna (Varón)", "transferTo": "foundation" },
-    { "key": "joint", "label": "Nudo (Congregación)", "transferTo": "foundation" },
-    { "key": "roller", "label": "Apoyo móvil (Intersección)", "transferTo": "joint" },
-    { "key": "foundation", "label": "Cimiento (Cristo)", "transferTo": null }
-  ],
-  "magnitude": { "min": 1, "max": 10, "default": 5 },
-  "rules": {
-    "maxPerZoneBeforeWarn": 6,
-    "riskThreshold": 22,
-    "criticalThreshold": 35
-  },
-  "verses": {
-    "transferencia": {
-      "quote": "Permaneced en mí, y yo en vosotros.",
-      "reference": "Juan 15:4 (RVR1960)"
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Estable",
+      "min": 0,
+      "max": 24,
+      "summary": "Las cargas están razonablemente transferidas. Mantener hábitos y transferencia ordenada.",
+      "verse": {
+        "quote": "El que edificó sobre la roca... descendió lluvia... y no cayó, porque estaba fundada sobre la roca.",
+        "reference": "Mateo 7:24–25 (RVR1960)"
+      }
     },
-    "cargas": {
-      "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
-      "reference": "1 Pedro 5:7 (RVR1960)"
+    {
+      "key": "g_ajuste",
+      "label": "En ajuste",
+      "min": 25,
+      "max": 59,
+      "summary": "Hay cargas fuera de ruta. Si no se transfieren, aumentará la deriva y el desgaste.",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "En riesgo",
+      "min": 60,
+      "max": 99,
+      "summary": "El sistema está bajo presión. Ajustar transferencia y acuerdos para evitar fisuras activas.",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Crítico",
+      "min": 100,
+      "max": 1000000,
+      "summary": "Carga severa o combinada con sísmica sin descarga. Requiere proceso: no más presión, sí orden y restauración.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "loadTypes": [
+    {
+      "key": "muerta",
+      "label": "Carga muerta (vertical)",
+      "direction": "vertical",
+      "color": "#94a3b8",
+      "defaultMagnitude": 10
+    },
+    {
+      "key": "viva",
+      "label": "Carga viva (vertical)",
+      "direction": "vertical",
+      "color": "#5eead4",
+      "defaultMagnitude": 12
+    },
+    {
+      "key": "sismica",
+      "label": "Carga sísmica (horizontal)",
+      "direction": "horizontal",
+      "color": "#f43f5e",
+      "defaultMagnitude": 18,
+      "defaultZone": "joint"
+    }
+  ],
+  "sections": [
+    { "id": "foundation", "title": "Cimiento (Cristo)", "node": "N1", "element": "foundation" },
+    { "id": "column", "title": "Columna (Varón)", "node": "COL", "element": "column" },
+    { "id": "beam", "title": "Viga (Mujer)", "node": "BEAM", "element": "beam" },
+    { "id": "joint", "title": "Nudo (Congregación del hogar)", "node": "N2", "element": "joint" },
+    { "id": "roller", "title": "Apoyo móvil (Intersección)", "node": "N3", "element": "roller" }
+  ],
+  "transferGraph": {
+    "beam": "column",
+    "joint": "column",
+    "roller": "beam",
+    "column": "foundation"
+  },
+  "render": {
+    "arrow": { "strokeWidth": 3, "headSize": 9 },
+    "magnitudes": { "min": 1, "max": 200 }
+  },
+  "equations": {
+    "fyFactor": 1.0,
+    "fxFactor": 1.0,
+    "momentFactor": 0.55,
+    "momentArm": {
+      "foundation": 0.1,
+      "column": 0.5,
+      "beam": 0.9,
+      "joint": 1.0,
+      "roller": 0.9
     }
   }
 }
