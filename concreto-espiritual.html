@@ -77,17 +77,6 @@
     .hr{height:1px;background:var(--line);margin:10px 0;}
     .twoCol{display:grid;grid-template-columns:1fr;gap:10px;}
     @media(min-width:740px){.twoCol{grid-template-columns:1fr 1fr;}}
-
-    /* Visual del concreto */
-    .vizBox{
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:16px;
-      padding:10px;
-      background:rgba(0,0,0,.10);
-    }
-    .vizLegend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-    .k{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
-    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;}
   </style>
 </head>
 
@@ -129,42 +118,6 @@
             <div class="big" id="overallBand">—</div>
             <div class="muted" id="overallSummary" style="font-size:12px;margin-top:4px;max-width:260px;">—</div>
           </div>
-        </div>
-      </div>
-
-      <!-- VISUAL DEL CONCRETO -->
-      <div class="mini">
-        <h3>Visual del concreto espiritual</h3>
-        <div class="muted" style="font-size:12px;margin-top:-2px">
-          Se “llena” según puntajes por material. Si hay déficit, aparecen vacíos.
-        </div>
-
-        <div class="vizBox" style="margin-top:10px;">
-          <svg id="mixSvg" viewBox="0 0 520 220" width="100%" height="auto" aria-label="Visual del concreto espiritual">
-            <!-- Marco -->
-            <rect x="10" y="10" width="500" height="200" rx="18" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.14)"></rect>
-
-            <!-- Bloque de concreto -->
-            <rect x="45" y="55" width="210" height="130" rx="18" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.18)"></rect>
-            <text x="150" y="45" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">BLOQUE (HOGAR)</text>
-
-            <!-- Vacíos -->
-            <g id="voids" opacity="0.0"></g>
-
-            <!-- “Rellenos” por material (se actualizan) -->
-            <g id="fills"></g>
-
-            <!-- Leyendas a la derecha -->
-            <text x="300" y="45" font-size="12" fill="rgba(255,255,255,.75)">MATERIALES</text>
-            <g id="mixLabels"></g>
-
-            <!-- Indicador de mezcla -->
-            <rect x="300" y="165" width="180" height="10" rx="999" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.12)"></rect>
-            <rect id="mixBalanceBar" x="300" y="165" width="0" height="10" rx="999" fill="rgba(94,234,212,.85)"></rect>
-            <text id="mixBalanceTxt" x="300" y="155" font-size="11" fill="rgba(255,255,255,.75)">Equilibrio (mezcla): —</text>
-          </svg>
-
-          <div class="vizLegend" id="vizLegend"></div>
         </div>
       </div>
 
@@ -247,35 +200,23 @@
   </div>
 </div>
 
-<!-- jsPDF + AutoTable (igual al simulador de cargas) -->
+<!-- jsPDF + AutoTable -->
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
 const JSON_PATH = "concreto-espiritual.json";
-const LOGO_PATH = "logo.png";
-const STORAGE_KEY = "concreto_espiritual_v2";
+const STORAGE_KEY = "concreto_espiritual_v1";
 
 let DATA = null;
-let logoDataUrl = null;
 
 const state = {
   header: { home:"", mentor:"", date:"", notes:"" },
   answers: {} // questionId -> value (1-5)
 };
 
+// ===== Helpers =====
 const $ = id => document.getElementById(id);
-
-function okPdfLib(){
-  return !!(window.jspdf && window.jspdf.jsPDF) &&
-         !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
-}
-
-function setDate(){
-  if($("date").value) return;
-  const d = new Date();
-  $("date").value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-}
 
 function save(){
   state.header.home = $("home").value || "";
@@ -295,25 +236,41 @@ function load(){
   }catch(e){}
 }
 
-function escapeHtml(str){
-  return String(str||"").replace(/[&<>"']/g, s => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[s]));
+function setDate(){
+  if($("date").value) return;
+  const d = new Date();
+  $("date").value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
 
-// ===== Colores por componente (visual + leyenda) =====
-const COMP_COLORS = {
-  palabra:  "#a78bfa", // cemento
-  espiritu: "#60a5fa", // agua
-  fe:       "#fb7185", // acero
-  triturado:"#f59e0b", // agregado grueso
-  arena:    "#facc15", // arena
-  mezcla:   "#5eead4"  // balance
-};
+function okPdfLib(){
+  return !!(window.jspdf && window.jspdf.jsPDF) &&
+    !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+}
 
-function compLabel(key){
-  const c = DATA.components.find(x=>x.key===key);
-  return c ? c.label : key;
+function safeName(name){
+  return (name||"hogar")
+    .toLowerCase().replace(/\s+/g,"_")
+    .replace(/[^a-z0-9_\-]/g,"")
+    .slice(0,60);
+}
+
+function requireComplete(){
+  const answered = Object.keys(state.answers).length;
+  if(answered < DATA.questions.length){
+    alert("Responde todas las preguntas antes de exportar PDF.");
+    return false;
+  }
+  return true;
+}
+
+function renderRules(){
+  const rules = $("rules");
+  rules.innerHTML = "";
+  (DATA.texts.rules || []).forEach(r=>{
+    const li = document.createElement("li");
+    li.textContent = r;
+    rules.appendChild(li);
+  });
 }
 
 // ===== Render preguntas =====
@@ -325,16 +282,16 @@ function renderQuestions(){
     block.className = "qBlock";
     block.innerHTML = `
       <div class="qHead">
-        <b>${escapeHtml(q.text)}</b>
-        <span class="tag">${escapeHtml(q.component)}</span>
+        <b>${q.text}</b>
+        <span class="tag">${q.component}</span>
       </div>
-      <div class="qHelp">${escapeHtml(q.help || "")}</div>
+      <div class="qHelp">${q.help || ""}</div>
       <div class="qOpts">
         ${DATA.scale.labels.map(l=>`
           <label class="opt ${state.answers[q.id]==l.value?"sel":""}">
             <input type="radio" name="${q.id}" value="${l.value}">
             <b>${l.value}</b>
-            <small>${escapeHtml(l.label)}</small>
+            <small>${l.label}</small>
           </label>
         `).join("")}
       </div>
@@ -347,10 +304,6 @@ function renderQuestions(){
         save();
         renderQuestions();
         updateCounts();
-        // si ya estaba completo, recalcula live
-        if(Object.keys(state.answers).length === DATA.questions.length){
-          renderResult(true);
-        }
       });
     });
   });
@@ -373,7 +326,7 @@ function calc(){
     const arr = compScores[c.key];
     const avg = arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
     const pct = Math.round((avg / DATA.scale.max) * 100);
-    compResult[c.key] = { pct, avg, answered: arr.length, totalQ: arr.length };
+    compResult[c.key] = { pct, avg };
     total += pct * c.weight;
   });
 
@@ -381,126 +334,9 @@ function calc(){
   return { overall, compResult };
 }
 
+// ===== Band =====
 function bandFor(score){
   return DATA.bands.find(b=> score>=b.min && score<=b.max) || DATA.bands[DATA.bands.length-1];
-}
-
-// ===== Visual del concreto =====
-function svgNS(tag){ return document.createElementNS("http://www.w3.org/2000/svg", tag); }
-
-function renderConcreteVisual(compResult, overallBand){
-  const fills = $("fills");
-  const voids = $("voids");
-  const labels = $("mixLabels");
-  const legend = $("vizLegend");
-  const mixBar = $("mixBalanceBar");
-  const mixTxt = $("mixBalanceTxt");
-
-  // limpiar
-  while(fills.firstChild) fills.removeChild(fills.firstChild);
-  while(voids.firstChild) voids.removeChild(voids.firstChild);
-  while(labels.firstChild) labels.removeChild(labels.firstChild);
-  legend.innerHTML = "";
-
-  // Mapa de “materiales” dentro del bloque (rectangulitos/partículas)
-  // Zona del bloque: x 60..240, y 68..178
-  const blockX = 60, blockY = 68, blockW = 180, blockH = 110;
-
-  // “Vacíos” según déficits: si un componente está <60, aumenta vacíos
-  const deficitKeys = Object.keys(compResult).filter(k => compResult[k].pct < 60);
-  const voidCount = Math.min(18, deficitKeys.length * 6);
-
-  for(let i=0;i<voidCount;i++){
-    const cx = blockX + 10 + Math.random()*(blockW-20);
-    const cy = blockY + 10 + Math.random()*(blockH-20);
-    const r = 4 + Math.random()*5;
-    const c = svgNS("circle");
-    c.setAttribute("cx", cx);
-    c.setAttribute("cy", cy);
-    c.setAttribute("r", r);
-    c.setAttribute("fill", "rgba(0,0,0,.25)");
-    c.setAttribute("stroke", "rgba(255,255,255,.12)");
-    voids.appendChild(c);
-  }
-  voids.setAttribute("opacity", voidCount>0 ? "1" : "0");
-
-  // Partículas por componente (cantidad proporcional al pct)
-  const keys = ["palabra","espiritu","fe","triturado","arena","mezcla"];
-  keys.forEach((k, idx)=>{
-    const pct = compResult[k]?.pct ?? 0;
-    const count = Math.round((pct/100) * 18); // 0..18 partículas por material
-
-    for(let i=0;i<count;i++){
-      const cx = blockX + 10 + Math.random()*(blockW-20);
-      const cy = blockY + 10 + Math.random()*(blockH-20);
-      const r = 3 + Math.random()*4;
-      const c = svgNS("circle");
-      c.setAttribute("cx", cx);
-      c.setAttribute("cy", cy);
-      c.setAttribute("r", r);
-      c.setAttribute("fill", COMP_COLORS[k] || "rgba(255,255,255,.6)");
-      c.setAttribute("opacity", "0.9");
-      fills.appendChild(c);
-    }
-
-    // Labels a la derecha
-    const y = 70 + idx*16;
-    const dot = svgNS("circle");
-    dot.setAttribute("cx", 305);
-    dot.setAttribute("cy", y-4);
-    dot.setAttribute("r", 5);
-    dot.setAttribute("fill", COMP_COLORS[k] || "rgba(255,255,255,.6)");
-    labels.appendChild(dot);
-
-    const txt = svgNS("text");
-    txt.setAttribute("x", 318);
-    txt.setAttribute("y", y);
-    txt.setAttribute("font-size", "11");
-    txt.setAttribute("fill", "rgba(255,255,255,.82)");
-    txt.textContent = `${compLabel(k).split("—")[0].trim()}: ${pct}%`;
-    labels.appendChild(txt);
-
-    // Legend pills abajo
-    const pill = document.createElement("div");
-    pill.className = "k";
-    pill.innerHTML = `<span class="dot" style="background:${COMP_COLORS[k]||"#e5e7eb"}"></span>${escapeHtml(k)} — ${pct}%`;
-    legend.appendChild(pill);
-  });
-
-  // “Equilibrio de mezcla” (desbalance = diferencia entre max y min componente)
-  const vals = keys.map(k => compResult[k]?.pct ?? 0);
-  const maxV = Math.max(...vals);
-  const minV = Math.min(...vals);
-  const balance = Math.max(0, 100 - (maxV - minV)); // 100 perfecto, 0 muy desbalanceado
-
-  mixBar.setAttribute("width", String(Math.round((balance/100)*180)));
-  mixBar.setAttribute("fill", overallBand.badgeColor || "rgba(94,234,212,.85)");
-  mixTxt.textContent = `Equilibrio (mezcla): ${balance}% (gap ${maxV-minV} pts)`;
-}
-
-// ===== Hallazgos (déficit + exceso por desbalance) =====
-function computeFindings(compResult){
-  const lows = [];
-  const highs = [];
-  Object.entries(compResult).forEach(([k,v])=>{
-    if(v.pct < 60) lows.push({k, v:v.pct});
-    if(v.pct > 90) highs.push({k, v:v.pct});
-  });
-
-  // exceso solo cuenta como hallazgo si hay alguien bajo (según regla del JSON)
-  const excess = (lows.length>0) ? highs : [];
-  return { lows, excess };
-}
-
-// ===== Render resultados =====
-function renderRules(){
-  const rules = $("rules");
-  rules.innerHTML = "";
-  (DATA.texts.rules || []).forEach(r=>{
-    const li = document.createElement("li");
-    li.textContent = r;
-    rules.appendChild(li);
-  });
 }
 
 function updateCounts(){
@@ -508,27 +344,17 @@ function updateCounts(){
   $("ansCount").textContent = `Respondidas: ${Object.keys(state.answers).length}/${DATA.questions.length}`;
 }
 
-function setPdfButtonsEnabled(enabled){
-  const pdfOk = okPdfLib();
-  $("btnTxt").disabled = !enabled;
-  $("btnPdf").disabled = !enabled || !pdfOk;
-  $("btnTeachPdf").disabled = !pdfOk;
-  $("pdfWarn").style.display = pdfOk ? "none" : "block";
-}
-
-function renderResult(silent=false){
+// ===== Render resultados =====
+function renderResult(){
   updateCounts();
 
   const answered = Object.keys(state.answers).length;
 
   if(answered < DATA.questions.length){
     $("liveState").textContent = "Estado: incompleto";
-    $("overallScore").textContent = "—";
-    $("overallBand").textContent = "—";
-    $("overallSummary").textContent = "Responde todas las preguntas para calcular.";
-    $("bandPill").textContent = "Calidad: —";
-    setPdfButtonsEnabled(false);
-    if(!silent) alert("Responde todas las preguntas para calcular el diagnóstico.");
+    $("btnTxt").disabled = true;
+    $("btnPdf").disabled = true;
+    $("btnTeachPdf").disabled = true;
     return;
   }
 
@@ -541,7 +367,7 @@ function renderResult(silent=false){
   $("bandPill").textContent = `Calidad: ${band.label}`;
   $("liveState").textContent = "Estado: evaluado";
 
-  // bars
+  // Bars
   const bars = $("bars");
   bars.innerHTML = "";
   DATA.components.forEach(c=>{
@@ -550,109 +376,79 @@ function renderResult(silent=false){
     div.className = "barItem";
     div.innerHTML = `
       <div class="barTop">
-        <div class="barTitle">${escapeHtml(c.label)}</div>
+        <div class="barTitle">${c.label}</div>
         <div class="barNum">${r.pct}%</div>
       </div>
       <div class="barBg">
         <div class="barFill" style="width:${r.pct}%;background:${band.badgeColor}"></div>
       </div>
-      <div class="muted" style="font-size:12px;margin-top:6px">${escapeHtml(c.summary||"")}</div>
+      <div class="muted" style="font-size:12px;margin-top:6px">${c.summary}</div>
     `;
     bars.appendChild(div);
   });
 
-  // findings
-  const { lows, excess } = computeFindings(compResult);
+  // Findings
   const f = $("findings");
   f.innerHTML = "";
+  const lows = [];
+  const highs = [];
 
-  if(lows.length===0 && excess.length===0){
-    f.innerHTML = "<li>Sin desbalances críticos detectados.</li>";
-  }else{
-    lows.forEach(x=>{
-      const li = document.createElement("li");
-      li.innerHTML = `Déficit en <b>${escapeHtml(x.k)}</b> (${x.v}%)`;
-      f.appendChild(li);
-    });
-    excess.forEach(x=>{
-      const li = document.createElement("li");
-      li.innerHTML = `Posible exceso por desbalance en <b>${escapeHtml(x.k)}</b> (${x.v}%)`;
-      f.appendChild(li);
-    });
-  }
-
-  // focus
-  const fo = $("focus");
-  fo.innerHTML = "";
-  (band.focus||[]).forEach(x=>{
-    const li = document.createElement("li");
-    li.textContent = x;
-    fo.appendChild(li);
+  Object.entries(compResult).forEach(([k,v])=>{
+    if(v.pct < 60) lows.push(k);
+    if(v.pct > 90) highs.push(k);
   });
 
-  // verse + rules
+  if(lows.length===0 && highs.length===0){
+    f.innerHTML = "<li>Sin desbalances críticos detectados.</li>";
+  } else {
+    lows.forEach(l=> f.innerHTML += `<li>Déficit en <b>${l}</b></li>`);
+    highs.forEach(h=> f.innerHTML += `<li>Posible exceso en <b>${h}</b></li>`);
+  }
+
+  // Focus
+  const fo = $("focus");
+  fo.innerHTML = "";
+  band.focus.forEach(x=> fo.innerHTML += `<li>${x}</li>`);
+
+  // Verse
   $("verse").textContent = `${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`;
+
+  // Rules
   renderRules();
 
-  // Visual concreto
-  renderConcreteVisual(compResult, band);
+  // Enable buttons
+  $("btnTxt").disabled = false;
+  $("btnPdf").disabled = !okPdfLib();
+  $("btnTeachPdf").disabled = !okPdfLib();
 
-  setPdfButtonsEnabled(true);
+  // PDF warn
+  $("pdfWarn").style.display = okPdfLib() ? "none" : "block";
 }
 
 // ===== TXT =====
 function downloadTXT(){
   const { overall, compResult } = calc();
   const band = bandFor(overall);
-  const { lows, excess } = computeFindings(compResult);
 
-  const out=[];
-  out.push((DATA.meta.title||"CONCRETO ESPIRITUAL").toUpperCase());
+  let out = [];
+  out.push("CONCRETO ESPIRITUAL — DIAGNÓSTICO");
   out.push("");
-  out.push("DATOS");
-  out.push(`Hogar: ${$("home").value || "(no especificado)"}`);
-  out.push(`Acompañante: ${$("mentor").value || "(no especificado)"}`);
-  out.push(`Fecha: ${$("date").value || "(no especificada)"}`);
-  out.push("Observaciones:");
-  out.push($("notes").value || "(sin observaciones)");
+  out.push(`Hogar: ${$("home").value}`);
+  out.push(`Fecha: ${$("date").value}`);
   out.push("");
-
-  out.push("RESULTADO");
-  out.push(`Puntaje global: ${overall}`);
-  out.push(`Calidad: ${band.label}`);
+  out.push(`PUNTAJE GLOBAL: ${overall}`);
+  out.push(`CALIDAD: ${band.label}`);
   out.push(band.summary);
   out.push("");
-
-  out.push("MATERIALES (por componente)");
+  out.push("COMPONENTES:");
   DATA.components.forEach(c=>{
     out.push(`- ${c.label}: ${compResult[c.key].pct}%`);
   });
   out.push("");
+  out.push("ENFOQUE 7 DÍAS:");
+  band.focus.forEach(x=> out.push("• "+x));
 
-  out.push("HALLAZGOS");
-  if(lows.length===0 && excess.length===0) out.push("• Sin desbalances críticos detectados.");
-  lows.forEach(x=> out.push(`• Déficit: ${x.k} (${x.v}%)`));
-  excess.forEach(x=> out.push(`• Exceso por desbalance: ${x.k} (${x.v}%)`));
-  out.push("");
-
-  out.push("ENFOQUE (7 días)");
-  (band.focus||[]).forEach(x=> out.push("• "+x));
-  out.push("");
-
-  out.push("PLAN 7 DÍAS (plantilla)");
-  (DATA.planTemplates.plan7||[]).forEach(d=>{
-    out.push(`Día ${d.day} — ${d.title}`);
-    (d.items||[]).forEach(it=> out.push("  - "+it));
-  });
-  out.push("");
-
-  out.push("VERSOS");
-  out.push(`Fundamento: ${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`);
-  out.push(`Palabra y Espíritu: ${DATA.verses.wordSpirit.quote} (${DATA.verses.wordSpirit.reference})`);
-  out.push(`Fe: ${DATA.verses.faith.quote} (${DATA.verses.faith.reference})`);
-  out.push("");
-
-  const blob = new Blob([out.join("\n")], {type:"text/plain;charset=utf-8"});
+  const blob = new Blob([out.join("\n")], {type:"text/plain"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "concreto_espiritual.txt";
@@ -660,183 +456,122 @@ function downloadTXT(){
   URL.revokeObjectURL(a.href);
 }
 
-// ===== PDF helpers =====
-async function loadLogo(){
-  try{
-    const res = await fetch(LOGO_PATH, { cache:"no-store" });
-    if(!res.ok) return null;
-    const blob = await res.blob();
-    return await new Promise(resolve=>{
-      const fr = new FileReader();
-      fr.onload = ()=> resolve(fr.result);
-      fr.onerror = ()=> resolve(null);
-      fr.readAsDataURL(blob);
-    });
-  }catch(e){ return null; }
-}
-
-function safeName(name){
-  return (name||"hogar")
-    .toLowerCase().replace(/\s+/g,"_")
-    .replace(/[^a-z0-9_\-]/g,"")
-    .slice(0,60);
-}
-
-// ===== PDF Premium (similar al simulador de cargas) =====
-async function downloadPDFPremium(){
+// ===== PDF premium =====
+function downloadPDFPremium(){
   if(!okPdfLib()){
     $("pdfWarn").style.display="block";
+    alert("No se pudo cargar jsPDF/AutoTable. Revisa internet/CDN.");
     return;
   }
-  if(Object.keys(state.answers).length < DATA.questions.length){
-    alert("Responde todas las preguntas antes de exportar.");
-    return;
-  }
-  if(logoDataUrl===null) logoDataUrl = await loadLogo();
+  if(!requireComplete()) return;
 
   const { overall, compResult } = calc();
   const band = bandFor(overall);
-  const { lows, excess } = computeFindings(compResult);
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({unit:"pt", format:"letter"});
+
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
   const M = 44;
 
-  const INK = [22,33,58];
-  const MUTED = [90,102,130];
-
-  function addLogo(x,y,w,h){
-    if(!logoDataUrl) return;
-    try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
-  }
-
-  function footer(){
-    const n = doc.getNumberOfPages();
-    for(let i=1;i<=n;i++){
-      doc.setPage(i);
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(9);
-      doc.setTextColor(...MUTED);
-      doc.text("Concreto Espiritual — Diagnóstico de Materiales del Hogar", M, H-18);
-      doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
-    }
-  }
-
-  // PORTADA
+  // Header
   doc.setFillColor(22,33,58);
-  doc.rect(0,0,W,96,"F");
-  addLogo(W-M-56, 18, 56, 56);
-
-  doc.setFont("helvetica","bold");
-  doc.setFontSize(20);
+  doc.rect(0,0,W,90,"F");
   doc.setTextColor(255,255,255);
-  doc.text("CONCRETO ESPIRITUAL — PDF PREMIUM", M, 50);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(18);
+  doc.text("CONCRETO ESPIRITUAL — PDF PREMIUM", M, 52);
 
   doc.setFont("helvetica","normal");
-  doc.setFontSize(12);
+  doc.setFontSize(11);
   doc.setTextColor(210,230,255);
   doc.text("Puntaje global + Componentes + Hallazgos + Plan 7 días", M, 72);
 
-  doc.setFillColor(245,247,255);
-  doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
-  doc.setTextColor(...INK);
-  doc.setFont("helvetica","bold");
-  doc.setFontSize(12);
-  doc.text("Datos", M+14, 145);
+  // Datos
+  doc.setTextColor(22,33,58);
+  doc.setFont("helvetica","bold"); doc.setFontSize(12);
+  doc.text("Datos", M, 130);
+  doc.setFont("helvetica","normal"); doc.setFontSize(11);
+  doc.text(`Hogar: ${$("home").value || "(no especificado)"}`, M, 152);
+  doc.text(`Acompañante: ${$("mentor").value || "(no especificado)"}`, M, 170);
+  doc.text(`Fecha: ${$("date").value || "(no especificada)"}`, M, 188);
 
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(11);
-  doc.text(`Hogar: ${$("home").value || "(no especificado)"}`, M+14, 172);
-  doc.text(`Acompañante: ${$("mentor").value || "(no especificado)"}`, M+14, 192);
-  doc.text(`Fecha: ${$("date").value || "(no especificada)"}`, M+14, 212);
+  // Resultado
+  doc.setFont("helvetica","bold"); doc.setFontSize(12);
+  doc.text("Resultado", M, 224);
 
-  doc.setFillColor(255,255,255);
-  doc.roundedRect(M, 260, W-M*2, 150, 12, 12, "F");
-  doc.setFont("helvetica","bold");
-  doc.setTextColor(...INK);
-  doc.text("Resultado", M+14, 288);
-
-  doc.setFont("helvetica","bold");
-  doc.setFontSize(22);
+  doc.setFont("helvetica","bold"); doc.setFontSize(28);
   doc.setTextColor(16,185,129);
-  doc.text(String(overall), M+14, 320);
+  doc.text(String(overall), M, 256);
 
-  doc.setFont("helvetica","bold");
-  doc.setFontSize(14);
-  doc.setTextColor(...INK);
-  doc.text(`Calidad: ${band.label}`, M+78, 320);
+  doc.setTextColor(22,33,58);
+  doc.setFont("helvetica","bold"); doc.setFontSize(14);
+  doc.text(`Calidad: ${band.label}`, M+70, 256);
 
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(11);
+  doc.setFont("helvetica","normal"); doc.setFontSize(11);
   doc.setTextColor(70,90,110);
-  doc.text(doc.splitTextToSize(band.summary, W-M*2-28), M+14, 346);
+  doc.text(doc.splitTextToSize(band.summary || "", W-M*2), M, 282);
 
-  doc.setFont("times","italic");
-  doc.setFontSize(11);
+  // Verso
+  doc.setFont("helvetica","bold"); doc.setFontSize(12);
+  doc.setTextColor(22,33,58);
+  doc.text("Verso fundamento", M, 330);
+  doc.setFont("times","italic"); doc.setFontSize(11);
   doc.setTextColor(20,60,70);
-  doc.text(doc.splitTextToSize(`${DATA.verses.foundation.quote}`, W-M*2-28), M+14, 392);
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(9);
-  doc.setTextColor(70,90,110);
-  doc.text(`(${DATA.verses.foundation.reference})`, M+14, 408);
+  doc.text(doc.splitTextToSize(DATA.verses.foundation.quote, W-M*2), M, 354);
+  doc.setFont("helvetica","normal"); doc.setFontSize(9);
+  doc.setTextColor(90,102,130);
+  doc.text(`(${DATA.verses.foundation.reference})`, M, 388);
 
-  // PAGE 2: Componentes
+  // Page 2: tabla componentes
   doc.addPage();
-  addLogo(M, 16, 32, 32);
-  doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-  doc.text("Materiales (puntajes por componente)", M, 64);
-  doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+  doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(22,33,58);
+  doc.text("Materiales (por componente)", M, 60);
+  doc.setDrawColor(230); doc.line(M, 70, W-M, 70);
 
   doc.autoTable({
     startY: 92,
-    head: [["Componente", "Puntaje (%)", "Peso", "Lectura"]],
-    body: DATA.components.map(c=>{
-      const pct = compResult[c.key].pct;
-      const note =
-        pct>=85 ? "Consistente" :
-        pct>=70 ? "Estable con ajustes" :
-        pct>=50 ? "Fisuras activas" : "Inestable (proceso)";
-      return [c.label, String(pct), String(Math.round(c.weight*100))+"%", note];
-    }),
+    head: [["Componente", "Puntaje (%)", "Peso", "Resumen"]],
+    body: DATA.components.map(c=>[
+      c.label,
+      `${compResult[c.key].pct}%`,
+      `${Math.round(c.weight*100)}%`,
+      c.summary
+    ]),
     theme:"grid",
     styles:{font:"helvetica", fontSize:10, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
     headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
     margin:{left:M, right:M}
   });
 
-  // PAGE 3: Hallazgos + Observaciones
+  // Page 3: hallazgos + plan
   doc.addPage();
-  addLogo(M, 16, 32, 32);
-  doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-  doc.text("Hallazgos + Observaciones", M, 64);
-  doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+  doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(22,33,58);
+  doc.text("Hallazgos + Plan 7 días", M, 60);
+  doc.setDrawColor(230); doc.line(M, 70, W-M, 70);
 
-  let y = 96;
-  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-  doc.text("Hallazgos", M, y); y+=16;
+  const lows = [];
+  const highs = [];
+  Object.entries(compResult).forEach(([k,v])=>{
+    if(v.pct < 60) lows.push(k);
+    if(v.pct > 90) highs.push(k);
+  });
 
-  doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
+  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(22,33,58);
+  doc.text("Hallazgos", M, 98);
+
+  doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(22,33,58);
   const lines = [];
-  if(lows.length===0 && excess.length===0) lines.push("• Sin desbalances críticos detectados.");
-  lows.forEach(x=> lines.push(`• Déficit: ${x.k} (${x.v}%)`));
-  excess.forEach(x=> lines.push(`• Exceso por desbalance: ${x.k} (${x.v}%)`));
-  doc.text(doc.splitTextToSize(lines.join("\n"), W-M*2), M, y); y+=120;
+  if(lows.length===0 && highs.length===0) lines.push("• Sin desbalances críticos detectados.");
+  lows.forEach(k=> lines.push(`• Déficit: ${k}`));
+  highs.forEach(k=> lines.push(`• Posible exceso: ${k}`));
+  doc.text(doc.splitTextToSize(lines.join("\n"), W-M*2), M, 120);
 
   doc.setFont("helvetica","bold"); doc.setFontSize(12);
-  doc.text("Observaciones", M, y); y+=16;
-
+  doc.text("Enfoque (7 días)", M, 210);
   doc.setFont("helvetica","normal"); doc.setFontSize(11);
-  const notes = $("notes").value || "(sin observaciones)";
-  doc.text(doc.splitTextToSize(notes, W-M*2), M, y);
-
-  // PAGE 4: Plan 7 días
-  doc.addPage();
-  addLogo(M, 16, 32, 32);
-  doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-  doc.text("Plan semanal automático (7 días)", M, 64);
-  doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+  doc.text(doc.splitTextToSize((band.focus||[]).map(x=>"• "+x).join("\n"), W-M*2), M, 232);
 
   const planRows = (DATA.planTemplates.plan7||[]).map(d=>[
     `Día ${d.day}`,
@@ -845,57 +580,41 @@ async function downloadPDFPremium(){
   ]);
 
   doc.autoTable({
-    startY: 92,
+    startY: 320,
     head: [["Día", "Enfoque", "Acciones"]],
     body: planRows,
     theme:"grid",
-    styles:{font:"helvetica", fontSize:9.5, cellPadding:6, text
-Color:[20,30,50], lineColor:[230,234,245], valign:"top"},
+    styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
     headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
     columnStyles:{0:{cellWidth:70},1:{cellWidth:170},2:{cellWidth:W-M*2-70-170}},
     margin:{left:M, right:M}
   });
 
-  // PAGE 5: Visual del concreto (captura SVG) + Enfoque
-  doc.addPage();
-  addLogo(M, 16, 32, 32);
-  doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-  doc.text("Visual del concreto + Enfoque", M, 64);
-  doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
+  // Footer
+  const pages = doc.getNumberOfPages();
+  for(let i=1;i<=pages;i++){
+    doc.setPage(i);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(90,102,130);
+    doc.text("Concreto Espiritual — Diagnóstico de Materiales del Hogar", M, H-18);
+    doc.text(`Página ${i} de ${pages}`, W-M, H-18, {align:"right"});
+  }
 
-  // Capturar SVG del visual (mixSvg) y embebarlo como PNG
-  const mixSnap = await captureSvgToPngData($("mixSvg"), 1400, 600);
-
-  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-  doc.text("Visual", M, 92);
-
-  const imgW = W - M*2;
-  const imgH = (imgW * 600) / 1400;
-  doc.addImage(mixSnap, "PNG", M, 104, imgW, imgH);
-
-  let y2 = 104 + imgH + 18;
-  doc.setFont("helvetica","bold"); doc.setFontSize(12);
-  doc.text("Enfoque recomendado", M, y2); y2 += 16;
-
-  doc.setFont("helvetica","normal"); doc.setFontSize(11);
-  const focusLines = (band.focus||[]).map(x=>"• "+x).join("\n");
-  doc.text(doc.splitTextToSize(focusLines, W-M*2), M, y2);
-
-  footer();
-  const name = safeName($("home").value || "hogar");
-  doc.save(`${name}_concreto_premium.pdf`);
+  doc.save(`${safeName($("home").value)}_concreto_premium.pdf`);
 }
 
-// ===== PDF Enseñanza (Libro) =====
-async function downloadTeachingPDF(){
+// ===== PDF Enseñanza =====
+function downloadTeachingPDF(){
   if(!okPdfLib()){
     $("pdfWarn").style.display="block";
+    alert("No se pudo cargar jsPDF/AutoTable. Revisa internet/CDN.");
     return;
   }
-  if(logoDataUrl===null) logoDataUrl = await loadLogo();
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({unit:"pt", format:"letter"});
+
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
   const M = 44;
@@ -903,44 +622,14 @@ async function downloadTeachingPDF(){
   const INK = [22,33,58];
   const MUTED = [90,102,130];
 
-  function addLogo(x,y,w,h){
-    if(!logoDataUrl) return;
-    try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
-  }
-
-  function header(title){
-    addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(13);
-    doc.setTextColor(...INK);
-    doc.text(title, W/2, 36, {align:"center"});
-    doc.setDrawColor(230);
-    doc.line(M, 52, W-M, 52);
-    return 74;
-  }
-
-  function footer(){
-    const n = doc.getNumberOfPages();
-    for(let i=1;i<=n;i++){
-      doc.setPage(i);
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(9);
-      doc.setTextColor(...MUTED);
-      doc.text("Enseñanza — Concreto Espiritual (Diagnóstico de Materiales)", M, H-18);
-      doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
-    }
-  }
-
   const T = DATA.teachingPdf;
 
-  // PORTADA
+  // Portada
   doc.setFillColor(22,33,58);
   doc.rect(0,0,W,110,"F");
-  addLogo(W-M-56, 26, 56, 56);
-
+  doc.setTextColor(255,255,255);
   doc.setFont("helvetica","bold");
   doc.setFontSize(18);
-  doc.setTextColor(255,255,255);
   doc.text(T.title, M, 56);
 
   doc.setFont("helvetica","normal");
@@ -950,196 +639,121 @@ async function downloadTeachingPDF(){
 
   // Marco
   doc.setFillColor(255,255,255);
-  doc.roundedRect(M, 140, W-M*2, 180, 12, 12, "F");
+  doc.roundedRect(M, 140, W-M*2, 190, 12, 12, "F");
   doc.setTextColor(...INK);
-  doc.setFont("helvetica","bold");
-  doc.setFontSize(12);
+  doc.setFont("helvetica","bold"); doc.setFontSize(12);
   doc.text("Marco (como el libro)", M+14, 166);
 
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(11);
-  const frameText = (T.frame||[]).map(x=>"• "+x).join("\n");
-  doc.text(frameText, M+14, 190);
+  doc.setFont("helvetica","normal"); doc.setFontSize(11);
+  doc.text((T.frame||[]).map(x=>"• "+x).join("\n"), M+14, 190);
 
-  // Versos clave (3)
-  doc.setFillColor(240,253,250);
-  doc.roundedRect(M, 338, W-M*2, 110, 12, 12, "F");
-  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-  doc.text("Versos clave", M+14, 364);
-
-  doc.setFont("times","italic"); doc.setFontSize(10.5); doc.setTextColor(20,60,70);
-  const v1 = `${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`;
-  const v2 = `${DATA.verses.wordSpirit.quote} (${DATA.verses.wordSpirit.reference})`;
-  const v3 = `${DATA.verses.faith.quote} (${DATA.verses.faith.reference})`;
-  doc.text(doc.splitTextToSize("• "+v1+"\n• "+v2+"\n• "+v3, W-M*2-28), M+14, 388);
-
-  // Página: cómo usar
+  // Cómo usar
   doc.addPage();
-  let y = header("Cómo usar la app (taller / consejería)");
-  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-  doc.text("Paso a paso", M, y); y += 18;
-
-  doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
-  const how = (T.howToUse||[]).map(x=>"• "+x).join("\n");
-  doc.text(doc.splitTextToSize(how, W-M*2), M, y);
-
-  // Página: componentes como concreto (explicación)
-  doc.addPage();
-  y = header("Mapa del concreto espiritual (materiales)");
-  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-  doc.text("Componentes", M, y); y += 18;
+  doc.setFont("helvetica","bold"); doc.setFontSize(14);
+  doc.setTextColor(...INK);
+  doc.text("Cómo usar la app", M, 60);
+  doc.setDrawColor(230); doc.line(M, 70, W-M, 70);
 
   doc.setFont("helvetica","normal"); doc.setFontSize(11);
-  const compLines = DATA.components.map(c=>{
-    const w = Math.round(c.weight*100);
-    return `• ${c.label} (${w}%): ${c.summary}`;
-  }).join("\n");
-  doc.text(doc.splitTextToSize(compLines, W-M*2), M, y);
+  doc.text(doc.splitTextToSize((T.howToUse||[]).map(x=>"• "+x).join("\n"), W-M*2), M, 98);
 
-  // Insertar el visual como referencia (sin necesidad de haber respondido todo)
-  y += 200;
-  try{
-    const snap = await captureSvgToPngData($("mixSvg"), 1400, 600);
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("Visual (referencia)", M, y);
-    y += 12;
-    const imgW = W - M*2;
-    const imgH = (imgW * 600) / 1400;
-    doc.addImage(snap, "PNG", M, y, imgW, imgH);
-  }catch(e){
-    // si falla, no pasa nada
-  }
-
-  // Página: cierre
+  // Tabla componentes
   doc.addPage();
-  y = header("Cierre");
-  doc.setFillColor(245,247,255);
-  doc.roundedRect(M, y, W-M*2, 170, 12, 12, "F");
-  doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-  doc.text("Cierre (modelo)", M+14, y+22);
+  doc.setFont("helvetica","bold"); doc.setFontSize(14);
+  doc.setTextColor(...INK);
+  doc.text("Componentes (mapa del concreto)", M, 60);
+  doc.setDrawColor(230); doc.line(M, 70, W-M, 70);
 
-  doc.setFont("helvetica","normal"); doc.setFontSize(11);
-  const closing = (T.closing||[]).map(x=>"• "+x).join("\n");
-  doc.text(doc.splitTextToSize(closing, W-M*2-28), M+14, y+46);
-
-  footer();
-  const name = safeName($("home").value || "hogar");
-  doc.save(`${name}_ensenanza_concreto.pdf`);
-}
-
-// ===== SVG -> PNG (para embebido en PDF) =====
-function waitFrame(){ return new Promise(r => requestAnimationFrame(() => r())); }
-
-async function captureSvgToPngData(svgEl, w, h){
-  // aseguramos un frame (por si acaba de renderizar)
-  await waitFrame();
-
-  const xml = new XMLSerializer().serializeToString(svgEl);
-  const svg64 = btoa(unescape(encodeURIComponent(xml)));
-  const imgSrc = "data:image/svg+xml;base64," + svg64;
-
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  await new Promise((resolve,reject)=>{
-    img.onload = ()=> resolve();
-    img.onerror = ()=> reject(new Error("No se pudo renderizar el SVG a imagen."));
-    img.src = imgSrc;
+  doc.autoTable({
+    startY: 92,
+    head: [["Elemento", "Peso", "Descripción"]],
+    body: DATA.components.map(c=>[c.label, `${Math.round(c.weight*100)}%`, c.summary]),
+    theme:"grid",
+    styles:{font:"helvetica", fontSize:10, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+    headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+    margin:{left:M, right:M}
   });
 
-  const canvas = document.createElement("canvas");
-  canvas.width = w; canvas.height = h;
-  const ctx = canvas.getContext("2d");
-  ctx.fillStyle = "#0b1220";
-  ctx.fillRect(0,0,w,h);
-  ctx.drawImage(img, 0, 0, w, h);
-  return canvas.toDataURL("image/png");
+  // Cierre
+  doc.addPage();
+  doc.setFont("helvetica","bold"); doc.setFontSize(14);
+  doc.setTextColor(...INK);
+  doc.text("Cierre", M, 60);
+  doc.setDrawColor(230); doc.line(M, 70, W-M, 70);
+
+  doc.setFillColor(245,247,255);
+  doc.roundedRect(M, 92, W-M*2, 190, 12, 12, "F");
+  doc.setFont("helvetica","bold"); doc.setFontSize(12);
+  doc.setTextColor(...INK);
+  doc.text("Cierre (modelo)", M+14, 118);
+
+  doc.setFont("helvetica","normal"); doc.setFontSize(11);
+  doc.text(doc.splitTextToSize((T.closing||[]).map(x=>"• "+x).join("\n"), W-M*2-28), M+14, 144);
+
+  // Footer
+  const pages = doc.getNumberOfPages();
+  for(let i=1;i<=pages;i++){
+    doc.setPage(i);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(...MUTED);
+    doc.text("Enseñanza — Concreto Espiritual (Diagnóstico de Materiales)", M, H-18);
+    doc.text(`Página ${i} de ${pages}`, W-M, H-18, {align:"right"});
+  }
+
+  doc.save(`${safeName($("home").value)}_ensenanza_concreto.pdf`);
 }
 
 // ===== Reset =====
-function clearAnswers(){
-  if(!confirm("¿Limpiar SOLO respuestas?")) return;
-  state.answers = {};
-  save();
-  renderQuestions();
-  renderResult(true);
-}
-
 function resetAll(){
-  if(!confirm("¿Borrar TODO el diagnóstico?")) return;
+  if(!confirm("¿Borrar todo el diagnóstico?")) return;
   localStorage.removeItem(STORAGE_KEY);
-  state.header = { home:"", mentor:"", date:"", notes:"" };
-  state.answers = {};
-  $("home").value = "";
-  $("mentor").value = "";
-  $("notes").value = "";
-  $("date").value = "";
-  setDate();
-  save();
-  renderQuestions();
-  renderResult(true);
+  location.reload();
 }
 
 // ===== Init =====
 async function init(){
-  try{
-    const res = await fetch(JSON_PATH, {cache:"no-store"});
-    if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
-    DATA = await res.json();
+  const res = await fetch(JSON_PATH);
+  DATA = await res.json();
 
-    $("t").textContent = DATA.meta.title || "Concreto Espiritual";
-    $("d").textContent = DATA.meta.description || "";
+  $("t").textContent = DATA.meta.title;
+  $("d").textContent = DATA.meta.description;
 
-    load();
-    $("home").value = state.header.home || "";
-    $("mentor").value = state.header.mentor || "";
-    $("date").value = state.header.date || "";
-    $("notes").value = state.header.notes || "";
-    setDate();
+  load();
+  $("home").value = state.header.home;
+  $("mentor").value = state.header.mentor;
+  $("date").value = state.header.date;
+  $("notes").value = state.header.notes;
+  setDate();
 
-    // reglas
-    renderRules();
+  renderQuestions();
+  updateCounts();
+  renderRules();
 
-    // preguntas
-    renderQuestions();
-    updateCounts();
-
-    // inicializa visual vacío (con 0)
-    const empty = {};
-    (DATA.components||[]).forEach(c=> empty[c.key] = {pct:0});
-    renderConcreteVisual(empty, {badgeColor:"#5eead4"});
-
-    // pdf warn
-    $("pdfWarn").style.display = okPdfLib() ? "none" : "block";
-
-    // si ya está completo, calcula
-    if(Object.keys(state.answers).length === DATA.questions.length){
-      renderResult(true);
-    }else{
-      setPdfButtonsEnabled(false);
-      $("liveState").textContent = "Estado: incompleto";
-      $("overallSummary").textContent = "Responde todas las preguntas para calcular.";
-    }
-
-  }catch(e){
-    document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${escapeHtml(e.message)}<br><span style="color:#a7b4d6">Asegúrate de que ${escapeHtml(JSON_PATH)} esté en la misma carpeta.</span></div>`;
-  }
+  // aviso si PDF libs no cargan
+  $("pdfWarn").style.display = okPdfLib() ? "none" : "block";
 }
 
-// ===== Events =====
-$("btnCalc").addEventListener("click", ()=> renderResult(false));
-$("btnClear").addEventListener("click", clearAnswers);
+$("btnCalc").addEventListener("click", renderResult);
+$("btnClear").addEventListener("click", resetAll);
 
 $("btnTxt").addEventListener("click", ()=>{
-  if(Object.keys(state.answers).length < DATA.questions.length) return alert("Responde todas las preguntas.");
+  // TXT solo si está completo
+  if(Object.keys(state.answers).length < DATA.questions.length){
+    alert("Responde todas las preguntas antes de exportar TXT.");
+    return;
+  }
   downloadTXT();
 });
+
+// ✅ PDFs funcionando
 $("btnPdf").addEventListener("click", downloadPDFPremium);
 $("btnTeachPdf").addEventListener("click", downloadTeachingPDF);
+
 $("btnReset").addEventListener("click", resetAll);
 
 ["home","mentor","date","notes"].forEach(id=>{
   $(id).addEventListener("input", save);
-  $(id).addEventListener("change", save);
 });
 
 init();
