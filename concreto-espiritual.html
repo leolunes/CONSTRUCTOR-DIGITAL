@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Concreto Espiritual — Simulador</title>
+
+<style>
+:root{
+  --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+  --line:rgba(255,255,255,.10); --accent:#5eead4;
+  --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+.wrap{max-width:1100px;margin:0 auto;padding:22px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;}
+h1{margin:0;font-size:26px}
+.sub{color:var(--muted);margin-top:6px}
+
+label{font-weight:700;font-size:13px}
+input[type=range]{width:100%}
+.output{margin-top:10px;font-weight:900}
+
+.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px}
+.bG{background:rgba(16,185,129,.18);color:#34d399}
+.bY{background:rgba(245,158,11,.18);color:#fcd34d}
+.bO{background:rgba(249,115,22,.18);color:#fdba74}
+.bR{background:rgba(244,63,94,.18);color:#fda4af}
+
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer}
+.primary{background:var(--accent);color:#071018}
+.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18)}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="card">
+    <h1 id="title">Concreto Espiritual</h1>
+    <p class="sub" id="desc"></p>
+  </div>
+
+  <div class="card">
+    <label>Palabra (cemento)</label>
+    <input type="range" id="palabra" min="0" max="100" step="5" value="50">
+    <div id="palabraOut" class="output"></div>
+
+    <label>Espíritu (agua)</label>
+    <input type="range" id="espiritu" min="0" max="100" step="5" value="50">
+    <div id="espirituOut" class="output"></div>
+
+    <label>Fe (acero)</label>
+    <input type="range" id="fe" min="0" max="100" step="5" value="50">
+    <div id="feOut" class="output"></div>
+  </div>
+
+  <div class="card">
+    <div id="globalResult"></div>
+    <div class="btns">
+      <button class="primary" id="btnPdf">PDF Diagnóstico</button>
+      <button class="ghost" id="btnTeach">PDF Enseñanza</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script>
+const JSON_PATH = "concreto-espiritual.json";
+let DATA=null;
+
+function bandByValue(v){
+  return DATA.ranges.magnitude.find(r=>v>=r.min && v<=r.max);
+}
+
+function update(){
+  ["palabra","espiritu","fe"].forEach(id=>{
+    const v = Number(document.getElementById(id).value);
+    const b = bandByValue(v);
+    document.getElementById(id+"Out").innerHTML =
+      `${v} <span class="badge" style="background:${b.color}22;color:${b.color}">${b.label}</span>`;
+  });
+
+  const p = palabra.value, e = espiritu.value, f = fe.value;
+  let band = DATA.bands[0];
+  if(p<30 || e<30) band = DATA.bands[2];
+  if(p<20 && e<20) band = DATA.bands[3];
+
+  globalResult.innerHTML = `
+    <span class="badge" style="background:${band.color}22;color:${band.color}">
+      ${band.label}
+    </span>
+    <p class="sub">${band.summary}</p>
+  `;
+}
+
+async function load(){
+  const r = await fetch(JSON_PATH);
+  DATA = await r.json();
+  title.textContent = DATA.meta.title;
+  desc.textContent = DATA.meta.description;
+  update();
+}
+
+["palabra","espiritu","fe"].forEach(id=>{
+  document.getElementById(id).addEventListener("input", update);
+});
+
+document.getElementById("btnTeach").addEventListener("click", ()=>{
+  const { jsPDF } = window.jspdf;
+  const d = new jsPDF();
+  d.setFontSize(18);
+  d.text(DATA.teaching.title, 20, 30);
+  let y=45;
+  DATA.teaching.sections.forEach(s=>{
+    d.setFontSize(14);
+    d.text(s.title,20,y); y+=8;
+    d.setFontSize(11);
+    d.text(d.splitTextToSize(s.text,170),20,y);
+    y+=20;
+  });
+  d.save("concreto_espiritual_ensenanza.pdf");
+});
+
+load();
+</script>
+</body>
+</html>
