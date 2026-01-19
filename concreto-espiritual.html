@@ -1,131 +1,456 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Concreto Espiritual — Simulador</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Concreto Espiritual — Diagnóstico</title>
 
-<style>
-:root{
-  --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
-  --line:rgba(255,255,255,.10); --accent:#5eead4;
-  --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
-}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
-.wrap{max-width:1100px;margin:0 auto;padding:22px;}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;}
-h1{margin:0;font-size:26px}
-.sub{color:var(--muted);margin-top:6px}
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:560px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:84px;resize:vertical;}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    button[disabled]{opacity:.55;cursor:not-allowed}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .mini{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.03);}
+    .mini h3{margin:0 0 8px;font-size:14px;}
+    ul{margin:8px 0 0;padding-left:18px;line-height:1.45;}
 
-label{font-weight:700;font-size:13px}
-input[type=range]{width:100%}
-.output{margin-top:10px;font-weight:900}
+    .barWrap{display:grid;gap:10px;margin-top:10px;}
+    .barItem{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px;background:rgba(0,0,0,.10);}
+    .barTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+    .barTitle{font-weight:950;font-size:13px;line-height:1.25;}
+    .barNum{font-weight:950;font-size:13px;color:rgba(255,255,255,.92);}
+    .barBg{height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:8px;border:1px solid rgba(255,255,255,.10);}
+    .barFill{height:100%;width:0%;border-radius:999px;background:rgba(94,234,212,.85);}
+    .tag{display:inline-block;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);}
+    .big{font-weight:950;font-size:18px;}
+    .bigNum{font-weight:950;font-size:34px;letter-spacing:.3px;line-height:1;}
+    .stateGood{color:#34d399;}
+    .stateWarn{color:#fcd34d;}
+    .stateBad{color:#fda4af;}
 
-.badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px}
-.bG{background:rgba(16,185,129,.18);color:#34d399}
-.bY{background:rgba(245,158,11,.18);color:#fcd34d}
-.bO{background:rgba(249,115,22,.18);color:#fdba74}
-.bR{background:rgba(244,63,94,.18);color:#fda4af}
-
-.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer}
-.primary{background:var(--accent);color:#071018}
-.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18)}
-</style>
+    .qBlock{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;background:rgba(0,0,0,.10);margin-top:10px;}
+    .qHead{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+    .qHead b{font-size:13px;}
+    .qHelp{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.35;}
+    .qOpts{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px;}
+    @media(min-width:740px){.qOpts{grid-template-columns:repeat(5, 1fr);}}
+    .opt{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      padding:10px;
+      background:rgba(255,255,255,.03);
+      cursor:pointer;
+      user-select:none;
+      font-size:12px;
+      color:rgba(255,255,255,.90);
+      display:flex;flex-direction:column;gap:6px;
+      min-height:60px;
+    }
+    .opt small{color:var(--muted);font-size:11px;line-height:1.2}
+    .opt input{display:none}
+    .opt.sel{border-color:rgba(94,234,212,.75);box-shadow:0 0 0 2px rgba(94,234,212,.15) inset;}
+    .hr{height:1px;background:var(--line);margin:10px 0;}
+    .twoCol{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.twoCol{grid-template-columns:1fr 1fr;}}
+  </style>
 </head>
 
 <body>
 <div class="wrap">
-
-  <div class="card">
-    <h1 id="title">Concreto Espiritual</h1>
-    <p class="sub" id="desc"></p>
+  <div class="hero">
+    <h1 id="t">Concreto Espiritual</h1>
+    <p class="sub" id="d"></p>
+    <div style="margin-top:10px">
+      <span class="pill">Diagnóstico didáctico (sin servidor)</span>
+      <span class="pill" id="qCount">Preguntas: —</span>
+      <span class="pill" id="ansCount">Respondidas: —</span>
+      <span class="pill" id="bandPill">Calidad: —</span>
+    </div>
+    <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
   </div>
 
-  <div class="card">
-    <label>Palabra (cemento)</label>
-    <input type="range" id="palabra" min="0" max="100" step="5" value="50">
-    <div id="palabraOut" class="output"></div>
+  <div class="grid">
+    <!-- IZQ: RESULTADOS -->
+    <div class="card">
+      <div class="row">
+        <div>
+          <b>Resultado</b>
+          <div class="muted" style="font-size:13px;margin-top:4px;">
+            Puntaje global ponderado + puntajes por componente (materiales).
+          </div>
+        </div>
+        <span class="pill" id="liveState">Estado: —</span>
+      </div>
 
-    <label>Espíritu (agua)</label>
-    <input type="range" id="espiritu" min="0" max="100" step="5" value="50">
-    <div id="espirituOut" class="output"></div>
+      <div class="mini">
+        <div class="row">
+          <div>
+            <div class="muted">Puntaje global</div>
+            <div class="bigNum" id="overallScore">—</div>
+          </div>
+          <div style="text-align:right">
+            <div class="muted">Calidad</div>
+            <div class="big" id="overallBand">—</div>
+            <div class="muted" id="overallSummary" style="font-size:12px;margin-top:4px;max-width:260px;">—</div>
+          </div>
+        </div>
+      </div>
 
-    <label>Fe (acero)</label>
-    <input type="range" id="fe" min="0" max="100" step="5" value="50">
-    <div id="feOut" class="output"></div>
-  </div>
+      <div class="mini">
+        <h3>Materiales (por componente)</h3>
+        <div class="barWrap" id="bars"></div>
+      </div>
 
-  <div class="card">
-    <div id="globalResult"></div>
-    <div class="btns">
-      <button class="primary" id="btnPdf">PDF Diagnóstico</button>
-      <button class="ghost" id="btnTeach">PDF Enseñanza</button>
+      <div class="twoCol">
+        <div class="mini">
+          <h3>Hallazgos</h3>
+          <div class="muted" style="font-size:12px;margin-top:-2px">Déficits y posibles excesos por desbalance.</div>
+          <ul id="findings"></ul>
+        </div>
+
+        <div class="mini">
+          <h3>Enfoque (siguiente ajuste)</h3>
+          <ul id="focus"></ul>
+        </div>
+      </div>
+
+      <div class="mini">
+        <h3>Verso fundamento</h3>
+        <div class="muted" id="verse"></div>
+      </div>
+
+      <div class="mini">
+        <h3>Reglas rápidas</h3>
+        <ul id="rules"></ul>
+      </div>
+
+      <div class="btns">
+        <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+        <button class="ghost" id="btnPdf" disabled>Descargar PDF premium</button>
+        <button class="ghost" id="btnTeachPdf" disabled>PDF Enseñanza (Libro)</button>
+        <button class="ghost" id="btnReset">Borrar todo</button>
+      </div>
+    </div>
+
+    <!-- DER: FORM + PREGUNTAS -->
+    <div class="card">
+      <div class="row">
+        <div>
+          <b>Formulario</b>
+          <div
+<div class="muted" style="font-size:13px;margin-top:4px;">
+            Responde según práctica real (últimas 2–4 semanas).
+          </div>
+        </div>
+        <span class="pill">Autoevaluación</span>
+      </div>
+
+      <div class="fieldgrid">
+        <div>
+          <label>Hogar / Familia</label>
+          <input id="home" placeholder="Ej: Hogar Abraham y Sara">
+        </div>
+        <div>
+          <label>Acompañante (opcional)</label>
+          <input id="mentor" placeholder="Ej: Pastor / Consejero">
+        </div>
+        <div>
+          <label>Fecha</label>
+          <input id="date" type="date">
+        </div>
+        <div>
+          <label>Observaciones</label>
+          <textarea id="notes" placeholder="Contexto, acuerdos, tensiones actuales…"></textarea>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div id="questions"></div>
+
+      <div class="btns">
+        <button class="primary" id="btnCalc">Calcular diagnóstico</button>
+        <button class="ghost" id="btnClear">Limpiar respuestas</button>
+      </div>
     </div>
   </div>
-
 </div>
 
+<!-- jsPDF -->
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
 <script>
 const JSON_PATH = "concreto-espiritual.json";
-let DATA=null;
+const STORAGE_KEY = "concreto_espiritual_v1";
 
-function bandByValue(v){
-  return DATA.ranges.magnitude.find(r=>v>=r.min && v<=r.max);
+let DATA = null;
+
+const state = {
+  header: { home:"", mentor:"", date:"", notes:"" },
+  answers: {} // questionId -> value (1-5)
+};
+
+// ===== Helpers =====
+const $ = id => document.getElementById(id);
+
+function save(){
+  state.header.home = $("home").value || "";
+  state.header.mentor = $("mentor").value || "";
+  state.header.date = $("date").value || "";
+  state.header.notes = $("notes").value || "";
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function update(){
-  ["palabra","espiritu","fe"].forEach(id=>{
-    const v = Number(document.getElementById(id).value);
-    const b = bandByValue(v);
-    document.getElementById(id+"Out").innerHTML =
-      `${v} <span class="badge" style="background:${b.color}22;color:${b.color}">${b.label}</span>`;
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    state.header = p.header || state.header;
+    state.answers = p.answers || {};
+  }catch(e){}
+}
+
+function setDate(){
+  if($("date").value) return;
+  const d = new Date();
+  $("date").value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+// ===== Render preguntas =====
+function renderQuestions(){
+  const wrap = $("questions");
+  wrap.innerHTML = "";
+  DATA.questions.forEach(q=>{
+    const block = document.createElement("div");
+    block.className = "qBlock";
+    block.innerHTML = `
+      <div class="qHead">
+        <b>${q.text}</b>
+        <span class="tag">${q.component}</span>
+      </div>
+      <div class="qHelp">${q.help || ""}</div>
+      <div class="qOpts">
+        ${DATA.scale.labels.map(l=>`
+          <label class="opt ${state.answers[q.id]==l.value?"sel":""}">
+            <input type="radio" name="${q.id}" value="${l.value}">
+            <b>${l.value}</b>
+            <small>${l.label}</small>
+          </label>
+        `).join("")}
+      </div>
+    `;
+    wrap.appendChild(block);
+
+    block.querySelectorAll("input").forEach(inp=>{
+      inp.addEventListener("change", ()=>{
+        state.answers[q.id] = Number(inp.value);
+        save();
+        renderQuestions();
+        updateCounts();
+      });
+    });
+  });
+}
+
+// ===== Cálculo =====
+function calc(){
+  const compScores = {};
+  DATA.components.forEach(c=> compScores[c.key] = []);
+
+  DATA.questions.forEach(q=>{
+    const v = state.answers[q.id];
+    if(v) compScores[q.component].push(v);
   });
 
-  const p = palabra.value, e = espiritu.value, f = fe.value;
-  let band = DATA.bands[0];
-  if(p<30 || e<30) band = DATA.bands[2];
-  if(p<20 && e<20) band = DATA.bands[3];
+  const compResult = {};
+  let total = 0;
 
-  globalResult.innerHTML = `
-    <span class="badge" style="background:${band.color}22;color:${band.color}">
-      ${band.label}
-    </span>
-    <p class="sub">${band.summary}</p>
-  `;
-}
-
-async function load(){
-  const r = await fetch(JSON_PATH);
-  DATA = await r.json();
-  title.textContent = DATA.meta.title;
-  desc.textContent = DATA.meta.description;
-  update();
-}
-
-["palabra","espiritu","fe"].forEach(id=>{
-  document.getElementById(id).addEventListener("input", update);
-});
-
-document.getElementById("btnTeach").addEventListener("click", ()=>{
-  const { jsPDF } = window.jspdf;
-  const d = new jsPDF();
-  d.setFontSize(18);
-  d.text(DATA.teaching.title, 20, 30);
-  let y=45;
-  DATA.teaching.sections.forEach(s=>{
-    d.setFontSize(14);
-    d.text(s.title,20,y); y+=8;
-    d.setFontSize(11);
-    d.text(d.splitTextToSize(s.text,170),20,y);
-    y+=20;
+  DATA.components.forEach(c=>{
+    const arr = compScores[c.key];
+    const avg = arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
+    const pct = Math.round((avg / DATA.scale.max) * 100);
+    compResult[c.key] = { pct, avg };
+    total += pct * c.weight;
   });
-  d.save("concreto_espiritual_ensenanza.pdf");
+
+  const overall = Math.round(total);
+  return { overall, compResult };
+}
+
+// ===== Band =====
+function bandFor(score){
+  return DATA.bands.find(b=> score>=b.min && score<=b.max) || DATA.bands[DATA.bands.length-1];
+}
+
+// ===== Render resultados =====
+function renderResult(){
+  const answered = Object.keys(state.answers).length;
+  $("ansCount").textContent = `Respondidas: ${answered}/${DATA.questions.length}`;
+  $("qCount").textContent = `Preguntas: ${DATA.questions.length}`;
+
+  if(answered < DATA.questions.length){
+    $("liveState").textContent = "Estado: incompleto";
+    return;
+  }
+
+  const { overall, compResult } = calc();
+  const band = bandFor(overall);
+
+  $("overallScore").textContent = overall;
+  $("overallBand").textContent = band.label;
+  $("overallSummary").textContent = band.summary;
+  $("bandPill").textContent = `Calidad: ${band.label}`;
+  $("liveState").textContent = "Estado: evaluado";
+
+  // Bars
+  const bars = $("bars");
+  bars.innerHTML = "";
+  DATA.components.forEach(c=>{
+    const r = compResult[c.key];
+    const div = document.createElement("div");
+    div.className = "barItem";
+    div.innerHTML = `
+      <div class="barTop">
+        <div class="barTitle">${c.label}</div>
+        <div class="barNum">${r.pct}%</div>
+      </div>
+      <div class="barBg">
+        <div class="barFill" style="width:${r.pct}%;background:${band.badgeColor}"></div>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:6px">${c.summary}</div>
+    `;
+    bars.appendChild(div);
+  });
+
+  // Findings
+  const f = $("findings");
+  f.innerHTML = "";
+  const lows = [];
+  const highs = [];
+
+  Object.entries(compResult).forEach(([k,v])=>{
+    if(v.pct < 60) lows.push(k);
+    if(v.pct > 90) highs.push(k);
+  });
+
+  if(lows.length===0 && highs.length===0){
+    f.innerHTML = "<li>Sin desbalances críticos detectados.</li>";
+  } else {
+    lows.forEach(l=> f.innerHTML += `<li>Déficit en <b>${l}</b></li>`);
+    highs.forEach(h=> f.innerHTML += `<li>Posible exceso en <b>${h}</b></li>`);
+  }
+
+  // Focus
+  const fo = $("focus");
+  fo.innerHTML = "";
+  band.focus.forEach(x=> fo.innerHTML += `<li>${x}</li>`);
+
+  // Verse
+  $("verse").textContent = `${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`;
+
+  $("btnTxt").disabled = false;
+  $("btnPdf").disabled = false;
+  $("btnTeachPdf").disabled = false;
+}
+
+// ===== TXT =====
+function downloadTXT(){
+  const { overall, compResult } = calc();
+  const band = bandFor(overall);
+
+  let out = [];
+  out.push("CONCRETO ESPIRITUAL — DIAGNÓSTICO");
+  out.push("");
+  out.push(`Hogar: ${$("home").value}`);
+  out.push(`Fecha: ${$("date").value}`);
+  out.push("");
+  out.push(`PUNTAJE GLOBAL: ${overall}`);
+  out.push(`CALIDAD: ${band.label}`);
+  out.push(band.summary);
+  out.push("");
+  out.push("COMPONENTES:");
+  DATA.components.forEach(c=>{
+    out.push(`- ${c.label}: ${compResult[c.key].pct}%`);
+  });
+  out.push("");
+  out.push("ENFOQUE 7 DÍAS:");
+  band.focus.forEach(x=> out.push("• "+x));
+
+  const blob = new Blob([out.join("\n")], {type:"text/plain"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "concreto_espiritual.txt";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ===== Reset =====
+function resetAll(){
+  if(!confirm("¿Borrar todo el diagnóstico?")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+// ===== Init =====
+async function init(){
+  const res = await fetch(JSON_PATH);
+  DATA = await res.json();
+
+  $("t").textContent = DATA.meta.title;
+  $("d").textContent = DATA.meta.description;
+
+  load();
+  $("home").value = state.header.home;
+  $("mentor").value = state.header.mentor;
+  $("date").value = state.header.date;
+  $("notes").value = state.header.notes;
+  setDate();
+
+  renderQuestions();
+  updateCounts();
+}
+
+function updateCounts(){
+  $("qCount").textContent = `Preguntas: ${DATA.questions.length}`;
+  $("ansCount").textContent = `Respondidas: ${Object.keys(state.answers).length}/${DATA.questions.length}`;
+}
+
+$("btnCalc").addEventListener("click", renderResult);
+$("btnClear").addEventListener("click", resetAll);
+$("btnTxt").addEventListener("click", downloadTXT);
+$("btnReset").addEventListener("click", resetAll);
+
+["home","mentor","date","notes"].forEach(id=>{
+  $(id).addEventListener("input", save);
 });
 
-load();
+init();
 </script>
 </body>
 </html>

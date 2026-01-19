@@ -1,0 +1,336 @@
+{
+  "meta": {
+    "title": "Concreto Espiritual — Diagnóstico de Materiales del Hogar",
+    "description": "Responde preguntas por componente (Palabra, Espíritu, Fe, Triturado/Varón, Arena/Mujer, Mezcla). La app calcula puntajes, detecta excesos/déficits y determina la calidad del concreto espiritual del hogar."
+  },
+  "scale": {
+    "min": 1,
+    "max": 5,
+    "labels": [
+      { "value": 1, "label": "Nunca / Muy débil" },
+      { "value": 2, "label": "Rara vez / Débil" },
+      { "value": 3, "label": "A veces / Medio" },
+      { "value": 4, "label": "Frecuente / Fuerte" },
+      { "value": 5, "label": "Constante / Muy fuerte" }
+    ],
+    "note": "Responde según práctica real, no intención."
+  },
+  "components": [
+    {
+      "key": "palabra",
+      "label": "Cemento — Palabra (cohesión)",
+      "weight": 0.2,
+      "summary": "La Palabra une, estabiliza y da forma. Sin Palabra hay emoción sin consolidación."
+    },
+    {
+      "key": "espiritu",
+      "label": "Agua — Espíritu (activación)",
+      "weight": 0.18,
+      "summary": "El Espíritu vivifica la Palabra y vuelve habitable el diseño. Sin Espíritu hay letra sin vida."
+    },
+    {
+      "key": "fe",
+      "label": "Acero — Fe (refuerzo en tensión)",
+      "weight": 0.17,
+      "summary": "La fe no quita tensión: evita colapso. Refuerza lo invisible cuando todo empuja."
+    },
+    {
+      "key": "triturado",
+      "label": "Triturado — Varón (soporte/transferencia)",
+      "weight": 0.15,
+      "summary": "Soporta cargas y las transfiere al altar. No absorbe: descarga en Cristo."
+    },
+    {
+      "key": "arena",
+      "label": "Arena — Mujer (integración/cohesión)",
+      "weight": 0.15,
+      "summary": "Integra, llena vacíos y mejora trabajabilidad. No está para cargar el peso estructural."
+    },
+    {
+      "key": "mezcla",
+      "label": "Mezcla — Proporción (equilibrio)",
+      "weight": 0.15,
+      "summary": "No todo lo espiritual fortalece: solo lo bien mezclado. Exceso o déficit generan fisuras."
+    }
+  ],
+  "bands": [
+    {
+      "key": "excelente",
+      "label": "Excelente (concreto maduro)",
+      "min": 85,
+      "max": 100,
+      "badgeColor": "#10b981",
+      "summary": "Materiales consistentes y bien integrados. Hay estabilidad bajo carga y tensión.",
+      "focus": [
+        "Mantener hábitos: altar, Palabra y oración.",
+        "Revisar semanalmente proporción (sin exceso).",
+        "Profundidad > rapidez."
+      ]
+    },
+    {
+      "key": "solido",
+      "label": "Sólido (estable con ajustes)",
+      "min": 70,
+      "max": 84,
+      "badgeColor": "#22c55e",
+      "summary": "Buena base, pero hay 1–2 componentes a reforzar para evitar desgaste acumulado.",
+      "focus": [
+        "Identificar el componente más bajo y reforzarlo 7 días.",
+        "Ajustar la mezcla: menos reacción, más altar.",
+        "Fortalecer transferencia de cargas."
+      ]
+    },
+    {
+      "key": "riesgo",
+      "label": "En riesgo (fisuras activas)",
+      "min": 50,
+      "max": 69,
+      "badgeColor": "#f59e0b",
+      "summary": "Hay incoherencias: exceso de emoción o norma, falta de integración o refuerzo de fe.",
+      "focus": [
+        "Volver al fundamento: Palabra + Espíritu juntos.",
+        "Reducir extremos: menos intensidad sin mezcla.",
+        "Buscar acompañamiento pastoral si hay tensión sostenida."
+      ]
+    },
+    {
+      "key": "critico",
+      "label": "Crítico (mezcla inestable)",
+      "min": 0,
+      "max": 49,
+      "badgeColor": "#f43f5e",
+      "summary": "Alta probabilidad de colapso bajo tensión. Se requiere reordenamiento y proceso.",
+      "focus": [
+        "Detener fuga: establecer altar básico diario (mínimo viable).",
+        "Reasignar cargas: varón transfiere, mujer integra (sin sobrecarga).",
+        "Proceso: acompañamiento, acuerdos escritos y hábitos medibles."
+      ]
+    }
+  ],
+  "texts": {
+    "rules": [
+      "Responde por práctica real (últimas 2–4 semanas), no por deseo.",
+      "El puntaje final es ponderado por componente (cemento/agua/acero/agregados/mezcla).",
+      "El resultado muestra: calidad global + componentes en déficit/exceso.",
+      "Déficit: componente < 60. Exceso: componente > 90 mientras otro < 60 (desbalance).",
+      "Objetivo: ajustar composición, no solo comportamiento."
+    ],
+    "premiumLegend": "Diagnóstico: Puntaje global + puntajes por componente + hallazgos (déficit/exceso) + plan de 7 días."
+  },
+  "verses": {
+    "foundation": {
+      "quote": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
+      "reference": "1 Corintios 3:11 (RVR1960)"
+    },
+    "wordSpirit": {
+      "quote": "La letra mata, más el Espíritu vivifica.",
+      "reference": "2 Corintios 3:6 (RVR1960)"
+    },
+    "faith": {
+      "quote": "Ahora bien, la fe es la certeza de lo que se espera, la convicción de lo que no se ve.",
+      "reference": "Hebreos 11:1 (RVR1960)"
+    }
+  },
+  "questions": [
+    {
+      "id": "p1",
+      "component": "palabra",
+      "text": "En el hogar, la Palabra guía decisiones (no solo opiniones).",
+      "help": "¿Se consulta y se obedece un marco bíblico antes de decidir?"
+    },
+    {
+      "id": "p2",
+      "component": "palabra",
+      "text": "Hay lectura/meditación bíblica consistente (personal o familiar).",
+      "help": "Constancia > intensidad."
+    },
+    {
+      "id": "p3",
+      "component": "palabra",
+      "text": "La verdad se usa para edificar, no para ganar discusiones.",
+      "help": "¿La Palabra produce humildad y orden, no juicio rápido?"
+    },
+
+    {
+      "id": "e1",
+      "component": "espiritu",
+      "text": "Se ora y se busca la dirección del Espíritu antes de reaccionar.",
+      "help": "Pausa + oración breve = gobierno."
+    },
+    {
+      "id": "e2",
+      "component": "espiritu",
+      "text": "Hay sensibilidad espiritual con discernimiento (no solo emoción).",
+      "help": "¿La experiencia se somete al marco de la Palabra?"
+    },
+    {
+      "id": "e3",
+      "component": "espiritu",
+      "text": "El hogar se vuelve 'habitable': paz, descanso, y claridad tras buscar a Dios.",
+      "help": "La presencia de Dios ordena lo cotidiano."
+    },
+
+    {
+      "id": "f1",
+      "component": "fe",
+      "text": "En tensión, el hogar permanece sin romper pactos básicos.",
+      "help": "Fe = permanencia bajo presión."
+    },
+    {
+      "id": "f2",
+      "component": "fe",
+      "text": "Hay confianza en el diseño aun sin resultados inmediatos.",
+      "help": "¿Se sostiene la obediencia cuando no hay evidencia?"
+    },
+    {
+      "id": "f3",
+      "component": "fe",
+      "text": "La fe se vive en silencio (acciones), más que en declaraciones.",
+      "help": "Consistencia > volumen."
+    },
+
+    {
+      "id": "t1",
+      "component": "triturado",
+      "text": "El varón sostiene dirección espiritual y transfiere cargas al altar.",
+      "help": "No absorbe: descarga en Cristo."
+    },
+    {
+      "id": "t2",
+      "component": "triturado",
+      "text": "El liderazgo del varón sostiene sin dureza (firmeza integrada).",
+      "help": "Firmeza ≠ rigidez."
+    },
+    {
+      "id": "t3",
+      "component": "triturado",
+      "text": "Hay provisión responsable y orden funcional (sin control excesivo).",
+      "help": "Soporte confiable, no dominio."
+    },
+
+    {
+      "id": "a1",
+      "component": "arena",
+      "text": "La mujer integra: percibe tensiones temprano y las comunica con sabiduría.",
+      "help": "Sensibilidad ordenada = prevención de grietas."
+    },
+    {
+      "id": "a2",
+      "component": "arena",
+      "text": "La mujer no está sobrecargada con cargas estructurales que no le corresponden.",
+      "help": "Sobrecargar la arena genera desgaste silencioso."
+    },
+    {
+      "id": "a3",
+      "component": "arena",
+      "text": "Hay trabajabilidad: conversaciones posibles, paciencia y procesos graduales.",
+      "help": "Suavidad bien ubicada evita rupturas."
+    },
+
+    {
+      "id": "m1",
+      "component": "mezcla",
+      "text": "Palabra y Espíritu operan juntos (verdad con vida).",
+      "help": "Ni letra sin fuego, ni fuego sin verdad."
+    },
+    {
+      "id": "m2",
+      "component": "mezcla",
+      "text": "La emoción no reemplaza el altar; la norma no reemplaza la gracia.",
+      "help": "Excesos debilitan."
+    },
+    {
+      "id": "m3",
+      "component": "mezcla",
+      "text": "Hay hábitos simples y sostenibles (mantenimiento), no solo eventos intensos.",
+      "help": "La resistencia nace del equilibrio, no del exceso."
+    }
+  ],
+  "planTemplates": {
+    "plan7": [
+      {
+        "day": 1,
+        "title": "Volver al fundamento",
+        "items": [
+          "10–15 min: Palabra + oración (anclaje).",
+          "Nombrar el componente más bajo sin culpa.",
+          "Oración de entrega: 'Señor, ajusta nuestra mezcla'."
+        ]
+      },
+      {
+        "day": 2,
+        "title": "Palabra + Espíritu juntos",
+        "items": [
+          "Leer un pasaje breve (Juan 6:63 o 2 Co 3:6).",
+          "Orar 3–5 min aplicándolo a un conflicto real.",
+          "Una frase de acuerdo: 'Hoy decidimos desde altar, no urgencia'."
+        ]
+      },
+      {
+        "day": 3,
+        "title": "Refuerzo de fe (acero)",
+        "items": [
+          "Elegir una tensión actual y escribir: 'No veo todo, pero confío en el diseño'.",
+          "Acción pequeña de obediencia (medible).",
+          "Cierre en oración breve."
+        ]
+      },
+      {
+        "day": 4,
+        "title": "Soporte + integración (triturado + arena)",
+        "items": [
+          "Varón: transferir una carga concreta al altar (orarla).",
+          "Mujer: expresar un vacío percibido sin acusación (en 2 minutos).",
+          "Acordar una redistribución de carga (una sola)."
+        ]
+      },
+      {
+        "day": 5,
+        "title": "Ajuste de mezcla (proporciones)",
+        "items": [
+          "Detectar un exceso (emoción/norma/actividad) y reducirlo hoy.",
+          "Añadir un hábito mínimo (5–10 min).",
+          "Celebrar un avance real (aunque sea pequeño)."
+        ]
+      },
+      {
+        "day": 6,
+        "title": "Mantenimiento sin intensidad",
+        "items": [
+          "Repetir hábito mínimo.",
+          "Conversación corta: '¿Qué alivió tensión esta semana?'",
+          "Oración de unidad (Mateo 18:20)."
+        ]
+      },
+      {
+        "day": 7,
+        "title": "Revisión y próxima semana",
+        "items": [
+          "Revisar puntajes y escoger 1 componente a reforzar 7 días más.",
+          "Dejar un acuerdo escrito (1 frase).",
+          "Cierre: gratitud + entrega al fundamento."
+        ]
+      }
+    ]
+  },
+  "teachingPdf": {
+    "title": "Enseñanza — Concreto Espiritual (Diagnóstico de Materiales)",
+    "subtitle": "Cómo leer el hogar por composición: Palabra (cemento), Espíritu (agua), Fe (acero), Varón (triturado), Mujer (arena) y Mezcla (proporción).",
+    "frame": [
+      "Esto no busca culpables: busca composición correcta.",
+      "No trabaja condena: trabaja ajuste y mantenimiento.",
+      "La estabilidad no es ausencia de carga; es buena mezcla + transferencia.",
+      "El fundamento es Cristo: todo material se ordena a Él."
+    ],
+    "howToUse": [
+      "1) Responder por práctica real (2–4 semanas).",
+      "2) Mirar componentes en déficit (bajos) y posibles excesos (desbalance).",
+      "3) Elegir 1 ajuste concreto para 7 días.",
+      "4) Repetir evaluación semanal (mantenimiento)."
+    ],
+    "closing": [
+      "Oración modelo: 'Señor, ajusta nuestra mezcla, purifica materiales y fortalece nuestro hogar desde dentro. Amén.'",
+      "Aplicación: 1 hábito mínimo diario + 1 acuerdo escrito semanal."
+    ]
+  }
+}
