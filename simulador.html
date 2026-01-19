@@ -9,7 +9,6 @@
     :root{
       --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
       --line:rgba(255,255,255,.10); --accent:#5eead4;
-      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
     }
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
     .wrap{max-width:1200px;margin:0 auto;padding:22px;}
@@ -31,6 +30,7 @@
     textarea{min-height:88px;resize:vertical;}
     .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
     button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    button[disabled]{opacity:.55;cursor:not-allowed}
     .primary{background:var(--accent);color:#071018;}
     .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
     .muted{color:var(--muted);}
@@ -48,20 +48,25 @@
     .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
     .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
     .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
-    .premium{
-      display:grid; grid-template-columns: 1fr 1fr;
-      gap:10px; margin-top:10px;
-    }
-    .premiumBox{
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:16px; padding:10px 12px;
-      background:rgba(0,0,0,.10);
-    }
-    .big{font-weight:950; font-size:18px;}
-    .bigNum{font-weight:950; font-size:22px; letter-spacing:.3px;}
+    .premium{display:grid;grid-template-columns: 1fr 1fr;gap:10px;margin-top:10px;}
+    .premiumBox{border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:10px 12px;background:rgba(0,0,0,.10);}
+    .big{font-weight:950;font-size:18px;}
+    .bigNum{font-weight:950;font-size:22px;letter-spacing:.3px;}
     .stateBad{color:#fda4af;}
     .stateGood{color:#34d399;}
     .stateWarn{color:#fcd34d;}
+
+    .rangeRow{display:flex;gap:10px;align-items:center;}
+    .rangeRow input[type="range"]{padding:0;height:34px}
+    .rangeBadge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.03);
+      font-weight:900;font-size:12px;
+      white-space:nowrap;
+    }
+    .rangeDot{width:10px;height:10px;border-radius:999px;display:inline-block;}
   </style>
 </head>
 
@@ -79,13 +84,13 @@
   </div>
 
   <div class="grid">
-    <!-- IZQ: DIAGRAMA / SIMULACION -->
+    <!-- IZQ -->
     <div class="card">
       <div class="row">
         <div>
           <b>Simulación del pórtico</b>
           <div class="muted" style="font-size:13px;margin-top:4px;">
-            Flechas por carga (color por tipo + magnitud). Sísmica = flecha horizontal en el nudo.
+            Flechas por carga (color por tipo + magnitud por rangos). Sísmica = flecha horizontal en el nudo.
           </div>
         </div>
         <span class="pill" id="liveState">Estado: —</span>
@@ -93,54 +98,38 @@
 
       <div class="svgBox" style="margin-top:10px;">
         <svg id="svg" viewBox="0 0 560 390" width="100%" height="auto" aria-label="Pórtico simulable">
-          <!-- base -->
           <rect x="0" y="340" width="560" height="50" fill="rgba(255,255,255,.05)"></rect>
 
-          <!-- frame group (we transform this for “deriva”) -->
           <g id="frame">
-            <!-- foundation -->
             <rect id="foundation" x="70" y="300" width="150" height="40" rx="10"
               fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
             <text x="145" y="325" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO (CRISTO)</text>
 
-            <!-- column -->
             <rect id="column" x="135" y="90" width="22" height="210" rx="10"
               fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
             <text x="146" y="80" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA (VARÓN)</text>
 
-            <!-- beam -->
             <rect id="beam" x="146" y="90" width="290" height="18" rx="9"
               fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
             <text x="290" y="75" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA (MUJER)</text>
 
-            <!-- roller support -->
             <circle id="rollerBase" cx="436" cy="110" r="11"
               fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
             <rect x="412" y="123" width="48" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
             <text x="436" y="155" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
 
-            <!-- joint node -->
             <circle id="joint" cx="146" cy="99" r="10" fill="#64748b"></circle>
             <text x="162" y="103" font-size="12" fill="rgba(255,255,255,.75)">NUDO</text>
 
-            <!-- crack (fisura) -->
             <path id="crack" d="" stroke="#fb7185" stroke-width="3" fill="none" opacity="0"></path>
           </g>
 
-          <!-- load arrows -->
           <g id="loadLayer"></g>
-
-          <!-- transfer “travel lines” -->
           <g id="travelLayer"></g>
         </svg>
 
-        <div class="legend">
-          <div class="k"><span class="dot" style="background:#a78bfa"></span>Muerta</div>
-          <div class="k"><span class="dot" style="background:#5eead4"></span>Viva</div>
-          <div class="k"><span class="dot" style="background:#fb7185"></span>Sísmica</div>
-        </div>
+        <div class="legend" id="rangeLegend"></div>
 
-        <!-- PREMIUM SUMMARY (big) -->
         <div class="premium">
           <div class="premiumBox">
             <div class="muted">Estado</div>
@@ -165,10 +154,9 @@
         <button class="ghost" id="btnNoTransfer">Ver SIN transferencia</button>
         <button class="ghost" id="btnWithTransfer">Ver CON transferencia</button>
       </div>
-
     </div>
 
-    <!-- DER: FORM + LISTADO -->
+    <!-- DER -->
     <div class="card">
       <div class="row">
         <div>
@@ -201,7 +189,7 @@
         <h3>Nueva carga</h3>
         <div class="fieldgrid">
           <div style="grid-column:1/-1">
-            <label>Nombre (solo para listado / PDF)</label>
+            <label>Nombre (solo para listado / PDFs)</label>
             <input id="loadName" placeholder="Ej: Presión financiera / Discusión / Falta de altar">
           </div>
 
@@ -215,9 +203,16 @@
             <select id="target"></select>
           </div>
 
-          <div>
-            <label>Magnitud (1–100)</label>
-            <input id="mag" type="number" min="1" max="100" value="20">
+          <div style="grid-column:1/-1">
+            <label>Magnitud (por rangos)</label>
+            <div class="rangeRow">
+              <input id="mag" type="range" min="10" max="100" step="10" value="20" style="flex:1">
+              <span class="rangeBadge" id="magBadge">
+                <span class="rangeDot" id="magDot"></span>
+                <span id="magTxt">—</span>
+              </span>
+            </div>
+            <div class="muted" style="font-size:12px;margin-top:6px;" id="magHelp"></div>
           </div>
 
           <div style="grid-column:1/-1">
@@ -232,7 +227,7 @@
         </div>
 
         <div class="muted" style="margin-top:10px;font-size:13px;">
-          Nota: en el pórtico NO se transfiere el nombre; se transfiere la flecha con su magnitud.
+          Nota: en el pórtico NO se transfiere el nombre; se transfiere la flecha con su magnitud y rango.
         </div>
       </div>
 
@@ -240,6 +235,7 @@
         <button class="ghost" id="btnTransfer">Transferir cargas (animación)</button>
         <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
         <button class="ghost" id="btnPdf" disabled>Descargar PDF premium</button>
+        <button class="ghost" id="btnTeachPdf" disabled>PDF Enseñanza (Libro)</button>
         <button class="ghost" id="btnReset">Borrar todo</button>
       </div>
 
@@ -253,6 +249,7 @@
                 <th>Tipo</th>
                 <th>Ubicación</th>
                 <th>Magnitud</th>
+                <th>Rango</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -271,21 +268,22 @@
 <script>
   const JSON_PATH = "simulador.json";
   const LOGO_PATH = "logo.png";
-  const STORAGE_KEY = "simulador_cargas_v1";
+  const STORAGE_KEY = "simulador_cargas_v2";
 
   let DATA=null;
   let logoDataUrl=null;
 
   const state = {
     header: { patient:"", auditor:"", date:"", notes:"" },
-    loads: [],          // {id,name,type,target,mag,detail,createdAt}
-    transferred: false  // global mode for simulation
+    loads: [],
+    transferred: false
   };
 
-  // ====== Elements ======
+  // ===== Elements =====
   const tEl = document.getElementById("t");
   const dEl = document.getElementById("d");
   const rulesEl = document.getElementById("rules");
+  const rangeLegend = document.getElementById("rangeLegend");
 
   const pCount = document.getElementById("pCount");
   const modePill = document.getElementById("modePill");
@@ -306,14 +304,19 @@
   const loadTypeEl = document.getElementById("loadType");
   const targetEl = document.getElementById("target");
   const magEl = document.getElementById("mag");
+  const magBadge = document.getElementById("magBadge");
+  const magDot = document.getElementById("magDot");
+  const magTxt = document.getElementById("magTxt");
+  const magHelp = document.getElementById("magHelp");
   const detailEl = document.getElementById("detail");
 
   const rowsEl = document.getElementById("rows");
   const btnTxt = document.getElementById("btnTxt");
   const btnPdf = document.getElementById("btnPdf");
+  const btnTeachPdf = document.getElementById("btnTeachPdf");
   const pdfWarn = document.getElementById("pdfWarn");
 
-  // SVG elements
+  // SVG
   const svgEl = document.getElementById("svg");
   const frameEl = document.getElementById("frame");
   const crackEl = document.getElementById("crack");
@@ -322,7 +325,8 @@
   const travelLayer = document.getElementById("travelLayer");
 
   function okPdfLib(){
-    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+    return !!(window.jspdf && window.jspdf.jsPDF) &&
+           !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
   }
 
   function setDefaultDateIfEmpty(){
@@ -365,76 +369,136 @@
     return it ? it.label : key;
   }
 
+  function escapeHtml(str){
+    return String(str||"").replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[s]));
+  }
+
+  // ===== RANGOS =====
+  function bandForMag(mag){
+    const m = Number(mag||0);
+    const b = (DATA.magnitude && Array.isArray(DATA.magnitude.bands))
+      ? DATA.magnitude.bands.find(x => m >= x.min && m <= x.max)
+      : null;
+    // fallback seguro
+    return b || { key:"media", label:"Media (ajuste)", badgeColor:"#f59e0b", summary:"" };
+  }
+
+  function applyMagUI(){
+    const m = Number(magEl.value || (DATA.magnitude?.default||20));
+    const b = bandForMag(m);
+    magDot.style.background = b.badgeColor;
+    magTxt.textContent = `${m} · ${b.label}`;
+    magHelp.textContent = b.summary || "";
+  }
+
+  function clampToStep(val){
+    const min = Number(DATA.magnitude?.min ?? 10);
+    const max = Number(DATA.magnitude?.max ?? 100);
+    const step = Number(DATA.magnitude?.step ?? 10);
+    let v = Math.max(min, Math.min(max, Number(val||min)));
+    // snap
+    const snapped = Math.round((v - min)/step) * step + min;
+    v = Math.max(min, Math.min(max, snapped));
+    return v;
+  }
+
+  // ===== Enums UI =====
   function setupEnums(){
     loadTypeEl.innerHTML = DATA.enums.loadType.map(x=>`<option value="${x.key}">${x.label}</option>`).join("");
     targetEl.innerHTML = DATA.enums.target.map(x=>`<option value="${x.key}">${x.label}</option>`).join("");
   }
 
-  // ====== SIM MATH (Fy / Fx / M) ======
+  function setupMagnitude(){
+    const min = Number(DATA.magnitude?.min ?? 10);
+    const max = Number(DATA.magnitude?.max ?? 100);
+    const step = Number(DATA.magnitude?.step ?? 10);
+    const def = Number(DATA.magnitude?.default ?? 20);
+
+    magEl.min = String(min);
+    magEl.max = String(max);
+    magEl.step = String(step);
+    magEl.value = String(clampToStep(def));
+    applyMagUI();
+
+    // legend ranges
+    rangeLegend.innerHTML = "";
+    (DATA.magnitude?.bands || []).forEach(b=>{
+      const div = document.createElement("div");
+      div.className = "k";
+      div.innerHTML = `<span class="dot" style="background:${b.badgeColor}"></span>${escapeHtml(b.label)} (${b.min}-${b.max})`;
+      rangeLegend.appendChild(div);
+    });
+  }
+
+  // ===== SIM MATH (didáctico) =====
   function sums(){
-    // Fy: sum of muerta+viva magnitudes
-    // Fx: sum of sismica magnitudes
-    // M: a didactic moment proxy = Fx*2 + (Fy if untransferred from beam)*1.2 + (Fy on column if not to foundation)*0.8
     let Fy=0, Fx=0, M=0;
 
     state.loads.forEach(L=>{
       const mag = Number(L.mag||0);
-      if(L.type === "sismica"){
-        Fx += mag;
-      }else{
-        Fy += mag;
-      }
-      // moment proxy
+      if(L.type === "sismica") Fx += mag;
+      else Fy += mag;
+
+      const b = bandForMag(mag);
+      const w = (b.key==="baja")?1 : (b.key==="media")?1.15 : (b.key==="alta")?1.35 : 1.65;
+
       if(!state.transferred){
-        if(L.type === "sismica") M += mag * 2.0;
-        if(L.target === "viga" && L.type !== "sismica") M += mag * 1.2;
-        if(L.target === "columna" && L.type !== "sismica") M += mag * 0.8;
+        if(L.type === "sismica") M += mag * 2.0 * w;
+        if(L.target === "viga" && L.type !== "sismica") M += mag * 1.2 * w;
+        if(L.target === "columna" && L.type !== "sismica") M += mag * 0.8 * w;
       }else{
-        // with transfer, residual moment small
-        if(L.type === "sismica") M += mag * 0.25;
+        if(L.type === "sismica") M += mag * 0.25 * w;
       }
     });
 
-    Fy = Math.round(Fy);
-    Fx = Math.round(Fx);
-    M  = Math.round(M);
-    return {Fy,Fx,M};
+    return {Fy:Math.round(Fy), Fx:Math.round(Fx), M:Math.round(M)};
   }
 
-  // ====== SVG DRAWING (arrows with magnitudes) ======
-  function clearLayer(g){
-    while(g.firstChild) g.removeChild(g.firstChild);
-  }
+  // ===== SVG helpers =====
+  function svgElNS(tag){ return document.createElementNS("http://www.w3.org/2000/svg", tag); }
+  function clearLayer(g){ while(g.firstChild) g.removeChild(g.firstChild); }
 
-  function svgElNS(tag){
-    return document.createElementNS("http://www.w3.org/2000/svg", tag);
-  }
-
-  function addArrow({x,y,dir,color,mag,scale=1}){
-    // dir: "down" or "right"
-    // returns group
+  function addArrow({x,y,dir,color,mag,band}){
     const g = svgElNS("g");
     g.setAttribute("opacity","0.95");
 
-    const w = Math.max(14, Math.min(42, 14 + mag*0.28)) * scale; // arrow visual size by mag
-    const h = Math.max(30, Math.min(95, 30 + mag*0.60)) * scale;
+    const w = Math.max(14, Math.min(42, 14 + mag*0.28));
+    const h = Math.max(30, Math.min(95, 30 + mag*0.60));
 
-    // line + head
     const line = svgElNS("line");
     line.setAttribute("stroke", color);
-    line.setAttribute("stroke-width", "4");
+    line.setAttribute("stroke-width", String(4 + (band.key==="critica"?2:band.key==="alta"?1:0)));
     line.setAttribute("stroke-linecap","round");
 
     const head = svgElNS("polygon");
     head.setAttribute("fill", color);
 
-    // label
+    // MAG text
     const txt = svgElNS("text");
-    txt.setAttribute("fill", "rgba(255,255,255,.88)");
+    txt.setAttribute("fill", "rgba(255,255,255,.92)");
     txt.setAttribute("font-size","12");
-    txt.setAttribute("font-weight","900");
+    txt.setAttribute("font-weight","950");
     txt.setAttribute("text-anchor","middle");
     txt.textContent = String(mag);
+
+    // RANGE badge next to mag (colored)
+    const badge = svgElNS("rect");
+    badge.setAttribute("rx","8");
+    badge.setAttribute("ry","8");
+    badge.setAttribute("fill", band.badgeColor);
+    badge.setAttribute("opacity","0.95");
+
+    const badgeTxt = svgElNS("text");
+    badgeTxt.setAttribute("fill", "#071018");
+    badgeTxt.setAttribute("font-size","10");
+    badgeTxt.setAttribute("font-weight","950");
+    badgeTxt.setAttribute("text-anchor","middle");
+    badgeTxt.textContent =
+      band.key === "baja" ? "B" :
+      band.key === "media" ? "M" :
+      band.key === "alta" ? "A" : "C";
 
     if(dir === "down"){
       line.setAttribute("x1", x);
@@ -442,27 +506,46 @@
       line.setAttribute("x2", x);
       line.setAttribute("y2", y + h);
 
-      const p = `${x},${y+h+10} ${x-9},${y+h-2} ${x+9},${y+h-2}`;
-      head.setAttribute("points", p);
+      head.setAttribute("points", `${x},${y+h+10} ${x-9},${y+h-2} ${x+9},${y+h-2}`);
 
       txt.setAttribute("x", x);
       txt.setAttribute("y", y - 8);
+
+      // badge to the right of mag
+      const bw = 20, bh = 16;
+      badge.setAttribute("x", String(x + 12));
+      badge.setAttribute("y", String(y - 22));
+      badge.setAttribute("width", String(bw));
+      badge.setAttribute("height", String(bh));
+      badgeTxt.setAttribute("x", String(x + 12 + bw/2));
+      badgeTxt.setAttribute("y", String(y - 10));
     }else{
       line.setAttribute("x1", x);
       line.setAttribute("y1", y);
       line.setAttribute("x2", x + h);
       line.setAttribute("y2", y);
 
-      const p = `${x+h+10},${y} ${x+h-2},${y-9} ${x+h-2},${y+9}`;
-      head.setAttribute("points", p);
+      head.setAttribute("points", `${x+h+10},${y} ${x+h-2},${y-9} ${x+h-2},${y+9}`);
 
       txt.setAttribute("x", x + (h/2));
       txt.setAttribute("y", y - 10);
+
+      // badge above and slightly right
+      const bw = 20, bh = 16;
+      badge.setAttribute("x", String(x + (h/2) + 14));
+      badge.setAttribute("y", String(y - 26));
+      badge.setAttribute("width", String(bw));
+      badge.setAttribute("height", String(bh));
+      badgeTxt.setAttribute("x", String(x + (h/2) + 14 + bw/2));
+      badgeTxt.setAttribute("y", String(y - 14));
     }
 
     g.appendChild(line);
     g.appendChild(head);
     g.appendChild(txt);
+    g.appendChild(badge);
+    g.appendChild(badgeTxt);
+
     loadLayer.appendChild(g);
     return g;
   }
@@ -470,10 +553,6 @@
   function layoutLoads(){
     clearLayer(loadLayer);
 
-    // positions:
-    // beam top region ~ x: 250..420, y: 35
-    // column top region ~ x: 120, y: 35
-    // joint for seismic ~ x: 150, y: 130
     const beamXs = [250, 320, 390, 460];
     const colXs  = [110, 140];
     let bI=0, cI=0, nI=0;
@@ -481,41 +560,38 @@
     state.loads.forEach(L=>{
       const lt = enumItem(DATA.enums.loadType, L.type);
       const color = lt ? lt.color : "#e5e7eb";
-      const mag = Math.max(1, Math.min(100, Number(L.mag||1)));
+      const mag = clampToStep(L.mag);
+      const band = bandForMag(mag);
 
+      // sísmica siempre horizontal en nudo
       if(L.type === "sismica" || L.target === "nudo"){
-        // always horizontal at joint
         const x = 160;
         const y = 118 + (nI*22);
         nI++;
-        addArrow({x,y,dir:"right",color,mag});
+        addArrow({x,y,dir:"right",color,mag,band});
       }else if(L.target === "columna"){
         const x = colXs[cI % colXs.length];
         const y = 34;
         cI++;
-        addArrow({x,y,dir:"down",color,mag});
+        addArrow({x,y,dir:"down",color,mag,band});
       }else{
         const x = beamXs[bI % beamXs.length];
         const y = 34;
         bI++;
-        addArrow({x,y,dir:"down",color,mag});
+        addArrow({x,y,dir:"down",color,mag,band});
       }
     });
   }
 
-  // ====== Simulation states: unstable vs stable ======
+  // ===== Simulation states =====
   function setUnstable(){
-    // Deriva & rotation based on sums (didactic)
-    const {Fy,Fx,M} = sums();
-    const dx = Math.min(55, Fx * 0.35 + M * 0.08);
-    const rot = Math.min(12, Fx * 0.05 + M * 0.012);
+    const {Fx,M} = sums();
+    const dx = Math.min(58, Fx * 0.35 + M * 0.08);
+    const rot = Math.min(14, Fx * 0.05 + M * 0.012);
     frameEl.setAttribute("transform", `translate(${dx},0) rotate(${rot} 146 300)`);
 
-    // crack appears
     crackEl.setAttribute("opacity","1");
     crackEl.setAttribute("d", "M120 300 L140 285 L132 270 L150 252 L142 236 L165 220");
-
-    // joint “stressed” color
     jointEl.setAttribute("fill", "#fb7185");
   }
 
@@ -551,13 +627,11 @@
     sumMEl.textContent = M;
   }
 
-  // ====== Transfer animation: traveling arrows ======
+  // ===== Transfer animation =====
   function animateTransfer(){
-    // Create ghost arrows traveling along the path:
-    // viga -> columna -> foundation (vertical+diagonal), nudo(sismo) -> foundation (diagonal)
     clearLayer(travelLayer);
 
-    const duration = 850; // ms per segment
+    const duration = 850;
     const now = performance.now();
 
     function makeGhost(color){
@@ -576,13 +650,10 @@
       return { L, color: (lt?lt.color:"#e5e7eb"), ghost: makeGhost(lt?lt.color:"#e5e7eb") };
     });
 
-    // Paths (start->mid->end)
     function pathsFor(L){
-      // end at foundation center
       const end = {x:145, y:320};
 
       if(L.type==="sismica" || L.target==="nudo"){
-        // from joint area
         const start = {x:170, y:120};
         const mid = {x:145, y:170};
         return [start, mid, end];
@@ -592,7 +663,6 @@
         const mid = {x:145, y:180};
         return [start, mid, end];
       }
-      // viga
       const start = {x:320, y:60};
       const mid = {x:170, y:110};
       return [start, mid, end];
@@ -602,14 +672,13 @@
 
     function tick(ts){
       const t = ts - now;
-      const segT = t / duration; // 0..?
-      ghosts.forEach(({L,color,ghost})=>{
+      const segT = t / duration;
+      ghosts.forEach(({L,ghost})=>{
         const pts = pathsFor(L);
-        const seg = Math.min(1.999, Math.max(0, segT)); // up to second segment
+        const seg = Math.min(1.999, Math.max(0, segT));
         const idx = seg < 1 ? 0 : 1;
         const local = seg < 1 ? seg : (seg-1);
-        const A = pts[idx];
-        const B = pts[idx+1];
+        const A = pts[idx], B = pts[idx+1];
         const x = lerp(A.x, B.x, local);
         const y = lerp(A.y, B.y, local);
         ghost.g.setAttribute("transform", `translate(${x} ${y})`);
@@ -618,18 +687,14 @@
       if(t < duration*2){
         requestAnimationFrame(tick);
       }else{
-        // end: set transferred and rerender
         state.transferred = true;
         save();
         render();
-        // fade travel layer
         travelLayer.setAttribute("opacity","0.0");
         setTimeout(()=>{ travelLayer.setAttribute("opacity","1"); clearLayer(travelLayer); }, 180);
       }
     }
 
-    // show guide lines
-    travelLayer.setAttribute("opacity","1");
     const guide = svgElNS("path");
     guide.setAttribute("stroke","rgba(255,255,255,.25)");
     guide.setAttribute("stroke-width","2");
@@ -641,36 +706,38 @@
     requestAnimationFrame(tick);
   }
 
-  // ====== CRUD loads ======
+  // ===== CRUD loads =====
   function clearForm(){
     loadNameEl.value = "";
     detailEl.value = "";
     loadTypeEl.value = "viva";
     targetEl.value = "viga";
-    magEl.value = "20";
+    magEl.value = String(clampToStep(DATA.magnitude?.default ?? 20));
+    applyMagUI();
   }
 
   function addLoad(){
     const name = (loadNameEl.value||"").trim() || "Carga";
     const type = loadTypeEl.value;
     let target = targetEl.value;
-    const mag = Math.max(1, Math.min(100, Number(magEl.value||1)));
 
-    // enforce: sismica must be at nudo, and drawn horizontal
+    let mag = clampToStep(magEl.value);
+
+    // enforce: sismica -> nudo
     if(type === "sismica") target = "nudo";
 
     const L = {
-      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2),
+      id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2)),
       name,
       type,
       target,
       mag,
+      bandKey: bandForMag(mag).key,
       detail: (detailEl.value||"").trim(),
       createdAt: new Date().toISOString()
     };
 
     state.loads.unshift(L);
-    // whenever loads change, keep current transfer mode (do not auto-transfer)
     save();
     clearForm();
     render();
@@ -686,14 +753,17 @@
   function renderRows(){
     rowsEl.innerHTML = "";
     state.loads.forEach(L=>{
-      const tr = document.createElement("tr");
       const lt = enumItem(DATA.enums.loadType, L.type);
-      const color = lt ? lt.color : "#e5e7eb";
+      const tColor = lt ? lt.color : "#e5e7eb";
+      const band = bandForMag(L.mag);
+
+      const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><b>${escapeHtml(L.name)}</b><div class="muted" style="font-size:12px;margin-top:4px">${escapeHtml(L.detail||"")}</div></td>
-        <td><span class="tag" style="border-color:${color};color:${color}">${escapeHtml(enumLabel(DATA.enums.loadType, L.type))}</span></td>
+        <td><span class="tag" style="border-color:${tColor};color:${tColor}">${escapeHtml(enumLabel(DATA.enums.loadType, L.type))}</span></td>
         <td><span class="tag">${escapeHtml(enumLabel(DATA.enums.target, L.target))}</span></td>
-        <td><b>${L.mag}</b></td>
+        <td><b>${escapeHtml(String(clampToStep(L.mag)))}</b></td>
+        <td><span class="tag" style="border-color:${band.badgeColor};color:${band.badgeColor}">${escapeHtml(band.label)}</span></td>
         <td><button class="ghost" style="padding:6px 10px;border-radius:10px;font-weight:900" data-del="${L.id}">Eliminar</button></td>
       `;
       rowsEl.appendChild(tr);
@@ -716,8 +786,16 @@
   function render(){
     pCount.textContent = `Cargas: ${state.loads.length}`;
     btnTxt.disabled = state.loads.length === 0;
-    btnPdf.disabled = state.loads.length === 0 || !okPdfLib();
-    pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    const pdfOk = okPdfLib();
+    btnPdf.disabled = state.loads.length === 0 || !pdfOk;
+    btnTeachPdf.disabled = !pdfOk;
+    pdfWarn.style.display = pdfOk ? "none" : "block";
+
+    // ensure mags snapped
+    state.loads.forEach(L=>{
+      L.mag = clampToStep(L.mag);
+      L.bandKey = bandForMag(L.mag).key;
+    });
 
     layoutLoads();
     updatePremiumNumbers();
@@ -725,56 +803,42 @@
     renderRows();
   }
 
-  function escapeHtml(str){
-    return String(str||"").replace(/[&<>"']/g, s => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[s]));
-  }
-
-  // ====== TXT export ======
+  // ===== TXT export =====
   function buildTXT(){
-    const L=[];
-    L.push((DATA.meta.title||"SIMULADOR").toUpperCase());
-    L.push("");
-    L.push("DATOS");
-    L.push(`Paciente: ${patientEl.value || "(no especificado)"}`);
-    L.push(`Auditor: ${auditorEl.value || "(no especificado)"}`);
-    L.push(`Fecha: ${dateEl.value || "(no especificada)"}`);
-    L.push("Observaciones:");
-    L.push(notesEl.value || "(sin observaciones)");
-    L.push("");
+    const out=[];
+    out.push((DATA.meta.title||"SIMULADOR").toUpperCase());
+    out.push("");
+    out.push("DATOS");
+    out.push(`Paciente: ${patientEl.value || "(no especificado)"}`);
+    out.push(`Auditor: ${auditorEl.value || "(no especificado)"}`);
+    out.push(`Fecha: ${dateEl.value || "(no especificada)"}`);
+    out.push("Observaciones:");
+    out.push(notesEl.value || "(sin observaciones)");
+    out.push("");
 
     const S = sums();
-    L.push("RESUMEN PREMIUM");
-    L.push(`Estado: ${state.transferred ? "CON transferencia" : "SIN transferencia"}`);
-    L.push(`∑Fy: ${S.Fy} | ∑Fx: ${S.Fx} | ∑M: ${S.M}`);
-    L.push("");
+    out.push("RESUMEN PREMIUM");
+    out.push(`Estado: ${state.transferred ? "CON transferencia" : "SIN transferencia"}`);
+    out.push(`∑Fy: ${S.Fy} | ∑Fx: ${S.Fx} | ∑M: ${S.M}`);
+    out.push("");
 
-    L.push("CARGAS");
-    L.push("--------------------------------------------------");
+    out.push("CARGAS");
+    out.push("--------------------------------------------------");
     state.loads.forEach(x=>{
-      L.push(`- ${x.name}`);
-      L.push(`  Tipo: ${enumLabel(DATA.enums.loadType,x.type)} | Ubicación: ${enumLabel(DATA.enums.target,x.target)} | Magnitud: ${x.mag}`);
-      if(x.detail) L.push(`  Detalle: ${x.detail}`);
-      L.push("");
+      const band = bandForMag(x.mag);
+      out.push(`- ${x.name}`);
+      out.push(`  Tipo: ${enumLabel(DATA.enums.loadType,x.type)} | Ubicación: ${enumLabel(DATA.enums.target,x.target)} | Magnitud: ${x.mag} | Rango: ${band.label}`);
+      if(x.detail) out.push(`  Detalle: ${x.detail}`);
+      out.push("");
     });
 
-    L.push("VERSO FUNDAMENTO");
-    L.push(`${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`);
-    L.push("");
-
-    L.push("PLAN DE TRANSFERENCIA (pasos)");
-    (DATA.planTemplates.transferSteps||[]).forEach(s=> L.push("• "+s));
-    L.push("");
-
-    L.push("PLAN 7 DÍAS");
-    (DATA.planTemplates.plan7||[]).forEach(d=>{
-      L.push(`Día ${d.day}: ${d.title}`);
-      (d.items||[]).forEach(it=> L.push("• "+it));
-      L.push("");
-    });
-
-    return L.join("\n");
+    out.push("VERSO FUNDAMENTO");
+    out.push(`${DATA.verses.foundation.quote} (${DATA.verses.foundation.reference})`);
+    out.push("");
+    out.push("PLAN DE TRANSFERENCIA (pasos)");
+    (DATA.planTemplates.transferSteps||[]).forEach(s=> out.push("• "+s));
+    out.push("");
+    return out.join("\n");
   }
 
   function downloadTXT(){
@@ -787,7 +851,7 @@
     URL.revokeObjectURL(a.href);
   }
 
-  // ====== PDF helpers ======
+  // ===== PDF helpers =====
   async function loadLogo(){
     try{
       const res = await fetch(LOGO_PATH, { cache:"no-store" });
@@ -813,7 +877,6 @@
     return new Promise(r => requestAnimationFrame(() => r()));
   }
 
-  // Convert SVG to PNG (dataURL)
   async function svgToPngData(svg, w, h){
     const xml = new XMLSerializer().serializeToString(svg);
     const svg64 = btoa(unescape(encodeURIComponent(xml)));
@@ -830,33 +893,25 @@
     const canvas = document.createElement("canvas");
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext("2d");
-
-    // fondo sólido para PDF
     ctx.fillStyle = "#0b1220";
     ctx.fillRect(0,0,w,h);
-
     ctx.drawImage(img, 0, 0, w, h);
     return canvas.toDataURL("image/png");
   }
 
-  // capture before/after + return snapshot and premium numbers
   async function captureScenarioMode(mode){
-    const prevTransferred = state.transferred;
+    const prev = state.transferred;
     state.transferred = (mode === "yes");
     render();
     await waitFrame();
-
     const snap = await svgToPngData(svgEl, 1500, 1050);
     const S = sums();
-
-    // restore
-    state.transferred = prevTransferred;
+    state.transferred = prev;
     render();
     await waitFrame();
     return { snap, S };
   }
 
-  // Draw the premium header box in PDF
   function drawPremiumBox(doc, x, y, w, h, modeLabel, S){
     doc.setFillColor(255,255,255);
     doc.roundedRect(x, y, w, h, 10, 10, "F");
@@ -865,9 +920,9 @@
     doc.setFontSize(12);
     doc.text("Resumen premium", x+12, y+20);
 
+    const isYes = modeLabel.toLowerCase().includes("con");
     doc.setFont("helvetica","bold");
     doc.setFontSize(14);
-    const isYes = modeLabel.toLowerCase().includes("con");
     doc.setTextColor(isYes ? 16 : 244, isYes ? 185 : 63, isYes ? 129 : 94);
     doc.text(modeLabel, x+12, y+42);
 
@@ -884,86 +939,7 @@
     doc.text(DATA.texts.premiumLegend || "", x+12, y+h-12);
   }
 
-  // Build didactic images inside hidden SVGs and convert to PNG
-  async function buildDidacticBeamDeflectionPNG(){
-    const s = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
-        <rect width="100%" height="100%" fill="#0b1220"/>
-        <text x="60" y="80" font-family="Arial" font-size="42" fill="#e7eefc" font-weight="800">Deflexión de la Viga (sin transferir a la columna)</text>
-        <text x="60" y="125" font-family="Arial" font-size="22" fill="#a7b4d6">La carga se queda en la viga → curvatura y fatiga</text>
-
-        <!-- supports -->
-        <circle cx="180" cy="470" r="18" fill="#64748b"/>
-        <circle cx="1020" cy="470" r="18" fill="#64748b"/>
-
-        <!-- beam (deflected) -->
-        <path d="M180 420 C 420 520, 780 520, 1020 420" stroke="#5eead4" stroke-width="18" fill="none" stroke-linecap="round"/>
-
-        <!-- loads -->
-        <line x1="430" y1="210" x2="430" y2="360" stroke="#a78bfa" stroke-width="8"/>
-        <polygon points="430,380 412,352 448,352" fill="#a78bfa"/>
-        <line x1="610" y1="210" x2="610" y2="360" stroke="#5eead4" stroke-width="8"/>
-        <polygon points="610,380 592,352 628,352" fill="#5eead4"/>
-        <text x="520" y="190" font-family="Arial" font-size="24" fill="#e7eefc" font-weight="700">Cargas (↓)</text>
-
-        <!-- note -->
-        <rect x="60" y="540" width="1080" height="110" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
-        <text x="90" y="585" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="700">Lectura:</text>
-        <text x="190" y="585" font-family="Arial" font-size="20" fill="#a7b4d6">cuando la viga no transfiere, el sistema entra en “agotamiento” y aparece fisura.</text>
-      </svg>
-    `;
-    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
-    const img = new Image();
-    await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; img.src=url; });
-
-    const c = document.createElement("canvas");
-    c.width = 1200; c.height = 700;
-    const ctx = c.getContext("2d");
-    ctx.drawImage(img,0,0);
-    return c.toDataURL("image/png");
-  }
-
-  async function buildDidacticColumnBucklingPNG(){
-    const s = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700">
-        <rect width="100%" height="100%" fill="#0b1220"/>
-        <text x="60" y="80" font-family="Arial" font-size="42" fill="#e7eefc" font-weight="800">Pandeo de la Columna (sin transferir al cimiento)</text>
-        <text x="60" y="125" font-family="Arial" font-size="22" fill="#a7b4d6">La carga no descarga al fundamento → inclinación y momento</text>
-
-        <!-- foundation -->
-        <rect x="420" y="560" width="360" height="70" rx="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)"/>
-        <text x="600" y="604" text-anchor="middle" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="800">CIMIENTO</text>
-
-        <!-- buckled column -->
-        <path d="M600 520 C 560 420, 660 320, 600 220" stroke="#fb7185" stroke-width="22" fill="none" stroke-linecap="round"/>
-
-        <!-- top load -->
-        <line x1="600" y1="120" x2="600" y2="190" stroke="#a78bfa" stroke-width="10"/>
-        <polygon points="600,210 578,182 622,182" fill="#a78bfa"/>
-        <text x="640" y="150" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="700">Peso sin descarga</text>
-
-        <!-- horizontal push -->
-        <line x1="300" y1="320" x2="460" y2="320" stroke="#fb7185" stroke-width="10"/>
-        <polygon points="480,320 452,298 452,342" fill="#fb7185"/>
-        <text x="260" y="310" font-family="Arial" font-size="22" fill="#a7b4d6">Empuje (→)</text>
-
-        <rect x="60" y="540" width="1080" height="110" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)"/>
-        <text x="90" y="585" font-family="Arial" font-size="22" fill="#e7eefc" font-weight="700">Lectura:</text>
-        <text x="190" y="585" font-family="Arial" font-size="20" fill="#a7b4d6">cuando la columna no transfiere al cimiento, pierde verticalidad y crece el momento.</text>
-      </svg>
-    `;
-    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
-    const img = new Image();
-    await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; img.src=url; });
-
-    const c = document.createElement("canvas");
-    c.width = 1200; c.height = 700;
-    const ctx = c.getContext("2d");
-    ctx.drawImage(img,0,0);
-    return c.toDataURL("image/png");
-  }
-
-  async function downloadPDF(){
+  async function downloadPDFPremium(){
     if(!okPdfLib()){
       pdfWarn.style.display="block";
       return;
@@ -996,7 +972,7 @@
       }
     }
 
-    // ===== PORTADA =====
+    // PORTADA
     doc.setFillColor(22,33,58);
     doc.rect(0,0,W,96,"F");
     addLogo(W-M-56, 18, 56, 56);
@@ -1009,7 +985,7 @@
     doc.setFont("helvetica","normal");
     doc.setFontSize(12);
     doc.setTextColor(210,230,255);
-    doc.text("Antes vs Después + Equilibrio (∑Fy, ∑Fx, ∑M) + Plan de Transferencia", M, 72);
+    doc.text("Antes vs Después + Equilibrio (∑Fy, ∑Fx, ∑M) + Rangos + Plan", M, 72);
 
     doc.setFillColor(245,247,255);
     doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
@@ -1038,12 +1014,10 @@
     doc.setTextColor(70,90,110);
     doc.text(`(${DATA.verses.foundation.reference})`, M+14, 384);
 
-    // ===== PAGE 2: ANTES =====
+    // PAGE 2: ANTES
     doc.addPage();
     addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(14);
-    doc.setTextColor(...INK);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
     doc.text("ANTES — Sin transferencia (deriva + fisuras)", M, 64);
     doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
 
@@ -1054,93 +1028,44 @@
     const imgH = (imgW * 1050) / 1500;
     doc.addImage(before.snap, "PNG", M, 240, imgW, Math.min(imgH, H-300));
 
-    // ===== PAGE 3: DESPUÉS =====
+    // PAGE 3: DESPUÉS
     doc.addPage();
     addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(14);
-    doc.setTextColor(...INK);
+    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
     doc.text("DESPUÉS — Con transferencia al Cimiento (Cristo)", M, 64);
     doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
 
     const after = await captureScenarioMode("yes");
     drawPremiumBox(doc, M, 90, W-M*2, 135, "CON transferencia", after.S);
-
     doc.addImage(after.snap, "PNG", M, 240, imgW, Math.min(imgH, H-300));
 
-    // ===== PAGE 4: Imagen Deflexión + lectura =====
+    // PAGE 4: tabla de cargas + rangos
     doc.addPage();
     addLogo(M, 16, 32, 32);
     doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-    doc.text(DATA.readings.beamDeflection.title, M, 64);
+    doc.text("Cargas registradas (con rangos)", M, 64);
     doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
-
-    const defPng = await buildDidacticBeamDeflectionPNG();
-    doc.addImage(defPng, "PNG", M, 92, imgW, (imgW*700)/1200);
-
-    let y = 92 + (imgW*700)/1200 + 14;
-    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-    doc.text("Lectura espiritual", M, y); y += 14;
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(10.5); doc.setTextColor(...INK);
-    const beamSp = (DATA.readings.beamDeflection.spiritual||[]).join(" • ");
-    doc.text(doc.splitTextToSize(beamSp, W-M*2), M, y);
-
-    // ===== PAGE 5: Imagen Pandeo + lectura =====
-    doc.addPage();
-    addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-    doc.text(DATA.readings.columnBuckling.title, M, 64);
-    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
-
-    const buckPng = await buildDidacticColumnBucklingPNG();
-    doc.addImage(buckPng, "PNG", M, 92, imgW, (imgW*700)/1200);
-
-    y = 92 + (imgW*700)/1200 + 14;
-    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-    doc.text("Lectura espiritual", M, y); y += 14;
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(10.5); doc.setTextColor(...INK);
-    const colSp = (DATA.readings.columnBuckling.spiritual||[]).join(" • ");
-    doc.text(doc.splitTextToSize(colSp, W-M*2), M, y);
-
-    // ===== PAGE 6: Plan de transferencia + cargas =====
-    doc.addPage();
-    addLogo(M, 16, 32, 32);
-    doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
-    doc.text("Plan de transferencia de cargas", M, 64);
-    doc.setDrawColor(230); doc.line(M, 74, W-M, 74);
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
-    doc.text(doc.splitTextToSize(`${DATA.verses.transfer.quote} (${DATA.verses.transfer.reference})`, W-M*2), M, 96);
-
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("Pasos (prácticos)", M, 126);
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(10.5);
-    const steps = (DATA.planTemplates.transferSteps||[]).map(x=>"• "+x).join("\n");
-    doc.text(steps, M, 146);
-
-    // Tabla de cargas
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("Cargas registradas", M, 260);
 
     doc.autoTable({
-      startY: 270,
-      head: [["Carga", "Tipo", "Ubicación", "Magnitud"]],
-      body: state.loads.map(L=>[
-        L.name,
-        enumLabel(DATA.enums.loadType, L.type),
-        enumLabel(DATA.enums.target, L.target),
-        String(L.mag)
-      ]),
+      startY: 92,
+      head: [["Carga", "Tipo", "Ubicación", "Magnitud", "Rango"]],
+      body: state.loads.map(L=>{
+        const band = bandForMag(L.mag);
+        return [
+          L.name,
+          enumLabel(DATA.enums.loadType, L.type),
+          enumLabel(DATA.enums.target, L.target),
+          String(L.mag),
+          band.label
+        ];
+      }),
       theme:"grid",
       styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
       headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
       margin:{left:M, right:M}
     });
 
-    // ===== PAGE 7: Plan 7 días + Observaciones =====
+    // PAGE 5: plan 7 días
     doc.addPage();
     addLogo(M, 16, 32, 32);
     doc.setFont("helvetica","bold"); doc.setFontSize(14); doc.setTextColor(...INK);
@@ -1164,24 +1089,169 @@
       margin:{left:M, right:M}
     });
 
-    // Observaciones
-    const lastY = doc.lastAutoTable ? doc.lastAutoTable.finalY : 520;
-    const boxY = Math.min(lastY + 18, 560);
-    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
-    doc.text("Observaciones", M, boxY);
-
-    doc.setFillColor(255,255,255);
-    doc.roundedRect(M, boxY+10, W-M*2, 140, 12, 12, "F");
-    doc.setFont("helvetica","normal"); doc.setFontSize(10.5);
-    doc.text(doc.splitTextToSize(notesEl.value || "(sin observaciones)", W-M*2-28), M+14, boxY+34);
-
     footer();
-
     const name = safeName(patientEl.value || "hogar");
-    doc.save(`${name}_simulador_cargas.pdf`);
+    doc.save(`${name}_simulador_premium.pdf`);
   }
 
-  // ====== Reset ======
+  async function downloadTeachingPDF(){
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+    if(logoDataUrl===null) logoDataUrl = await loadLogo();
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:"pt", format:"letter"});
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const INK = [22,33,58];
+    const MUTED = [90,102,130];
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(title){
+      addLogo(M, 16, 32, 32);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(13);
+      doc.setTextColor(...INK);
+      doc.text(title, W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...MUTED);
+        doc.text("Enseñanza — Simulador de Cargas del Hogar (Enfoque del Libro)", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    const T = DATA.teachingPdf;
+
+    // PORTADA
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,110,"F");
+    addLogo(W-M-56, 26, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
+    doc.setTextColor(255,255,255);
+    doc.text(T.title, M, 56);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11.5);
+    doc.setTextColor(210,230,255);
+    doc.text(doc.splitTextToSize(T.subtitle, W-M*2), M, 84);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 140, W-M*2, 170, 12, 12, "F");
+    doc.setTextColor(...INK);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Marco (como el libro)", M+14, 166);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    const frameText = (T.frame||[]).map(x=>"• "+x).join("\n");
+    doc.text(frameText, M+14, 190);
+
+    doc.setFillColor(240,253,250);
+    doc.roundedRect(M, 330, W-M*2, 70, 12, 12, "F");
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(`${DATA.verses.burdens.quote}`, W-M*2-28), M+14, 356);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${DATA.verses.burdens.reference})`, M+14, 392);
+
+    // Página: ideas clave
+    doc.addPage();
+    let y = header("Ideas clave (estructura espiritual)");
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Lectura estructural", M, y); y += 18;
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(...INK);
+    const ideas = (T.keyIdeas||[]).map(x=>"• "+x).join("\n");
+    doc.text(ideas, M, y); y += 110;
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("Rangos de magnitud (cómo interpretarlos)", M, y); y += 14;
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10.5);
+    const bandLines = (DATA.magnitude.bands||[]).map(b=>`• ${b.label} (${b.min}-${b.max}): ${b.summary}`).join("\n");
+    doc.text(doc.splitTextToSize(bandLines, W-M*2), M, y);
+
+    // Página: flujo de uso
+    doc.addPage();
+    y = header("Cómo usar la app en taller / consejería");
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Paso a paso", M, y); y += 18;
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    const how = (T.howToUse||[]).map(x=>"• "+x).join("\n");
+    doc.text(doc.splitTextToSize(how, W-M*2), M, y); y += 180;
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("Flujo sugerido (80 min)", M, y); y += 10;
+
+    doc.autoTable({
+      startY: y + 8,
+      head: [["Min", "Bloque", "Qué hacer"]],
+      body: (T.workshopFlow||[]).map(b=>[b.min, b.title, (b.items||[]).join(" • ")]),
+      theme:"grid",
+      styles:{font:"helvetica", fontSize:9.5, cellPadding:6, textColor:[20,30,50], lineColor:[230,234,245], valign:"top"},
+      headStyles:{fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles:{0:{cellWidth:70},1:{cellWidth:160},2:{cellWidth:W-M*2-70-160}},
+      margin:{left:M, right:M}
+    });
+
+    // Página: preguntas + cierre
+    doc.addPage();
+    y = header("Preguntas guía + cierre");
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Preguntas (para activar transferencia)", M, y); y += 18;
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    const qs = (T.questions||[]).map(x=>"• "+x).join("\n");
+    doc.text(doc.splitTextToSize(qs, W-M*2), M, y); y += 150;
+
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, y, W-M*2, 120, 12, 12, "F");
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Cierre", M+14, y+22);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    const closing = (T.closing||[]).map(x=>"• "+x).join("\n");
+    doc.text(doc.splitTextToSize(closing, W-M*2-28), M+14, y+46);
+
+    footer();
+    const name = safeName(patientEl.value || "hogar");
+    doc.save(`${name}_ensenanza_simulador.pdf`);
+  }
+
+  // ===== Init helpers =====
+  function renderRules(){
+    rulesEl.innerHTML = "";
+    (DATA.texts.rules || []).forEach(r=>{
+      const li = document.createElement("li");
+      li.textContent = r;
+      rulesEl.appendChild(li);
+    });
+  }
+
   function resetAll(){
     if(!confirm("¿Borrar TODO el simulador?")) return;
     localStorage.removeItem(STORAGE_KEY);
@@ -1195,7 +1265,6 @@
     render();
   }
 
-  // ====== Init ======
   async function init(){
     try{
       const res = await fetch(JSON_PATH, {cache:"no-store"});
@@ -1204,24 +1273,27 @@
 
       tEl.textContent = DATA.meta.title || "Simulador";
       dEl.textContent = DATA.meta.description || "";
-      renderRules();
+
       setupEnums();
+      setupMagnitude();
+      renderRules();
 
       load();
       fillHeaderUI();
       setDefaultDateIfEmpty();
       clearForm();
-      render();
 
       pdfWarn.style.display = okPdfLib() ? "none" : "block";
+      render();
     }catch(e){
       document.body.innerHTML = `<div style="padding:22px;color:#fda4af"><b>Error:</b> ${e.message}<br><span style="color:#a7b4d6">Asegúrate de que ${JSON_PATH} esté en la misma carpeta.</span></div>`;
     }
   }
 
-  // ====== Events ======
+  // ===== Events =====
   document.getElementById("btnAdd").addEventListener("click", addLoad);
   document.getElementById("btnClear").addEventListener("click", clearForm);
+
   document.getElementById("btnTransfer").addEventListener("click", ()=>{
     if(state.loads.length===0) return alert("Primero agrega cargas.");
     animateTransfer();
@@ -1238,7 +1310,8 @@
   });
 
   document.getElementById("btnTxt").addEventListener("click", downloadTXT);
-  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDFPremium);
+  document.getElementById("btnTeachPdf").addEventListener("click", downloadTeachingPDF);
   document.getElementById("btnReset").addEventListener("click", resetAll);
 
   [patientEl,auditorEl,dateEl,notesEl].forEach(el=>{
@@ -1246,7 +1319,12 @@
     el.addEventListener("change", save);
   });
 
-  // enforce: if type becomes sismica, force target to nudo
+  magEl.addEventListener("input", ()=>{
+    // snap to step while sliding
+    magEl.value = String(clampToStep(magEl.value));
+    applyMagUI();
+  });
+
   loadTypeEl.addEventListener("change", ()=>{
     if(loadTypeEl.value==="sismica") targetEl.value = "nudo";
   });

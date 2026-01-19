@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Simulador de Cargas del Hogar — Laboratorio de Transferencia",
-    "description": "Herramienta didáctica para talleres: crea cargas (muertas/vivas/sísmicas) con magnitud, observa deriva/fisuras si no se transfieren, y simula estabilidad al transferir al Cimiento (Cristo)."
+    "description": "Crea cargas (muertas/vivas/sísmicas) usando rangos de magnitud. Observa deriva/fisuras si no se transfiere, y estabilidad al transferir al Cimiento (Cristo)."
   },
   "enums": {
     "loadType": [
@@ -15,12 +15,53 @@
       { "key": "nudo", "label": "Nudo (Congregación) — sismo horizontal" }
     ]
   },
+  "magnitude": {
+    "min": 10,
+    "max": 100,
+    "step": 10,
+    "default": 20,
+    "bands": [
+      {
+        "key": "baja",
+        "label": "Baja (mantenimiento)",
+        "min": 10,
+        "max": 30,
+        "badgeColor": "#10b981",
+        "summary": "Carga normal. El sistema la soporta si hay hábitos y transferencia."
+      },
+      {
+        "key": "media",
+        "label": "Media (ajuste)",
+        "min": 40,
+        "max": 60,
+        "badgeColor": "#f59e0b",
+        "summary": "Carga que requiere ajuste. Si se repite sin transferencia, acumula fatiga."
+      },
+      {
+        "key": "alta",
+        "label": "Alta (riesgo)",
+        "min": 70,
+        "max": 80,
+        "badgeColor": "#f97316",
+        "summary": "Carga de riesgo. Necesita conversación, acuerdos y descarga al fundamento."
+      },
+      {
+        "key": "critica",
+        "label": "Crítica (proceso)",
+        "min": 90,
+        "max": 100,
+        "badgeColor": "#f43f5e",
+        "summary": "Carga crítica. Requiere proceso pastoral, no corrección rápida."
+      }
+    ]
+  },
   "texts": {
     "rules": [
       "Muerta/Viva se dibujan como flechas VERTICALES (↓) sobre viga o columna.",
       "Sísmica se dibuja como flecha HORIZONTAL (→) sobre el nudo (columna↔viga).",
       "La transferencia correcta es: Viga → Columna → Cimiento (Cristo).",
-      "Si no hay transferencia, aparece deriva (desplazamiento), fisuras y momento (rotación)."
+      "Si no hay transferencia, aparece deriva (desplazamiento), fisuras y momento (rotación).",
+      "La magnitud se trabaja por rangos: Baja / Media / Alta / Crítica."
     ],
     "premiumLegend": "Resumen premium: estado + ∑Fy (vertical), ∑Fx (horizontal), ∑M (momento)."
   },
@@ -42,33 +83,49 @@
       "reference": "1 Corintios 14:33 (RVR1960)"
     }
   },
-  "readings": {
-    "beamDeflection": {
-      "title": "Deflexión de la viga (cuando NO transfiere a la columna)",
-      "points": [
-        "Cuando la viga carga sola, se curva: es agotamiento emocional y sobrecarga silenciosa.",
-        "La viga fue diseñada para percibir primero… pero para TRANSFERIR, no para quedarse sola.",
-        "La curvatura aumenta con cargas repetidas (frecuencia) y sin apoyo (intersección)."
-      ],
-      "spiritual": [
-        "Lectura espiritual: si la mujer sostiene sin descarga, el sistema se vuelve esfuerzo.",
-        "La transferencia correcta no es culpa: es diseño. Hablarlo es parte del anclaje.",
-        "Acción: nombrar la carga y pedir soporte (columna) y fundamento (Cristo)."
-      ]
-    },
-    "columnBuckling": {
-      "title": "Pandeo de la columna (cuando NO transfiere al cimiento)",
-      "points": [
-        "Cuando la columna no descarga al cimiento, se inclina: aparece presión interna y pérdida de verticalidad.",
-        "No es falta de capacidad: es falta de anclaje (Cristo) y proceso (orden).",
-        "La inclinación incrementa el momento (rotación) y acelera fisuras."
-      ],
-      "spiritual": [
-        "Lectura espiritual: el varón sosteniendo desde sí mismo entra en deriva.",
-        "Anclaje diario (altar) restaura verticalidad; no es performance, es dependencia.",
-        "Acción: entregar cargas concretas a Cristo y tomar decisiones desde altar, no urgencia."
-      ]
-    }
+  "teachingPdf": {
+    "title": "Enseñanza — Simulador de Cargas del Hogar (Enfoque del Libro)",
+    "subtitle": "Cómo leer el hogar como pórtico, diagnosticar cargas y transferir al fundamento (Cristo).",
+    "frame": [
+      "Este material NO busca culpables: busca alineación de funciones.",
+      "No trabaja condena: trabaja transferencia.",
+      "No promete cambio instantáneo: establece proceso y mantenimiento.",
+      "El Cimiento (Cristo) no es adorno: es el destino final de toda carga."
+    ],
+    "keyIdeas": [
+      "Cargas verticales (muertas/vivas) son normales: pesan. El problema es la ruta.",
+      "Cargas horizontales (sísmicas) prueban el nudo: revelan calidad de congregación.",
+      "Sin transferencia, aparece momento (∑M): rotación, deriva, fisuras.",
+      "Con transferencia, no desaparece la vida: aparece estabilidad."
+    ],
+    "howToUse": [
+      "1) Escuchar el caso sin juicio.",
+      "2) Convertir el relato en 2–5 cargas claras.",
+      "3) Asignar tipo y magnitud por rangos.",
+      "4) Ubicar las cargas en viga/columna/nudo.",
+      "5) Mostrar ANTES (sin transferencia): deriva y fisura.",
+      "6) Transferir: viga→columna→cimiento; nudo→columna→cimiento.",
+      "7) Mostrar DESPUÉS (transferido): estabilidad.",
+      "8) Terminar con 1 acuerdo + 1 hábito + 1 oración."
+    ],
+    "workshopFlow": [
+      { "min": "0–10", "title": "Marco", "items": ["Pórtico: cimiento, columna, viga, nudo.", "No culpa: transferencia."] },
+      { "min": "10–25", "title": "Cargas", "items": ["Muertas/vivas (vertical).", "Sísmicas (horizontal).", "Rangos: Baja/Media/Alta/Crítica."] },
+      { "min": "25–45", "title": "Simulación", "items": ["Construir escenario real.", "Ver ANTES (sin transferencia).", "Ver ∑Fy/∑Fx/∑M."] },
+      { "min": "45–65", "title": "Transferencia", "items": ["Animación de ruta al cimiento.", "Ver DESPUÉS (estabilidad)."] },
+      { "min": "65–80", "title": "Aplicación", "items": ["1 acuerdo práctico.", "1 hábito semanal.", "Oración de entrega al fundamento."] }
+    ],
+    "questions": [
+      "¿Qué carga se repite y dónde se está quedando (viga/columna/nudo)?",
+      "¿Qué empuje horizontal está moviendo el sistema (sísmica)?",
+      "¿Qué parte debería transferir hoy y qué parte necesita proceso?",
+      "¿Qué acuerdo puede quedar por escrito en 1 frase?",
+      "¿Qué hábito semanal mantiene el sistema estable?"
+    ],
+    "closing": [
+      "Oración (modelo): ‘Señor Jesús, entregamos esta carga al fundamento. Alinea funciones, restaura el nudo y danos paz para sostener el proceso’.",
+      "Aplicación: 1 acción medible en 24 horas."
+    ]
   },
   "planTemplates": {
     "transferSteps": [
