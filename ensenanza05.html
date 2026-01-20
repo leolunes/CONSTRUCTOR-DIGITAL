@@ -25,7 +25,6 @@
       --orange:#fb923c;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 18px;
-      --radius2: 14px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
@@ -39,7 +38,6 @@
       font-family:var(--sans);
       line-height:1.35;
     }
-    a{color:var(--accent)}
     .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
     header{
       display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
@@ -67,8 +65,10 @@
     .pill.warn .dot{background:var(--warn)}
     .pill.risk .dot{background:var(--orange)}
     .pill.bad .dot{background:var(--bad)}
+
     .grid{display:grid;grid-template-columns: 1.1fr .9fr;gap:16px;margin-top:16px;}
     @media(max-width:980px){.grid{grid-template-columns:1fr}}
+
     .card{
       background:rgba(17,26,46,.75);
       border:1px solid var(--line);
@@ -106,6 +106,7 @@
     .smallNote{color:var(--muted);font-size:12px;margin-top:8px}
     .toggle{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12.5px;margin-left:auto;}
     .toggle input{transform: translateY(1px)}
+
     .section{
       margin-top:16px;border:1px solid var(--line);border-radius:var(--radius);
       overflow:hidden;background:rgba(17,26,46,.62);box-shadow:var(--shadow);
@@ -129,6 +130,7 @@
     }
     .opt input{margin:0}
     .opt:hover{border-color: rgba(125,211,252,.35)}
+
     .results{
       margin-top:16px;border:1px solid rgba(255,255,255,.12);
       background:rgba(15,23,42,.62);border-radius:var(--radius);overflow:hidden;
@@ -168,6 +170,7 @@
     .err{
       margin-top:14px;padding:12px;border-radius:16px;border:1px solid rgba(251,113,133,.38);
       background:rgba(251,113,133,.10);color:var(--text);
+      white-space:pre-wrap;
     }
     .footerNote{margin-top:18px;color:var(--muted);font-size:12px}
 
@@ -290,7 +293,6 @@
       <div class="resBody">
         <div id="globalBox" class="bandBox"></div>
 
-        <!-- Diagrama del pórtico -->
         <div style="margin-top:12px">
           <h2 style="margin:0 0 10px;font-size:14px">Diagrama del pórtico</h2>
           <div class="bandBox">
@@ -411,7 +413,6 @@
     box.textContent = '';
   }
 
-  // Defaults
   try {
     const today = new Date();
     const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
@@ -422,9 +423,7 @@
   function fmtPct(p){ return `${Math.round(p*100)}%`; }
   function safeText(s){ return (s ?? '').toString(); }
 
-  // DOM-safe id (sin romper q.id real)
   function domSafeId(str){
-    // Base64url-ish simple (no dependencias)
     const s = safeText(str);
     let out = '';
     for (let i=0;i<s.length;i++){
@@ -592,10 +591,10 @@
 
           const inp = document.createElement('input');
           inp.type = 'radio';
-          inp.name = qDom;               // name DOM-safe
+          inp.name = qDom;
           inp.id = id;
           inp.value = String(opt.value);
-          inp.dataset.qid = q.id;        // qid real
+          inp.dataset.qid = q.id;
           inp.addEventListener('change', () => {
             state.answers.set(q.id, Number(inp.value));
             state.lastPorticoPNG = null;
@@ -793,6 +792,7 @@
   <path d="M 520 110 C 560 125, 600 135, 640 130" fill="none" stroke="rgba(125,211,252,0.30)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M 535 122 C 570 136, 605 144, 650 138" fill="none" stroke="rgba(167,243,208,0.22)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
 
+  <!-- FOUNDATION (CIMIENTO) -->
   <rect x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
         fill="none" stroke="${cComm}" stroke-width="22" stroke-linejoin="round"/>
   <text x="${foundation.x + foundation.w/2}" y="${foundation.y + foundation.h/2 + 5}"
@@ -800,18 +800,21 @@
     CIMIENTO
   </text>
 
+  <!-- COLUMN (VARÓN) -->
   <path d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}" fill="none" stroke="${cCong}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="155" y="220" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" font-weight="700"
         text-anchor="middle" transform="rotate(-90 155 220)">
     COLUMNA (VARÓN)
   </text>
 
+  <!-- BEAM (MUJER) -->
   <path d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}" fill="none" stroke="${cInter}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="${(beam.x1+beam.x2)/2}" y="${beam.y - 26}"
         fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" font-weight="700" text-anchor="middle">
     VIGA (MUJER)
   </text>
 
+  <!-- NODES (OBLIGATORIOS) -->
   <circle cx="${nCom.x}" cy="${nCom.y}" r="${nCom.r}" fill="#0b1220" stroke="${cComm}" stroke-width="10"/>
   <circle cx="${nCong.x}" cy="${nCong.y}" r="${nCong.r}" fill="#0b1220" stroke="${cCong}" stroke-width="10"/>
   <circle cx="${nInter.x}" cy="${nInter.y}" r="${nInter.r}" fill="#0b1220" stroke="${cInter}" stroke-width="10"/>
@@ -826,6 +829,7 @@
     INTERSECCIÓN / APOYO MÓVIL
   </text>
 
+  <!-- Status panel -->
   <g>
     <rect x="520" y="230" width="300" height="120" rx="16" fill="rgba(11,18,32,0.65)" stroke="rgba(255,255,255,0.10)"/>
     <text x="540" y="262" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" font-weight="800">
@@ -848,6 +852,7 @@
     </text>
   </g>
 
+  <!-- Footer -->
   <text x="${W/2}" y="${H-26}" fill="rgba(170,183,214,0.95)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="12" text-anchor="middle">
     ${titleLine}
   </text>
@@ -1014,7 +1019,7 @@
     const date = safeText(el('dateField').value).trim() || '—';
     const notes = safeText(el('notes').value).trim() || '—';
 
-    const { total, answered } = computeTotals();
+    const { total } = computeTotals();
     const max = state.maxTotal || 1;
     const pct = total / max;
     const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
@@ -1023,8 +1028,8 @@
     const axes = computePorticoAxes();
 
     const lines = [];
-    lines.push(TITLE);
-    lines.push('='.repeat(70));
+    lines.push(TITLE.replace(/\[|\]/g,''));
+    lines.push('='.repeat(72));
     lines.push(`Paciente: ${patient}`);
     lines.push(`Auditor:  ${auditor}`);
     lines.push(`Fecha:    ${date}`);
@@ -1038,7 +1043,7 @@
     lines.push(`- Intersección:  ${Math.round(axes.interseccion.pct)}% (${axes.interseccion.band.label})`);
     lines.push('');
     lines.push('RESULTADOS POR SECCIÓN');
-    lines.push('-'.repeat(70));
+    lines.push('-'.repeat(72));
 
     const bySectionRaw = computeBySection();
     const bySectionOriginalOrder = (state.data.sections || []).map(s => bySectionRaw.find(x => x.section.id === s.id)).filter(Boolean);
@@ -1051,54 +1056,59 @@
       lines.push(`  Verso: “${safeText(sv.quote)}” (${safeText(sv.reference)})`);
       const mini = getMiniTeachingForSection(s.id);
       if (mini){
-        lines.push(`  Mini-enseñanza: ${safeText(mini.title
-)}`);
+        lines.push(`  Mini-enseñanza: ${safeText(mini.title)}`);
         for (const b of (mini.text || [])) lines.push(`   - ${safeText(b)}`);
+        if (mini.oneWeekPlan?.length){
+          lines.push(`  Plan sugerido (muestras):`);
+          for (const a of mini.oneWeekPlan.slice(0,3)) lines.push(`   * ${safeText(a)}`);
+        }
       }
       lines.push('');
     }
 
     lines.push('PLAN SEMANAL (7 DÍAS)');
-    lines.push('-'.repeat(70));
+    lines.push('-'.repeat(72));
     const week = buildWeeklyPlanFromSections(bySectionRaw);
     for (let i=0;i<7;i++){
       lines.push(`Día ${i+1}:`);
       for (const p of (week[i] || [])){
-        lines.push(`  - (${safeText(p.sec)}) ${safeText(p.act)}`);
+        lines.push(` - (${safeText(p.sec)}) ${safeText(p.act)}`);
       }
+      lines.push('');
     }
 
-    lines.push('');
     lines.push('OBSERVACIONES');
-    lines.push('-'.repeat(70));
+    lines.push('-'.repeat(72));
     lines.push(notes);
     lines.push('');
 
-    const includeDetails = el('includeDetails').checked;
-    if (includeDetails){
-      lines.push('DETALLE DE RESPUESTAS');
-      lines.push('-'.repeat(70));
+    if (el('includeDetails').checked){
+      lines.push('DETALLE POR PREGUNTA');
+      lines.push('-'.repeat(72));
       for (const s of (state.data.sections || [])){
-        lines.push(`SECCIÓN: ${safeText(s.title)}`);
+        lines.push(`[${safeText(s.title)}]`);
         for (const q of (s.questions || [])){
           const v = state.answers.get(q.id);
-          lines.push(` - ${safeText(q.text)} => ${Number.isFinite(v) ? v : '—'}`);
+          lines.push(` - ${safeText(q.text)} => ${Number.isFinite(v) ? v : '—'} / ${state.maxPerQuestion}`);
         }
         lines.push('');
       }
-    } else {
-      lines.push(`Detalle de respuestas: no incluido (respuestas contestadas: ${answered}/${state.totalQuestions}).`);
     }
 
     return lines.join('\n');
   }
 
-  function downloadTextFile(text, filename){
+  function downloadTXT(){
+    const patient = safeText(el('patientName').value).trim() || 'paciente';
+    const date = safeText(el('dateField').value).trim() || 'fecha';
+    const fname = `informe_${patient.replace(/\s+/g,'_')}_${date}.txt`.replace(/[^\w\-\.]/g,'_');
+
+    const text = buildTXTReport();
     const blob = new Blob([text], { type:'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename;
+    a.download = fname;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -1106,16 +1116,12 @@
   }
 
   // -------------------------
-  // PDF EXPORT (jsPDF + autoTable)
+  // PDF BONITO (jsPDF + autoTable) — con versos ajustados (wrap + autosize)
   // -------------------------
   async function buildAndDownloadPDF(){
     clearError();
     const { jsPDF } = (window.jspdf || {});
     if (!jsPDF) throw new Error('jsPDF no está disponible. Verifica conexión CDN.');
-    if (!jsPDF.API || !jsPDF.API.autoTable) {
-      // jspdf-autotable inyecta autoTable en la API
-      // Aun así, algunas cargas tardías pueden fallar
-    }
 
     const patient = safeText(el('patientName').value).trim() || '—';
     const auditor = safeText(el('auditorName').value).trim() || '—';
@@ -1128,19 +1134,34 @@
     const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
     const gv = globalBand.verse || { quote:'', reference:'' };
 
-    // Portico PNG
-    renderPorticoSVG(); // ensure exists
+    renderPorticoSVG();
     const porticoPng = await exportPorticoPNGDataURL();
 
     const doc = new jsPDF({ unit:'pt', format:'a4' });
     const pageW = doc.internal.pageSize.getWidth();
     const pageH = doc.internal.pageSize.getHeight();
-
-    // Helpers
     const margin = 44;
-    const line = (y) => { doc.setDrawColor(255,255,255,40); doc.line(margin, y, pageW-margin, y); };
 
-    // Load logo (optional)
+    function fitVerseLine(verseText, x, y, maxWidth, baseSize=10, minSize=8, color=[170,183,214]){
+      let fs = baseSize;
+      while (fs >= minSize){
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(fs);
+        const lines = doc.splitTextToSize(safeText(verseText), maxWidth);
+        if (lines.length <= 4 || fs === minSize){
+          doc.setTextColor(...color);
+          doc.text(lines, x, y, { maxWidth });
+          return { fontSize: fs, lines, h: lines.length * fs * 1.25 };
+        }
+        fs -= 1;
+      }
+      doc.setFontSize(minSize);
+      const lines = doc.splitTextToSize(safeText(verseText), maxWidth);
+      doc.setTextColor(...color);
+      doc.text(lines, x, y, { maxWidth });
+      return { fontSize: minSize, lines, h: lines.length * minSize * 1.25 };
+    }
+
     async function loadLogoDataURL(){
       return new Promise((resolve) => {
         const img = new Image();
@@ -1159,13 +1180,10 @@
     }
     const logoData = await loadLogoDataURL();
 
-    // -------------
     // COVER
-    // -------------
     doc.setFillColor(11,18,32);
     doc.rect(0,0,pageW,pageH,'F');
 
-    // Title
     doc.setTextColor(232,238,252);
     doc.setFont('helvetica','bold');
     doc.setFontSize(18);
@@ -1176,14 +1194,10 @@
     doc.setTextColor(170,183,214);
     doc.text('Auditoría diagnóstica estructural del hogar — Capítulo 5: “La columna”', margin, 96);
 
-    // Logo
     if (logoData){
-      try{
-        doc.addImage(logoData, 'PNG', pageW - margin - 54, 54, 54, 54);
-      } catch {}
+      try{ doc.addImage(logoData, 'PNG', pageW - margin - 54, 54, 54, 54); } catch {}
     }
 
-    // Patient/Auditor/Date box
     doc.setDrawColor(255,255,255,30);
     doc.setFillColor(15,23,42);
     doc.roundedRect(margin, 120, pageW - margin*2, 74, 12, 12, 'FD');
@@ -1194,7 +1208,6 @@
     doc.text(`Auditor: ${auditor}`, margin+14, 166);
     doc.text(`Fecha: ${date}`, margin+14, 186);
 
-    // Global pill (auto-fit)
     const pillText = `Diagnóstico global: ${safeText(globalBand.label)} · ${Math.round(pct*100)}%`;
     doc.setFont('helvetica','bold');
     doc.setFontSize(11);
@@ -1205,24 +1218,15 @@
     doc.setTextColor(232,238,252);
     doc.text(pillText, margin+13, 229);
 
-    // Global verse
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(10);
-    doc.setTextColor(170,183,214);
-    doc.text(`📖 “${safeText(gv.quote)}” (${safeText(gv.reference)})`, margin, 256, { maxWidth: pageW - margin*2 });
+    const globalVerseLine = `📖 “${safeText(gv.quote)}” (${safeText(gv.reference)})`;
+    fitVerseLine(globalVerseLine, margin, 256, pageW - margin*2, 10, 8, [170,183,214]);
 
-    // Portico image centered
     const imgW = Math.min(pageW - margin*2, 460);
     const imgH = imgW * (420/860);
     const imgX = (pageW - imgW)/2;
     const imgY = 286;
-    try{
-      doc.addImage(porticoPng, 'PNG', imgX, imgY, imgW, imgH);
-    } catch {}
+    try{ doc.addImage(porticoPng, 'PNG', imgX, imgY, imgW, imgH); } catch {}
 
-    // -------------
-    // INTERNAL PAGES HEADER helper
-    // -------------
     function headerSmall(){
       doc.setFillColor(11,18,32);
       doc.rect(0,0,pageW,54,'F');
@@ -1230,7 +1234,6 @@
       doc.setFont('helvetica','bold');
       doc.setFontSize(11);
       doc.text(TITLE.replace(/[\[\]]/g,''), margin, 34, { maxWidth: pageW - margin*2 - 60 });
-
       if (logoData){
         try{ doc.addImage(logoData, 'PNG', pageW - margin - 24, 16, 24, 24); } catch {}
       }
@@ -1238,9 +1241,7 @@
       doc.line(margin, 54, pageW-margin, 54);
     }
 
-    // -------------
-    // PAGE 2: TABLE
-    // -------------
+    // TABLE PAGE
     doc.addPage();
     headerSmall();
     doc.setFont('helvetica','bold');
@@ -1275,9 +1276,7 @@
       tableLineWidth: 0.1
     });
 
-    // -------------
-    // PAGE 3+: PASTORAL MANUAL (all)
-    // -------------
+    // PASTORAL PAGES
     doc.addPage();
     headerSmall();
     doc.setFont('helvetica','bold');
@@ -1286,17 +1285,55 @@
     doc.text('Enfoque pastoral por secciones', margin, 84);
 
     let y = 102;
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(10);
 
     for (const it of bySectionOriginalOrder){
       const s = it.section;
       const mini = getMiniTeachingForSection(s.id);
       const sv = (mini?.verse || s.sectionVerse || { quote:'', reference:'' });
 
-      // section box
-      const boxH = 78;
-      if (y + boxH > pageH - margin){
+      const boxX = margin;
+      const boxW = pageW - margin*2;
+      const pad = 12;
+
+      const t1 = `${safeText(s.title)} — ${safeText(it.band?.label || '')} (${Math.round(it.pct*100)}%)`;
+      const t2 = `Enfoque: ${safeText(s.diagnosticFocus)}`;
+      const t3 = (mini?.title ? safeText(mini.title) : 'Mini-enseñanza');
+      const verseLine = `📖 “${safeText(sv.quote)}” (${safeText(sv.reference)})`;
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(11);
+      const t1Lines = doc.splitTextToSize(t1, boxW - pad*2);
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5);
+      const t2Lines = doc.splitTextToSize(t2, boxW - pad*2);
+      doc.setFont('helvetica','normal'); doc.setFontSize(10);
+      const t3Lines = doc.splitTextToSize(t3, boxW - pad*2);
+
+      let verseSize = 10;
+      let verseLines = [];
+      while (verseSize >= 8){
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(verseSize);
+        verseLines = doc.splitTextToSize(verseLine, boxW - pad*2);
+        if (verseLines.length <= 4 || verseSize === 8) break;
+        verseSize -= 1;
+      }
+
+      const bulletLines = (() => {
+        if (!mini?.text?.length) return [];
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(10);
+        const joined = mini.text.map(x => `• ${safeText(x)}`).join('\n');
+        return doc.splitTextToSize(joined, boxW - pad*2);
+      })();
+
+      const h =
+        pad + (t1Lines.length * 11 * 1.20) +
+        4  + (t2Lines.length * 9.5 * 1.22) +
+        4  + (t3Lines.length * 10 * 1.22) +
+        6  + (bulletLines.length * 10 * 1.22) +
+        6  + (verseLines.length * verseSize * 1.25) +
+        pad;
+
+      if (y + h > pageH - margin){
         doc.addPage();
         headerSmall();
         y = 78;
@@ -1304,31 +1341,45 @@
 
       doc.setFillColor(15,23,42);
       doc.setDrawColor(255,255,255,30);
-      doc.roundedRect(margin, y, pageW - margin*2, boxH, 10, 10, 'FD');
+      doc.roundedRect(boxX, y, boxW, h, 10, 10, 'FD');
 
-      doc.setTextColor(232,238,252);
+      let cy = y + pad + 8;
+
       doc.setFont('helvetica','bold');
       doc.setFontSize(11);
-      doc.text(`${safeText(s.title)} — ${safeText(it.band?.label || '')} (${Math.round(it.pct*100)}%)`, margin+12, y+20, { maxWidth: pageW - margin*2 - 24 });
+      doc.setTextColor(232,238,252);
+      doc.text(t1Lines, boxX+pad, cy, { maxWidth: boxW - pad*2 });
+      cy += (t1Lines.length * 11 * 1.20) + 4;
 
       doc.setFont('helvetica','normal');
       doc.setFontSize(9.5);
       doc.setTextColor(170,183,214);
-      doc.text(`Enfoque: ${safeText(s.diagnosticFocus)}`, margin+12, y+36, { maxWidth: pageW - margin*2 - 24 });
+      doc.text(t2Lines, boxX+pad, cy, { maxWidth: boxW - pad*2 });
+      cy += (t2Lines.length * 9.5 * 1.22) + 4;
 
-      const teachingTitle = mini?.title ? safeText(mini.title) : 'Mini-enseñanza';
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
       doc.setTextColor(232,238,252);
-      doc.text(`${teachingTitle}`, margin+12, y+52, { maxWidth: pageW - margin*2 - 24 });
+      doc.text(t3Lines, boxX+pad, cy, { maxWidth: boxW - pad*2 });
+      cy += (t3Lines.length * 10 * 1.22) + 6;
 
+      if (bulletLines.length){
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(10);
+        doc.setTextColor(232,238,252);
+        doc.text(bulletLines, boxX+pad, cy, { maxWidth: boxW - pad*2 });
+        cy += (bulletLines.length * 10 * 1.22) + 6;
+      }
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(verseSize);
       doc.setTextColor(170,183,214);
-      doc.text(`📖 “${safeText(sv.quote)}” (${safeText(sv.reference)})`, margin+12, y+68, { maxWidth: pageW - margin*2 - 24 });
+      doc.text(verseLines, boxX+pad, cy, { maxWidth: boxW - pad*2 });
 
-      y += boxH + 10;
+      y += h + 10;
     }
 
-    // -------------
-    // PLAN SEMANAL
-    // -------------
+    // WEEK PLAN PAGE
     doc.addPage();
     headerSmall();
     doc.setFont('helvetica','bold');
@@ -1338,16 +1389,19 @@
 
     const week = buildWeeklyPlanFromSections(bySectionRaw);
     let py = 104;
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(10);
 
     for (let i=0;i<7;i++){
       const dayTitle = `Día ${i+1}`;
       const items = (week[i] || []).map(p => `• (${safeText(p.sec)}) ${safeText(p.act)}`);
-      const block = [dayTitle, ...items].join('\n');
 
-      const needed = doc.getTextDimensions(block, { maxWidth: pageW - margin*2 - 20 }).h + 16;
-      if (py + needed > pageH - margin){
+      doc.setFont('helvetica','bold'); doc.setFontSize(11);
+      const titleLines = doc.splitTextToSize(dayTitle, pageW - margin*2 - 24);
+      doc.setFont('helvetica','normal'); doc.setFontSize(10);
+      const itemsLines = doc.splitTextToSize(items.join('\n'), pageW - margin*2 - 24);
+
+      const blockH = 12 + (titleLines.length*11*1.2) + 6 + (itemsLines.length*10*1.25) + 12;
+
+      if (py + blockH > pageH - margin){
         doc.addPage();
         headerSmall();
         py = 78;
@@ -1355,22 +1409,24 @@
 
       doc.setFillColor(15,23,42);
       doc.setDrawColor(255,255,255,30);
-      doc.roundedRect(margin, py, pageW - margin*2, needed, 10, 10, 'FD');
+      doc.roundedRect(margin, py, pageW - margin*2, blockH, 10, 10, 'FD');
 
+      let cy = py + 18;
       doc.setFont('helvetica','bold');
+      doc.setFontSize(11);
       doc.setTextColor(232,238,252);
-      doc.text(dayTitle, margin+12, py+18);
+      doc.text(titleLines, margin+12, cy, { maxWidth: pageW - margin*2 - 24 });
+      cy += (titleLines.length*11*1.2) + 8;
 
       doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
       doc.setTextColor(170,183,214);
-      doc.text(items.join('\n'), margin+12, py+34, { maxWidth: pageW - margin*2 - 24 });
+      doc.text(itemsLines, margin+12, cy, { maxWidth: pageW - margin*2 - 24 });
 
-      py += needed + 10;
+      py += blockH + 10;
     }
 
-    // -------------
-    // OBSERVACIONES + (opcional) DETALLES
-    // -------------
+    // OBSERVATIONS PAGE
     doc.addPage();
     headerSmall();
     doc.setFont('helvetica','bold');
@@ -1381,8 +1437,9 @@
     doc.setFont('helvetica','normal');
     doc.setFontSize(10);
     doc.setTextColor(170,183,214);
-    doc.text(notes, margin, 104, { maxWidth: pageW - margin*2 });
+    doc.text(doc.splitTextToSize(notes, pageW - margin*2), margin, 104);
 
+    // DETAILS PAGE (optional)
     if (el('includeDetails').checked){
       doc.addPage();
       headerSmall();
@@ -1414,150 +1471,231 @@
       });
     }
 
-    // Save
     const fname = `informe_${patient.replace(/\s+/g,'_')}_${date}.pdf`.replace(/[^\w\-\.]/g,'_');
     doc.save(fname);
   }
 
   // -------------------------
-  // PNG EXPORT
+  // BUTTONS +
+// -------------------------
+  // BUTTONS + INIT
   // -------------------------
-  async function downloadPorticoPNG(){
-    clearError();
-    renderPorticoSVG();
-    const patient = safeText(el('patientName').value).trim() || 'paciente';
-    const date = safeText(el('dateField').value).trim() || 'fecha';
-    const dataUrl = await exportPorticoPNGDataURL();
-    const fname = `portico_${patient.replace(/\s+/g,'_')}_${date}.png`.replace(/[^\w\-\.]/g,'_');
-    downloadDataURL(dataUrl, fname);
+  function validateReady(){
+    // Habilitar resultados/descargas si hay al menos 1 respuesta (puedes cambiar a "todas respondidas" si lo prefieres)
+    const { answered } = computeTotals();
+    const ready = !!state.data && state.totalQuestions > 0 && answered > 0;
+    el('btnResults').disabled = !ready;
+    el('btnTxt').disabled = !ready;
+    el('btnPdf').disabled = !ready;
+    el('btnPng').disabled = !ready;
+    el('btnReset').disabled = !state.data;
   }
 
-  // -------------------------
-  // EVENTS
-  // -------------------------
+  function sanitizeFileNamePart(s){
+    return safeText(s).trim().replace(/\s+/g,'_').replace(/[^\w\-]/g,'_').slice(0,60) || 'dato';
+  }
+
+  function downloadPorticoPNG(){
+    clearError();
+    exportPorticoPNGDataURL()
+      .then((dataUrl) => {
+        const patient = sanitizeFileNamePart(el('patientName').value || 'paciente');
+        const date = sanitizeFileNamePart(el('dateField').value || 'fecha');
+        const fname = `portico_${patient}_${date}.png`;
+        downloadDataURL(dataUrl, fname);
+      })
+      .catch((e) => showError(`Error exportando PNG:\n${e?.message || e}`));
+  }
+
   function resetAll(){
+    if (!state.data) return;
     state.answers.clear();
     state.lastPorticoPNG = null;
 
-    // uncheck radios
-    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    // Limpia radios
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(r => { r.checked = false; });
 
+    // Limpia resultados
     el('resultsRoot').style.display = 'none';
-    el('liveScore').textContent = '0';
-    el('liveAnswered').textContent = '0';
+    el('globalBox').innerHTML = '';
+    el('pastoralBlocks').innerHTML = '';
+    el('weeklyPlan').innerHTML = '';
+    const tbody = el('sectionTable')?.querySelector('tbody');
+    if (tbody) tbody.innerHTML = '';
+    el('porticoSvgMount').innerHTML = '';
+
     updateLive();
-    clearError();
+    validateReady();
+    window.scrollTo({ top: 0, behavior:'smooth' });
   }
 
-  function wireEvents(){
-    el('btnResults').addEventListener('click', () => {
-      try{ renderResults(); } catch(e){ showError(e?.message || String(e)); }
-    });
+  // Hook: cuando cambia paciente/fecha, refrescamos SVG (para footer) y limpiamos cache PNG
+  function hookPorticoMetaRefresh(){
+    const p = el('patientName');
+    const d = el('dateField');
+    const handler = () => {
+      state.lastPorticoPNG = null;
+      if (el('resultsRoot').style.display !== 'none'){
+        renderPorticoSVG();
+      }
+    };
+    if (p) p.addEventListener('input', handler);
+    if (d) d.addEventListener('change', handler);
+  }
 
-    el('btnTxt').addEventListener('click', () => {
-      try{
-        const patient = safeText(el('patientName').value).trim() || 'paciente';
-        const date = safeText(el('dateField').value).trim() || 'fecha';
-        const txt = buildTXTReport();
-        const fname = `informe_${patient.replace(/\s+/g,'_')}_${date}.txt`.replace(/[^\w\-\.]/g,'_');
-        downloadTextFile(txt, fname);
-      } catch(e){ showError(e?.message || String(e)); }
-    });
+  // Interceptar updateLive para validar botones siempre
+  const _updateLive = updateLive;
+  updateLive = function(){
+    _updateLive();
+    validateReady();
+  };
 
-    el('btnPdf').addEventListener('click', async () => {
-      try{ await buildAndDownloadPDF(); }
-      catch(e){ showError(e?.message || String(e)); }
-    });
+  // -------------------------
+  // JSON LOAD (fetch + manual file)
+  // -------------------------
+  async function loadJSONViaFetch(){
+    clearError();
+    try{
+      const res = await fetch(JSON_PATH, { cache:'no-store' });
+      if (!res.ok) throw new Error(`No se pudo cargar ${JSON_PATH} (HTTP ${res.status})`);
+      const json = await res.json();
+      return json;
+    } catch(e){
+      throw e;
+    }
+  }
 
-    el('btnPng').addEventListener('click', async () => {
-      try{ await downloadPorticoPNG(); }
-      catch(e){ showError(e?.message || String(e)); }
-    });
-
-    el('btnReset').addEventListener('click', () => resetAll());
-
-    // If patient/date changes, invalidate cached png + refresh if results open
-    ['patientName','dateField'].forEach(id => {
-      el(id).addEventListener('input', () => {
-        state.lastPorticoPNG = null;
-        if (el('resultsRoot').style.display !== 'none'){
-          updatePorticoUI();
+  function loadJSONFromFile(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const txt = safeText(reader.result);
+          const json = JSON.parse(txt);
+          resolve(json);
+        } catch(e){
+          reject(e);
         }
-      });
+      };
+      reader.onerror = () => reject(new Error('No se pudo leer el archivo JSON.'));
+      reader.readAsText(file, 'utf-8');
     });
+  }
 
-    // Manual JSON load
+  function applyLoadedJSON(json){
+    // Validación mínima
+    if (!json || !json.sections || !Array.isArray(json.sections) || !json.scale?.options?.length){
+      throw new Error('JSON inválido: faltan "sections" o "scale.options".');
+    }
+    state.data = json;
+    state.answers.clear();
+    state.lastPorticoPNG = null;
+
+    clearError();
+    setJsonStatus(true, 'cargado ✔');
+    enableUI(true);
+
+    renderTest();
+    validateReady();
+  }
+
+  async function init(){
+    enableUI(false);
+    setJsonStatus(false, 'cargando…');
+    hookPorticoMetaRefresh();
+
+    // Manual loader button
     el('btnLoadJson').addEventListener('click', () => el('jsonFile').click());
     el('jsonFile').addEventListener('change', async (ev) => {
-      const file = ev.target.files?.[0];
-      if (!file) return;
+      clearError();
+      const f = ev.target.files?.[0];
+      if (!f) return;
       try{
-        clearError();
-        const text = await file.text();
-        const json = JSON.parse(text);
-        initFromJSON(json, true);
+        const json = await loadJSONFromFile(f);
+        applyLoadedJSON(json);
       } catch(e){
-        setJsonStatus(false, 'error al cargar');
-        showError('No se pudo leer el JSON. Verifica el archivo.');
+        setJsonStatus(false, 'error');
+        showError(`Error cargando JSON manual:\n${e?.message || e}`);
       } finally {
         ev.target.value = '';
       }
     });
-  }
 
-  // -------------------------
-  // INIT (fetch JSON with fallback)
-  // -------------------------
-  function validateJSONShape(json){
-    if (!json || typeof json !== 'object') return 'JSON inválido.';
-    if (!json.meta?.title) return 'Falta meta.title.';
-    if (!Array.isArray(json.scale?.options) || !json.scale.options.length) return 'Falta scale.options.';
-    if (!Array.isArray(json.sections) || !json.sections.length) return 'Falta sections.';
-    if (!json.rubrics?.globalBands || !json.rubrics?.sectionBands) return 'Falta rubrics.';
-    if (!json.pastoralManual?.sections) return 'Falta pastoralManual.sections.';
-    return null;
-  }
+    // Botones
+    el('btnResults').addEventListener('click', () => {
+      try{
+        clearError();
+        renderResults();
+      } catch(e){
+        showError(`Error mostrando resultados:\n${e?.message || e}`);
+      }
+    });
 
-  function initFromJSON(json, fromManual=false){
-    const err = validateJSONShape(json);
-    if (err) throw new Error(err);
+    el('btnTxt').addEventListener('click', () => {
+      try{
+        clearError();
+        downloadTXT();
+      } catch(e){
+        showError(`Error descargando TXT:\n${e?.message || e}`);
+      }
+    });
 
-    state.data = json;
+    el('btnPdf').addEventListener('click', async () => {
+      try{
+        clearError();
+        // Asegura que resultados estén renderizados (para portico)
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        await buildAndDownloadPDF();
+      } catch(e){
+        showError(`Error generando PDF:\n${e?.message || e}`);
+      }
+    });
 
-    // reset answers
-    state.answers.clear();
-    state.lastPorticoPNG = null;
+    el('btnPng').addEventListener('click', async () => {
+      try{
+        clearError();
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        downloadPorticoPNG();
+      } catch(e){
+        showError(`Error descargando PNG:\n${e?.message || e}`);
+      }
+    });
 
-    // render
-    renderTest();
-    enableUI(true);
-    setJsonStatus(true, fromManual ? 'cargado (manual)' : 'cargado');
-    clearError();
-  }
+    el('btnReset').addEventListener('click', () => {
+      try{
+        clearError();
+        resetAll();
+      } catch(e){
+        showError(`Error reiniciando:\n${e?.message || e}`);
+      }
+    });
 
-  async function loadJSON(){
-    enableUI(false);
-    clearError();
+    // Intentar fetch primero (GitHub Pages ok). Si falla, sugerir manual.
     try{
-      const res = await fetch(JSON_PATH, { cache:'no-store' });
-      if (!res.ok) throw new Error('No se pudo cargar el JSON por fetch.');
-      const json = await res.json();
-      initFromJSON(json, false);
+      const json = await loadJSONViaFetch();
+      applyLoadedJSON(json);
     } catch(e){
-      // En file:// fetch suele fallar: dejamos opción manual
-      setJsonStatus(false, 'no disponible por fetch');
-      showError('No se pudo cargar el JSON automáticamente. Pulsa “Cargar JSON manual” y selecciona ensenanza05.json.');
+      setJsonStatus(false, 'no disponible (usa carga manual)');
+      // No bloquear totalmente: permite carga manual
+      enableUI(false);
+      validateReady();
+      showError(
+        `No se pudo cargar automáticamente el JSON (${JSON_PATH}).\n` +
+        `Causas comunes:\n` +
+        `- Estás abriendo el HTML con file:// (sin servidor).\n` +
+        `- El archivo no está junto al HTML o el nombre no coincide.\n\n` +
+        `Solución:\n` +
+        `- Sube ambos a GitHub Pages, o\n` +
+        `- Usa “Cargar JSON manual”.\n\n` +
+        `Detalle técnico:\n${e?.message || e}`
+      );
     }
   }
 
-  // Start
-  wireEvents();
-  loadJSON();
+  init();
 
 })();
 </script>
 </body>
 </html>
-
-
-
