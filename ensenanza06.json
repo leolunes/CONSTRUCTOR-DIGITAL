@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "La viga: la mujer como alma del sistema",
-    "description": "Auditoría diagnóstica basada en el capítulo 6: “La viga”. Evalúa percepción y distribución de cargas, horizontalidad relacional, apoyo del Espíritu Santo en el alma, riesgo de intentar ser columna, transferencia correcta (viga→columna→cimiento) y aplicación práctica para restaurar descanso y armonía."
+    "description": "Auditoría diagnóstica basada en el capítulo 6: “La viga”. Evalúa percepción y distribución de cargas, horizontalidad relacional, apoyo del Espíritu Santo en el alma, riesgo de intentar ser columna, transferencia correcta (viga→columna→cimiento) y aplicación práctica para restaurar descanso y armonía. Incluye modelo del Pórtico (Comunión, Congregación, Intersección) para visualizar el estado estructural del hogar."
   },
   "scale": {
     "options": [
@@ -75,12 +75,50 @@
       }
     ]
   },
+  "porticoModel": {
+    "axes": [
+      {
+        "id": "comunion",
+        "label": "Comunión",
+        "description": "Cimiento del hogar: intimidad con Dios, unidad y comunicación que trae reposo. Incluye oración, perdón, claridad emocional y transferencia temprana para que el alma no acumule.",
+        "bands": {
+          "alineado": { "min": 75, "max": 100, "emoji": "🟢", "label": "Alineado" },
+          "ajuste": { "min": 55, "max": 74, "emoji": "🟡", "label": "En ajuste" },
+          "riesgo": { "min": 35, "max": 54, "emoji": "🟠", "label": "En riesgo" },
+          "critico": { "min": 0, "max": 34, "emoji": "🔴", "label": "Crítico" }
+        }
+      },
+      {
+        "id": "congregacion",
+        "label": "Congregación",
+        "description": "Nodo de unión y orden: sujeción mutua, acuerdos y dirección compartida. Incluye cultura de servicio, discipulado y orden relacional (hablar, acordar, cumplir) para que el sistema funcione sin fricción.",
+        "bands": {
+          "alineado": { "min": 75, "max": 100, "emoji": "🟢", "label": "Alineado" },
+          "ajuste": { "min": 55, "max": 74, "emoji": "🟡", "label": "En ajuste" },
+          "riesgo": { "min": 35, "max": 54, "emoji": "🟠", "label": "En riesgo" },
+          "critico": { "min": 0, "max": 34, "emoji": "🔴", "label": "Crítico" }
+        }
+      },
+      {
+        "id": "interseccion",
+        "label": "Intersección",
+        "description": "Apoyo móvil y extremo operativo: decisiones, límites, administración práctica y distribución de responsabilidades. Incluye misión/propósito, acuerdos concretos y pasos semanales para evitar sobrecarga.",
+        "bands": {
+          "alineado": { "min": 75, "max": 100, "emoji": "🟢", "label": "Alineado" },
+          "ajuste": { "min": 55, "max": 74, "emoji": "🟡", "label": "En ajuste" },
+          "riesgo": { "min": 35, "max": 54, "emoji": "🟠", "label": "En riesgo" },
+          "critico": { "min": 0, "max": 34, "emoji": "🔴", "label": "Crítico" }
+        }
+      }
+    ]
+  },
   "sections": [
     {
       "id": "s1_identidad_viga",
       "title": "Identidad de viga",
       "subtitle": "Indispensable: percibe, distribuye y canaliza",
       "diagnosticFocus": "Comprender la función: no decorativa ni pasiva; sensibilidad como diseño estructural.",
+      "porticoAxis": "comunion",
       "sectionVerse": {
         "quote": "Mas quiero que sepáis que Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer.",
         "reference": "1 Corintios 11:3"
@@ -101,6 +139,7 @@
       "title": "Percibir y distribuir",
       "subtitle": "Discernimiento temprano y canalización sabia",
       "diagnosticFocus": "Evaluar si detecto y comunico tensiones a tiempo, y si distribuyo el peso con orden.",
+      "porticoAxis": "comunion",
       "sectionVerse": {
         "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua.",
         "reference": "Proverbios 31:26"
@@ -121,6 +160,7 @@
       "title": "Horizontalidad relacional",
       "subtitle": "Clima del hogar, convivencia y expresión del alma",
       "diagnosticFocus": "Medir salud de convivencia: fluidez, acuerdos, comunicación y manejo de tensiones.",
+      "porticoAxis": "comunion",
       "sectionVerse": {
         "quote": "Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, esa será alabada.",
         "reference": "Proverbios 31:30"
@@ -141,6 +181,7 @@
       "title": "Apoyo móvil: el Espíritu Santo y el alma",
       "subtitle": "Sostén con libertad: sin rigidez ni ausencia",
       "diagnosticFocus": "Evaluar si mi apoyo es el Espíritu (libertad y sostén) o el control (rigidez) o la desconexión (ausencia).",
+      "porticoAxis": "comunion",
       "sectionVerse": {
         "quote": "El Espíritu nos ayuda en nuestra debilidad.",
         "reference": "Romanos 8:26"
@@ -161,6 +202,7 @@
       "title": "Sobrecarga y señales de fisura",
       "subtitle": "Advertencia estructural: cuando la viga se sobrecarga",
       "diagnosticFocus": "Detectar rencilla, resentimiento silencioso, agotamiento y tensión constante como señales de sobrecarga.",
+      "porticoAxis": "comunion",
       "sectionVerse": {
         "quote": "Mejor es morar en el rincón del terrado que con mujer rencillosa en casa espaciosa.",
         "reference": "Proverbios 21:9"
@@ -181,6 +223,7 @@
       "title": "Cuando la viga intenta ser columna",
       "subtitle": "Agotamiento crónico y desgaste por cargar verticalmente",
       "diagnosticFocus": "Evaluar si intento sostener sola, reemplazar funciones o cargar verticalmente lo que debía canalizar.",
+      "porticoAxis": "interseccion",
       "sectionVerse": {
         "quote": "Cada uno permanezca en la vocación en que fue llamado.",
         "reference": "1 Corintios 7:20"
@@ -201,6 +244,7 @@
       "title": "Transferencia correcta",
       "subtitle": "Viga → columna → cimiento (Cristo)",
       "diagnosticFocus": "Medir si la carga fluye o se queda acumulada; practicar transferencia como acto espiritual.",
+      "porticoAxis": "congregacion",
       "sectionVerse": {
         "quote": "Someteos unos a otros en el temor de Dios.",
         "reference": "Efesios 5:21"
@@ -221,6 +265,7 @@
       "title": "Diseño hoy: aplicación",
       "subtitle": "Honrar sensibilidad, respirar en familia, canalizar en lo espiritual",
       "diagnosticFocus": "Aplicar el diseño en el día a día: soltar carga, comunicar con sabiduría, vivir bajo apoyo del Espíritu.",
+      "porticoAxis": "interseccion",
       "sectionVerse": {
         "quote": "El Espíritu nos ayuda en nuestra debilidad.",
         "reference": "Romanos 8:26"
