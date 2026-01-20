@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La viga: la mujer como alma del sistema — Test</title>
+
+  <!-- jsPDF + autoTable (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2e;
+      --card2:#0f172a;
+      --text:#e8eefc;
+      --muted:#aab7d6;
+      --line:#22304e;
+      --accent:#7dd3fc;
+      --accent2:#a7f3d0;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --good:#34d399;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(125,211,252,.22), transparent 60%),
+                  radial-gradient(1200px 700px at 85% 0%, rgba(167,243,208,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.35;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+    header{
+      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      padding:18px 18px;border:1px solid var(--line);background:rgba(17,26,46,.72);
+      border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter: blur(8px);
+      position:sticky;top:0;z-index:30;
+    }
+    .titleBlock{display:flex;gap:14px;align-items:center;min-width:280px}
+    .logo{
+      width:44px;height:44px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);padding:6px;
+    }
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:12.5px;margin-top:2px}
+    .live{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.7);
+      font-size:12.5px;
+    }
+    .pill b{font-family:var(--mono);font-size:12.5px}
+    .pill .dot{width:9px;height:9px;border-radius:999px;background:var(--accent)}
+    .pill.good .dot{background:var(--good)}
+    .pill.warn .dot{background:var(--warn)}
+    .pill.bad .dot{background:var(--bad)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{
+      background:rgba(17,26,46,.75);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      backdrop-filter: blur(8px);
+    }
+    .card h2{margin:0 0 10px;font-size:15px}
+    .fields{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    }
+    @media(max-width:700px){.fields{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input[type="text"], input[type="date"], textarea{
+      width:100%;
+      background:rgba(15,23,42,.75);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+    }
+    textarea{min-height:110px;resize:vertical}
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px
+    }
+    button{
+      appearance:none;border:0;cursor:pointer;
+      padding:10px 12px;border-radius:14px;
+      background:linear-gradient(180deg, rgba(125,211,252,.22), rgba(125,211,252,.12));
+      color:var(--text);
+      border:1px solid rgba(125,211,252,.35);
+      font-weight:600;
+    }
+    button.secondary{
+      background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:600;
+    }
+    button.danger{
+      background:linear-gradient(180deg, rgba(251,113,133,.22), rgba(251,113,133,.12));
+      border:1px solid rgba(251,113,133,.38);
+    }
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .smallNote{color:var(--muted);font-size:12px;margin-top:8px}
+    .toggle{
+      display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12.5px;
+      margin-left:auto;
+    }
+    .toggle input{transform: translateY(1px)}
+    .section{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:rgba(17,26,46,.62);
+      box-shadow:var(--shadow);
+    }
+    .sectionHead{
+      padding:14px 14px;
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      background:rgba(15,23,42,.65);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .sectionHead h3{margin:0;font-size:14px}
+    .sectionHead .metaLine{color:var(--muted);font-size:12.5px;margin-top:4px}
+    .sectionBody{padding:10px 14px 14px}
+    .q{
+      padding:12px 0;border-bottom:1px dashed rgba(255,255,255,.12);
+    }
+    .q:last-child{border-bottom:0}
+    .q .qText{font-size:13.5px;margin-bottom:8px}
+    .scaleRow{
+      display:flex;flex-wrap:wrap;gap:8px;
+    }
+    .opt{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;background:rgba(15,23,42,.55);
+      font-size:12.5px;color:var(--text);
+      user-select:none;
+    }
+    .opt input{margin:0}
+    .opt:hover{border-color: rgba(125,211,252,.35)}
+    .results{
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(15,23,42,.62);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .resultsHead{
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      padding:14px;border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(17,26,46,.75);
+    }
+    .resultsHead h2{margin:0;font-size:15px}
+    .resBody{padding:14px}
+    .bandBox{
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.35);
+    }
+    .bandTop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      border-radius:999px;
+      padding:7px 10px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.65);
+      font-size:12.5px;font-weight:700;
+    }
+    .tag.good{border-color: rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
+    .tag.warn{border-color: rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
+    .tag.bad{border-color: rgba(251,113,133,.35);background:rgba(251,113,133,.12)}
+    .verse{
+      margin-top:10px;color:var(--muted);font-size:12.5px;
+      border-left:3px solid rgba(125,211,252,.35);
+      padding-left:10px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      font-size:12.5px;
+    }
+    th,td{
+      text-align:left;
+      padding:10px 8px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      vertical-align:top;
+    }
+    th{color:var(--muted);font-weight:700}
+    .muted{color:var(--muted)}
+    .plan{
+      margin-top:14px;
+      display:grid;grid-template-columns:1fr;gap:10px;
+    }
+    .day{
+      padding:10px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.30);
+    }
+    .day b{font-family:var(--mono);font-size:12.5px}
+    .err{
+      margin-top:14px;
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(251,113,133,.38);
+      background:rgba(251,113,133,.10);
+      color:var(--text);
+    }
+    .footerNote{margin-top:18px;color:var(--muted);font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="titleBlock">
+        <img class="logo" src="logo.png" alt="Logo" onerror="this.style.display='none'">
+        <div>
+          <h1>[La viga: la mujer como alma del sistema]</h1>
+          <div class="sub">Auditoría diagnóstica basada en el capítulo 6: “La viga”</div>
+        </div>
+      </div>
+      <div class="live">
+        <div id="liveScorePill" class="pill"><span class="dot"></span><span>Puntaje:</span> <b id="liveScore">0</b><span class="muted">/</span><b id="liveMax">0</b></div>
+        <div id="livePercentPill" class="pill"><span class="dot"></span><span>Progreso:</span> <b id="liveAnswered">0</b><span class="muted">/</span><b id="liveTotalQ">0</b></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Datos del informe</h2>
+        <div class="fields">
+          <div>
+            <label for="patientName">Nombre del paciente</label>
+            <input id="patientName" type="text" placeholder="Ej: María Pérez" />
+          </div>
+          <div>
+            <label for="auditorName">Nombre del auditor</label>
+            <input id="auditorName" type="text" placeholder="Ej: Pastora / Mentora / Auditor" />
+          </div>
+          <div>
+            <label for="dateField">Fecha</label>
+            <input id="dateField" type="date" />
+          </div>
+          <div>
+            <label for="includeDetails">Detalle por pregunta (para TXT/PDF)</label>
+            <div class="toggle" style="margin-left:0">
+              <input id="includeDetails" type="checkbox" />
+              <span>Incluir detalles</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="notes">Observaciones libres</label>
+          <textarea id="notes" placeholder="Notas del auditor, contexto, acuerdos, etc."></textarea>
+        </div>
+
+        <div class="controls">
+          <button id="btnResults">Ver resultado</button>
+          <button id="btnTxt" class="secondary">Descargar TXT</button>
+          <button id="btnPdf" class="secondary">Descargar PDF bonito</button>
+          <button id="btnReset" class="danger">Reiniciar</button>
+          <div class="toggle">
+            <input id="autoScroll" type="checkbox" checked />
+            <span>Auto-bajar a resultados</span>
+          </div>
+        </div>
+        <div class="smallNote">Escala 0–5 (radio buttons). No se permiten números escritos manualmente.</div>
+        <div id="loadError" class="err" style="display:none"></div>
+      </div>
+
+      <div class="card">
+        <h2>Guía rápida de lectura</h2>
+        <div class="bandBox">
+          <div class="muted" style="font-size:12.5px">
+            Este test detecta <b>sensibilidad como diseño</b>, <b>percepción y distribución</b>, <b>horizontalidad relacional</b>,
+            <b>apoyo del Espíritu Santo</b>, <b>sobrecarga/fisuras</b>, <b>riesgo de cargar como columna</b> y <b>transferencia correcta</b>.
+            <br><br>
+            El objetivo no es acusar: es <b>diagnosticar</b> para <b>restaurar</b> con pasos concretos y descanso real.
+          </div>
+        </div>
+        <div class="footerNote">
+          Archivo requerido: <span class="muted">ensenanza06.json</span> en la misma carpeta (junto a <span class="muted">ensenanza06.html</span> y <span class="muted">logo.png</span>).
+        </div>
+      </div>
+    </div>
+
+    <div id="testRoot"></div>
+
+    <div id="resultsRoot" class="results" style="display:none">
+      <div class="resultsHead">
+        <h2>Resultados</h2>
+        <div class="pill"><span class="dot"></span><span>Total:</span> <b id="resTotal">0</b><span class="muted">/</span><b id="resMax">0</b> <span class="muted">·</span> <b id="resPct">0%</b></div>
+      </div>
+      <div class="resBody">
+        <div id="globalBox" class="bandBox"></div>
+
+        <div style="margin-top:12px">
+          <h2 style="margin:0 0 10px;font-size:14px">Resultados por sección</h2>
+          <div style="overflow:auto">
+            <table id="sectionTable">
+              <thead>
+                <tr>
+                  <th>Sección</th>
+                  <th>Diagnóstico</th>
+                  <th>Puntaje</th>
+                  <th>%</th>
+                  <th>Enfoque</th>
+                  <th>Verso</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2 style="margin:0 0 10px;font-size:14px">Enfoque pastoral por secciones</h2>
+          <div id="pastoralBlocks"></div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2 style="margin:0 0 10px;font-size:14px">Plan semanal automático (7 días)</h2>
+          <div class="muted" style="font-size:12.5px;margin-bottom:8px">
+            Basado en las secciones con mayor tensión (menor %). Se prioriza restauración con pasos pequeños y sostenibles.
+          </div>
+          <div id="weeklyPlan" class="plan"></div>
+        </div>
+
+        <div class="footerNote">Tip: descarga el PDF para una lectura ordenada con portada, tablas, plan y enfoque pastoral.</div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+(() => {
+  const JSON_PATH = './ensenanza06.json';
+  const TITLE = '[La viga: la mujer como alma del sistema]';
+
+  // Umbrales por porcentaje (0..1)
+  const GLOBAL_THRESHOLDS = [
+    { min: 0.85, band: 'Alineado' },
+    { min: 0.65, band: 'Ajuste' },
+    { min: 0.40, band: 'Riesgo' },
+    { min: 0.00, band: 'Crítico' }
+  ];
+  const SECTION_THRESHOLDS = [
+    { min: 0.75, band: 'Alineado' },
+    { min: 0.50, band: 'Ajuste' },
+    { min: 0.00, band: 'Riesgo' }
+  ];
+
+  const el = (id) => document.getElementById(id);
+
+  const state = {
+    data: null,
+    answers: new Map(), // key: qid, value: number
+    totalQuestions: 0,
+    maxPerQuestion: 5,
+    maxTotal: 0
+  };
+
+  // Defaults
+  try {
+    const today = new Date();
+    const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    el('dateField').value = iso;
+  } catch {}
+
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+  function fmtPct(p){ return `${Math.round(p*100)}%`; }
+  function safeText(s){ return (s ?? '').toString(); }
+
+  function getScaleOptions(){
+    const opts = state.data?.scale?.options || [];
+    const nums = opts.map(o => Number(o.value)).filter(v => Number.isFinite(v));
+    const max = nums.length ? Math.max(...nums) : 5;
+    state.maxPerQuestion = max;
+    return opts;
+  }
+
+  function computeTotals(){
+    let total = 0;
+    let answered = 0;
+    for (const [, val] of state.answers.entries()){
+      if (Number.isFinite(val)){
+        total += val;
+        answered += 1;
+      }
+    }
+    return { total, answered };
+  }
+
+  function pickBand(pct, thresholds, kind){
+    const p = clamp(pct, 0, 1);
+    const chosen = thresholds.find(t => p >= t.min) || thresholds[thresholds.length - 1];
+    const label = chosen.band;
+
+    if (kind === 'global'){
+      const bandObj = (state.data.rubrics.globalBands || []).find(b => b.label === label);
+      return bandObj || (state.data.rubrics.globalBands || [])[0] || { label, summary:'', verse:{quote:'',reference:''} };
+    } else {
+      const bandObj = (state.data.rubrics.sectionBands || []).find(b => b.label === label);
+      return bandObj || (state.data.rubrics.sectionBands || [])[0] || { label, summary:'', verse:{quote:'',reference:''} };
+    }
+  }
+
+  function computeBySection(){
+    const sections = state.data.sections || [];
+    const by = [];
+    for (const s of sections){
+      let score = 0;
+      let answered = 0;
+      const qCount = (s.questions || []).length;
+      for (const q of (s.questions || [])){
+        const v = state.answers.get(q.id);
+        if (Number.isFinite(v)){
+          score += v;
+          answered += 1;
+        }
+      }
+      const max = qCount * state.maxPerQuestion;
+      const pct = max > 0 ? (score / max) : 0;
+      const band = pickBand(pct, SECTION_THRESHOLDS, 'section');
+      by.push({ section: s, score, max, pct, answered, qCount, band });
+    }
+    by.sort((a,b) => a.pct - b.pct); // tension first
+    return by;
+  }
+
+  function bandClass(label){
+    const l = (label || '').toLowerCase();
+    if (l.includes('aline')) return 'good';
+    if (l.includes('ajust')) return 'warn';
+    if (l.includes('riesg')) return 'bad';
+    if (l.includes('crít') || l.includes('crit')) return 'bad';
+    return '';
+  }
+
+  function renderTest(){
+    const root = el('testRoot');
+    root.innerHTML = '';
+
+    const data = state.data;
+    const scale = getScaleOptions();
+    const sections = data.sections || [];
+
+    // counts
+    let totalQ = 0;
+    for (const s of sections) totalQ += (s.questions || []).length;
+    state.totalQuestions = totalQ;
+    state.maxTotal = totalQ * state.maxPerQuestion;
+
+    el('liveMax').textContent = state.maxTotal;
+    el('liveTotalQ').textContent = totalQ;
+
+    for (const s of sections){
+      const sec = document.createElement('div');
+      sec.className = 'section';
+      sec.dataset.sectionId = s.id;
+
+      const head = document.createElement('div');
+      head.className = 'sectionHead';
+
+      const left = document.createElement('div');
+      const h = document.createElement('h3');
+      h.textContent = s.title;
+      const meta = document.createElement('div');
+      meta.className = 'metaLine';
+      meta.textContent = `${safeText(s.subtitle)} · Enfoque: ${safeText(s.diagnosticFocus)}`;
+      left.appendChild(h);
+      left.appendChild(meta);
+
+      const right = document.createElement('div');
+      right.style.display = 'flex';
+      right.style.gap = '10px';
+      right.style.alignItems = 'center';
+      right.style.flexWrap = 'wrap';
+      right.innerHTML = `
+        <div class="pill"><span class="dot"></span><span>Sección:</span> <b id="secScore_${s.id}">0</b><span class="muted">/</span><b id="secMax_${s.id}">0</b></div>
+      `;
+
+      head.appendChild(left);
+      head.appendChild(right);
+
+      const body = document.createElement('div');
+      body.className = 'sectionBody';
+
+      for (const q of (s.questions || [])){
+        const qWrap = document.createElement('div');
+        qWrap.className = 'q';
+
+        const qText = document.createElement('div');
+        qText.className = 'qText';
+        qText.textContent = q.text;
+
+        const row = document.createElement('div');
+        row.className = 'scaleRow';
+
+        for (const opt of scale){
+          const id = `${q.id}_v${opt.value}`;
+          const lab = document.createElement('label');
+          lab.className = 'opt';
+          lab.setAttribute('for', id);
+
+          const inp = document.createElement('input');
+          inp.type = 'radio';
+          inp.name = q.id;
+          inp.id = id;
+          inp.value = String(opt.value);
+          inp.addEventListener('change', () => {
+            state.answers.set(q.id, Number(inp.value));
+            updateLive();
+          });
+
+          const span = document.createElement('span');
+          span.textContent = `${opt.label}`;
+
+          lab.appendChild(inp);
+          lab.appendChild(span);
+          row.appendChild(lab);
+        }
+
+        qWrap.appendChild(qText);
+        qWrap.appendChild(row);
+        body.appendChild(qWrap);
+      }
+
+      sec.appendChild(head);
+      sec.appendChild(body);
+      root.appendChild(sec);
+
+      const secMax = (s.questions || []).length * state.maxPerQuestion;
+      const maxEl = el(`secMax_${s.id}`);
+      if (maxEl) maxEl.textContent = secMax;
+    }
+
+    updateLive();
+  }
+
+  function updateLive(){
+    const { total, answered } = computeTotals();
+
+    el('liveScore').textContent = total;
+    el('liveAnswered').textContent = answered;
+
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const pill = el('liveScorePill');
+    pill.classList.remove('good','warn','bad');
+    const label = pickBand(pct, GLOBAL_THRESHOLDS, 'global').label || '';
+    const cls = bandClass(label);
+    if (cls) pill.classList.add(cls);
+
+    const pill2 = el('livePercentPill');
+    pill2.classList.remove('good','warn','bad');
+    if (answered === state.totalQuestions && state.totalQuestions > 0) pill2.classList.add('good');
+    else if (answered > 0) pill2.classList.add('warn');
+
+    const bySection = computeBySection().reduce((acc, it) => { acc[it.section.id] = it; return acc; }, {});
+    for (const s of (state.data.sections || [])){
+      const it = bySection[s.id];
+      const scoreEl = el(`secScore_${s.id}`);
+      if (scoreEl) scoreEl.textContent = it ? it.score : 0;
+    }
+  }
+
+  function buildGlobalBox(globalBand, pct){
+    const cls = bandClass(globalBand.label);
+    const tagClass = cls ? `tag ${cls}` : 'tag';
+    const verse = globalBand.verse || { quote:'', reference:'' };
+
+    return `
+      <div class="bandTop">
+        <span class="${tagClass}">Diagnóstico global: ${safeText(globalBand.label)}</span>
+        <span class="pill"><span class="dot"></span><span>Porcentaje:</span> <b>${fmtPct(pct)}</b></span>
+      </div>
+      <div style="margin-top:10px;color:var(--text);font-size:13px">${safeText(globalBand.summary)}</div>
+      <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+    `;
+  }
+
+  function getMiniTeachingForSection(sectionId){
+    const list = state.data?.pastoralManual?.sections || [];
+    return list.find(x => x.id === sectionId)?.miniTeaching || null;
+  }
+
+  function buildWeeklyPlanFromSections(bySectionSortedLow){
+    const priority = bySectionSortedLow.slice(0, 3);
+    const pools = priority.map(it => {
+      const mini = getMiniTeachingForSection(it.section.id);
+      return { title: it.section.title, actions: (mini?.oneWeekPlan || []).slice() };
+    }).filter(p => p.actions.length);
+
+    const days = [];
+    for (let i=0;i<7;i++){
+      const picks = [];
+      for (let j=0;j<pools.length;j++){
+        const pool = pools[(i + j) % pools.length];
+        const act = pool.actions[i % pool.actions.length];
+        if (act) picks.push({ sec: pool.title, act });
+        if (picks.length >= 2) break;
+      }
+      if (!picks.length){
+        picks.push({ sec: 'Alineación general', act: 'Ora: “Espíritu Santo, sostén mi alma; enséñame a percibir sin cargar y a transferir sin temor.”' });
+      }
+      days.push(picks);
+    }
+    return days;
+  }
+
+  function renderResults(){
+    const { total } = computeTotals();
+    const max = state.maxTotal || 1;
+    const pct = total / max;
+
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+
+    el('resTotal').textContent = total;
+    el('resMax').textContent = max;
+    el('resPct').textContent = fmtPct(pct);
+
+    el('globalBox').innerHTML = buildGlobalBox(globalBand, pct);
+
+    const tbody = el('sectionTable').querySelector('tbody');
+    tbody.innerHTML = '';
+
+    const bySectionRaw = computeBySection();
+    const bySectionOriginalOrder = (state.data.sections || [])
+      .map(s => bySectionRaw.find(x => x.section.id === s.id))
+      .filter(Boolean);
+
+    for (const it of bySectionOriginalOrder){
+      const s = it.section;
+      const secVerse = s.sectionVerse || { quote:'', reference:'' };
+      const diag = it.band?.label || '—';
+      const diagSummary = it.band?.summary || '';
+      const diagCell = `<b>${safeText(diag)}</b><div class="muted" style="margin-top:4px">${safeText(diagSummary)}</div>`;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><b>${safeText(s.title)}</b><div class="muted" style="margin-top:4px">${safeText(s.subtitle)}</div></td>
+        <td>${diagCell}</td>
+        <td><span style="font-family:var(--mono)">${it.score}</span> / <span class="muted">${it.max}</span></td>
+        <td><b>${fmtPct(it.pct)}</b></td>
+        <td class="muted">${safeText(s.diagnosticFocus)}</td>
+        <td class="muted">“${safeText(secVerse.quote)}” (${safeText(secVerse.reference)})</td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    const pastoralRoot = el('pastoralBlocks');
+    pastoralRoot.innerHTML = '';
+    for (const it of bySectionOriginalOrder){
+      const s = it.section;
+      const mini = getMiniTeachingForSection(s.id);
+      const cls = bandClass(it.band?.label || '');
+      const tagClass = cls ? `tag ${cls}` : 'tag';
+
+      const block = document.createElement('div');
+      block.className = 'bandBox';
+      block.style.marginBottom = '10px';
+
+      if (!mini){
+        block.innerHTML = `
+          <div class="bandTop">
+            <span class="${tagClass}">${safeText(s.title)} — ${safeText(it.band?.label || '')}</span>
+            <span class="pill"><span class="dot"></span><span>${fmtPct(it.pct)}</span></span>
+          </div>
+          <div class="muted" style="margin-top:10px">No se encontró mini-enseñanza para esta sección.</div>
+        `;
+      } else {
+        const bullets = (mini.text || []).map(x => `<li>${safeText(x)}</li>`).join('');
+        const v = mini.verse || { quote:'', reference:'' };
+        block.innerHTML = `
+          <div class="bandTop">
+            <span class="${tagClass}">${safeText(s.title)} — ${safeText(it.band?.label || '')}</span>
+            <span class="pill"><span class="dot"></span><span>Puntaje:</span> <b>${it.score}</b><span class="muted">/</span><b>${it.max}</b> <span class="muted">·</span> <b>${fmtPct(it.pct)}</b></span>
+          </div>
+          <div style="margin-top:10px"><b>${safeText(mini.title)}</b></div>
+          <ul style="margin:8px 0 0 18px;color:var(--text);font-size:13px">${bullets}</ul>
+          <div class="verse">📖 “${safeText(v.quote)}” <span class="muted">(${safeText(v.reference)})</span></div>
+        `;
+      }
+
+      pastoralRoot.appendChild(block);
+    }
+
+    const planRoot = el('weeklyPlan');
+    planRoot.innerHTML = '';
+    const days = buildWeeklyPlanFromSections(bySectionRaw);
+
+    for (let d=0; d<7; d++){
+      const div = document.createElement('div');
+      div.className = 'day';
+      const items = days[d].map(x => `<li><span class="muted">(${safeText(x.sec)})</span> ${safeText(x.act)}</li>`).join('');
+      div.innerHTML = `<b>Día ${d+1}</b><ul style="margin:8px 0 0 18px;font-size:13px">${items}</ul>`;
+      planRoot.appendChild(div);
+    }
+
+    el('resultsRoot').style.display = 'block';
+    if (el('autoScroll').checked){
+      el('resultsRoot').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  }
+
+  function buildTXT(){
+    const data = state.data;
+    const patient = safeText(el('patientName').value).trim();
+    const auditor = safeText(el('auditorName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const notes = safeText(el('notes').value).trim();
+    const includeDetails = el('includeDetails').checked;
+
+    const { total } = computeTotals();
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    const globalVerse = globalBand.verse || { quote:'', reference:'' };
+
+    const bySection = computeBySection();
+    const ordered = (data.sections || [])
+      .map(s => bySection.find(x => x.section.id === s.id))
+      .filter(Boolean);
+
+    const days = buildWeeklyPlanFromSections(bySection);
+
+    let out = '';
+    out += `${TITLE}\n`;
+    out += `${'='.repeat(TITLE.length)}\n\n`;
+    out += `Paciente: ${patient || '(sin especificar)'}\n`;
+    out += `Auditor:  ${auditor || '(sin especificar)'}\n`;
+    out += `Fecha:    ${date || '(sin especificar)'}\n\n`;
+    out += `Observaciones:\n${notes ? notes : '(sin observaciones)'}\n\n`;
+
+    out += `DIAGNÓSTICO GLOBAL\n`;
+    out += `- Puntaje: ${total}/${state.maxTotal} (${fmtPct(pct)})\n`;
+    out += `- Nivel: ${safeText(globalBand.label)}\n`;
+    out += `- Resumen: ${safeText(globalBand.summary)}\n`;
+    out += `- Verso: “${safeText(globalVerse.quote)}” (${safeText(globalVerse.reference)})\n\n`;
+
+    out += `RESULTADOS POR SECCIÓN\n`;
+    out += `----------------------\n`;
+    for (const it of ordered){
+      const s = it.section;
+      const diag = it.band?.label || '—';
+      const secVerse = s.sectionVerse || { quote:'', reference:'' };
+      out += `• ${safeText(s.title)}\n`;
+      out += `  - Puntaje: ${it.score}/${it.max} (${fmtPct(it.pct)})\n`;
+      out += `  - Diagnóstico: ${safeText(diag)}\n`;
+      out += `  - Enfoque: ${safeText(s.diagnosticFocus)}\n`;
+      out += `  - Verso: “${safeText(secVerse.quote)}” (${safeText(secVerse.reference)})\n\n`;
+    }
+
+    out += `ENFOQUE PASTORAL POR SECCIONES\n`;
+    out += `-----------------------------\n`;
+    for (const it of ordered){
+      const s = it.section;
+      const mini = getMiniTeachingForSection(s.id);
+      out += `• ${safeText(s.title)}\n`;
+      if (!mini){
+        out += `  (sin mini-enseñanza)\n\n`;
+        continue;
+      }
+      out += `  ${safeText(mini.title)}\n`;
+      for (const b of (mini.text || [])){
+        out += `  - ${safeText(b)}\n`;
+      }
+      const v = mini.verse || { quote:'', reference:'' };
+      out += `  Verso: “${safeText(v.quote)}” (${safeText(v.reference)})\n\n`;
+    }
+
+    out += `PLAN SEMANAL (7 DÍAS)\n`;
+    out += `---------------------\n`;
+    for (let i=0;i<7;i++){
+      out += `Día ${i+1}:\n`;
+      for (const x of days[i]){
+        out += `  - (${safeText(x.sec)}) ${safeText(x.act)}\n`;
+      }
+      out += `\n`;
+    }
+
+    if (includeDetails){
+      out += `DETALLE DE RESPUESTAS (por pregunta)\n`;
+      out += `-----------------------------------\n`;
+      for (const s of (data.sections || [])){
+        out += `\n[${safeText(s.title)}]\n`;
+        for (const q of (s.questions || [])){
+          const v = state.answers.get(q.id);
+          out += `- ${safeText(q.text)}\n`;
+          out += `  Respuesta: ${Number.isFinite(v) ? v : '(sin responder)'}\n`;
+        }
+      }
+      out += `\n`;
+    }
+
+    return out;
+  }
+
+  function downloadTXT(){
+    const txt = buildTXT();
+    const blob = new Blob([txt], { type:'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    const fname = `ensenanza06_${(el('patientName').value || 'informe').toString().trim().replace(/\s+/g,'_')}.txt`;
+    a.href = URL.createObjectURL(blob);
+    a.download = fname;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  }
+
+  // --- PDF BONITO (jsPDF + autoTable) ---
+  async function loadImageAsDataURL(url){
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try{
+          const c = document.createElement('canvas');
+          c.width = img.naturalWidth; c.height = img.naturalHeight;
+          const ctx = c.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          resolve(c.toDataURL('image/png'));
+        }catch(e){ resolve(null); }
+      };
+      img.onerror = () => resolve(null);
+      img.src = url;
+    });
+  }
+
+  function fitPillText(doc, text, x, y, w, h, baseSize){
+    let size = baseSize;
+    doc.setFont('helvetica', 'bold');
+    while (size > 8){
+      doc.setFontSize(size);
+      if (doc.getTextWidth(text) <= w - 10) break;
+      size -= 1;
+    }
+    const tw = doc.getTextWidth(text);
+    const tx = x + (w - tw)/2;
+    const ty = y + (h/2) + (size*0.35);
+    doc.text(text, tx, ty);
+  }
+
+  function addHeaderLogo(doc, logoDataUrl){
+    const pageW = doc.internal.pageSize.getWidth();
+    if (logoDataUrl){
+      doc.addImage(logoDataUrl, 'PNG', 12, 10, 10, 10);
+    }
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(10);
+    doc.text('La viga — Informe', 26, 17);
+    doc.setDrawColor(220);
+    doc.setLineWidth(0.3);
+    doc.line(12, 22, pageW - 12, 22);
+  }
+
+  function addFooter(doc){
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const page = doc.internal.getNumberOfPages();
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9);
+    doc.setTextColor(140);
+    doc.text(`Página ${page}`, pageW - 12, pageH - 10, { align:'right' });
+    doc.setTextColor(0);
+  }
+
+  async function downloadPDF(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:'mm', format:'a4' });
+
+    const data = state.data;
+    const patient = safeText(el('patientName').value).trim();
+    const auditor = safeText(el('auditorName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const notes = safeText(el('notes').value).trim();
+    const includeDetails = el('includeDetails').checked;
+
+    const { total } = computeTotals();
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    const globalVerse = globalBand.verse || { quote:'', reference:'' };
+
+    const bySection = computeBySection();
+    const ordered = (data.sections || [])
+      .map(s => bySection.find(x => x.section.id === s.id))
+      .filter(Boolean);
+
+    const days = buildWeeklyPlanFromSections(bySection);
+    const logoData = await loadImageAsDataURL('logo.png');
+
+    // PORTADA
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+
+    doc.setFillColor(17, 26, 46);
+    doc.rect(0, 0, pageW, pageH, 'F');
+
+    if (logoData){
+      doc.addImage(logoData, 'PNG', (pageW/2)-12, 18, 24, 24);
+    }
+
+    doc.setTextColor(255,255,255);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(18);
+    doc.text('La viga:', pageW/2, 55, { align:'center' });
+    doc.setFontSize(16);
+    doc.text('la mujer como alma del sistema', pageW/2, 64, { align:'center' });
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    doc.setTextColor(220,230,252);
+    doc.text(`Paciente: ${patient || '—'}`, pageW/2, 80, { align:'center' });
+    doc.text(`Auditor: ${auditor || '—'}`, pageW/2, 86, { align:'center' });
+    doc.text(`Fecha: ${date || '—'}`, pageW/2, 92, { align:'center' });
+
+    const pillW = 96, pillH = 12;
+    const pillX = (pageW - pillW)/2, pillY = 104;
+    const gl = (globalBand.label || '').toLowerCase();
+    let bg = [52,211,153];
+    if (gl.includes('ajust')) bg = [251,191,36];
+    if (gl.includes('riesg') || gl.includes('crít') || gl.includes('crit')) bg = [251,113,133];
+
+    doc.setFillColor(bg[0], bg[1], bg[2]);
+    doc.roundedRect(pillX, pillY, pillW, pillH, 6, 6, 'F');
+    doc.setTextColor(10,15,25);
+    fitPillText(doc, `Diagnóstico global: ${safeText(globalBand.label)} (${fmtPct(pct)})`, pillX, pillY, pillW, pillH, 11);
+
+    doc.setTextColor(220,230,252);
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(11);
+    const verseLine = `“${safeText(globalVerse.quote)}” (${safeText(globalVerse.reference)})`;
+    const lines = doc.splitTextToSize(verseLine, pageW - 30);
+    doc.text(lines, 15, 132);
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    const sumLines = doc.splitTextToSize(safeText(globalBand.summary), pageW - 30);
+    doc.text(sumLines, 15, 150);
+
+    doc.setTextColor(150,170,210);
+    doc.setFontSize(9);
+    doc.text('Informe generado sin backend — listo para GitHub Pages', pageW/2, pageH - 12, { align:'center' });
+
+    // PÁGINA 2: TABLA POR SECCIÓN
+    doc.addPage();
+    doc.setTextColor(0,0,0);
+    addHeaderLogo(doc, logoData);
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    doc.text('Resultados por sección', 12, 32);
+
+    const tableBody = ordered.map(it => ([
+      safeText(it.section.title),
+      `${safeText(it.band?.label || '')}`,
+      `${it.score}/${it.max}`,
+      `${fmtPct(it.pct)}`,
+      safeText(it.section.diagnosticFocus),
+      `“${safeText(it.section.sectionVerse?.quote || '')}” (${safeText(it.section.sectionVerse?.reference || '')})`
+    ]));
+
+    doc.autoTable({
+      startY: 36,
+      head: [['Sección', 'Diagnóstico', 'Puntaje', '%', 'Enfoque', 'Verso']],
+      body: tableBody,
+      styles: { fontSize: 8, cellPadding: 2.2 },
+      headStyles: { fillColor: [17,26,46], textColor: 255 },
+      columnStyles: {
+        0: { cellWidth: 30 },
+        1: { cellWidth: 18 },
+        2: { cellWidth: 18 },
+        3: { cellWidth: 10 },
+        4: { cellWidth: 45 },
+        5: { cellWidth: 62 }
+      },
+      didDrawPage: () => {
+        addHeaderLogo(doc, logoData);
+        addFooter(doc);
+      }
+    });
+
+    // PÁGINA 3+: ENFOQUE PASTORAL (TODAS)
+    doc.addPage();
+    addHeaderLogo(doc, logoData);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    doc.text('Enfoque pastoral por secciones', 12, 32);
+
+    let y = 38;
+    for (const it of ordered){
+      const mini = getMiniTeachingForSection(it.section.id);
+      const secTitle = safeText(it.section.title);
+      const bandLabel = safeText(it.band?.label || '');
+      const miniTitle = safeText(mini?.title || '');
+      const verse = mini?.verse || { quote:'', reference:'' };
+      const bullets = (mini?.text || []);
+
+      if (y > 260){
+        doc.addPage();
+        addHeaderLogo(doc, logoData);
+        y = 28;
+      }
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(12);
+      doc.text(`${secTitle} — ${bandLabel}`, 12, y);
+      y += 6;
+
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(10);
+      doc.text(miniTitle || '—', 12, y);
+      y += 5;
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
+      for (const b of bullets){
+        const bl = doc.splitTextToSize(`• ${safeText(b)}`, pageW - 24);
+        doc.text(bl, 12, y);
+        y += (bl.length * 4.6);
+        if (y > 270){
+          doc.addPage();
+          addHeaderLogo(doc, logoData);
+          y = 28;
+        }
+      }
+
+      doc.setFont('helvetica','italic');
+      doc.setTextColor(90);
+      const vLine = `“${safeText(verse.quote)}” (${safeText(verse.reference)})`;
+      const vLines = doc.splitTextToSize(vLine, pageW - 24);
+      doc.text(vLines, 12, y);
+      doc.setTextColor(0);
+      y += (vLines.length * 4.6) + 6;
+    }
+    addFooter(doc);
+
+    // PÁGINA: PLAN 7 DÍAS
+    doc.addPage();
+    addHeaderLogo(doc, logoData);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    doc.text('Plan semanal automático (7 días)', 12, 32);
+
+    const planBody = days.map((day, idx) => {
+      const text = day.map(x => `(${safeText(x.sec)}) ${safeText(x.act)}`).join('\n');
+      return [`Día ${idx+1}`, text];
+    });
+
+    doc.autoTable({
+      startY: 36,
+      head: [['Día', 'Acciones (prioriza secciones con mayor tensión)']],
+      body: planBody,
+      styles: { fontSize: 9, cellPadding: 2.4, valign: 'top' },
+      headStyles: { fillColor: [17,26,46], textColor: 255 },
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: pageW - 12 - 12 - 20 }
+      },
+      didDrawPage: () => {
+        addHeaderLogo(doc, logoData);
+        addFooter(doc);
+      }
+    });
+
+    // PÁGINA: OBSERVACIONES
+    doc.addPage();
+    addHeaderLogo(doc, logoData);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    doc.text('Observaciones', 12, 32);
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    const noteLines = doc.splitTextToSize(notes ? notes : '(sin observaciones)', pageW - 24);
+    doc.text(noteLines, 12, 40);
+    addFooter(doc);
+
+    // PÁGINA: DETALLES POR PREGUNTA (OPCIONAL)
+    if (includeDetails){
+      doc.addPage();
+      addHeaderLogo(doc, logoData);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(14);
+      doc.text('Detalle por pregunta', 12, 32);
+
+      const detailRows = [];
+      for (const s of (data.sections || [])){
+        detailRows.push([`[${safeText(s.title)}]`, '', '']);
+        for (const q of (s.questions || [])){
+          const v = state.answers.get(q.id);
+          detailRows.push([
+            safeText(q.id),
+            safeText(q.text),
+            Number.isFinite(v) ? String(v) : '—'
+          ]);
+        }
+      }
+
+      doc.autoTable({
+        startY: 36,
+        head: [['ID', 'Pregunta', 'Respuesta']],
+        body: detailRows,
+        styles: { fontSize: 8.5, cellPadding: 2.2 },
+        headStyles: { fillColor: [17,26,46], textColor: 255 },
+        columnStyles: {
+          0: { cellWidth: 18 },
+          1: { cellWidth: pageW - 12 - 12 - 18 - 18 },
+          2: { cellWidth: 18 }
+        },
+        didDrawPage: () => {
+          addHeaderLogo(doc, logoData);
+          addFooter(doc);
+        }
+      });
+    }
+
+    const fname = `ensenanza06_${(patient || 'informe').replace(/\s+/g,'_')}.pdf`;
+    doc.save(fname);
+  }
+
+  function resetAll(){
+    if (!confirm('¿Reiniciar el test? Se borrarán respuestas y resultados.')) return;
+    state.answers.clear();
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    updateLive();
+    el('resultsRoot').style.display = 'none';
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  function validateLoaded(){
+    if (!state.data?.sections?.length) return 'El JSON no trae secciones.';
+    if (!state.data?.scale?.options?.length) return 'El JSON no trae escala.';
+    if (!state.data?.rubrics?.globalBands?.length) return 'El JSON no trae rúbricas globales.';
+    if (!state.data?.rubrics?.sectionBands?.length) return 'El JSON no trae rúbricas por sección.';
+    return null;
+  }
+
+  async function init(){
+    try{
+      const resp = await fetch(JSON_PATH, { cache:'no-store' });
+      if (!resp.ok) throw new Error(`No se pudo cargar ${JSON_PATH} (HTTP ${resp.status}).`);
+      const data = await resp.json();
+      state.data = data;
+
+      const err = validateLoaded();
+      if (err){
+        el('loadError').style.display = 'block';
+        el('loadError').textContent = err;
+        return;
+      }
+
+      renderTest();
+
+      el('btnResults').addEventListener('click', () => { renderResults(); });
+      el('btnTxt').addEventListener('click', () => { renderResults(); downloadTXT(); });
+      el('btnPdf').addEventListener('click', () => { renderResults(); downloadPDF(); });
+      el('btnReset').addEventListener('click', resetAll);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') el('resultsRoot').style.display = 'none';
+      });
+
+    }catch(e){
+      el('loadError').style.display = 'block';
+      el('loadError').textContent = `Error cargando el test: ${e.message || e}`;
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

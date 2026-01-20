@@ -1,0 +1,444 @@
+{
+  "meta": {
+    "title": "La viga: la mujer como alma del sistema",
+    "description": "Auditoría diagnóstica basada en el capítulo 6: “La viga”. Evalúa percepción y distribución de cargas, horizontalidad relacional, apoyo del Espíritu Santo en el alma, riesgo de intentar ser columna, transferencia correcta (viga→columna→cimiento) y aplicación práctica para restaurar descanso y armonía."
+  },
+  "scale": {
+    "options": [
+      { "value": 0, "label": "0 — No presente / en desacuerdo" },
+      { "value": 1, "label": "1 — Poco consistente / raro" },
+      { "value": 2, "label": "2 — Parcial / intermitente" },
+      { "value": 3, "label": "3 — Claro / consistente" },
+      { "value": 4, "label": "4 — Firme / habitual" },
+      { "value": 5, "label": "5 — Muy alineado / ejemplar" }
+    ]
+  },
+  "rubrics": {
+    "globalBands": [
+      {
+        "label": "Alineado",
+        "summary": "Tu sensibilidad está alineada al diseño: percibes, expresas y transfieres con sabiduría. La horizontalidad del hogar respira y la carga fluye hacia la columna y el cimiento. El foco es sostener hábitos de comunicación y dependencia del Espíritu.",
+        "verse": {
+          "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+          "reference": "Romanos 8:26"
+        }
+      },
+      {
+        "label": "Ajuste",
+        "summary": "Hay elementos sanos, pero aparece acumulación intermitente, expresión poco clara o desgaste por sostener más de lo debido. El foco es ordenar la transferencia, pedir apoyo y recuperar descanso sin perder sensibilidad.",
+        "verse": {
+          "quote": "Someteos unos a otros en el temor de Dios.",
+          "reference": "Efesios 5:21"
+        }
+      },
+      {
+        "label": "Riesgo",
+        "summary": "La carga emocional/relacional se está quedando en ti: acumulación, tensión constante o cansancio sostenido. Puede haber intento de cargar verticalmente (como columna) o apoyos rígidos (control) que generan fisuras. El foco es soltar peso, canalizar con el Espíritu y reconstruir acuerdos.",
+        "verse": {
+          "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+          "reference": "Romanos 8:26"
+        }
+      },
+      {
+        "label": "Crítico",
+        "summary": "Hay señales de sobrecarga profunda: agotamiento crónico, resentimiento silencioso o convivencia pesada. No es condena: es alerta estructural. El foco es intervención inmediata: límites sanos, acompañamiento, transferencia intencional y descanso real bajo el apoyo del Espíritu.",
+        "verse": {
+          "quote": "Mejor es morar en el rincón del terrado que con mujer rencillosa en casa espaciosa.",
+          "reference": "Proverbios 21:9"
+        }
+      }
+    ],
+    "sectionBands": [
+      {
+        "label": "Alineado",
+        "summary": "La sección muestra sensibilidad canalizada, expresión sana y transferencia fluida.",
+        "verse": {
+          "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua.",
+          "reference": "Proverbios 31:26"
+        }
+      },
+      {
+        "label": "Ajuste",
+        "summary": "La sección funciona, pero con acumulación, cansancio o comunicación que necesita ordenarse.",
+        "verse": {
+          "quote": "Someteos unos a otros en el temor de Dios.",
+          "reference": "Efesios 5:21"
+        }
+      },
+      {
+        "label": "Riesgo",
+        "summary": "La sección está sobrecargada o rígida: hay tensión constante, fisuras o intentos de cargar sola.",
+        "verse": {
+          "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+          "reference": "Romanos 8:26"
+        }
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "s1_identidad_viga",
+      "title": "Identidad de viga",
+      "subtitle": "Indispensable: percibe, distribuye y canaliza",
+      "diagnosticFocus": "Comprender la función: no decorativa ni pasiva; sensibilidad como diseño estructural.",
+      "sectionVerse": {
+        "quote": "Mas quiero que sepáis que Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer.",
+        "reference": "1 Corintios 11:3"
+      },
+      "questions": [
+        { "id": "s1_q1", "text": "Reconozco que mi sensibilidad es una función del diseño, no un defecto personal." },
+        { "id": "s1_q2", "text": "Puedo percibir tensiones sin sentir culpa por sentirlas." },
+        { "id": "s1_q3", "text": "Me valoro como parte indispensable del sistema, no como “extra” o adorno." },
+        { "id": "s1_q4", "text": "Distingo entre percibir (función) y cargar sola (desalineación)." },
+        { "id": "s1_q5", "text": "Cuando noto una carga, busco canalizarla en vez de guardarla para “no molestar”." },
+        { "id": "s1_q6", "text": "Puedo expresar lo que percibo con respeto, sin explosión ni silencio prolongado." },
+        { "id": "s1_q7", "text": "Entiendo que la armonía del hogar también depende de mi capacidad de transferir, no de aguantar." },
+        { "id": "s1_q8", "text": "He dejado de creer que debo ser ‘fuerte’ negando lo que siento." }
+      ]
+    },
+    {
+      "id": "s2_percibir_distribuir",
+      "title": "Percibir y distribuir",
+      "subtitle": "Discernimiento temprano y canalización sabia",
+      "diagnosticFocus": "Evaluar si detecto y comunico tensiones a tiempo, y si distribuyo el peso con orden.",
+      "sectionVerse": {
+        "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua.",
+        "reference": "Proverbios 31:26"
+      },
+      "questions": [
+        { "id": "s2_q1", "text": "Sueldo percibir cambios en el ambiente del hogar antes de que sean evidentes para otros." },
+        { "id": "s2_q2", "text": "Cuando detecto tensión, la nombro con claridad (sin sarcasmo ni acusación)." },
+        { "id": "s2_q3", "text": "No minimizo lo que percibo: lo tomo en serio y lo ordeno." },
+        { "id": "s2_q4", "text": "Puedo distinguir entre una emoción momentánea y una carga real del sistema." },
+        { "id": "s2_q5", "text": "Distribuyo el peso: converso, pido apoyo y busco acuerdos prácticos." },
+        { "id": "s2_q6", "text": "Uso palabras con sabiduría y clemencia, incluso en temas sensibles." },
+        { "id": "s2_q7", "text": "Evito acumular por miedo a la reacción del otro; busco el momento y lo comunico." },
+        { "id": "s2_q8", "text": "Mi forma de percibir y hablar trae luz al sistema, no confusión." }
+      ]
+    },
+    {
+      "id": "s3_horizontalidad_relacional",
+      "title": "Horizontalidad relacional",
+      "subtitle": "Clima del hogar, convivencia y expresión del alma",
+      "diagnosticFocus": "Medir salud de convivencia: fluidez, acuerdos, comunicación y manejo de tensiones.",
+      "sectionVerse": {
+        "quote": "Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, esa será alabada.",
+        "reference": "Proverbios 31:30"
+      },
+      "questions": [
+        { "id": "s3_q1", "text": "El clima de mi hogar tiende a ser estable; si se tensa, lo abordamos y no lo ignoramos." },
+        { "id": "s3_q2", "text": "Puedo expresar necesidades sin convertirlas en reclamo constante." },
+        { "id": "s3_q3", "text": "No uso la crítica como herramienta de control; busco acuerdos y soluciones." },
+        { "id": "s3_q4", "text": "La convivencia se siente ligera con frecuencia, no pesada por tensión acumulada." },
+        { "id": "s3_q5", "text": "Cuando hay desacuerdo, puedo conversar sin escalar a rencilla." },
+        { "id": "s3_q6", "text": "Mi temor de Dios guía mi trato: respeto, mansedumbre y verdad." },
+        { "id": "s3_q7", "text": "No ‘callo para mantener paz’; busco paz real a través de comunicación sana." },
+        { "id": "s3_q8", "text": "Puedo recibir corrección sin cerrarme ni sentirme invalidada." }
+      ]
+    },
+    {
+      "id": "s4_apoyo_espiritu_santo",
+      "title": "Apoyo móvil: el Espíritu Santo y el alma",
+      "subtitle": "Sostén con libertad: sin rigidez ni ausencia",
+      "diagnosticFocus": "Evaluar si mi apoyo es el Espíritu (libertad y sostén) o el control (rigidez) o la desconexión (ausencia).",
+      "sectionVerse": {
+        "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+        "reference": "Romanos 8:26"
+      },
+      "questions": [
+        { "id": "s4_q1", "text": "Busco al Espíritu Santo cuando me siento sobrepasada, antes de reaccionar." },
+        { "id": "s4_q2", "text": "Mi sensibilidad se mantiene viva sin convertirse en caos." },
+        { "id": "s4_q3", "text": "No uso el control para sentir seguridad; busco dirección del Espíritu." },
+        { "id": "s4_q4", "text": "Puedo soltar lo que no puedo resolver y descansar sin culpa." },
+        { "id": "s4_q5", "text": "Cuando siento tensión, oro y luego doy pasos prácticos (conversar, acordar, pedir ayuda)." },
+        { "id": "s4_q6", "text": "Evito rigidez: no me cierro, no me endurezco, no me vuelvo inmovible." },
+        { "id": "s4_q7", "text": "Evito ausencia: no me desconecto emocionalmente para no sentir." },
+        { "id": "s4_q8", "text": "Percibo libertad interior: el Espíritu sostiene mi alma sin apagar mi sensibilidad." }
+      ]
+    },
+    {
+      "id": "s5_sobrecarga_rencilla",
+      "title": "Sobrecarga y señales de fisura",
+      "subtitle": "Advertencia estructural: cuando la viga se sobrecarga",
+      "diagnosticFocus": "Detectar rencilla, resentimiento silencioso, agotamiento y tensión constante como señales de sobrecarga.",
+      "sectionVerse": {
+        "quote": "Mejor es morar en el rincón del terrado que con mujer rencillosa en casa espaciosa.",
+        "reference": "Proverbios 21:9"
+      },
+      "questions": [
+        { "id": "s5_q1", "text": "He sentido que ‘todo recae en mí’ (emocional o prácticamente) con frecuencia." },
+        { "id": "s5_q2", "text": "Cuando estoy sobrecargada, tiendo a hablar desde irritación o reclamo." },
+        { "id": "s5_q3", "text": "He acumulado resentimiento silencioso por no expresar o por sentirme sola cargando." },
+        { "id": "s5_q4", "text": "Mi cuerpo muestra señales de cansancio (sueño, tensión, desgaste) por sostener demasiado." },
+        { "id": "s5_q5", "text": "Me cuesta disfrutar la convivencia porque siento peso constante." },
+        { "id": "s5_q6", "text": "Puedo identificar temprano cuando me estoy fisurando y pido apoyo." },
+        { "id": "s5_q7", "text": "No uso la queja como descarga principal; busco canales sanos (oración, conversación, acuerdos)." },
+        { "id": "s5_q8", "text": "He aprendido a pausar antes de responder para no convertir la tensión en rencilla." }
+      ]
+    },
+    {
+      "id": "s6_intentar_ser_columna",
+      "title": "Cuando la viga intenta ser columna",
+      "subtitle": "Agotamiento crónico y desgaste por cargar verticalmente",
+      "diagnosticFocus": "Evaluar si intento sostener sola, reemplazar funciones o cargar verticalmente lo que debía canalizar.",
+      "sectionVerse": {
+        "quote": "Cada uno permanezca en la vocación en que fue llamado.",
+        "reference": "1 Corintios 7:20"
+      },
+      "questions": [
+        { "id": "s6_q1", "text": "He intentado sostener el hogar sola cuando el otro no responde (o responde mal)." },
+        { "id": "s6_q2", "text": "Me cuesta soltar control porque siento que si no lo hago yo, colapsa todo." },
+        { "id": "s6_q3", "text": "Me he sentido agotada por cargar decisiones, dirección o peso emocional de forma constante." },
+        { "id": "s6_q4", "text": "Me resulta difícil pedir al otro que asuma su parte sin sentir culpa o miedo." },
+        { "id": "s6_q5", "text": "He notado resentimiento por ‘hacer de columna’ sin ser escuchada o sostenida." },
+        { "id": "s6_q6", "text": "Estoy aprendiendo a volver al diseño: canalizar, no reemplazar." },
+        { "id": "s6_q7", "text": "Puedo establecer límites cuando el peso es indebido (sin amenaza, con claridad)." },
+        { "id": "s6_q8", "text": "He empezado a buscar acompañamiento si el sistema está desalineado." }
+      ]
+    },
+    {
+      "id": "s7_transferencia_flujo",
+      "title": "Transferencia correcta",
+      "subtitle": "Viga → columna → cimiento (Cristo)",
+      "diagnosticFocus": "Medir si la carga fluye o se queda acumulada; practicar transferencia como acto espiritual.",
+      "sectionVerse": {
+        "quote": "Someteos unos a otros en el temor de Dios.",
+        "reference": "Efesios 5:21"
+      },
+      "questions": [
+        { "id": "s7_q1", "text": "Cuando percibo una carga, la llevo a Dios antes de convertirla en discusión." },
+        { "id": "s7_q2", "text": "Puedo hablar con mi esposo/columna de forma directa y respetuosa sobre lo que percibo." },
+        { "id": "s7_q3", "text": "Evito acumular: busco un momento y transfiero con claridad lo que siento y lo que necesito." },
+        { "id": "s7_q4", "text": "Hacemos acuerdos: la carga no queda ‘en el aire’, se organiza." },
+        { "id": "s7_q5", "text": "Veo la transferencia como un acto espiritual, no solo emocional." },
+        { "id": "s7_q6", "text": "Puedo soltar el resultado: transfiero y descanso, sin querer controlar todo." },
+        { "id": "s7_q7", "text": "Cuando la cadena se interrumpe, busco restaurarla (conversación, consejería, acompañamiento)." },
+        { "id": "s7_q8", "text": "El hogar descansa más cuando practicamos este flujo: percibir → expresar → transferir → orar." }
+      ]
+    },
+    {
+      "id": "s8_diseno_hoy_aplicacion",
+      "title": "Diseño hoy: aplicación",
+      "subtitle": "Honrar sensibilidad, respirar en familia, canalizar en lo espiritual",
+      "diagnosticFocus": "Aplicar el diseño en el día a día: soltar carga, comunicar con sabiduría, vivir bajo apoyo del Espíritu.",
+      "sectionVerse": {
+        "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+        "reference": "Romanos 8:26"
+      },
+      "questions": [
+        { "id": "s8_q1", "text": "He entendido que no todo lo que siento debo cargarlo yo." },
+        { "id": "s8_q2", "text": "Estoy practicando expresar sin acumular: hablo antes de llegar al límite." },
+        { "id": "s8_q3", "text": "Cuando transfiero en vez de acumular, noto que el hogar respira." },
+        { "id": "s8_q4", "text": "Creo que Dios no silencia mi alma: la canaliza con sabiduría." },
+        { "id": "s8_q5", "text": "Estoy aprendiendo a pedir ayuda sin vergüenza (a Dios, a mi esposo, a una guía madura)." },
+        { "id": "s8_q6", "text": "Mi sensibilidad bajo el Espíritu produce discernimiento, no caos." },
+        { "id": "s8_q7", "text": "Estoy soltando una carga específica hoy con una acción concreta." },
+        { "id": "s8_q8", "text": "Estoy construyendo descanso real: límites, hábitos, conversación y oración." }
+      ]
+    }
+  ],
+  "pastoralManual": {
+    "sections": [
+      {
+        "id": "s1_identidad_viga",
+        "miniTeaching": {
+          "title": "Sensibilidad como función estructural",
+          "text": [
+            "La viga no es secundaria: sin ella el peso no tiene dónde reposar ni cómo distribuirse.",
+            "Tu sensibilidad no es debilidad: es capacidad de percibir lo que aún no se ve.",
+            "El diseño no te pide cargar sola, sino canalizar con orden.",
+            "Honrar tu función es cuidar el sistema, no callarte para sobrevivir."
+          ],
+          "verse": {
+            "quote": "Mas quiero que sepáis que Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer.",
+            "reference": "1 Corintios 11:3"
+          },
+          "oneWeekPlan": [
+            "Escribe: “Lo que percibo no es culpa; es información para ordenar.”",
+            "Identifica una tensión del hogar y descríbela sin acusación (hecho + impacto).",
+            "Ora 5 minutos antes de hablar: pide claridad, mansedumbre y verdad.",
+            "Practica una frase de transferencia: “Esto me pesa y necesito que lo ordenemos.”",
+            "Elige una carga que no te corresponde y decide soltarla con un límite sano.",
+            "Agradece una mejora pequeña en el clima del hogar; refuerza lo que funciona.",
+            "Cierra la semana con una oración: “Espíritu Santo, sostén mi alma y alinea mi función.”"
+          ]
+        }
+      },
+      {
+        "id": "s2_percibir_distribuir",
+        "miniTeaching": {
+          "title": "Percibir temprano, canalizar con sabiduría",
+          "text": [
+            "La viga siente lo que aún no es visible: eso puede salvar estructuras.",
+            "Lo que percibes no debe minimizarse: debe canalizarse.",
+            "Distribuir es ordenar el peso: conversación, acuerdos y pasos concretos.",
+            "La sabiduría se expresa con clemencia: firmeza sin dureza."
+          ],
+          "verse": {
+            "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua.",
+            "reference": "Proverbios 31:26"
+          },
+          "oneWeekPlan": [
+            "Detecta una tensión temprana y nómbrala con respeto (sin generalizar).",
+            "Escribe 2 necesidades y 2 propuestas concretas (no solo emociones).",
+            "Elige un momento adecuado y conversa 20–30 minutos (sin interrupciones).",
+            "Evita frases absolutas (“siempre / nunca”); usa ejemplos específicos.",
+            "Cierra la conversación con un acuerdo práctico (qué, cuándo, quién).",
+            "Revisa el acuerdo a los 3 días y ajusta lo necesario.",
+            "Celebra una pequeña transferencia bien hecha: ‘esto nos dio descanso’."
+          ]
+        }
+      },
+      {
+        "id": "s3_horizontalidad_relacional",
+        "miniTeaching": {
+          "title": "Cuidar el clima: convivencia con temor de Dios",
+          "text": [
+            "La horizontalidad es la vida diaria: ahí se nota la salud del sistema.",
+            "Ignorar la expresión del alma no elimina el problema: lo traslada.",
+            "La paz no es silencio: es verdad con respeto y acuerdos.",
+            "El temor de Dios guía el trato: honra, mansedumbre y claridad."
+          ],
+          "verse": {
+            "quote": "Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, esa será alabada.",
+            "reference": "Proverbios 31:30"
+          },
+          "oneWeekPlan": [
+            "Haz un ‘check-in’ diario de 5 minutos: “¿Cómo estás hoy?”",
+            "Identifica una conducta que tensa el clima y reemplázala por una práctica de paz.",
+            "Elige una conversación pendiente y hazla corta, clara y sin ataque.",
+            "Practica expresar necesidad sin reclamo: “Necesito… para poder…”",
+            "Incluye un momento de gratitud en casa (una frase específica al día).",
+            "Toma un descanso intencional: baja el ritmo para recuperar fluidez.",
+            "Cierra la semana con una pregunta: “¿Qué nos hizo respirar estos días?”"
+          ]
+        }
+      },
+      {
+        "id": "s4_apoyo_espiritu_santo",
+        "miniTeaching": {
+          "title": "El apoyo del Espíritu: libertad sin colapso",
+          "text": [
+            "El Espíritu sostiene el alma sin apagar la sensibilidad.",
+            "Un apoyo rígido (control) oprime; un apoyo ausente (desconexión) deja caer el peso.",
+            "Bajo el Espíritu hay libertad: sentir sin hundirse, expresar sin explotar.",
+            "La oración no reemplaza acciones: las ordena."
+          ],
+          "verse": {
+            "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+            "reference": "Romanos 8:26"
+          },
+          "oneWeekPlan": [
+            "Ora cuando sientas presión: “Espíritu Santo, ayúdame a canalizar, no a cargar.”",
+            "Detecta un patrón de control y cámbialo por una pregunta humilde.",
+            "Detecta un patrón de desconexión y cámbialo por una conversación breve.",
+            "Respira 60 segundos antes de responder en tensión (pausa espiritual).",
+            "Haz una acción de descanso sin culpa (caminar, silencio, lectura).",
+            "Busca apoyo: habla con una hermana madura/mentora si lo necesitas.",
+            "Cierra la semana con una rendición: suelta una carga específica en oración."
+          ]
+        }
+      },
+      {
+        "id": "s5_sobrecarga_rencilla",
+        "miniTeaching": {
+          "title": "Sobrecarga: alerta estructural, no condena",
+          "text": [
+            "Proverbios 21:9 no es condena: es advertencia sobre una viga sobrecargada.",
+            "Cuando el alma acumula, la convivencia se vuelve pesada.",
+            "La rencilla suele ser síntoma de cansancio y soledad en la carga.",
+            "Restaurar empieza por soltar peso y pedir ayuda a tiempo."
+          ],
+          "verse": {
+            "quote": "Mejor es morar en el rincón del terrado que con mujer rencillosa en casa espaciosa.",
+            "reference": "Proverbios 21:9"
+          },
+          "oneWeekPlan": [
+            "Identifica una señal de sobrecarga (cuerpo/ánimo) y tómala en serio.",
+            "Escribe 3 cargas que estás sosteniendo sola y marca 1 para transferir ya.",
+            "Haz una conversación sin reproche: “Estoy cansada; necesito apoyo en…”",
+            "Elige una práctica de autocuidado simple (15–20 min) 3 veces en la semana.",
+            "Evita discutir en el pico de cansancio: acuerda un horario para hablar.",
+            "Busca acompañamiento si hay resentimiento acumulado (pastoral/consejería).",
+            "Cierra la semana con gratitud por una carga que se movió del alma al sistema."
+          ]
+        }
+      },
+      {
+        "id": "s6_intentar_ser_columna",
+        "miniTeaching": {
+          "title": "Volver al diseño: canalizar, no reemplazar",
+          "text": [
+            "La mujer no colapsa por ser débil, sino por cargar lo que no le corresponde.",
+            "Intentar ser columna produce agotamiento crónico y resentimiento silencioso.",
+            "El diseño no exige sacrificio indebido: exige alineación y transferencia.",
+            "Pedir al otro que asuma su parte puede ser un acto de amor y orden."
+          ],
+          "verse": {
+            "quote": "Cada uno permanezca en la vocación en que fue llamado.",
+            "reference": "1 Corintios 7:20"
+          },
+          "oneWeekPlan": [
+            "Escribe: “No tengo que sostener todo para que el hogar funcione.”",
+            "Detecta una responsabilidad que estás asumiendo de más y define un límite.",
+            "Conversa con claridad: “Esto necesito que lo tomes tú / que lo hagamos juntos.”",
+            "Evita amenazas; pide acuerdos concretos con fechas y pasos.",
+            "Entrega a Dios la ansiedad de ‘si no lo hago yo’ y toma una pausa real.",
+            "Si el otro no responde, busca acompañamiento: no cargues sola en silencio.",
+            "Cierra la semana celebrando un límite sano que te devolvió descanso."
+          ]
+        }
+      },
+      {
+        "id": "s7_transferencia_flujo",
+        "miniTeaching": {
+          "title": "Flujo correcto: descanso por transferencia",
+          "text": [
+            "La transferencia es un acto espiritual, no solo emocional.",
+            "Cuando la cadena se interrumpe, el alma acumula y la relación se tensa.",
+            "Transferir incluye: orar, expresar claro, pedir respuesta y construir acuerdos.",
+            "El descanso del hogar depende de este flujo: viga → columna → Cristo."
+          ],
+          "verse": {
+            "quote": "Someteos unos a otros en el temor de Dios.",
+            "reference": "Efesios 5:21"
+          },
+          "oneWeekPlan": [
+            "Ora antes de hablar: presenta la carga a Cristo y pide mansedumbre.",
+            "Elige 1 carga y transfórmala en una petición concreta (no solo emoción).",
+            "Conversa y acuerden un siguiente paso pequeño (hoy/esta semana).",
+            "Registra el acuerdo por escrito (2 líneas) para evitar confusión.",
+            "Suelta el control del resultado: haz tu parte y descansa.",
+            "Si se interrumpe el flujo, retomen con ayuda (mentor/pastor) sin vergüenza.",
+            "Cierra la semana diciendo: “Hoy el hogar respiró porque transferimos mejor.”"
+          ]
+        }
+      },
+      {
+        "id": "s8_diseno_hoy_aplicacion",
+        "miniTeaching": {
+          "title": "Aplicación diaria: sensibilidad alineada que estabiliza",
+          "text": [
+            "Tu sensibilidad no es un problema que debas corregir: es un diseño que debes honrar.",
+            "Cuando transfieres y no acumulas, el hogar respira.",
+            "Dios no silencia el alma: la canaliza bajo el Espíritu.",
+            "La sensibilidad alineada produce discernimiento, no caos."
+          ],
+          "verse": {
+            "quote": "El Espíritu nos ayuda en nuestra debilidad.",
+            "reference": "Romanos 8:26"
+          },
+          "oneWeekPlan": [
+            "Elige una carga y suéltala hoy: oración + conversación + paso práctico.",
+            "Practica expresar temprano (antes del límite): una frase clara y respetuosa.",
+            "Incluye 10 minutos diarios de quietud para que el alma no acumule.",
+            "Haz un acto de paz en casa (servicio, palabra amable, gratitud específica).",
+            "Pide ayuda si te sientes sola en la carga (mentora/pastoral).",
+            "Revisa tu apoyo: cambia control por confianza guiada por el Espíritu.",
+            "Cierra la semana con la oración final del capítulo, en tus palabras."
+          ]
+        }
+      }
+    ]
+  }
+}
