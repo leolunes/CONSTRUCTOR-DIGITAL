@@ -766,7 +766,7 @@
   }
 
   // -------------------------
-  // DIAGRAMA DEL PÓRTICO (SVG)
+  // DIAGRAMA DEL PÓRTICO (SVG) — GEOMETRÍA FIJA (NO MODIFICAR)
   // -------------------------
   function buildPorticoSVGMarkup(){
     const axes = computePorticoAxes();
@@ -781,105 +781,111 @@
     const cCong = colorForPorticoKey(cong.band.key);
     const cInter = colorForPorticoKey(inter.band.key);
 
-    // Visual settings
+    const labelBand = (a) => `${a.band.emoji} ${a.band.label} (${Math.round(a.pct)}%)`;
+
+    // SVG fixed size for export
     const W = 860, H = 420;
-    const pad = 26;
 
-    // Geometry (pórtico)
-    const baseY = 320;
-    const baseX1 = 140, baseX2 = 760;
-    const colX = 220;
-    const colYTop = 150;
-    const beamY = colYTop;
-    const beamX2 = 720;
+    // Fixed geometry (as requested)
+    const foundation = { x:110, y:320, w:220, h:48, rx:14 };
+    const col = { x:220, y1:310, y2:130 };
+    const beam = { x1:220, y:130, x2:660 };
 
-    // Nodes
-    const n1x = colX, n1y = baseY - 10;        // COMUNIÓN above base
-    const n2x = colX, n2y = beamY;             // CONGREGACIÓN at joint
-    const n3x = beamX2, n3y = beamY;           // INTERSECCIÓN at right end
+    const nCom = { x:220, y:310, r:14 };
+    const nCong = { x:220, y:130, r:14 };
+    const nInter = { x:660, y:130, r:14 };
 
     const titleLine = `Diagrama del pórtico — ${patient ? patient : 'Paciente'} — ${date || 'Fecha'}`;
 
-    const labelBand = (a) => `${a.band.emoji} ${a.band.label} (${Math.round(a.pct)}%)`;
-
     return `
 <svg id="porticoSvg" xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
-  <defs>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="rgba(0,0,0,0.45)"/>
-    </filter>
-  </defs>
-
-  <!-- Background -->
   <rect x="0" y="0" width="${W}" height="${H}" rx="22" fill="#0b1220"/>
-  <rect x="${pad}" y="${pad}" width="${W - pad*2}" height="${H - pad*2}" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
+  <rect x="18" y="18" width="${W-36}" height="${H-36}" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
 
-  <!-- Top text: CARGAS -->
-  <text x="${W/2}" y="70" fill="rgba(232,238,252,0.88)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="18" font-weight="700" text-anchor="middle">
+  <!-- Top texts -->
+  <text x="${W/2}" y="70" fill="rgba(232,238,252,0.90)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="18" font-weight="700" text-anchor="middle">
     CARGAS (vivas + muertas)
   </text>
   <text x="${W/2}" y="94" fill="rgba(170,183,214,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="middle">
-    (decorativo) ↘↘↘ hacia la viga
+    (decorativo) →→ hacia la viga
   </text>
 
-  <!-- Decorative arrows -->
-  <path d="M 530 112 C 560 128, 590 140, 620 150" fill="none" stroke="rgba(125,211,252,0.35)" stroke-width="6" stroke-linecap="round"/>
-  <path d="M 540 126 C 570 142, 600 152, 630 160" fill="none" stroke="rgba(167,243,208,0.22)" stroke-width="6" stroke-linecap="round"/>
+  <!-- Decorative arrows to the beam (kept decorative, not structural) -->
+  <path d="M 520 110 C 560 125, 600 135, 640 130" fill="none" stroke="rgba(125,211,252,0.30)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 535 122 C 570 136, 605 144, 650 138" fill="none" stroke="rgba(
+167,243,208,0.18)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Base (CIMIENTO) -->
-  <path d="M ${baseX1} ${baseY} L ${baseX2} ${baseY}" stroke="${cComm}" stroke-width="18" stroke-linecap="round" filter="url(#softShadow)"/>
-  <text x="${(baseX1+baseX2)/2}" y="${baseY+36}" fill="rgba(232,238,252,0.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="middle">
-    CIMIENTO
-  </text>
+  <!-- FOUNDATION (CIMIENTO) -->
+  <rect x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+        fill="rgba(0,0,0,0)" stroke="${cComm}" stroke-width="22" stroke-linejoin="round"/>
+  <text x="${foundation.x + foundation.w/2}" y="${foundation.y + foundation.h/2 + 5}"
+        fill="rgba(232,238,252,0.90)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="13" font-weight="700" text-anchor="middle">CIMIENTO</text>
 
-  <!-- Column (VARÓN) - colored by CONGREGACIÓN -->
-  <path d="M ${colX} ${baseY} L ${colX} ${colYTop}" stroke="${cCong}" stroke-width="18" stroke-linecap="round" filter="url(#softShadow)"/>
-  <text x="${colX-50}" y="${(baseY+colYTop)/2}" fill="rgba(232,238,252,0.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="middle" transform="rotate(-90 ${colX-50} ${(baseY+colYTop)/2})">
-    COLUMNA (VARÓN)
-  </text>
+  <!-- COLUMN (COLUMNA / VARÓN) -->
+  <path d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+        fill="none" stroke="${cCong}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Beam (MUJER) - colored by INTERSECCIÓN -->
-  <path d="M ${colX} ${beamY} L ${beamX2} ${beamY}" stroke="${cInter}" stroke-width="18" stroke-linecap="round" filter="url(#softShadow)"/>
-  <text x="${(colX+beamX2)/2}" y="${beamY-24}" fill="rgba(232,238,252,0.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="middle">
-    VIGA (MUJER)
-  </text>
+  <!-- BEAM (VIGA / MUJER) -->
+  <path d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+        fill="none" stroke="${cInter}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Nodes -->
-  <circle cx="${n1x}" cy="${n1y}" r="16" fill="#0b1220" stroke="${cComm}" stroke-width="10"/>
-  <circle cx="${n2x}" cy="${n2y}" r="16" fill="#0b1220" stroke="${cCong}" stroke-width="10"/>
-  <circle cx="${n3x}" cy="${n3y}" r="16" fill="#0b1220" stroke="${cInter}" stroke-width="10"/>
+  <!-- Labels -->
+  <text x="${col.x - 52}" y="${(col.y1 + col.y2)/2}" fill="rgba(232,238,252,0.90)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="13" font-weight="700" text-anchor="middle"
+        transform="rotate(-90 ${col.x - 52} ${(col.y1 + col.y2)/2})">COLUMNA (VARÓN)</text>
 
-  <text x="${n1x}" y="${n1y+44}" fill="rgba(232,238,252,0.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="middle">
-    COMUNIÓN
-  </text>
-  <text x="${n2x+10}" y="${n2y-26}" fill="rgba(232,238,252,0.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="start">
-    CONGREGACIÓN
-  </text>
-  <text x="${n3x}" y="${n3y-26}" fill="rgba(232,238,252,0.9)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13" text-anchor="middle">
-    INTERSECCIÓN / APOYO MÓVIL
-  </text>
+  <text x="${(beam.x1 + beam.x2)/2}" y="${beam.y - 24}" fill="rgba(232,238,252,0.90)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="13" font-weight="700" text-anchor="middle">VIGA (MUJER)</text>
 
-  <!-- Axis status badges -->
+  <!-- NODES -->
+  <circle cx="${nCom.x}" cy="${nCom.y}" r="${nCom.r}" fill="#0f172a" stroke="${cComm}" stroke-width="10"/>
+  <circle cx="${nCong.x}" cy="${nCong.y}" r="${nCong.r}" fill="#0f172a" stroke="${cCong}" stroke-width="10"/>
+  <circle cx="${nInter.x}" cy="${nInter.y}" r="${nInter.r}" fill="#0f172a" stroke="${cInter}" stroke-width="10"/>
+
+  <!-- Node captions -->
+  <text x="${nCom.x}" y="${nCom.y + 40}" fill="rgba(232,238,252,0.90)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="13" font-weight="700" text-anchor="middle">COMUNIÓN</text>
+
+  <text x="${nCong.x + 18}" y="${nCong.y - 26}" fill="rgba(232,238,252,0.90)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="13" font-weight="700" text-anchor="start">CONGREGACIÓN</text>
+
+  <text x="${nInter.x}" y="${nInter.y - 26}" fill="rgba(232,238,252,0.90)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="13" font-weight="700" text-anchor="middle">INTERSECCIÓN / APOYO MÓVIL</text>
+
+  <!-- Axis status box (inside diagram) -->
   <g>
-    <rect x="60" y="265" rx="12" ry="12" width="250
-" height="92" fill="rgba(17,26,46,0.70)" stroke="rgba(255,255,255,0.10)"/>
-    <text x="78" y="292" fill="rgba(232,238,252,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="12">
+    <rect x="520" y="250" width="300" height="118" rx="16" fill="rgba(11,18,32,0.55)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="540" y="278" fill="rgba(170,183,214,0.95)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace"
+          font-size="12">EJES DEL PÓRTICO</text>
+
+    <circle cx="542" cy="300" r="6" fill="${cComm}"/>
+    <text x="555" y="305" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
       COMUNIÓN: ${labelBand(comm)}
     </text>
-    <text x="78" y="316" fill="rgba(232,238,252,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="12">
+
+    <circle cx="542" cy="326" r="6" fill="${cCong}"/>
+    <text x="555" y="331" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
       CONGREGACIÓN: ${labelBand(cong)}
     </text>
-    <text x="78" y="340" fill="rgba(232,238,252,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="12">
+
+    <circle cx="542" cy="352" r="6" fill="${cInter}"/>
+    <text x="555" y="357" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
       INTERSECCIÓN: ${labelBand(inter)}
     </text>
   </g>
 
-  <!-- Footer title/date inside image -->
-  <text x="${W/2}" y="${H-22}" fill="rgba(170,183,214,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="12" text-anchor="middle">
-    ${safeText(titleLine)}
-  </text>
+  <!-- Footer title line -->
+  <text x="${W/2}" y="${H - 26}" fill="rgba(170,183,214,0.92)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="12" text-anchor="middle">${titleLine}</text>
 </svg>
-    `.trim();
+    `;
   }
 
   function renderPorticoSVG(){
@@ -888,64 +894,67 @@
     mount.innerHTML = buildPorticoSVGMarkup();
   }
 
-  async function svgToPngDataUrl(svgEl){
-    const svgText = new XMLSerializer().serializeToString(svgEl);
-    const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(svgBlob);
+  async function exportPorticoPNG(){
+    // Cache if already generated for current answers
+    if (state.lastPorticoPNG) return state.lastPorticoPNG;
+
+    const svgEl = document.getElementById('porticoSvg');
+    if (!svgEl) {
+      // ensure it exists
+      renderPorticoSVG();
+    }
+    const svg = document.getElementById('porticoSvg');
+    if (!svg) return null;
+
+    const serializer = new XMLSerializer();
+    let svgStr = serializer.serializeToString(svg);
+
+    // Ensure xmlns
+    if (!svgStr.includes('http://www.w3.org/2000/svg')) {
+      svgStr = svgStr.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+
+    const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
 
     const img = new Image();
-    img.decoding = 'async';
-
-    // Try anonymous (works for same-origin)
     img.crossOrigin = 'anonymous';
 
-    await new Promise((resolve, reject) => {
-      img.onload = () => resolve();
-      img.onerror = (e) => reject(e);
+    const W = 860, H = 420;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    const dataUrl = await new Promise((resolve) => {
+      img.onload = () => {
+        ctx.clearRect(0,0,W,H);
+        ctx.drawImage(img, 0, 0, W, H);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(null);
+      };
       img.src = url;
     });
 
-    const canvas = document.createElement('canvas');
-    const w = svgEl.viewBox.baseVal.width || svgEl.width.baseVal.value || 860;
-    const h = svgEl.viewBox.baseVal.height || svgEl.height.baseVal.value || 420;
-    canvas.width = Math.round(w);
-    canvas.height = Math.round(h);
-
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-    URL.revokeObjectURL(url);
-    return canvas.toDataURL('image/png');
-  }
-
-  async function getPorticoPNG(){
-    if (state.lastPorticoPNG) return state.lastPorticoPNG;
-    const svg = document.getElementById('porticoSvg');
-    if (!svg) throw new Error('No se encontró el SVG del pórtico.');
-    const dataUrl = await svgToPngDataUrl(svg);
     state.lastPorticoPNG = dataUrl;
     return dataUrl;
   }
 
-  async function downloadPorticoPNG(){
-    try{
-      // ensure rendered
-      renderPorticoSVG();
-      const dataUrl = await getPorticoPNG();
-      const a = document.createElement('a');
-      const date = safeText(el('dateField').value).trim() || 'fecha';
-      a.href = dataUrl;
-      a.download = `portico_${date}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }catch(err){
-      alert('No se pudo exportar el PNG del pórtico. ' + (err?.message || err));
-    }
+  function downloadDataUrl(dataUrl, filename){
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   // -------------------------
-  // RESULTADOS + REPORTES
+  // RESULTADOS + INFORMES
   // -------------------------
   function renderResults(){
     const { total } = computeTotals();
@@ -960,47 +969,44 @@
 
     el('globalBox').innerHTML = buildGlobalBox(globalBand, pct);
 
-    // Section table + pastoral blocks
+    // section table + pastoral blocks
     const tbody = el('sectionTable').querySelector('tbody');
     tbody.innerHTML = '';
 
     const bySectionRaw = computeBySection(); // sorted low->high
-    const bySectionOriginalOrder = (state.data.sections || []).map(s => bySectionRaw.find(x => x.section.id === s.id)).filter(Boolean);
+    const ordered = (state.data.sections || []).map(s => bySectionRaw.find(x => x.section.id === s.id)).filter(Boolean);
 
-    for (const it of bySectionOriginalOrder){
+    for (const it of ordered){
       const s = it.section;
       const secVerse = s.sectionVerse || { quote:'', reference:'' };
-
-      const tr = document.createElement('tr');
-      const focus = safeText(s.diagnosticFocus);
       const diag = it.band?.label || '—';
       const diagSummary = it.band?.summary || '';
-      const diagCell = `<b>${safeText(diag)}</b><div class="muted" style="margin-top:4px">${safeText(diagSummary)}</div>`;
 
+      const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><b>${safeText(s.title)}</b><div class="muted" style="margin-top:4px">${safeText(s.subtitle)}</div></td>
-        <td>${diagCell}</td>
+        <td><b>${safeText(diag)}</b><div class="muted" style="margin-top:4px">${safeText(diagSummary)}</div></td>
         <td><span style="font-family:var(--mono)">${it.score}</span> / <span class="muted">${it.max}</span></td>
         <td><b>${fmtPct(it.pct)}</b></td>
-        <td class="muted">${focus}</td>
+        <td class="muted">${safeText(s.diagnosticFocus)}</td>
         <td class="muted">“${safeText(secVerse.quote)}” (${safeText(secVerse.reference)})</td>
       `;
       tbody.appendChild(tr);
     }
 
-    // Pastoral blocks (all sections)
+    // pastoral blocks (all sections)
     const pastoralRoot = el('pastoralBlocks');
     pastoralRoot.innerHTML = '';
-    for (const it of bySectionOriginalOrder){
+    for (const it of ordered){
       const s = it.section;
       const mini = getMiniTeachingForSection(s.id);
       const cls = bandClass(it.band?.label || '');
+      const tagClass = cls ? `tag ${cls}` : 'tag';
 
       const block = document.createElement('div');
       block.className = 'bandBox';
       block.style.marginBottom = '10px';
 
-      const tagClass = cls ? `tag ${cls}` : 'tag';
       if (!mini){
         block.innerHTML = `
           <div class="bandTop">
@@ -1026,22 +1032,23 @@
       pastoralRoot.appendChild(block);
     }
 
-    // Weekly plan (7 days)
+    // weekly plan
     const planRoot = el('weeklyPlan');
     planRoot.innerHTML = '';
-    const days = buildWeeklyPlanFromSections(bySectionRaw);
+    const planDays = buildWeeklyPlanFromSections(bySectionRaw);
+
     for (let d=0; d<7; d++){
       const div = document.createElement('div');
       div.className = 'day';
-      const items = days[d].map(x => `<li><span class="muted">(${safeText(x.sec)})</span> ${safeText(x.act)}</li>`).join('');
+      const items = planDays[d].map(x => `<li><span class="muted">(${safeText(x.sec)})</span> ${safeText(x.act)}</li>`).join('');
       div.innerHTML = `<b>Día ${d+1}</b><ul style="margin:8px 0 0 18px;font-size:13px">${items}</ul>`;
       planRoot.appendChild(div);
     }
 
-    // Portico UI
+    el('resultsRoot').style.display = 'block';
+
     updatePorticoUI();
 
-    el('resultsRoot').style.display = 'block';
     if (el('autoScroll').checked){
       el('resultsRoot').scrollIntoView({ behavior:'smooth', block:'start' });
     }
@@ -1063,13 +1070,9 @@
     const bySection = computeBySection();
     const ordered = (data.sections || []).map(s => bySection.find(x => x.section.id === s.id)).filter(Boolean);
 
-    const days = buildWeeklyPlanFromSections(bySection);
-
     const axes = computePorticoAxes();
-    const axisLine = (id, label) => {
-      const a = axes[id];
-      return `${label}: ${Math.round(a.pct)}% — ${a.band.emoji} ${a.band.label}`;
-    };
+
+    const planDays = buildWeeklyPlanFromSections(bySection);
 
     let out = '';
     out += `${TITLE}\n`;
@@ -1085,10 +1088,10 @@
     out += `- Resumen: ${safeText(globalBand.summary)}\n`;
     out += `- Verso: “${safeText(globalVerse.quote)}” (${safeText(globalVerse.reference)})\n\n`;
 
-    out += `DIAGRAMA DEL PÓRTICO (indicadores)\n`;
-    out += `- ${axisLine('comunion', 'Comunión')}\n`;
-    out += `- ${axisLine('congregacion', 'Congregación')}\n`;
-    out += `- ${axisLine('interseccion', 'Intersección')}\n\n`;
+    out += `EJES DEL PÓRTICO\n`;
+    out += `- Comunión: ${Math.round(axes.comunion.pct)}% (${axes.comunion.band.label})\n`;
+    out += `- Congregación: ${Math.round(axes.congregacion.pct)}% (${axes.congregacion.band.label})\n`;
+    out += `- Intersección: ${Math.round(axes.interseccion.pct)}% (${axes.interseccion.band.label})\n\n`;
 
     out += `RESULTADOS POR SECCIÓN\n`;
     out += `----------------------\n`;
@@ -1104,13 +1107,13 @@
     }
 
     out += `ENFOQUE PASTORAL POR SECCIONES\n`;
-    out += `------------------------------\n`;
+    out += `-----------------------------\n`;
     for (const it of ordered){
       const s = it.section;
       const mini = getMiniTeachingForSection(s.id);
       out += `• ${safeText(s.title)}\n`;
       if (!mini){
-        out += `  (sin mini-enseñanza)\n\n`;
+        out += `  (Sin mini-enseñanza)\n\n`;
         continue;
       }
       out += `  ${safeText(mini.title)}\n`;
@@ -1123,23 +1126,25 @@
 
     out += `PLAN SEMANAL (7 DÍAS)\n`;
     out += `---------------------\n`;
-    for (let i=0;i<7;i++){
-      out += `Día ${i+1}:\n`;
-      for (const item of days[i]){
-        out += `  - (${safeText(item.sec)}) ${safeText(item.act)}\n`;
+    for (let d=0; d<7; d++){
+      out += `Día ${d+1}:\n`;
+      for (const item of planDays[d]){
+        out += `- (${safeText(item.sec)}) ${safeText(item.act)}\n`;
       }
       out += `\n`;
     }
 
     if (includeDetails){
-      out += `DETALLE DE RESPUESTAS\n`;
-      out += `---------------------\n`;
+      out += `DETALLE POR PREGUNTA\n`;
+      out += `--------------------\n`;
+      const scale = getScaleOptions();
+      const labelByValue = new Map(scale.map(o => [Number(o.value), safeText(o.label)]));
       for (const s of (data.sections || [])){
         out += `\n[${safeText(s.title)}]\n`;
         for (const q of (s.questions || [])){
           const v = state.answers.get(q.id);
-          const val = Number.isFinite(v) ? v : null;
-          out += `- ${safeText(q.text)} => ${val === null ? '(sin responder)' : val}\n`;
+          const lab = Number.isFinite(v) ? (labelByValue.get(v) || `${v}`) : '(sin respuesta)';
+          out += `- ${safeText(q.text)} => ${lab}\n`;
         }
       }
       out += `\n`;
@@ -1150,12 +1155,15 @@
 
   function downloadTXT(){
     const txt = buildTXT();
-    const blob = new Blob([txt], { type:'text/plain;charset=utf-8' });
+    const patient = safeText(el('patientName').value).trim() || 'paciente';
+    const date = safeText(el('dateField').value).trim() || 'fecha';
+    const filename = `ensenanza06_${patient.replace(/\s+/g,'_')}_${date}.txt`;
+
+    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    const date = safeText(el('dateField').value).trim() || 'fecha';
     a.href = url;
-    a.download = `ensenanza06_${date}.txt`;
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -1166,12 +1174,13 @@
   // PDF BONITO (jsPDF + autoTable)
   // -------------------------
   async function downloadPDF(){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit:'pt', format:'a4' });
-    const W = doc.internal.pageSize.getWidth();
-    const H = doc.internal.pageSize.getHeight();
-    const margin = 42;
+    const { jsPDF } = window.jspdf || {};
+    if (!jsPDF){
+      alert('jsPDF no está disponible. Revisa el CDN.');
+      return;
+    }
 
+    const data = state.data;
     const patient = safeText(el('patientName').value).trim();
     const auditor = safeText(el('auditorName').value).trim();
     const date = safeText(el('dateField').value).trim();
@@ -1179,326 +1188,266 @@
     const includeDetails = el('includeDetails').checked;
 
     const { total } = computeTotals();
-    const max = state.maxTotal || 1;
-    const pct = total / max;
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
     const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
     const globalVerse = globalBand.verse || { quote:'', reference:'' };
 
     const bySection = computeBySection();
-    const ordered = (state.data.sections || []).map(s => bySection.find(x => x.section.id === s.id)).filter(Boolean);
+    const ordered = (data.sections || []).map(s => bySection.find(x => x.section.id === s.id)).filter(Boolean);
 
-    // Prepare portico image
-    updatePorticoUI();
-    let porticoPng = null;
-    try { porticoPng = await getPorticoPNG(); } catch { porticoPng = null; }
+    const planDays = buildWeeklyPlanFromSections(bySection);
 
-    // Load logo (optional)
-    const loadImageToDataUrl = (src) => new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        const c = document.createElement('canvas');
-        c.width = img.width; c.height = img.height;
-        c.getContext('2d').drawImage(img, 0, 0);
-        resolve(c.toDataURL('image/png'));
-      };
-      img.onerror = () => resolve(null);
-      img.src = src;
-    });
+    const axes = computePorticoAxes();
+    const porticoPng = await exportPorticoPNG();
 
-    const logoData = await loadImageToDataUrl('logo.png');
+    const doc = new jsPDF({ unit:'pt', format:'a4' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 40;
 
-    // Helper: header logo small
-    const drawHeader = () => {
-      if (logoData){
-        doc.addImage(logoData, 'PNG', margin, 18, 26, 26);
+    // helper: header with small logo
+    let logoImg = null;
+    async function loadLogo(){
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = 'logo.png';
+      });
+    }
+    logoImg = await loadLogo();
+
+    function addHeader(){
+      if (logoImg){
+        try { doc.addImage(logoImg, 'PNG', margin, 18, 22, 22); } catch {}
       }
       doc.setFont('helvetica','normal');
       doc.setFontSize(10);
-      doc.setTextColor(170,183,214);
-      doc.text('Auditoría — La viga', margin + 34, 36);
-      doc.setDrawColor(34,48,78);
-      doc.setLineWidth(1);
-      doc.line(margin, 52, W - margin, 52);
-    };
-
-    // Helper: pill auto-fit
-    const drawPill = (x, y, text, bgRGB, textRGB) => {
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(12);
-      const paddingX = 10, paddingY = 8;
-      const maxW = W - margin - x;
-      let t = text;
-      while (doc.getTextWidth(t) + paddingX*2 > maxW && t.length > 10){
-        t = t.slice(0, -1);
-      }
-      const w = doc.getTextWidth(t) + paddingX*2;
-      const h = 24;
-      doc.setFillColor(...bgRGB);
-      doc.setDrawColor(255,255,255);
+      doc.setTextColor(160);
+      doc.text(TITLE, margin + (logoImg ? 30 : 0), 34);
+      doc.setDrawColor(230);
       doc.setLineWidth(0.5);
-      doc.roundedRect(x, y, w, h, 12, 12, 'F');
-      doc.setTextColor(...textRGB);
-      doc.text(t, x + paddingX, y + 16);
-      doc.setTextColor(232,238,252);
-    };
-
-    // ----- COVER -----
-    doc.setFillColor(11,18,32);
-    doc.rect(0,0,W,H,'F');
-
-    // Title
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(22);
-    doc.setTextColor(232,238,252);
-    doc.text(TITLE, margin, 92);
-
-    // Logo
-    if (logoData){
-      doc.addImage(logoData, 'PNG', W - margin - 56, 70, 56, 56);
+      doc.line(margin, 44, pageW - margin, 44);
     }
 
-    // Meta
+    function pillFitText(text, x, y, w, h){
+      // draw rounded rect and shrink text until fits
+      doc.setDrawColor(200);
+      doc.setFillColor(15,23,42);
+      doc.roundedRect(x, y, w, h, 12, 12, 'FD');
+
+      doc.setFont('helvetica','bold');
+      doc.setTextColor(240);
+      let size = 12;
+      doc.setFontSize(size);
+      while (doc.getTextWidth(text) > (w - 14) && size > 8){
+        size -= 1;
+        doc.setFontSize(size);
+      }
+      doc.text(text, x + w/2, y + h/2 + (size/2 - 2), { align:'center' });
+    }
+
+    // COVER
+    doc.setFillColor(11,18,32);
+    doc.rect(0,0,pageW,pageH,'F');
+
+    if (logoImg){
+      try { doc.addImage(logoImg, 'PNG', margin, 52, 44, 44); } catch {}
+    }
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(22);
+    doc.setTextColor(248);
+    doc.text(TITLE, margin, 118);
+
     doc.setFont('helvetica','normal');
     doc.setFontSize(12);
-    doc.setTextColor(170,183,214);
-    doc.text(`Paciente: ${patient || '—'}`, margin, 126);
-    doc.text(`Auditor: ${auditor || '—'}`, margin, 146);
-    doc.text(`Fecha: ${date || '—'}`, margin, 166);
+    doc.setTextColor(180);
+    doc.text('Auditoría diagnóstica (capítulo 6: “La viga”)', margin, 140);
+
+    doc.setTextColor(220);
+    doc.setFontSize(11);
+    doc.text(`Paciente: ${patient || '(sin especificar)'}`, margin, 170);
+    doc.text(`Auditor:  ${auditor || '(sin especificar)'}`, margin, 188);
+    doc.text(`Fecha:    ${date || '(sin especificar)'}`, margin, 206);
 
     // Global pill
-    const gb = safeText(globalBand.label);
-    const pillText = `Diagnóstico global: ${gb} · ${Math.round(pct*100)}%`;
-    // pick colors
-    let bg = [15,23,42], fg = [232,238,252];
-    const bc = bandClass(gb);
-    if (bc === 'good') bg = [52,211,153];
-    else if (bc === 'warn') bg = [251,191,36];
-    else if (bc === 'bad') bg = [251,113,133];
-    drawPill(margin, 188, pillText, bg, [11,18,32]);
+    const pillText = `Diagnóstico global: ${safeText(globalBand.label)} · ${Math.round(pct*100)}%`;
+    pillFitText(pillText, margin, 228, pageW - margin*2, 32);
 
-    // Verse global
-    doc.setTextColor(232,238,252);
+    // Global verse
     doc.setFont('helvetica','italic');
-    doc.setFontSize(12);
+    doc.setFontSize(11);
+    doc.setTextColor(200);
     const verseLine = `“${safeText(globalVerse.quote)}” (${safeText(globalVerse.reference)})`;
-    doc.text(verseLine, margin, 226, { maxWidth: W - margin*2 });
+    doc.text(verseLine, margin, 280, { maxWidth: pageW - margin*2 });
 
     // Portico image centered
     if (porticoPng){
-      const imgW = W - margin*2;
-      const imgH = imgW * (420/860); // same ratio
-      const y = 260;
-      doc.addImage(porticoPng, 'PNG', margin, y, imgW, imgH);
+      const imgW = pageW - margin*2;
+      const imgH = imgW * (420/860);
+      const y = 310;
+      try { doc.addImage(porticoPng, 'PNG', margin, y, imgW, imgH); } catch {}
     }
 
     // Next page
     doc.addPage();
-    drawHeader();
+    addHeader();
 
-    // ----- TABLE by section -----
+    // Table by section
     doc.setFont('helvetica','bold');
     doc.setFontSize(14);
-    doc.setTextColor(232,238,252);
-    doc.text('Tabla de resultados por sección', margin, 84);
+    doc.setTextColor(40);
+    doc.text('Tabla de resultados por sección', margin, 74);
 
-    const tableBody = ordered.map(it => {
-      const s = it.section;
-      const diag = it.band?.label || '—';
-      return [
-        safeText(s.title),
-        safeText(diag),
-        `${it.score}/${it.max}`,
-        `${Math.round(it.pct*100)}%`,
-        safeText(s.porticoAxis || '')
-      ];
-    });
+    const tableBody = ordered.map(it => ([
+      safeText(it.section.title),
+      safeText(it.band?.label || ''),
+      `${it.score}/${it.max}`,
+      `${Math.round(it.pct*100)}%`,
+      safeText(it.section.porticoAxis || '')
+    ]));
 
     doc.autoTable({
-      startY: 100,
-      head: [['Sección','Diagnóstico','Puntaje','%','Eje pórtico']],
+      startY: 88,
+      head: [['Sección','Diagnóstico','Puntaje','%','Eje']],
       body: tableBody,
-      styles: { font:'helvetica', fontSize:10, textColor:[232,238,252], fillColor:[15,23,42], lineColor:[34,48,78], lineWidth:0.5 },
-      headStyles: { fillColor:[17,26,46], textColor:[170,183,214] },
-      alternateRowStyles: { fillColor:[13,20,36] },
+      styles: { fontSize: 9 },
+      headStyles: { fillColor: [15,23,42] },
       margin: { left: margin, right: margin }
     });
 
-    // Portico mini (optional) + Plan
-    let yAfter = doc.lastAutoTable.finalY + 18;
+    let yCursor = doc.lastAutoTable.finalY + 18;
 
+    // Pastoral teachings
     doc.setFont('helvetica','bold');
     doc.setFontSize(14);
-    doc.setTextColor(232,238,252);
-    doc.text('Plan semanal (7 días)', margin, yAfter);
-    yAfter += 12;
+    doc.setTextColor(40);
+    doc.text('Enfoque pastoral por secciones', margin, yCursor);
+    yCursor += 12;
 
-    const days = buildWeeklyPlanFromSections(bySection);
-    const planRows = [];
-    for (let i=0;i<7;i++){
-      const actions = days[i].map(x => `(${safeText(x.sec)}) ${safeText(x.act)}`).join('\n');
-      planRows.push([`Día ${i+1}`, actions]);
-    }
-
-    doc.autoTable({
-      startY: yAfter + 8,
-      head: [['Día','Acciones (1–2)']],
-      body: planRows,
-      styles: { font:'helvetica', fontSize:10, textColor:[232,238,252], fillColor:[15,23,42], lineColor:[34,48,78], lineWidth:0.5, cellPadding:6 },
-      headStyles: { fillColor:[17,26,46], textColor:[170,183,214] },
-      alternateRowStyles: { fillColor:[13,20,36] },
-      margin: { left: margin, right: margin }
-    });
-
-    // ----- Pastoral sections -----
-    doc.addPage();
-    drawHeader();
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(14);
-    doc.setTextColor(232,238,252);
-    doc.text('Enfoque pastoral por secciones', margin, 84);
-
-    let y = 104;
     doc.setFont('helvetica','normal');
     doc.setFontSize(11);
-    doc.setTextColor(232,238,252);
-
-    const pageBottom = H - margin;
+    doc.setTextColor(60);
 
     for (const it of ordered){
-      const s = it.section;
-      const mini = getMiniTeachingForSection(s.id);
-      const title = `${safeText(s.title)} — ${safeText(it.band?.label || '')} (${Math.round(it.pct*100)}%)`;
-      const secVerse = (mini?.verse) || s.sectionVerse || { quote:'', reference:'' };
+      const mini = getMiniTeachingForSection(it.section.id);
+      const title = `${safeText(it.section.title)} — ${safeText(it.band?.label || '')} (${Math.round(it.pct*100)}%)`;
+      const v = mini?.verse || { quote:'', reference:'' };
 
-      const ensureSpace = (needed) => {
-        if (y + needed > pageBottom){
-          doc.addPage();
-          drawHeader();
-          y = 78;
-        }
-      };
-
-      ensureSpace(90);
-      doc.setFont('helvetica','bold');
-      doc.text(title, margin, y);
-      y += 16;
-
-      if (!mini){
-        doc.setFont('helvetica','normal');
-        doc.setTextColor(170,183,214);
-        doc.text('(sin mini-enseñanza)', margin, y);
-        doc.setTextColor(232,238,252);
-        y += 16;
-        continue;
+      if (yCursor > pageH - 140){
+        doc.addPage(); addHeader(); yCursor = 70;
       }
 
-      doc.setFont('helvetica','normal');
-      doc.setTextColor(232,238,252);
-      doc.text(safeText(mini.title), margin, y);
-      y += 14;
+      doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30);
+      doc.text(title, margin, yCursor); yCursor += 14;
 
-      const bullets = (mini.text || []).map(t => `• ${safeText(t)}`);
-      for (const b of bullets){
-        ensureSpace(18);
-        doc.setTextColor(232,238,252);
-        doc.text(b, margin, y, { maxWidth: W - margin*2 });
-        y += 14;
+      doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60);
+      if (mini?.title){
+        doc.text(mini.title, margin, yCursor, { maxWidth: pageW - margin*2 }); yCursor += 14;
       }
-
-      ensureSpace(34);
-      doc.setFont('helvetica','italic');
-      doc.setTextColor(170,183,214);
-      doc.text(`“${safeText(secVerse.quote)}” (${safeText(secVerse.reference)})`, margin, y, { maxWidth: W - margin*2 });
-      doc.setFont('helvetica','normal');
-      y += 22;
-
-      // divider
-      doc.setDrawColor(34,48,78);
-      doc.setLineWidth(1);
-      doc.line(margin, y, W - margin, y);
-      y += 16;
+      for (const b of (mini?.text || [])){
+        const lines = doc.splitTextToSize(`• ${safeText(b)}`, pageW - margin*2);
+        doc.text(lines, margin, yCursor); yCursor += lines.length * 13;
+      }
+      const vline = `“${safeText(v.quote)}” (${safeText(v.reference)})`;
+      doc.setFont('helvetica','italic'); doc.setTextColor(90);
+      const vlines = doc.splitTextToSize(vline, pageW - margin*2);
+      doc.text(vlines, margin, yCursor); yCursor += vlines.length * 13 + 10;
+      doc.setFont('helvetica','normal'); doc.setTextColor(60);
     }
 
-    // ----- Observations + Portico -----
-    doc.addPage();
-    drawHeader();
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(14);
-    doc.setTextColor(232,238,252);
-    doc.text('Observaciones', margin, 84);
+    // Weekly plan
+    if (yCursor > pageH - 220){
+      doc.addPage(); addHeader(); yCursor = 70;
+    }
+    doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(40);
+    doc.text('Plan semanal automático (7 días)', margin, yCursor); yCursor += 14;
 
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(11);
-    doc.setTextColor(232,238,252);
-    const obs = notes ? notes : '(sin observaciones)';
-    doc.text(obs, margin, 106, { maxWidth: W - margin*2 });
-
-    // Portico again (smaller)
-    if (porticoPng){
-      const imgW2 = W - margin*2;
-      const imgH2 = imgW2 * (420/860);
-      const y2 = 220;
-      doc.addImage(porticoPng, 'PNG', margin, y2, imgW2, imgH2);
+    doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60);
+    for (let d=0; d<7; d++){
+      if (yCursor > pageH - 110){
+        doc.addPage(); addHeader(); yCursor = 70;
+      }
+      doc.setFont('helvetica','bold'); doc.setTextColor(30);
+      doc.text(`Día ${d+1}`, margin, yCursor); yCursor += 13;
+      doc.setFont('helvetica','normal'); doc.setTextColor(60);
+      for (const item of planDays[d]){
+        const lines = doc.splitTextToSize(`• (${safeText(item.sec)}) ${safeText(item.act)}`, pageW - margin*2);
+        doc.text(lines, margin, yCursor); yCursor += lines.length * 13;
+      }
+      yCursor += 6;
     }
 
-    // ----- Details (optional) -----
+    // Observations
+    if (yCursor > pageH - 140){
+      doc.addPage(); addHeader(); yCursor = 70;
+    }
+    doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(40);
+    doc.text('Observaciones', margin, yCursor); yCursor += 14;
+
+    doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(60);
+    const nlines = doc.splitTextToSize(notes ? notes : '(sin observaciones)', pageW - margin*2);
+    doc.text(nlines, margin, yCursor); yCursor += nlines.length * 13 + 10;
+
+    // Details by question (optional)
     if (includeDetails){
-      doc.addPage();
-      drawHeader();
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(14);
-      doc.setTextColor(232,238,252);
-      doc.text('Detalle por pregunta', margin, 84);
+      doc.addPage(); addHeader();
+      yCursor = 70;
+      doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(40);
+      doc.text('Detalle por pregunta', margin, yCursor); yCursor += 14;
 
-      const detailRows = [];
-      for (const s of (state.data.sections || [])){
-        for (const q of (s.questions || [])){
-          const v = state.answers.get(q.id);
-          detailRows.push([
-            safeText(s.title),
-            safeText(q.text),
-            Number.isFinite(v) ? String(v) : '—'
-          ]);
+      const scale = getScaleOptions();
+      const labelByValue = new Map(scale.map(o => [Number(o.value), safeText(o.label)]));
+
+      for (const s of (data.sections || [])){
+        if (yCursor > pageH - 120){
+          doc.addPage(); addHeader(); yCursor = 70;
         }
-      }
+        doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(30);
+        doc.text(safeText(s.title), margin, yCursor); yCursor += 14;
 
-      doc.autoTable({
-        startY: 100,
-        head: [['Sección','Pregunta','Valor']],
-        body: detailRows,
-        styles: { font:'helvetica', fontSize:9, textColor:[232,238,252], fillColor:[15,23,42], lineColor:[34,48,78], lineWidth:0.5, cellPadding:5 },
-        headStyles: { fillColor:[17,26,46], textColor:[170,183,214] },
-        alternateRowStyles: { fillColor:[13,20,36] },
-        margin: { left: margin, right: margin }
-      });
+        doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(70);
+        for (const q of (s.questions || [])){
+          if (yCursor > pageH - 70){
+            doc.addPage(); addHeader(); yCursor = 70;
+          }
+          const v = state.answers.get(q.id);
+          const lab = Number.isFinite(v) ? (labelByValue.get(v) || `${v}`) : '(sin respuesta)';
+          const line = `• ${safeText(q.text)} — ${lab}`;
+          const lines = doc.splitTextToSize(line, pageW - margin*2);
+          doc.text(lines, margin, yCursor); yCursor += lines.length * 12;
+        }
+        yCursor += 8;
+      }
     }
 
-    const fileDate = date || 'fecha';
-    doc.save(`ensenanza06_${fileDate}.pdf`);
+    const safePatient = (patient || 'paciente').replace(/[^\w\-]+/g,'_');
+    const safeDate = (date || 'fecha').replace(/[^\w\-]+/g,'_');
+    doc.save(`ensenanza06_${safePatient}_${safeDate}.pdf`);
   }
 
   // -------------------------
-  // LOAD JSON + EVENTS
+  // CARGA JSON + EVENTOS
   // -------------------------
   async function loadJSON(){
-    try{
+    try {
       const res = await fetch(JSON_PATH, { cache:'no-store' });
-      if (!res.ok) throw new Error(`No se pudo cargar ${JSON_PATH} (HTTP ${res.status}).`);
+      if (!res.ok) throw new Error(`No se pudo cargar ${JSON_PATH} (HTTP ${res.status})`);
       const data = await res.json();
       state.data = data;
 
-      // Ensure required structures exist
-      if (!data.sections || !Array.isArray(data.sections)) throw new Error('JSON inválido: falta "sections".');
-      if (!data.scale?.options) throw new Error('JSON inválido: falta "scale.options".');
-      if (!data.rubrics?.globalBands || !data.rubrics?.sectionBands) throw new Error('JSON inválido: falta "rubrics".');
-
+      // Render sections
       renderTest();
-    }catch(err){
+    } catch (e){
+      const msg = `Error cargando el JSON: ${e.message || e}`;
       const box = el('loadError');
-      box.style.display = 'block';
-      box.textContent = 'Error cargando ensenanza06.json: ' + (err?.message || err);
-      console.error(err);
+      if (box){
+        box.style.display = 'block';
+        box.textContent = msg;
+      } else {
+        alert(msg);
+      }
     }
   }
 
@@ -1508,7 +1457,14 @@
     state.lastPorticoPNG = null;
 
     // clear radios
-    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    const inputs = document.querySelectorAll('input[type="radio"]');
+    inputs.forEach(i => i.checked = false);
+
+    // clear fields (keep date)
+    el('patientName').value = '';
+    el('auditorName').value = '';
+    el('notes').value = '';
+    el('includeDetails').checked = false;
 
     // hide results
     el('resultsRoot').style.display = 'none';
@@ -1517,44 +1473,32 @@
   }
 
   // Buttons
-  el('btnResults').addEventListener('click', () => {
-    renderResults();
-  });
-
-  el('btnTxt').addEventListener('click', () => {
-    downloadTXT();
-  });
-
-  el('btnPdf').addEventListener('click', async () => {
-    try{
-      // If user never opened results, still compute and render diagram
-      if (el('resultsRoot').style.display === 'none'){
-        renderResults();
-      }
-      await downloadPDF();
-    }catch(err){
-      alert('No se pudo generar el PDF. ' + (err?.message || err));
-      console.error(err);
-    }
-  });
+  el('btnResults').addEventListener('click', () => renderResults());
+  el('btnTxt').addEventListener('click', () => downloadTXT());
+  el('btnPdf').addEventListener('click', () => downloadPDF());
+  el('btnReset').addEventListener('click', () => resetAll());
 
   el('btnPng').addEventListener('click', async () => {
-    // Ensure results shown (so SVG exists)
-    if (el('resultsRoot').style.display === 'none'){
-      renderResults();
+    // Ensure diagram is present/updated
+    if (el('resultsRoot').style.display === 'none') renderResults();
+
+    const dataUrl = await exportPorticoPNG();
+    if (!dataUrl){
+      alert('No se pudo exportar la imagen del pórtico.');
+      return;
     }
-    await downloadPorticoPNG();
+    const patient = (safeText(el('patientName').value).trim() || 'paciente').replace(/[^\w\-]+/g,'_');
+    const date = (safeText(el('dateField').value).trim() || 'fecha').replace(/[^\w\-]+/g,'_');
+    downloadDataUrl(dataUrl, `portico_${patient}_${date}.png`);
   });
 
-  el('btnReset').addEventListener('click', () => {
-    if (confirm('¿Reiniciar el test y borrar respuestas?')) resetAll();
-  });
-
-  // Load
+  // Init
   loadJSON();
 
 })();
 </script>
-
 </body>
 </html>
+
+
+
