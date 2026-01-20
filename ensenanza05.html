@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La columna: el varón como eje estructural — Test digital</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a2e;
+      --card2:#0d1730;
+      --ink:#eaf0ff;
+      --muted:#b8c3e6;
+      --line:rgba(255,255,255,.12);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --risk:#fb7185;
+      --crit:#f43f5e;
+      --btn:#16284a;
+      --btn2:#12223f;
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius2:14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.18), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(167,139,250,.18), transparent 60%),
+                  linear-gradient(180deg, #070b14, var(--bg) 25%, #050913);
+      color:var(--ink);
+      font-family:var(--sans);
+    }
+    a{color:inherit}
+    .wrap{max-width:1180px;margin:0 auto;padding:22px 18px 60px}
+    header{
+      display:flex;gap:14px;align-items:center;justify-content:space-between;
+      padding:16px 18px;border:1px solid var(--line);background:rgba(15,26,46,.6);
+      border-radius:var(--radius);box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .title{display:flex;flex-direction:column;gap:6px;min-width:0;}
+    .title h1{margin:0;font-size:20px;line-height:1.2;letter-spacing:.2px;}
+    .title p{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
+    .badgeRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(10,18,34,.6);
+      font-size:12px;color:var(--muted)
+    }
+    .pill strong{color:var(--ink);font-weight:700}
+    .pill .dot{width:8px;height:8px;border-radius:50%}
+    .grid{display:grid;grid-template-columns: 1.2fr .8fr;gap:16px;margin-top:16px;}
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+    .card{
+      border:1px solid var(--line);
+      background:rgba(15,26,46,.55);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0;padding:14px 16px;border-bottom:1px solid var(--line);
+      font-size:14px;letter-spacing:.2px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), transparent);
+    }
+    .card .body{padding:14px 16px}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media (max-width: 700px){ .fields{grid-template-columns:1fr} }
+    label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}
+    input[type="text"], input[type="date"], textarea{
+      width:100%;padding:11px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(9,14,26,.75);
+      color:var(--ink);outline:none;
+    }
+    textarea{min-height:92px;resize:vertical}
+    input:focus, textarea:focus{border-color: rgba(125,211,252,.55);box-shadow:0 0 0 3px rgba(125,211,252,.15)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .btn{
+      appearance:none;border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(22,40,74,.9), rgba(18,34,63,.88));
+      color:var(--ink);padding:10px 12px;border-radius:14px;
+      font-weight:700;font-size:13px;cursor:pointer;
+      display:inline-flex;gap:8px;align-items:center;
+      transition: transform .05s ease, border-color .2s ease, filter .2s ease;
+      user-select:none;
+    }
+    .btn:hover{filter:brightness(1.06);border-color: rgba(125,211,252,.35)}
+    .btn:active{transform: translateY(1px)}
+    .btn.secondary{background:linear-gradient(180deg, rgba(18,34,63,.9), rgba(14,26,47,.9))}
+    .btn.danger{border-color: rgba(251,113,133,.35); background:linear-gradient(180deg, rgba(75,18,35,.9), rgba(45,10,20,.9))}
+    .tiny{font-size:12px;color:var(--muted);line-height:1.45}
+    .toggle{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 12px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(9,14,26,.5);border-radius:14px;
+    }
+    .toggle input{margin-top:2px}
+    .sections{display:flex;flex-direction:column;gap:14px}
+    .sec{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(9,14,26,.46);
+      border-radius:var(--radius2);
+      overflow:hidden;
+    }
+    .secHead{
+      padding:12px 12px;border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+    }
+    .secHead h3{margin:0;font-size:14px;line-height:1.25;}
+    .secHead .sub{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.35}
+    .secHead .miniPills{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+    .miniPills .mini{
+      font-size:11px;color:var(--muted);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.6);
+      padding:6px 8px;border-radius:999px;white-space:nowrap;
+    }
+    .secBody{padding:12px}
+    .q{
+      padding:10px 10px;border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;background:rgba(11,18,32,.45);
+      margin-bottom:10px;
+    }
+    .q:last-child{margin-bottom:0}
+    .qTop{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+    .qText{margin:0;font-size:13px;line-height:1.35}
+    .qCode{font-family:var(--mono);font-size:11px;color:rgba(234,240,255,.65)}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .opt{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(9,14,26,.55);
+      cursor:pointer;font-size:12px;color:var(--muted);
+      user-select:none;
+      transition: border-color .2s ease, background .2s ease, color .2s ease;
+    }
+    .opt input{display:none}
+    .opt[data-checked="true"]{
+      border-color: rgba(125,211,252,.55);
+      background:rgba(125,211,252,.12);
+      color:var(--ink);
+    }
+    .report{display:flex;flex-direction:column;gap:12px}
+    .kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width: 540px){ .kpi{grid-template-columns:1fr} }
+    .k{
+      padding:12px;border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;background:rgba(9,14,26,.5);
+    }
+    .k .lab{font-size:12px;color:var(--muted)}
+    .k .val{font-size:18px;font-weight:900;margin-top:4px}
+    .k .val small{font-size:12px;color:var(--muted);font-weight:700}
+    .diag{
+      padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(9,14,26,.55));
+    }
+    .diag .top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:900;font-size:12px;
+      max-width:100%;
+    }
+    .tag span{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .verse{
+      margin-top:10px;border-top:1px dashed rgba(255,255,255,.16);padding-top:10px;
+      color:var(--muted);font-size:12px;line-height:1.45;
+    }
+    .verse b{color:var(--ink)}
+    .tbl{
+      width:100%;border-collapse:separate;border-spacing:0;margin-top:6px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);border-radius:14px;
+    }
+    .tbl th, .tbl td{padding:10px;border-bottom:1px solid rgba(255,255,255,.10);font-size:12px;vertical-align:top;}
+    .tbl th{background:rgba(255,255,255,.06);text-align:left;color:var(--muted);font-weight:900}
+    .tbl tr:last-child td{border-bottom:none}
+    .right{ text-align:right }
+    .muted{ color:var(--muted) }
+    .teach{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;background:rgba(9,14,26,.5);
+      padding:12px;
+    }
+    .teach h4{margin:0 0 8px;font-size:13px}
+    .teach ul{margin:0;padding-left:18px;color:var(--muted);font-size:12px;line-height:1.5}
+    .teach li{margin:4px 0}
+    .teach .v{margin-top:8px;color:var(--muted);font-size:12px}
+    .plan{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;background:rgba(9,14,26,.5);
+      padding:12px;
+    }
+    .plan h4{margin:0 0 8px;font-size:13px}
+    .days{display:flex;flex-direction:column;gap:8px}
+    .day{
+      padding:10px;border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;background:rgba(11,18,32,.45);
+      display:flex;gap:10px;align-items:flex-start;justify-content:space-between;
+    }
+    .day b{font-family:var(--mono);font-size:12px;color:rgba(234,240,255,.75)}
+    .foot{margin-top:14px;color:rgba(234,240,255,.55);font-size:11px}
+    .spinner{
+      display:inline-block;width:14px;height:14px;border-radius:50%;
+      border:2px solid rgba(255,255,255,.22);border-top-color: rgba(125,211,252,.9);
+      animation:spin 1s linear infinite
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>La columna: el varón como eje estructural</h1>
+        <p id="metaDesc">Cargando contenido…</p>
+      </div>
+      <div class="badgeRow">
+        <div class="pill" title="Puntaje total actual">
+          <span class="dot" style="background:var(--accent)"></span>
+          <span>Total:</span>
+          <strong id="liveTotal">0</strong>
+          <span class="muted">/</span>
+          <strong id="liveMax">0</strong>
+        </div>
+        <div class="pill" title="Porcentaje actual">
+          <span class="dot" style="background:var(--accent2)"></span>
+          <span>Progreso:</span>
+          <strong id="livePct">0%</strong>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Datos del informe <span class="muted" style="font-weight:700">— editable</span></h2>
+        <div class="body">
+          <div class="fields">
+            <label>Nombre del paciente
+              <input id="inpPaciente" type="text" placeholder="Ej: Juan Pérez" />
+            </label>
+            <label>Nombre del auditor
+              <input id="inpAuditor" type="text" placeholder="Ej: Líder / Consejero" />
+            </label>
+            <label>Fecha
+              <input id="inpFecha" type="date" />
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px">
+              <span>Opciones</span>
+              <div class="toggle">
+                <input id="chkDetalles" type="checkbox" />
+                <div>
+                  <div style="font-size:12px;font-weight:900;color:var(--ink)">Incluir detalles por pregunta</div>
+                  <div class="tiny">Si activas esto, el TXT/PDF incluirá el listado de preguntas con sus respuestas.</div>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <label style="margin-top:10px">Observaciones libres
+            <textarea id="inpObs" placeholder="Notas, contexto, acuerdos, alertas, etc."></textarea>
+          </label>
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn" id="btnVer"><span>📊</span>Ver resultado</button>
+            <button class="btn secondary" id="btnTXT"><span>⬇️</span>Descargar TXT</button>
+            <button class="btn secondary" id="btnPDF"><span>🧾</span>Descargar PDF bonito</button>
+            <button class="btn danger" id="btnReset"><span>♻️</span>Reiniciar</button>
+            <span id="status" class="tiny" style="margin-left:auto"></span>
+          </div>
+
+          <div class="foot">
+            Escala cerrada (solo radios). Diagnóstico global + por sección + mini-enseñanza + plan semanal automático.
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <h2>Panel de resultados</h2>
+        <div class="body report">
+          <div class="kpi">
+            <div class="k">
+              <div class="lab">Puntaje total</div>
+              <div class="val"><span id="kTotal">0</span> <small>pts</small></div>
+            </div>
+            <div class="k">
+              <div class="lab">Porcentaje</div>
+              <div class="val"><span id="kPct">0</span><small>%</small></div>
+            </div>
+          </div>
+
+          <div class="diag" id="globalDiagBox">
+            <div class="top">
+              <div class="tag" id="globalTag" style="background:rgba(255,255,255,.06)">
+                <span id="globalLabel">Diagnóstico global</span>
+              </div>
+              <div class="tiny muted" id="globalRangeHint">Completa el test para ver tu diagnóstico.</div>
+            </div>
+            <div class="tiny" style="margin-top:8px" id="globalSummary"></div>
+            <div class="verse" id="globalVerse"></div>
+          </div>
+
+          <div>
+            <div class="tiny muted" style="margin-bottom:6px">Resultados por sección</div>
+            <div style="max-height:340px;overflow:auto;padding-right:2px" id="secResults">
+              <div class="tiny muted">Aún no hay secciones cargadas.</div>
+            </div>
+          </div>
+
+          <div class="teach" id="teachBox" style="display:none">
+            <h4 id="teachTitle">Enfoque pastoral</h4>
+            <ul id="teachBullets"></ul>
+            <div class="v" id="teachVerse"></div>
+          </div>
+
+          <div class="plan" id="planBox" style="display:none">
+            <h4>Plan semanal (7 días)</h4>
+            <div class="days" id="weekPlan"></div>
+          </div>
+
+        </div>
+      </aside>
+    </div>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Test por secciones <span class="muted" id="scaleHint"></span></h2>
+      <div class="body">
+        <div id="sections" class="sections">
+          <div class="tiny"><span class="spinner"></span> Cargando secciones desde JSON…</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- jsPDF + autoTable (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    const FILE_JSON = './ensenanza05.json';
+    const TITLE = 'La columna: el varón como eje estructural';
+    const LOGO_PATH = './logo.png';
+
+    const $ = (sel) => document.querySelector(sel);
+
+    const state = {
+      data: null,
+      answers: new Map(), // qid -> value number
+      sectionByQ: new Map(), // qid -> sectionId
+      maxTotal: 0,
+      maxBySection: new Map(), // sectionId -> max points
+      scoreBySection: new Map(),
+      logoDataUrl: null
+    };
+
+    function todayISO(){
+      const d = new Date();
+      const z = (x)=> String(x).padStart(2,'0');
+      return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}`;
+    }
+    function safeText(s){ return (s ?? '').toString().trim(); }
+    function pct(score, max){ if(!max) return 0; return Math.round((score / max) * 100); }
+    function bandFromPct(p, bands){ return bands.find(b => p >= b.min && p <= b.max) || bands[bands.length-1]; }
+
+    function tagStyleForLevel(level){
+      switch(level){
+        case 'alineado': return { border:'rgba(52,211,153,.45)', bg:'rgba(52,211,153,.12)' };
+        case 'ajuste': return { border:'rgba(251,191,36,.45)', bg:'rgba(251,191,36,.12)' };
+        case 'riesgo': return { border:'rgba(251,113,133,.45)', bg:'rgba(251,113,133,.12)' };
+        case 'crítico': return { border:'rgba(244,63,94,.55)', bg:'rgba(244,63,94,.14)' };
+        default: return { border:'rgba(255,255,255,.14)', bg:'rgba(255,255,255,.06)' };
+      }
+    }
+
+    function escapeHtml(str){
+      return (str ?? '').toString()
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+    }
+
+    function makeOptEl(name, opt, checked, onChange){
+      const lab = document.createElement('label');
+      lab.className = 'opt';
+      lab.dataset.checked = checked ? 'true' : 'false';
+
+      const inp = document.createElement('input');
+      inp.type = 'radio';
+      inp.name = name;
+      inp.value = String(opt.value);
+      inp.checked = !!checked;
+      inp.addEventListener('change', () => onChange(opt.value));
+
+      const span = document.createElement('span');
+      span.textContent = `${opt.label}`;
+
+      lab.appendChild(inp);
+      lab.appendChild(span);
+
+      lab.addEventListener('click', () => {
+        if(!inp.checked){
+          inp.checked = true;
+          inp.dispatchEvent(new Event('change', {bubbles:true}));
+        }
+      });
+      return lab;
+    }
+
+    function render(){
+      const data = state.data;
+      $('#metaDesc').textContent = data.meta?.description || '';
+      const optText = data.scale?.options?.map(o => `${o.value}=${o.label}`).join(' · ') || '';
+      $('#scaleHint').textContent = optText ? `— Escala: ${optText}` : '';
+
+      const maxOpt = Math.max(...data.scale.options.map(o => Number(o.value)));
+      state.maxTotal = 0;
+      state.maxBySection.clear();
+      state.sectionByQ.clear();
+
+      const secWrap = $('#sections');
+      secWrap.innerHTML = '';
+
+      data.sections.forEach((sec, si) => {
+        let secMax = 0;
+
+        const secEl = document.createElement('div');
+        secEl.className = 'sec';
+        secEl.id = `sec-${sec.id}`;
+
+        const head = document.createElement('div');
+        head.className = 'secHead';
+
+        const left = document.createElement('div');
+        const h3 = document.createElement('h3');
+        h3.textContent = `${si+1}. ${sec.title}`;
+        const sub = document.createElement('div');
+        sub.className = 'sub';
+        sub.textContent = sec.subtitle || sec.diagnosticFocus || '';
+        left.appendChild(h3);
+        left.appendChild(sub);
+
+        const right = document.createElement('div');
+        right.className = 'miniPills';
+        const p1 = document.createElement('div');
+        p1.className = 'mini';
+        p1.textContent = 'Diagnóstico por sección (independiente)';
+        const p2 = document.createElement('div');
+        p2.className = 'mini';
+        p2.textContent = 'Verso + mini-enseñanza al final';
+        right.appendChild(p1); right.appendChild(p2);
+
+        head.appendChild(left); head.appendChild(right);
+
+        const body = document.createElement('div');
+        body.className = 'secBody';
+
+        sec.questions.forEach((q) => {
+          secMax += maxOpt;
+          state.sectionByQ.set(q.id, sec.id);
+
+          const qEl = document.createElement('div');
+          qEl.className = 'q';
+
+          const top = document.createElement('div');
+          top.className = 'qTop';
+
+          const p = document.createElement('p');
+          p.className = 'qText';
+          p.textContent = q.text;
+
+          const code = document.createElement('div');
+          code.className = 'qCode';
+          code.textContent = q.id;
+
+          top.appendChild(p);
+          top.appendChild(code);
+
+          const opts = document.createElement('div');
+          opts.className = 'opts';
+
+          const groupName = `q_${q.id}`;
+          data.scale.options.forEach(opt => {
+            const checked = state.answers.get(q.id) === Number(opt.value);
+            const optEl = makeOptEl(groupName, opt, checked, (val) => {
+              state.answers.set(q.id, Number(val));
+              [...opts.querySelectorAll('.opt')].forEach(el => el.dataset.checked = 'false');
+              optEl.dataset.checked = 'true';
+              computeAndPaintLive();
+            });
+            opts.appendChild(optEl);
+          });
+
+          qEl.appendChild(top);
+          qEl.appendChild(opts);
+          body.appendChild(qEl);
+        });
+
+        state.maxBySection.set(sec.id, secMax);
+        state.maxTotal += secMax;
+
+        secEl.appendChild(head);
+        secEl.appendChild(body);
+        secWrap.appendChild(secEl);
+      });
+
+      $('#liveMax').textContent = String(state.maxTotal);
+      computeAndPaintLive();
+    }
+
+    function computeScores(){
+      const data = state.data;
+      let total = 0;
+      state.scoreBySection.clear();
+      data.sections.forEach(sec => state.scoreBySection.set(sec.id, 0));
+
+      for(const sec of data.sections){
+        let s = 0;
+        for(const q of sec.questions){
+          const v = state.answers.get(q.id);
+          if(typeof v === 'number') s += v;
+        }
+        state.scoreBySection.set(sec.id, s);
+        total += s;
+      }
+      return { total, maxTotal: state.maxTotal };
+    }
+
+    function buildSectionResultsModel(){
+      const data = state.data;
+      const out = [];
+      for(const sec of data.sections){
+        const score = state.scoreBySection.get(sec.id) || 0;
+        const max = state.maxBySection.get(sec.id) || 0;
+        const p = pct(score, max);
+        const band = bandFromPct(p, data.rubrics.sectionBands);
+        out.push({
+          id: sec.id,
+          title: sec.title,
+          subtitle: sec.subtitle,
+          diagnosticFocus: sec.diagnosticFocus,
+          verse: sec.sectionVerse,
+          score, max, pct: p,
+          band
+        });
+      }
+      // 🔥 AQUÍ CONTINÚA (arreglo del sort)
+      out.sort((a,b) => a.pct - b.pct);
+      return out;
+    }
+
+    function computeGlobalBand(totalScore){
+      const data = state.data;
+      const p = pct(totalScore, state.maxTotal);
+      const band = bandFromPct(p, data.rubrics.globalBands);
+      return { pct: p, band };
+    }
+
+    function scrollToSection(sectionId){
+      const el = document.getElementById(`sec-${sectionId}`);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function computeAndPaintLive(){
+      if(!state.data) return;
+      const { total } = computeScores();
+      const p = pct(total, state.maxTotal);
+
+      $('#liveTotal').textContent = String(total);
+      $('#livePct').textContent = `${p}%`;
+      $('#kTotal').textContent = String(total);
+      $('#kPct').textContent = String(p);
+
+      const g = computeGlobalBand(total);
+      const style = tagStyleForLevel(g.band.level);
+      const tag = $('#globalTag');
+      tag.style.borderColor = style.border;
+      tag.style.background = style.bg;
+
+      $('#globalLabel').textContent = `${g.band.label} (${g.pct}%)`;
+      $('#globalSummary').textContent = safeText(g.band.summary || '');
+      const gv = g.band.verse;
+      $('#globalVerse').innerHTML = gv
+        ? `<b>Verso guía:</b> “${escapeHtml(gv.quote)}” <b>(${escapeHtml(gv.reference)})</b>`
+        : '';
+
+      const secRes = $('#secResults');
+      const model = buildSectionResultsModel();
+      secRes.innerHTML = '';
+      if(!model.length){
+        secRes.innerHTML = `<div class="tiny muted">No hay secciones.</div>`;
+      }else{
+        for(const s of model){
+          const row = document.createElement('div');
+          row.className = 'toggle';
+          row.style.alignItems = 'center';
+          row.style.cursor = 'pointer';
+          row.addEventListener('click', () => scrollToSection(s.id));
+
+          const left = document.createElement('div');
+          left.style.flex = '1';
+          left.innerHTML = `<div style="font-weight:900;color:var(--ink);font-size:12px;line-height:1.25">${escapeHtml(s.title)}</div>
+                            <div class="tiny muted" style="margin-top:2px">${escapeHtml(s.band.label)} · ${s.pct}% · ${s.score}/${s.max}</div>`;
+
+          const right = document.createElement('div');
+          const t = document.createElement('div');
+          t.className = 'tag';
+          t.style.padding = '6px 8px';
+          t.style.fontSize = '11px';
+          const ss = tagStyleForLevel(s.band.level);
+          t.style.borderColor = ss.border;
+          t.style.background = ss.bg;
+          t.innerHTML = `<span>${escapeHtml(String(s.band.level || '').toUpperCase())}</span>`;
+          right.appendChild(t);
+
+          row.appendChild(left);
+          row.appendChild(right);
+          secRes.appendChild(row);
+        }
+      }
+    }
+
+    function buildWeeklyPlan(sectionResultsSortedByTension){
+      const data = state.data;
+      const top = sectionResultsSortedByTension.slice(0, 3);
+      const manual = new Map(data.pastoralManual.sections.map(s => [s.id, s]));
+      const pools = top.map(s => {
+        const m = manual.get(s.id);
+        const acts = (m?.miniTeaching?.oneWeekPlan || []).slice();
+        if(!acts.length) acts.push(`Haz una oración breve y una acción concreta de alineación en: ${s.title}.`);
+        return { sec: s, acts };
+      });
+
+      const days = [];
+      for(let i=0;i<7;i++){
+        const pick = pools[i % pools.length] || pools[0];
+        const action = pick.acts[i % pick.acts.length];
+        days.push({ day: i+1, focus: pick.sec.title, action });
+      }
+      return days;
+    }
+
+    function pickTeachingForDisplay(sectionResultsSortedByTension){
+      const data = state.data;
+      const worst = sectionResultsSortedByTension[0];
+      if(!worst) return null;
+      const manual = data.pastoralManual.sections.find(s => s.id === worst.id);
+      return { worst, manual };
+    }
+
+    function onViewResult(){
+      computeAndPaintLive();
+      const model = buildSectionResultsModel();
+      const teaching = pickTeachingForDisplay(model);
+      const plan = buildWeeklyPlan(model);
+
+      if(teaching && teaching.manual && teaching.manual.miniTeaching){
+        const t = teaching.manual.miniTeaching;
+        $('#teachBox').style.display = '';
+        $('#teachTitle').textContent = `Enfoque pastoral (sección con mayor tensión): ${teaching.worst.title}`;
+        const ul = $('#teachBullets');
+        ul.innerHTML = '';
+        (t.text || []).forEach(b => {
+          const li = document.createElement('li');
+          li.textContent = b;
+          ul.appendChild(li);
+        });
+        const v = t.verse;
+        $('#teachVerse').innerHTML = v ? `<b>Verso:</b> “${escapeHtml(v.quote)}” <b>(${escapeHtml(v.reference)})</b>` : '';
+      }else{
+        $('#teachBox').style.display = 'none';
+      }
+
+      $('#planBox').style.display = '';
+      const box = $('#weekPlan');
+      box.innerHTML = '';
+      plan.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'day';
+        el.innerHTML = `<div><b>Día ${d.day}</b><div class="tiny muted" style="margin-top:4px">${escapeHtml(d.focus)}</div></div>
+                        <div class="tiny" style="flex:1;margin-left:10px">${escapeHtml(d.action)}</div>`;
+        box.appendChild(el);
+      });
+
+      $('#status').textContent = 'Resultado actualizado.';
+      setTimeout(() => $('#status').textContent = '', 1200);
+    }
+
+    function getHeaderData(){
+      return {
+        paciente: safeText($('#inpPaciente').value),
+        auditor: safeText($('#inpAuditor').value),
+        fecha: safeText($('#inpFecha').value),
+        observaciones: safeText($('#inpObs').value),
+        incluirDetalles: $('#chkDetalles').checked
+      };
+    }
+
+    function formatTxtReport(){
+      const data = state.data;
+      const { total } = computeScores();
+      const g = computeGlobalBand(total);
+      const sectionsModel = buildSectionResultsModel();
+      const weekly = buildWeeklyPlan(sectionsModel);
+      const hdr = getHeaderData();
+
+      const lines = [];
+      lines.push(TITLE);
+      lines.push('='.repeat(TITLE.length));
+      lines.push('');
+      lines.push(`Paciente: ${hdr.paciente || '(sin nombre)'}`);
+      lines.push(`Auditor: ${hdr.auditor || '(sin nombre)'}`);
+      lines.push(`Fecha: ${hdr.fecha || '(sin fecha)'}`);
+      lines.push('');
+      lines.push('Observaciones:');
+      lines.push(hdr.observaciones ? hdr.observaciones : '(sin observaciones)');
+      lines.push('');
+      lines.push('DIAGNÓSTICO GLOBAL');
+      lines.push(`- Puntaje: ${total}/${state.maxTotal} (${g.pct}%)`);
+      lines.push(`- Nivel: ${g.band.label}`);
+      lines.push(`- Resumen: ${g.band.summary}`);
+      if(g.band.verse){
+        lines.push(`- Verso guía: “${g.band.verse.quote}” (${g.band.verse.reference})`);
+      }
+      lines.push('');
+      lines.push('RESULTADOS POR SECCIÓN');
+      sectionsModel.slice().sort((a,b)=> a.title.localeCompare(b.title)).forEach(s => {
+        lines.push(`• ${s.title}`);
+        lines.push(`  - Puntaje: ${s.score}/${s.max} (${s.pct}%)`);
+        lines.push(`  - Diagnóstico: ${s.band.label}`);
+        lines.push(`  - Enfoque: ${s.diagnosticFocus}`);
+        if(s.verse) lines.push(`  - Verso: “${s.verse.quote}” (${s.verse.reference})`);
+      });
+      lines.push('');
+      lines.push('ENFOQUE PASTORAL POR SECCIONES');
+      data.pastoralManual.sections.forEach(pm => {
+        const sec = data.sections.find(s => s.id === pm.id);
+        lines.push(`- ${sec ? sec.title : pm.id}: ${pm.miniTeaching.title}`);
+        (pm.miniTeaching.text || []).forEach(b => lines.push(`  • ${b}`));
+        const v = pm.miniTeaching.verse;
+        if(v) lines.push(`  Verso: “${v.quote}” (${v.reference})`);
+        lines.push('');
+      });
+
+      lines.push('PLAN SEMANAL (7 DÍAS) — basado en mayor tensión');
+      weekly.forEach(d => {
+        lines.push(`Día ${d.day}: ${d.focus}`);
+        lines.push(`  Acción: ${d.action}`);
+      });
+
+      if(hdr.incluirDetalles){
+        lines.push('');
+        lines.push('DETALLE DE RESPUESTAS POR PREGUNTA');
+        data.sections.forEach(sec => {
+          lines.push('');
+          lines.push(`> ${sec.title}`);
+          sec.questions.forEach(q => {
+            const v = state.answers.get(q.id);
+            const label = (data.scale.options.find(o => Number(o.value) === Number(v)) || {}).label;
+            lines.push(`- ${q.text}`);
+            lines.push(`  Respuesta: ${typeof v === 'number' ? `${v} (${label})` : '(sin responder)'}`);
+          });
+        });
+      }
+
+      lines.push('');
+      lines.push('— Fin del informe —');
+      return lines.join('\n');
+    }
+
+    function downloadTxt(){
+      const content = formatTxtReport();
+      const blob = new Blob([content], {type:'text/plain;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ensenanza05_reporte.txt';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
+    }
+
+    async function fetchAsDataUrl(path){
+      const res = await fetch(path);
+      if(!res.ok) throw new Error('No se pudo cargar: ' + path);
+      const blob = await res.blob();
+      return await new Promise((resolve,reject)=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = reject;
+        fr.readAsDataURL(blob);
+      });
+    }
+
+    function fitPillText(doc, text, x, y, maxW, fontSizeMax, fontSizeMin){
+      let fs = fontSizeMax;
+      doc.setFontSize(fs);
+      while(fs >= fontSizeMin && doc.getTextWidth(text) > maxW){
+        fs -= 1;
+        doc.setFontSize(fs);
+      }
+      doc.text(text, x, y);
+      return fs;
+    }
+
+    function addHeaderWithLogo(doc, title){
+      const pageW = doc.internal.pageSize.getWidth();
+      const margin = 14;
+      const y = 10;
+
+      if(state.logoDataUrl){
+        try{ doc.addImage(state.logoDataUrl, 'PNG', margin, y, 12, 12); }catch(_){}
+      }
+      doc.setFontSize(10);
+      doc.text(title, margin + 16, y + 8);
+
+      doc.setLineWidth(0.2);
+      doc.line(margin, y + 15, pageW - margin, y + 15);
+    }
+
+    async function downloadPdf(){
+      const data = state.data;
+      const hdr = getHeaderData();
+      const { total } = computeScores();
+      const g = computeGlobalBand(total);
+      const sectionsModel = buildSectionResultsModel();
+      const weekly = buildWeeklyPlan(sectionsModel);
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit:'mm', format:'a4' });
+
+      if(!state.logoDataUrl){
+        try{ state.logoDataUrl = await fetchAsDataUrl(LOGO_PATH); }catch(_){}
+      }
+
+      const pageW = doc.internal.pageSize.getWidth();
+      const pageH = doc.internal.pageSize.getHeight();
+      const margin = 16;
+
+      // ===== PORTADA =====
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(18);
+      doc.text(TITLE, margin, 28, { maxWidth: pageW - margin*2 });
+
+      if(state.logoDataUrl){
+        try{ doc.addImage(state.logoDataUrl, 'PNG', pageW - margin - 26, 20, 26, 26); }catch(_){}
+      }
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.text(`Paciente: ${hdr.paciente || '(sin nombre)'}`, margin, 42);
+      doc.text(`Auditor: ${hdr.auditor || '(sin nombre)'}`, margin, 49);
+      doc.text(`Fecha: ${hdr.fecha || '(sin fecha)'}`, margin, 56);
+
+      // pill diagnóstico global (autoajustada)
+      const pillX = margin;
+      const pillY = 68;
+      const pillW = pageW - margin*2;
+      const pillH = 14;
+
+      // color por nivel (solo relleno suave)
+      const lev = g.band.level;
+      if(lev === 'alineado'){ doc.setFillColor(52,211,153); doc.setDrawColor(52,211,153); }
+      else if(lev === 'ajuste'){ doc.setFillColor(251,191,36); doc.setDrawColor(251,191,36); }
+      else if(lev === 'riesgo'){ doc.setFillColor(251,113,133); doc.setDrawColor(251,113,133); }
+      else { doc.setFillColor(244,63,94); doc.setDrawColor(244,63,94); }
+
+      doc.setGState(new doc.GState({ opacity: 0.14 }));
+      doc.roundedRect(pillX, pillY, pillW, pillH, 4, 4, 'F');
+      doc.setGState(new doc.GState({ opacity: 1 }));
+      doc.roundedRect(pillX, pillY, pillW, pillH, 4, 4, 'S');
+
+      doc.setTextColor(20);
+      doc.setFont('helvetica','bold');
+      const pillText = `${g.band.label} — ${g.pct}% (${total}/${state.maxTotal})`;
+      fitPillText(doc, pillText, pillX + 4, pillY + 9, pillW - 8, 12, 8);
+      doc.setTextColor(0);
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.text(g.band.summary || '', margin, 90, { maxWidth: pageW - margin*2 });
+
+      if(g.band.verse){
+        doc.setFont('helvetica','bold');
+        doc.text('Verso guía', margin, 110);
+        doc.setFont('helvetica','normal');
+        doc.text(`“${g.band.verse.quote}” (${g.band.verse.reference})`, margin, 118, { maxWidth: pageW - margin*2 });
+      }
+
+      // ===== TABLA POR SECCIÓN =====
+      doc.addPage();
+      addHeaderWithLogo(doc, TITLE);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(14);
+      doc.text('Resultados por sección', margin, 28);
+
+      const tableRows = sectionsModel
+        .slice()
+        .sort((a,b)=> a.title.localeCompare(b.title))
+        .map(s => ([
+          s.title,
+          `${s.score}/${s.max}`,
+          `${s.pct}%`,
+          s.band.label
+        ]));
+
+      doc.autoTable({
+        startY: 34,
+        head: [['Sección', 'Puntaje', '%', 'Diagnóstico']],
+        body: tableRows,
+        styles: { fontSize: 9, cellPadding: 2.2 },
+        headStyles: { fillColor: [15,26,46] },
+        theme: 'grid',
+        margin: { left: margin, right: margin }
+      });
+
+      // ===== ENFOQUE PASTORAL (TODAS LAS SECCIONES) =====
+      doc.addPage();
+      addHeaderWithLogo(doc, TITLE);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(14);
+      doc.text('Enfoque pastoral por secciones', margin, 28);
+
+      let y = 36;
+      doc.setFontSize(10);
+      for(const pm of data.pastoralManual.sections){
+        const sec = data.sections.find(s => s.id === pm.id);
+        const secName = sec ? sec.title : pm.id;
+
+        doc.setFont('helvetica','bold');
+        doc.text(secName, margin, y);
+        y += 5;
+
+        doc.setFont('helvetica','normal');
+        doc.text(pm.miniTeaching.title || '', margin, y, { maxWidth: pageW - margin*2 });
+        y += 5;
+
+        const bullets = (pm.miniTeaching.text || []).map(t => `• ${t}`);
+        const txt = bullets.join('\n');
+        doc.text(txt, margin, y, { maxWidth: pageW - margin*2 });
+        y += Math.max(8, bullets.length * 4.5);
+
+        const v = pm.miniTeaching.verse;
+        if(v){
+          doc.setFont('helvetica','italic');
+          doc.text(`“${v.quote}” (${v.reference})`, margin, y, { maxWidth: pageW - margin*2 });
+          y += 7;
+          doc.setFont('helvetica','normal');
+        }
+
+        y += 3;
+        if(y > pageH - 30){
+          doc.addPage();
+          addHeaderWithLogo(doc, TITLE);
+          y = 28;
+        }
+      }
+
+      // ===== PLAN SEMANAL =====
+      doc.addPage();
+      addHeaderWithLogo(doc, TITLE);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(14);
+      doc.text('Plan semanal (7 días) — basado en mayor tensión', margin, 28);
+
+      doc.autoTable({
+        startY: 34,
+        head: [['Día', 'Enfoque', 'Acción']],
+        body: weekly.map(d => [`Día ${d.day}`, d.focus, d.action]),
+        styles: { fontSize: 9, cellPadding: 2.2 },
+        headStyles: { fillColor: [15,26,46] },
+        theme: 'grid',
+        margin: { left: margin, right: margin },
+        columnStyles: { 0: { cellWidth: 20 }, 1: { cellWidth: 55 } }
+      });
+
+      // ===== OBSERVACIONES =====
+      doc.addPage();
+      addHeaderWithLogo(doc, TITLE);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(14);
+      doc.text('Observaciones', margin, 28);
+
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(11);
+      doc.text(hdr.observaciones ? hdr.observaciones : '(sin observaciones)', margin, 36, { maxWidth: pageW - margin*2 });
+
+      // ===== DETALLES (opcional) =====
+      if(hdr.incluirDetalles){
+        doc.addPage();
+        addHeaderWithLogo(doc, TITLE);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(14);
+        doc.text('Detalle de respuestas por pregunta', margin, 28);
+
+        let dy = 36;
+        doc.setFontSize(9);
+        for(const sec of data.sections){
+          doc.setFont('helvetica','bold');
+          doc.text(sec.title, margin, dy);
+          dy += 5;
+          doc.setFont('helvetica','normal');
+
+          for(const q of sec.questions){
+            const v = state.answers.get(q.id);
+            const opt = data.scale.options.find(o => Number(o.value) === Number(v));
+            const resp = (typeof v === 'number') ? `${v} (${opt ? opt.label : ''})` : '(sin responder)';
+            const line = `• ${q.text} — ${resp}`;
+            doc.text(line, margin, dy, { maxWidth: pageW - margin*2 });
+            dy += 5;
+            if(dy > pageH - 20){
+              doc.addPage();
+              addHeaderWithLogo(doc, TITLE);
+              dy = 28;
+              doc.setFont('helvetica','normal');
+            }
+          }
+          dy += 3;
+          if(dy > pageH - 20){
+            doc.addPage();
+            addHeaderWithLogo(doc, TITLE);
+            dy = 28;
+          }
+        }
+      }
+
+      doc.save('ensenanza05_reporte.pdf');
+    }
+
+    function resetAll(){
+      state.answers.clear();
+      $('#inpPaciente').value = '';
+      $('#inpAuditor').value = '';
+      $('#inpFecha').value = todayISO();
+      $('#inpObs').value = '';
+      $('#chkDetalles').checked = false;
+      $('#teachBox').style.display = 'none';
+      $('#planBox').style.display = 'none';
+      render();
+      $('#status').textContent = 'Reiniciado.';
+      setTimeout(() => $('#status').textContent = '', 1200);
+    }
+
+    async function init(){
+      $('#inpFecha').value = todayISO();
+      try{
+        const res = await fetch(FILE_JSON, { cache:'no-store' });
+        if(!res.ok) throw new Error('No se pudo cargar el JSON.');
+        state.data = await res.json();
+        render();
+        $('#btnVer').addEventListener('click', onViewResult);
+        $('#btnTXT').addEventListener('click', downloadTxt);
+        $('#btnPDF').addEventListener('click', downloadPdf);
+        $('#btnReset').addEventListener('click', resetAll);
+      }catch(err){
+        $('#sections').innerHTML = `<div class="tiny">❌ Error: ${escapeHtml(err.message)}<br/>Asegúrate de que <b>ensenanza05.json</b> esté en la misma carpeta.</div>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
