@@ -3,2060 +3,1842 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>La viga: la mujer como alma del sistema — Auditoría diagnóstica pastoral</title>
+  <title>La viga: la mujer como alma del sistema — Auditoría Diagnóstica Pastoral</title>
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.31/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
   <style>
     :root{
       --bg:#0b0f14;
-      --panel:#0f1722;
-      --panel2:#0c1320;
-      --card:#0f1a28;
-      --stroke:#1f2a3a;
-      --text:#e7eef9;
-      --muted:#a7b4c8;
-      --soft:#8aa0c0;
-      --ok:#19c37d;
-      --warn:#f4d44d;
-      --risk:#ff9f43;
-      --crit:#ff4d4d;
-      --accent:#7aa2ff;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 16px;
-      --pillRadius: 999px;
-      --gap: 14px;
+      --panel:#0f1620;
+      --card:#111b26;
+      --muted:#8aa0b5;
+      --text:#e7f0fb;
+      --line:#223246;
+      --line2:#1a2839;
+      --accent:#6fb1ff;
+
+      --good:#3ddc97;
+      --warn:#ffd166;
+      --risk:#ff9f1c;
+      --crit:#ff4d6d;
+
+      --pill:#162536;
+      --pillOn:#223a55;
+      --shadow: 0 12px 34px rgba(0,0,0,.35);
+      --radius: 18px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 20% 0%, rgba(122,162,255,.12), transparent 55%),
-                  radial-gradient(900px 600px at 85% 10%, rgba(25,195,125,.08), transparent 55%),
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(111,177,255,.18), transparent 55%),
+                  radial-gradient(900px 540px at 90% 0%, rgba(61,220,151,.12), transparent 60%),
                   var(--bg);
-      color: var(--text);
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       line-height:1.35;
     }
-    header{
-      padding: 18px 18px 10px 18px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      position: sticky;
-      top:0;
-      background: linear-gradient(to bottom, rgba(11,15,20,.92), rgba(11,15,20,.74));
-      backdrop-filter: blur(10px);
-      z-index: 30;
-    }
+    a{color:inherit}
     .wrap{
-      max-width: 1220px;
-      margin: 0 auto;
+      max-width:1200px;
+      margin:0 auto;
+      padding:22px 16px 60px;
     }
-    .toprow{
+    header{
       display:flex;
+      gap:14px;
       align-items:flex-start;
       justify-content:space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      flex-wrap:wrap;
+      padding:14px 14px 6px;
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(17,27,38,.92), rgba(15,22,32,.92));
+      border:1px solid var(--line2);
+      box-shadow:var(--shadow);
     }
-    h1{
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: .2px;
-      font-weight: 750;
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width:280px;
     }
-    .sub{
-      margin-top:6px;
-      color: var(--muted);
-      font-size: 13px;
-      max-width: 980px;
+    .logo{
+      width:46px;height:46px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(111,177,255,.35), rgba(61,220,151,.25));
+      border:1px solid rgba(111,177,255,.22);
+      display:grid;place-items:center;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+      flex:0 0 auto;
     }
-    .actions{
+    .logo svg{opacity:.95}
+    .title h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .title .sub{
+      margin-top:3px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .topActions{
       display:flex;
       gap:10px;
-      flex-wrap: wrap;
       align-items:center;
+      flex-wrap:wrap;
       justify-content:flex-end;
     }
     button{
       appearance:none;
-      border: 1px solid rgba(255,255,255,.10);
-      background: linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
-      transition: transform .06s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
-      font-weight: 650;
-      font-size: 13px;
-      user-select:none;
+      border:none;
+      background:var(--pill);
+      color:var(--text);
+      border:1px solid rgba(138,160,181,.18);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+      font-weight:650;
+      letter-spacing:.15px;
+      box-shadow: 0 10px 18px rgba(0,0,0,.18);
     }
-    button:hover{ transform: translateY(-1px); border-color: rgba(122,162,255,.35); box-shadow: 0 12px 26px rgba(0,0,0,.25); }
-    button:active{ transform: translateY(0px); }
+    button:hover{background:var(--pillOn); border-color: rgba(111,177,255,.22)}
+    button:active{transform: translateY(1px)}
     button.primary{
-      border-color: rgba(122,162,255,.45);
-      background: linear-gradient(to bottom, rgba(122,162,255,.22), rgba(122,162,255,.08));
+      background: linear-gradient(135deg, rgba(111,177,255,.25), rgba(111,177,255,.08));
+      border-color: rgba(111,177,255,.35);
     }
     button.danger{
-      border-color: rgba(255,77,77,.35);
-      background: linear-gradient(to bottom, rgba(255,77,77,.18), rgba(255,77,77,.06));
+      background: linear-gradient(135deg, rgba(255,77,109,.20), rgba(255,77,109,.06));
+      border-color: rgba(255,77,109,.32);
     }
-    button:disabled{
-      opacity:.45;
-      cursor:not-allowed;
-      transform:none;
-      box-shadow:none;
-    }
-    main{
-      padding: 18px;
-    }
+    button:disabled{opacity:.45; cursor:not-allowed; transform:none}
     .grid{
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 16px;
-      align-items:start;
+      grid-template-columns: 1.25fr .85fr;
+      gap:14px;
+      margin-top:14px;
     }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: 1fr; }
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr}
     }
     .card{
-      background: linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(17,27,38,.95), rgba(15,22,32,.95));
+      border:1px solid var(--line2);
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
-    .cardHeader{
-      padding: 14px 14px 10px 14px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+    .cardHead{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--line2);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .cardHead h2{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      color:rgba(231,240,251,.95);
+    }
+    .cardHead .hint{
+      font-size:12px;
+      color:var(--muted);
+      max-width:560px;
+    }
+    .cardBody{padding:14px}
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(22,37,54,.75);
+      border:1px solid rgba(138,160,181,.18);
+      color:rgba(231,240,251,.92);
+      font-size:12px;
+    }
+    .pill b{font-weight:800}
+    .muted{color:var(--muted)}
+    .sec{
+      padding:12px;
+      border-radius:16px;
+      background: rgba(10,14,20,.35);
+      border:1px solid rgba(34,50,70,.65);
+      margin-bottom:12px;
+    }
+    .secTop{
       display:flex;
       gap:10px;
       align-items:flex-start;
       justify-content:space-between;
       flex-wrap:wrap;
     }
-    .cardHeader h2{
+    .secTop h3{
       margin:0;
-      font-size: 14px;
-      font-weight: 780;
+      font-size:14px;
       letter-spacing:.2px;
     }
-    .cardHeader .meta{
+    .secTop .metaLine{
+      margin-top:4px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .verse{
+      margin-top:10px;
+      font-size:12px;
+      color:rgba(231,240,251,.88);
+      padding:10px 10px;
+      border-radius:14px;
+      background: rgba(17,27,38,.55);
+      border:1px dashed rgba(138,160,181,.22);
+    }
+    .q{
+      margin-top:10px;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid rgba(34,50,70,.75);
+      background: rgba(15,22,32,.55);
+    }
+    .q .qText{font-size:13px; font-weight:650}
+    .q .qObs{font-size:12px; color:var(--muted); margin-top:6px}
+    .scaleRow{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .pill{
-      padding: 6px 10px;
-      border-radius: var(--pillRadius);
-      border: 1px solid rgba(255,255,255,.10);
-      color: var(--muted);
-      font-size: 12px;
-      background: rgba(0,0,0,.12);
-      white-space: nowrap;
-    }
-    .pill strong{ color: var(--text); font-weight: 780; }
-    .content{
-      padding: 14px;
-    }
-    .note{
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0 0 12px 0;
-    }
-    .section{
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.16);
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-    .sectionTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-    .sectionTitle{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-width: 220px;
-    }
-    .sectionTitle h3{
-      margin:0;
-      font-size: 14px;
-      font-weight: 820;
-      letter-spacing:.2px;
-    }
-    .sectionTitle .help{
-      margin:0;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .axisTag{
-      display:flex;
-      gap: 6px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .axisTag .pill{ font-size: 11px; padding: 5px 9px; }
-    .q{
-      border-top: 1px solid rgba(255,255,255,.06);
-      padding: 10px 0;
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
+      margin-top:10px;
       align-items:center;
     }
-    .q:first-of-type{ border-top:0; padding-top: 4px; }
-    .qText{
-      font-size: 13px;
-      color: var(--text);
-    }
-    .scale{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .opt{
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
-      display:grid;
-      place-items:center;
+    .scorePill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:38px;
+      height:34px;
+      border-radius:12px;
+      background: rgba(22,37,54,.75);
+      border:1px solid rgba(138,160,181,.18);
       cursor:pointer;
-      font-weight: 780;
-      color: var(--muted);
-      transition: transform .06s ease, border-color .2s ease, background .2s ease, color .2s ease;
       user-select:none;
+      font-weight:850;
+      transition: background .2s ease, border-color .2s ease, transform .08s ease;
     }
-    .opt:hover{ transform: translateY(-1px); border-color: rgba(122,162,255,.35); color: var(--text); }
-    .opt.sel{
-      border-color: rgba(122,162,255,.55);
-      background: rgba(122,162,255,.16);
-      color: var(--text);
+    .scorePill:hover{background: rgba(34,58,85,.65); border-color: rgba(111,177,255,.22)}
+    .scorePill:active{transform: translateY(1px)}
+    .scorePill.on{
+      background: linear-gradient(135deg, rgba(111,177,255,.30), rgba(61,220,151,.12));
+      border-color: rgba(111,177,255,.40);
+    }
+    .mini{
+      font-size:12px;
+      color:var(--muted);
     }
 
-    .rightStack{
+    /* Results */
+    .resultBanner{
       display:flex;
-      flex-direction:column;
-      gap: 16px;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(34,50,70,.75);
+      background: rgba(15,22,32,.65);
+      margin-bottom:12px;
     }
+    .badge{
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.2px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(22,37,54,.75);
+    }
+    .badge.good{border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.12)}
+    .badge.warn{border-color: rgba(255,209,102,.35); background: rgba(255,209,102,.10)}
+    .badge.risk{border-color: rgba(255,159,28,.35); background: rgba(255,159,28,.10)}
+    .badge.crit{border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.10)}
 
-    .svgWrap{
-      padding: 10px 12px 14px 12px;
-    }
-    .legend{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .legendLeft{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .legendRight{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .kpi{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .kpiCol{
-      flex: 1 1 220px;
-      background: rgba(0,0,0,.16);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 14px;
-      padding: 12px;
-    }
-    .kpiCol h4{
-      margin:0 0 6px 0;
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 750;
-      letter-spacing:.2px;
-      display:flex;
-      align-items:center;
-      gap: 8px;
-    }
-    .kpiCol .big{
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing:.2px;
-      margin: 0;
-    }
-    .kpiCol .small{
-      margin: 6px 0 0 0;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .bar{
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
       overflow:hidden;
-      margin-top: 10px;
-      border: 1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      border:1px solid rgba(34,50,70,.75);
+      background: rgba(15,22,32,.55);
     }
-    .bar > div{
-      height:100%;
-      width: 0%;
-      background: linear-gradient(to right, rgba(25,195,125,.85), rgba(122,162,255,.85));
-      border-radius: 999px;
-      transition: width .35s ease;
+    th, td{
+      padding:10px 10px;
+      font-size:12px;
+      border-bottom:1px solid rgba(34,50,70,.75);
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      color:rgba(231,240,251,.92);
+      font-weight:900;
+      background: rgba(17,27,38,.55);
+    }
+    tr:last-child td{border-bottom:none}
+    .rightCol{
+      display:grid;
+      gap:14px;
+      align-content:start;
     }
 
-    .result{
-      display:none;
+    /* Portico */
+    .porticoWrap{
+      position:relative;
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid var(--line2);
+      background: radial-gradient(900px 420px at 25% 0%, rgba(111,177,255,.12), transparent 55%),
+                  radial-gradient(720px 360px at 80% 20%, rgba(61,220,151,.10), transparent 58%),
+                  rgba(10,14,20,.55);
+      box-shadow:var(--shadow);
     }
-    .result.show{ display:block; }
-    .resultTop{
+    .porticoTop{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
+      padding:12px 12px 8px;
+      border-bottom:1px solid rgba(34,50,70,.65);
+      background: rgba(15,22,32,.55);
     }
-    .resultTop .diag{
+    .porticoTop .left{
       display:flex;
       flex-direction:column;
-      gap: 8px;
-      min-width: 250px;
+      gap:4px;
     }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.14);
-      font-size: 12px;
-      color: var(--muted);
-      width: fit-content;
-    }
-    .dot{
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--muted);
-      box-shadow: 0 0 0 6px rgba(255,255,255,.02);
-    }
-    .dot.ok{ background: var(--ok); box-shadow: 0 0 0 6px rgba(25,195,125,.08); }
-    .dot.warn{ background: var(--warn); box-shadow: 0 0 0 6px rgba(244,212,77,.08); }
-    .dot.risk{ background: var(--risk); box-shadow: 0 0 0 6px rgba(255,159,67,.08); }
-    .dot.crit{ background: var(--crit); box-shadow: 0 0 0 6px rgba(255,77,77,.10); }
-    .result h3{
-      margin:0;
-      font-size: 14px;
-      font-weight: 900;
+    .porticoTop .t{
+      font-weight:950;
       letter-spacing:.2px;
+      font-size:13px;
     }
-    table{
-      width:100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      overflow:hidden;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.14);
+    .porticoTop .d{
+      font-size:12px;
+      color:var(--muted);
+      max-width:620px;
     }
-    th, td{
-      padding: 10px 10px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      text-align:left;
-      font-size: 12px;
-      vertical-align: top;
-    }
-    th{
-      color: var(--muted);
-      font-weight: 800;
-      letter-spacing:.15px;
-    }
-    tr:last-child td{ border-bottom:0; }
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .porticoTop .btns{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
 
     .tooltip{
-      position: fixed;
-      left: 0; top:0;
-      transform: translate(-9999px,-9999px);
-      z-index: 50;
-      background: rgba(7,10,14,.92);
-      border: 1px solid rgba(255,255,255,.12);
-      color: var(--text);
-      padding: 10px 10px;
-      border-radius: 12px;
-      box-shadow: 0 14px 34px rgba(0,0,0,.35);
-      max-width: 260px;
+      position:absolute;
       pointer-events:none;
-      font-size: 12px;
+      opacity:0;
+      transform: translateY(-6px);
+      transition: opacity .12s ease, transform .12s ease;
+      background: rgba(10,14,20,.92);
+      border:1px solid rgba(138,160,181,.22);
+      color:rgba(231,240,251,.96);
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:12px;
+      max-width:260px;
+      box-shadow: 0 18px 32px rgba(0,0,0,.38);
+      z-index:10;
       line-height:1.25;
     }
-    .tooltip .t1{ font-weight: 850; margin-bottom: 4px; }
-    .tooltip .t2{ color: var(--muted); }
+    .tooltip.on{opacity:1; transform: translateY(0)}
+    .tooltip .small{color:var(--muted); font-size:11px; margin-top:4px}
 
     .modalBackdrop{
-      position:fixed;
-      inset:0;
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.58);
       display:none;
-      background: rgba(0,0,0,.55);
-      z-index: 60;
       align-items:center;
       justify-content:center;
-      padding: 18px;
+      padding:16px;
+      z-index:50;
     }
-    .modalBackdrop.show{ display:flex; }
+    .modalBackdrop.on{display:flex}
     .modal{
-      width: min(900px, 96vw);
-      background: linear-gradient(to bottom, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      box-shadow: 0 26px 70px rgba(0,0,0,.45);
+      width:min(760px, 96vw);
+      border-radius:22px;
+      background: linear-gradient(180deg, rgba(17,27,38,.96), rgba(15,22,32,.96));
+      border:1px solid rgba(34,50,70,.85);
+      box-shadow: 0 28px 80px rgba(0,0,0,.55);
       overflow:hidden;
     }
     .modalHead{
+      padding:14px 14px 10px;
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap: 10px;
-      padding: 14px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      gap:10px;
+      border-bottom:1px solid rgba(34,50,70,.75);
     }
-    .modalHead h3{
+    .modalHead .h{
+      font-weight:950;
+      letter-spacing:.2px;
+      font-size:14px;
       margin:0;
-      font-size: 14px;
-      font-weight: 920;
-      letter-spacing:.2px;
     }
-    .modalBody{
-      padding: 14px;
-      color: var(--text);
+    .modalBody{padding:14px}
+    .modalBody .k{font-size:12px; color:var(--muted); margin-top:8px}
+    .modalBody .teaching{
+      margin-top:8px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(34,50,70,.75);
+      background: rgba(10,14,20,.35);
+      font-size:13px;
     }
-    .modalBody p{
-      margin: 0 0 10px 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .modalBody .verse{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      color: var(--text);
-      margin: 10px 0;
-    }
-    .modalBody .actionsList{
-      margin-top: 10px;
-      display:grid;
-      gap: 8px;
-    }
-    .actionItem{
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.14);
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      color: var(--text);
-    }
-    .guideToast{
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      z-index: 55;
-      display:none;
-      width: min(760px, 92vw);
-      background: rgba(7,10,14,.92);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.45);
-      padding: 12px 12px;
-      gap: 10px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .guideToast.show{ display:flex; }
-    .guideText{
-      display:flex;
-      flex-direction:column;
-      gap: 4px;
-      min-width: 0;
-    }
-    .guideText .g1{
-      font-weight: 900;
-      font-size: 13px;
-      letter-spacing:.2px;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-    }
-    .guideText .g2{
-      font-size: 12px;
-      color: var(--muted);
-      overflow:hidden;
-      display:-webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    .modalBody ul{margin:10px 0 0 18px; padding:0}
+    .modalBody li{margin:6px 0; color:rgba(231,240,251,.92); font-size:13px}
+    .modalClose{
+      padding:8px 10px;
+      border-radius:14px;
+      border:1px solid rgba(138,160,181,.18);
+      background: rgba(22,37,54,.65);
+      cursor:pointer;
+      font-weight:900;
     }
 
-    .pulseSoft{ animation: pulseSoft 1.9s ease-in-out infinite; }
+    /* SVG status classes */
+    .axis-good{stroke: var(--good)}
+    .axis-warn{stroke: var(--warn)}
+    .axis-risk{stroke: var(--risk)}
+    .axis-crit{stroke: var(--crit)}
+
+    .pulseSoft{animation: pulseSoft 2.6s ease-in-out infinite}
     @keyframes pulseSoft{
-      0%,100%{ opacity:1; }
-      50%{ opacity:.72; }
+      0%,100%{opacity:1}
+      50%{opacity:.72}
     }
-    .microVibe{ animation: microVibe 2.4s ease-in-out infinite; }
+    .microVibe{animation: microVibe 2.3s ease-in-out infinite}
     @keyframes microVibe{
-      0%,100%{ transform: translate(0,0); }
-      20%{ transform: translate(2px,0); }
-      40%{ transform: translate(-2px,0); }
-      60%{ transform: translate(2px,0); }
-      80%{ transform: translate(-2px,0); }
+      0%,100%{transform: translateX(0)}
+      25%{transform: translateX(2px)}
+      50%{transform: translateX(0)}
+      75%{transform: translateX(-2px)}
     }
-    .dashCrit{
+    .dashAnim{
       stroke-dasharray: 18 14;
-      animation: dashMove 3.8s linear infinite;
+      animation: dashMove 2.8s linear infinite;
     }
     @keyframes dashMove{
-      to{ stroke-dashoffset: -96; }
-    }
-    .highlightStroke{
-      filter: drop-shadow(0 0 10px rgba(122,162,255,.35));
-    }
-    .nodeHalo{
-      filter: drop-shadow(0 0 12px rgba(255,255,255,.18));
+      from{stroke-dashoffset:0}
+      to{stroke-dashoffset:-64}
     }
 
-    .miniRow{
+    .nodeCircle{
+      fill: rgba(15,22,32,.95);
+      stroke: rgba(231,240,251,.22);
+      stroke-width: 3;
+    }
+    .nodeRing{
+      fill:none;
+      stroke-width: 10;
+      opacity:0;
+      filter: blur(0.2px);
+    }
+    .nodeRing.on{opacity:.22}
+    .nodeLabel{
+      font-size:14px;
+      font-weight:900;
+      fill: rgba(231,240,251,.92);
+      letter-spacing:.4px;
+    }
+    .structLabel{
+      font-size:14px;
+      font-weight:950;
+      fill: rgba(231,240,251,.90);
+      letter-spacing:.9px;
+    }
+    .structSubLabel{
+      font-size:12px;
+      font-weight:800;
+      fill: rgba(138,160,181,.90);
+      letter-spacing:.35px;
+    }
+    .ghostPrev{
+      opacity:.35;
+      stroke: rgba(231,240,251,.55);
+      stroke-dasharray: 10 12;
+      stroke-linecap: round;
+    }
+    .deltaRow{
+      margin-top:10px;
       display:flex;
-      gap: 8px;
+      gap:8px;
       flex-wrap:wrap;
-      align-items:center;
     }
-    .muted{ color: var(--muted); }
-
-    a.link{
-      color: var(--accent);
-      text-decoration:none;
-      border-bottom: 1px dashed rgba(122,162,255,.45);
+    .delta{
+      font-size:12px;
+      color:rgba(231,240,251,.92);
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(34,50,70,.75);
+      background: rgba(15,22,32,.55);
     }
+    .delta b{font-weight:950}
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <div class="toprow">
-        <div>
-          <h1 id="testTitle">La viga: la mujer como alma del sistema</h1>
-          <div class="sub" id="testSubtitle">
-            Auditoría diagnóstica pastoral (0–5). Responde con honestidad observable: lo que ocurre, no lo que deseas.
-          </div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="12.2" stroke="rgba(231,240,251,.85)" stroke-width="2"/>
+            <path d="M14 7.2V20.8" stroke="rgba(231,240,251,.92)" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M8.2 14H19.8" stroke="rgba(231,240,251,.92)" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
         </div>
-        <div class="actions">
-          <button id="btnGuide" class="primary" type="button">Explícame este diagrama</button>
-          <button id="btnResult" class="primary" type="button">Ver resultado</button>
-          <button id="btnTxt" type="button" disabled>Descargar TXT</button>
-          <button id="btnPdf" type="button" disabled>Descargar PDF bonito</button>
-          <button id="btnPng" type="button" disabled>Descargar Imagen PNG</button>
-          <button id="btnReset" class="danger" type="button">Reiniciar</button>
+        <div class="title">
+          <h1 id="appTitle">La viga: la mujer como alma del sistema</h1>
+          <div class="sub" id="appSub">Auditoría diagnóstica pastoral • sin backend • escala 0–5</div>
         </div>
       </div>
-    </div>
-  </header>
 
-  <main>
-    <div class="wrap">
-      <div class="grid">
-        <section class="card" aria-label="Cuestionario">
-          <div class="cardHeader">
+      <div class="topActions">
+        <button id="btnShowResult" class="primary" disabled>Ver resultado</button>
+        <button id="btnDownloadTxt" disabled>Descargar TXT</button>
+        <button id="btnDownloadPdf" disabled>Descargar PDF bonito</button>
+        <button id="btnDownloadPng" disabled>Descargar Imagen PNG</button>
+        <button id="btnReset" class="danger">Reiniciar</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card" id="cardTest">
+        <div class="cardHead">
+          <div>
+            <h2 id="testHeading">Test</h2>
+            <div class="hint" id="testHint">Responde con honestidad pastoral. No diagnostica personas: diagnostica flujo, cargas y alineación.</div>
+          </div>
+          <div class="pills" id="metaPills"></div>
+        </div>
+        <div class="cardBody" id="sectionsRoot">
+          <div class="muted" id="loadingState">Cargando contenido…</div>
+        </div>
+      </div>
+
+      <div class="rightCol">
+        <div class="porticoWrap">
+          <div class="porticoTop">
+            <div class="left">
+              <div class="t">Diagrama del pórtico (diagnóstico)</div>
+              <div class="d" id="porticoDesc">Cimiento (Comunión), Columna (Congregación), Viga (Intersección). Pasa el cursor o toca para ver estados; haz click para abrir mini-enseñanza.</div>
+            </div>
+            <div class="btns">
+              <button id="btnGuided">Explícame este diagrama</button>
+            </div>
+          </div>
+
+          <div style="position:relative; padding:10px;">
+            <div class="tooltip" id="tooltip"></div>
+
+            <!-- SVG 860×420 — geometría fija: L estructural -->
+            <svg id="porticoSvg" width="860" height="420" viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pórtico diagnóstico en L">
+              <defs>
+                <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L10,5 L0,10 Z" fill="currentColor"></path>
+                </marker>
+              </defs>
+
+              <!-- CARGAS (coordenadas fijas) -->
+              <!-- Carga Viva (verde) -->
+              <g id="loadLive" data-kind="load">
+                <line x1="740" y1="50" x2="740" y2="108" stroke="var(--good)" stroke-width="6" stroke-linecap="round" style="color:var(--good)" marker-end="url(#arrowHead)"/>
+                <text x="712" y="42" class="structSubLabel">CARGA VIVA</text>
+              </g>
+              <!-- Carga Muerta (roja) -->
+              <g id="loadDead" data-kind="load">
+                <line x1="780" y1="50" x2="780" y2="108" stroke="var(--crit)" stroke-width="6" stroke-linecap="round" style="color:var(--crit)" marker-end="url(#arrowHead)"/>
+                <text x="742" y="42" class="structSubLabel">CARGA MUERTA</text>
+              </g>
+              <!-- Carga Sísmica (horizontal) -->
+              <g id="loadSeismic" data-kind="load">
+                <line x1="810" y1="300" x2="728" y2="300" stroke="rgba(231,240,251,.75)" stroke-width="6" stroke-linecap="round" style="color:rgba(231,240,251,.75)" marker-end="url(#arrowHead)"/>
+                <text x="736" y="292" class="structSubLabel">CARGA SÍSMICA</text>
+              </g>
+
+              <!-- PÓRTICO PREVIO (para Antes/Después) -->
+              <g id="prevOverlay" opacity="0"></g>
+
+              <!-- PÓRTICO ACTUAL (L estructural) -->
+              <!-- Cimiento -->
+              <path id="elCimiento" data-kind="element" data-axis="comunion"
+                    d="M140 330 L720 330"
+                    stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
+              <!-- Columna -->
+              <path id="elColumna" data-kind="element" data-axis="congregacion"
+                    d="M200 330 L200 110"
+                    stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
+              <!-- Viga -->
+              <path id="elViga" data-kind="element" data-axis="interseccion"
+                    d="M200 110 L720 110"
+                    stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
+
+              <!-- Etiquetas estructurales (reglas: solo un text para CIMIENTO y solo un text para COMUNIÓN) -->
+              <text x="140" y="368" class="structLabel">CIMIENTO</text>
+
+              <!-- Nudos -->
+              <!-- Halo/ring + nodo principal -->
+              <g id="nodeComunion" data-kind="node" data-axis="comunion" style="cursor:pointer">
+                <circle id="haloComunion" class="nodeRing" cx="200" cy="330" r="22" stroke="var(--accent)"></circle>
+                <circle class="nodeCircle" cx="200" cy="330" r="14"></circle>
+                <text x="200" y="386" text-anchor="middle" class="nodeLabel">COMUNIÓN</text>
+              </g>
+
+              <g id="nodeCongregacion" data-kind="node" data-axis="congregacion" style="cursor:pointer">
+                <circle id="haloCongregacion" class="nodeRing" cx="200" cy="110" r="22" stroke="var(--accent)"></circle>
+                <circle class="nodeCircle" cx="200" cy="110" r="14"></circle>
+                <text x="200" y="86" text-anchor="middle" class="nodeLabel">CONGREGACIÓN</text>
+              </g>
+
+              <g id="nodeInterseccion" data-kind="node" data-axis="interseccion" style="cursor:pointer">
+                <circle id="haloInterseccion" class="nodeRing" cx="720" cy="110" r="22" stroke="var(--accent)"></circle>
+                <circle class="nodeCircle" cx="720" cy="110" r="14"></circle>
+                <text x="720" y="86" text-anchor="middle" class="nodeLabel">INTERSECCIÓN</text>
+              </g>
+
+              <!-- Sub-etiquetas discretas -->
+              <text x="248" y="325" class="structSubLabel">BASE / CRISTO</text>
+              <text x="218" y="170" class="structSubLabel">COLUMNA / VARÓN</text>
+              <text x="420" y="100" class="structSubLabel">VIGA / MUJER</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card" id="cardResults">
+          <div class="cardHead">
             <div>
-              <h2 id="cardLeftTitle">Cuestionario por secciones</h2>
-              <div class="miniRow">
-                <span class="pill" id="pillScale"><strong>Escala:</strong> 0 = Nunca · 5 = Siempre</span>
-                <span class="pill" id="pillProgress"><strong>Avance:</strong> 0%</span>
-              </div>
+              <h2>Resultados</h2>
+              <div class="hint" id="resultHint">Aparecerán cuando completes el test y presiones “Ver resultado”.</div>
             </div>
-            <div class="meta">
-              <span class="pill" id="pillFile"><strong>Archivo:</strong> viga-mujer</span>
-              <span class="pill" id="pillMode"><strong>Modo:</strong> Sin backend (GitHub Pages)</span>
-            </div>
+            <div class="pills" id="resultPills"></div>
           </div>
-          <div class="content">
-            <p class="note" id="introText">
-              Este diagnóstico mira la “viga” como función espiritual: percibir, expresar y transferir carga sin acumularla.
-              Responde según tu realidad actual (últimas 4 semanas).
-            </p>
-            <div id="sectionsContainer"></div>
+          <div class="cardBody" id="resultsRoot">
+            <div class="muted">Completa el test para ver diagnóstico global, ejes, tensiones y plan de enfoque.</div>
           </div>
-        </section>
-
-        <aside class="rightStack">
-          <section class="card" aria-label="Pórtico diagnóstico">
-            <div class="cardHeader">
-              <div>
-                <h2 id="cardRightTitle">Pórtico diagnóstico (L estructural)</h2>
-                <div class="miniRow">
-                  <span class="pill"><strong>3 ejes:</strong> Comunión · Congregación · Intersección</span>
-                  <span class="pill" id="pillCompare"><strong>Comparación:</strong> apagada</span>
-                </div>
-              </div>
-              <div class="meta">
-                <span class="pill" id="pillGlobal"><strong>Global:</strong> —</span>
-              </div>
-            </div>
-            <div class="svgWrap">
-              <svg id="porticoSvg" width="860" height="420" viewBox="0 0 860 420" role="img" aria-label="Pórtico diagnóstico">
-                <defs>
-                  <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L12,6 L0,12 Z" fill="rgba(25,195,125,.95)"></path>
-                  </marker>
-                  <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L12,6 L0,12 Z" fill="rgba(255,77,77,.95)"></path>
-                  </marker>
-                  <marker id="arrowGray" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L12,6 L0,12 Z" fill="rgba(167,180,200,.85)"></path>
-                  </marker>
-                  <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="3.6" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-
-                <rect x="12" y="12" width="836" height="396" rx="18" ry="18" fill="rgba(0,0,0,.16)" stroke="rgba(255,255,255,.07)"></rect>
-
-                <!-- Base fixed geometry: Cimiento, Columna, Viga -->
-                <g id="porticoGroup" transform="translate(0,0)">
-                  <path id="elCimiento" d="M140 340 L720 340" stroke="rgba(122,162,255,.40)" stroke-width="22" stroke-linecap="round" fill="none"></path>
-                  <path id="elColumna" d="M220 340 L220 110" stroke="rgba(122,162,255,.40)" stroke-width="22" stroke-linecap="round" fill="none"></path>
-                  <path id="elViga" d="M220 110 L720 110" stroke="rgba(122,162,255,.40)" stroke-width="22" stroke-linecap="round" fill="none"></path>
-
-                  <!-- Previous overlay (dashed) -->
-                  <path id="prevCimiento" d="M140 340 L720 340" stroke="rgba(167,180,200,.35)" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="14 14" opacity="0"></path>
-                  <path id="prevColumna" d="M220 340 L220 110" stroke="rgba(167,180,200,.35)" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="14 14" opacity="0"></path>
-                  <path id="prevViga" d="M220 110 L720 110" stroke="rgba(167,180,200,.35)" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="14 14" opacity="0"></path>
-
-                  <!-- Nodes: Comunión, Congregación, Intersección -->
-                  <circle id="nComunion" cx="220" cy="340" r="13" fill="rgba(231,238,249,.9)" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle>
-                  <circle id="nCongregacion" cx="220" cy="110" r="13" fill="rgba(231,238,249,.9)" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle>
-                  <circle id="nInterseccion" cx="720" cy="110" r="13" fill="rgba(231,238,249,.9)" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle>
-
-                  <!-- Tension halos (only shown when needed) -->
-                  <circle id="haloComunion" cx="220" cy="340" r="22" fill="none" stroke="rgba(255,255,255,.0)" stroke-width="6" opacity="0"></circle>
-                  <circle id="haloCongregacion" cx="220" cy="110" r="22" fill="none" stroke="rgba(255,255,255,.0)" stroke-width="6" opacity="0"></circle>
-                  <circle id="haloInterseccion" cx="720" cy="110" r="22" fill="none" stroke="rgba(255,255,255,.0)" stroke-width="6" opacity="0"></circle>
-
-                  <!-- Loads (fixed coordinates) -->
-                  <line id="cargaViva" x1="470" y1="55" x2="470" y2="104" stroke="rgba(25,195,125,.95)" stroke-width="6" marker-end="url(#arrowGreen)"></line>
-                  <line id="cargaMuerta" x1="540" y1="55" x2="540" y2="104" stroke="rgba(255,77,77,.95)" stroke-width="6" marker-end="url(#arrowRed)"></line>
-                  <line id="cargaSismica" x1="760" y1="210" x2="712" y2="210" stroke="rgba(167,180,200,.85)" stroke-width="6" marker-end="url(#arrowGray)"></line>
-
-                  <!-- Single texts rules -->
-                  <text id="tCimiento" x="140" y="372" fill="rgba(167,180,200,.85)" font-size="12" font-weight="800" letter-spacing="1">CIMIENTO</text>
-                  <text id="tComunion" x="136" y="330" fill="rgba(231,238,249,.92)" font-size="12" font-weight="900" letter-spacing=".6">COMUNIÓN</text>
-
-                  <text id="tColumna" x="94" y="220" fill="rgba(167,180,200,.85)" font-size="12" font-weight="800" letter-spacing="1" transform="rotate(-90 94 220)">COLUMNA</text>
-                  <text id="tCongregacion" x="238" y="132" fill="rgba(231,238,249,.92)" font-size="12" font-weight="900" letter-spacing=".6">CONGREGACIÓN</text>
-
-                  <text id="tViga" x="468" y="96" fill="rgba(167,180,200,.85)" font-size="12" font-weight="800" letter-spacing="1">VIGA</text>
-                  <text id="tInterseccion" x="642" y="132" fill="rgba(231,238,249,.92)" font-size="12" font-weight="900" letter-spacing=".6">INTERSECCIÓN</text>
-
-                  <!-- Delta labels -->
-                  <text id="deltaComunion" x="238" y="360" fill="rgba(167,180,200,.85)" font-size="11" font-weight="800" opacity="0">Δ 0%</text>
-                  <text id="deltaCongregacion" x="238" y="96" fill="rgba(167,180,200,.85)" font-size="11" font-weight="800" opacity="0">Δ 0%</text>
-                  <text id="deltaInterseccion" x="740" y="96" fill="rgba(167,180,200,.85)" font-size="11" font-weight="800" opacity="0">Δ 0%</text>
-                </g>
-              </svg>
-
-              <div class="legend">
-                <div class="legendLeft">
-                  <span class="pill"><strong>Carga viva</strong> (verde)</span>
-                  <span class="pill"><strong>Carga muerta</strong> (roja)</span>
-                  <span class="pill"><strong>Carga sísmica</strong> (horizontal)</span>
-                </div>
-                <div class="legendRight">
-                  <span class="pill" id="pillSaved"><strong>Previo:</strong> —</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section class="card" aria-label="Indicadores">
-            <div class="cardHeader">
-              <div>
-                <h2>Indicadores rápidos</h2>
-                <div class="miniRow">
-                  <span class="pill"><strong>Lectura:</strong> pórtico real, diagnóstico claro</span>
-                </div>
-              </div>
-            </div>
-            <div class="content">
-              <div class="kpi" id="kpiRow">
-                <div class="kpiCol">
-                  <h4><span class="dot" id="dotGlobal"></span> Diagnóstico global</h4>
-                  <p class="big" id="kpiGlobal">—</p>
-                  <p class="small" id="kpiGlobalHint">Responde al menos una sección para ver lectura.</p>
-                  <div class="bar"><div id="barGlobal"></div></div>
-                </div>
-                <div class="kpiCol">
-                  <h4><span class="dot" id="dotAxis"></span> Eje más presionado</h4>
-                  <p class="big" id="kpiAxis">—</p>
-                  <p class="small" id="kpiAxisHint">La presión apunta a “dónde se acumula el peso”.</p>
-                  <div class="bar"><div id="barAxis"></div></div>
-                </div>
-              </div>
-
-              <div class="result" id="resultPanel">
-                <div class="resultTop">
-                  <div class="diag">
-                    <div class="badge" id="badgeGlobal"><span class="dot" id="dotBadge"></span><span id="badgeText">—</span></div>
-                    <h3 id="resultHeadline">Resultado</h3>
-                    <div class="muted" id="resultSummary">—</div>
-                  </div>
-                  <div class="miniRow">
-                    <span class="pill" id="pillDate"><strong>Fecha:</strong> —</span>
-                    <span class="pill" id="pillAnswered"><strong>Respondidas:</strong> —</span>
-                  </div>
-                </div>
-
-                <table id="resultTable" aria-label="Tabla de ejes">
-                  <thead>
-                    <tr>
-                      <th>Eje</th>
-                      <th>Sección</th>
-                      <th>Puntaje</th>
-                      <th>Estado</th>
-                      <th>Riesgo visible</th>
-                      <th>Enfoque</th>
-                    </tr>
-                  </thead>
-                  <tbody id="resultTbody"></tbody>
-                </table>
-
-                <table id="planTable" aria-label="Plan pastoral">
-                  <thead>
-                    <tr>
-                      <th>Prioridad</th>
-                      <th>Acción práctica</th>
-                      <th>Verso ancla</th>
-                      <th>Indicador observable</th>
-                    </tr>
-                  </thead>
-                  <tbody id="planTbody"></tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-        </aside>
+        </div>
       </div>
     </div>
-  </main>
-
-  <div id="tooltip" class="tooltip" aria-hidden="true">
-    <div class="t1" id="tipTitle">—</div>
-    <div class="t2" id="tipBody">—</div>
   </div>
 
-  <div id="contextModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-label="Panel contextual">
-    <div class="modal">
+  <!-- Modal contextual -->
+  <div class="modalBackdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modalHead">
         <div>
-          <h3 id="modalTitle">—</h3>
-          <div class="muted" id="modalMeta">—</div>
+          <div class="h" id="modalTitle">Panel</div>
+          <div class="k" id="modalSubtitle"></div>
         </div>
-        <button id="btnCloseModal" type="button">Cerrar</button>
+        <div class="modalClose" id="modalClose">Cerrar</div>
       </div>
       <div class="modalBody">
-        <p id="modalTeaching">—</p>
-        <div class="verse" id="modalVerse">—</div>
-        <div class="actionsList" id="modalActions"></div>
+        <div class="verse" id="modalVerse"></div>
+        <div class="teaching" id="modalTeaching"></div>
+        <div class="k">Acciones prácticas sugeridas</div>
+        <ul id="modalActions"></ul>
       </div>
-    </div>
-  </div>
-
-  <div id="guideToast" class="guideToast" aria-live="polite">
-    <div class="guideText">
-      <div class="g1" id="guideTitle">Lectura guiada</div>
-      <div class="g2" id="guideBody">—</div>
-    </div>
-    <div class="miniRow">
-      <button id="btnGuidePrev" type="button">Atrás</button>
-      <button id="btnGuideNext" class="primary" type="button">Siguiente</button>
-      <button id="btnGuideStop" type="button">Salir</button>
     </div>
   </div>
 
   <script>
+    // =========================
+    // CONFIG
+    // =========================
     const JSON_PATH = "./viga-mujer.json";
-    const STORAGE_KEY_CURRENT = "viga-mujer_current";
-    const STORAGE_KEY_PREV = "viga-mujer_prev";
+    const STORAGE_KEY_LAST = "viga-mujer:lastResult";
+    const STORAGE_KEY_PREV = "viga-mujer:prevResult";
 
-    const dom = {
-      testTitle: document.getElementById("testTitle"),
-      testSubtitle: document.getElementById("testSubtitle"),
-      introText: document.getElementById("introText"),
-      sectionsContainer: document.getElementById("sectionsContainer"),
-      pillProgress: document.getElementById("pillProgress"),
-      pillGlobal: document.getElementById("pillGlobal"),
-      pillDate: document.getElementById("pillDate"),
-      pillAnswered: document.getElementById("pillAnswered"),
-      pillSaved: document.getElementById("pillSaved"),
-      pillCompare: document.getElementById("pillCompare"),
+    // =========================
+    // STATE
+    // =========================
+    let DATA = null;
+    let ANSWERS = {}; // questionId -> score (0..5)
+    let LAST_RESULT = null;
+    let GUIDED = { on:false, step:0, timer:null };
 
-      btnGuide: document.getElementById("btnGuide"),
-      btnResult: document.getElementById("btnResult"),
-      btnTxt: document.getElementById("btnTxt"),
-      btnPdf: document.getElementById("btnPdf"),
-      btnPng: document.getElementById("btnPng"),
-      btnReset: document.getElementById("btnReset"),
+    // =========================
+    // DOM
+    // =========================
+    const appTitle = document.getElementById("appTitle");
+    const appSub = document.getElementById("appSub");
+    const metaPills = document.getElementById("metaPills");
+    const sectionsRoot = document.getElementById("sectionsRoot");
+    const loadingState = document.getElementById("loadingState");
 
-      resultPanel: document.getElementById("resultPanel"),
-      badgeGlobal: document.getElementById("badgeGlobal"),
-      badgeText: document.getElementById("badgeText"),
-      dotBadge: document.getElementById("dotBadge"),
-      resultHeadline: document.getElementById("resultHeadline"),
-      resultSummary: document.getElementById("resultSummary"),
-      resultTbody: document.getElementById("resultTbody"),
-      planTbody: document.getElementById("planTbody"),
+    const btnShowResult = document.getElementById("btnShowResult");
+    const btnDownloadTxt = document.getElementById("btnDownloadTxt");
+    const btnDownloadPdf = document.getElementById("btnDownloadPdf");
+    const btnDownloadPng = document.getElementById("btnDownloadPng");
+    const btnReset = document.getElementById("btnReset");
+    const btnGuided = document.getElementById("btnGuided");
 
-      kpiGlobal: document.getElementById("kpiGlobal"),
-      kpiGlobalHint: document.getElementById("kpiGlobalHint"),
-      barGlobal: document.getElementById("barGlobal"),
-      dotGlobal: document.getElementById("dotGlobal"),
-      kpiAxis: document.getElementById("kpiAxis"),
-      kpiAxisHint: document.getElementById("kpiAxisHint"),
-      barAxis: document.getElementById("barAxis"),
-      dotAxis: document.getElementById("dotAxis"),
+    const resultsRoot = document.getElementById("resultsRoot");
+    const resultPills = document.getElementById("resultPills");
+    const resultHint = document.getElementById("resultHint");
 
-      tooltip: document.getElementById("tooltip"),
-      tipTitle: document.getElementById("tipTitle"),
-      tipBody: document.getElementById("tipBody"),
+    const tooltip = document.getElementById("tooltip");
+    const porticoSvg = document.getElementById("porticoSvg");
 
-      modalBackdrop: document.getElementById("contextModal"),
-      btnCloseModal: document.getElementById("btnCloseModal"),
-      modalTitle: document.getElementById("modalTitle"),
-      modalMeta: document.getElementById("modalMeta"),
-      modalTeaching: document.getElementById("modalTeaching"),
-      modalVerse: document.getElementById("modalVerse"),
-      modalActions: document.getElementById("modalActions"),
+    const elCimiento = document.getElementById("elCimiento");
+    const elColumna = document.getElementById("elColumna");
+    const elViga = document.getElementById("elViga");
 
-      guideToast: document.getElementById("guideToast"),
-      guideTitle: document.getElementById("guideTitle"),
-      guideBody: document.getElementById("guideBody"),
-      btnGuidePrev: document.getElementById("btnGuidePrev"),
-      btnGuideNext: document.getElementById("btnGuideNext"),
-      btnGuideStop: document.getElementById("btnGuideStop"),
+    const nodeComunion = document.getElementById("nodeComunion");
+    const nodeCongregacion = document.getElementById("nodeCongregacion");
+    const nodeInterseccion = document.getElementById("nodeInterseccion");
 
-      // SVG
-      porticoSvg: document.getElementById("porticoSvg"),
-      elCimiento: document.getElementById("elCimiento"),
-      elColumna: document.getElementById("elColumna"),
-      elViga: document.getElementById("elViga"),
-      prevCimiento: document.getElementById("prevCimiento"),
-      prevColumna: document.getElementById("prevColumna"),
-      prevViga: document.getElementById("prevViga"),
-      nComunion: document.getElementById("nComunion"),
-      nCongregacion: document.getElementById("nCongregacion"),
-      nInterseccion: document.getElementById("nInterseccion"),
-      haloComunion: document.getElementById("haloComunion"),
-      haloCongregacion: document.getElementById("haloCongregacion"),
-      haloInterseccion: document.getElementById("haloInterseccion"),
-      deltaComunion: document.getElementById("deltaComunion"),
-      deltaCongregacion: document.getElementById("deltaCongregacion"),
-      deltaInterseccion: document.getElementById("deltaInterseccion"),
-    };
+    const haloComunion = document.getElementById("haloComunion");
+    const haloCongregacion = document.getElementById("haloCongregacion");
+    const haloInterseccion = document.getElementById("haloInterseccion");
 
-    let appData = null;
-    let answers = {}; // { "sectionId": [0..5 or null] }
-    let guide = { active:false, step:0, steps:[] };
+    const prevOverlay = document.getElementById("prevOverlay");
 
-    function safeNowISO(){
-      const d = new Date();
-      const pad = (n)=> String(n).padStart(2,"0");
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    }
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalClose = document.getElementById("modalClose");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalSubtitle = document.getElementById("modalSubtitle");
+    const modalVerse = document.getElementById("modalVerse");
+    const modalTeaching = document.getElementById("modalTeaching");
+    const modalActions = document.getElementById("modalActions");
 
+    // =========================
+    // HELPERS
+    // =========================
     function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-    function round1(n){ return Math.round(n*10)/10; }
-
-    function bandFromPct(pct){
-      if (pct >= 80) return { key:"aligned", label:"🟢 Alineado", color:"var(--ok)" };
-      if (pct >= 60) return { key:"adjust", label:"🟡 Ajuste", color:"var(--warn)" };
-      if (pct >= 40) return { key:"risk", label:"🟠 Riesgo", color:"var(--risk)" };
-      return { key:"critical", label:"🔴 Crítico", color:"var(--crit)" };
+    function nowISO(){ return new Date().toISOString().slice(0,10); }
+    function fmtDateLong(){
+      const d = new Date();
+      const opts = {year:"numeric", month:"long", day:"2-digit"};
+      return d.toLocaleDateString("es-ES", opts);
     }
-
-    function dotClassFromBandKey(key){
-      if (key==="aligned") return "ok";
-      if (key==="adjust") return "warn";
-      if (key==="risk") return "risk";
+    function safeText(s){ return (s ?? "").toString(); }
+    function avg(arr){
+      if(!arr.length) return 0;
+      return arr.reduce((a,b)=>a+b,0)/arr.length;
+    }
+    function percentFromAvg(a){ return Math.round((clamp(a,0,5)/5)*100); }
+    function bandByPercent(pct){
+      const bands = DATA?.rubrics?.globalBands || [];
+      for(const b of bands){
+        if(pct >= b.minPercent && pct <= b.maxPercent) return b;
+      }
+      return bands[bands.length-1] || {key:"critical", label:"🔴 Crítico"};
+    }
+    function bandByAvg(a){
+      const bands = DATA?.rubrics?.sectionBands || [];
+      for(const b of bands){
+        if(a >= b.minAvg && a <= b.maxAvg) return b;
+      }
+      return bands[bands.length-1] || {key:"critical", label:"🔴 Crítico"};
+    }
+    function badgeClass(key){
+      if(key==="aligned") return "good";
+      if(key==="adjust") return "warn";
+      if(key==="risk") return "risk";
       return "crit";
     }
-
-    function pctFromScore(score, maxScore){
-      if (maxScore <= 0) return 0;
-      return clamp((score / maxScore) * 100, 0, 100);
+    function axisColorKey(key){
+      if(key==="comunion") return "--good";
+      if(key==="congregacion") return "--warn";
+      return "--risk";
+    }
+    function getAxisInfo(axisKey){
+      return DATA?.porticoModel?.axes?.[axisKey] || null;
+    }
+    function getManualForSection(sectionId){
+      return (DATA?.pastoralManual || []).find(m => m.sectionId === sectionId) || null;
+    }
+    function getManualForAxis(axisKey){
+      const sections = (DATA?.sections || []).filter(s => s.axis === axisKey);
+      // Tomar el manual del primer section del eje como base contextual (y en modal mostrarlo como “enfoque”)
+      const first = sections.sort((a,b)=>a.order-b.order)[0];
+      if(!first) return null;
+      return getManualForSection(first.id);
+    }
+    function downloadBlob(name, content, mime){
+      const blob = new Blob([content], {type:mime});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
     }
 
-    function getAxisLabel(axisKey){
-      const map = {
-        comunion: "Comunión",
-        congregacion: "Congregación",
-        interseccion: "Intersección"
-      };
-      return map[axisKey] || axisKey;
+    // =========================
+    // LOAD DATA
+    // =========================
+    async function init(){
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      DATA = await res.json();
+
+      // minimal validations (silent)
+      if(!DATA?.sections?.length) throw new Error("JSON inválido: no sections");
+      if((DATA.pastoralManual||[]).length !== (DATA.sections||[]).length) throw new Error("JSON inválido: pastoralManual no coincide 1:1");
+
+      appTitle.textContent = safeText(DATA.meta?.title || "Auditoría");
+      appSub.textContent = `${safeText(DATA.meta?.chapterRef || "")} • escala ${DATA.scale?.min ?? 0}–${DATA.scale?.max ?? 5} • ${safeText(DATA.meta?.fileName || "")}`;
+
+      renderMeta();
+      renderSections();
+      hydratePrevOverlayFromStorage();
+      wirePorticoInteractivity();
+      wireButtons();
+
+      loadingState?.remove?.();
+      updateButtonsState();
+      updatePorticoVisual(null);
     }
 
-    function getAxisElementBundle(axisKey){
-      if (axisKey === "comunion") return { el: dom.elCimiento, node: dom.nComunion, halo: dom.haloComunion, delta: dom.deltaComunion };
-      if (axisKey === "congregacion") return { el: dom.elColumna, node: dom.nCongregacion, halo: dom.haloCongregacion, delta: dom.deltaCongregacion };
-      return { el: dom.elViga, node: dom.nInterseccion, halo: dom.haloInterseccion, delta: dom.deltaInterseccion };
-    }
-
-    function saveCurrent(){
-      try{
-        const payload = {
-          ts: Date.now(),
-          answers
-        };
-        localStorage.setItem(STORAGE_KEY_CURRENT, JSON.stringify(payload));
-      }catch(e){}
-    }
-
-    function loadCurrent(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY_CURRENT);
-        if (!raw) return false;
-        const obj = JSON.parse(raw);
-        if (!obj || typeof obj !== "object" || !obj.answers) return false;
-        answers = obj.answers;
-        return true;
-      }catch(e){
-        return false;
+    function renderMeta(){
+      metaPills.innerHTML = "";
+      const pills = [
+        {k:"Archivo", v: DATA.meta?.fileName},
+        {k:"Versión", v: DATA.meta?.version},
+        {k:"Fecha", v: DATA.meta?.createdAt},
+        {k:"Capítulo", v: DATA.meta?.chapterRef}
+      ];
+      for(const p of pills){
+        const el = document.createElement("div");
+        el.className = "pill";
+        el.innerHTML = `<span class="muted">${safeText(p.k)}:</span> <b>${safeText(p.v)}</b>`;
+        metaPills.appendChild(el);
       }
     }
 
-    function setPreviousFromCurrentIfValid(){
-      const computed = computeScores();
-      if (!computed || computed.answeredCount === 0) return false;
-      const prevPayload = {
-        ts: Date.now(),
-        axes: computed.axes,
-        global: computed.global
-      };
-      try{
-        localStorage.setItem(STORAGE_KEY_PREV, JSON.stringify(prevPayload));
-        return true;
-      }catch(e){
-        return false;
-      }
-    }
+    function renderSections(){
+      sectionsRoot.innerHTML = "";
+      const sections = (DATA.sections || []).slice().sort((a,b)=>a.order-b.order);
 
-    function loadPrevious(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY_PREV);
-        if (!raw) return null;
-        const obj = JSON.parse(raw);
-        if (!obj || typeof obj !== "object" || !obj.axes) return null;
-        return obj;
-      }catch(e){
-        return null;
-      }
-    }
+      for(const sec of sections){
+        const block = document.createElement("div");
+        block.className = "sec";
+        block.id = `sec_${sec.id}`;
 
-    async function loadJSON(){
-      const res = await fetch(JSON_PATH, { cache: "no-store" });
-      if (!res.ok) throw new Error(`No se pudo cargar el JSON (${res.status}).`);
-      const data = await res.json();
-      return data;
-    }
-
-    function initDefaultAnswers(){
-      answers = {};
-      for (const s of appData.sections){
-        answers[s.id] = new Array(s.questions.length).fill(null);
-      }
-    }
-
-    function answeredCount(){
-      let c = 0;
-      let total = 0;
-      for (const sid of Object.keys(answers)){
-        const arr = answers[sid] || [];
-        for (const v of arr){
-          total += 1;
-          if (v !== null && v !== undefined) c += 1;
-        }
-      }
-      return { c, total };
-    }
-
-    function updateProgressPill(){
-      const { c, total } = answeredCount();
-      const pct = total ? Math.round((c/total)*100) : 0;
-      dom.pillProgress.innerHTML = `<strong>Avance:</strong> ${pct}%`;
-      const canExport = c > 0;
-      dom.btnTxt.disabled = !canExport;
-      dom.btnPdf.disabled = !canExport;
-      dom.btnPng.disabled = !canExport;
-    }
-
-    function render(){
-      dom.testTitle.textContent = appData.meta?.title || "Auditoría diagnóstica pastoral";
-      dom.testSubtitle.textContent = appData.meta?.subtitle || "Diagnóstico sin backend (0–5).";
-
-      dom.sectionsContainer.innerHTML = "";
-      for (const section of appData.sections){
-        const sec = document.createElement("div");
-        sec.className = "section";
-        sec.id = `sec_${section.id}`;
-
-        const axisLabel = getAxisLabel(section.axis);
-        const axisPill = `<span class="pill"><strong>Eje:</strong> ${axisLabel}</span>`;
-        const secPill = `<span class="pill"><strong>Enfoque:</strong> ${section.focus}</span>`;
-
+        const axisInfo = getAxisInfo(sec.axis);
         const top = document.createElement("div");
-        top.className = "sectionTop";
+        top.className = "secTop";
         top.innerHTML = `
-          <div class="sectionTitle">
-            <h3>${section.title}</h3>
-            <p class="help">${section.prompt}</p>
+          <div>
+            <h3>${sec.order}. ${safeText(sec.title)}</h3>
+            <div class="metaLine">Eje: <b>${safeText(axisInfo?.label || sec.axis)}</b> • Elemento: <b>${safeText(axisInfo?.element || "")}</b></div>
           </div>
-          <div class="axisTag">
-            ${axisPill}
-            ${secPill}
-          </div>
+          <div class="pill"><span class="muted">Estado:</span> <b id="band_${sec.id}">—</b></div>
         `;
-        sec.appendChild(top);
 
-        section.questions.forEach((q, idx)=>{
+        const intro = document.createElement("div");
+        intro.className = "mini";
+        intro.textContent = safeText(sec.intro || "");
+
+        const verse = document.createElement("div");
+        verse.className = "verse";
+        verse.textContent = safeText(sec.verse || "");
+
+        block.appendChild(top);
+        block.appendChild(intro);
+        block.appendChild(verse);
+
+        for(const q of (sec.questions||[])){
+          const qEl = document.createElement("div");
+          qEl.className = "q";
+          qEl.id = `q_${q.id}`;
+
+          const text = document.createElement("div");
+          text.className = "qText";
+          text.textContent = safeText(q.text);
+
+          const obs = document.createElement("div");
+          obs.className = "qObs";
+          obs.textContent = safeText(q.observable);
+
           const row = document.createElement("div");
-          row.className = "q";
-          const qText = document.createElement("div");
-          qText.className = "qText";
-          qText.textContent = q.text;
+          row.className = "scaleRow";
+          row.setAttribute("role","group");
+          row.setAttribute("aria-label", `Puntaje para ${q.id}`);
 
-          const scale = document.createElement("div");
-          scale.className = "scale";
-          for (let k=0;k<=5;k++){
-            const b = document.createElement("div");
-            b.className = "opt";
-            b.textContent = String(k);
-            b.setAttribute("role","button");
-            b.setAttribute("tabindex","0");
-            b.setAttribute("aria-label", `Puntuar ${k}`);
-            if (answers[section.id] && answers[section.id][idx] === k) b.classList.add("sel");
-
-            const setVal = ()=>{
-              answers[section.id][idx] = k;
-              for (const child of scale.children) child.classList.remove("sel");
-              b.classList.add("sel");
-              saveCurrent();
-              updateProgressPill();
-              updateLiveDiagnostics();
-            };
-            b.addEventListener("click", setVal);
-            b.addEventListener("keydown", (ev)=>{
-              if (ev.key === "Enter" || ev.key === " "){
-                ev.preventDefault();
-                setVal();
-              }
+          for(let v=DATA.scale.min; v<=DATA.scale.max; v++){
+            const p = document.createElement("div");
+            p.className = "scorePill";
+            p.textContent = v;
+            p.dataset.qid = q.id;
+            p.dataset.val = String(v);
+            p.tabIndex = 0;
+            p.addEventListener("click", ()=> setAnswer(q.id, v));
+            p.addEventListener("keydown", (e)=>{
+              if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setAnswer(q.id, v); }
             });
-
-            scale.appendChild(b);
+            row.appendChild(p);
           }
 
-          row.appendChild(qText);
-          row.appendChild(scale);
-          sec.appendChild(row);
-        });
+          qEl.appendChild(text);
+          qEl.appendChild(obs);
+          qEl.appendChild(row);
 
-        dom.sectionsContainer.appendChild(sec);
+          block.appendChild(qEl);
+        }
+
+        sectionsRoot.appendChild(block);
       }
-
-      updateProgressPill();
-      updateLiveDiagnostics();
     }
 
-    function computeScores(){
-      const maxPerQ = appData.scale?.max ?? 5;
-      const minPerQ = appData.scale?.min ?? 0;
+    function setAnswer(qid, val){
+      ANSWERS[qid] = clamp(val, 0, 5);
+      const qWrap = document.getElementById(`q_${qid}`);
+      if(qWrap){
+        qWrap.querySelectorAll(".scorePill").forEach(el=>{
+          el.classList.toggle("on", Number(el.dataset.val) === ANSWERS[qid]);
+        });
+      }
+      updateSectionBadgesLive();
+      updateButtonsState();
+    }
 
-      const sections = [];
-      let answeredCount = 0;
-      let totalQuestions = 0;
-
-      const axes = {
-        comunion: { score:0, max:0, sections:[] },
-        congregacion: { score:0, max:0, sections:[] },
-        interseccion: { score:0, max:0, sections:[] }
-      };
-
-      for (const s of appData.sections){
-        const a = answers[s.id] || [];
-        const maxScore = a.length * (maxPerQ - minPerQ);
-        let score = 0;
-        let answeredHere = 0;
-        for (const v of a){
-          totalQuestions += 1;
-          if (v !== null && v !== undefined){
-            answeredCount += 1;
-            answeredHere += 1;
-            score += (v - minPerQ);
-          }
+    function updateSectionBadgesLive(){
+      const sections = (DATA.sections || []).slice().sort((a,b)=>a.order-b.order);
+      for(const sec of sections){
+        const qids = (sec.questions||[]).map(q=>q.id);
+        const scores = qids.map(id => (id in ANSWERS) ? ANSWERS[id] : null).filter(v=>v!==null);
+        const el = document.getElementById(`band_${sec.id}`);
+        if(!el) continue;
+        if(scores.length === 0){
+          el.textContent = "—";
+          continue;
         }
-        const pct = maxScore ? pctFromScore(score, maxScore) : 0;
-        const band = bandFromPct(pct);
+        const a = avg(scores);
+        const b = bandByAvg(a);
+        el.textContent = `${b.label} (${a.toFixed(2)})`;
+      }
+    }
 
-        const sectionRow = {
-          id: s.id,
+    function updateButtonsState(){
+      const totalQuestions = (DATA.sections||[]).reduce((n,s)=>n + (s.questions||[]).length, 0);
+      const answered = Object.keys(ANSWERS).length;
+      const complete = answered === totalQuestions;
+
+      btnShowResult.disabled = !complete;
+      const hasResult = !!LAST_RESULT;
+      btnDownloadTxt.disabled = !hasResult;
+      btnDownloadPdf.disabled = !hasResult;
+      btnDownloadPng.disabled = !hasResult;
+    }
+
+    // =========================
+    // SCORING & RESULTS
+    // =========================
+    function computeResults(){
+      const sections = (DATA.sections||[]).slice().sort((a,b)=>a.order-b.order);
+
+      const sectionResults = sections.map(sec=>{
+        const scores = (sec.questions||[]).map(q => ANSWERS[q.id] ?? null);
+        const filled = scores.filter(v=>v!==null);
+        const a = avg(filled);
+        const pct = percentFromAvg(a);
+        const band = bandByAvg(a);
+        return {
+          id: sec.id,
+          order: sec.order,
+          title: sec.title,
+          axis: sec.axis,
+          verse: sec.verse,
+          avg: Number(a.toFixed(3)),
+          percent: pct,
+          bandKey: band.key,
+          bandLabel: band.label,
+          bandSignal: band.signal
+        };
+      });
+
+      const byAxis = {comunion:[], congregacion:[], interseccion:[]};
+      sectionResults.forEach(r => byAxis[r.axis]?.push(r.avg));
+
+      const axisAverages = {};
+      const axisPercents = {};
+      const axisBands = {};
+      for(const k of Object.keys(byAxis)){
+        const a = avg(byAxis[k]);
+        axisAverages[k] = Number(a.toFixed(3));
+        axisPercents[k] = percentFromAvg(a);
+        axisBands[k] = bandByPercent(axisPercents[k]);
+      }
+
+      const globalAvg = avg(Object.values(axisAverages));
+      const globalPercent = percentFromAvg(globalAvg);
+      const globalBand = bandByPercent(globalPercent);
+
+      // top needs: lowest 3 sections
+      const needs = sectionResults.slice().sort((a,b)=>a.avg-b.avg).slice(0,3).map(s=>{
+        const manual = getManualForSection(s.id);
+        return {
+          sectionId: s.id,
           title: s.title,
           axis: s.axis,
-          focus: s.focus,
-          verse: s.verse,
-          answered: answeredHere,
-          total: a.length,
-          score,
-          maxScore,
-          pct,
-          band
+          bandLabel: s.bandLabel,
+          avg: s.avg,
+          percent: s.percent,
+          actions: (manual?.actions || []).slice(0,2),
+          keyVerse: manual?.keyVerse || s.verse || ""
         };
-        sections.push(sectionRow);
-
-        const ax = axes[s.axis];
-        ax.score += score;
-        ax.max += maxScore;
-        ax.sections.push(sectionRow);
-      }
-
-      for (const axKey of Object.keys(axes)){
-        axes[axKey].pct = axes[axKey].max ? pctFromScore(axes[axKey].score, axes[axKey].max) : 0;
-        axes[axKey].band = bandFromPct(axes[axKey].pct);
-      }
-
-      const globalMax = Object.values(axes).reduce((acc,x)=> acc + x.max, 0);
-      const globalScore = Object.values(axes).reduce((acc,x)=> acc + x.score, 0);
-      const globalPct = globalMax ? pctFromScore(globalScore, globalMax) : 0;
-      const globalBand = bandFromPct(globalPct);
-
-      return {
-        answeredCount,
-        totalQuestions,
-        sections,
-        axes,
-        global: { score: globalScore, max: globalMax, pct: globalPct, band: globalBand }
-      };
-    }
-
-    function axisTooltipText(axisKey, computed){
-      const ax = computed.axes[axisKey];
-      const pct = Math.round(ax.pct);
-      if (axisKey === "comunion"){
-        return {
-          title: "Cimiento / Comunión",
-          body: `Estado: ${pct}% · ${ax.band.label.replace("🟢 ","").replace("🟡 ","").replace("🟠 ","").replace("🔴 ","")}`
-        };
-      }
-      if (axisKey === "congregacion"){
-        return {
-          title: "Columna / Congregación",
-          body: `Alineación del varón: ${pct}% · Riesgo: ${ax.band.label.replace("🟢 ","").replace("🟡 ","").replace("🟠 ","").replace("🔴 ","")}`
-        };
-      }
-      return {
-        title: "Viga / Intersección",
-        body: `Sobrecarga visible: ${Math.round(100-ax.pct)}% · Estado: ${ax.band.label.replace("🟢 ","").replace("🟡 ","").replace("🟠 ","").replace("🔴 ","")}`
-      };
-    }
-
-    function nodeTooltipText(axisKey, computed){
-      const ax = computed.axes[axisKey];
-      const pct = Math.round(ax.pct);
-      let diag = "";
-      if (axisKey==="comunion") diag = pct >= 80 ? "Reposo en Cristo" : (pct >= 60 ? "Reposo intermitente" : (pct >= 40 ? "Alma fatigada" : "Reposo quebrado"));
-      if (axisKey==="congregacion") diag = pct >= 80 ? "Cobertura presente" : (pct >= 60 ? "Cobertura irregular" : (pct >= 40 ? "Fallas de liderazgo" : "Ausencia crítica"));
-      if (axisKey==="interseccion") diag = pct >= 80 ? "Flujo sano" : (pct >= 60 ? "Tensión contenida" : (pct >= 40 ? "Transferencia rota" : "Acumulación peligrosa"));
-      return { title: getAxisLabel(axisKey), body: `${diag} · ${pct}%` };
-    }
-
-    function showTooltip(x, y, title, body){
-      dom.tipTitle.textContent = title;
-      dom.tipBody.textContent = body;
-      const pad = 14;
-      dom.tooltip.style.transform = `translate(${x + pad}px, ${y + pad}px)`;
-      dom.tooltip.setAttribute("aria-hidden","false");
-    }
-
-    function hideTooltip(){
-      dom.tooltip.style.transform = "translate(-9999px,-9999px)";
-      dom.tooltip.setAttribute("aria-hidden","true");
-    }
-
-    function openContextPanel(kind, axisKey){
-      const computed = computeScores();
-      const axisLabel = getAxisLabel(axisKey);
-
-      const manual = appData.pastoralManual || [];
-      const manualItems = manual.filter(m => m.axis === axisKey);
-
-      let teaching = "";
-      let verse = "";
-      let actions = [];
-      if (manualItems.length){
-        const m = manualItems[0];
-        teaching = m.miniTeaching;
-        verse = m.verse;
-        actions = m.actions || [];
-      }else{
-        teaching = "Este eje requiere lectura pastoral, pero falta el manual correspondiente.";
-        verse = appData.porticoModel?.axes?.[axisKey]?.verse || "—";
-        actions = [];
-      }
-
-      const ax = computed.axes[axisKey];
-      const pct = Math.round(ax.pct);
-      const band = ax.band;
-
-      const title = kind === "element"
-        ? `${kindLabelFromAxis(axisKey)} — Panel contextual`
-        : `${axisLabel} — Panel contextual`;
-
-      dom.modalTitle.textContent = title;
-      dom.modalMeta.textContent = `${axisLabel} · ${band.label} · ${pct}%`;
-
-      dom.modalTeaching.textContent = teaching;
-
-      dom.modalVerse.textContent = verse;
-
-      dom.modalActions.innerHTML = "";
-      const useActions = actions.slice(0,2);
-      if (!useActions.length){
-        useActions.push("Toma 10 minutos y escribe qué estás percibiendo, y a quién lo vas a transferir con respeto y claridad.");
-        useActions.push("Establece un momento breve (15–20 min) para expresar el clima del hogar sin acusación, solo con hechos y necesidades.");
-      }
-      useActions.forEach((a)=>{
-        const div = document.createElement("div");
-        div.className = "actionItem";
-        div.textContent = a;
-        dom.modalActions.appendChild(div);
       });
 
-      dom.modalBackdrop.classList.add("show");
-    }
-
-    function kindLabelFromAxis(axisKey){
-      if (axisKey==="comunion") return "Cimiento / Comunión";
-      if (axisKey==="congregacion") return "Columna / Congregación";
-      return "Viga / Intersección";
-    }
-
-    function closeContextPanel(){
-      dom.modalBackdrop.classList.remove("show");
-    }
-
-    function clearAxisAnimations(el){
-      el.classList.remove("pulseSoft","microVibe","dashCrit");
-      el.style.strokeDasharray = "";
-      el.style.strokeDashoffset = "";
-    }
-
-    function applyAxisStateVisual(axisKey, computed){
-      const ax = computed.axes[axisKey];
-      const bundle = getAxisElementBundle(axisKey);
-      const el = bundle.el;
-      clearAxisAnimations(el);
-
-      if (ax.band.key === "adjust"){
-        el.classList.add("pulseSoft");
-      }else if (ax.band.key === "risk"){
-        el.classList.add("microVibe");
-      }else if (ax.band.key === "critical"){
-        el.classList.add("dashCrit");
-      }
-    }
-
-    function setAxisColor(el, bandKey){
-      if (bandKey === "aligned") el.setAttribute("stroke", "rgba(25,195,125,.92)");
-      else if (bandKey === "adjust") el.setAttribute("stroke", "rgba(244,212,77,.92)");
-      else if (bandKey === "risk") el.setAttribute("stroke", "rgba(255,159,67,.92)");
-      else el.setAttribute("stroke", "rgba(255,77,77,.92)");
-    }
-
-    function setNodeColor(node, bandKey){
-      if (bandKey === "aligned") node.setAttribute("fill", "rgba(25,195,125,.95)");
-      else if (bandKey === "adjust") node.setAttribute("fill", "rgba(244,212,77,.95)");
-      else if (bandKey === "risk") node.setAttribute("fill", "rgba(255,159,67,.95)");
-      else node.setAttribute("fill", "rgba(255,77,77,.95)");
-      node.setAttribute("stroke", "rgba(0,0,0,.35)");
-      node.setAttribute("stroke-width","2");
-    }
-
-    function updateTensionHalos(computed){
-      const p = {
-        comunion: computed.axes.comunion.pct,
-        congregacion: computed.axes.congregacion.pct,
-        interseccion: computed.axes.interseccion.pct
+      return {
+        meta:{
+          fileName: DATA.meta?.fileName,
+          title: DATA.meta?.title,
+          createdAt: nowISO(),
+          createdAtLong: fmtDateLong()
+        },
+        totals:{
+          globalAvg: Number(globalAvg.toFixed(3)),
+          globalPercent,
+          globalBandKey: globalBand.key,
+          globalBandLabel: globalBand.label,
+          globalSummary: globalBand.summary,
+          pastoralTone: globalBand.pastoralTone
+        },
+        axes:{
+          comunion:{avg: axisAverages.comunion, percent: axisPercents.comunion, bandKey: axisBands.comunion.key, bandLabel: axisBands.comunion.label},
+          congregacion:{avg: axisAverages.congregacion, percent: axisPercents.congregacion, bandKey: axisBands.congregacion.key, bandLabel: axisBands.congregacion.label},
+          interseccion:{avg: axisAverages.interseccion, percent: axisPercents.interseccion, bandKey: axisBands.interseccion.key, bandLabel: axisBands.interseccion.label}
+        },
+        sections: sectionResults,
+        needs
       };
+    }
 
-      const diffs = [
-        { a:"comunion", b:"congregacion", d: Math.abs(p.comunion - p.congregacion) },
-        { a:"congregacion", b:"interseccion", d: Math.abs(p.congregacion - p.interseccion) },
-        { a:"comunion", b:"interseccion", d: Math.abs(p.comunion - p.interseccion) }
+    function renderResults(result){
+      resultPills.innerHTML = "";
+      resultsRoot.innerHTML = "";
+
+      const gb = bandByPercent(result.totals.globalPercent);
+      resultHint.textContent = gb.summary || "";
+
+      const banner = document.createElement("div");
+      banner.className = "resultBanner";
+      banner.innerHTML = `
+        <div>
+          <div style="font-weight:950; font-size:14px; letter-spacing:.2px;">Diagnóstico global: <span class="badge ${badgeClass(gb.key)}">${gb.label}</span></div>
+          <div class="muted" style="margin-top:6px; font-size:12px;">${safeText(gb.summary)} • Enfoque: <b>${safeText(gb.pastoralTone)}</b></div>
+          <div class="muted" style="margin-top:4px; font-size:12px;">Fecha: <b>${safeText(result.meta.createdAtLong)}</b></div>
+        </div>
+        <div class="pill"><span class="muted">Global:</span> <b>${result.totals.globalPercent}%</b></div>
+      `;
+      resultsRoot.appendChild(banner);
+
+      // Pills axes
+      const axPills = [
+        {k:"Comunión (Cimiento)", v:`${result.axes.comunion.percent}%`, cls: badgeClass(result.axes.comunion.bandKey)},
+        {k:"Congregación (Columna)", v:`${result.axes.congregacion.percent}%`, cls: badgeClass(result.axes.congregacion.bandKey)},
+        {k:"Intersección (Viga)", v:`${result.axes.interseccion.percent}%`, cls: badgeClass(result.axes.interseccion.bandKey)}
       ];
+      for(const p of axPills){
+        const el = document.createElement("div");
+        el.className = `badge ${p.cls}`;
+        el.textContent = `${p.k}: ${p.v}`;
+        resultPills.appendChild(el);
+      }
 
-      dom.haloComunion.style.opacity = 0;
-      dom.haloCongregacion.style.opacity = 0;
-      dom.haloInterseccion.style.opacity = 0;
+      // Axis table
+      const axisTable = document.createElement("table");
+      axisTable.innerHTML = `
+        <thead>
+          <tr>
+            <th>Eje</th>
+            <th>Elemento</th>
+            <th>Estado</th>
+            <th>Promedio</th>
+            <th>%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Comunión</b></td>
+            <td>Cimiento</td>
+            <td>${safeText(result.axes.comunion.bandLabel)}</td>
+            <td>${result.axes.comunion.avg.toFixed(2)}</td>
+            <td><b>${result.axes.comunion.percent}%</b></td>
+          </tr>
+          <tr>
+            <td><b>Congregación</b></td>
+            <td>Columna</td>
+            <td>${safeText(result.axes.congregacion.bandLabel)}</td>
+            <td>${result.axes.congregacion.avg.toFixed(2)}</td>
+            <td><b>${result.axes.congregacion.percent}%</b></td>
+          </tr>
+          <tr>
+            <td><b>Intersección</b></td>
+            <td>Viga</td>
+            <td>${safeText(result.axes.interseccion.bandLabel)}</td>
+            <td>${result.axes.interseccion.avg.toFixed(2)}</td>
+            <td><b>${result.axes.interseccion.percent}%</b></td>
+          </tr>
+        </tbody>
+      `;
+      resultsRoot.appendChild(axisTable);
 
-      const max = diffs.sort((x,y)=> y.d-x.d)[0];
-      if (!max || max.d <= 20) return;
+      // Section table
+      const secTable = document.createElement("table");
+      const rows = result.sections.map(s=>`
+        <tr>
+          <td><b>${s.order}. ${safeText(s.title)}</b><div class="muted" style="margin-top:4px">${safeText(getAxisInfo(s.axis)?.label || s.axis)}</div></td>
+          <td>${safeText(s.bandLabel)}<div class="muted" style="margin-top:4px">${safeText(s.bandSignal)}</div></td>
+          <td>${s.avg.toFixed(2)}</td>
+          <td><b>${s.percent}%</b></td>
+        </tr>
+      `).join("");
 
-      const dominant = p[max.a] >= p[max.b] ? max.a : max.b;
-      const color = computed.axes[dominant].band.key === "aligned" ? "rgba(25,195,125,.35)"
-                  : computed.axes[dominant].band.key === "adjust" ? "rgba(244,212,77,.35)"
-                  : computed.axes[dominant].band.key === "risk" ? "rgba(255,159,67,.35)"
-                  : "rgba(255,77,77,.38)";
+      secTable.innerHTML = `
+        <thead>
+          <tr>
+            <th>Sección</th>
+            <th>Señal</th>
+            <th>Prom.</th>
+            <th>%</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      `;
+      resultsRoot.appendChild(document.createElement("div")).style.height="10px";
+      resultsRoot.appendChild(secTable);
 
-      const haloA = getAxisElementBundle(max.a).halo;
-      const haloB = getAxisElementBundle(max.b).halo;
+      // Plan
+      const plan = document.createElement("div");
+      plan.className = "sec";
+      plan.innerHTML = `<div style="font-weight:950; letter-spacing:.2px; font-size:14px;">Plan de enfoque (3 áreas de presión)</div>
+                        <div class="muted" style="margin-top:6px; font-size:12px;">Prioriza aliviar carga y restaurar flujo: percibir → expresar → transferir → reposar.</div>`;
+      for(const n of result.needs){
+        const ax = getAxisInfo(n.axis);
+        const box = document.createElement("div");
+        box.className = "q";
+        box.innerHTML = `
+          <div class="qText">${safeText(n.title)} <span class="muted">(${safeText(ax?.element || "")})</span></div>
+          <div class="qObs">Estado: <b>${safeText(n.bandLabel)}</b> • ${n.percent}%</div>
+          <div class="verse" style="margin-top:10px;">${safeText(n.keyVerse)}</div>
+          <div class="mini" style="margin-top:8px; font-weight:850; color:rgba(231,240,251,.92)">Acciones sugeridas</div>
+          <div class="mini" style="margin-top:6px;">
+            • ${safeText(n.actions?.[0] || "—")}<br/>
+            • ${safeText(n.actions?.[1] || "—")}
+          </div>
+        `;
+        plan.appendChild(box);
+      }
+      resultsRoot.appendChild(document.createElement("div")).style.height="10px";
+      resultsRoot.appendChild(plan);
 
-      [haloA, haloB].forEach(h=>{
-        h.setAttribute("stroke", color);
-        h.style.opacity = 1;
-        h.classList.add("nodeHalo");
-      });
+      // Before/After deltas (if previous exists)
+      const prev = loadPrevResult();
+      if(prev){
+        const deltas = {
+          comunion: result.axes.comunion.percent - prev.axes.comunion.percent,
+          congregacion: result.axes.congregacion.percent - prev.axes.congregacion.percent,
+          interseccion: result.axes.interseccion.percent - prev.axes.interseccion.percent
+        };
+        const deltaWrap = document.createElement("div");
+        deltaWrap.className = "deltaRow";
+        deltaWrap.innerHTML = `
+          <div class="delta"><b>Antes/Después</b> (medición previa detectada)</div>
+          <div class="delta">Comunión: <b>${fmtDelta(deltas.comunion)}</b></div>
+          <div class="delta">Congregación: <b>${fmtDelta(deltas.congregacion)}</b></div>
+          <div class="delta">Intersección: <b>${fmtDelta(deltas.interseccion)}</b></div>
+        `;
+        resultsRoot.insertBefore(deltaWrap, resultsRoot.children[1] || null);
+      }
     }
 
-    function updateBeforeAfterOverlay(computed){
-      const prev = loadPrevious();
-      const hasPrev = !!prev;
+    function fmtDelta(n){
+      const s = (n>0?"+":"") + n.toString() + "%";
+      return s;
+    }
 
-      if (!hasPrev){
-        dom.prevCimiento.setAttribute("opacity","0");
-        dom.prevColumna.setAttribute("opacity","0");
-        dom.prevViga.setAttribute("opacity","0");
-        dom.deltaComunion.setAttribute("opacity","0");
-        dom.deltaCongregacion.setAttribute("opacity","0");
-        dom.deltaInterseccion.setAttribute("opacity","0");
-        dom.pillCompare.innerHTML = `<strong>Comparación:</strong> apagada`;
-        dom.pillSaved.innerHTML = `<strong>Previo:</strong> —`;
+    // =========================
+    // PÓRTICO: VISUALS + INTERACTIVITY
+    // =========================
+    function clearAxisClasses(el){
+      el.classList.remove("axis-good","axis-warn","axis-risk","axis-crit","pulseSoft","microVibe","dashAnim");
+    }
+    function applyAxisStyle(el, band
+      if(!el || !band) return;
+      clearAxisClasses(el);
+
+      // Color band
+      if(band.key==="aligned") el.classList.add("axis-good");
+      else if(band.key==="adjust") el.classList.add("axis-warn");
+      else if(band.key==="risk") el.classList.add("axis-risk");
+      else el.classList.add("axis-crit");
+
+      // Animation rules (sutil)
+      if(band.key==="adjust") el.classList.add("pulseSoft");
+      if(band.key==="risk") el.classList.add("microVibe");
+      if(band.key==="critical") el.classList.add("dashAnim");
+    }
+
+    function updatePorticoVisual(result){
+      // If no result yet: reset strokes and halos, keep overlays hidden if no prev
+      if(!result){
+        [elCimiento, elColumna, elViga].forEach(el=>{
+          clearAxisClasses(el);
+          el.setAttribute("stroke","rgba(231,240,251,.60)");
+        });
+        [haloComunion, haloCongregacion, haloInterseccion].forEach(h=>{
+          h.classList.remove("on");
+          h.setAttribute("stroke","var(--accent)");
+        });
+        prevOverlay.setAttribute("opacity","0");
         return;
       }
 
-      dom.prevCimiento.setAttribute("opacity","1");
-      dom.prevColumna.setAttribute("opacity","1");
-      dom.prevViga.setAttribute("opacity","1");
-      dom.pillCompare.innerHTML = `<strong>Comparación:</strong> activa`;
+      const ax = result.axes;
+      const bCom = bandByPercent(ax.comunion.percent);
+      const bCon = bandByPercent(ax.congregacion.percent);
+      const bInt = bandByPercent(ax.interseccion.percent);
 
-      const prevDate = new Date(prev.ts || Date.now());
-      const pd = prevDate.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" });
-      dom.pillSaved.innerHTML = `<strong>Previo:</strong> ${pd}`;
+      applyAxisStyle(elCimiento, bCom);
+      applyAxisStyle(elColumna, bCon);
+      applyAxisStyle(elViga, bInt);
 
-      const delta = (axisKey)=>{
-        const now = computed.axes[axisKey]?.pct ?? 0;
-        const old = prev.axes?.[axisKey]?.pct ?? 0;
-        return now - old;
+      // Node tension halos (difference > 20%)
+      const p = {
+        comunion: ax.comunion.percent,
+        congregacion: ax.congregacion.percent,
+        interseccion: ax.interseccion.percent
+      };
+      const keys = Object.keys(p);
+      let maxK = keys[0], minK = keys[0];
+      for(const k of keys){
+        if(p[k] > p[maxK]) maxK = k;
+        if(p[k] < p[minK]) minK = k;
+      }
+      const diff = Math.abs(p[maxK] - p[minK]);
+      const dominant = maxK;
+      const domVar = axisColorKey(dominant);
+
+      // reset halos
+      const haloMap = {
+        comunion: haloComunion,
+        congregacion: haloCongregacion,
+        interseccion: haloInterseccion
+      };
+      for(const k of keys){
+        haloMap[k].classList.remove("on");
+        haloMap[k].setAttribute("stroke","var(--accent)");
+      }
+
+      if(diff > 20){
+        for(const k of keys){
+          haloMap[k].classList.add("on");
+          haloMap[k].setAttribute("stroke", `var(${domVar})`);
+        }
+      }
+
+      // Previous overlay
+      renderPrevOverlayIfAny(result);
+    }
+
+    function axisTooltip(axisKey, kind){
+      const r = LAST_RESULT;
+      const info = getAxisInfo(axisKey);
+      const pct = r ? r.axes?.[axisKey]?.percent : null;
+      const band = r ? bandByPercent(pct) : null;
+
+      if(kind === "element"){
+        if(axisKey==="comunion"){
+          return {
+            line1: `Cimiento / Comunión — ${pct ?? "—"}%`,
+            line2: band ? band.summary : safeText(info?.diagnosticFocus || "")
+          };
+        }
+        if(axisKey==="congregacion"){
+          const risk = band ? (band.key==="risk"||band.key==="critical" ? "Riesgo detectado" : "Sin riesgo crítico") : "—";
+          return {
+            line1: `Columna / Congregación — ${pct ?? "—"}%`,
+            line2: `Alineación del varón • ${risk}`
+          };
+        }
+        // interseccion
+        return {
+          line1: `Viga / Intersección — ${pct ?? "—"}%`,
+          line2: band ? "Sobrecarga y presión visible" : safeText(info?.diagnosticFocus || "")
+        };
+      }
+
+      // node
+      const templates = info?.shortDiagnosisTemplates || [];
+      let diag = safeText(info?.diagnosticFocus || "");
+      if(band){
+        if(band.key==="aligned") diag = templates[0] || diag;
+        else if(band.key==="adjust") diag = templates[1] || diag;
+        else diag = templates[2] || diag;
+      }
+      return {
+        line1: `${safeText(info?.nodeLabel || info?.label || axisKey)} — ${pct ?? "—"}%`,
+        line2: diag
+      };
+    }
+
+    function showTooltipAt(clientX, clientY, html){
+      const pad = 14;
+      tooltip.innerHTML = html;
+      tooltip.classList.add("on");
+
+      const rect = tooltip.getBoundingClientRect();
+      let x = clientX + 12;
+      let y = clientY + 12;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      if(x + rect.width + pad > vw) x = clientX - rect.width - 12;
+      if(y + rect.height + pad > vh) y = clientY - rect.height - 12;
+
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+    }
+
+    function hideTooltip(){
+      tooltip.classList.remove("on");
+    }
+
+    function openModalForAxis(axisKey, sourceLabel){
+      const info = getAxisInfo(axisKey);
+      const manual = getManualForAxis(axisKey);
+
+      modalTitle.textContent = `${safeText(info?.element || "Panel")} — ${safeText(info?.label || axisKey)}`;
+      modalSubtitle.textContent = safeText(sourceLabel || info?.diagnosticFocus || "");
+      modalVerse.textContent = safeText(manual?.keyVerse || info?.keyVerse || "");
+      modalTeaching.textContent = safeText(manual?.miniTeaching || info?.diagnosticFocus || "");
+
+      modalActions.innerHTML = "";
+      const acts = (manual?.actions || []).slice(0,2);
+      for(const a of acts){
+        const li = document.createElement("li");
+        li.textContent = safeText(a);
+        modalActions.appendChild(li);
+      }
+      if(acts.length === 0){
+        const li = document.createElement("li");
+        li.textContent = "Practiquen una conversación breve de transferencia hoy: percibir → expresar → transferir → reposar.";
+        modalActions.appendChild(li);
+      }
+
+      modalBackdrop.classList.add("on");
+      modalBackdrop.setAttribute("aria-hidden","false");
+    }
+
+    function closeModal(){
+      modalBackdrop.classList.remove("on");
+      modalBackdrop.setAttribute("aria-hidden","true");
+    }
+
+    function wirePorticoInteractivity(){
+      const targets = [
+        {el: elCimiento, kind:"element", axis:"comunion"},
+        {el: elColumna, kind:"element", axis:"congregacion"},
+        {el: elViga, kind:"element", axis:"interseccion"},
+        {el: nodeComunion, kind:"node", axis:"comunion"},
+        {el: nodeCongregacion, kind:"node", axis:"congregacion"},
+        {el: nodeInterseccion, kind:"node", axis:"interseccion"}
+      ];
+
+      for(const t of targets){
+        t.el.style.cursor = "pointer";
+
+        const onMove = (e)=>{
+          if(GUIDED.on) return;
+          if(!LAST_RESULT){
+            showTooltipAt(e.clientX, e.clientY, `<div><b>${safeText(getAxisInfo(t.axis)?.element || "")}</b></div><div class="small">Completa el test para ver el estado.</div>`);
+            return;
+          }
+          const tip = axisTooltip(t.axis, t.kind);
+          showTooltipAt(e.clientX, e.clientY, `<div><b>${safeText(tip.line1)}</b></div><div class="small">${safeText(tip.line2)}</div>`);
+        };
+
+        const onEnter = (e)=> onMove(e);
+        const onLeave = ()=> { if(!GUIDED.on) hideTooltip(); };
+
+        t.el.addEventListener("pointerenter", onEnter);
+        t.el.addEventListener("pointermove", onMove);
+        t.el.addEventListener("pointerleave", onLeave);
+
+        // Tap support
+        t.el.addEventListener("pointerdown", (e)=>{
+          if(GUIDED.on) return;
+          if(e.pointerType === "touch"){
+            onMove(e);
+            setTimeout(()=> hideTooltip(), 1400);
+          }
+        }, {passive:true});
+
+        // Click -> contextual panel
+        t.el.addEventListener("click", ()=>{
+          if(!LAST_RESULT){
+            openModalForAxis(t.axis, "Completa el test para habilitar diagnóstico por eje.");
+            return;
+          }
+          const label = (t.kind==="element")
+            ? `Estado actual: ${LAST_RESULT.axes?.[t.axis]?.percent ?? "—"}% • ${safeText(bandByPercent(LAST_RESULT.axes?.[t.axis]?.percent ?? 0).label)}`
+            : `Diagnóstico del nudo: ${safeText(axisTooltip(t.axis, "node").line2)}`;
+
+          openModalForAxis(t.axis, label);
+        });
+      }
+    }
+
+    // =========================
+    // GUIDED MODE
+    // =========================
+    function stopGuided(){
+      GUIDED.on = false;
+      GUIDED.step = 0;
+      if(GUIDED.timer) clearTimeout(GUIDED.timer);
+      GUIDED.timer = null;
+      btnGuided.textContent = "Explícame este diagrama";
+      hideTooltip();
+      // remove temporary emphasis
+      [elCimiento, elColumna, elViga].forEach(el=> el.style.filter = "");
+      [nodeComunion, nodeCongregacion, nodeInterseccion].forEach(el=> el.style.filter = "");
+    }
+
+    function runGuidedStep(step){
+      const steps = [
+        {
+          el: elCimiento,
+          title: "1/4 — Cimiento",
+          text: "Aquí se diagnostica la base: descanso y dependencia de Cristo. Si el cimiento está bajo, todo se vuelve presión."
+        },
+        {
+          el: elColumna,
+          title: "2/4 — Columna",
+          text: "Aquí se ve la alineación del varón: presencia, cobertura y recepción de transferencia. Si la columna reacciona tarde, la viga se sobrecarga."
+        },
+        {
+          el: elViga,
+          title: "3/4 — Viga",
+          text: "Aquí se ve el clima del hogar: sensibilidad canalizada, convivencia y distribución del peso. Si acumula, aparecen fisuras emocionales."
+        },
+        {
+          el: nodeInterseccion,
+          title: "4/4 — Cargas",
+          text: "Las flechas representan presiones. El objetivo no es negar cargas, sino transferir y sostener con orden: viga → columna → cimiento."
+        }
+      ];
+
+      const s = steps[step];
+      if(!s){ stopGuided(); return; }
+
+      // emphasis
+      [elCimiento, elColumna, elViga].forEach(el=> el.style.filter = "");
+      [nodeComunion, nodeCongregacion, nodeInterseccion].forEach(el=> el.style.filter = "");
+      s.el.style.filter = "drop-shadow(0 0 10px rgba(111,177,255,.35))";
+
+      const host = porticoSvg.getBoundingClientRect();
+      const cx = Math.round(host.left + host.width*0.5);
+      const cy = Math.round(host.top + 18);
+
+      showTooltipAt(cx, cy, `<div><b>${safeText(s.title)}</b></div><div class="small">${safeText(s.text)}</div>`);
+      tooltip.style.left = `${Math.round(host.left + 16)}px`;
+      tooltip.style.top = `${Math.round(host.top + 16)}px`;
+
+      GUIDED.timer = setTimeout(()=>{
+        GUIDED.step += 1;
+        runGuidedStep(GUIDED.step);
+      }, 2800);
+    }
+
+    function startGuided(){
+      if(GUIDED.on) return;
+      GUIDED.on = true;
+      GUIDED.step = 0;
+      btnGuided.textContent = "Detener lectura guiada";
+      runGuidedStep(0);
+    }
+
+    // =========================
+    // STORAGE (Before/After)
+    // =========================
+    function saveLastResult(result){
+      localStorage.setItem(STORAGE_KEY_LAST, JSON.stringify(result));
+    }
+    function loadLastResult(){
+      try{
+        const s = localStorage.getItem(STORAGE_KEY_LAST);
+        return s ? JSON.parse(s) : null;
+      }catch(_){ return null; }
+    }
+    function savePrevResult(result){
+      localStorage.setItem(STORAGE_KEY_PREV, JSON.stringify(result));
+    }
+    function loadPrevResult(){
+      try{
+        const s = localStorage.getItem(STORAGE_KEY_PREV);
+        return s ? JSON.parse(s) : null;
+      }catch(_){ return null; }
+    }
+    function hydratePrevOverlayFromStorage(){
+      const prev = loadPrevResult();
+      if(prev){
+        // keep overlay rendered once we have a current result too; just prepare silently
+        prevOverlay.setAttribute("opacity","0");
+      }
+    }
+
+    function renderPrevOverlayIfAny(currentResult){
+      const prev = loadPrevResult();
+      if(!prev){
+        prevOverlay.innerHTML = "";
+        prevOverlay.setAttribute("opacity","0");
+        return;
+      }
+
+      // Build a dashed overlay of the same geometry, styled to axis colors but ghosted
+      // (Geometry MUST remain fixed; overlay uses same paths)
+      const pc = prev.axes?.comunion?.percent ?? 0;
+      const pg = prev.axes?.congregacion?.percent ?? 0;
+      const pi = prev.axes?.interseccion?.percent ?? 0;
+
+      const bCom = bandByPercent(pc);
+      const bCon = bandByPercent(pg);
+      const bInt = bandByPercent(pi);
+
+      const colorClass = (key)=>{
+        if(key==="aligned") return "axis-good";
+        if(key==="adjust") return "axis-warn";
+        if(key==="risk") return "axis-risk";
+        return "axis-crit";
       };
 
-      const dC = delta("comunion");
-      const dG = delta("congregacion");
-      const dI = delta("interseccion");
-
-      setDeltaLabel(dom.deltaComunion, dC);
-      setDeltaLabel(dom.deltaCongregacion, dG);
-      setDeltaLabel(dom.deltaInterseccion, dI);
-
-      dom.deltaComunion.setAttribute("opacity","1");
-      dom.deltaCongregacion.setAttribute("opacity","1");
-      dom.deltaInterseccion.setAttribute("opacity","1");
+      prevOverlay.innerHTML = `
+        <path d="M140 330 L720 330" class="ghostPrev ${colorClass(bCom.key)}" stroke-width="14" fill="none"/>
+        <path d="M200 330 L200 110" class="ghostPrev ${colorClass(bCon.key)}" stroke-width="14" fill="none"/>
+        <path d="M200 110 L720 110" class="ghostPrev ${colorClass(bInt.key)}" stroke-width="14" fill="none"/>
+      `;
+      prevOverlay.setAttribute("opacity","1");
     }
 
-    function setDeltaLabel(el, d){
-      const sign = d >= 0 ? "+" : "";
-      const txt = `Δ ${sign}${Math.round(d)}%`;
-      el.textContent = txt;
-
-      const abs = Math.abs(d);
-      let color = "rgba(167,180,200,.85)";
-      if (abs >= 1){
-        color = d > 0 ? "rgba(25,195,125,.85)" : "rgba(255,159,67,.85)";
-      }
-      el.setAttribute("fill", color);
-    }
-
-    function updatePorticoFromScores(computed){
-      const axesKeys = ["comunion","congregacion","interseccion"];
-      axesKeys.forEach((k)=>{
-        const ax = computed.axes[k];
-        const bundle = getAxisElementBundle(k);
-        setAxisColor(bundle.el, ax.band.key);
-        setNodeColor(bundle.node, ax.band.key);
-        applyAxisStateVisual(k, computed);
-      });
-
-      updateTensionHalos(computed);
-      updateBeforeAfterOverlay(computed);
-
-      dom.pillGlobal.innerHTML = `<strong>Global:</strong> ${Math.round(computed.global.pct)}%`;
-
-      dom.kpiGlobal.textContent = `${Math.round(computed.global.pct)}%`;
-      dom.kpiGlobalHint.textContent = computed.answeredCount ? computed.global.band.label : "Responde al menos una sección para ver lectura.";
-      dom.barGlobal.style.width = `${Math.round(computed.global.pct)}%`;
-      dom.dotGlobal.className = `dot ${computed.answeredCount ? dotClassFromBandKey(computed.global.band.key) : ""}`;
-
-      const mostPressed = axesKeys
-        .map(k=> ({ k, pct: computed.axes[k].pct }))
-        .sort((a,b)=> a.pct - b.pct)[0];
-
-      if (computed.answeredCount){
-        dom.kpiAxis.textContent = getAxisLabel(mostPressed.k);
-        dom.kpiAxisHint.textContent = `Este eje está más bajo (${Math.round(mostPressed.pct)}%). Aquí suele acumularse el peso.`;
-        dom.barAxis.style.width = `${Math.round(mostPressed.pct)}%`;
-        dom.dotAxis.className = `dot ${dotClassFromBandKey(computed.axes[mostPressed.k].band.key)}`;
-      }else{
-        dom.kpiAxis.textContent = "—";
-        dom.kpiAxisHint.textContent = "La presión apunta a “dónde se acumula el peso”.";
-        dom.barAxis.style.width = "0%";
-        dom.dotAxis.className = "dot";
-      }
-    }
-
-    function updateLiveDiagnostics(){
-      const computed = computeScores();
-      updatePorticoFromScores(computed);
-    }
-
-    function buildPlanRows(computed){
-      const rows = [];
-      const axes = computed.axes;
-
-      const priorityOrder = Object.keys(axes)
-        .map(k=> ({ k, pct: axes[k].pct, band: axes[k].band }))
-        .sort((a,b)=> a.pct - b.pct);
-
-      priorityOrder.forEach((item, idx)=>{
-        const axisKey = item.k;
-        const manual = (appData.pastoralManual || []).find(m => m.axis === axisKey);
-        const verse = manual?.verse || appData.porticoModel?.axes?.[axisKey]?.verse || "—";
-
-        let actions = manual?.actions || [];
-        if (!actions.length){
-          actions = [
-            "Nombrar con claridad una carga específica y transferirla sin sarcasmo ni amenaza.",
-            "Pedir una respuesta concreta (quién / cuándo / cómo) y registrar el cumplimiento."
-          ];
-        }
-
-        const observ = axisKey==="interseccion"
-          ? "Se expresa tensión y se transfiere en 24–48h, sin acumular."
-          : axisKey==="congregacion"
-            ? "Hay cobertura práctica: decisiones, presencia y escucha sin evasión."
-            : "Se ve reposo: oración, perdón y orden interno, sin resentimiento sostenido.";
-
-        rows.push({
-          prioridad: `${idx+1}`,
-          accion: actions[0],
-          verso: verse,
-          indicador: observ
-        });
-      });
-
-      return rows;
-    }
-
-    function showResult(){
-      const computed = computeScores();
-      const d = safeNowISO();
-      dom.pillDate.innerHTML = `<strong>Fecha:</strong> ${d}`;
-      dom.pillAnswered.innerHTML = `<strong>Respondidas:</strong> ${computed.answeredCount}/${computed.totalQuestions}`;
-
-      const g = computed.global;
-      dom.badgeText.textContent = `${g.band.label} · ${Math.round(g.pct)}%`;
-      dom.dotBadge.className = `dot ${dotClassFromBandKey(g.band.key)}`;
-
-      dom.resultHeadline.textContent = "Lectura diagnóstica (pórtico)";
-      dom.resultSummary.textContent =
-        g.band.key === "aligned" ? "La viga está cumpliendo su función: percibe, expresa y transfiere sin acumular. Sostén la práctica y protege el reposo."
-        : g.band.key === "adjust" ? "Hay señales de ajuste: la sensibilidad está activa, pero necesita mejor transferencia y acuerdos claros."
-        : g.band.key === "risk" ? "Hay riesgo de fisura: se percibe tensión y se acumula. Urge restaurar la cadena viga → columna → cimiento."
-        : "Estado crítico: la viga está sobrecargada o aislada. Se requiere intervención pastoral y acciones inmediatas de alivio y orden.";
-
-      dom.resultTbody.innerHTML = "";
-      computed.sections.forEach((s)=>{
-        const ax = computed.axes[s.axis];
-        const tr = document.createElement("tr");
-        const riskVisible = s.axis==="interseccion"
-          ? (s.band.key==="aligned" ? "Flujo claro" : s.band.key==="adjust" ? "Tensión ocasional" : s.band.key==="risk" ? "Acumulación" : "Sobrecarga")
-          : s.axis==="congregacion"
-            ? (s.band.key==="aligned" ? "Cobertura presente" : s.band.key==="adjust" ? "Cobertura irregular" : s.band.key==="risk" ? "Fallas visibles" : "Ausencia")
-            : (s.band.key==="aligned" ? "Reposo" : s.band.key==="adjust" ? "Reposo intermitente" : s.band.key==="risk" ? "Fatiga" : "Quiebre");
-
-        const focus = s.axis==="interseccion"
-          ? "Transferir carga con respeto, sin acumular."
-          : s.axis==="congregacion"
-            ? "Pedir cobertura concreta, no control."
-            : "Anclar la sensibilidad en Cristo, no en ansiedad.";
-
-        tr.innerHTML = `
-          <td><span class="pill"><strong>${getAxisLabel(s.axis)}</strong></span></td>
-          <td>${s.title}</td>
-          <td class="mono">${round1(s.score)}/${round1(s.maxScore)} (${Math.round(s.pct)}%)</td>
-          <td>${s.band.label}</td>
-          <td>${riskVisible}</td>
-          <td>${focus}</td>
-        `;
-        dom.resultTbody.appendChild(tr);
-      });
-
-      const plan = buildPlanRows(computed);
-      dom.planTbody.innerHTML = "";
-      plan.forEach((r)=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="mono">${r.prioridad}</td>
-          <td>${r.accion}</td>
-          <td>${r.verso}</td>
-          <td>${r.indicador}</td>
-        `;
-        dom.planTbody.appendChild(tr);
-      });
-
-      dom.resultPanel.classList.add("show");
-      dom.resultPanel.scrollIntoView({ behavior:"smooth", block:"start" });
-    }
-
-    function buildTxtReport(){
-      const computed = computeScores();
-      const d = safeNowISO();
+    // =========================
+    // EXPORTS
+    // =========================
+    function buildTxt(result){
       const lines = [];
-      lines.push(appData.meta?.title || "Auditoría diagnóstica pastoral");
-      lines.push(`Fecha: ${d}`);
-      lines.push(`Respondidas: ${computed.answeredCount}/${computed.totalQuestions}`);
+      lines.push(`${safeText(result.meta.title)} — Auditoría Diagnóstica Pastoral`);
+      lines.push(`Fecha: ${safeText(result.meta.createdAtLong)} (${safeText(result.meta.createdAt)})`);
       lines.push("");
-      lines.push(`GLOBAL: ${Math.round(computed.global.pct)}% — ${computed.global.band.label}`);
+      lines.push(`Diagnóstico global: ${safeText(result.totals.globalBandLabel)} — ${result.totals.globalPercent}%`);
+      lines.push(`${safeText(result.totals.globalSummary)} (Enfoque: ${safeText(result.totals.pastoralTone)})`);
       lines.push("");
-
-      const axesKeys = ["comunion","congregacion","interseccion"];
-      axesKeys.forEach((k)=>{
-        const ax = computed.axes[k];
-        lines.push(`${getAxisLabel(k).toUpperCase()}: ${Math.round(ax.pct)}% — ${ax.band.label}`);
-        const manual = (appData.pastoralManual || []).find(m=> m.axis===k);
-        if (manual?.verse) lines.push(`Verso: ${manual.verse}`);
-        if (manual?.miniTeaching) lines.push(`Mini-enseñanza: ${manual.miniTeaching}`);
-        const act = (manual?.actions || []).slice(0,2);
-        if (act.length){
-          lines.push(`Acciones:`);
-          act.forEach((a,i)=> lines.push(`  ${i+1}. ${a}`));
-        }
-        lines.push("");
-      });
-
-      lines.push("SECCIONES:");
-      computed.sections.forEach((s, idx)=>{
-        lines.push(`${idx+1}. [${getAxisLabel(s.axis)}] ${s.title}`);
-        lines.push(`   Puntaje: ${round1(s.score)}/${round1(s.maxScore)} (${Math.round(s.pct)}%) — ${s.band.label}`);
-        lines.push(`   Enfoque: ${s.focus}`);
-        lines.push(`   Verso: ${s.verse}`);
-      });
-
+      lines.push("Ejes:");
+      lines.push(`- Comunión / Cimiento: ${result.axes.comunion.percent}% (prom. ${result.axes.comunion.avg.toFixed(2)}) ${safeText(result.axes.comunion.bandLabel)}`);
+      lines.push(`- Congregación / Columna: ${result.axes.congregacion.percent}% (prom. ${result.axes.congregacion.avg.toFixed(2)}) ${safeText(result.axes.congregacion.bandLabel)}`);
+      lines.push(`- Intersección / Viga: ${result.axes.interseccion.percent}% (prom. ${result.axes.interseccion.avg.toFixed(2)}) ${safeText(result.axes.interseccion.bandLabel)}`);
+      lines.push("");
+      lines.push("Secciones:");
+      for(const s of result.sections){
+        lines.push(`- ${s.order}. ${safeText(s.title)} [${safeText(getAxisInfo(s.axis)?.label || s.axis)}]: ${s.percent}% (prom. ${s.avg.toFixed(2)}) ${safeText(s.bandLabel)}`);
+      }
+      lines.push("");
+      lines.push("Plan de enfoque (3 áreas de presión):");
+      for(const n of result.needs){
+        lines.push(`• ${safeText(n.title)} — ${n.percent}% ${safeText(n.bandLabel)}`);
+        if(n.keyVerse) lines.push(`  ${safeText(n.keyVerse)}`);
+        if(n.actions?.[0]) lines.push(`  - ${safeText(n.actions[0])}`);
+        if(n.actions?.[1]) lines.push(`  - ${safeText(n.actions[1])}`);
+      }
       return lines.join("\n");
     }
 
-    function downloadBlob(filename, blob){
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function exportTXT(){
-      const txt = buildTxtReport();
-      const blob = new Blob([txt], { type:"text/plain;charset=utf-8" });
-      downloadBlob("viga-mujer_resultado.txt", blob);
-    }
-
-    function svgToDataUrl(svgEl, titleLine, dateLine){
-      const clone = svgEl.cloneNode(true);
-
-      const t = document.createElementNS("http://www.w3.org/2000/svg","text");
-      t.setAttribute("x","28");
-      t.setAttribute("y","34");
-      t.setAttribute("fill","rgba(231,238,249,.92)");
-      t.setAttribute("font-size","14");
-      t.setAttribute("font-weight","900");
-      t.textContent = titleLine;
-
-      const d = document.createElementNS("http://www.w3.org/2000/svg","text");
-      d.setAttribute("x","28");
-      d.setAttribute("y","56");
-      d.setAttribute("fill","rgba(167,180,200,.85)");
-      d.setAttribute("font-size","11");
-      d.setAttribute("font-weight","800");
-      d.textContent = dateLine;
-
-      clone.appendChild(t);
-      clone.appendChild(d);
-
-      const serializer = new XMLSerializer();
-      const str = serializer.serializeToString(clone);
-      const svg = `<?xml version="1.0" encoding="UTF-8"?>\n${str}`;
-      const encoded = encodeURIComponent(svg)
-        .replace(/'/g, "%27")
-        .replace(/"/g, "%22");
+    function svgToDataUrl(svgString){
+      const encoded = encodeURIComponent(svgString)
+        .replace(/%0A/g, "")
+        .replace(/%20/g, " ")
+        .replace(/%3D/g, "=")
+        .replace(/%3A/g, ":")
+        .replace(/%2F/g, "/")
+        .replace(/%22/g, "'");
       return `data:image/svg+xml;charset=utf-8,${encoded}`;
     }
 
-    function exportPNG(){
-      const computed = computeScores();
-      const dateLine = `Fecha: ${safeNowISO()}`;
-      const titleLine = appData.meta?.title || "Auditoría diagnóstica pastoral";
+    function buildExportSvg(includeTitleDate){
+      const svg = porticoSvg.cloneNode(true);
+
+      // Ensure overlay reflects current result
+      const prevG = svg.querySelector("#prevOverlay");
+      if(prevG && prevOverlay){
+        prevG.innerHTML = prevOverlay.innerHTML;
+        prevG.setAttribute("opacity", prevOverlay.getAttribute("opacity") || "0");
+      }
+
+      // Add title + date INSIDE the image
+      if(includeTitleDate){
+        const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t1.setAttribute("x", "18");
+        t1.setAttribute("y", "28");
+        t1.setAttribute("fill", "rgba(231,240,251,.92)");
+        t1.setAttribute("font-size", "16");
+        t1.setAttribute("font-weight", "900");
+        t1.textContent = safeText(DATA?.meta?.title || "Auditoría");
+
+        const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t2.setAttribute("x", "18");
+        t2.setAttribute("y", "48");
+        t2.setAttribute("fill", "rgba(138,160,181,.92)");
+        t2.setAttribute("font-size", "12");
+        t2.setAttribute("font-weight", "800");
+        t2.textContent = `Fecha: ${fmtDateLong()}`;
+
+        svg.insertBefore(t2, svg.firstChild);
+        svg.insertBefore(t1, svg.firstChild);
+      }
+
+      // Add background rectangle to keep dark mode on export
+      const bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      bg.setAttribute("x","0"); bg.setAttribute("y","0");
+      bg.setAttribute("width","860"); bg.setAttribute("height","420");
+      bg.setAttribute("fill", "#0b0f14");
+      svg.insertBefore(bg, svg.firstChild);
+
+      // Serialize
+      const serializer = new XMLSerializer();
+      const str = serializer.serializeToString(svg);
+      return str;
+    }
+
+    async function getPorticoPngDataUrl(includeTitleDate){
+      const svgStr = buildExportSvg(includeTitleDate);
+      const url = svgToDataUrl(svgStr);
 
       const canvas = document.createElement("canvas");
       canvas.width = 860;
       canvas.height = 420;
       const ctx = canvas.getContext("2d");
 
-      const img = new Image();
-      img.onload = ()=>{
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      await new Promise((resolve, reject)=>{
+        const img = new Image();
+        img.onload = ()=>{ ctx.drawImage(img, 0, 0); resolve(); };
+        img.onerror = reject;
+        img.src = url;
+      });
 
-        const a = document.createElement("a");
-        a.download = "viga-mujer_portico.png";
-        a.href = canvas.toDataURL("image/png");
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      };
-      img.onerror = ()=>{
-        alert("No se pudo exportar PNG. Intenta nuevamente.");
-      };
-
-      const dataUrl = svgToDataUrl(dom.porticoSvg, titleLine, dateLine);
-      img.src = dataUrl;
+      return canvas.toDataURL("image/png");
     }
 
-    function buildPdf(){
+    async function exportPng(){
+      const pngUrl = await getPorticoPngDataUrl(true);
+      const a = document.createElement("a");
+      a.href = pngUrl;
+      a.download = `${safeText(DATA?.meta?.fileName || "portico")}-${nowISO()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(()=> a.remove(), 200);
+    }
+
+    function exportTxt(){
+      const txt = buildTxt(LAST_RESULT);
+      downloadBlob(`${safeText(DATA?.meta?.fileName || "auditoria")}-${nowISO()}.txt`, txt, "text/plain;charset=utf-8");
+    }
+
+    async function exportPdf(){
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ orientation:"p", unit:"pt", format:"a4" });
-      const computed = computeScores();
+      const doc = new jsPDF({orientation:"p", unit:"pt", format:"a4"});
 
-      const title = appData.meta?.title || "Auditoría diagnóstica pastoral";
-      const subtitle = appData.meta?.subtitle || "Diagnóstico sin backend (0–5).";
-      const dateLine = `Fecha: ${safeNowISO()}`;
-      const answeredLine = `Respondidas: ${computed.answeredCount}/${computed.totalQuestions}`;
-      const globalLine = `Diagnóstico global: ${Math.round(computed.global.pct)}% — ${computed.global.band.label}`;
+      const W = doc.internal.pageSize.getWidth();
+      const margin = 44;
 
-      const margin = 40;
-      let y = 52;
+      // Cover
+      doc.setFillColor(15,22,32);
+      doc.rect(0,0,W,doc.internal.pageSize.getHeight(),"F");
 
+      // Logo (simple)
+      doc.setDrawColor(231,240,251);
+      doc.setLineWidth(2);
+      doc.circle(margin+20, margin+20, 16, "S");
+      doc.line(margin+20, margin+10, margin+20, margin+30);
+      doc.line(margin+10, margin+20, margin+30, margin+20);
+
+      doc.setTextColor(231,240,251);
       doc.setFont("helvetica","bold");
-      doc.setFontSize(18);
-      doc.text(title, margin, y);
+      doc.setFontSize(16);
+      doc.text(safeText(DATA?.meta?.title || "Auditoría Diagnóstica Pastoral"), margin, margin+70);
 
       doc.setFont("helvetica","normal");
-      doc.setFontSize(11);
-      y += 18;
-      doc.text(subtitle, margin, y);
-      y += 16;
-      doc.text(dateLine, margin, y);
-      y += 14;
-      doc.text(answeredLine, margin, y);
-      y += 14;
-      doc.setFont("helvetica","bold");
-      doc.text(globalLine, margin, y);
+      doc.setFontSize(10);
+      doc.setTextColor(138,160,181);
+      doc.text(`${safeText(DATA?.meta?.chapterRef || "")} • ${safeText(DATA?.meta?.fileName || "")}`, margin, margin+90);
+      doc.text(`Fecha: ${safeText(LAST_RESULT?.meta?.createdAtLong || fmtDateLong())}`, margin, margin+105);
 
-      // Logo simple
-      doc.setDrawColor(122,162,255);
-      doc.setFillColor(20,30,48);
-      doc.roundedRect(440, 38, 120, 40, 10, 10, "FD");
-      doc.setTextColor(231,238,249);
+      const gb = bandByPercent(LAST_RESULT.totals.globalPercent);
+      doc.setFont("helvetica","bold");
       doc.setFontSize(12);
-      doc.text("PÓRTICO", 468, 63);
+      doc.setTextColor(231,240,251);
+      doc.text(`Diagnóstico global: ${safeText(gb.label)} — ${LAST_RESULT.totals.globalPercent}%`, margin, margin+132);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(10);
+      doc.setTextColor(138,160,181);
+      doc.text(doc.splitTextToSize(safeText(gb.summary || ""), W - margin*2), margin, margin+150);
 
       // Portico image
-      const dataUrl = svgToDataUrl(dom.porticoSvg, title, dateLine);
-      const img = new Image();
-      return new Promise((resolve, reject)=>{
-        img.onload = ()=>{
-          const pw = 520;
-          const ph = 254;
-          const px = margin;
-          const py = 140;
-          doc.addImage(img, "PNG", px, py, pw, ph);
+      const png = await getPorticoPngDataUrl(true);
+      const imgW = W - margin*2;
+      const imgH = Math.round(imgW * (420/860));
+      doc.addImage(png, "PNG", margin, margin+190, imgW, imgH);
 
-          // Ejes table
-          const axesKeys = ["comunion","congregacion","interseccion"];
-          const axisRows = axesKeys.map((k)=>{
-            const ax = computed.axes[k];
-            const manual = (appData.pastoralManual || []).find(m=>m.axis===k);
-            const actions = (manual?.actions || []).slice(0,2).join(" / ");
-            return [
-              getAxisLabel(k),
-              `${Math.round(ax.pct)}%`,
-              ax.band.label,
-              (manual?.verse || appData.porticoModel?.axes?.[k]?.verse || "—"),
-              actions || "—"
-            ];
-          });
+      // New page: Tables
+      doc.addPage();
+      doc.setTextColor(231,240,251);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.text("Resumen por ejes", margin, margin);
 
-          doc.setTextColor(0,0,0);
-          doc.autoTable({
-            startY: 414,
-            head: [["Eje","%","Estado","Verso","Acciones (1–2)"]],
-            body: axisRows,
-            styles: { fontSize: 9, cellPadding: 6 },
-            headStyles: { fillColor: [20,30,48], textColor: [231,238,249] },
-            alternateRowStyles: { fillColor: [245,247,252] },
-            margin: { left: margin, right: margin }
-          });
+      doc.setFontSize(10);
+      doc.setFont("helvetica","normal");
+      doc.setTextColor(138,160,181);
+      doc.text("Diagnostica alineación, cargas y transferencia por eje.", margin, margin+16);
 
-          // Secciones
-          doc.addPage();
-          doc.setFont("helvetica","bold");
-          doc.setFontSize(14);
-          doc.text("Detalle por secciones", margin, 54);
-
-          const secRows = computed.sections.map((s)=>[
-            getAxisLabel(s.axis),
-            s.title,
-            `${Math.round(s.pct)}%`,
-            s.band.label,
-            s.focus,
-            s.verse
-          ]);
-
-          doc.autoTable({
-            startY: 76,
-            head: [["Eje","Sección","%","Estado","Enfoque","Verso"]],
-            body: secRows,
-            styles: { fontSize: 8.5, cellPadding: 6, overflow:"linebreak" },
-            headStyles: { fillColor: [20,30,48], textColor: [231,238,249] },
-            alternateRowStyles: { fillColor: [245,247,252] },
-            margin: { left: margin, right: margin }
-          });
-
-          // Plan
-          doc.addPage();
-          doc.setFont("helvetica","bold");
-          doc.setFontSize(14);
-          doc.text("Plan pastoral (enfoque y acciones)", margin, 54);
-
-          const plan = buildPlanRows(computed).map(r=>[
-            r.prioridad,
-            r.accion,
-            r.verso,
-            r.indicador
-          ]);
-
-          doc.autoTable({
-            startY: 76,
-            head: [["Prioridad","Acción práctica","Verso ancla","Indicador observable"]],
-            body: plan,
-            styles: { fontSize: 9, cellPadding: 6, overflow:"linebreak" },
-            headStyles: { fillColor: [20,30,48], textColor: [231,238,249] },
-            alternateRowStyles: { fillColor: [245,247,252] },
-            margin: { left: margin, right: margin }
-          });
-
-          resolve(doc);
-        };
-        img.onerror = ()=> reject(new Error("No se pudo generar la imagen del pórtico."));
-        img.src = dataUrl;
+      doc.autoTable({
+        startY: margin+28,
+        head: [["Eje","Elemento","Estado","Prom.","%"]],
+        body: [
+          ["Comunión","Cimiento", safeText(LAST_RESULT.axes.comunion.bandLabel), LAST_RESULT.axes.comunion.avg.toFixed(2), `${LAST_RESULT.axes.comunion.percent}%`],
+          ["Congregación","Columna", safeText(LAST_RESULT.axes.congregacion.bandLabel), LAST_RESULT.axes.congregacion.avg.toFixed(2), `${LAST_RESULT.axes.congregacion.percent}%`],
+          ["Intersección","Viga", safeText(LAST_RESULT.axes.interseccion.bandLabel), LAST_RESULT.axes.interseccion.avg.toFixed(2), `${LAST_RESULT.axes.interseccion.percent}%`]
+        ],
+        theme: "grid",
+        styles: {font:"helvetica", fontSize:9, textColor: [231,240,251], lineColor:[34,50,70], fillColor:[15,22,32]},
+        headStyles: {fillColor:[17,27,38], textColor:[231,240,251]},
+        alternateRowStyles: {fillColor:[13,19,28]},
+        margin: {left: margin, right: margin}
       });
+
+      // Plan page
+      doc.addPage();
+      doc.setTextColor(231,240,251);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.text("Plan de enfoque (3 áreas de presión)", margin, margin);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(10);
+      doc.setTextColor(138,160,181);
+      doc.text("Prioriza aliviar carga y restaurar flujo: percibir → expresar → transferir → reposar.", margin, margin+16);
+
+      const planBody = LAST_RESULT.needs.map(n=>{
+        const ax = getAxisInfo(n.axis);
+        const acts = (n.actions||[]).slice(0,2).join(" | ");
+        return [
+          safeText(n.title),
+          safeText(ax?.element || ""),
+          `${n.percent}%`,
+          safeText(n.keyVerse || ""),
+          acts
+        ];
+      });
+
+      doc.autoTable({
+        startY: margin+28,
+        head: [["Área","Elemento","%","Verso clave","Acciones"]],
+        body: planBody,
+        theme: "grid",
+        styles: {font:"helvetica", fontSize:8, textColor: [231,240,251], lineColor:[34,50,70], fillColor:[15,22,32], cellPadding:6},
+        headStyles: {fillColor:[17,27,38], textColor:[231,240,251]},
+        alternateRowStyles: {fillColor:[13,19,28]},
+        margin: {left: margin, right: margin},
+        columnStyles: {
+          0: {cellWidth: 160},
+          1: {cellWidth: 70},
+          2: {cellWidth: 40},
+          3: {cellWidth: 170},
+          4: {cellWidth: 110}
+        }
+      });
+
+      // Save
+      doc.save(`${safeText(DATA?.meta?.fileName || "auditoria")}-${nowISO()}.pdf`);
     }
 
-    async function exportPDF(){
-      try{
-        const doc = await buildPdf();
-        doc.save("viga-mujer_resultado.pdf");
-      }catch(e){
-        alert("No se pudo exportar PDF. Intenta nuevamente.");
-      }
-    }
+    // =========================
+    // BUTTONS / EVENTS
+    // =========================
+    function wireButtons(){
+      btnShowResult.addEventListener("click", ()=>{
+        const r = computeResults();
 
-    function resetAll(){
-      try{
-        localStorage.removeItem(STORAGE_KEY_CURRENT);
-      }catch(e){}
-      initDefaultAnswers();
-      render();
-      dom.resultPanel.classList.remove("show");
-    }
+        // Move last -> prev (for progressive before/after)
+        const existingLast = loadLastResult();
+        if(existingLast) savePrevResult(existingLast);
 
-    function attachSvgInteractivity(){
-      const computed = ()=> computeScores();
+        LAST_RESULT = r;
+        saveLastResult(r);
 
-      const onMove = (ev, title, body)=>{
-        const x = ev.clientX ?? (ev.touches && ev.touches[0]?.clientX) ?? 0;
-        const y = ev.clientY ?? (ev.touches && ev.touches[0]?.clientY) ?? 0;
-        showTooltip(x, y, title, body);
-      };
+        renderResults(r);
+        updatePorticoVisual(r);
+        updateButtonsState();
+      });
 
-      const bind = (el, getTip, onClick)=>{
-        el.style.cursor = "pointer";
+      btnDownloadTxt.addEventListener("click", ()=> exportTxt());
+      btnDownloadPng.addEventListener("click", ()=> exportPng());
+      btnDownloadPdf.addEventListener("click", ()=> exportPdf());
 
-        el.addEventListener("mousemove", (ev)=>{
-          const tip = getTip(computed());
-          onMove(ev, tip.title, tip.body);
-        });
-        el.addEventListener("mouseleave", ()=>{
-          hideTooltip();
-        });
+      btnReset.addEventListener("click", ()=>{
+        stopGuided();
+        ANSWERS = {};
+        LAST_RESULT = null;
 
-        el.addEventListener("touchstart", (ev)=>{
-          const tip = getTip(computed());
-          onMove(ev, tip.title, tip.body);
-        }, { passive:true });
+        // Clear UI selections
+        document.querySelectorAll(".scorePill.on").forEach(el=> el.classList.remove("on"));
+        document.querySelectorAll('[id^="band_sec-"]').forEach(el=> el.textContent="—");
 
-        el.addEventListener("touchend", ()=>{
-          setTimeout(hideTooltip, 350);
-        });
+        resultsRoot.innerHTML = `<div class="muted">Completa el test para ver diagnóstico global, ejes, tensiones y plan de enfoque.</div>`;
+        resultPills.innerHTML = "";
+        resultHint.textContent = "Aparecerán cuando completes el test y presiones “Ver resultado”.";
 
-        el.addEventListener("click", (ev)=>{
-          ev.stopPropagation();
-          const c = computed();
-          const tip = getTip(c);
-          const x = ev.clientX ?? 0;
-          const y = ev.clientY ?? 0;
-          showTooltip(x,y, tip.title, tip.body);
-          onClick(c);
-        });
-      };
-
-      bind(dom.elCimiento, (c)=> axisTooltipText("comunion", c), ()=> openContextPanel("element","comunion"));
-      bind(dom.elColumna, (c)=> axisTooltipText("congregacion", c), ()=> openContextPanel("element","congregacion"));
-      bind(dom.elViga, (c)=> axisTooltipText("interseccion", c), ()=> openContextPanel("element","interseccion"));
-
-      bind(dom.nComunion, (c)=> nodeTooltipText("comunion", c), ()=> openContextPanel("node","comunion"));
-      bind(dom.nCongregacion, (c)=> nodeTooltipText("congregacion", c), ()=> openContextPanel("node","congregacion"));
-      bind(dom.nInterseccion, (c)=> nodeTooltipText("interseccion", c), ()=> openContextPanel("node","interseccion"));
-
-      dom.porticoSvg.addEventListener("click", ()=>{
+        updatePorticoVisual(null);
+        updateButtonsState();
         hideTooltip();
       });
-    }
 
-    function guidedSteps(){
-      return [
-        {
-          key:"cimiento",
-          title:"1/4 — Cimiento (Comunión)",
-          body:"Aquí se define el reposo del sistema. Si el cimiento está bajo, la sensibilidad se vuelve ansiedad. Diagnóstico: ¿hay oración, perdón y descanso en Cristo, o hay fatiga sostenida?",
-          highlight: ["elCimiento","nComunion"]
-        },
-        {
-          key:"columna",
-          title:"2/4 — Columna (Congregación)",
-          body:"La columna habla de cobertura y liderazgo práctico. Diagnóstico: ¿la carga se recibe y se ordena, o se deja a la viga intentando sostener verticalmente?",
-          highlight: ["elColumna","nCongregacion"]
-        },
-        {
-          key:"viga",
-          title:"3/4 — Viga (Intersección)",
-          body:"La viga distribuye la vida diaria. Diagnóstico: ¿se percibe y se transfiere con claridad, o se acumula hasta fisurar la convivencia?",
-          highlight: ["elViga","nInterseccion"]
-        },
-        {
-          key:"cargas",
-          title:"4/4 — Cargas (presión visible)",
-          body:"Las cargas no se niegan: se canalizan. Diagnóstico: ¿la cadena viga → columna → Cristo está fluyendo, o el peso está quedando ‘en el alma’?",
-          highlight: ["cargaViva","cargaMuerta","cargaSismica"]
-        }
-      ];
-    }
-
-    function clearGuidedHighlights(){
-      const ids = ["elCimiento","elColumna","elViga","nComunion","nCongregacion","nInterseccion","cargaViva","cargaMuerta","cargaSismica"];
-      ids.forEach((id)=>{
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.remove("highlightStroke");
-        el.style.filter = "";
-      });
-    }
-
-    function applyGuidedHighlight(step){
-      clearGuidedHighlights();
-      step.highlight.forEach((id)=>{
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.add("highlightStroke");
-        el.style.filter = "url(#softGlow)";
-      });
-    }
-
-    function openGuide(){
-      guide.active = true;
-      guide.steps = guidedSteps();
-      guide.step = 0;
-      dom.guideToast.classList.add("show");
-      renderGuideStep();
-    }
-
-    function closeGuide(){
-      guide.active = false;
-      dom.guideToast.classList.remove("show");
-      clearGuidedHighlights();
-    }
-
-    function renderGuideStep(){
-      const step = guide.steps[guide.step];
-      dom.guideTitle.textContent = step.title;
-      dom.guideBody.textContent = step.body;
-      dom.btnGuidePrev.disabled = guide.step === 0;
-      dom.btnGuideNext.textContent = guide.step === guide.steps.length - 1 ? "Listo" : "Siguiente";
-      applyGuidedHighlight(step);
-    }
-
-    function nextGuide(){
-      if (guide.step >= guide.steps.length - 1){
-        closeGuide();
-        return;
-      }
-      guide.step += 1;
-      renderGuideStep();
-    }
-
-    function prevGuide(){
-      guide.step = Math.max(0, guide.step - 1);
-      renderGuideStep();
-    }
-
-    function wireEvents(){
-      dom.btnResult.addEventListener("click", ()=>{
-        showResult();
-        const ok = setPreviousFromCurrentIfValid();
-        if (ok) updateLiveDiagnostics();
+      btnGuided.addEventListener("click", ()=>{
+        if(GUIDED.on) stopGuided();
+        else startGuided();
       });
 
-      dom.btnTxt.addEventListener("click", exportTXT);
-      dom.btnPng.addEventListener("click", exportPNG);
-      dom.btnPdf.addEventListener("click", exportPDF);
-
-      dom.btnReset.addEventListener("click", resetAll);
-
-      dom.btnCloseModal.addEventListener("click", closeContextPanel);
-      dom.modalBackdrop.addEventListener("click", (ev)=>{
-        if (ev.target === dom.modalBackdrop) closeContextPanel();
+      modalClose.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", (e)=>{
+        if(e.target === modalBackdrop) closeModal();
       });
-      document.addEventListener("keydown", (ev)=>{
-        if (ev.key === "Escape"){
-          closeContextPanel();
-          if (guide.active) closeGuide();
+
+      window.addEventListener("keydown", (e)=>{
+        if(e.key === "Escape"){
+          if(modalBackdrop.classList.contains("on")) closeModal();
+          if(GUIDED.on) stopGuided();
           hideTooltip();
         }
       });
 
-      dom.btnGuide.addEventListener("click", ()=>{
-        if (guide.active) closeGuide();
-        else openGuide();
-      });
-      dom.btnGuideNext.addEventListener("click", nextGuide);
-      dom.btnGuidePrev.addEventListener("click", prevGuide);
-      dom.btnGuideStop.addEventListener("click", closeGuide);
+      // Hide tooltip when scrolling or leaving diagram area
+      document.addEventListener("scroll", ()=> { if(!GUIDED.on) hideTooltip(); }, {passive:true});
     }
 
-    function validateAppData(data){
-      if (!data || typeof data !== "object") throw new Error("JSON inválido.");
-      if (!data.sections || !Array.isArray(data.sections)) throw new Error("Faltan sections.");
-      if (!data.pastoralManual || !Array.isArray(data.pastoralManual)) throw new Error("Falta pastoralManual.");
-      const secIds = new Set();
-      for (const s of data.sections){
-        if (!s.id) throw new Error("Sección sin id.");
-        if (secIds.has(s.id)) throw new Error(`ID repetido: ${s.id}`);
-        secIds.add(s.id);
-        if (!Array.isArray(s.questions) || s.questions.length !== 8) throw new Error(`Sección ${s.id} debe tener 8 preguntas.`);
-        if (!["comunion","congregacion","interseccion"].includes(s.axis)) throw new Error(`Sección ${s.id} axis inválido.`);
-      }
-      if (data.pastoralManual.length !== data.sections.length) throw new Error("pastoralManual debe coincidir 1:1 con sections.");
-      const manualAxisOk = data.pastoralManual.every(m => ["comunion","congregacion","interseccion"].includes(m.axis));
-      if (!manualAxisOk) throw new Error("pastoralManual axis inválido.");
-      return true;
-    }
-
-    (async function boot(){
-      try{
-        appData = await loadJSON();
-        validateAppData(appData);
-
-        const hadCurrent = loadCurrent();
-        if (!hadCurrent) initDefaultAnswers();
-        else{
-          // Ensure shape matches new JSON if needed
-          for (const s of appData.sections){
-            if (!answers[s.id] || !Array.isArray(answers[s.id]) || answers[s.id].length !== s.questions.length){
-              answers[s.id] = new Array(s.questions.length).fill(null);
-            }
-          }
-          for (const k of Object.keys(answers)){
-            if (!appData.sections.find(s=> s.id === k)){
-              delete answers[k];
-            }
-          }
-        }
-
-        render();
-        wireEvents();
-        attachSvgInteractivity();
-
-        const prev = loadPrevious();
-        if (prev?.ts){
-          const pd = new Date(prev.ts).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" });
-          dom.pillSaved.innerHTML = `<strong>Previo:</strong> ${pd}`;
-        }else{
-          dom.pillSaved.innerHTML = `<strong>Previo:</strong> —`;
-        }
-      }catch(e){
-        dom.sectionsContainer.innerHTML = `
-          <div class="section">
-            <div class="sectionTop">
-              <div class="sectionTitle">
-                <h3>No se pudo iniciar la app</h3>
-                <p class="help">Verifica que <span class="mono">${JSON_PATH}</span> exista en la misma carpeta y sea JSON válido.</p>
-              </div>
-              <div class="axisTag">
-                <span class="pill"><strong>Error:</strong> ${String(e.message || e)}</span>
-              </div>
-            </div>
-            <div class="q">
-              <div class="qText muted">
-                Si estás en GitHub Pages, confirma que ambos archivos estén publicados: <span class="mono">viga-mujer.html</span> y <span class="mono">viga-mujer.json</span>.
-              </div>
-              <div class="scale">
-                <a class="link" href="./viga-mujer.json" target="_blank" rel="noreferrer">Abrir JSON</a>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    })();
+    // =========================
+    // BOOT
+    // =========================
+    init().catch(err=>{
+      sectionsRoot.innerHTML = `<div class="sec"><div class="qText">Error al cargar</div><div class="qObs">${safeText(err?.message || err)}</div></div>`;
+    });
   </script>
 </body>
 </html>
+

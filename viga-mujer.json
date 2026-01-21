@@ -1,497 +1,640 @@
 {
   "meta": {
+    "fileName": "viga-mujer",
     "title": "La viga: la mujer como alma del sistema",
-    "description": "Auditoría diagnóstica (capítulo 6) sobre la mujer como viga espiritual: sensibilidad que percibe, capacidad de distribuir y transferir cargas, horizontalidad relacional, apoyo del Espíritu Santo, y restauración del flujo viga → columna → cimiento para que el hogar respire."
+    "chapterRef": "Capítulo 6 — La viga",
+    "language": "es",
+    "version": "1.0.0",
+    "createdAt": "2026-01-21",
+    "authoringNote": "Auditoría diagnóstica pastoral sin backend. Escala 0–5. Pórtico en L: Cimiento (Comunión), Columna (Congregación), Viga (Intersección)."
   },
   "scale": {
-    "options": [
-      { "value": 0, "label": "0 — No ocurre / nunca" },
-      { "value": 1, "label": "1 — Rara vez" },
-      { "value": 2, "label": "2 — A veces" },
-      { "value": 3, "label": "3 — Frecuente" },
-      { "value": 4, "label": "4 — Casi siempre" },
-      { "value": 5, "label": "5 — Constante / plenamente" }
+    "min": 0,
+    "max": 5,
+    "anchors": [
+      {
+        "value": 0,
+        "label": "Nulo",
+        "descriptor": "No hay evidencia; negación o ausencia total de la práctica."
+      },
+      {
+        "value": 1,
+        "label": "Muy bajo",
+        "descriptor": "Evidencia rara; patrón débil, frágil o reactivo."
+      },
+      {
+        "value": 2,
+        "label": "Bajo",
+        "descriptor": "Evidencia inconsistente; aparece bajo presión."
+      },
+      {
+        "value": 3,
+        "label": "Medio",
+        "descriptor": "Evidencia frecuente; necesita enfoque y ajuste."
+      },
+      {
+        "value": 4,
+        "label": "Alto",
+        "descriptor": "Evidencia sólida; hábito estable con buena transferencia."
+      },
+      {
+        "value": 5,
+        "label": "Pleno",
+        "descriptor": "Evidencia madura; práctica sostenida, humilde y fructífera."
+      }
     ]
   },
   "rubrics": {
     "globalBands": [
       {
-        "label": "Alineado",
-        "summary": "La viga está funcionando con salud: percibe sin dramatizar, expresa con sabiduría y distribuye el peso con orden. No acumula sola; transfiere con claridad y se apoya en el Espíritu Santo. El hogar respira porque el flujo está abierto y la convivencia recupera armonía.",
-        "verse": {
-          "quote": "El Espíritu nos ayuda en nuestra debilidad; pues qué hemos de pedir como conviene, no lo sabemos, pero el Espíritu mismo intercede por nosotros con gemidos indecibles",
-          "reference": "Romanos 8:26"
-        }
+        "key": "aligned",
+        "label": "🟢 Alineado",
+        "minPercent": 80,
+        "maxPercent": 100,
+        "summary": "Flujo saludable: percibir, expresar y transferir sin colapso.",
+        "pastoralTone": "afirmar y consolidar"
       },
       {
-        "label": "Ajuste",
-        "summary": "Hay sensibilidad y deseo de cuidar, pero aparecen acumulaciones, cansancio o expresiones poco cuidadas bajo presión. Se requieren ajustes: canalizar lo percibido, ordenar conversaciones, pedir apoyo y restablecer el flujo de transferencia para evitar fisuras emocionales.",
-        "verse": {
-          "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua",
-          "reference": "Proverbios 31:26"
-        }
+        "key": "adjust",
+        "label": "🟡 Ajuste",
+        "minPercent": 60,
+        "maxPercent": 79,
+        "summary": "Hay luz y fruto, pero existen puntos de presión que requieren ajustes.",
+        "pastoralTone": "ordenar y acompañar"
       },
       {
-        "label": "Riesgo",
-        "summary": "Se observa sobrecarga sostenida: acumula, intenta sostener verticalmente, o la expresión se vuelve tensa y repetitiva. El sistema pierde reposo y la relación se endurece. Urge restaurar límites, pedir apoyo y volver a la transferencia correcta (viga → columna → cimiento).",
-        "verse": {
-          "quote": "Someteos unos a otros en el temor de Dios",
-          "reference": "Efesios 5:21"
-        }
+        "key": "risk",
+        "label": "🟠 Riesgo",
+        "minPercent": 40,
+        "maxPercent": 59,
+        "summary": "Se observan señales de sobrecarga, tensiones y transferencia incompleta.",
+        "pastoralTone": "intervenir y aliviar"
       },
       {
-        "label": "Crítico",
-        "summary": "Hay fisuras emocionales: agotamiento crónico, resentimiento silencioso o reacciones que dañan la convivencia. La viga está intentando cargar sola o quedó sin apoyo. Prioridad: acompañamiento pastoral/mentoría, acuerdos claros, descanso, y reconexión con el Espíritu Santo para sanar el flujo y evitar colapso relacional.",
-        "verse": {
-          "quote": "Cada uno permanezca en la vocación en que fue llamado",
-          "reference": "1 Corintios 7:20"
-        }
+        "key": "critical",
+        "label": "🔴 Crítico",
+        "minPercent": 0,
+        "maxPercent": 39,
+        "summary": "El sistema está bajo presión: acumulación, control o desgaste evidente.",
+        "pastoralTone": "restaurar y proteger"
       }
     ],
     "sectionBands": [
       {
-        "label": "Alineado",
-        "summary": "Esta área está estable: lo que percibes se canaliza con sabiduría, el peso se distribuye sin acumular y la relación gana fluidez.",
-        "verse": {
-          "quote": "El corazón del marido está en ella confiado, y no carecerá de ganancias",
-          "reference": "Proverbios 31:11"
-        }
+        "key": "aligned",
+        "label": "🟢 Alineado",
+        "minAvg": 4.0,
+        "maxAvg": 5.0,
+        "signal": "Hábitos sanos y transferencias claras."
       },
       {
-        "label": "Ajuste",
-        "summary": "Hay señales de carga acumulada o expresiones sin orden. Con pasos concretos (apoyo del Espíritu, acuerdos, límites y transferencia) esta área puede recuperar armonía.",
-        "verse": {
-          "quote": "Mejor es el que tarda en airarse que el fuerte; y el que se enseñorea de su espíritu, que el que toma una ciudad",
-          "reference": "Proverbios 16:32"
-        }
+        "key": "adjust",
+        "label": "🟡 Ajuste",
+        "minAvg": 3.0,
+        "maxAvg": 3.99,
+        "signal": "Buenas intenciones con puntos ciegos corregibles."
       },
       {
-        "label": "Riesgo",
-        "summary": "Esta área muestra tensión sostenida: sobrecarga, resentimiento o presión relacional. Se recomienda intervención intencional, descanso y acuerdos para restaurar el flujo del diseño.",
-        "verse": {
-          "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar",
-          "reference": "Mateo 11:28"
-        }
+        "key": "risk",
+        "label": "🟠 Riesgo",
+        "minAvg": 2.0,
+        "maxAvg": 2.99,
+        "signal": "Tensión frecuente; se acumula carga o se rompe la comunicación."
+      },
+      {
+        "key": "critical",
+        "label": "🔴 Crítico",
+        "minAvg": 0.0,
+        "maxAvg": 1.99,
+        "signal": "Patrón dañino sostenido; urgencia de apoyo y reorden."
       }
     ]
   },
   "porticoModel": {
-    "axes": [
-      {
-        "id": "comunion",
+    "axes": {
+      "comunion": {
+        "key": "comunion",
         "label": "Comunión",
-        "description": "Apoyo del Espíritu Santo: vida interior sostenida, oración, descanso y dependencia para percibir sin quebrarse y expresar con mansedumbre.",
-        "bands": {
-          "alineado": "75-100",
-          "ajuste": "55-74",
-          "riesgo": "35-54",
-          "critico": "0-34"
-        }
+        "nodeLabel": "COMUNIÓN",
+        "element": "Cimiento",
+        "diagnosticFocus": "Dependencia de Cristo, descanso y base espiritual del hogar.",
+        "keyVerse": "“Mas quiero que sepáis que Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer.” (1 Corintios 11:3)",
+        "shortDiagnosisTemplates": [
+          "Hay reposo y dirección en Cristo.",
+          "Se sostiene la base, pero falta consistencia.",
+          "La base se está agrietando por autosuficiencia."
+        ]
       },
-      {
-        "id": "congregacion",
+      "congregacion": {
+        "key": "congregacion",
         "label": "Congregación",
-        "description": "Horizontalidad relacional: convivencia, comunicación, clima del hogar y expresión sabia que revela y ordena sin trasladar tensión destructiva.",
-        "bands": {
-          "alineado": "75-100",
-          "ajuste": "55-74",
-          "riesgo": "35-54",
-          "critico": "0-34"
-        }
+        "nodeLabel": "CONGREGACIÓN",
+        "element": "Columna",
+        "diagnosticFocus": "Alineación del varón, cobertura, recepción de transferencia y liderazgo servicial.",
+        "keyVerse": "“Someteos unos a otros en el temor de Dios.” (Efesios 5:21)",
+        "shortDiagnosisTemplates": [
+          "La columna recibe y sostiene con mansedumbre.",
+          "La columna está presente, pero reacciona tarde.",
+          "La columna está ausente; la carga se desordena."
+        ]
       },
-      {
-        "id": "interseccion",
+      "interseccion": {
+        "key": "interseccion",
         "label": "Intersección",
-        "description": "Distribución y transferencia de cargas: percibir, ordenar, canalizar y entregar a la columna para que Cristo sostenga, evitando acumulación y sobrecarga.",
-        "bands": {
-          "alineado": "75-100",
-          "ajuste": "55-74",
-          "riesgo": "35-54",
-          "critico": "0-34"
-        }
+        "nodeLabel": "INTERSECCIÓN",
+        "element": "Viga",
+        "diagnosticFocus": "Vida relacional, clima del hogar, sensibilidad canalizada y distribución del peso.",
+        "keyVerse": "“El Espíritu nos ayuda en nuestra debilidad.” (Romanos 8:26)",
+        "shortDiagnosisTemplates": [
+          "La viga percibe y transfiere con libertad.",
+          "La viga funciona, pero hay sobrecarga intermitente.",
+          "La viga acumula: tensión visible y fisuras emocionales."
+        ]
       }
-    ]
+    }
   },
   "sections": [
     {
-      "id": "s01_diseno_viga",
-      "title": "La viga como diseño",
-      "subtitle": "Indispensable: sin ella el peso no se distribuye",
-      "diagnosticFocus": "Honrar tu función sin cargar sola ni minimizar tu sensibilidad",
-      "porticoAxis": "interseccion",
-      "sectionVerse": {
-        "quote": "Mas quiero que sepáis que Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer",
-        "reference": "1 Corintios 11:3"
-      },
+      "id": "sec-01-funcion-viga",
+      "order": 1,
+      "axis": "interseccion",
+      "title": "Función de la viga: percibir y distribuir",
+      "intro": "La sensibilidad es función estructural: capta tensiones tempranas y ayuda a distribuir el peso antes de que se vuelva colapso.",
+      "verse": "“Abre su boca con sabiduría, y la ley de clemencia está en su lengua.” (Proverbios 31:26)",
       "questions": [
-        { "id": "q01_01", "text": "Entiendo que mi rol no es cargar sola, sino ayudar a distribuir y canalizar el peso del hogar." },
-        { "id": "q01_02", "text": "Mi sensibilidad la reconozco como diseño, no como defecto que debo ocultar." },
-        { "id": "q01_03", "text": "Cuando algo me pesa, busco transferirlo en lugar de guardarlo por orgullo o miedo." },
-        { "id": "q01_04", "text": "Puedo pedir ayuda sin sentir culpa por “no poder con todo”." },
-        { "id": "q01_05", "text": "Evito asumir funciones que corresponden a la columna (sostener verticalmente el sistema)." },
-        { "id": "q01_06", "text": "Mis decisiones y acciones buscan descanso y orden, no solo “sobrevivir el día”." },
-        { "id": "q01_07", "text": "Cuando percibo tensión, la nombro con respeto y propongo un paso concreto." },
-        { "id": "q01_08", "text": "Sé diferenciar entre sentir una carga y convertirme en su soporte permanente." }
+        {
+          "id": "q-01-01",
+          "text": "Cuando aparece tensión en casa, la esposa suele detectarla antes de que estalle un conflicto.",
+          "observable": "Identifica señales tempranas (tono, silencio, irritación, distancia) y las nombra con calma."
+        },
+        {
+          "id": "q-01-02",
+          "text": "La esposa expresa lo que percibe sin acusar ni humillar.",
+          "observable": "Usa frases concretas (“noté…”, “me preocupa…”) y evita generalizaciones (“siempre”, “nunca”)."
+        },
+        {
+          "id": "q-01-03",
+          "text": "La familia toma en serio la percepción de la esposa y la considera como alerta útil.",
+          "observable": "Se escucha, se pregunta, se valida y se acuerda un paso práctico."
+        },
+        {
+          "id": "q-01-04",
+          "text": "La esposa distingue entre sentir una carga y asumirla como responsabilidad total.",
+          "observable": "Puede decir “esto lo transfiero” en lugar de “yo lo resuelvo sola”."
+        },
+        {
+          "id": "q-01-05",
+          "text": "La comunicación diaria incluye espacios breves para revisar el “clima” del hogar.",
+          "observable": "Hay un momento fijo o frecuente para conversar sin pantallas y con atención real."
+        },
+        {
+          "id": "q-01-06",
+          "text": "Cuando la esposa percibe una carga emocional, la canaliza hacia una conversación y no hacia el resentimiento.",
+          "observable": "Evita el sarcasmo y el silencio punitivo; busca diálogo oportuno."
+        },
+        {
+          "id": "q-01-07",
+          "text": "La esposa ha aprendido a pedir ayuda antes de llegar al agotamiento.",
+          "observable": "Pide apoyo específico (tareas, tiempo, escucha, oración) con anticipación."
+        },
+        {
+          "id": "q-01-08",
+          "text": "En la casa se reconoce que la sensibilidad puede salvar estructuras cuando es escuchada.",
+          "observable": "Se celebran ajustes tempranos que evitaron conflictos mayores."
+        }
       ]
     },
     {
-      "id": "s02_percibir_distribuir",
-      "title": "Percibir y distribuir",
-      "subtitle": "Sientes primero: eso permite ordenar a tiempo",
-      "diagnosticFocus": "Detectar percepción temprana y canalización sabia antes de la acumulación",
-      "porticoAxis": "interseccion",
-      "sectionVerse": {
-        "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua",
-        "reference": "Proverbios 31:26"
-      },
+      "id": "sec-02-horizontalidad",
+      "order": 2,
+      "axis": "interseccion",
+      "title": "Horizontalidad: relación, convivencia y expresión",
+      "intro": "La viga trabaja en el eje horizontal: la vida diaria revela la salud del sistema. Lo no expresado se traslada como presión.",
+      "verse": "“Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, esa será alabada.” (Proverbios 31:30)",
       "questions": [
-        { "id": "q02_01", "text": "Percibo cambios en el clima del hogar y puedo describirlos con calma y claridad." },
-        { "id": "q02_02", "text": "Cuando noto una tensión, no la minimizo ni la exagero: la encauzo." },
-        { "id": "q02_03", "text": "Identifico qué parte del peso me corresponde procesar y qué parte debo transferir." },
-        { "id": "q02_04", "text": "Evito cargar emocionalmente por días algo que puedo expresar en una conversación breve." },
-        { "id": "q02_05", "text": "Mi manera de hablar abre caminos; no cierro el ambiente con sarcasmo o dureza." },
-        { "id": "q02_06", "text": "Cuando estoy sensible, busco apoyo (oración, conversación, descanso) antes de estallar." },
-        { "id": "q02_07", "text": "Puedo priorizar lo importante: distribuyo tareas y responsabilidades con orden." },
-        { "id": "q02_08", "text": "No convierto mi percepción en control; la uso para traer luz y dirección." }
+        {
+          "id": "q-02-01",
+          "text": "La convivencia en casa se siente liviana la mayoría de los días (sin tensión constante).",
+          "observable": "Hay risas, conversaciones y cooperación; el ambiente no es de “pisar huevos”."
+        },
+        {
+          "id": "q-02-02",
+          "text": "Los desacuerdos se conversan en el mismo día, sin castigos emocionales prolongados.",
+          "observable": "Se busca reconciliación o al menos un acuerdo de pausa con respeto."
+        },
+        {
+          "id": "q-02-03",
+          "text": "La esposa puede expresar tristeza o cansancio sin ser ridiculizada o ignorada.",
+          "observable": "El varón responde con escucha, preguntas y contención, no con burla o evasión."
+        },
+        {
+          "id": "q-02-04",
+          "text": "El hogar tiene prácticas que protegen el clima emocional (rutinas, descanso, límites).",
+          "observable": "Se cuida el sueño, se administran pantallas, y hay tiempo de calidad real."
+        },
+        {
+          "id": "q-02-05",
+          "text": "Cuando el ambiente se torna pesado, se identifican causas concretas y se hace un ajuste práctico.",
+          "observable": "Se reduce una carga, se reordena agenda o se redistribuyen tareas."
+        },
+        {
+          "id": "q-02-06",
+          "text": "La esposa no necesita elevar el tono para ser tomada en serio.",
+          "observable": "Su voz es escuchada aun cuando habla con mansedumbre."
+        },
+        {
+          "id": "q-02-07",
+          "text": "La expresión emocional de la esposa no se confunde con falta de fe o rebeldía.",
+          "observable": "Se responde con discernimiento, oración y cuidado, no con etiquetas espirituales."
+        },
+        {
+          "id": "q-02-08",
+          "text": "La familia reconoce que ignorar el alma no elimina el problema: lo desplaza.",
+          "observable": "Se atienden señales pequeñas antes de que se vuelvan crisis."
+        }
       ]
     },
     {
-      "id": "s03_horizontalidad_relacion",
-      "title": "Horizontalidad",
-      "subtitle": "Relación y expresión: el clima del hogar se manifiesta aquí",
-      "diagnosticFocus": "Medir fluidez en convivencia, comunicación y manejo del ambiente",
-      "porticoAxis": "congregacion",
-      "sectionVerse": {
-        "quote": "Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, ésa será alabada",
-        "reference": "Proverbios 31:30"
-      },
+      "id": "sec-03-apoyo-movil",
+      "order": 3,
+      "axis": "interseccion",
+      "title": "Apoyo móvil: Espíritu Santo y el alma",
+      "intro": "La viga se apoya: el Espíritu sostiene sin quitar sensibilidad. Rigidez oprime; ausencia deja caer el peso.",
+      "verse": "“El Espíritu nos ayuda en nuestra debilidad.” (Romanos 8:26)",
       "questions": [
-        { "id": "q03_01", "text": "Puedo expresar lo que siento sin atacar, humillar o levantar muros." },
-        { "id": "q03_02", "text": "Cuando el ambiente está tenso, procuro traer paz con palabras y acciones prácticas." },
-        { "id": "q03_03", "text": "Evito repetir lo mismo con intensidad creciente; busco un acuerdo concreto." },
-        { "id": "q03_04", "text": "Sé cuándo necesito pausa para hablar mejor (y la pido con respeto)." },
-        { "id": "q03_05", "text": "Mi convivencia no depende de “buen humor”; tengo hábitos que sostienen el clima del hogar." },
-        { "id": "q03_06", "text": "Reconozco cuando mi expresión está cargada por acumulación y decido ordenar el corazón." },
-        { "id": "q03_07", "text": "Me siento escuchada la mayor parte del tiempo, y sé pedir escucha sin presión." },
-        { "id": "q03_08", "text": "Mi temor de Dios guía mi trato: cuido mis palabras aun cuando estoy herida." }
+        {
+          "id": "q-03-01",
+          "text": "La esposa busca al Espíritu Santo para discernir lo que siente antes de reaccionar.",
+          "observable": "Ora, respira, escribe o espera un momento antes de confrontar."
+        },
+        {
+          "id": "q-03-02",
+          "text": "En momentos de presión, la esposa distingue entre discernimiento espiritual y control.",
+          "observable": "Puede soltar el resultado y enfocarse en obedecer el proceso."
+        },
+        {
+          "id": "q-03-03",
+          "text": "La casa practica oración conjunta cuando hay tensión (aunque sea breve).",
+          "observable": "Se ora 1–3 minutos, se pide ayuda y se baja el tono emocional."
+        },
+        {
+          "id": "q-03-04",
+          "text": "El varón honra la obra del Espíritu en la esposa y no la trata como “exagerada”.",
+          "observable": "Pregunta: “¿Qué estás percibiendo? ¿Qué necesitas?”"
+        },
+        {
+          "id": "q-03-05",
+          "text": "La esposa puede expresar emociones sin sentirse culpable por ‘sentir demasiado’.",
+          "observable": "No se castiga; busca canalizar lo que siente con verdad y amor."
+        },
+        {
+          "id": "q-03-06",
+          "text": "Cuando hay corrección, se hace con mansedumbre y claridad, no con presión rígida.",
+          "observable": "Se proponen límites y acuerdos, sin amenazas ni manipulación."
+        },
+        {
+          "id": "q-03-07",
+          "text": "La esposa recibe descanso emocional real (tiempo, apoyo, contención).",
+          "observable": "Se observa recuperación: menos irritación, más paz y mayor claridad."
+        },
+        {
+          "id": "q-03-08",
+          "text": "Donde el Espíritu apoya, hay libertad sin colapso en la dinámica familiar.",
+          "observable": "Aun con problemas, el hogar mantiene esperanza y cooperación."
+        }
       ]
     },
     {
-      "id": "s04_sobrecarga_advertencia",
-      "title": "Sobrecarga y fisuras",
-      "subtitle": "Advertencia estructural: cuando la viga se sobrecarga, el sistema se endurece",
-      "diagnosticFocus": "Reconocer señales tempranas de sobrecarga y prevenir rencilla",
-      "porticoAxis": "congregacion",
-      "sectionVerse": {
-        "quote": "Mejor es morar en el rincón del terrado que con mujer rencillosa en casa espaciosa",
-        "reference": "Proverbios 21:9"
-      },
-      "questions": [
-        { "id": "q04_01", "text": "Cuando estoy sobrecargada, lo reconozco y lo comunico antes de llegar al límite." },
-        { "id": "q04_02", "text": "Identifico señales de fisura (agotamiento, irritabilidad, tristeza) y pido apoyo." },
-        { "id": "q04_03", "text": "Evito convertir mi cansancio en crítica constante o discusiones repetitivas." },
-        { "id": "q04_04", "text": "No uso el reclamo como forma de descarga; busco un acuerdo específico." },
-        { "id": "q04_05", "text": "Sé delegar y soltar tareas sin sentir que “si no lo hago yo, nada sale bien”." },
-        { "id": "q04_06", "text": "Cuando me siento sola con el peso, lo digo con honestidad y mansedumbre." },
-        { "id": "q04_07", "text": "Me doy permiso para descansar sin culpa, porque el descanso protege la estructura." },
-        { "id": "q04_08", "text": "Puedo reconciliar rápido: pido perdón por el tono y vuelvo al propósito." }
-      ]
-    },
-    {
-      "id": "s05_apoyo_movil_espiritu",
-      "title": "Apoyo móvil",
-      "subtitle": "El Espíritu Santo sostiene el alma sin quitar sensibilidad",
-      "diagnosticFocus": "Medir apoyo real en el Espíritu y libertad sin colapso",
-      "porticoAxis": "comunion",
-      "sectionVerse": {
-        "quote": "El Espíritu nos ayuda en nuestra debilidad",
-        "reference": "Romanos 8:26"
-      },
-      "questions": [
-        { "id": "q05_01", "text": "Busco al Espíritu Santo cuando me siento débil, en vez de endurecerme o controlar." },
-        { "id": "q05_02", "text": "Mi oración incluye lo que siento: no escondo mi alma delante de Dios." },
-        { "id": "q05_03", "text": "Puedo recibir consuelo de Dios antes de exigir que otros reparen mi interior." },
-        { "id": "q05_04", "text": "Distingo entre apoyo del Espíritu y control: no oprimo para sentir seguridad." },
-        { "id": "q05_05", "text": "No me inmovilizo por miedo: el Espíritu me da libertad para dar pasos." },
-        { "id": "q05_06", "text": "Cuando estoy sensible, elijo prácticas que me estabilizan (Palabra, oración, descanso)." },
-        { "id": "q05_07", "text": "Puedo expresar dolor sin caos: el Espíritu ordena mi expresión." },
-        { "id": "q05_08", "text": "Siento que hay esperanza real: Dios sostiene mi alma aun en temporadas difíciles." }
-      ]
-    },
-    {
-      "id": "s06_cuando_intenta_columna",
+      "id": "sec-04-cuando-viga-es-columna",
+      "order": 4,
+      "axis": "congregacion",
       "title": "Cuando la viga intenta ser columna",
-      "subtitle": "Cargar verticalmente trae agotamiento y resentimiento",
-      "diagnosticFocus": "Detectar sustitución de funciones y restablecer límites del diseño",
-      "porticoAxis": "interseccion",
-      "sectionVerse": {
-        "quote": "Cada uno permanezca en la vocación en que fue llamado",
-        "reference": "1 Corintios 7:20"
-      },
+      "intro": "La mujer no colapsa por ser débil, sino por cargar lo que no le corresponde. El diseño pide alineación, no sacrificio indebido.",
+      "verse": "“Cada uno permanezca en la vocación en que fue llamado.” (1 Corintios 7:20)",
       "questions": [
-        { "id": "q06_01", "text": "Me sorprendo sosteniendo el hogar sola, como si fuera mi responsabilidad total." },
-        { "id": "q06_02", "text": "Me cuesta soltar porque siento que nadie lo hará bien o a tiempo." },
-        { "id": "q06_03", "text": "Cuando la columna no responde, mi reacción habitual es sobrecargarme en silencio." },
-        { "id": "q06_04", "text": "Identifico resentimiento acumulado y lo llevo a conversación antes de que se endurezca." },
-        { "id": "q06_05", "text": "Puedo decir: “esto no me corresponde cargar así” sin agresión ni culpa." },
-        { "id": "q06_06", "text": "No confundo amor con sacrificio indebido: pongo límites saludables." },
-        { "id": "q06_07", "text": "Busco apoyo pastoral/mentoría cuando el patrón es crónico." },
-        { "id": "q06_08", "text": "Estoy dispuesta a reordenar rutinas para dejar de vivir en modo supervivencia." }
+        {
+          "id": "q-04-01",
+          "text": "La esposa sostiene responsabilidades que deberían ser lideradas por el varón (decisiones, orden, límites).",
+          "observable": "Ella decide sola, administra crisis sola y luego queda exhausta."
+        },
+        {
+          "id": "q-04-02",
+          "text": "El varón suele llegar tarde a los problemas y solo reacciona cuando ya hay daño.",
+          "observable": "Interviene cuando todo explotó, no cuando apareció la señal."
+        },
+        {
+          "id": "q-04-03",
+          "text": "La esposa muestra señales de agotamiento crónico (físico, emocional o espiritual).",
+          "observable": "Cansancio persistente, irritabilidad, llanto frecuente, apatía o insomnio."
+        },
+        {
+          "id": "q-04-04",
+          "text": "Existe resentimiento silencioso en la esposa por sentir que carga sola.",
+          "observable": "Frases como “da igual” o “yo me encargo” con tono de derrota."
+        },
+        {
+          "id": "q-04-05",
+          "text": "El varón asume tareas y liderazgo servicial sin necesidad de ser presionado.",
+          "observable": "Toma iniciativa: conversa, decide, acompaña, sirve, organiza."
+        },
+        {
+          "id": "q-04-06",
+          "text": "La pareja identifica qué cargas son de la viga (percibir/expresar) y cuáles de la columna (sostener/decidir).",
+          "observable": "Hay acuerdos claros sobre roles prácticos en casa."
+        },
+        {
+          "id": "q-04-07",
+          "text": "El varón recibe corrección o alerta sin defenderse ni atacar.",
+          "observable": "Escucha, reconoce, pide perdón o acuerda un plan."
+        },
+        {
+          "id": "q-04-08",
+          "text": "La casa corrige el patrón de ‘ella sostiene verticalmente’ antes de que se vuelva norma.",
+          "observable": "Se redistribuye carga (finanzas, disciplina, agenda, familia extensa)."
+        }
       ]
     },
     {
-      "id": "s07_transferencia_correcta",
-      "title": "Transferencia correcta",
-      "subtitle": "Viga → Columna → Cimiento: el hogar descansa cuando fluye",
-      "diagnosticFocus": "Medir flujo de transferencia y acuerdos prácticos que evitan acumulación",
-      "porticoAxis": "interseccion",
-      "sectionVerse": {
-        "quote": "Someteos unos a otros en el temor de Dios",
-        "reference": "Efesios 5:21"
-      },
+      "id": "sec-05-transferencia-a-columna",
+      "order": 5,
+      "axis": "congregacion",
+      "title": "Transferencia correcta: viga → columna",
+      "intro": "El sistema respira cuando la viga transfiere y la columna recibe. La transferencia es acto espiritual, no solo emocional.",
+      "verse": "“Someteos unos a otros en el temor de Dios.” (Efesios 5:21)",
       "questions": [
-        { "id": "q07_01", "text": "Cuando percibo una carga, la presento con claridad a la columna, no como reproche." },
-        { "id": "q07_02", "text": "Aprendí a pedir ayuda con peticiones concretas, no con señales indirectas." },
-        { "id": "q07_03", "text": "Buscamos acuerdos que distribuyen tareas y reducen fricción en la convivencia." },
-        { "id": "q07_04", "text": "Evito acumular “listas mentales” sin hablar: elijo transferir a tiempo." },
-        { "id": "q07_05", "text": "Puedo reconocer mi parte y ajustar hábitos para facilitar el flujo del hogar." },
-        { "id": "q07_06", "text": "Si el diálogo se tensa, vuelvo al propósito: descanso y orden, no victoria." },
-        { "id": "q07_07", "text": "Oramos por cargas reales del hogar, no solo de forma general." },
-        { "id": "q07_08", "text": "Después de transferir bien, siento alivio y claridad, no más peso acumulado." }
+        {
+          "id": "q-05-01",
+          "text": "La esposa transfiere cargas con palabras claras, no con indirectas.",
+          "observable": "Pide apoyo específico: “Necesito que hoy te encargues de…”"
+        },
+        {
+          "id": "q-05-02",
+          "text": "El varón recibe la transferencia sin minimizar, espiritualizar para evadir o culpar.",
+          "observable": "No responde “solo ora” para esquivar; se involucra con acciones."
+        },
+        {
+          "id": "q-05-03",
+          "text": "La pareja tiene un canal regular para transferir cargas (reunión de hogar, caminata, devocional).",
+          "observable": "Se conversa con estructura: qué pasa, qué se necesita, qué se hará."
+        },
+        {
+          "id": "q-05-04",
+          "text": "Cuando la esposa transfiere, el varón toma responsabilidad y la sostiene hasta resolver.",
+          "observable": "Da seguimiento, informa avances y cumple acuerdos."
+        },
+        {
+          "id": "q-05-05",
+          "text": "La esposa no se siente castigada por transferir (silencio, burla, enojo).",
+          "observable": "Se percibe seguridad: puede hablar sin temor."
+        },
+        {
+          "id": "q-05-06",
+          "text": "El varón interpreta la sensibilidad como información del sistema, no como ataque personal.",
+          "observable": "Pregunta por hechos, necesidades y soluciones."
+        },
+        {
+          "id": "q-05-07",
+          "text": "La transferencia reduce tensión y produce reposo, no escalada.",
+          "observable": "Después de conversar, el ambiente mejora: paz, orden, cooperación."
+        },
+        {
+          "id": "q-05-08",
+          "text": "Cuando la transferencia falla, se identifica qué bloqueó el flujo (orgullo, miedo, cansancio, control).",
+          "observable": "Se nombran obstáculos sin culpar, y se ajusta el método."
+        }
       ]
     },
     {
-      "id": "s08_diseno_hoy_restauracion",
-      "title": "Diseño hoy: discernimiento y restauración",
-      "subtitle": "Honrar sensibilidad, soltar carga y caminar con pasos sostenibles",
-      "diagnosticFocus": "Convertir el diagnóstico en acciones de 7 días que restauren armonía",
-      "porticoAxis": "comunion",
-      "sectionVerse": {
-        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar",
-        "reference": "Mateo 11:28"
-      },
+      "id": "sec-06-columna-alineada",
+      "order": 6,
+      "axis": "congregacion",
+      "title": "La columna: alineación del varón y cobertura servicial",
+      "intro": "La columna no oprime; sostiene. Liderar es servir, recibir, ordenar y proteger para que la viga no se fisure.",
+      "verse": "“Maridos, amad a vuestras mujeres, así como Cristo amó a la iglesia, y se entregó a sí mismo por ella.” (Efesios 5:25)",
       "questions": [
-        { "id": "q08_01", "text": "Identifico una carga específica que debo soltar hoy (no mañana) delante de Dios." },
-        { "id": "q08_02", "text": "Puedo nombrar lo que siento en una frase clara, sin discurso largo ni acusación." },
-        { "id": "q08_03", "text": "Estoy dispuesta a descansar y cuidar mi alma como parte del diseño, no como lujo." },
-        { "id": "q08_04", "text": "Acepto que pedir apoyo no me hace débil: me vuelve sabia." },
-        { "id": "q08_05", "text": "Estoy construyendo una rutina espiritual que sostenga mi sensibilidad con paz." },
-        { "id": "q08_06", "text": "Si hay tensión crónica, busco acompañamiento en lugar de aislarme." },
-        { "id": "q08_07", "text": "Mi expresión está aprendiendo mansedumbre: digo la verdad sin romper el vínculo." },
-        { "id": "q08_08", "text": "Mi hogar respira más cuando transfiero, no cuando acumulo o sostengo sola." }
+        {
+          "id": "q-06-01",
+          "text": "El varón lidera con presencia: está emocionalmente disponible y atento a su casa.",
+          "observable": "Se nota en tiempo, conversación, acompañamiento y decisiones."
+        },
+        {
+          "id": "q-06-02",
+          "text": "El varón cuida el tono del hogar: corrige sin violencia y promueve paz.",
+          "observable": "No grita, no humilla; establece límites con firmeza y respeto."
+        },
+        {
+          "id": "q-06-03",
+          "text": "El varón protege la agenda familiar y evita sobrecargas constantes.",
+          "observable": "Reduce compromisos, negocia prioridades y respeta el descanso."
+        },
+        {
+          "id": "q-06-04",
+          "text": "El varón provee cobertura espiritual (oración, palabra, dirección) sin religiosidad vacía.",
+          "observable": "Ora con la familia, pide perdón, y muestra coherencia."
+        },
+        {
+          "id": "q-06-05",
+          "text": "El varón recibe retroalimentación sin descalificar la sensibilidad de la esposa.",
+          "observable": "Agradece la alerta y ajusta conducta o decisiones."
+        },
+        {
+          "id": "q-06-06",
+          "text": "El varón asume la responsabilidad de conflictos con terceros (familia extensa, límites, finanzas).",
+          "observable": "No deja a la esposa como “cara” de los límites difíciles."
+        },
+        {
+          "id": "q-06-07",
+          "text": "El varón se entrega en servicio práctico cotidiano.",
+          "observable": "Ayuda sin que se lo rueguen; carga con tareas reales."
+        },
+        {
+          "id": "q-06-08",
+          "text": "La esposa percibe descanso cuando la columna está alineada.",
+          "observable": "Hay alivio emocional, menor tensión y mayor ternura en la convivencia."
+        }
+      ]
+    },
+    {
+      "id": "sec-07-cimiento-en-cristo",
+      "order": 7,
+      "axis": "comunion",
+      "title": "Cimiento: Cristo sostiene el sistema",
+      "intro": "Sin cimiento, todo colapsa. La base es Cristo: dirección, identidad, reposo y orden espiritual.",
+      "verse": "“Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.” (1 Corintios 3:11)",
+      "questions": [
+        {
+          "id": "q-07-01",
+          "text": "La pareja reconoce a Cristo como fundamento práctico, no solo como idea.",
+          "observable": "Las decisiones se someten a principios bíblicos y oración real."
+        },
+        {
+          "id": "q-07-02",
+          "text": "Hay hábitos espirituales sencillos que sostienen el hogar (oración, palabra, gratitud).",
+          "observable": "Se practican semanalmente con consistencia básica."
+        },
+        {
+          "id": "q-07-03",
+          "text": "Cuando hay crisis, la primera reacción no es control, sino rendición y búsqueda de Dios.",
+          "observable": "Se ora antes de pelear; se pide consejo sabio oportunamente."
+        },
+        {
+          "id": "q-07-04",
+          "text": "La esposa descansa en Dios y no se define solo por lo que siente o resuelve.",
+          "observable": "Puede decir “Dios sostiene” y actuar sin ansiedad desbordada."
+        },
+        {
+          "id": "q-07-05",
+          "text": "El varón cuida su vida espiritual para no trasladar sequedad a la casa.",
+          "observable": "Se nota en frutos: mansedumbre, dominio propio, responsabilidad."
+        },
+        {
+          "id": "q-07-06",
+          "text": "El hogar tiene orden de autoridad saludable (Cristo, varón, mujer) sin abuso ni silenciamiento.",
+          "observable": "Hay servicio mutuo, honra y seguridad emocional."
+        },
+        {
+          "id": "q-07-07",
+          "text": "Cuando se falla, la familia practica arrepentimiento y perdón con hechos.",
+          "observable": "Se pide perdón específico y se repara con cambios visibles."
+        },
+        {
+          "id": "q-07-08",
+          "text": "La casa muestra señales de reposo: menos presión, más paz y claridad de prioridades.",
+          "observable": "Se descansa, se ordena, se conversa y se coopera sin colapso."
+        }
+      ]
+    },
+    {
+      "id": "sec-08-descanso-y-plan",
+      "order": 8,
+      "axis": "comunion",
+      "title": "Descanso y reorden: soltar cargas delante de Dios",
+      "intro": "No todo lo que se siente se debe cargar. El descanso llega cuando el flujo se reordena: percibir, expresar, transferir y reposar en Cristo.",
+      "verse": "“Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.” (Mateo 11:28)",
+      "questions": [
+        {
+          "id": "q-08-01",
+          "text": "La esposa identifica qué cargas no le corresponden y las entrega (a Dios y a la columna).",
+          " observable": "Puede nombrar 1–3 cargas específicas que hoy decide soltar y transferir con un paso concreto."
+        },
+        {
+          "id": "q-08-02",
+          "text": "La esposa tiene prácticas para descargar el corazón sin acumular (oración, conversación, descanso).",
+          "observable": "Se observa una rutina semanal de desahogo sano: ora, conversa y descansa sin culparse."
+        },
+        {
+          "id": "q-08-03",
+          "text": "La pareja establece límites que protegen el descanso del hogar (agenda, familia extensa, trabajo).",
+          "observable": "Dicen “no” a excesos y sostienen un horario de descanso real."
+        },
+        {
+          "id": "q-08-04",
+          "text": "Cuando la esposa se siente saturada, lo comunica antes de quebrarse.",
+          "observable": "Expresa señales tempranas (“estoy al límite”) y pide un ajuste inmediato."
+        },
+        {
+          "id": "q-08-05",
+          "text": "El varón responde a la saturación con protección, no con exigencia.",
+          "observable": "Reduce cargas, toma tareas y crea un espacio seguro para que ella se recupere."
+        },
+        {
+          "id": "q-08-06",
+          "text": "La casa practica “reorden” después de una semana pesada (evaluar, redistribuir, agradecer).",
+          "observable": "Hacen una revisión breve y ajustan tareas/ritmos para la próxima semana."
+        },
+        {
+          "id": "q-08-07",
+          "text": "La esposa puede confiar el resultado a Dios y soltar el control cuando ya transfirió lo necesario.",
+          "observable": "Se ve menos vigilancia, menos ansiedad y más paz al delegar y esperar."
+        },
+        {
+          "id": "q-08-08",
+          "text": "El hogar ha aprendido que el descanso es una señal de alineación, no de pereza.",
+          "observable": "Se prioriza reposo y paz sin culpa; el ambiente se vuelve más liviano."
+        }
       ]
     }
   ],
-  "pastoralManual": {
-    "sections": [
-      {
-        "id": "s01_diseno_viga",
-        "miniTeaching": {
-          "title": "Tu sensibilidad es función estructural",
-          "text": [
-            "La viga no es secundaria: hace posible que el peso se distribuya y el hogar repose.",
-            "No fuiste diseñada para cargar sola, sino para canalizar y transferir con sabiduría.",
-            "Honrar tu diseño incluye pedir apoyo y poner límites a la sobrecarga.",
-            "La sensibilidad no es debilidad; es percepción que salva estructuras cuando se escucha.",
-            "Tu aporte se vuelve descanso cuando el flujo está abierto y hay acuerdos."
-          ],
-          "verse": {
-            "quote": "Mas quiero que sepáis que Cristo es la cabeza de todo varón, y el varón es la cabeza de la mujer",
-            "reference": "1 Corintios 11:3"
-          },
-          "oneWeekPlan": [
-            "Día 1: Escribe una carga y di: “no la cargaré sola; la canalizaré con sabiduría”.",
-            "Día 2: Identifica una tarea que asumiste de más y define un límite saludable.",
-            "Día 3: Habla una frase clara: “necesito transferencia en esto: ___”.",
-            "Día 4: Haz una pausa de 20 minutos para cuidar tu alma (oración/descanso).",
-            "Día 5: Propón un acuerdo concreto para distribuir el peso en casa.",
-            "Día 6: Suelta una exigencia perfeccionista y elige lo esencial.",
-            "Día 7: Evalúa: ¿qué acción trajo más respiración al hogar? Repítela."
-          ]
-        }
-      },
-      {
-        "id": "s02_percibir_distribuir",
-        "miniTeaching": {
-          "title": "Percibir a tiempo evita fisuras",
-          "text": [
-            "Dios te dio percepción para detectar tensiones antes de que se vuelvan crisis.",
-            "Canaliza lo que sientes: nómbralo con mansedumbre y pide un paso concreto.",
-            "Distribuir no es controlar: es ordenar prioridades y evitar acumulación silenciosa.",
-            "La sabiduría se muestra en el tono: verdad con clemencia abre puertas.",
-            "Cuando tu percepción se honra, el hogar gana dirección y paz."
-          ],
-          "verse": {
-            "quote": "Abre su boca con sabiduría, y la ley de clemencia está en su lengua",
-            "reference": "Proverbios 31:26"
-          },
-          "oneWeekPlan": [
-            "Día 1: Anota 3 señales del clima del hogar (sin juicio) y ora por dirección.",
-            "Día 2: Expresa una tensión en 60 segundos: “veo/ siento ___; propongo ___”.",
-            "Día 3: Distribuye una carga: define quién hace qué y cuándo (por escrito).",
-            "Día 4: Cambia crítica por petición: reemplaza “nunca” por “hoy necesito ___”.",
-            "Día 5: Practica una conversación con tono suave y pausas.",
-            "Día 6: Identifica una carga emocional y entrégala a Dios con nombre específico.",
-            "Día 7: Revisa el acuerdo: ajusta sin pelea, con propósito de descanso."
-          ]
-        }
-      },
-      {
-        "id": "s03_horizontalidad_relacion",
-        "miniTeaching": {
-          "title": "Horizontalidad: el hogar se siente aquí",
-          "text": [
-            "La convivencia revela lo interior: tu expresión muestra salud o tensión del sistema.",
-            "El temor de Dios te da dirección: hablar con honra protege la relación.",
-            "La fluidez se cuida con hábitos: conversaciones cortas, acuerdos y descanso.",
-            "Ignorar la expresión del alma no elimina el problema: lo traslada.",
-            "La paz se construye: tono, tiempos y verdad con amor."
-          ],
-          "verse": {
-            "quote": "Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, ésa será alabada",
-            "reference": "Proverbios 31:30"
-          },
-          "oneWeekPlan": [
-            "Día 1: Pide a Dios un “tono nuevo” para esta semana.",
-            "Día 2: Elige un momento fijo de 15 minutos para hablar sin pantallas.",
-            "Día 3: Practica decir una verdad sin acusación: “me duele ___; necesito ___”.",
-            "Día 4: Haz un acto de paz (servicio/orden) sin esperar reconocimiento.",
-            "Día 5: Si hay tensión, pide pausa y retoma con propósito, no con impulso.",
-            "Día 6: Agradece una cosa específica; la honra baja la fricción.",
-            "Día 7: Evalúen juntos: ¿qué mejoró el clima? Mantengan ese hábito."
-          ]
-        }
-      },
-      {
-        "id": "s04_sobrecarga_advertencia",
-        "miniTeaching": {
-          "title": "La sobrecarga cambia el tono del hogar",
-          "text": [
-            "Proverbios advierte: la rencilla suele ser síntoma de peso acumulado.",
-            "No es condena: es diagnóstico para ajustar antes de que la fisura crezca.",
-            "Descanso y límites no son egoísmo: son protección estructural.",
-            "Pedir apoyo a tiempo evita que la expresión se vuelva filo.",
-            "La reparación rápida protege la convivencia y restaura armonía."
-          ],
-          "verse": {
-            "quote": "Mejor es morar en el rincón del terrado que con mujer rencillosa en casa espaciosa",
-            "reference": "Proverbios 21:9"
-          },
-          "oneWeekPlan": [
-            "Día 1: Identifica tu señal de sobrecarga (cuerpo/ánimo) y escríbela.",
-            "Día 2: Pide ayuda con una petición puntual, no con reclamo general.",
-            "Día 3: Descansa 30 minutos sin culpa; ora y suelta el control.",
-            "Día 4: Reduce una expectativa: elige “suficientemente bien” por hoy.",
-            "Día 5: Repara un tono: pide perdón por dureza o palabras apresuradas.",
-            "Día 6: Delegación práctica: entrega una tarea y acepta el proceso.",
-            "Día 7: Celebra un avance pequeño: la armonía se construye por pasos."
-          ]
-        }
-      },
-      {
-        "id": "s05_apoyo_movil_espiritu",
-        "miniTeaching": {
-          "title": "El Espíritu sostiene sin oprimir",
-          "text": [
-            "El apoyo móvil permite movimiento sin colapso: sensibilidad con estabilidad.",
-            "El Espíritu te ayuda en debilidad: no tienes que sostener desde tus fuerzas.",
-            "Apoyo no es rigidez: cuando controlas para sentir seguridad, aparecen fisuras.",
-            "Apoyo no es ausencia: cuando te quedas sola con el peso, el alma se agota.",
-            "Donde el Espíritu apoya, hay libertad para hablar, soltar y avanzar."
-          ],
-          "verse": {
-            "quote": "El Espíritu nos ayuda en nuestra debilidad",
-            "reference": "Romanos 8:26"
-          },
-          "oneWeekPlan": [
-            "Día 1: Ora: “Espíritu Santo, sostén mi alma hoy; dame paz para percibir sin cargar”.",
-            "Día 2: Practica 5 minutos de respiración y oración antes de hablar un tema difícil.",
-            "Día 3: Identifica un control innecesario y suéltalo deliberadamente.",
-            "Día 4: Lee Romanos 8:26 y pide ayuda específica para tu debilidad principal.",
-            "Día 5: Sustituye una reacción por una pausa: responde después de 2 minutos.",
-            "Día 6: Busca apoyo: conversa con una persona madura o guía pastoral si lo necesitas.",
-            "Día 7: Escribe 3 evidencias de ayuda de Dios esta semana y agradece."
-          ]
-        }
-      },
-      {
-        "id": "s06_cuando_intenta_columna",
-        "miniTeaching": {
-          "title": "Cargar lo que no corresponde desgasta el alma",
-          "text": [
-            "La viga se fisura cuando intenta sostener verticalmente el hogar sola.",
-            "El sacrificio indebido no es el diseño: el diseño pide alineación y flujo.",
-            "Resentimiento silencioso es señal de peso acumulado sin transferencia.",
-            "Límites sanos protegen el amor: decir “no puedo con todo” abre restauración.",
-            "Acompañamiento y acuerdos no son fracaso: son sabiduría para sanar patrones."
-          ],
-          "verse": {
-            "quote": "Cada uno permanezca en la vocación en que fue llamado",
-            "reference": "1 Corintios 7:20"
-          },
-          "oneWeekPlan": [
-            "Día 1: Identifica una carga que sostienes sola y nómbrala sin vergüenza.",
-            "Día 2: Declara un límite: “esto necesita compartirse; no lo cargaré sola”.",
-            "Día 3: Pide una acción concreta a la columna (tiempo, decisión, tarea).",
-            "Día 4: Descanso intencional: una hora sin responsabilidades domésticas extras.",
-            "Día 5: Evita el silencio largo: conversa 10 minutos para ordenar expectativas.",
-            "Día 6: Si el patrón es crónico, agenda mentoría/acompañamiento.",
-            "Día 7: Ajusten rutinas: reduzcan 1 fuente de estrés repetitiva."
-          ]
-        }
-      },
-      {
-        "id": "s07_transferencia_correcta",
-        "miniTeaching": {
-          "title": "La transferencia es un acto espiritual",
-          "text": [
-            "El hogar descansa cuando fluye: viga transfiere, columna recibe, Cristo sostiene.",
-            "Transferir no es quejarse: es presentar el peso con claridad y pedir dirección.",
-            "Someteos unos a otros: cooperación bajo Dios, no competencia ni carga unilateral.",
-            "Acuerdos simples sostienen la convivencia: menos fricción, más reposo.",
-            "Cuando el flujo se restaura, el alma deja de acumular y vuelve la paz."
-          ],
-          "verse": {
-            "quote": "Someteos unos a otros en el temor de Dios",
-            "reference": "Efesios 5:21"
-          },
-          "oneWeekPlan": [
-            "Día 1: Presenta una carga en una frase: “necesito transferencia en ___”.",
-            "Día 2: Elaboren un acuerdo escrito de 2 puntos (quién/qué/cuándo).",
-            "Día 3: Oren juntos por una carga concreta del hogar (sin generalidades).",
-            "Día 4: Practica pedir sin reproche: petición + propuesta de solución.",
-            "Día 5: Revisa tareas: quita una actividad innecesaria para recuperar reposo.",
-            "Día 6: Haz seguimiento al acuerdo sin presión; ajusta con respeto.",
-            "Día 7: Agradezcan un avance: la honra fortalece el flujo."
-          ]
-        }
-      },
-      {
-        "id": "s08_diseno_hoy_restauracion",
-        "miniTeaching": {
-          "title": "Descanso y pasos pequeños sostienen la restauración",
-          "text": [
-            "No todo lo que sientes debes cargarlo tú: lo puedes presentar y transferir.",
-            "Cristo llama a los cargados: descanso es parte del diseño, no premio por rendir.",
-            "Tu sensibilidad alineada produce discernimiento, no caos.",
-            "Restauración se logra con pasos sostenibles: conversación corta, acuerdo simple, oración real.",
-            "La paz vuelve cuando sueltas lo que no te corresponde y vuelves al apoyo del Espíritu."
-          ],
-          "verse": {
-            "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar",
-            "reference": "Mateo 11:28"
-          },
-          "oneWeekPlan": [
-            "Día 1: Ora: “Espíritu Santo, enséñame a percibir sin cargar; a transferir sin temor”.",
-            "Día 2: Define una práctica de descanso (hora fija) y protégela con un límite.",
-            "Día 3: Haz una conversación de 10 minutos con una petición concreta.",
-            "Día 4: Elige una carga y entrégala a Dios por escrito; luego suéltala.",
-            "Día 5: Practica mansedumbre: verdad breve + tono suave + propuesta simple.",
-            "Día 6: Busca apoyo externo si lo necesitas (mentoría/pareja pastoral).",
-            "Día 7: Revisa: ¿qué te hizo respirar? Hazlo parte de tu rutina."
-          ]
-        }
-      }
-    ]
-  }
+  "pastoralManual": [
+    {
+      "sectionId": "sec-01-funcion-viga",
+      "axis": "interseccion",
+      "miniTeaching": "La viga percibe primero: su sensibilidad no es debilidad, es una alarma misericordiosa. Cuando se escucha a tiempo, se distribuye la carga y el hogar evita fisuras. El problema no es sentir, sino acumular en silencio.",
+      "keyVerse": "“Abre su boca con sabiduría, y la ley de clemencia está en su lengua.” (Proverbios 31:26)",
+      "actions": [
+        "Practiquen un “chequeo de clima” de 10 minutos, 3 veces por semana: ¿qué estamos sintiendo y qué necesitamos hoy?",
+        "Acordar una frase de transferencia: “Esto lo percibo y lo transfiero; no lo voy a cargar sola”."
+      ]
+    },
+    {
+      "sectionId": "sec-02-horizontalidad",
+      "axis": "interseccion",
+      "miniTeaching": "La horizontalidad revela la salud: convivencia, tono y relaciones. Si el alma no puede expresarse, la presión se traslada a gritos, sarcasmo o distancia. Dios no pide silencio emocional: pide verdad con amor.",
+      "keyVerse": "“Engañosa es la gracia, y vana la hermosura; la mujer que teme a Jehová, esa será alabada.” (Proverbios 31:30)",
+      "actions": [
+        "Establezcan una regla: los conflictos no se resuelven con castigo emocional; se acuerda una hora para conversar con respeto.",
+        "Protejan el ambiente con límites simples: pantallas fuera en la comida y una rutina corta de gratitud al final del día."
+      ]
+    },
+    {
+      "sectionId": "sec-03-apoyo-movil",
+      "axis": "interseccion",
+      "miniTeaching": "La viga se apoya: el Espíritu Santo sostiene el alma sin apagarla. Cuando el apoyo se vuelve rígido (control, presión, manipulación), aparecen fisuras. Cuando falta apoyo (abandono emocional), el peso cae sobre la viga.",
+      "keyVerse": "“El Espíritu nos ayuda en nuestra debilidad.” (Romanos 8:26)",
+      "actions": [
+        "Antes de una conversación difícil: 60 segundos de oración y una pregunta guía: “Espíritu Santo, muéstrame qué es discernimiento y qué es reacción”.",
+        "Practiquen una oración breve en tensión: “Señor, danos mansedumbre y claridad; ayúdanos a escuchar”."
+      ]
+    },
+    {
+      "sectionId": "sec-04-cuando-viga-es-columna",
+      "axis": "congregacion",
+      "miniTeaching": "Cuando la viga intenta ser columna, no se vuelve más fuerte: se quiebra. El diseño no exige sacrificio indebido; exige alineación. La columna debe estar presente para recibir transferencia y sostener sin demora.",
+      "keyVerse": "“Cada uno permanezca en la vocación en que fue llamado.” (1 Corintios 7:20)",
+      "actions": [
+        "Hagan una lista de 5 responsabilidades que hoy están sobre la esposa y deben pasar al varón; definan fecha y primer paso.",
+        "El varón asume una “iniciativa visible” esta semana (finanzas, límites, agenda o disciplina) y la sostiene hasta cerrar."
+      ]
+    },
+    {
+      "sectionId": "sec-05-transferencia-a-columna",
+      "axis": "congregacion",
+      "miniTeaching": "La transferencia es espiritual: nombrar cargas con claridad y entregarlas con fe. Si la columna minimiza o evade, la viga acumula y el clima se deteriora. El objetivo no es ganar discusiones, sino restaurar flujo.",
+      "keyVerse": "“Someteos unos a otros en el temor de Dios.” (Efesios 5:21)",
+      "actions": [
+        "Usen un formato simple de transferencia: (1) qué pasa, (2) cómo me afecta, (3) qué necesito, (4) qué harás tú y cuándo.",
+        "Después de conversar, definan un seguimiento: una nota o mensaje con el acuerdo para evitar que se disuelva."
+      ]
+    },
+    {
+      "sectionId": "sec-06-columna-alineada",
+      "axis": "congregacion",
+      "miniTeaching": "La columna alineada no oprime: sostiene, protege y ordena. Liderar es servir, tomar responsabilidad y crear un ambiente seguro para que la viga cumpla su función sin colapsar. Una columna ausente produce sobrecarga invisible.",
+      "keyVerse": "“Maridos, amad a vuestras mujeres, así como Cristo amó a la iglesia, y se entregó a sí mismo por ella.” (Efesios 5:25)",
+      "actions": [
+        "El varón establece un hábito de presencia: 20 minutos diarios de conversación sin pantallas, con escucha activa.",
+        "Tomen una carga recurrente (tarea o decisión) y el varón la adopta como propia por 30 días para estabilizar el sistema."
+      ]
+    },
+    {
+      "sectionId": "sec-07-cimiento-en-cristo",
+      "axis": "comunion",
+      "miniTeaching": "El cimiento es Cristo: identidad, reposo y orden. Cuando el hogar se sostiene en autosuficiencia, la base se agrieta. Cristo no es adorno espiritual; es fundamento práctico: guía decisiones, sana patrones y trae paz.",
+      "keyVerse": "“Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.” (1 Corintios 3:11)",
+      "actions": [
+        "Hagan un devocional breve 3 veces por semana: un versículo, una oración y un acuerdo práctico para ese día.",
+        "Practiquen reparación: cuando fallen, pidan perdón específico y definan un cambio observable para la próxima vez."
+      ]
+    },
+    {
+      "sectionId": "sec-08-descanso-y-plan",
+      "axis": "comunion",
+      "miniTeaching": "El descanso no es lujo: es señal de alineación. No todo lo que se siente se debe cargar. Cuando la esposa percibe y transfiere, la columna sostiene, y el cimiento es Cristo, el hogar respira. Donde hay reposo, hay orden.",
+      "keyVerse": "“Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.” (Mateo 11:28)",
+      "actions": [
+        "Definan una descarga semanal: 30–45 minutos para revisar cargas, redistribuir tareas y orar por paz.",
+        "Elijan una carga que hoy deben soltar: eliminen una actividad o ajusten un límite para recuperar descanso real."
+      ]
+    }
+  ]
 }
