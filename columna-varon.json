@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "La columna: el varón como eje estructural",
-    "description": "Auditoría diagnóstica (capítulo 5) sobre el varón como columna del diseño: alineación vertical con Cristo, recibir y transferir cargas al fundamento, evitar inclinaciones (ego/evasión), empotramiento real, y restauración del sistema cuando la columna se corrige."
+    "description": "Auditoría diagnóstica (capítulo 5) sobre el varón como columna del diseño divino: alineación vertical con Cristo, recepción y transferencia de cargas, empotramiento en el fundamento, detección de inclinaciones (ego o evasión) y restauración del sistema para que el hogar descanse."
   },
   "scale": {
     "options": [
@@ -17,23 +17,23 @@
     "globalBands": [
       {
         "label": "Alineado",
-        "summary": "La columna está vertical y empotrada: recibe sin ego, transfiere sin evasión y conduce el peso al fundamento. La casa descansa porque el varón se alinea por dependencia, no por fuerza.",
+        "summary": "La columna está firme y vertical: recibe sin reaccionar desde el ego, transfiere con fe, y se mantiene empotrada en Cristo. El hogar percibe estabilidad, claridad y descanso estructural.",
         "verse": {
-          "quote": "Separados de mí nada podéis hacer",
-          "reference": "Juan 15:5"
-        }
-      },
-      {
-        "label": "Ajuste",
-        "summary": "Hay deseo de sostener bien, pero aparecen momentos de inclinación (control, pasividad, reacción). Se requieren ajustes prácticos: volver a la referencia vertical, fortalecer la comunión y ordenar la transferencia de cargas.",
-        "verse": {
-          "quote": "Echando toda vuestra ansiedad sobre él",
+          "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
           "reference": "1 Pedro 5:7"
         }
       },
       {
+        "label": "Ajuste",
+        "summary": "Hay responsabilidad y deseo de sostener bien, pero aparecen retenciones de carga, momentos de inclinación o desconexión práctica del fundamento. Con ajustes intencionales, el eje puede recuperar verticalidad y descanso.",
+        "verse": {
+          "quote": "Separados de mí nada podéis hacer.",
+          "reference": "Juan 15:5"
+        }
+      },
+      {
         "label": "Riesgo",
-        "summary": "La columna está recibiendo pero reteniendo o evitando: se nota tensión sostenida, desgaste y desorden en acuerdos. La estabilidad se compromete más por falta de alineación que por el peso mismo. Urge restauración del empotramiento y hábitos de transferencia.",
+        "summary": "La columna muestra inclinaciones sostenidas (ego o evasión), la transferencia se traba y el sistema empieza a girar: aumenta tensión, confusión y sobrecarga en la viga. Se requiere rendición, acuerdos y acompañamiento cercano.",
         "verse": {
           "quote": "Si el fundamento se destruye, ¿qué puede hacer el justo?",
           "reference": "Salmos 11:3"
@@ -41,9 +41,9 @@
       },
       {
         "label": "Crítico",
-        "summary": "Hay desconexión del fundamento y desviaciones marcadas: ego (autosuficiencia/control) o evasión (pasividad/delegación). La viga se sobrecarga y el sistema se fractura. Prioridad: rendición, acompañamiento pastoral, límites y decisiones concretas para volver a verticalidad.",
+        "summary": "Hay fracturas, desconexión del fundamento o evasión crónica. La carga se queda en el sistema y el hogar pierde reposo. Prioridad: volver al anclaje en Cristo, restaurar la transferencia, pedir ayuda pastoral y establecer límites y hábitos de alineación.",
         "verse": {
-          "quote": "Porque nadie puede poner otro fundamento",
+          "quote": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
           "reference": "1 Corintios 3:11"
         }
       }
@@ -51,25 +51,25 @@
     "sectionBands": [
       {
         "label": "Alineado",
-        "summary": "Esta área muestra verticalidad: recepción sobria, transferencia clara y dependencia del fundamento con paz práctica.",
+        "summary": "Esta área se ve estable: hay verticalidad, recepción madura y transferencia clara hacia Cristo.",
         "verse": {
-          "quote": "Cristo es la cabeza de todo varón",
-          "reference": "1 Corintios 11:3"
+          "quote": "Mas el que me oyere, habitará confiadamente y vivirá tranquilo, sin temor del mal.",
+          "reference": "Proverbios 1:33"
         }
       },
       {
         "label": "Ajuste",
-        "summary": "Hay base, pero se observan fugas: reacción, control o postergación. Con ajustes simples, esta área puede recuperar orden y descanso.",
+        "summary": "Hay intención correcta, pero se notan retrasos en rendición, comunicación o disciplina espiritual. Con ajustes prácticos, esta área puede volver a descansar.",
         "verse": {
-          "quote": "Alzad vuestros ojos y mirad los campos",
-          "reference": "Juan 4:35"
+          "quote": "Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.",
+          "reference": "Proverbios 4:23"
         }
       },
       {
         "label": "Riesgo",
-        "summary": "Hay inclinación sostenida o desconexión del fundamento. Se recomienda intervención intencional: volver a Cristo, ordenar hábitos, pedir ayuda y reparar acuerdos.",
+        "summary": "Hay señales de inclinación, retención o evasión. La transferencia se rompe y el sistema se carga. Se recomienda rendición inmediata, acuerdos y acompañamiento.",
         "verse": {
-          "quote": "El corazón altivo va delante de la caída",
+          "quote": "El corazón altivo va delante de la caída, y antes de la honra la humildad.",
           "reference": "Proverbios 16:18"
         }
       }
@@ -80,7 +80,7 @@
       {
         "id": "comunion",
         "label": "Comunión",
-        "description": "Empotramiento en Cristo y vida interior: oración, obediencia, rendición, identidad sana y referencia vertical.",
+        "description": "Empotramiento en Cristo: vida devocional, obediencia, rendición diaria, humildad y dependencia real del fundamento.",
         "bands": {
           "alineado": "75-100",
           "ajuste": "55-74",
@@ -91,7 +91,7 @@
       {
         "id": "congregacion",
         "label": "Congregación",
-        "description": "Orden, unidad y sostén del hogar en comunidad: responsabilidad, sujeción a Cristo, servicio, liderazgo por alineación y cuidado del sistema.",
+        "description": "Orden y unidad del hogar en comunidad: sujeción a Cristo, acuerdos, responsabilidad espiritual y restauración del sistema en familia e iglesia.",
         "bands": {
           "alineado": "75-100",
           "ajuste": "55-74",
@@ -102,7 +102,7 @@
       {
         "id": "interseccion",
         "label": "Intersección",
-        "description": "Acuerdos prácticos y transferencia operativa: decisiones, límites, administración de cargas, comunicación, resolución y acciones concretas.",
+        "description": "Apoyo móvil y transferencia práctica: recibir cargas, procesarlas con madurez, comunicar con claridad, decidir límites y conducir el peso al fundamento.",
         "bands": {
           "alineado": "75-100",
           "ajuste": "55-74",
@@ -114,381 +114,384 @@
   },
   "sections": [
     {
-      "id": "s01_diseno_columna",
-      "title": "La columna como diseño (no dominio)",
-      "subtitle": "Eje vertical de alineación, transferencia y anclaje",
-      "diagnosticFocus": "Entender la función del varón como sostén por alineación, no por fuerza",
+      "id": "s01_columna_diseno",
+      "title": "La columna como diseño",
+      "subtitle": "No decora: sostiene y transfiere",
+      "diagnosticFocus": "Asumir el rol del varón como eje vertical de alineación sin dominio ni pasividad",
       "porticoAxis": "congregacion",
       "sectionVerse": {
-        "quote": "Cristo es la cabeza de todo varón",
+        "quote": "Pero quiero que sepáis que Cristo es la cabeza de todo varón.",
         "reference": "1 Corintios 11:3"
       },
       "questions": [
-        { "id": "q01_01", "text": "Entiendo que ser columna no es dominar, sino alinear el hogar con Cristo mediante responsabilidad y servicio." },
-        { "id": "q01_02", "text": "Mi familia percibe en mí dirección y estabilidad más que imposición o dureza." },
-        { "id": "q01_03", "text": "Cuando hay tensión en casa, busco ordenarla desde principios, no desde orgullo o defensa." },
-        { "id": "q01_04", "text": "Acepto que mi función incluye recibir cargas sin reaccionar desde el ego." },
-        { "id": "q01_05", "text": "Mi liderazgo se nota en consistencia y ejemplo, no solo en palabras." },
-        { "id": "q01_06", "text": "Me hago responsable de lo que me corresponde sin delegarlo por comodidad o miedo." },
-        { "id": "q01_07", "text": "En el hogar se nota que priorizo la alineación con Cristo por encima de ‘tener la razón’." },
-        { "id": "q01_08", "text": "Sé diferenciar entre autoridad espiritual y control emocional." }
+        { "id": "q01_01", "text": "Entiendo mi rol como columna espiritual: sostener y transferir, no controlar ni desaparecer." },
+        { "id": "q01_02", "text": "Mi forma de liderar nace de alineación con Cristo, no de imposición o fuerza." },
+        { "id": "q01_03", "text": "Me hago responsable del clima del hogar sin convertirlo en jerarquía o superioridad." },
+        { "id": "q01_04", "text": "Cuando hay tensión, busco restaurar el sistema, no ganar discusiones." },
+        { "id": "q01_05", "text": "Puedo explicar con claridad qué significa ‘transferir cargas al fundamento’ en mi vida diaria." },
+        { "id": "q01_06", "text": "Mi hogar percibe estabilidad por mi presencia madura, no solo por mis palabras." },
+        { "id": "q01_07", "text": "No delego mi función espiritual: oro, me alineo y actúo con constancia." },
+        { "id": "q01_08", "text": "Reconozco cuándo estoy actuando desde orgullo o desde evasión, y lo corrijo a tiempo." }
       ]
     },
     {
       "id": "s02_recibir_transferir",
-      "title": "Recibir y transferir (no absorber, no evadir)",
-      "subtitle": "La carga llega, se recibe y se conduce al fundamento",
-      "diagnosticFocus": "Medir si el varón transfiere correctamente el peso hacia Cristo",
+      "title": "Recibir y transferir",
+      "subtitle": "La fortaleza no es aguantar: es rendir",
+      "diagnosticFocus": "Evaluar la recepción madura de cargas y la transferencia directa hacia Cristo",
       "porticoAxis": "interseccion",
       "sectionVerse": {
-        "quote": "Echando toda vuestra ansiedad sobre él",
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
         "reference": "1 Pedro 5:7"
       },
       "questions": [
-        { "id": "q02_01", "text": "Cuando llega una carga al hogar, la recibo con calma en vez de discutirla o minimizarla." },
-        { "id": "q02_02", "text": "No absorbo el peso final: lo rindo a Cristo y busco dirección antes de responder." },
-        { "id": "q02_03", "text": "Evito ‘desaparecer’ o desconectarme cuando hay problemas; permanezco presente." },
-        { "id": "q02_04", "text": "He aprendido a transferir cargas sin culpar a otros ni cargar resentimiento." },
-        { "id": "q02_05", "text": "Puedo tomar decisiones bajo presión sin endurecerme ni explotar." },
-        { "id": "q02_06", "text": "Cuando me siento sobrepasado, pido ayuda (a Dios y a personas sabias) en vez de aguantar solo." },
-        { "id": "q02_07", "text": "Después de conversar una carga, el hogar tiende a descansar, no a quedar más tenso." },
-        { "id": "q02_08", "text": "Transformo la ansiedad en acción ordenada (oración, acuerdo, paso concreto) en vez de postergar." }
+        { "id": "q02_01", "text": "Cuando llega una carga al hogar, la recibo con calma en lugar de reaccionar desde el ego." },
+        { "id": "q02_02", "text": "No evado conversaciones necesarias: enfrento el peso con claridad y mansedumbre." },
+        { "id": "q02_03", "text": "Distingo entre ‘recibir’ una carga y ‘absorberla’ emocionalmente hasta quebrarme." },
+        { "id": "q02_04", "text": "Tengo hábitos concretos para transferir cargas a Cristo (oración, Palabra, rendición real)." },
+        { "id": "q02_05", "text": "Cuando transfiero bien, el hogar se siente más liviano y ordenado." },
+        { "id": "q02_06", "text": "No me quedo rumiando el problema: lo convierto en decisión y rendición." },
+        { "id": "q02_07", "text": "Puedo pedir ayuda (mentoría/pastoral) sin sentir que eso amenaza mi identidad." },
+        { "id": "q02_08", "text": "No uso silencio, trabajo excesivo o distracciones como forma de evadir el peso." }
       ]
     },
     {
-      "id": "s03_verticalidad_identidad",
-      "title": "Verticalidad: identidad y referencia",
-      "subtitle": "La alineación sostiene más que la fuerza",
-      "diagnosticFocus": "Evaluar claridad de identidad, dirección y dependencia del fundamento",
-      "porticoAxis": "comunion",
-      "sectionVerse": {
-        "quote": "Separados de mí nada podéis hacer",
-        "reference": "Juan 15:5"
-      },
-      "questions": [
-        { "id": "q03_01", "text": "Mi vida espiritual sostiene mis decisiones: no solo creo, también dependo." },
-        { "id": "q03_02", "text": "Tengo momentos reales de comunión (oración/Palabra) que me re-alinean durante la semana." },
-        { "id": "q03_03", "text": "Cuando me equivoco, puedo reconocerlo sin justificarme ni endurecerme." },
-        { "id": "q03_04", "text": "Mi identidad no depende del control, del rendimiento o de la aprobación." },
-        { "id": "q03_05", "text": "Puedo escuchar corrección sin interpretarla como ataque personal." },
-        { "id": "q03_06", "text": "Antes de reaccionar, busco referencia vertical: ¿qué honra a Cristo aquí?" },
-        { "id": "q03_07", "text": "La dirección que doy en casa nace de convicción y paz, no de impulso." },
-        { "id": "q03_08", "text": "Cuando el hogar necesita guía, yo vuelvo primero al fundamento en lugar de improvisar." }
-      ]
-    },
-    {
-      "id": "s04_inclinacion_ego",
-      "title": "Inclinación hacia adentro: ego y autosuficiencia",
-      "subtitle": "Control, orgullo y resistencia a depender",
-      "diagnosticFocus": "Detectar señales de autosuficiencia y control que inclinan el eje",
+      "id": "s03_ansiedad_rendida",
+      "title": "Ansiedad y carga retenida",
+      "subtitle": "Cuando la columna retiene, se fractura",
+      "diagnosticFocus": "Detectar señales de retención de carga y ansiedad no rendida",
       "porticoAxis": "interseccion",
       "sectionVerse": {
-        "quote": "El corazón altivo va delante de la caída",
-        "reference": "Proverbios 16:18"
+        "quote": "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias.",
+        "reference": "Filipenses 4:6"
       },
       "questions": [
-        { "id": "q04_01", "text": "Me cuesta pedir ayuda porque siento que ‘debo poder solo’." },
-        { "id": "q04_02", "text": "Cuando algo no sale como espero, tiendo a controlar más en lugar de rendirlo." },
-        { "id": "q04_03", "text": "Me pongo a la defensiva cuando mi esposa o familia señalan un punto real." },
-        { "id": "q04_04", "text": "A veces confundo firmeza con dureza o rigidez." },
-        { "id": "q04_05", "text": "Me cuesta escuchar hasta el final sin interrumpir o imponer mi conclusión." },
-        { "id": "q04_06", "text": "Cuando hay conflicto, priorizo ganar/poner orden por fuerza más que buscar paz con verdad." },
-        { "id": "q04_07", "text": "Me resulta difícil reconocer mi pecado/errores con humildad práctica." },
-        { "id": "q04_08", "text": "Puedo rendir el control a Cristo sin sentir que ‘pierdo autoridad’." }
+        { "id": "q03_01", "text": "Identifico señales de carga retenida (irritabilidad, tensión, insomnio, desconexión) y actúo a tiempo." },
+        { "id": "q03_02", "text": "Cuando estoy bajo presión, no descargo el peso en mi familia con dureza o distancia." },
+        { "id": "q03_03", "text": "Tengo un momento definido para rendir a Dios lo que me preocupa (no solo lo pienso)." },
+        { "id": "q03_04", "text": "Puedo hablar de mi carga sin justificarme ni defenderme, buscando solución y paz." },
+        { "id": "q03_05", "text": "No convierto mi ansiedad en control: aprendo a soltar el resultado en Dios." },
+        { "id": "q03_06", "text": "Cuando el hogar se tensa, busco orden y acuerdos en vez de endurecerme." },
+        { "id": "q03_07", "text": "No tomo decisiones importantes desde prisa o temor; pauso para alinearme primero." },
+        { "id": "q03_08", "text": "Después de orar y rendir, noto cambios reales en mi paz y mi conducta." }
       ]
     },
     {
-      "id": "s05_inclinacion_evasion",
-      "title": "Inclinación hacia afuera: evasión y pasividad",
-      "subtitle": "Delegar lo que debo sostener y transferir",
-      "diagnosticFocus": "Identificar desconexión, postergación y ausencia bajo presión",
-      "porticoAxis": "congregacion",
+      "id": "s04_verticalidad_identidad",
+      "title": "Verticalidad e identidad",
+      "subtitle": "La falta de alineación produce más daño que la carga",
+      "diagnosticFocus": "Medir claridad de identidad, dirección y referencia vertical en Cristo",
+      "porticoAxis": "comunion",
       "sectionVerse": {
-        "quote": "Alzad vuestros ojos y mirad los campos",
+        "quote": "Alzad vuestros ojos y mirad los campos, porque ya están blancos para la siega.",
         "reference": "Juan 4:35"
       },
       "questions": [
-        { "id": "q05_01", "text": "Cuando surge tensión, tiendo a callar, evitar o distraerme en lugar de enfrentar con orden." },
-        { "id": "q05_02", "text": "Dejo que mi esposa cargue decisiones o clima emocional que me corresponde atender." },
-        { "id": "q05_03", "text": "Postergar conversaciones importantes se ha vuelto un patrón en mí." },
-        { "id": "q05_04", "text": "A veces me desconecto (pantalla, trabajo, silencio) para no sentir el peso." },
-        { "id": "q05_05", "text": "Me cuesta iniciar reparación después de un conflicto; espero que se ‘pase solo’." },
-        { "id": "q05_06", "text": "He dejado acuerdos sin seguimiento, generando incertidumbre en casa." },
-        { "id": "q05_07", "text": "Me hago presente en momentos difíciles, no solo cuando todo está bien." },
-        { "id": "q05_08", "text": "Puedo asumir responsabilidad sin vergüenza ni huida, aunque me cueste." }
+        { "id": "q04_01", "text": "Mi identidad está anclada en Cristo más que en desempeño, éxito o aprobación." },
+        { "id": "q04_02", "text": "Cuando me equivoco, regreso a Dios con humildad en vez de endurecerme o esconderme." },
+        { "id": "q04_03", "text": "Tengo dirección clara para mi hogar (valores, prioridades, ritmo), no solo reacción a lo urgente." },
+        { "id": "q04_04", "text": "Mi vida espiritual no es intermitente: hay constancia aunque el día esté cargado." },
+        { "id": "q04_05", "text": "La presión no me inclina fácilmente porque mantengo referencia vertical (Palabra y obediencia)." },
+        { "id": "q04_06", "text": "Sé decir ‘no’ a lo que inclina mi eje (hábitos, amistades, excesos, doble vida)." },
+        { "id": "q04_07", "text": "Busco corrección y rendición de cuentas sin sentir que eso me humilla." },
+        { "id": "q04_08", "text": "Mis decisiones reflejan dependencia de Cristo, no autosuficiencia." }
       ]
     },
     {
-      "id": "s06_empotramiento_fundamento",
-      "title": "Empotramiento: Cristo como único fundamento",
-      "subtitle": "Anclaje real, no solo lenguaje espiritual",
-      "diagnosticFocus": "Medir si hay anclaje profundo: obediencia, rendición y comunión constante",
+      "id": "s05_inclinacion_ego",
+      "title": "Inclinación hacia adentro",
+      "subtitle": "Ego: autosuficiencia, control y resistencia a depender",
+      "diagnosticFocus": "Detectar orgullo funcional y reemplazo del fundamento por ‘yo puedo’",
       "porticoAxis": "comunion",
       "sectionVerse": {
-        "quote": "Nadie puede poner otro fundamento",
+        "quote": "Dios resiste a los soberbios, y da gracia a los humildes.",
+        "reference": "Santiago 4:6"
+      },
+      "questions": [
+        { "id": "q05_01", "text": "Me cuesta pedir ayuda porque siento que ‘debo poder solo’." },
+        { "id": "q05_02", "text": "Cuando tengo miedo, mi tendencia es controlar en lugar de confiar." },
+        { "id": "q05_03", "text": "Me justifico con facilidad cuando alguien me confronta." },
+        { "id": "q05_04", "text": "Mi autoridad se expresa con mansedumbre, no con dureza o sarcasmo." },
+        { "id": "q05_05", "text": "Puedo reconocer un error y repararlo sin postergar ni culpar a otros." },
+        { "id": "q05_06", "text": "Cuando no tengo el control, mantengo paz y fe (no me vuelvo áspero)." },
+        { "id": "q05_07", "text": "Busco depender de Cristo antes de ejecutar mi plan." },
+        { "id": "q05_08", "text": "Mi familia siente que puede hablar conmigo sin miedo a mi reacción." }
+      ]
+    },
+    {
+      "id": "s06_inclinacion_evasion",
+      "title": "Inclinación hacia afuera",
+      "subtitle": "Evasión: pasividad, baja autoestima y delegar lo que debo transferir",
+      "diagnosticFocus": "Detectar ausencia funcional: evitar cargas, conversaciones y decisiones",
+      "porticoAxis": "congregacion",
+      "sectionVerse": {
+        "quote": "Mas el que no provee para los suyos, y mayormente para los de su casa, ha negado la fe, y es peor que un incrédulo.",
+        "reference": "1 Timoteo 5:8"
+      },
+      "questions": [
+        { "id": "q06_01", "text": "Evito conversaciones difíciles y espero que el tiempo ‘lo arregle’." },
+        { "id": "q06_02", "text": "Me desconecto (pantallas, trabajo, silencio) cuando el hogar necesita dirección." },
+        { "id": "q06_03", "text": "Dejo que otros sostengan lo que me corresponde, y luego me siento culpable o molesto." },
+        { "id": "q06_04", "text": "Tomo decisiones con claridad en lugar de postergarlas indefinidamente." },
+        { "id": "q06_05", "text": "Cuando llega una carga, no la minimizo ni la llamo ‘exageración’." },
+        { "id": "q06_06", "text": "Puedo mantener presencia emocional: escucho, valido y actúo." },
+        { "id": "q06_07", "text": "Si me siento insuficiente, lo llevo a Cristo y busco crecimiento, no huida." },
+        { "id": "q06_08", "text": "Mi liderazgo se nota más en acciones consistentes que en promesas." }
+      ]
+    },
+    {
+      "id": "s07_empotramiento_fundamento",
+      "title": "Empotramiento en el fundamento",
+      "subtitle": "Cristo como único anclaje real",
+      "diagnosticFocus": "Evaluar profundidad de comunión, obediencia y dependencia (no solo lenguaje cristiano)",
+      "porticoAxis": "comunion",
+      "sectionVerse": {
+        "quote": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
         "reference": "1 Corintios 3:11"
       },
       "questions": [
-        { "id": "q06_01", "text": "Mi dependencia de Cristo es práctica: se nota en mis decisiones y reacciones." },
-        { "id": "q06_02", "text": "Tengo hábitos que me empotran (Palabra, oración, obediencia), no solo ‘creencias’." },
-        { "id": "q06_03", "text": "Cuando fallo, vuelvo al fundamento con arrepentimiento y ajustes reales." },
-        { "id": "q06_04", "text": "No uso lo espiritual para evitar conversaciones: lo uso para ordenar mi corazón y actuar mejor." },
-        { "id": "q06_05", "text": "Mis prioridades muestran a Cristo primero (tiempo, decisiones, límites)." },
-        { "id": "q06_06", "text": "Sé identificar cuándo estoy ‘en tierra suelta’ (ansiedad, orgullo, evasión) y regreso a la roca." },
-        { "id": "q06_07", "text": "La casa percibe mi anclaje: hay paz cuando yo me rindo a Cristo." },
-        { "id": "q06_08", "text": "Busco obedecer incluso cuando mi ego no quiere." }
+        { "id": "q07_01", "text": "Mi comunión con Cristo es práctica y frecuente, no solo ocasional o simbólica." },
+        { "id": "q07_02", "text": "La Palabra corrige mis decisiones, aunque me incomode." },
+        { "id": "q07_03", "text": "Mi obediencia no depende del ánimo del día: sostengo hábitos básicos de fe." },
+        { "id": "q07_04", "text": "Cuando hay presión, mi primera reacción es anclarme en Dios, no improvisar." },
+        { "id": "q07_05", "text": "Identifico ‘tierra suelta’ (pecados, dobles agendas, hábitos ocultos) y los trato con verdad." },
+        { "id": "q07_06", "text": "Soy consistente en lo secreto: no tengo una vida ‘doble’." },
+        { "id": "q07_07", "text": "Tengo un plan simple de crecimiento espiritual (lectura, oración, congregación)." },
+        { "id": "q07_08", "text": "Me dejo pastorear y enseñar: no vivo aislado." }
       ]
     },
     {
-      "id": "s07_cuando_falla_sistema",
-      "title": "Cuando la columna falla, el sistema lo siente",
-      "subtitle": "Sobre carga en la viga, tensión en uniones, inestabilidad",
-      "diagnosticFocus": "Reconocer impacto sistémico y asumir restauración desde la columna",
-      "porticoAxis": "congregacion",
-      "sectionVerse": {
-        "quote": "Si el fundamento se destruye, ¿qué puede hacer el justo?",
-        "reference": "Salmos 11:3"
-      },
-      "questions": [
-        { "id": "q07_01", "text": "Soy consciente de que mis inclinaciones afectan el clima y la estabilidad del hogar." },
-        { "id": "q07_02", "text": "Cuando yo me alineo, noto que la casa descansa (menos tensión, más orden)." },
-        { "id": "q07_03", "text": "Identifico señales de sobrecarga en mi esposa/familia y actúo antes de que se quiebre algo." },
-        { "id": "q07_04", "text": "Puedo pedir perdón y reparar sin justificarme ni culpar a otros." },
-        { "id": "q07_05", "text": "No dejo que el resentimiento se acumule: busco restauración intencional." },
-        { "id": "q07_06", "text": "He establecido espacios para conversar y transferir cargas (tiempo, tono, objetivos)." },
-        { "id": "q07_07", "text": "Asumo mi parte sin dramatizar ni minimizar: con responsabilidad tranquila." },
-        { "id": "q07_08", "text": "Busco ayuda pastoral/mentoría cuando el sistema muestra fallas repetidas." }
-      ]
-    },
-    {
-      "id": "s08_diseno_hoy_restauracion",
-      "title": "Diseño hoy: pasos de restauración del eje",
-      "subtitle": "Alineación diaria, transferencia y descanso del hogar",
-      "diagnosticFocus": "Convertir discernimiento en acciones pequeñas sostenibles (7 días)",
+      "id": "s08_restauracion_sistema",
+      "title": "Restauración del sistema",
+      "subtitle": "Cuando la columna se alinea, el hogar descansa",
+      "diagnosticFocus": "Convertir discernimiento en ajustes, acuerdos y pasos sostenibles de restauración",
       "porticoAxis": "interseccion",
       "sectionVerse": {
-        "quote": "Mirad los campos, porque ya están blancos",
-        "reference": "Juan 4:35"
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28"
       },
       "questions": [
-        { "id": "q08_01", "text": "Sé dónde me he inclinado últimamente (ego o evasión) y puedo nombrarlo con honestidad." },
-        { "id": "q08_02", "text": "Identifico una carga que estoy reteniendo y decido transferirla correctamente." },
-        { "id": "q08_03", "text": "Tengo claro un hábito semanal que me re-alinea (oración, Palabra, mentoría, descanso)." },
-        { "id": "q08_04", "text": "Puedo iniciar una conversación necesaria con mansedumbre y objetivo claro." },
-        { "id": "q08_05", "text": "Estoy dispuesto a establecer límites para proteger el hogar (tiempo, trabajo, pantallas, terceros)." },
-        { "id": "q08_06", "text": "Cuando me siento bajo presión, elijo rendición y obediencia en vez de impulsos." },
-        { "id": "q08_07", "text": "Estoy dispuesto a un plan de 7 días para restaurar el eje (sin excusas, sin perfeccionismo)." },
-        { "id": "q08_08", "text": "Mi meta no es ‘aguantar’, sino alinear y transferir para que el hogar descanse." }
+        { "id": "q08_01", "text": "Tengo claridad sobre qué carga debo transferir hoy en lugar de retenerla." },
+        { "id": "q08_02", "text": "Estoy dispuesto a corregir una inclinación (ego o evasión) con acciones concretas." },
+        { "id": "q08_03", "text": "Puedo establecer acuerdos con mi hogar para reducir tensión y confusión." },
+        { "id": "q08_04", "text": "Cuando fallo, vuelvo a alinearme rápido (no me quedo días desconectado)." },
+        { "id": "q08_05", "text": "Sé pedir perdón y reparar con hechos, no solo con palabras." },
+        { "id": "q08_06", "text": "Busco unidad: escucho y conduzco hacia paz, no hacia competencia." },
+        { "id": "q08_07", "text": "Si la carga se volvió crónica, busco acompañamiento pastoral sin postergarlo." },
+        { "id": "q08_08", "text": "Estoy comprometido a sostener desde Cristo: dependencia más que fuerza." }
       ]
     }
   ],
   "pastoralManual": {
     "sections": [
       {
-        "id": "s01_diseno_columna",
+        "id": "s01_columna_diseno",
         "miniTeaching": {
-          "title": "Gobernar por alineación, no por fuerza",
+          "title": "Ser columna: responsabilidad sin dominio",
           "text": [
-            "La columna no existe para dominar: existe para sostener el eje vertical hacia Cristo.",
-            "La autoridad sana no presiona; ordena y sirve desde la obediencia.",
-            "La estabilidad se transmite cuando el varón está alineado por dentro.",
-            "Ser columna es responsabilidad tranquila: presente, firme y rendida."
+            "La columna no busca aplauso: sostiene el eje vertical del hogar.",
+            "No es jerarquía para mandar, es alineación para servir con dirección.",
+            "La autoridad sana nace de sujeción a Cristo, no de control.",
+            "El hogar descansa cuando el varón recibe y transfiere con mansedumbre.",
+            "La estabilidad no se impone: se construye con presencia madura."
           ],
           "verse": {
-            "quote": "Cristo es la cabeza de todo varón",
+            "quote": "Pero quiero que sepáis que Cristo es la cabeza de todo varón.",
             "reference": "1 Corintios 11:3"
           },
           "oneWeekPlan": [
-            "Escribe en una frase: “Ser columna significa para mí…”, y compártelo con humildad.",
-            "Haz una oración breve diaria: “Señor, alíname; quiero sostener desde Ti”.",
-            "Elige un área donde estabas controlando y reemplázala por servicio concreto.",
-            "Pide retroalimentación: “¿Qué te haría sentir más segura esta semana?”.",
-            "Define 1 responsabilidad que te corresponde y cúmplela sin recordatorios.",
-            "Practica liderazgo por ejemplo: llega a tiempo, cumple palabra, honra acuerdos.",
-            "Cierra la semana agradeciendo a Dios por un avance y registra el aprendizaje."
+            "Escribe en una frase tu función: “recibo, transfiero y me alineo con Cristo”.",
+            "Ora 3 minutos: “Señor, quita dominio y pasividad; dame alineación”.",
+            "Haz una acción de presencia: 15 minutos de conversación sin pantallas.",
+            "Define una prioridad del hogar para esta semana y compártela con calma.",
+            "Pide perdón por un área donde lideraste desde ego o distancia.",
+            "Practica una decisión pequeña con firmeza y mansedumbre (no postergar).",
+            "Cierra la semana agradeciendo un avance y rindiendo el próximo paso."
           ]
         }
       },
       {
         "id": "s02_recibir_transferir",
         "miniTeaching": {
-          "title": "Fortaleza no es aguantar: es transferir correctamente",
+          "title": "Recibir sin absorber, transferir sin evadir",
           "text": [
-            "El varón recibe cargas, pero no fue diseñado para absorber el peso final.",
-            "Transferir es rendir: llevar lo que pesa a Cristo con obediencia y acción.",
-            "Evadir desestabiliza; retener fractura. Transferir trae descanso.",
-            "La paz llega cuando la carga toma el camino correcto: viga → columna → fundamento."
+            "Recibir no es cargar solo: es asumir el peso y llevarlo al lugar correcto.",
+            "Evadir rompe el sistema; retener fractura el corazón.",
+            "Transferir es un acto espiritual: convertir carga en rendición y dirección.",
+            "La fortaleza bíblica no es aguantar; es rendir con fe.",
+            "Cuando transfieres bien, el hogar respira."
           ],
           "verse": {
-            "quote": "Echando toda vuestra ansiedad sobre él",
+            "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
             "reference": "1 Pedro 5:7"
           },
           "oneWeekPlan": [
-            "Identifica una carga que estás reteniendo y nómbrala sin vergüenza.",
-            "Ora 2 minutos: “Cristo, te entrego esta carga; dame dirección”.",
-            "Haz un paso concreto (llamada, acuerdo, límite) en lugar de postergar.",
-            "Si la conversación se tensa, pausa y retoma con objetivo claro.",
-            "Pide ayuda sabia si lo necesitas (mentor, pastor, consejero).",
-            "Cierra cada día con una entrega: “No lo cargo solo; lo rindo a Ti”.",
-            "Evalúa: ¿hoy evadí, retuve o transferí? y ajusta sin condena."
+            "Identifica una carga concreta y nómbrala sin drama (en una frase).",
+            "Ora: “Cristo, recibo esto y te lo entrego; dame dirección”.",
+            "Evita reaccionar: pausa 60 segundos antes de responder a tensión.",
+            "Conversación breve: Hecho → cómo afectó → necesito → acuerdo.",
+            "Haz un acuerdo práctico (tarea/horario/límite) y escríbanlo.",
+            "Revisa el acuerdo a mitad de semana (5 minutos).",
+            "Celebra un progreso y vuelve a transferir lo que aún pesa."
           ]
         }
       },
       {
-        "id": "s03_verticalidad_identidad",
+        "id": "s03_ansiedad_rendida",
         "miniTeaching": {
-          "title": "La verticalidad sostiene más que la fuerza",
+          "title": "La ansiedad no se administra sola: se rinde",
           "text": [
-            "La falta de referencia vertical hace que el sistema gire, aunque aún ‘siga en pie’.",
-            "Identidad sana es dependencia: saber quién eres en Cristo y actuar desde allí.",
-            "La alineación se renueva: no es un evento, es una práctica diaria.",
-            "Cuando el varón se alinea, el hogar recupera reposo."
+            "La carga retenida se convierte en tensión, dureza o desconexión.",
+            "Dios no te pide negarte; te pide rendirte.",
+            "Orar no es evadir: es poner el peso en manos correctas.",
+            "La paz crece cuando confiesas, pides dirección y actúas con orden.",
+            "La familia necesita tu calma, no tu presión."
           ],
           "verse": {
-            "quote": "Separados de mí nada podéis hacer",
-            "reference": "Juan 15:5"
+            "quote": "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias.",
+            "reference": "Filipenses 4:6"
           },
           "oneWeekPlan": [
-            "Aparta 10 minutos diarios para Palabra y oración (sin pantalla).",
-            "Escribe tu enfoque del día: “Hoy respondo desde Cristo, no desde impulso”.",
-            "Antes de una decisión, pregunta: “¿Esto honra a Cristo y trae paz?”.",
-            "Si fallas, re-alínea rápido: reconoce, pide perdón, ajusta.",
-            "Haz una caminata corta orando por tu hogar y su estabilidad.",
-            "Elimina 1 fuente de ruido que te inclina (exceso, ocio, redes, prisa).",
-            "Termina la semana con gratitud y una decisión de obediencia específica."
+            "Detecta tu señal #1 de ansiedad (cuerpo/humor) y anótala.",
+            "Haz una rendición diaria de 3 minutos (mañana o noche).",
+            "Cambia control por claridad: define el siguiente paso mínimo.",
+            "Habla una carga sin atacar: “me pesa esto; necesito orden”.",
+            "Suelta una preocupación por escrito y termina con “lo dejo en Ti”.",
+            "Reduce una fuente de presión (agenda, gasto, hábito) por 7 días.",
+            "Cierra la semana con gratitud: reconoce 1 cuidado de Dios."
           ]
         }
       },
       {
-        "id": "s04_inclinacion_ego",
+        "id": "s04_verticalidad_identidad",
         "miniTeaching": {
-          "title": "Ego: una inclinación que parece firme, pero es peligrosa",
+          "title": "Verticalidad: referencia clara en Cristo",
           "text": [
-            "La autosuficiencia es una inclinación silenciosa: ‘yo puedo’ sin rendición.",
-            "Control no es liderazgo; es miedo con apariencia de fuerza.",
-            "Humildad no te quita autoridad: la purifica y la hace estable.",
-            "Cuando el ego baja, la transferencia vuelve a fluir."
+            "La carga no destruye tanto como la pérdida de alineación.",
+            "La verticalidad es identidad y dependencia: saber quién eres en Cristo.",
+            "Dirección no es rigidez: es claridad para no girar con el ambiente.",
+            "La humildad mantiene el eje; el orgullo lo inclina.",
+            "Un varón alineado trae reposo sin gritar."
           ],
           "verse": {
-            "quote": "El corazón altivo va delante de la caída",
-            "reference": "Proverbios 16:18"
-          },
-          "oneWeekPlan": [
-            "Identifica una conducta de control y reemplázala por escucha real.",
-            "Practica una frase diaria: “Tengo parte en esto; quiero entender”.",
-            "Antes de corregir, pregunta: “¿Qué necesitas de mí?”.",
-            "Haz una confesión simple a Dios: “Renuncio al orgullo; dependo de Ti”.",
-            "Elige una acción de servicio sin anunciarla ni cobrarla emocionalmente.",
-            "Pide perdón por un gesto de dureza (tono, indiferencia, imposición).",
-            "Cierra la semana con un acuerdo: liderazgo por alineación, no por fuerza."
-          ]
-        }
-      },
-      {
-        "id": "s05_inclinacion_evasion",
-        "miniTeaching": {
-          "title": "Evasión: delegar lo que debo sostener",
-          "text": [
-            "La pasividad no es paz: es ausencia bajo presión.",
-            "Cuando el varón evade, la viga se sobrecarga y el sistema se tensa.",
-            "Presencia es una forma de amor: quedarse, escuchar, ordenar y actuar.",
-            "El primer paso de restauración es volver a estar disponible."
-          ],
-          "verse": {
-            "quote": "Alzad vuestros ojos y mirad los campos",
+            "quote": "Alzad vuestros ojos y mirad los campos, porque ya están blancos para la siega.",
             "reference": "Juan 4:35"
           },
           "oneWeekPlan": [
-            "Elige 1 conversación que has evitado y agenda día y hora.",
-            "Practica presencia: 15 minutos diarios sin pantalla para conectar.",
-            "Haz seguimiento a 1 acuerdo pendiente (confirmar, revisar, cumplir).",
-            "Cuando sientas huir, di: “me cuesta, pero me quedo y lo enfrentamos”.",
-            "Asume una responsabilidad práctica esta semana y termínala.",
-            "Pide ayuda si te sientes inseguro: eso es madurez, no debilidad.",
-            "Celebra un acto de valentía: estar presente cuando era más fácil irse."
+            "Elige un horario fijo de 10 minutos para Palabra y oración.",
+            "Escribe tus 3 prioridades (Cristo, hogar, misión) y ordénalas.",
+            "Identifica una ‘tierra suelta’ que te inclina y pon un límite.",
+            "Pide rendición de cuentas a alguien maduro (mensaje breve).",
+            "Practica humildad: admite un error sin explicar de más.",
+            "Decide una acción alineada (pequeña) y cúmplela ese día.",
+            "Haz una revisión semanal: “¿me incliné o me mantuve vertical?”"
           ]
         }
       },
       {
-        "id": "s06_empotramiento_fundamento",
+        "id": "s05_inclinacion_ego",
         "miniTeaching": {
-          "title": "Anclaje real: no basta mencionar a Cristo",
+          "title": "Ego: cuando la columna se sostiene en sí misma",
           "text": [
-            "Una columna no empotrada parece firme, pero colapsa bajo presión sostenida.",
-            "Empotramiento es comunión constante, obediencia y rendición diaria.",
-            "La fe se vuelve estructura cuando produce decisiones y límites sanos.",
-            "El hogar descansa cuando Cristo es fundamento práctico, no solo frase."
+            "El ego se ve como autosuficiencia: ‘yo puedo, yo sé, yo mando’.",
+            "El control puede parecer liderazgo, pero produce tensión.",
+            "Humildad no es debilidad: es volver al fundamento.",
+            "La gracia crece cuando aceptas corrección y haces reparación.",
+            "Tu casa necesita tu mansedumbre, no tu dureza."
           ],
           "verse": {
-            "quote": "Nadie puede poner otro fundamento",
+            "quote": "Dios resiste a los soberbios, y da gracia a los humildes.",
+            "reference": "Santiago 4:6"
+          },
+          "oneWeekPlan": [
+            "Pide a Dios: “muéstrame dónde me creo autosuficiente”.",
+            "Elige una situación y practica escuchar 2 minutos sin interrumpir.",
+            "Responde con mansedumbre: baja el tono, sube la claridad.",
+            "Admite un error y repara con un hecho concreto.",
+            "Cambia control por acuerdo: negocia una solución simple.",
+            "Haz una oración de rendición: “no sostengo desde mí, sino desde Ti”.",
+            "Agradece a tu familia por una observación que te ayudó a crecer."
+          ]
+        }
+      },
+      {
+        "id": "s06_inclinacion_evasion",
+        "miniTeaching": {
+          "title": "Evasión: presencia física, ausencia espiritual",
+          "text": [
+            "La evasión inclina el eje hacia afuera: postergar, callar, desaparecer.",
+            "Pasividad no es paz: es transferencia rota y carga acumulada.",
+            "Responsabilidad bíblica es presencia: escuchar, decidir y sostener con fe.",
+            "La baja autoestima se sana en Cristo, no huyendo del peso.",
+            "Tu casa no necesita perfección; necesita constancia."
+          ],
+          "verse": {
+            "quote": "Mas el que no provee para los suyos, y mayormente para los de su casa, ha negado la fe, y es peor que un incrédulo.",
+            "reference": "1 Timoteo 5:8"
+          },
+          "oneWeekPlan": [
+            "Elige una conversación pendiente y fija día/hora (no lo dejes al aire).",
+            "Practica presencia: 20 minutos diarios de hogar sin pantalla.",
+            "Toma una decisión pequeña que vienes postergando.",
+            "Valida una carga de tu familia antes de opinar o minimizar.",
+            "Haz un acuerdo práctico (tarea/finanzas/tiempos) y cúmplelo 2 días.",
+            "Si te sientes insuficiente, dilo a Cristo y pide ayuda (no huida).",
+            "Cierra la semana revisando: “¿me acerqué o me evadí?”"
+          ]
+        }
+      },
+      {
+        "id": "s07_empotramiento_fundamento",
+        "miniTeaching": {
+          "title": "Anclado en la roca: comunión real, no solo lenguaje",
+          "text": [
+            "Una columna no empotrada parece firme, pero colapsa bajo presión.",
+            "Empotramiento es comunión, obediencia y rendición diaria.",
+            "Mencionar a Cristo no es lo mismo que depender de Cristo.",
+            "La vida secreta sostiene la vida pública.",
+            "Ser columna es volver al fundamento antes de mover el sistema."
+          ],
+          "verse": {
+            "quote": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
             "reference": "1 Corintios 3:11"
           },
           "oneWeekPlan": [
-            "Elige una obediencia concreta (algo que sabes que Dios te pide) y cúmplela.",
-            "Ora cada mañana: “Empótrame en Ti; quita mi inclinación”.",
-            "Lee 1 Corintios 3:11 y escribe cómo se ve ‘fundamento’ en tu vida.",
-            "Corta una práctica que te deja en tierra suelta (exceso, secreto, orgullo).",
-            "Busca un compañero de rendición (mentor/pastor) y abre tu proceso.",
-            "Rinde una ansiedad diaria por escrito y termina con: “lo suelto en Ti”.",
-            "Cierra la semana con una oración por tu hogar y un paso de orden."
+            "Define tu hábito base: 10 minutos diarios con Cristo (sin negociación).",
+            "Lee un pasaje y aplica una obediencia concreta ese día.",
+            "Confiesa a Dios una ‘tierra suelta’ y toma una medida práctica.",
+            "Busca un hermano/mentor: comparte una lucha y pide oración.",
+            "Reduce un consumo que te desenfoca (pantallas, redes, vicios) por 7 días.",
+            "Ora con tu familia al menos 2 veces en la semana (corto y real).",
+            "Escribe un testimonio: “esta semana me empotré en Cristo así…”"
           ]
         }
       },
       {
-        "id": "s07_cuando_falla_sistema",
+        "id": "s08_restauracion_sistema",
         "miniTeaching": {
-          "title": "La restauración suele empezar en la columna",
+          "title": "Restauración: la columna alineada devuelve descanso",
           "text": [
-            "Cuando la columna se inclina, el sistema entero lo siente: sobrecarga, tensión y fisuras.",
-            "No es culpa; es diagnóstico: si el eje se alinea, el sistema respira.",
-            "Reparar no es ‘ceder’: es construir paz con verdad.",
-            "La madurez espiritual se nota en asumir responsabilidad y buscar ayuda."
+            "Cuando la columna se alinea, el sistema deja de girar.",
+            "Restaurar no es culpar: es volver a función y flujo correcto.",
+            "Acuerdos simples sostienen mejor que promesas grandes.",
+            "La reparación rápida evita fisuras largas.",
+            "La estabilidad del hogar crece con pasos pequeños sostenidos."
           ],
           "verse": {
-            "quote": "Si el fundamento se destruye, ¿qué puede hacer el justo?",
-            "reference": "Salmos 11:3"
+            "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+            "reference": "Mateo 11:28"
           },
           "oneWeekPlan": [
-            "Pregunta en casa: “¿Qué está sintiendo el sistema por mi inclinación?”.",
-            "Elige 1 reparación: pedir perdón, cambiar hábito, cumplir acuerdo.",
-            "Agenda 20 minutos para transferencia de cargas con calma y oración.",
-            "Define un acuerdo claro (qué, cuándo, cómo) y escríbanlo.",
-            "Haz seguimiento a mitad de semana: 5 minutos para revisar sin pelear.",
-            "Si hay patrones repetidos, solicita acompañamiento pastoral/mentoría.",
-            "Cierra la semana agradeciendo a Dios por un avance y reafirma el compromiso."
-          ]
-        }
-      },
-      {
-        "id": "s08_diseno_hoy_restauracion",
-        "miniTeaching": {
-          "title": "Pasos pequeños, eje firme",
-          "text": [
-            "Alineación no es perfección: es volver al fundamento cada vez que te inclinas.",
-            "Transferir correctamente devuelve descanso sin necesidad de dramatizar.",
-            "La estabilidad del hogar crece cuando hay hábitos, acuerdos y rendición.",
-            "Una columna alineada sostiene más por dependencia que por fuerza."
-          ],
-          "verse": {
-            "quote": "Echando toda vuestra ansiedad sobre él",
-            "reference": "1 Pedro 5:7"
-          },
-          "oneWeekPlan": [
-            "Define tu inclinación principal (ego o evasión) en una frase honesta.",
-            "Elige 1 carga para transferir: ora, conversa, acuerda un paso concreto.",
-            "Crea un hábito de verticalidad: 10 minutos diarios de comunión.",
-            "Establece un límite protector (trabajo/pantalla/terceros) por 7 días.",
-            "Haz una conversación de reparación con objetivo: paz, orden, unidad.",
-            "Pide ayuda si el peso es crónico: consejería/mentoría/pastoral.",
-            "Cierra la semana con la oración: “No quiero sostener desde mí; quiero sostener desde Ti”."
+            "Identifica una carga #1 y transfórmala en un acuerdo concreto.",
+            "Pide perdón por un hábito que tensiona el hogar (tono, distancia, control).",
+            "Haz una reparación con hechos (tiempo, orden, escucha, servicio).",
+            "Agenden 20 minutos para revisar el hogar sin ataques (solo soluciones).",
+            "Pongan un límite a una presión externa que esté inclinando el sistema.",
+            "Busca acompañamiento si el desgaste es crónico (no caminar solo).",
+            "Cierra con oración: “Señor, alinea mi eje y trae descanso a mi casa”."
           ]
         }
       }
     ]
   }
 }
-
-
-
-
-
