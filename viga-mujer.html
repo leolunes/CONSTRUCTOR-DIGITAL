@@ -1,0 +1,2062 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La viga: la mujer como alma del sistema — Auditoría diagnóstica pastoral</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.31/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1722;
+      --panel2:#0c1320;
+      --card:#0f1a28;
+      --stroke:#1f2a3a;
+      --text:#e7eef9;
+      --muted:#a7b4c8;
+      --soft:#8aa0c0;
+      --ok:#19c37d;
+      --warn:#f4d44d;
+      --risk:#ff9f43;
+      --crit:#ff4d4d;
+      --accent:#7aa2ff;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --pillRadius: 999px;
+      --gap: 14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 0%, rgba(122,162,255,.12), transparent 55%),
+                  radial-gradient(900px 600px at 85% 10%, rgba(25,195,125,.08), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height:1.35;
+    }
+    header{
+      padding: 18px 18px 10px 18px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      position: sticky;
+      top:0;
+      background: linear-gradient(to bottom, rgba(11,15,20,.92), rgba(11,15,20,.74));
+      backdrop-filter: blur(10px);
+      z-index: 30;
+    }
+    .wrap{
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+    .toprow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    h1{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .2px;
+      font-weight: 750;
+    }
+    .sub{
+      margin-top:6px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 980px;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    button{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: transform .06s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+      font-weight: 650;
+      font-size: 13px;
+      user-select:none;
+    }
+    button:hover{ transform: translateY(-1px); border-color: rgba(122,162,255,.35); box-shadow: 0 12px 26px rgba(0,0,0,.25); }
+    button:active{ transform: translateY(0px); }
+    button.primary{
+      border-color: rgba(122,162,255,.45);
+      background: linear-gradient(to bottom, rgba(122,162,255,.22), rgba(122,162,255,.08));
+    }
+    button.danger{
+      border-color: rgba(255,77,77,.35);
+      background: linear-gradient(to bottom, rgba(255,77,77,.18), rgba(255,77,77,.06));
+    }
+    button:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+    main{
+      padding: 18px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .card{
+      background: linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHeader{
+      padding: 14px 14px 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .cardHeader h2{
+      margin:0;
+      font-size: 14px;
+      font-weight: 780;
+      letter-spacing:.2px;
+    }
+    .cardHeader .meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .pill{
+      padding: 6px 10px;
+      border-radius: var(--pillRadius);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(0,0,0,.12);
+      white-space: nowrap;
+    }
+    .pill strong{ color: var(--text); font-weight: 780; }
+    .content{
+      padding: 14px;
+    }
+    .note{
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 12px 0;
+    }
+    .section{
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.16);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .sectionTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .sectionTitle{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 220px;
+    }
+    .sectionTitle h3{
+      margin:0;
+      font-size: 14px;
+      font-weight: 820;
+      letter-spacing:.2px;
+    }
+    .sectionTitle .help{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .axisTag{
+      display:flex;
+      gap: 6px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .axisTag .pill{ font-size: 11px; padding: 5px 9px; }
+    .q{
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 10px 0;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items:center;
+    }
+    .q:first-of-type{ border-top:0; padding-top: 4px; }
+    .qText{
+      font-size: 13px;
+      color: var(--text);
+    }
+    .scale{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .opt{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      font-weight: 780;
+      color: var(--muted);
+      transition: transform .06s ease, border-color .2s ease, background .2s ease, color .2s ease;
+      user-select:none;
+    }
+    .opt:hover{ transform: translateY(-1px); border-color: rgba(122,162,255,.35); color: var(--text); }
+    .opt.sel{
+      border-color: rgba(122,162,255,.55);
+      background: rgba(122,162,255,.16);
+      color: var(--text);
+    }
+
+    .rightStack{
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+
+    .svgWrap{
+      padding: 10px 12px 14px 12px;
+    }
+    .legend{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      margin-top: 10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .legendLeft{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .legendRight{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .kpi{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .kpiCol{
+      flex: 1 1 220px;
+      background: rgba(0,0,0,.16);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .kpiCol h4{
+      margin:0 0 6px 0;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 750;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+    }
+    .kpiCol .big{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      margin: 0;
+    }
+    .kpiCol .small{
+      margin: 6px 0 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .bar{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .bar > div{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(to right, rgba(25,195,125,.85), rgba(122,162,255,.85));
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+
+    .result{
+      display:none;
+    }
+    .result.show{ display:block; }
+    .resultTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .resultTop .diag{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      min-width: 250px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      font-size: 12px;
+      color: var(--muted);
+      width: fit-content;
+    }
+    .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--muted);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.02);
+    }
+    .dot.ok{ background: var(--ok); box-shadow: 0 0 0 6px rgba(25,195,125,.08); }
+    .dot.warn{ background: var(--warn); box-shadow: 0 0 0 6px rgba(244,212,77,.08); }
+    .dot.risk{ background: var(--risk); box-shadow: 0 0 0 6px rgba(255,159,67,.08); }
+    .dot.crit{ background: var(--crit); box-shadow: 0 0 0 6px rgba(255,77,77,.10); }
+    .result h3{
+      margin:0;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing:.2px;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      text-align:left;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    th{
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing:.15px;
+    }
+    tr:last-child td{ border-bottom:0; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    .tooltip{
+      position: fixed;
+      left: 0; top:0;
+      transform: translate(-9999px,-9999px);
+      z-index: 50;
+      background: rgba(7,10,14,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      padding: 10px 10px;
+      border-radius: 12px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.35);
+      max-width: 260px;
+      pointer-events:none;
+      font-size: 12px;
+      line-height:1.25;
+    }
+    .tooltip .t1{ font-weight: 850; margin-bottom: 4px; }
+    .tooltip .t2{ color: var(--muted); }
+
+    .modalBackdrop{
+      position:fixed;
+      inset:0;
+      display:none;
+      background: rgba(0,0,0,.55);
+      z-index: 60;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+    .modalBackdrop.show{ display:flex; }
+    .modal{
+      width: min(900px, 96vw);
+      background: linear-gradient(to bottom, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      box-shadow: 0 26px 70px rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .modalHead h3{
+      margin:0;
+      font-size: 14px;
+      font-weight: 920;
+      letter-spacing:.2px;
+    }
+    .modalBody{
+      padding: 14px;
+      color: var(--text);
+    }
+    .modalBody p{
+      margin: 0 0 10px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .modalBody .verse{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      color: var(--text);
+      margin: 10px 0;
+    }
+    .modalBody .actionsList{
+      margin-top: 10px;
+      display:grid;
+      gap: 8px;
+    }
+    .actionItem{
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .guideToast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 55;
+      display:none;
+      width: min(760px, 92vw);
+      background: rgba(7,10,14,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      padding: 12px 12px;
+      gap: 10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .guideToast.show{ display:flex; }
+    .guideText{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .guideText .g1{
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing:.2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .guideText .g2{
+      font-size: 12px;
+      color: var(--muted);
+      overflow:hidden;
+      display:-webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .pulseSoft{ animation: pulseSoft 1.9s ease-in-out infinite; }
+    @keyframes pulseSoft{
+      0%,100%{ opacity:1; }
+      50%{ opacity:.72; }
+    }
+    .microVibe{ animation: microVibe 2.4s ease-in-out infinite; }
+    @keyframes microVibe{
+      0%,100%{ transform: translate(0,0); }
+      20%{ transform: translate(2px,0); }
+      40%{ transform: translate(-2px,0); }
+      60%{ transform: translate(2px,0); }
+      80%{ transform: translate(-2px,0); }
+    }
+    .dashCrit{
+      stroke-dasharray: 18 14;
+      animation: dashMove 3.8s linear infinite;
+    }
+    @keyframes dashMove{
+      to{ stroke-dashoffset: -96; }
+    }
+    .highlightStroke{
+      filter: drop-shadow(0 0 10px rgba(122,162,255,.35));
+    }
+    .nodeHalo{
+      filter: drop-shadow(0 0 12px rgba(255,255,255,.18));
+    }
+
+    .miniRow{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .muted{ color: var(--muted); }
+
+    a.link{
+      color: var(--accent);
+      text-decoration:none;
+      border-bottom: 1px dashed rgba(122,162,255,.45);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="toprow">
+        <div>
+          <h1 id="testTitle">La viga: la mujer como alma del sistema</h1>
+          <div class="sub" id="testSubtitle">
+            Auditoría diagnóstica pastoral (0–5). Responde con honestidad observable: lo que ocurre, no lo que deseas.
+          </div>
+        </div>
+        <div class="actions">
+          <button id="btnGuide" class="primary" type="button">Explícame este diagrama</button>
+          <button id="btnResult" class="primary" type="button">Ver resultado</button>
+          <button id="btnTxt" type="button" disabled>Descargar TXT</button>
+          <button id="btnPdf" type="button" disabled>Descargar PDF bonito</button>
+          <button id="btnPng" type="button" disabled>Descargar Imagen PNG</button>
+          <button id="btnReset" class="danger" type="button">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="grid">
+        <section class="card" aria-label="Cuestionario">
+          <div class="cardHeader">
+            <div>
+              <h2 id="cardLeftTitle">Cuestionario por secciones</h2>
+              <div class="miniRow">
+                <span class="pill" id="pillScale"><strong>Escala:</strong> 0 = Nunca · 5 = Siempre</span>
+                <span class="pill" id="pillProgress"><strong>Avance:</strong> 0%</span>
+              </div>
+            </div>
+            <div class="meta">
+              <span class="pill" id="pillFile"><strong>Archivo:</strong> viga-mujer</span>
+              <span class="pill" id="pillMode"><strong>Modo:</strong> Sin backend (GitHub Pages)</span>
+            </div>
+          </div>
+          <div class="content">
+            <p class="note" id="introText">
+              Este diagnóstico mira la “viga” como función espiritual: percibir, expresar y transferir carga sin acumularla.
+              Responde según tu realidad actual (últimas 4 semanas).
+            </p>
+            <div id="sectionsContainer"></div>
+          </div>
+        </section>
+
+        <aside class="rightStack">
+          <section class="card" aria-label="Pórtico diagnóstico">
+            <div class="cardHeader">
+              <div>
+                <h2 id="cardRightTitle">Pórtico diagnóstico (L estructural)</h2>
+                <div class="miniRow">
+                  <span class="pill"><strong>3 ejes:</strong> Comunión · Congregación · Intersección</span>
+                  <span class="pill" id="pillCompare"><strong>Comparación:</strong> apagada</span>
+                </div>
+              </div>
+              <div class="meta">
+                <span class="pill" id="pillGlobal"><strong>Global:</strong> —</span>
+              </div>
+            </div>
+            <div class="svgWrap">
+              <svg id="porticoSvg" width="860" height="420" viewBox="0 0 860 420" role="img" aria-label="Pórtico diagnóstico">
+                <defs>
+                  <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L12,6 L0,12 Z" fill="rgba(25,195,125,.95)"></path>
+                  </marker>
+                  <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L12,6 L0,12 Z" fill="rgba(255,77,77,.95)"></path>
+                  </marker>
+                  <marker id="arrowGray" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L12,6 L0,12 Z" fill="rgba(167,180,200,.85)"></path>
+                  </marker>
+                  <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3.6" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <rect x="12" y="12" width="836" height="396" rx="18" ry="18" fill="rgba(0,0,0,.16)" stroke="rgba(255,255,255,.07)"></rect>
+
+                <!-- Base fixed geometry: Cimiento, Columna, Viga -->
+                <g id="porticoGroup" transform="translate(0,0)">
+                  <path id="elCimiento" d="M140 340 L720 340" stroke="rgba(122,162,255,.40)" stroke-width="22" stroke-linecap="round" fill="none"></path>
+                  <path id="elColumna" d="M220 340 L220 110" stroke="rgba(122,162,255,.40)" stroke-width="22" stroke-linecap="round" fill="none"></path>
+                  <path id="elViga" d="M220 110 L720 110" stroke="rgba(122,162,255,.40)" stroke-width="22" stroke-linecap="round" fill="none"></path>
+
+                  <!-- Previous overlay (dashed) -->
+                  <path id="prevCimiento" d="M140 340 L720 340" stroke="rgba(167,180,200,.35)" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="14 14" opacity="0"></path>
+                  <path id="prevColumna" d="M220 340 L220 110" stroke="rgba(167,180,200,.35)" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="14 14" opacity="0"></path>
+                  <path id="prevViga" d="M220 110 L720 110" stroke="rgba(167,180,200,.35)" stroke-width="22" stroke-linecap="round" fill="none" stroke-dasharray="14 14" opacity="0"></path>
+
+                  <!-- Nodes: Comunión, Congregación, Intersección -->
+                  <circle id="nComunion" cx="220" cy="340" r="13" fill="rgba(231,238,249,.9)" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle>
+                  <circle id="nCongregacion" cx="220" cy="110" r="13" fill="rgba(231,238,249,.9)" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle>
+                  <circle id="nInterseccion" cx="720" cy="110" r="13" fill="rgba(231,238,249,.9)" stroke="rgba(0,0,0,.35)" stroke-width="2"></circle>
+
+                  <!-- Tension halos (only shown when needed) -->
+                  <circle id="haloComunion" cx="220" cy="340" r="22" fill="none" stroke="rgba(255,255,255,.0)" stroke-width="6" opacity="0"></circle>
+                  <circle id="haloCongregacion" cx="220" cy="110" r="22" fill="none" stroke="rgba(255,255,255,.0)" stroke-width="6" opacity="0"></circle>
+                  <circle id="haloInterseccion" cx="720" cy="110" r="22" fill="none" stroke="rgba(255,255,255,.0)" stroke-width="6" opacity="0"></circle>
+
+                  <!-- Loads (fixed coordinates) -->
+                  <line id="cargaViva" x1="470" y1="55" x2="470" y2="104" stroke="rgba(25,195,125,.95)" stroke-width="6" marker-end="url(#arrowGreen)"></line>
+                  <line id="cargaMuerta" x1="540" y1="55" x2="540" y2="104" stroke="rgba(255,77,77,.95)" stroke-width="6" marker-end="url(#arrowRed)"></line>
+                  <line id="cargaSismica" x1="760" y1="210" x2="712" y2="210" stroke="rgba(167,180,200,.85)" stroke-width="6" marker-end="url(#arrowGray)"></line>
+
+                  <!-- Single texts rules -->
+                  <text id="tCimiento" x="140" y="372" fill="rgba(167,180,200,.85)" font-size="12" font-weight="800" letter-spacing="1">CIMIENTO</text>
+                  <text id="tComunion" x="136" y="330" fill="rgba(231,238,249,.92)" font-size="12" font-weight="900" letter-spacing=".6">COMUNIÓN</text>
+
+                  <text id="tColumna" x="94" y="220" fill="rgba(167,180,200,.85)" font-size="12" font-weight="800" letter-spacing="1" transform="rotate(-90 94 220)">COLUMNA</text>
+                  <text id="tCongregacion" x="238" y="132" fill="rgba(231,238,249,.92)" font-size="12" font-weight="900" letter-spacing=".6">CONGREGACIÓN</text>
+
+                  <text id="tViga" x="468" y="96" fill="rgba(167,180,200,.85)" font-size="12" font-weight="800" letter-spacing="1">VIGA</text>
+                  <text id="tInterseccion" x="642" y="132" fill="rgba(231,238,249,.92)" font-size="12" font-weight="900" letter-spacing=".6">INTERSECCIÓN</text>
+
+                  <!-- Delta labels -->
+                  <text id="deltaComunion" x="238" y="360" fill="rgba(167,180,200,.85)" font-size="11" font-weight="800" opacity="0">Δ 0%</text>
+                  <text id="deltaCongregacion" x="238" y="96" fill="rgba(167,180,200,.85)" font-size="11" font-weight="800" opacity="0">Δ 0%</text>
+                  <text id="deltaInterseccion" x="740" y="96" fill="rgba(167,180,200,.85)" font-size="11" font-weight="800" opacity="0">Δ 0%</text>
+                </g>
+              </svg>
+
+              <div class="legend">
+                <div class="legendLeft">
+                  <span class="pill"><strong>Carga viva</strong> (verde)</span>
+                  <span class="pill"><strong>Carga muerta</strong> (roja)</span>
+                  <span class="pill"><strong>Carga sísmica</strong> (horizontal)</span>
+                </div>
+                <div class="legendRight">
+                  <span class="pill" id="pillSaved"><strong>Previo:</strong> —</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" aria-label="Indicadores">
+            <div class="cardHeader">
+              <div>
+                <h2>Indicadores rápidos</h2>
+                <div class="miniRow">
+                  <span class="pill"><strong>Lectura:</strong> pórtico real, diagnóstico claro</span>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="kpi" id="kpiRow">
+                <div class="kpiCol">
+                  <h4><span class="dot" id="dotGlobal"></span> Diagnóstico global</h4>
+                  <p class="big" id="kpiGlobal">—</p>
+                  <p class="small" id="kpiGlobalHint">Responde al menos una sección para ver lectura.</p>
+                  <div class="bar"><div id="barGlobal"></div></div>
+                </div>
+                <div class="kpiCol">
+                  <h4><span class="dot" id="dotAxis"></span> Eje más presionado</h4>
+                  <p class="big" id="kpiAxis">—</p>
+                  <p class="small" id="kpiAxisHint">La presión apunta a “dónde se acumula el peso”.</p>
+                  <div class="bar"><div id="barAxis"></div></div>
+                </div>
+              </div>
+
+              <div class="result" id="resultPanel">
+                <div class="resultTop">
+                  <div class="diag">
+                    <div class="badge" id="badgeGlobal"><span class="dot" id="dotBadge"></span><span id="badgeText">—</span></div>
+                    <h3 id="resultHeadline">Resultado</h3>
+                    <div class="muted" id="resultSummary">—</div>
+                  </div>
+                  <div class="miniRow">
+                    <span class="pill" id="pillDate"><strong>Fecha:</strong> —</span>
+                    <span class="pill" id="pillAnswered"><strong>Respondidas:</strong> —</span>
+                  </div>
+                </div>
+
+                <table id="resultTable" aria-label="Tabla de ejes">
+                  <thead>
+                    <tr>
+                      <th>Eje</th>
+                      <th>Sección</th>
+                      <th>Puntaje</th>
+                      <th>Estado</th>
+                      <th>Riesgo visible</th>
+                      <th>Enfoque</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resultTbody"></tbody>
+                </table>
+
+                <table id="planTable" aria-label="Plan pastoral">
+                  <thead>
+                    <tr>
+                      <th>Prioridad</th>
+                      <th>Acción práctica</th>
+                      <th>Verso ancla</th>
+                      <th>Indicador observable</th>
+                    </tr>
+                  </thead>
+                  <tbody id="planTbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="tooltip" class="tooltip" aria-hidden="true">
+    <div class="t1" id="tipTitle">—</div>
+    <div class="t2" id="tipBody">—</div>
+  </div>
+
+  <div id="contextModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-label="Panel contextual">
+    <div class="modal">
+      <div class="modalHead">
+        <div>
+          <h3 id="modalTitle">—</h3>
+          <div class="muted" id="modalMeta">—</div>
+        </div>
+        <button id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+      <div class="modalBody">
+        <p id="modalTeaching">—</p>
+        <div class="verse" id="modalVerse">—</div>
+        <div class="actionsList" id="modalActions"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="guideToast" class="guideToast" aria-live="polite">
+    <div class="guideText">
+      <div class="g1" id="guideTitle">Lectura guiada</div>
+      <div class="g2" id="guideBody">—</div>
+    </div>
+    <div class="miniRow">
+      <button id="btnGuidePrev" type="button">Atrás</button>
+      <button id="btnGuideNext" class="primary" type="button">Siguiente</button>
+      <button id="btnGuideStop" type="button">Salir</button>
+    </div>
+  </div>
+
+  <script>
+    const JSON_PATH = "./viga-mujer.json";
+    const STORAGE_KEY_CURRENT = "viga-mujer_current";
+    const STORAGE_KEY_PREV = "viga-mujer_prev";
+
+    const dom = {
+      testTitle: document.getElementById("testTitle"),
+      testSubtitle: document.getElementById("testSubtitle"),
+      introText: document.getElementById("introText"),
+      sectionsContainer: document.getElementById("sectionsContainer"),
+      pillProgress: document.getElementById("pillProgress"),
+      pillGlobal: document.getElementById("pillGlobal"),
+      pillDate: document.getElementById("pillDate"),
+      pillAnswered: document.getElementById("pillAnswered"),
+      pillSaved: document.getElementById("pillSaved"),
+      pillCompare: document.getElementById("pillCompare"),
+
+      btnGuide: document.getElementById("btnGuide"),
+      btnResult: document.getElementById("btnResult"),
+      btnTxt: document.getElementById("btnTxt"),
+      btnPdf: document.getElementById("btnPdf"),
+      btnPng: document.getElementById("btnPng"),
+      btnReset: document.getElementById("btnReset"),
+
+      resultPanel: document.getElementById("resultPanel"),
+      badgeGlobal: document.getElementById("badgeGlobal"),
+      badgeText: document.getElementById("badgeText"),
+      dotBadge: document.getElementById("dotBadge"),
+      resultHeadline: document.getElementById("resultHeadline"),
+      resultSummary: document.getElementById("resultSummary"),
+      resultTbody: document.getElementById("resultTbody"),
+      planTbody: document.getElementById("planTbody"),
+
+      kpiGlobal: document.getElementById("kpiGlobal"),
+      kpiGlobalHint: document.getElementById("kpiGlobalHint"),
+      barGlobal: document.getElementById("barGlobal"),
+      dotGlobal: document.getElementById("dotGlobal"),
+      kpiAxis: document.getElementById("kpiAxis"),
+      kpiAxisHint: document.getElementById("kpiAxisHint"),
+      barAxis: document.getElementById("barAxis"),
+      dotAxis: document.getElementById("dotAxis"),
+
+      tooltip: document.getElementById("tooltip"),
+      tipTitle: document.getElementById("tipTitle"),
+      tipBody: document.getElementById("tipBody"),
+
+      modalBackdrop: document.getElementById("contextModal"),
+      btnCloseModal: document.getElementById("btnCloseModal"),
+      modalTitle: document.getElementById("modalTitle"),
+      modalMeta: document.getElementById("modalMeta"),
+      modalTeaching: document.getElementById("modalTeaching"),
+      modalVerse: document.getElementById("modalVerse"),
+      modalActions: document.getElementById("modalActions"),
+
+      guideToast: document.getElementById("guideToast"),
+      guideTitle: document.getElementById("guideTitle"),
+      guideBody: document.getElementById("guideBody"),
+      btnGuidePrev: document.getElementById("btnGuidePrev"),
+      btnGuideNext: document.getElementById("btnGuideNext"),
+      btnGuideStop: document.getElementById("btnGuideStop"),
+
+      // SVG
+      porticoSvg: document.getElementById("porticoSvg"),
+      elCimiento: document.getElementById("elCimiento"),
+      elColumna: document.getElementById("elColumna"),
+      elViga: document.getElementById("elViga"),
+      prevCimiento: document.getElementById("prevCimiento"),
+      prevColumna: document.getElementById("prevColumna"),
+      prevViga: document.getElementById("prevViga"),
+      nComunion: document.getElementById("nComunion"),
+      nCongregacion: document.getElementById("nCongregacion"),
+      nInterseccion: document.getElementById("nInterseccion"),
+      haloComunion: document.getElementById("haloComunion"),
+      haloCongregacion: document.getElementById("haloCongregacion"),
+      haloInterseccion: document.getElementById("haloInterseccion"),
+      deltaComunion: document.getElementById("deltaComunion"),
+      deltaCongregacion: document.getElementById("deltaCongregacion"),
+      deltaInterseccion: document.getElementById("deltaInterseccion"),
+    };
+
+    let appData = null;
+    let answers = {}; // { "sectionId": [0..5 or null] }
+    let guide = { active:false, step:0, steps:[] };
+
+    function safeNowISO(){
+      const d = new Date();
+      const pad = (n)=> String(n).padStart(2,"0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+    function round1(n){ return Math.round(n*10)/10; }
+
+    function bandFromPct(pct){
+      if (pct >= 80) return { key:"aligned", label:"🟢 Alineado", color:"var(--ok)" };
+      if (pct >= 60) return { key:"adjust", label:"🟡 Ajuste", color:"var(--warn)" };
+      if (pct >= 40) return { key:"risk", label:"🟠 Riesgo", color:"var(--risk)" };
+      return { key:"critical", label:"🔴 Crítico", color:"var(--crit)" };
+    }
+
+    function dotClassFromBandKey(key){
+      if (key==="aligned") return "ok";
+      if (key==="adjust") return "warn";
+      if (key==="risk") return "risk";
+      return "crit";
+    }
+
+    function pctFromScore(score, maxScore){
+      if (maxScore <= 0) return 0;
+      return clamp((score / maxScore) * 100, 0, 100);
+    }
+
+    function getAxisLabel(axisKey){
+      const map = {
+        comunion: "Comunión",
+        congregacion: "Congregación",
+        interseccion: "Intersección"
+      };
+      return map[axisKey] || axisKey;
+    }
+
+    function getAxisElementBundle(axisKey){
+      if (axisKey === "comunion") return { el: dom.elCimiento, node: dom.nComunion, halo: dom.haloComunion, delta: dom.deltaComunion };
+      if (axisKey === "congregacion") return { el: dom.elColumna, node: dom.nCongregacion, halo: dom.haloCongregacion, delta: dom.deltaCongregacion };
+      return { el: dom.elViga, node: dom.nInterseccion, halo: dom.haloInterseccion, delta: dom.deltaInterseccion };
+    }
+
+    function saveCurrent(){
+      try{
+        const payload = {
+          ts: Date.now(),
+          answers
+        };
+        localStorage.setItem(STORAGE_KEY_CURRENT, JSON.stringify(payload));
+      }catch(e){}
+    }
+
+    function loadCurrent(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY_CURRENT);
+        if (!raw) return false;
+        const obj = JSON.parse(raw);
+        if (!obj || typeof obj !== "object" || !obj.answers) return false;
+        answers = obj.answers;
+        return true;
+      }catch(e){
+        return false;
+      }
+    }
+
+    function setPreviousFromCurrentIfValid(){
+      const computed = computeScores();
+      if (!computed || computed.answeredCount === 0) return false;
+      const prevPayload = {
+        ts: Date.now(),
+        axes: computed.axes,
+        global: computed.global
+      };
+      try{
+        localStorage.setItem(STORAGE_KEY_PREV, JSON.stringify(prevPayload));
+        return true;
+      }catch(e){
+        return false;
+      }
+    }
+
+    function loadPrevious(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY_PREV);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (!obj || typeof obj !== "object" || !obj.axes) return null;
+        return obj;
+      }catch(e){
+        return null;
+      }
+    }
+
+    async function loadJSON(){
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if (!res.ok) throw new Error(`No se pudo cargar el JSON (${res.status}).`);
+      const data = await res.json();
+      return data;
+    }
+
+    function initDefaultAnswers(){
+      answers = {};
+      for (const s of appData.sections){
+        answers[s.id] = new Array(s.questions.length).fill(null);
+      }
+    }
+
+    function answeredCount(){
+      let c = 0;
+      let total = 0;
+      for (const sid of Object.keys(answers)){
+        const arr = answers[sid] || [];
+        for (const v of arr){
+          total += 1;
+          if (v !== null && v !== undefined) c += 1;
+        }
+      }
+      return { c, total };
+    }
+
+    function updateProgressPill(){
+      const { c, total } = answeredCount();
+      const pct = total ? Math.round((c/total)*100) : 0;
+      dom.pillProgress.innerHTML = `<strong>Avance:</strong> ${pct}%`;
+      const canExport = c > 0;
+      dom.btnTxt.disabled = !canExport;
+      dom.btnPdf.disabled = !canExport;
+      dom.btnPng.disabled = !canExport;
+    }
+
+    function render(){
+      dom.testTitle.textContent = appData.meta?.title || "Auditoría diagnóstica pastoral";
+      dom.testSubtitle.textContent = appData.meta?.subtitle || "Diagnóstico sin backend (0–5).";
+
+      dom.sectionsContainer.innerHTML = "";
+      for (const section of appData.sections){
+        const sec = document.createElement("div");
+        sec.className = "section";
+        sec.id = `sec_${section.id}`;
+
+        const axisLabel = getAxisLabel(section.axis);
+        const axisPill = `<span class="pill"><strong>Eje:</strong> ${axisLabel}</span>`;
+        const secPill = `<span class="pill"><strong>Enfoque:</strong> ${section.focus}</span>`;
+
+        const top = document.createElement("div");
+        top.className = "sectionTop";
+        top.innerHTML = `
+          <div class="sectionTitle">
+            <h3>${section.title}</h3>
+            <p class="help">${section.prompt}</p>
+          </div>
+          <div class="axisTag">
+            ${axisPill}
+            ${secPill}
+          </div>
+        `;
+        sec.appendChild(top);
+
+        section.questions.forEach((q, idx)=>{
+          const row = document.createElement("div");
+          row.className = "q";
+          const qText = document.createElement("div");
+          qText.className = "qText";
+          qText.textContent = q.text;
+
+          const scale = document.createElement("div");
+          scale.className = "scale";
+          for (let k=0;k<=5;k++){
+            const b = document.createElement("div");
+            b.className = "opt";
+            b.textContent = String(k);
+            b.setAttribute("role","button");
+            b.setAttribute("tabindex","0");
+            b.setAttribute("aria-label", `Puntuar ${k}`);
+            if (answers[section.id] && answers[section.id][idx] === k) b.classList.add("sel");
+
+            const setVal = ()=>{
+              answers[section.id][idx] = k;
+              for (const child of scale.children) child.classList.remove("sel");
+              b.classList.add("sel");
+              saveCurrent();
+              updateProgressPill();
+              updateLiveDiagnostics();
+            };
+            b.addEventListener("click", setVal);
+            b.addEventListener("keydown", (ev)=>{
+              if (ev.key === "Enter" || ev.key === " "){
+                ev.preventDefault();
+                setVal();
+              }
+            });
+
+            scale.appendChild(b);
+          }
+
+          row.appendChild(qText);
+          row.appendChild(scale);
+          sec.appendChild(row);
+        });
+
+        dom.sectionsContainer.appendChild(sec);
+      }
+
+      updateProgressPill();
+      updateLiveDiagnostics();
+    }
+
+    function computeScores(){
+      const maxPerQ = appData.scale?.max ?? 5;
+      const minPerQ = appData.scale?.min ?? 0;
+
+      const sections = [];
+      let answeredCount = 0;
+      let totalQuestions = 0;
+
+      const axes = {
+        comunion: { score:0, max:0, sections:[] },
+        congregacion: { score:0, max:0, sections:[] },
+        interseccion: { score:0, max:0, sections:[] }
+      };
+
+      for (const s of appData.sections){
+        const a = answers[s.id] || [];
+        const maxScore = a.length * (maxPerQ - minPerQ);
+        let score = 0;
+        let answeredHere = 0;
+        for (const v of a){
+          totalQuestions += 1;
+          if (v !== null && v !== undefined){
+            answeredCount += 1;
+            answeredHere += 1;
+            score += (v - minPerQ);
+          }
+        }
+        const pct = maxScore ? pctFromScore(score, maxScore) : 0;
+        const band = bandFromPct(pct);
+
+        const sectionRow = {
+          id: s.id,
+          title: s.title,
+          axis: s.axis,
+          focus: s.focus,
+          verse: s.verse,
+          answered: answeredHere,
+          total: a.length,
+          score,
+          maxScore,
+          pct,
+          band
+        };
+        sections.push(sectionRow);
+
+        const ax = axes[s.axis];
+        ax.score += score;
+        ax.max += maxScore;
+        ax.sections.push(sectionRow);
+      }
+
+      for (const axKey of Object.keys(axes)){
+        axes[axKey].pct = axes[axKey].max ? pctFromScore(axes[axKey].score, axes[axKey].max) : 0;
+        axes[axKey].band = bandFromPct(axes[axKey].pct);
+      }
+
+      const globalMax = Object.values(axes).reduce((acc,x)=> acc + x.max, 0);
+      const globalScore = Object.values(axes).reduce((acc,x)=> acc + x.score, 0);
+      const globalPct = globalMax ? pctFromScore(globalScore, globalMax) : 0;
+      const globalBand = bandFromPct(globalPct);
+
+      return {
+        answeredCount,
+        totalQuestions,
+        sections,
+        axes,
+        global: { score: globalScore, max: globalMax, pct: globalPct, band: globalBand }
+      };
+    }
+
+    function axisTooltipText(axisKey, computed){
+      const ax = computed.axes[axisKey];
+      const pct = Math.round(ax.pct);
+      if (axisKey === "comunion"){
+        return {
+          title: "Cimiento / Comunión",
+          body: `Estado: ${pct}% · ${ax.band.label.replace("🟢 ","").replace("🟡 ","").replace("🟠 ","").replace("🔴 ","")}`
+        };
+      }
+      if (axisKey === "congregacion"){
+        return {
+          title: "Columna / Congregación",
+          body: `Alineación del varón: ${pct}% · Riesgo: ${ax.band.label.replace("🟢 ","").replace("🟡 ","").replace("🟠 ","").replace("🔴 ","")}`
+        };
+      }
+      return {
+        title: "Viga / Intersección",
+        body: `Sobrecarga visible: ${Math.round(100-ax.pct)}% · Estado: ${ax.band.label.replace("🟢 ","").replace("🟡 ","").replace("🟠 ","").replace("🔴 ","")}`
+      };
+    }
+
+    function nodeTooltipText(axisKey, computed){
+      const ax = computed.axes[axisKey];
+      const pct = Math.round(ax.pct);
+      let diag = "";
+      if (axisKey==="comunion") diag = pct >= 80 ? "Reposo en Cristo" : (pct >= 60 ? "Reposo intermitente" : (pct >= 40 ? "Alma fatigada" : "Reposo quebrado"));
+      if (axisKey==="congregacion") diag = pct >= 80 ? "Cobertura presente" : (pct >= 60 ? "Cobertura irregular" : (pct >= 40 ? "Fallas de liderazgo" : "Ausencia crítica"));
+      if (axisKey==="interseccion") diag = pct >= 80 ? "Flujo sano" : (pct >= 60 ? "Tensión contenida" : (pct >= 40 ? "Transferencia rota" : "Acumulación peligrosa"));
+      return { title: getAxisLabel(axisKey), body: `${diag} · ${pct}%` };
+    }
+
+    function showTooltip(x, y, title, body){
+      dom.tipTitle.textContent = title;
+      dom.tipBody.textContent = body;
+      const pad = 14;
+      dom.tooltip.style.transform = `translate(${x + pad}px, ${y + pad}px)`;
+      dom.tooltip.setAttribute("aria-hidden","false");
+    }
+
+    function hideTooltip(){
+      dom.tooltip.style.transform = "translate(-9999px,-9999px)";
+      dom.tooltip.setAttribute("aria-hidden","true");
+    }
+
+    function openContextPanel(kind, axisKey){
+      const computed = computeScores();
+      const axisLabel = getAxisLabel(axisKey);
+
+      const manual = appData.pastoralManual || [];
+      const manualItems = manual.filter(m => m.axis === axisKey);
+
+      let teaching = "";
+      let verse = "";
+      let actions = [];
+      if (manualItems.length){
+        const m = manualItems[0];
+        teaching = m.miniTeaching;
+        verse = m.verse;
+        actions = m.actions || [];
+      }else{
+        teaching = "Este eje requiere lectura pastoral, pero falta el manual correspondiente.";
+        verse = appData.porticoModel?.axes?.[axisKey]?.verse || "—";
+        actions = [];
+      }
+
+      const ax = computed.axes[axisKey];
+      const pct = Math.round(ax.pct);
+      const band = ax.band;
+
+      const title = kind === "element"
+        ? `${kindLabelFromAxis(axisKey)} — Panel contextual`
+        : `${axisLabel} — Panel contextual`;
+
+      dom.modalTitle.textContent = title;
+      dom.modalMeta.textContent = `${axisLabel} · ${band.label} · ${pct}%`;
+
+      dom.modalTeaching.textContent = teaching;
+
+      dom.modalVerse.textContent = verse;
+
+      dom.modalActions.innerHTML = "";
+      const useActions = actions.slice(0,2);
+      if (!useActions.length){
+        useActions.push("Toma 10 minutos y escribe qué estás percibiendo, y a quién lo vas a transferir con respeto y claridad.");
+        useActions.push("Establece un momento breve (15–20 min) para expresar el clima del hogar sin acusación, solo con hechos y necesidades.");
+      }
+      useActions.forEach((a)=>{
+        const div = document.createElement("div");
+        div.className = "actionItem";
+        div.textContent = a;
+        dom.modalActions.appendChild(div);
+      });
+
+      dom.modalBackdrop.classList.add("show");
+    }
+
+    function kindLabelFromAxis(axisKey){
+      if (axisKey==="comunion") return "Cimiento / Comunión";
+      if (axisKey==="congregacion") return "Columna / Congregación";
+      return "Viga / Intersección";
+    }
+
+    function closeContextPanel(){
+      dom.modalBackdrop.classList.remove("show");
+    }
+
+    function clearAxisAnimations(el){
+      el.classList.remove("pulseSoft","microVibe","dashCrit");
+      el.style.strokeDasharray = "";
+      el.style.strokeDashoffset = "";
+    }
+
+    function applyAxisStateVisual(axisKey, computed){
+      const ax = computed.axes[axisKey];
+      const bundle = getAxisElementBundle(axisKey);
+      const el = bundle.el;
+      clearAxisAnimations(el);
+
+      if (ax.band.key === "adjust"){
+        el.classList.add("pulseSoft");
+      }else if (ax.band.key === "risk"){
+        el.classList.add("microVibe");
+      }else if (ax.band.key === "critical"){
+        el.classList.add("dashCrit");
+      }
+    }
+
+    function setAxisColor(el, bandKey){
+      if (bandKey === "aligned") el.setAttribute("stroke", "rgba(25,195,125,.92)");
+      else if (bandKey === "adjust") el.setAttribute("stroke", "rgba(244,212,77,.92)");
+      else if (bandKey === "risk") el.setAttribute("stroke", "rgba(255,159,67,.92)");
+      else el.setAttribute("stroke", "rgba(255,77,77,.92)");
+    }
+
+    function setNodeColor(node, bandKey){
+      if (bandKey === "aligned") node.setAttribute("fill", "rgba(25,195,125,.95)");
+      else if (bandKey === "adjust") node.setAttribute("fill", "rgba(244,212,77,.95)");
+      else if (bandKey === "risk") node.setAttribute("fill", "rgba(255,159,67,.95)");
+      else node.setAttribute("fill", "rgba(255,77,77,.95)");
+      node.setAttribute("stroke", "rgba(0,0,0,.35)");
+      node.setAttribute("stroke-width","2");
+    }
+
+    function updateTensionHalos(computed){
+      const p = {
+        comunion: computed.axes.comunion.pct,
+        congregacion: computed.axes.congregacion.pct,
+        interseccion: computed.axes.interseccion.pct
+      };
+
+      const diffs = [
+        { a:"comunion", b:"congregacion", d: Math.abs(p.comunion - p.congregacion) },
+        { a:"congregacion", b:"interseccion", d: Math.abs(p.congregacion - p.interseccion) },
+        { a:"comunion", b:"interseccion", d: Math.abs(p.comunion - p.interseccion) }
+      ];
+
+      dom.haloComunion.style.opacity = 0;
+      dom.haloCongregacion.style.opacity = 0;
+      dom.haloInterseccion.style.opacity = 0;
+
+      const max = diffs.sort((x,y)=> y.d-x.d)[0];
+      if (!max || max.d <= 20) return;
+
+      const dominant = p[max.a] >= p[max.b] ? max.a : max.b;
+      const color = computed.axes[dominant].band.key === "aligned" ? "rgba(25,195,125,.35)"
+                  : computed.axes[dominant].band.key === "adjust" ? "rgba(244,212,77,.35)"
+                  : computed.axes[dominant].band.key === "risk" ? "rgba(255,159,67,.35)"
+                  : "rgba(255,77,77,.38)";
+
+      const haloA = getAxisElementBundle(max.a).halo;
+      const haloB = getAxisElementBundle(max.b).halo;
+
+      [haloA, haloB].forEach(h=>{
+        h.setAttribute("stroke", color);
+        h.style.opacity = 1;
+        h.classList.add("nodeHalo");
+      });
+    }
+
+    function updateBeforeAfterOverlay(computed){
+      const prev = loadPrevious();
+      const hasPrev = !!prev;
+
+      if (!hasPrev){
+        dom.prevCimiento.setAttribute("opacity","0");
+        dom.prevColumna.setAttribute("opacity","0");
+        dom.prevViga.setAttribute("opacity","0");
+        dom.deltaComunion.setAttribute("opacity","0");
+        dom.deltaCongregacion.setAttribute("opacity","0");
+        dom.deltaInterseccion.setAttribute("opacity","0");
+        dom.pillCompare.innerHTML = `<strong>Comparación:</strong> apagada`;
+        dom.pillSaved.innerHTML = `<strong>Previo:</strong> —`;
+        return;
+      }
+
+      dom.prevCimiento.setAttribute("opacity","1");
+      dom.prevColumna.setAttribute("opacity","1");
+      dom.prevViga.setAttribute("opacity","1");
+      dom.pillCompare.innerHTML = `<strong>Comparación:</strong> activa`;
+
+      const prevDate = new Date(prev.ts || Date.now());
+      const pd = prevDate.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" });
+      dom.pillSaved.innerHTML = `<strong>Previo:</strong> ${pd}`;
+
+      const delta = (axisKey)=>{
+        const now = computed.axes[axisKey]?.pct ?? 0;
+        const old = prev.axes?.[axisKey]?.pct ?? 0;
+        return now - old;
+      };
+
+      const dC = delta("comunion");
+      const dG = delta("congregacion");
+      const dI = delta("interseccion");
+
+      setDeltaLabel(dom.deltaComunion, dC);
+      setDeltaLabel(dom.deltaCongregacion, dG);
+      setDeltaLabel(dom.deltaInterseccion, dI);
+
+      dom.deltaComunion.setAttribute("opacity","1");
+      dom.deltaCongregacion.setAttribute("opacity","1");
+      dom.deltaInterseccion.setAttribute("opacity","1");
+    }
+
+    function setDeltaLabel(el, d){
+      const sign = d >= 0 ? "+" : "";
+      const txt = `Δ ${sign}${Math.round(d)}%`;
+      el.textContent = txt;
+
+      const abs = Math.abs(d);
+      let color = "rgba(167,180,200,.85)";
+      if (abs >= 1){
+        color = d > 0 ? "rgba(25,195,125,.85)" : "rgba(255,159,67,.85)";
+      }
+      el.setAttribute("fill", color);
+    }
+
+    function updatePorticoFromScores(computed){
+      const axesKeys = ["comunion","congregacion","interseccion"];
+      axesKeys.forEach((k)=>{
+        const ax = computed.axes[k];
+        const bundle = getAxisElementBundle(k);
+        setAxisColor(bundle.el, ax.band.key);
+        setNodeColor(bundle.node, ax.band.key);
+        applyAxisStateVisual(k, computed);
+      });
+
+      updateTensionHalos(computed);
+      updateBeforeAfterOverlay(computed);
+
+      dom.pillGlobal.innerHTML = `<strong>Global:</strong> ${Math.round(computed.global.pct)}%`;
+
+      dom.kpiGlobal.textContent = `${Math.round(computed.global.pct)}%`;
+      dom.kpiGlobalHint.textContent = computed.answeredCount ? computed.global.band.label : "Responde al menos una sección para ver lectura.";
+      dom.barGlobal.style.width = `${Math.round(computed.global.pct)}%`;
+      dom.dotGlobal.className = `dot ${computed.answeredCount ? dotClassFromBandKey(computed.global.band.key) : ""}`;
+
+      const mostPressed = axesKeys
+        .map(k=> ({ k, pct: computed.axes[k].pct }))
+        .sort((a,b)=> a.pct - b.pct)[0];
+
+      if (computed.answeredCount){
+        dom.kpiAxis.textContent = getAxisLabel(mostPressed.k);
+        dom.kpiAxisHint.textContent = `Este eje está más bajo (${Math.round(mostPressed.pct)}%). Aquí suele acumularse el peso.`;
+        dom.barAxis.style.width = `${Math.round(mostPressed.pct)}%`;
+        dom.dotAxis.className = `dot ${dotClassFromBandKey(computed.axes[mostPressed.k].band.key)}`;
+      }else{
+        dom.kpiAxis.textContent = "—";
+        dom.kpiAxisHint.textContent = "La presión apunta a “dónde se acumula el peso”.";
+        dom.barAxis.style.width = "0%";
+        dom.dotAxis.className = "dot";
+      }
+    }
+
+    function updateLiveDiagnostics(){
+      const computed = computeScores();
+      updatePorticoFromScores(computed);
+    }
+
+    function buildPlanRows(computed){
+      const rows = [];
+      const axes = computed.axes;
+
+      const priorityOrder = Object.keys(axes)
+        .map(k=> ({ k, pct: axes[k].pct, band: axes[k].band }))
+        .sort((a,b)=> a.pct - b.pct);
+
+      priorityOrder.forEach((item, idx)=>{
+        const axisKey = item.k;
+        const manual = (appData.pastoralManual || []).find(m => m.axis === axisKey);
+        const verse = manual?.verse || appData.porticoModel?.axes?.[axisKey]?.verse || "—";
+
+        let actions = manual?.actions || [];
+        if (!actions.length){
+          actions = [
+            "Nombrar con claridad una carga específica y transferirla sin sarcasmo ni amenaza.",
+            "Pedir una respuesta concreta (quién / cuándo / cómo) y registrar el cumplimiento."
+          ];
+        }
+
+        const observ = axisKey==="interseccion"
+          ? "Se expresa tensión y se transfiere en 24–48h, sin acumular."
+          : axisKey==="congregacion"
+            ? "Hay cobertura práctica: decisiones, presencia y escucha sin evasión."
+            : "Se ve reposo: oración, perdón y orden interno, sin resentimiento sostenido.";
+
+        rows.push({
+          prioridad: `${idx+1}`,
+          accion: actions[0],
+          verso: verse,
+          indicador: observ
+        });
+      });
+
+      return rows;
+    }
+
+    function showResult(){
+      const computed = computeScores();
+      const d = safeNowISO();
+      dom.pillDate.innerHTML = `<strong>Fecha:</strong> ${d}`;
+      dom.pillAnswered.innerHTML = `<strong>Respondidas:</strong> ${computed.answeredCount}/${computed.totalQuestions}`;
+
+      const g = computed.global;
+      dom.badgeText.textContent = `${g.band.label} · ${Math.round(g.pct)}%`;
+      dom.dotBadge.className = `dot ${dotClassFromBandKey(g.band.key)}`;
+
+      dom.resultHeadline.textContent = "Lectura diagnóstica (pórtico)";
+      dom.resultSummary.textContent =
+        g.band.key === "aligned" ? "La viga está cumpliendo su función: percibe, expresa y transfiere sin acumular. Sostén la práctica y protege el reposo."
+        : g.band.key === "adjust" ? "Hay señales de ajuste: la sensibilidad está activa, pero necesita mejor transferencia y acuerdos claros."
+        : g.band.key === "risk" ? "Hay riesgo de fisura: se percibe tensión y se acumula. Urge restaurar la cadena viga → columna → cimiento."
+        : "Estado crítico: la viga está sobrecargada o aislada. Se requiere intervención pastoral y acciones inmediatas de alivio y orden.";
+
+      dom.resultTbody.innerHTML = "";
+      computed.sections.forEach((s)=>{
+        const ax = computed.axes[s.axis];
+        const tr = document.createElement("tr");
+        const riskVisible = s.axis==="interseccion"
+          ? (s.band.key==="aligned" ? "Flujo claro" : s.band.key==="adjust" ? "Tensión ocasional" : s.band.key==="risk" ? "Acumulación" : "Sobrecarga")
+          : s.axis==="congregacion"
+            ? (s.band.key==="aligned" ? "Cobertura presente" : s.band.key==="adjust" ? "Cobertura irregular" : s.band.key==="risk" ? "Fallas visibles" : "Ausencia")
+            : (s.band.key==="aligned" ? "Reposo" : s.band.key==="adjust" ? "Reposo intermitente" : s.band.key==="risk" ? "Fatiga" : "Quiebre");
+
+        const focus = s.axis==="interseccion"
+          ? "Transferir carga con respeto, sin acumular."
+          : s.axis==="congregacion"
+            ? "Pedir cobertura concreta, no control."
+            : "Anclar la sensibilidad en Cristo, no en ansiedad.";
+
+        tr.innerHTML = `
+          <td><span class="pill"><strong>${getAxisLabel(s.axis)}</strong></span></td>
+          <td>${s.title}</td>
+          <td class="mono">${round1(s.score)}/${round1(s.maxScore)} (${Math.round(s.pct)}%)</td>
+          <td>${s.band.label}</td>
+          <td>${riskVisible}</td>
+          <td>${focus}</td>
+        `;
+        dom.resultTbody.appendChild(tr);
+      });
+
+      const plan = buildPlanRows(computed);
+      dom.planTbody.innerHTML = "";
+      plan.forEach((r)=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="mono">${r.prioridad}</td>
+          <td>${r.accion}</td>
+          <td>${r.verso}</td>
+          <td>${r.indicador}</td>
+        `;
+        dom.planTbody.appendChild(tr);
+      });
+
+      dom.resultPanel.classList.add("show");
+      dom.resultPanel.scrollIntoView({ behavior:"smooth", block:"start" });
+    }
+
+    function buildTxtReport(){
+      const computed = computeScores();
+      const d = safeNowISO();
+      const lines = [];
+      lines.push(appData.meta?.title || "Auditoría diagnóstica pastoral");
+      lines.push(`Fecha: ${d}`);
+      lines.push(`Respondidas: ${computed.answeredCount}/${computed.totalQuestions}`);
+      lines.push("");
+      lines.push(`GLOBAL: ${Math.round(computed.global.pct)}% — ${computed.global.band.label}`);
+      lines.push("");
+
+      const axesKeys = ["comunion","congregacion","interseccion"];
+      axesKeys.forEach((k)=>{
+        const ax = computed.axes[k];
+        lines.push(`${getAxisLabel(k).toUpperCase()}: ${Math.round(ax.pct)}% — ${ax.band.label}`);
+        const manual = (appData.pastoralManual || []).find(m=> m.axis===k);
+        if (manual?.verse) lines.push(`Verso: ${manual.verse}`);
+        if (manual?.miniTeaching) lines.push(`Mini-enseñanza: ${manual.miniTeaching}`);
+        const act = (manual?.actions || []).slice(0,2);
+        if (act.length){
+          lines.push(`Acciones:`);
+          act.forEach((a,i)=> lines.push(`  ${i+1}. ${a}`));
+        }
+        lines.push("");
+      });
+
+      lines.push("SECCIONES:");
+      computed.sections.forEach((s, idx)=>{
+        lines.push(`${idx+1}. [${getAxisLabel(s.axis)}] ${s.title}`);
+        lines.push(`   Puntaje: ${round1(s.score)}/${round1(s.maxScore)} (${Math.round(s.pct)}%) — ${s.band.label}`);
+        lines.push(`   Enfoque: ${s.focus}`);
+        lines.push(`   Verso: ${s.verse}`);
+      });
+
+      return lines.join("\n");
+    }
+
+    function downloadBlob(filename, blob){
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportTXT(){
+      const txt = buildTxtReport();
+      const blob = new Blob([txt], { type:"text/plain;charset=utf-8" });
+      downloadBlob("viga-mujer_resultado.txt", blob);
+    }
+
+    function svgToDataUrl(svgEl, titleLine, dateLine){
+      const clone = svgEl.cloneNode(true);
+
+      const t = document.createElementNS("http://www.w3.org/2000/svg","text");
+      t.setAttribute("x","28");
+      t.setAttribute("y","34");
+      t.setAttribute("fill","rgba(231,238,249,.92)");
+      t.setAttribute("font-size","14");
+      t.setAttribute("font-weight","900");
+      t.textContent = titleLine;
+
+      const d = document.createElementNS("http://www.w3.org/2000/svg","text");
+      d.setAttribute("x","28");
+      d.setAttribute("y","56");
+      d.setAttribute("fill","rgba(167,180,200,.85)");
+      d.setAttribute("font-size","11");
+      d.setAttribute("font-weight","800");
+      d.textContent = dateLine;
+
+      clone.appendChild(t);
+      clone.appendChild(d);
+
+      const serializer = new XMLSerializer();
+      const str = serializer.serializeToString(clone);
+      const svg = `<?xml version="1.0" encoding="UTF-8"?>\n${str}`;
+      const encoded = encodeURIComponent(svg)
+        .replace(/'/g, "%27")
+        .replace(/"/g, "%22");
+      return `data:image/svg+xml;charset=utf-8,${encoded}`;
+    }
+
+    function exportPNG(){
+      const computed = computeScores();
+      const dateLine = `Fecha: ${safeNowISO()}`;
+      const titleLine = appData.meta?.title || "Auditoría diagnóstica pastoral";
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 860;
+      canvas.height = 420;
+      const ctx = canvas.getContext("2d");
+
+      const img = new Image();
+      img.onload = ()=>{
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+        const a = document.createElement("a");
+        a.download = "viga-mujer_portico.png";
+        a.href = canvas.toDataURL("image/png");
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      };
+      img.onerror = ()=>{
+        alert("No se pudo exportar PNG. Intenta nuevamente.");
+      };
+
+      const dataUrl = svgToDataUrl(dom.porticoSvg, titleLine, dateLine);
+      img.src = dataUrl;
+    }
+
+    function buildPdf(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation:"p", unit:"pt", format:"a4" });
+      const computed = computeScores();
+
+      const title = appData.meta?.title || "Auditoría diagnóstica pastoral";
+      const subtitle = appData.meta?.subtitle || "Diagnóstico sin backend (0–5).";
+      const dateLine = `Fecha: ${safeNowISO()}`;
+      const answeredLine = `Respondidas: ${computed.answeredCount}/${computed.totalQuestions}`;
+      const globalLine = `Diagnóstico global: ${Math.round(computed.global.pct)}% — ${computed.global.band.label}`;
+
+      const margin = 40;
+      let y = 52;
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(18);
+      doc.text(title, margin, y);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      y += 18;
+      doc.text(subtitle, margin, y);
+      y += 16;
+      doc.text(dateLine, margin, y);
+      y += 14;
+      doc.text(answeredLine, margin, y);
+      y += 14;
+      doc.setFont("helvetica","bold");
+      doc.text(globalLine, margin, y);
+
+      // Logo simple
+      doc.setDrawColor(122,162,255);
+      doc.setFillColor(20,30,48);
+      doc.roundedRect(440, 38, 120, 40, 10, 10, "FD");
+      doc.setTextColor(231,238,249);
+      doc.setFontSize(12);
+      doc.text("PÓRTICO", 468, 63);
+
+      // Portico image
+      const dataUrl = svgToDataUrl(dom.porticoSvg, title, dateLine);
+      const img = new Image();
+      return new Promise((resolve, reject)=>{
+        img.onload = ()=>{
+          const pw = 520;
+          const ph = 254;
+          const px = margin;
+          const py = 140;
+          doc.addImage(img, "PNG", px, py, pw, ph);
+
+          // Ejes table
+          const axesKeys = ["comunion","congregacion","interseccion"];
+          const axisRows = axesKeys.map((k)=>{
+            const ax = computed.axes[k];
+            const manual = (appData.pastoralManual || []).find(m=>m.axis===k);
+            const actions = (manual?.actions || []).slice(0,2).join(" / ");
+            return [
+              getAxisLabel(k),
+              `${Math.round(ax.pct)}%`,
+              ax.band.label,
+              (manual?.verse || appData.porticoModel?.axes?.[k]?.verse || "—"),
+              actions || "—"
+            ];
+          });
+
+          doc.setTextColor(0,0,0);
+          doc.autoTable({
+            startY: 414,
+            head: [["Eje","%","Estado","Verso","Acciones (1–2)"]],
+            body: axisRows,
+            styles: { fontSize: 9, cellPadding: 6 },
+            headStyles: { fillColor: [20,30,48], textColor: [231,238,249] },
+            alternateRowStyles: { fillColor: [245,247,252] },
+            margin: { left: margin, right: margin }
+          });
+
+          // Secciones
+          doc.addPage();
+          doc.setFont("helvetica","bold");
+          doc.setFontSize(14);
+          doc.text("Detalle por secciones", margin, 54);
+
+          const secRows = computed.sections.map((s)=>[
+            getAxisLabel(s.axis),
+            s.title,
+            `${Math.round(s.pct)}%`,
+            s.band.label,
+            s.focus,
+            s.verse
+          ]);
+
+          doc.autoTable({
+            startY: 76,
+            head: [["Eje","Sección","%","Estado","Enfoque","Verso"]],
+            body: secRows,
+            styles: { fontSize: 8.5, cellPadding: 6, overflow:"linebreak" },
+            headStyles: { fillColor: [20,30,48], textColor: [231,238,249] },
+            alternateRowStyles: { fillColor: [245,247,252] },
+            margin: { left: margin, right: margin }
+          });
+
+          // Plan
+          doc.addPage();
+          doc.setFont("helvetica","bold");
+          doc.setFontSize(14);
+          doc.text("Plan pastoral (enfoque y acciones)", margin, 54);
+
+          const plan = buildPlanRows(computed).map(r=>[
+            r.prioridad,
+            r.accion,
+            r.verso,
+            r.indicador
+          ]);
+
+          doc.autoTable({
+            startY: 76,
+            head: [["Prioridad","Acción práctica","Verso ancla","Indicador observable"]],
+            body: plan,
+            styles: { fontSize: 9, cellPadding: 6, overflow:"linebreak" },
+            headStyles: { fillColor: [20,30,48], textColor: [231,238,249] },
+            alternateRowStyles: { fillColor: [245,247,252] },
+            margin: { left: margin, right: margin }
+          });
+
+          resolve(doc);
+        };
+        img.onerror = ()=> reject(new Error("No se pudo generar la imagen del pórtico."));
+        img.src = dataUrl;
+      });
+    }
+
+    async function exportPDF(){
+      try{
+        const doc = await buildPdf();
+        doc.save("viga-mujer_resultado.pdf");
+      }catch(e){
+        alert("No se pudo exportar PDF. Intenta nuevamente.");
+      }
+    }
+
+    function resetAll(){
+      try{
+        localStorage.removeItem(STORAGE_KEY_CURRENT);
+      }catch(e){}
+      initDefaultAnswers();
+      render();
+      dom.resultPanel.classList.remove("show");
+    }
+
+    function attachSvgInteractivity(){
+      const computed = ()=> computeScores();
+
+      const onMove = (ev, title, body)=>{
+        const x = ev.clientX ?? (ev.touches && ev.touches[0]?.clientX) ?? 0;
+        const y = ev.clientY ?? (ev.touches && ev.touches[0]?.clientY) ?? 0;
+        showTooltip(x, y, title, body);
+      };
+
+      const bind = (el, getTip, onClick)=>{
+        el.style.cursor = "pointer";
+
+        el.addEventListener("mousemove", (ev)=>{
+          const tip = getTip(computed());
+          onMove(ev, tip.title, tip.body);
+        });
+        el.addEventListener("mouseleave", ()=>{
+          hideTooltip();
+        });
+
+        el.addEventListener("touchstart", (ev)=>{
+          const tip = getTip(computed());
+          onMove(ev, tip.title, tip.body);
+        }, { passive:true });
+
+        el.addEventListener("touchend", ()=>{
+          setTimeout(hideTooltip, 350);
+        });
+
+        el.addEventListener("click", (ev)=>{
+          ev.stopPropagation();
+          const c = computed();
+          const tip = getTip(c);
+          const x = ev.clientX ?? 0;
+          const y = ev.clientY ?? 0;
+          showTooltip(x,y, tip.title, tip.body);
+          onClick(c);
+        });
+      };
+
+      bind(dom.elCimiento, (c)=> axisTooltipText("comunion", c), ()=> openContextPanel("element","comunion"));
+      bind(dom.elColumna, (c)=> axisTooltipText("congregacion", c), ()=> openContextPanel("element","congregacion"));
+      bind(dom.elViga, (c)=> axisTooltipText("interseccion", c), ()=> openContextPanel("element","interseccion"));
+
+      bind(dom.nComunion, (c)=> nodeTooltipText("comunion", c), ()=> openContextPanel("node","comunion"));
+      bind(dom.nCongregacion, (c)=> nodeTooltipText("congregacion", c), ()=> openContextPanel("node","congregacion"));
+      bind(dom.nInterseccion, (c)=> nodeTooltipText("interseccion", c), ()=> openContextPanel("node","interseccion"));
+
+      dom.porticoSvg.addEventListener("click", ()=>{
+        hideTooltip();
+      });
+    }
+
+    function guidedSteps(){
+      return [
+        {
+          key:"cimiento",
+          title:"1/4 — Cimiento (Comunión)",
+          body:"Aquí se define el reposo del sistema. Si el cimiento está bajo, la sensibilidad se vuelve ansiedad. Diagnóstico: ¿hay oración, perdón y descanso en Cristo, o hay fatiga sostenida?",
+          highlight: ["elCimiento","nComunion"]
+        },
+        {
+          key:"columna",
+          title:"2/4 — Columna (Congregación)",
+          body:"La columna habla de cobertura y liderazgo práctico. Diagnóstico: ¿la carga se recibe y se ordena, o se deja a la viga intentando sostener verticalmente?",
+          highlight: ["elColumna","nCongregacion"]
+        },
+        {
+          key:"viga",
+          title:"3/4 — Viga (Intersección)",
+          body:"La viga distribuye la vida diaria. Diagnóstico: ¿se percibe y se transfiere con claridad, o se acumula hasta fisurar la convivencia?",
+          highlight: ["elViga","nInterseccion"]
+        },
+        {
+          key:"cargas",
+          title:"4/4 — Cargas (presión visible)",
+          body:"Las cargas no se niegan: se canalizan. Diagnóstico: ¿la cadena viga → columna → Cristo está fluyendo, o el peso está quedando ‘en el alma’?",
+          highlight: ["cargaViva","cargaMuerta","cargaSismica"]
+        }
+      ];
+    }
+
+    function clearGuidedHighlights(){
+      const ids = ["elCimiento","elColumna","elViga","nComunion","nCongregacion","nInterseccion","cargaViva","cargaMuerta","cargaSismica"];
+      ids.forEach((id)=>{
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove("highlightStroke");
+        el.style.filter = "";
+      });
+    }
+
+    function applyGuidedHighlight(step){
+      clearGuidedHighlights();
+      step.highlight.forEach((id)=>{
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add("highlightStroke");
+        el.style.filter = "url(#softGlow)";
+      });
+    }
+
+    function openGuide(){
+      guide.active = true;
+      guide.steps = guidedSteps();
+      guide.step = 0;
+      dom.guideToast.classList.add("show");
+      renderGuideStep();
+    }
+
+    function closeGuide(){
+      guide.active = false;
+      dom.guideToast.classList.remove("show");
+      clearGuidedHighlights();
+    }
+
+    function renderGuideStep(){
+      const step = guide.steps[guide.step];
+      dom.guideTitle.textContent = step.title;
+      dom.guideBody.textContent = step.body;
+      dom.btnGuidePrev.disabled = guide.step === 0;
+      dom.btnGuideNext.textContent = guide.step === guide.steps.length - 1 ? "Listo" : "Siguiente";
+      applyGuidedHighlight(step);
+    }
+
+    function nextGuide(){
+      if (guide.step >= guide.steps.length - 1){
+        closeGuide();
+        return;
+      }
+      guide.step += 1;
+      renderGuideStep();
+    }
+
+    function prevGuide(){
+      guide.step = Math.max(0, guide.step - 1);
+      renderGuideStep();
+    }
+
+    function wireEvents(){
+      dom.btnResult.addEventListener("click", ()=>{
+        showResult();
+        const ok = setPreviousFromCurrentIfValid();
+        if (ok) updateLiveDiagnostics();
+      });
+
+      dom.btnTxt.addEventListener("click", exportTXT);
+      dom.btnPng.addEventListener("click", exportPNG);
+      dom.btnPdf.addEventListener("click", exportPDF);
+
+      dom.btnReset.addEventListener("click", resetAll);
+
+      dom.btnCloseModal.addEventListener("click", closeContextPanel);
+      dom.modalBackdrop.addEventListener("click", (ev)=>{
+        if (ev.target === dom.modalBackdrop) closeContextPanel();
+      });
+      document.addEventListener("keydown", (ev)=>{
+        if (ev.key === "Escape"){
+          closeContextPanel();
+          if (guide.active) closeGuide();
+          hideTooltip();
+        }
+      });
+
+      dom.btnGuide.addEventListener("click", ()=>{
+        if (guide.active) closeGuide();
+        else openGuide();
+      });
+      dom.btnGuideNext.addEventListener("click", nextGuide);
+      dom.btnGuidePrev.addEventListener("click", prevGuide);
+      dom.btnGuideStop.addEventListener("click", closeGuide);
+    }
+
+    function validateAppData(data){
+      if (!data || typeof data !== "object") throw new Error("JSON inválido.");
+      if (!data.sections || !Array.isArray(data.sections)) throw new Error("Faltan sections.");
+      if (!data.pastoralManual || !Array.isArray(data.pastoralManual)) throw new Error("Falta pastoralManual.");
+      const secIds = new Set();
+      for (const s of data.sections){
+        if (!s.id) throw new Error("Sección sin id.");
+        if (secIds.has(s.id)) throw new Error(`ID repetido: ${s.id}`);
+        secIds.add(s.id);
+        if (!Array.isArray(s.questions) || s.questions.length !== 8) throw new Error(`Sección ${s.id} debe tener 8 preguntas.`);
+        if (!["comunion","congregacion","interseccion"].includes(s.axis)) throw new Error(`Sección ${s.id} axis inválido.`);
+      }
+      if (data.pastoralManual.length !== data.sections.length) throw new Error("pastoralManual debe coincidir 1:1 con sections.");
+      const manualAxisOk = data.pastoralManual.every(m => ["comunion","congregacion","interseccion"].includes(m.axis));
+      if (!manualAxisOk) throw new Error("pastoralManual axis inválido.");
+      return true;
+    }
+
+    (async function boot(){
+      try{
+        appData = await loadJSON();
+        validateAppData(appData);
+
+        const hadCurrent = loadCurrent();
+        if (!hadCurrent) initDefaultAnswers();
+        else{
+          // Ensure shape matches new JSON if needed
+          for (const s of appData.sections){
+            if (!answers[s.id] || !Array.isArray(answers[s.id]) || answers[s.id].length !== s.questions.length){
+              answers[s.id] = new Array(s.questions.length).fill(null);
+            }
+          }
+          for (const k of Object.keys(answers)){
+            if (!appData.sections.find(s=> s.id === k)){
+              delete answers[k];
+            }
+          }
+        }
+
+        render();
+        wireEvents();
+        attachSvgInteractivity();
+
+        const prev = loadPrevious();
+        if (prev?.ts){
+          const pd = new Date(prev.ts).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" });
+          dom.pillSaved.innerHTML = `<strong>Previo:</strong> ${pd}`;
+        }else{
+          dom.pillSaved.innerHTML = `<strong>Previo:</strong> —`;
+        }
+      }catch(e){
+        dom.sectionsContainer.innerHTML = `
+          <div class="section">
+            <div class="sectionTop">
+              <div class="sectionTitle">
+                <h3>No se pudo iniciar la app</h3>
+                <p class="help">Verifica que <span class="mono">${JSON_PATH}</span> exista en la misma carpeta y sea JSON válido.</p>
+              </div>
+              <div class="axisTag">
+                <span class="pill"><strong>Error:</strong> ${String(e.message || e)}</span>
+              </div>
+            </div>
+            <div class="q">
+              <div class="qText muted">
+                Si estás en GitHub Pages, confirma que ambos archivos estén publicados: <span class="mono">viga-mujer.html</span> y <span class="mono">viga-mujer.json</span>.
+              </div>
+              <div class="scale">
+                <a class="link" href="./viga-mujer.json" target="_blank" rel="noreferrer">Abrir JSON</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    })();
+  </script>
+</body>
+</html>
