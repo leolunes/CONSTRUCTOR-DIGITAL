@@ -3,1978 +3,1608 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>La viga: la mujer como alma del sistema — Auditoría Diagnóstica Pastoral</title>
+  <title></title>
 
+  <!-- Allowed CDNs -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
   <style>
     :root{
       --bg:#0b0f14;
-      --panel:#0f1620;
-      --card:#111b26;
-      --muted:#8aa0b5;
-      --text:#e7f0fb;
-      --line:#223246;
-      --line2:#1a2839;
-      --accent:#6fb1ff;
-
-      --good:#3ddc97;
-      --warn:#ffd166;
-      --risk:#ff9f1c;
-      --crit:#ff4d6d;
-
-      --pill:#162536;
-      --pillOn:#223a55;
-      --shadow: 0 12px 34px rgba(0,0,0,.35);
-      --radius: 18px;
+      --panel:#0f1722;
+      --panel2:#0b1320;
+      --text:#e6eefc;
+      --muted:#a6b3c7;
+      --line:#1d2a3a;
+      --focus:#6aa6ff;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --risk:#fb7185;
+      --crit:#ef4444;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 16px;
+      --radius2: 22px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(111,177,255,.18), transparent 55%),
-                  radial-gradient(900px 540px at 90% 0%, rgba(61,220,151,.12), transparent 60%),
+      font-family: var(--sans);
+      background: radial-gradient(900px 600px at 18% -10%, rgba(106,166,255,.16), transparent 55%),
+                  radial-gradient(800px 520px at 96% 0%, rgba(52,211,153,.10), transparent 45%),
+                  radial-gradient(900px 700px at 60% 110%, rgba(251,191,36,.08), transparent 55%),
                   var(--bg);
       color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      line-height:1.35;
     }
     a{color:inherit}
     .wrap{
-      max-width:1200px;
+      max-width:1180px;
       margin:0 auto;
-      padding:22px 16px 60px;
+      padding:28px 16px 64px;
     }
-    header{
+    .topbar{
       display:flex;
       gap:14px;
       align-items:flex-start;
       justify-content:space-between;
-      flex-wrap:wrap;
-      padding:14px 14px 6px;
-      border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(17,27,38,.92), rgba(15,22,32,.92));
-      border:1px solid var(--line2);
-      box-shadow:var(--shadow);
+      margin-bottom:18px;
     }
     .brand{
       display:flex;
-      gap:12px;
-      align-items:center;
-      min-width:280px;
+      gap:14px;
+      align-items:flex-start;
     }
-    .logo{
-      width:46px;height:46px;
-      border-radius:14px;
-      background: linear-gradient(135deg, rgba(111,177,255,.35), rgba(61,220,151,.25));
-      border:1px solid rgba(111,177,255,.22);
-      display:grid;place-items:center;
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
-      flex:0 0 auto;
+    .mark{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(106,166,255,.22), rgba(52,211,153,.12));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
     }
-    .logo svg{opacity:.95}
-    .title h1{
+    .mark:before{
+      content:"";
+      position:absolute;inset:-20%;
+      background: radial-gradient(circle at 30% 30%, rgba(106,166,255,.35), transparent 50%),
+                  radial-gradient(circle at 70% 60%, rgba(52,211,153,.28), transparent 55%),
+                  radial-gradient(circle at 40% 90%, rgba(251,191,36,.18), transparent 55%);
+      filter: blur(2px);
+    }
+    h1{
       margin:0;
       font-size:18px;
       letter-spacing:.2px;
     }
-    .title .sub{
-      margin-top:3px;
-      font-size:12px;
+    .sub{
+      margin-top:4px;
       color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+      max-width:64ch;
     }
-    .topActions{
+    .toolbar{
       display:flex;
       gap:10px;
-      align-items:center;
       flex-wrap:wrap;
       justify-content:flex-end;
+      align-items:center;
     }
-    button{
+    .btn{
       appearance:none;
-      border:none;
-      background:var(--pill);
+      border:1px solid rgba(255,255,255,.09);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       color:var(--text);
-      border:1px solid rgba(138,160,181,.18);
       padding:10px 12px;
       border-radius:14px;
+      font-size:13px;
       cursor:pointer;
-      transition: transform .08s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
-      font-weight:650;
-      letter-spacing:.15px;
-      box-shadow: 0 10px 18px rgba(0,0,0,.18);
+      box-shadow: 0 12px 30px rgba(0,0,0,.28);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+      white-space:nowrap;
     }
-    button:hover{background:var(--pillOn); border-color: rgba(111,177,255,.22)}
-    button:active{transform: translateY(1px)}
-    button.primary{
-      background: linear-gradient(135deg, rgba(111,177,255,.25), rgba(111,177,255,.08));
-      border-color: rgba(111,177,255,.35);
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.16);}
+    .btn:active{transform: translateY(0px);}
+    .btn.secondary{
+      background: rgba(255,255,255,.03);
+      box-shadow: none;
     }
-    button.danger{
-      background: linear-gradient(135deg, rgba(255,77,109,.20), rgba(255,77,109,.06));
-      border-color: rgba(255,77,109,.32);
+    .btn.danger{
+      border-color: rgba(239,68,68,.25);
+      background: linear-gradient(180deg, rgba(239,68,68,.16), rgba(239,68,68,.06));
     }
-    button:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
     .grid{
       display:grid;
-      grid-template-columns: 1.25fr .85fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:14px;
-      margin-top:14px;
+      align-items:start;
     }
-    @media (max-width:980px){
-      .grid{grid-template-columns:1fr}
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr; }
+      .toolbar{justify-content:flex-start;}
     }
+
     .card{
-      border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(17,27,38,.95), rgba(15,22,32,.95));
-      border:1px solid var(--line2);
-      box-shadow:var(--shadow);
-      overflow:hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius2);
+      padding:14px;
+      box-shadow: var(--shadow);
     }
-    .cardHead{
-      padding:14px 14px 10px;
-      border-bottom:1px solid var(--line2);
+    .card .head{
       display:flex;
-      justify-content:space-between;
-      gap:12px;
       align-items:flex-start;
-      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
     }
-    .cardHead h2{
+    .card h2{
       margin:0;
       font-size:14px;
-      letter-spacing:.3px;
-      text-transform:uppercase;
-      color:rgba(231,240,251,.95);
+      letter-spacing:.2px;
     }
-    .cardHead .hint{
-      font-size:12px;
+    .muted{
       color:var(--muted);
-      max-width:560px;
-    }
-    .cardBody{padding:14px}
-    .pills{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:10px;
+      font-size:12px;
+      line-height:1.4;
     }
     .pill{
       display:inline-flex;
-      gap:8px;
       align-items:center;
-      padding:7px 10px;
+      gap:8px;
+      padding:8px 10px;
       border-radius:999px;
-      background: rgba(22,37,54,.75);
-      border:1px solid rgba(138,160,181,.18);
-      color:rgba(231,240,251,.92);
-      font-size:12px;
-    }
-    .pill b{font-weight:800}
-    .muted{color:var(--muted)}
-    .sec{
-      padding:12px;
-      border-radius:16px;
-      background: rgba(10,14,20,.35);
-      border:1px solid rgba(34,50,70,.65);
-      margin-bottom:12px;
-    }
-    .secTop{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      justify-content:space-between;
-      flex-wrap:wrap;
-    }
-    .secTop h3{
-      margin:0;
-      font-size:14px;
-      letter-spacing:.2px;
-    }
-    .secTop .metaLine{
-      margin-top:4px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
       font-size:12px;
       color:var(--muted);
     }
-    .verse{
-      margin-top:10px;
-      font-size:12px;
-      color:rgba(231,240,251,.88);
-      padding:10px 10px;
-      border-radius:14px;
-      background: rgba(17,27,38,.55);
-      border:1px dashed rgba(138,160,181,.22);
-    }
-    .q{
-      margin-top:10px;
-      padding:10px;
-      border-radius:14px;
-      border:1px solid rgba(34,50,70,.75);
-      background: rgba(15,22,32,.55);
-    }
-    .q .qText{font-size:13px; font-weight:650}
-    .q .qObs{font-size:12px; color:var(--muted); margin-top:6px}
-    .scaleRow{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
-      align-items:center;
-    }
-    .scorePill{
+    .band{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
-      min-width:38px;
-      height:34px;
-      border-radius:12px;
-      background: rgba(22,37,54,.75);
-      border:1px solid rgba(138,160,181,.18);
-      cursor:pointer;
-      user-select:none;
-      font-weight:850;
-      transition: background .2s ease, border-color .2s ease, transform .08s ease;
-    }
-    .scorePill:hover{background: rgba(34,58,85,.65); border-color: rgba(111,177,255,.22)}
-    .scorePill:active{transform: translateY(1px)}
-    .scorePill.on{
-      background: linear-gradient(135deg, rgba(111,177,255,.30), rgba(61,220,151,.12));
-      border-color: rgba(111,177,255,.40);
-    }
-    .mini{
+      gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border
+:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
       font-size:12px;
       color:var(--muted);
+      width:100%;
+      justify-content:space-between;
     }
+    .band strong{font-weight:650; color:var(--text);}
+    .band.aligned{border-color: rgba(52,211,153,.25); background: linear-gradient(180deg, rgba(52,211,153,.14), rgba(52,211,153,.05));}
+    .band.adjust{border-color: rgba(251,191,36,.25); background: linear-gradient(180deg, rgba(251,191,36,.14), rgba(251,191,36,.05));}
+    .band.risk{border-color: rgba(251,113,133,.25); background: linear-gradient(180deg, rgba(251,113,133,.14), rgba(251,113,133,.05));}
+    .band.critical{border-color: rgba(239,68,68,.25); background: linear-gradient(180deg, rgba(239,68,68,.16), rgba(239,68,68,.06));}
 
-    /* Results */
-    .resultBanner{
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+    .kpi{
+      flex:1 1 180px;
+      min-width:180px;
+      padding:12px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.18);
+    }
+    .kpi .label{color:var(--muted); font-size:12px;}
+    .kpi .value{font-size:22px; margin-top:6px; font-weight:750; letter-spacing:.2px;}
+    .kpi .hint{color:var(--muted); font-size:12px; margin-top:6px; line-height:1.35;}
+
+    .divider{height:1px; background: rgba(255,255,255,.07); margin:12px 0;}
+
+    .sections{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    details.sec{
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.16);
+      border-radius: var(--radius2);
+      overflow:hidden;
+    }
+    details.sec[open]{
+      background: rgba(0,0,0,.20);
+      border-color: rgba(255,255,255,.10);
+    }
+    summary.secSum{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+      user-select:none;
+    }
+    summary.secSum::-webkit-details-marker{display:none}
+    .secLeft{display:flex; gap:12px; align-items:flex-start;}
+    .secIdx{
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      display:grid; place-items:center;
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size:12px;
+      flex:0 0 auto;
+    }
+    .secTitles .t{margin:0; font-size:13px; font-weight:700;}
+    .secTitles .s{margin-top:3px; color:var(--muted); font-size:12px; line-height:1.35;}
+    .secRight{
       display:flex;
       gap:10px;
       align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(34,50,70,.75);
-      background: rgba(15,22,32,.65);
-      margin-bottom:12px;
+      flex:0 0 auto;
     }
-    .badge{
-      padding:7px 10px;
-      border-radius:999px;
+    .miniScore{
+      font-family: var(--mono);
+      color: var(--muted);
       font-size:12px;
-      font-weight:900;
-      letter-spacing:.2px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(22,37,54,.75);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      border-radius: 999px;
+      padding:6px 10px;
+      white-space:nowrap;
     }
-    .badge.good{border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.12)}
-    .badge.warn{border-color: rgba(255,209,102,.35); background: rgba(255,209,102,.10)}
-    .badge.risk{border-color: rgba(255,159,28,.35); background: rgba(255,159,28,.10)}
-    .badge.crit{border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.10)}
+    .secBody{
+      padding: 0 12px 12px;
+    }
+    .secMeta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size:12px;
+      max-width: 100%;
+    }
+    .tag .k{opacity:.8}
+    .tag .v{color: var(--text); font-weight:650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .qList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .q{
+      padding:12px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.02);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .q .qt{
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .q .qt .qId{
+      font-family: var(--mono);
+      font-size:11px;
+      color: var(--muted);
+      margin-bottom:6px;
+    }
+    .q .qt .qText{
+      font-size:13px;
+      line-height:1.4;
+      color: var(--text);
+    }
 
-    table{
+    .scale{
+      flex: 0 0 auto;
+      display:flex;
+      gap:6px;
+      align-items:center;
+    }
+    .dot{
+      width:34px; height:34px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      display:grid; place-items:center;
+      font-family: var(--mono);
+      font-size:12px;
+      cursor:pointer;
+      transition: transform .10s ease, border-color .12s ease, background .12s ease, color .12s ease;
+      user-select:none;
+    }
+    .dot:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.18);}
+    .dot.active{
+      color: var(--text);
+      border-color: rgba(106,166,255,.35);
+      background: rgba(106,166,255,.14);
+    }
+
+    .table{
       width:100%;
       border-collapse:separate;
       border-spacing:0;
       overflow:hidden;
-      border-radius:16px;
-      border:1px solid rgba(34,50,70,.75);
-      background: rgba(15,22,32,.55);
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.16);
     }
-    th, td{
+    .table th, .table td{
       padding:10px 10px;
       font-size:12px;
-      border-bottom:1px solid rgba(34,50,70,.75);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      text-align:left;
       vertical-align:top;
     }
-    th{
-      text-align:left;
-      color:rgba(231,240,251,.92);
-      font-weight:900;
-      background: rgba(17,27,38,.55);
-    }
-    tr:last-child td{border-bottom:none}
-    .rightCol{
-      display:grid;
-      gap:14px;
-      align-content:start;
-    }
+    .table th{color: var(--muted); font-weight:650; background: rgba(255,255,255,.02);}
+    .table tr:last-child td{border-bottom:none}
+    .mono{font-family: var(--mono);}
 
-    /* Portico */
-    .porticoWrap{
-      position:relative;
-      border-radius:var(--radius);
+    .svgWrap{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.14);
+      padding:12px;
       overflow:hidden;
-      border:1px solid var(--line2);
-      background: radial-gradient(900px 420px at 25% 0%, rgba(111,177,255,.12), transparent 55%),
-                  radial-gradient(720px 360px at 80% 20%, rgba(61,220,151,.10), transparent 58%),
-                  rgba(10,14,20,.55);
-      box-shadow:var(--shadow);
+      position:relative;
     }
-    .porticoTop{
+    .svgTop{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
       gap:10px;
-      flex-wrap:wrap;
-      padding:12px 12px 8px;
-      border-bottom:1px solid rgba(34,50,70,.65);
-      background: rgba(15,22,32,.55);
+      margin-bottom:10px;
     }
-    .porticoTop .left{
+    .legend{
       display:flex;
-      flex-direction:column;
-      gap:4px;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-end;
     }
-    .porticoTop .t{
-      font-weight:950;
-      letter-spacing:.2px;
-      font-size:13px;
-    }
-    .porticoTop .d{
+    .sw{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
       font-size:12px;
-      color:var(--muted);
-      max-width:620px;
+      color: var(--muted);
     }
-    .porticoTop .btns{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .sw i{
+      width:10px;height:10px;border-radius:999px; display:inline-block;
+      background: currentColor;
+    }
+    .sw.live{color: var(--good);}
+    .sw.dead{color: var(--crit);}
+    .sw.seis{color: #9aa6b2;}
+
+    svg#portico{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .node{cursor:pointer}
+    .part{cursor:pointer}
+    .loadArrow{cursor:pointer}
+    .hoverGlow{filter: drop-shadow(0 0 14px rgba(106,166,255,.22));}
 
     .tooltip{
       position:absolute;
       pointer-events:none;
-      opacity:0;
-      transform: translateY(-6px);
-      transition: opacity .12s ease, transform .12s ease;
+      z-index:20;
       background: rgba(10,14,20,.92);
-      border:1px solid rgba(138,160,181,.22);
-      color:rgba(231,240,251,.96);
-      padding:8px 10px;
-      border-radius:12px;
-      font-size:12px;
-      max-width:260px;
-      box-shadow: 0 18px 32px rgba(0,0,0,.38);
-      z-index:10;
-      line-height:1.25;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding:10px 12px;
+      max-width: 320px;
+      box-shadow: var(--shadow);
+      transform: translate(10px, 10px);
+      opacity:0;
+      transition: opacity .10s ease;
     }
-    .tooltip.on{opacity:1; transform: translateY(0)}
-    .tooltip .small{color:var(--muted); font-size:11px; margin-top:4px}
+    .tooltip .t{font-size:12px; font-weight:750; margin-bottom:4px;}
+    .tooltip .b{font-size:12px; color: var(--muted); line-height:1.35;}
+    .tooltip.show{opacity:1;}
 
     .modalBackdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.58);
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.55);
       display:none;
       align-items:center;
       justify-content:center;
-      padding:16px;
+      padding: 18px;
       z-index:50;
     }
-    .modalBackdrop.on{display:flex}
+    .modalBackdrop.show{display:flex;}
     .modal{
-      width:min(760px, 96vw);
-      border-radius:22px;
-      background: linear-gradient(180deg, rgba(17,27,38,.96), rgba(15,22,32,.96));
-      border:1px solid rgba(34,50,70,.85);
-      box-shadow: 0 28px 80px rgba(0,0,0,.55);
-      overflow:hidden;
+      width: min(920px, 100%);
+      max-height: min(86vh, 920px);
+      overflow:auto;
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      padding: 14px;
     }
-    .modalHead{
-      padding:14px 14px 10px;
+    .modalHeader{
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
       gap:10px;
-      border-bottom:1px solid rgba(34,50,70,.75);
+      margin-bottom:10px;
     }
-    .modalHead .h{
-      font-weight:950;
-      letter-spacing:.2px;
-      font-size:14px;
-      margin:0;
+    .modalTitle{margin:0; font-size:14px; letter-spacing:.2px;}
+    .modalBody{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:12px;
+      align-items:start;
     }
-    .modalBody{padding:14px}
-    .modalBody .k{font-size:12px; color:var(--muted); margin-top:8px}
-    .modalBody .teaching{
-      margin-top:8px;
+    @media (max-width: 900px){
+      .modalBody{grid-template-columns:1fr;}
+    }
+    .box{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.07);
+      background: rgba(0,0,0,.16);
       padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(34,50,70,.75);
-      background: rgba(10,14,20,.35);
-      font-size:13px;
     }
-    .modalBody ul{margin:10px 0 0 18px; padding:0}
-    .modalBody li{margin:6px 0; color:rgba(231,240,251,.92); font-size:13px}
-    .modalClose{
-      padding:8px 10px;
-      border-radius:14px;
-      border:1px solid rgba(138,160,181,.18);
-      background: rgba(22,37,54,.65);
-      cursor:pointer;
-      font-weight:900;
-    }
-
-    /* SVG status classes */
-    .axis-good{stroke: var(--good)}
-    .axis-warn{stroke: var(--warn)}
-    .axis-risk{stroke: var(--risk)}
-    .axis-crit{stroke: var(--crit)}
-
-    .pulseSoft{animation: pulseSoft 2.6s ease-in-out infinite}
-    @keyframes pulseSoft{
-      0%,100%{opacity:1}
-      50%{opacity:.72}
-    }
-    .microVibe{animation: microVibe 2.3s ease-in-out infinite}
-    @keyframes microVibe{
-      0%,100%{transform: translateX(0)}
-      25%{transform: translateX(2px)}
-      50%{transform: translateX(0)}
-      75%{transform: translateX(-2px)}
-    }
-    .dashAnim{
-      stroke-dasharray: 18 14;
-      animation: dashMove 2.8s linear infinite;
-    }
-    @keyframes dashMove{
-      from{stroke-dashoffset:0}
-      to{stroke-dashoffset:-64}
-    }
-
-    .nodeCircle{
-      fill: rgba(15,22,32,.95);
-      stroke: rgba(231,240,251,.22);
-      stroke-width: 3;
-    }
-    .nodeRing{
-      fill:none;
-      stroke-width: 10;
-      opacity:0;
-      filter: blur(0.2px);
-    }
-    .nodeRing.on{opacity:.22}
-    .nodeLabel{
-      font-size:14px;
-      font-weight:900;
-      fill: rgba(231,240,251,.92);
-      letter-spacing:.4px;
-    }
-    .structLabel{
-      font-size:14px;
-      font-weight:950;
-      fill: rgba(231,240,251,.90);
-      letter-spacing:.9px;
-    }
-    .structSubLabel{
+    .box h3{margin:0 0 8px; font-size:13px;}
+    .box p{margin:0; color: var(--muted); font-size:12px; line-height:1.5;}
+    .list{
+      margin:8px 0 0;
+      padding:0 0 0 16px;
+      color: var(--muted);
       font-size:12px;
-      font-weight:800;
-      fill: rgba(138,160,181,.90);
-      letter-spacing:.35px;
+      line-height:1.55;
     }
-    .ghostPrev{
-      opacity:.35;
-      stroke: rgba(231,240,251,.55);
-      stroke-dasharray: 10 12;
-      stroke-linecap: round;
+
+    .ghost{
+      opacity:.0;
+      height:0;
+      overflow:hidden;
     }
-    .deltaRow{
-      margin-top:10px;
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-    .delta{
-      font-size:12px;
-      color:rgba(231,240,251,.92);
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(34,50,70,.75);
-      background: rgba(15,22,32,.55);
-    }
-    .delta b{font-weight:950}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
+    <div class="topbar">
       <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="14" r="12.2" stroke="rgba(231,240,251,.85)" stroke-width="2"/>
-            <path d="M14 7.2V20.8" stroke="rgba(231,240,251,.92)" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M8.2 14H19.8" stroke="rgba(231,240,251,.92)" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="title">
-          <h1 id="appTitle">La viga: la mujer como alma del sistema</h1>
-          <div class="sub" id="appSub">Auditoría diagnóstica pastoral • sin backend • escala 0–5</div>
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <h1 id="appTitle"></h1>
+          <div class="sub" id="appSubtitle"></div>
         </div>
       </div>
 
-      <div class="topActions">
-        <button id="btnShowResult" class="primary" disabled>Ver resultado</button>
-        <button id="btnDownloadTxt" disabled>Descargar TXT</button>
-        <button id="btnDownloadPdf" disabled>Descargar PDF bonito</button>
-        <button id="btnDownloadPng" disabled>Descargar Imagen PNG</button>
-        <button id="btnReset" class="danger">Reiniciar</button>
+      <div class="toolbar">
+        <button class="btn secondary" id="btnSave" type="button">
+          <span id="lblSave"></span>
+          <span aria-hidden="true">💾</span>
+        </button>
+        <button class="btn secondary" id="btnReset" type="button">
+          <span id="lblReset"></span>
+          <span aria-hidden="true">↺</span>
+        </button>
+        <button class="btn" id="btnPdf" type="button">
+          <span id="lblPdf"></span>
+          <span aria-hidden="true">📄</span>
+        </button>
+        <button class="btn" id="btnPng" type="button">
+          <span id="lblPng"></span>
+          <span aria-hidden="true">🖼️</span>
+        </button>
+        <button class="btn" id="btnTxt" type="button">
+          <span id="lblTxt"></span>
+          <span aria-hidden="true">🧾</span>
+        </button>
+        <button class="btn danger" id="btnClearAll" type="button">
+          <span id="lblClear"></span>
+          <span aria-hidden="true">🗑️</span>
+        </button>
       </div>
-    </header>
+    </div>
 
     <div class="grid">
-      <div class="card" id="cardTest">
-        <div class="cardHead">
+      <div class="card">
+        <div class="head">
           <div>
-            <h2 id="testHeading">Test</h2>
-            <div class="hint" id="testHint">Responde con honestidad pastoral. No diagnostica personas: diagnostica flujo, cargas y alineación.</div>
+            <h2 id="hdrAssessment"></h2>
+            <div class="muted" id="hdrAssessmentSub"></div>
           </div>
-          <div class="pills" id="metaPills"></div>
+          <div class="pill" id="pillGlobal"></div>
         </div>
-        <div class="cardBody" id="sectionsRoot">
-          <div class="muted" id="loadingState">Cargando contenido…</div>
+
+        <div class="row" id="kpis">
+          <div class="kpi">
+            <div class="label" id="kpiGlobalLabel"></div>
+            <div class="value mono" id="kpiGlobalValue">—</div>
+            <div class="hint" id="kpiGlobalHint"></div>
+          </div>
+          <div class="kpi">
+            <div class="label" id="kpiAxisLabel"></div>
+            <div class="value mono" id="kpiAxisValue">—</div>
+            <div class="hint" id="kpiAxisHint"></div>
+          </div>
+          <div class="kpi">
+            <div class="label" id="kpiSectionsLabel"></div>
+            <div class="value mono" id="kpiSectionsValue">—</div>
+            <div class="hint" id="kpiSectionsHint"></div>
+          </div>
         </div>
+
+        <div class="divider"></div>
+
+        <div id="globalBand" class="band aligned">
+          <strong id="bandTitle"></strong>
+          <span class="mono" id="bandScore"></span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="sections" id="sections"></div>
       </div>
 
-      <div class="rightCol">
-        <div class="porticoWrap">
-          <div class="porticoTop">
-            <div class="left">
-              <div class="t">Diagrama del pórtico (diagnóstico)</div>
-              <div class="d" id="porticoDesc">Cimiento (Comunión), Columna (Congregación), Viga (Intersección). Pasa el cursor o toca para ver estados; haz click para abrir mini-enseñanza.</div>
-            </div>
-            <div class="btns">
-              <button id="btnGuided">Explícame este diagrama</button>
-            </div>
+      <div class="card">
+        <div class="head">
+          <div>
+            <h2 id="hdrPortico"></h2>
+            <div class="muted" id="hdrPorticoSub"></div>
           </div>
-
-          <div style="position:relative; padding:10px;">
-            <div class="tooltip" id="tooltip"></div>
-
-            <!-- SVG 860×420 — geometría fija: L estructural -->
-            <svg id="porticoSvg" width="860" height="420" viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pórtico diagnóstico en L">
-              <defs>
-                <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
-                  <path d="M0,0 L10,5 L0,10 Z" fill="currentColor"></path>
-                </marker>
-
-                <!-- hatch (for critical base look like reference) -->
-                <pattern id="critHatch" patternUnits="userSpaceOnUse" width="12" height="12" patternTransform="rotate(25)">
-                  <rect width="12" height="12" fill="rgba(0,0,0,0)"></rect>
-                  <rect x="0" y="0" width="6" height="12" fill="rgba(255,77,109,.28)"></rect>
-                </pattern>
-              </defs>
-
-              <!-- CARGAS (coordenadas fijas) -->
-              <g id="loadLive" data-kind="load">
-                <line x1="740" y1="50" x2="740" y2="108" stroke="var(--good)" stroke-width="6" stroke-linecap="round" style="color:var(--good)" marker-end="url(#arrowHead)"/>
-                <text x="712" y="42" class="structSubLabel">CARGA VIVA</text>
-              </g>
-              <g id="loadDead" data-kind="load">
-                <line x1="780" y1="50" x2="780" y2="108" stroke="var(--crit)" stroke-width="6" stroke-linecap="round" style="color:var(--crit)" marker-end="url(#arrowHead)"/>
-                <text x="742" y="42" class="structSubLabel">CARGA MUERTA</text>
-              </g>
-              <g id="loadSeismic" data-kind="load">
-                <line x1="810" y1="300" x2="728" y2="300" stroke="rgba(231,240,251,.75)" stroke-width="6" stroke-linecap="round" style="color:rgba(231,240,251,.75)" marker-end="url(#arrowHead)"/>
-                <text x="736" y="292" class="structSubLabel">CARGA SÍSMICA</text>
-              </g>
-
-              <!-- PÓRTICO PREVIO (para Antes/Después) -->
-              <g id="prevOverlay" opacity="0"></g>
-
-              <!-- CIMENTACIÓN VISUAL (solo como fondo, no cambia geometría del pórtico) -->
-              <rect id="baseCritFill" x="132" y="314" width="600" height="32" rx="16" fill="rgba(0,0,0,0)" opacity="0"></rect>
-
-              <!-- PÓRTICO ACTUAL (L estructural) -->
-              <path id="elCimiento" data-kind="element" data-axis="comunion"
-                    d="M140 330 L720 330"
-                    stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
-              <path id="elColumna" data-kind="element" data-axis="congregacion"
-                    d="M200 330 L200 110"
-                    stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
-              <path id="elViga" data-kind="element" data-axis="interseccion"
-                    d="M200 110 L720 110"
-                    stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
-
-              <!-- Etiquetas estructurales (reglas: solo un text para CIMIENTO y solo un text para COMUNIÓN) -->
-              <text x="140" y="368" class="structLabel">CIMIENTO</text>
-
-              <!-- Nudos -->
-              <g id="nodeComunion" data-kind="node" data-axis="comunion" style="cursor:pointer">
-                <circle id="haloComunion" class="nodeRing" cx="200" cy="330" r="22" stroke="var(--accent)"></circle>
-                <circle class="nodeCircle" cx="200" cy="330" r="14"></circle>
-                <text x="200" y="386" text-anchor="middle" class="nodeLabel">COMUNIÓN</text>
-              </g>
-
-              <g id="nodeCongregacion" data-kind="node" data-axis="congregacion" style="cursor:pointer">
-                <circle id="haloCongregacion" class="nodeRing" cx="200" cy="110" r="22" stroke="var(--accent)"></circle>
-                <circle class="nodeCircle" cx="200" cy="110" r="14"></circle>
-                <text x="200" y="86" text-anchor="middle" class="nodeLabel">CONGREGACIÓN</text>
-              </g>
-
-              <g id="nodeInterseccion" data-kind="node" data-axis="interseccion" style="cursor:pointer">
-                <circle id="haloInterseccion" class="nodeRing" cx="720" cy="110" r="22" stroke="var(--accent)"></circle>
-                <circle class="nodeCircle" cx="720" cy="110" r="14"></circle>
-                <text x="720" y="86" text-anchor="middle" class="nodeLabel">INTERSECCIÓN</text>
-              </g>
-
-              <!-- Sub-etiquetas discretas -->
-              <text x="248" y="325" class="structSubLabel">BASE / CRISTO</text>
-              <text x="218" y="170" class="structSubLabel">COLUMNA / VARÓN</text>
-              <text x="420" y="100" class="structSubLabel">VIGA / MUJER</text>
-
-              <!-- Leyenda (para PDF/PNG y referencia visual) -->
-              <g id="legendBlock" opacity="1">
-                <rect x="520" y="220" width="320" height="150" rx="16" fill="rgba(15,22,32,.72)" stroke="rgba(34,50,70,.8)"/>
-                <text x="540" y="246" class="structSubLabel" style="font-weight:950; fill:rgba(231,240,251,.92)">EJES DEL PÓRTICO</text>
-
-                <circle cx="540" cy="272" r="6" fill="var(--good)"></circle>
-                <text id="lgCom" x="554" y="277" class="structSubLabel" style="fill:rgba(231,240,251,.92)">COMUNIÓN: —</text>
-
-                <circle cx="540" cy="300" r="6" fill="var(--warn)"></circle>
-                <text id="lgCon" x="554" y="305" class="structSubLabel" style="fill:rgba(231,240,251,.92)">CONGREGACIÓN: —</text>
-
-                <circle cx="540" cy="328" r="6" fill="var(--risk)"></circle>
-                <text id="lgInt" x="554" y="333" class="structSubLabel" style="fill:rgba(231,240,251,.92)">INTERSECCIÓN: —</text>
-
-                <text id="lgFooter" x="540" y="360" class="structSubLabel" style="fill:rgba(138,160,181,.92)">Diagrama del pórtico — —</text>
-              </g>
-            </svg>
-          </div>
+          <div class="pill" id="pillBeforeAfter"></div>
         </div>
 
-        <div class="card" id="cardResults">
-          <div class="cardHead">
-            <div>
-              <h2>Resultados</h2>
-              <div class="hint" id="resultHint">Aparecerán cuando completes el test y presiones “Ver resultado”.</div>
+        <div class="svgWrap" id="svgWrap">
+          <div class="svgTop">
+            <div class="pill" id="pillAxis"></div>
+            <div class="legend">
+              <span class="sw live"><i></i><span id="lblLive"></span></span>
+              <span class="sw dead"><i></i><span id="lblDead"></span></span>
+              <span class="sw seis"><i></i><span id="lblSeis"></span></span>
             </div>
-            <div class="pills" id="resultPills"></div>
           </div>
-          <div class="cardBody" id="resultsRoot">
-            <div class="muted">Completa el test para ver diagnóstico global, ejes, tensiones y plan de enfoque.</div>
+
+          <div class="tooltip" id="tooltip">
+            <div class="t" id="ttTitle"></div>
+            <div class="b" id="ttBody"></div>
           </div>
+
+          <!-- REAL SVG Pórtico -->
+          <svg id="portico" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="">
+            <defs>
+              <linearGradient id="gPanel" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="rgba(255,255,255,.06)"/>
+                <stop offset="1" stop-color="rgba(255,255,255,.02)"/>
+              </linearGradient>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+              </marker>
+            </defs>
+
+            <!-- Frame background -->
+            <rect x="18" y="18" width="864" height="524" rx="22" fill="url(#gPanel)" stroke="rgba(255,255,255,.08)"/>
+
+            <!-- Ground line -->
+            <path d="M 80 460 H 820" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
+
+            <!-- CIMIENTO -->
+            <g class="part" data-part="cimiento">
+              <rect x="130" y="420" width="640" height="70" rx="18" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.10)" stroke-width="2"/>
+              <path d="M 150 450 H 750" stroke="rgba(255,255,255,.08)" stroke-width="2" stroke-dasharray="6 8"/>
+              <circle class="node" data-node="nudo-izq-cimiento" cx="220" cy="455" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+              <circle class="node" data-node="nudo-der-cimiento" cx="680" cy="455" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+            </g>
+
+            <!-- COLUMNA -->
+            <g class="part" data-part="columna">
+              <rect x="220" y="180" width="56" height="240" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.11)" stroke-width="2"/>
+              <circle class="node" data-node="nudo-columna-base" cx="248" cy="420" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+              <circle class="node" data-node="nudo-columna-cabeza" cx="248" cy="180" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+            </g>
+
+            <!-- VIGA -->
+            <g class="part" data-part="viga">
+              <rect x="248" y="150" width="470" height="56" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.11)" stroke-width="2"/>
+              <circle class="node" data-node="nudo-viga-izq" cx="248" cy="178" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+              <circle class="node" data-node="nudo-viga-der" cx="718" cy="178" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+            </g>
+
+            <!-- Apoyo móvil (representado como rodillo) -->
+            <g class="part" data-part="apoyo">
+              <path d="M 705 206 L 731 206 L 718 228 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+              <circle cx="710" cy="235" r="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+              <circle cx="726" cy="235" r="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
+            </g>
+
+            <!-- Flechas de carga -->
+            <g class="loadArrow live" data-load="viva" style="color: var(--good);">
+              <path d="M 360 105 V 142" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
+              <path d="M 520 105 V 142" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
+            </g>
+            <g class="loadArrow dead" data-load="muerta" style="color: var(--crit);">
+              <path d="M 440 105 V 142" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
+            </g>
+            <g class="loadArrow seis" data-load="sismica" style="color: #9aa6b2;">
+              <path d="M 140 360 H 205" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
+              <path d="M 140 340 H 205" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
+            </g>
+
+            <!-- Etiquetas (vacías; se llenan desde JSON para cumplir regla de texto) -->
+            <g font-family="var(--sans)" font-size="13" fill="rgba(230,238,252,.90)">
+              <text id="svgLabelCimiento" x="160" y="445"></text>
+              <text id="svgLabelColumna" x="220" y="168"></text>
+              <text id="svgLabelViga" x="248" y="140"></text>
+              <text id="svgLabelApoyo" x="660" y="260"></text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="box">
+          <h3 id="hdrSteps"></h3>
+          <div class="muted" id="stepsIntro"></div>
+          <ol class="list" id="steps"></ol>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="box">
+          <h3 id="hdrAxes"></h3>
+          <table class="table" id="axesTable" aria-label="">
+            <thead>
+              <tr>
+                <th id="thAxis"></th>
+                <th id="thScore"></th>
+                <th id="thBand"></th>
+              </tr>
+            </thead>
+            <tbody id="axesBody"></tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal contextual -->
-  <div class="modalBackdrop" id="modalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modalHead">
+  <!-- Modal -->
+  <div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="">
+    <div class="modal">
+      <div class="modalHeader">
         <div>
-          <div class="h" id="modalTitle">Panel</div>
-          <div class="k" id="modalSubtitle"></div>
+          <h3 class="modalTitle" id="modalTitle"></h3>
+          <div class="muted" id="modalSub"></div>
         </div>
-        <div class="modalClose" id="modalClose">Cerrar</div>
+        <button class="btn secondary" id="btnCloseModal" type="button">
+          <span id="lblClose"></span>
+          <span aria-hidden="true">✕</span>
+        </button>
       </div>
+
       <div class="modalBody">
-        <div class="verse" id="modalVerse"></div>
-        <div class="teaching" id="modalTeaching"></div>
-        <div class="k">Acciones prácticas sugeridas</div>
-        <ul id="modalActions"></ul>
+        <div class="box">
+          <h3 id="hdrTeaching"></h3>
+          <p id="modalTeaching"></p>
+          <div class="divider"></div>
+          <h3 id="hdrVerse"></h3>
+          <p id="modalVerse"></p>
+        </div>
+        <div class="box">
+          <h3 id="hdrActions"></h3>
+          <ul class="list" id="modalActions"></ul>
+          <div class="divider"></div>
+          <div class="muted" id="modalNote"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // =========================
-    // CONFIG
-    // =========================
-    const JSON_PATH = "./viga-mujer.json";
-    const STORAGE_KEY_LAST = "viga-mujer:lastResult";
-    const STORAGE_KEY_PREV = "viga-mujer:prevResult";
-    const STORAGE_KEY_PROFILE = "viga-mujer:profile"; // {paciente, auditor}
+    (function(){
+      "use strict";
 
-    // =========================
-    // STATE
-    // =========================
-    let DATA = null;
-    let ANSWERS = {}; // questionId -> score (0..5)
-    let LAST_RESULT = null;
-    let GUIDED = { on:false, step:0, timer:null };
+      const JSON_PATH = "viga-mujer.json";
+      const LS_KEY = "audit:viga-mujer";
 
-    // =========================
-    // DOM
-    // =========================
-    const appTitle = document.getElementById("appTitle");
-    const appSub = document.getElementById("appSub");
-    const metaPills = document.getElementById("metaPills");
-    const sectionsRoot = document.getElementById("sectionsRoot");
-    const loadingState = document.getElementById("loadingState");
+      const $ = (id)=>document.getElementById(id);
+      const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
+      const fmt1 = (n)=> (Math.round(n*10)/10).toFixed(1);
+      const safeText = (v)=> (v==null ? "" : String(v));
 
-    const btnShowResult = document.getElementById("btnShowResult");
-    const btnDownloadTxt = document.getElementById("btnDownloadTxt");
-    const btnDownloadPdf = document.getElementById("btnDownloadPdf");
-    const btnDownloadPng = document.getElementById("btnDownloadPng");
-    const btnReset = document.getElementById("btnReset");
-    const btnGuided = document.getElementById("btnGuided");
+      let data = null;
+      let state = { answers: {} }; // qid -> 0..5 (null => unanswered)
+      let lastSaved = null;
 
-    const resultsRoot = document.getElementById("resultsRoot");
-    const resultPills = document.getElementById("resultPills");
-    const resultHint = document.getElementById("resultHint");
+      const ui = {
+        title: $("appTitle"),
+        subtitle: $("appSubtitle"),
+        labels: {
+          save: $("lblSave"),
+          reset: $("lblReset"),
+          pdf: $("lblPdf"),
+          png: $("lblPng"),
+          txt: $("lblTxt"),
+          clear: $("lblClear"),
+          close: $("lblClose"),
+          live: $("lblLive"),
+          dead: $("lblDead"),
+          seis: $("lblSeis"),
+        },
+        headers: {
+          assessment: $("hdrAssessment"),
+          assessmentSub: $("hdrAssessmentSub"),
+          portico: $("hdrPortico"),
+          porticoSub: $("hdrPorticoSub"),
+          steps: $("hdrSteps"),
+          stepsIntro: $("stepsIntro"),
+          axes: $("hdrAxes"),
+          teaching: $("hdrTeaching"),
+          verse: $("hdrVerse"),
+          actions: $("hdrActions"),
+        },
+        pills: {
+          global: $("pillGlobal"),
+          axis: $("pillAxis"),
+          beforeAfter: $("pillBeforeAfter"),
+        },
+        kpis: {
+          gLabel: $("kpiGlobalLabel"),
+          gValue: $("kpiGlobalValue"),
+          gHint: $("kpiGlobalHint"),
+          aLabel: $("kpiAxisLabel"),
+          aValue: $("kpiAxisValue"),
+          aHint: $("kpiAxisHint"),
+          sLabel: $("kpiSectionsLabel"),
+          sValue: $("kpiSectionsValue"),
+          sHint: $("kpiSectionsHint"),
+        },
+        band: {
+          el: $("globalBand"),
+          title: $("bandTitle"),
+          score: $("bandScore"),
+        },
+        sections: $("sections"),
+        axes: {
+          table: $("axesTable"),
+          body: $("axesBody"),
+          thAxis: $("thAxis"),
+          thScore: $("thScore"),
+          thBand: $("thBand"),
+        },
+        tooltip: {
+          box: $("tooltip"),
+          t: $("ttTitle"),
+          b: $("ttBody"),
+        },
+        svg: {
+          wrap: $("svgWrap"),
+          root: $("portico"),
+          labelC: $("svgLabelCimiento"),
+          labelCol: $("svgLabelColumna"),
+          labelV: $("svgLabelViga"),
+          labelA: $("svgLabelApoyo"),
+        },
+        steps: $("steps"),
+        modal: {
+          back: $("modalBackdrop"),
+          title: $("modalTitle"),
+          sub: $("modalSub"),
+          teaching: $("modalTeaching"),
+          verse: $("modalVerse"),
+          actions: $("modalActions"),
+          note: $("modalNote"),
+        },
+        btns: {
+          save: $("btnSave"),
+          reset: $("btnReset"),
+          pdf: $("btnPdf"),
+          png: $("btnPng"),
+          txt: $("btnTxt"),
+          clear: $("btnClearAll"),
+          closeModal: $("btnCloseModal"),
+        },
+      };
 
-    const tooltip = document.getElementById("tooltip");
-    const porticoSvg = document.getElementById("porticoSvg");
-
-    const elCimiento = document.getElementById("elCimiento");
-    const elColumna = document.getElementById("elColumna");
-    const elViga = document.getElementById("elViga");
-
-    const nodeComunion = document.getElementById("nodeComunion");
-    const nodeCongregacion = document.getElementById("nodeCongregacion");
-    const nodeInterseccion = document.getElementById("nodeInterseccion");
-
-    const haloComunion = document.getElementById("haloComunion");
-    const haloCongregacion = document.getElementById("haloCongregacion");
-    const haloInterseccion = document.getElementById("haloInterseccion");
-
-    const prevOverlay = document.getElementById("prevOverlay");
-
-    const modalBackdrop = document.getElementById("modalBackdrop");
-    const modalClose = document.getElementById("modalClose");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalSubtitle = document.getElementById("modalSubtitle");
-    const modalVerse = document.getElementById("modalVerse");
-    const modalTeaching = document.getElementById("modalTeaching");
-    const modalActions = document.getElementById("modalActions");
-
-    const baseCritFill = document.getElementById("baseCritFill");
-    const lgCom = document.getElementById("lgCom");
-    const lgCon = document.getElementById("lgCon");
-    const lgInt = document.getElementById("lgInt");
-    const lgFooter = document.getElementById("lgFooter");
-
-    // =========================
-    // HELPERS
-    // =========================
-    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-    function nowISO(){ return new Date().toISOString().slice(0,10); }
-    function fmtDateLong(){
-      const d = new Date();
-      const opts = {year:"numeric", month:"long", day:"2-digit"};
-      return d.toLocaleDateString("es-ES", opts);
-    }
-    function safeText(s){ return (s ?? "").toString(); }
-    function avg(arr){
-      if(!arr.length) return 0;
-      return arr.reduce((a,b)=>a+b,0)/arr.length;
-    }
-    function percentFromAvg(a){ return Math.round((clamp(a,0,5)/5)*100); }
-    function bandByPercent(pct){
-      const bands = DATA?.rubrics?.globalBands || [];
-      for(const b of bands){
-        if(pct >= b.minPercent && pct <= b.maxPercent) return b;
+      function bandForScore(avg){
+        // 0..5 where 5 is best alignment.
+        const b = data?.rubrics?.globalBands || [];
+        // Expect bands with min/max inclusive; pick match. Fallback thresholds.
+        for(const band of b){
+          if(typeof band?.min==="number" && typeof band?.max==="number"){
+            if(avg>=band.min && avg<=band.max) return band;
+          }
+        }
+        // fallback
+        if(avg>=4.2) return {key:"aligned", label:"", css:"aligned"};
+        if(avg>=3.2) return {key:"adjust", label:"", css:"adjust"};
+        if(avg>=2.0) return {key:"risk", label:"", css:"risk"};
+        return {key:"critical", label:"", css:"critical"};
       }
-      return bands[bands.length-1] || {key:"critical", label:"🔴 Crítico"};
-    }
-    function bandByAvg(a){
-      const bands = DATA?.rubrics?.sectionBands || [];
-      for(const b of bands){
-        if(a >= b.minAvg && a <= b.maxAvg) return b;
+
+      function sectionBandForScore(avg){
+        const b = data?.rubrics?.sectionBands || [];
+        for(const band of b){
+          if(typeof band?.min==="number" && typeof band?.max==="number"){
+            if(avg>=band.min && avg<=band.max) return band;
+          }
+        }
+        return bandForScore(avg);
       }
-      return bands[bands.length-1] || {key:"critical", label:"🔴 Crítico"};
-    }
-    function badgeClass(key){
-      if(key==="aligned") return "good";
-      if(key==="adjust") return "warn";
-      if(key==="risk") return "risk";
-      return "crit";
-    }
-    function axisColorKey(key){
-      if(key==="comunion") return "--good";
-      if(key==="congregacion") return "--warn";
-      return "--risk";
-    }
-    function getAxisInfo(axisKey){
-      return DATA?.porticoModel?.axes?.[axisKey] || null;
-    }
-    function getManualForSection(sectionId){
-      return (DATA?.pastoralManual || []).find(m => m.sectionId === sectionId) || null;
-    }
-    function getManualForAxis(axisKey){
-      const sections = (DATA?.sections || []).filter(s => s.axis === axisKey);
-      const first = sections.sort((a,b)=>a.order-b.order)[0];
-      if(!first) return null;
-      return getManualForSection(first.id);
-    }
-    function downloadBlob(name, content, mime){
-      const blob = new Blob([content], {type:mime});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
-    }
 
-    function getProfile(){
-      const qp = new URLSearchParams(location.search);
-      const qpPaciente = qp.get("paciente");
-      const qpAuditor = qp.get("auditor");
-      if(qpPaciente || qpAuditor){
-        const p = {paciente: qpPaciente || "", auditor: qpAuditor || ""};
-        localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(p));
-        return p;
+      function getUi(path, fallback=""){
+        // meta.ui.* is optional; avoid visible fixed text if absent
+        const parts = path.split(".");
+        let cur = data?.meta?.ui;
+        for(const p of parts){
+          if(!cur || typeof cur!=="object") return fallback;
+          cur = cur[p];
+        }
+        return safeText(cur ?? fallback);
       }
-      try{
-        const s = localStorage.getItem(STORAGE_KEY_PROFILE);
-        return s ? JSON.parse(s) : {paciente:"", auditor:""};
-      }catch(_){
-        return {paciente:"", auditor:""};
+
+      function loadLocal(){
+        try{
+          const raw = localStorage.getItem(LS_KEY);
+          if(!raw) return null;
+          return JSON.parse(raw);
+        }catch(e){ return null; }
       }
-    }
 
-    function fmtBandTextForPdf(bandKey){
-      if(bandKey==="aligned") return "Alineado";
-      if(bandKey==="adjust") return "Ajuste";
-      if(bandKey==="risk") return "En riesgo";
-      return "Crítico";
-    }
-
-    // =========================
-    // LOAD DATA
-    // =========================
-    async function init(){
-      const res = await fetch(JSON_PATH, {cache:"no-store"});
-      DATA = await res.json();
-
-      if(!DATA?.sections?.length) throw new Error("JSON inválido: no sections");
-      if((DATA.pastoralManual||[]).length !== (DATA.sections||[]).length) throw new Error("JSON inválido: pastoralManual no coincide 1:1");
-
-      appTitle.textContent = safeText(DATA.meta?.title || "Auditoría");
-      appSub.textContent = `${safeText(DATA.meta?.chapterRef || "")} • escala ${DATA.scale?.min ?? 0}–${DATA.scale?.max ?? 5} • ${safeText(DATA.meta?.fileName || "")}`;
-
-      renderMeta();
-      renderSections();
-      hydratePrevOverlayFromStorage();
-      wirePorticoInteractivity();
-      wireButtons();
-
-      loadingState?.remove?.();
-      updateButtonsState();
-      updatePorticoVisual(null);
-      updateLegend(null);
-    }
-
-    function renderMeta(){
-      metaPills.innerHTML = "";
-      const profile = getProfile();
-      const pills = [
-        {k:"Archivo", v: DATA.meta?.fileName},
-        {k:"Versión", v: DATA.meta?.version},
-        {k:"Fecha", v: DATA.meta?.createdAt},
-        {k:"Capítulo", v: DATA.meta?.chapterRef},
-        {k:"Paciente", v: profile.paciente || "—"},
-        {k:"Auditor", v: profile.auditor || "—"}
-      ];
-      for(const p of pills){
-        const el = document.createElement("div");
-        el.className = "pill";
-        el.innerHTML = `<span class="muted">${safeText(p.k)}:</span> <b>${safeText(p.v)}</b>`;
-        metaPills.appendChild(el);
+      function saveLocal(payload){
+        localStorage.setItem(LS_KEY, JSON.stringify(payload));
       }
-    }
 
-    function renderSections(){
-      sectionsRoot.innerHTML = "";
-      const sections = (DATA.sections || []).slice().sort((a,b)=>a.order-b.order);
+      function clearLocal(){
+        localStorage.removeItem(LS_KEY);
+      }
 
-      for(const sec of sections){
-        const block = document.createElement("div");
-        block.className = "sec";
-        block.id = `sec_${sec.id}`;
+      function hydrateFromSaved(saved){
+        if(!saved) return;
+        if(saved.answers && typeof saved.answers==="object"){
+          state.answers = saved.answers;
+        }
+      }
 
-        const axisInfo = getAxisInfo(sec.axis);
-        const top = document.createElement("div");
-        top.className = "secTop";
-        top.innerHTML = `
-          <div>
-            <h3>${sec.order}. ${safeText(sec.title)}</h3>
-            <div class="metaLine">Eje: <b>${safeText(axisInfo?.label || sec.axis)}</b> • Elemento: <b>${safeText(axisInfo?.element || "")}</b></div>
-          </div>
-          <div class="pill"><span class="muted">Estado:</span> <b id="band_${sec.id}">—</b></div>
-        `;
+      function compute(){
+        const sections = data.sections || [];
+        const axes = (data.porticoModel && data.porticoModel.axes) ? data.porticoModel.axes : [];
+        const qMax = (data.scale && data.scale.options ? Math.max(...data.scale.options.map(o=>o.value)) : 5) || 5;
 
-        const intro = document.createElement("div");
-        intro.className = "mini";
-        intro.textContent = safeText(sec.intro || "");
+        // Per section
+        const sectionScores = sections.map(sec=>{
+          const qs = sec.questions || [];
+          let sum=0, cnt=0;
+          for(const q of qs){
+            const v = state.answers[q.id];
+            if(v==null || v==="") continue;
+            sum += Number(v);
+            cnt += 1;
+          }
+          const avg = cnt ? sum/cnt : 0;
+          const pct = (avg / qMax) * 100;
+          return { id: sec.id, title: sec.title, avg, pct, cnt, total: qs.length, porticoAxis: sec.porticoAxis };
+        });
 
-        const verse = document.createElement("div");
-        verse.className = "verse";
-        verse.textContent = safeText(sec.verse || "");
+        // Per axis (aggregate across sections that map to axis)
+        const axisScores = axes.map(ax=>{
+          const rel = sectionScores.filter(s=>s.porticoAxis===ax.id);
+          let sum=0, cnt=0, totalQ=0;
+          for(const s of rel){
+            const sec = sections.find(x=>x.id===s.id);
+            const qs = sec?.questions || [];
+            totalQ += qs.length;
+            // Weighted by answered questions in section
+            if(s.cnt){
+              sum += s.avg * s.cnt;
+              cnt += s.cnt;
+            }
+          }
+          const avg = cnt ? sum/cnt : 0;
+          const pct = (avg / qMax) * 100;
+          return { id: ax.id, title: ax.title, avg, pct, answered: cnt, totalQ };
+        });
 
-        block.appendChild(top);
-        block.appendChild(intro);
-        block.appendChild(verse);
+        // Global (all answered questions)
+        let gSum=0, gCnt=0, gTotal=0;
+        for(const sec of sections){
+          for(const q of (sec.questions||[])){
+            gTotal++;
+            const v = state.answers[q.id];
+            if(v==null || v==="") continue;
+            gSum += Number(v);
+            gCnt++;
+          }
+        }
+        const gAvg = gCnt ? gSum/gCnt : 0;
+        const gPct = (gAvg / qMax) * 100;
 
-        for(const q of (sec.questions||[])){
-          const qEl = document.createElement("div");
-          qEl.className = "q";
-          qEl.id = `q_${q.id}`;
+        return { sectionScores, axisScores, global: { avg: gAvg, pct: gPct, answered: gCnt, totalQ: gTotal } };
+      }
 
-          const text = document.createElement("div");
-          text.className = "qText";
-          text.textContent = safeText(q.text);
+      function renderTop(){
+        document.title = safeText(data?.meta?.title || "");
+        ui.title.textContent = safeText(data?.meta?.title || "");
+        ui.subtitle.textContent = safeText(data?.meta?.subtitle || "");
 
-          const obs = document.createElement("div");
-          obs.className = "qObs";
-          obs.textContent = safeText(q.observable);
+        ui.labels.save.textContent = getUi("buttons.save", "");
+        ui.labels.reset.textContent = getUi("buttons.reset", "");
+        ui.labels.pdf.textContent = getUi("buttons.pdf", "");
+        ui.labels.png.textContent = getUi("buttons.png", "");
+        ui.labels.txt.textContent = getUi("buttons.txt", "");
+        ui.labels.clear.textContent = getUi("buttons.clear", "");
+        ui.labels.close.textContent = getUi("buttons.close", "");
 
-          const row = document.createElement("div");
-          row.className = "scaleRow";
-          row.setAttribute("role","group");
-          row.setAttribute("aria-label", `Puntaje para ${q.id}`);
+        ui.headers.assessment.textContent = getUi("headers.assessment", "");
+        ui.headers.assessmentSub.textContent = safeText(data?.meta?.description || "");
 
-          for(let v=DATA.scale.min; v<=DATA.scale.max; v++){
-            const p = document.createElement("div");
-            p.className = "scorePill";
-            p.textContent = v;
-            p.dataset.qid = q.id;
-            p.dataset.val = String(v);
-            p.tabIndex = 0;
-            p.addEventListener("click", ()=> setAnswer(q.id, v));
-            p.addEventListener("keydown", (e)=>{
-              if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setAnswer(q.id, v); }
-            });
-            row.appendChild(p);
+        ui.headers.portico.textContent = getUi("headers.portico", "");
+        ui.headers.porticoSub.textContent = getUi("headers.porticoSub", "");
+
+        ui.headers.steps.textContent = getUi("headers.steps", "");
+        ui.headers.stepsIntro.textContent = getUi("headers.stepsIntro", "");
+
+        ui.headers.axes.textContent = getUi("headers.axes", "");
+
+        ui.headers.teaching.textContent = getUi("headers.teaching", "");
+        ui.headers.verse.textContent = getUi("headers.verse", "");
+        ui.headers.actions.textContent = getUi("headers.actions", "");
+
+        ui.kpis.gLabel.textContent = getUi("kpis.globalLabel", "");
+        ui.kpis.gHint.textContent = getUi("kpis.globalHint", "");
+        ui.kpis.aLabel.textContent = getUi("kpis.axisLabel", "");
+        ui.kpis.aHint.textContent = getUi("kpis.axisHint", "");
+        ui.kpis.sLabel.textContent = getUi("kpis.sectionsLabel", "");
+        ui.kpis.sHint.textContent = getUi("kpis.sectionsHint", "");
+
+        ui.axes.thAxis.textContent = getUi("tables.axis", "");
+        ui.axes.thScore.textContent = getUi("tables.score", "");
+        ui.axes.thBand.textContent = getUi("tables.band", "");
+        ui.axes.table.setAttribute("aria-label", getUi("tables.axisAria", ""));
+
+        ui.svg.root.setAttribute("aria-label", getUi("svg.aria", ""));
+        ui.modal.back.setAttribute("aria-label", getUi("modal.aria", ""));
+
+        ui.labels.live.textContent = getUi("legend.live", "");
+        ui.labels.dead.textContent = getUi("legend.dead", "");
+        ui.labels.seis.textContent = getUi("legend.seismic", "");
+
+        ui.svg.labelC.textContent = getUi("svg.labels.cimiento", "");
+        ui.svg.labelCol.textContent = getUi("svg.labels.columna", "");
+        ui.svg.labelV.textContent = getUi("svg.labels.viga", "");
+        ui.svg.labelA.textContent = getUi("svg.labels.apoyo", "");
+      }
+
+      function makeDots(qid, current){
+        const opts = (data.scale && data.scale.options) ? data.scale.options : [
+          {value:0,label:"0"},{value:1,label:"1"},{value:2,label:"2"},{value:3,label:"3"},{value:4,label:"4"},{value:5,label:"5"}
+        ];
+        const wrap = document.createElement("div");
+        wrap.className = "scale";
+        for(const o of opts){
+          const b = document.createElement("button");
+          b.type="button";
+          b.className = "dot" + (Number(current)===Number(o.value) ? " active" : "");
+          b.textContent = safeText(o.value);
+          b.addEventListener("click", ()=>{
+            state.answers[qid] = Number(o.value);
+            renderAll();
+          });
+          wrap.appendChild(b);
+        }
+        return wrap;
+      }
+
+      function renderSections(computed){
+        ui.sections.innerHTML = "";
+        const sections = data.sections || [];
+        const secScoreMap = new Map(computed.sectionScores.map(s=>[s.id,s]));
+
+        let idx = 0;
+        for(const sec of sections){
+          idx++;
+          const det = document.createElement("details");
+          det.className = "sec";
+          det.dataset.sec = sec.id;
+
+          const sum = document.createElement("summary");
+          sum.className = "secSum";
+
+          const left = document.createElement("div");
+          left.className = "secLeft";
+
+          const boxIdx = document.createElement("div");
+          boxIdx.className = "secIdx";
+          boxIdx.textContent = String(idx);
+
+          const titles = document.createElement("div");
+          titles.className = "secTitles";
+          const t = document.createElement("div");
+          t.className = "t";
+          t.textContent = safeText(sec.title || "");
+          const s = document.createElement("div");
+          s.className = "s";
+          s.textContent = safeText(sec.subtitle || "");
+          titles.appendChild(t);
+          titles.appendChild(s);
+
+          left.appendChild(boxIdx);
+          left.appendChild(titles);
+
+          const right = document.createElement("div");
+          right.className = "secRight";
+
+          const score = secScoreMap.get(sec.id) || {avg:0,cnt:0,total:(sec.questions||[]).length};
+          const band = sectionBandForScore(score.avg);
+
+          const mini = document.createElement("div");
+          mini.className = "miniScore";
+          mini.textContent = `${fmt1(score.avg)} / 5  ·  ${score.cnt}/${score.total}`;
+
+          const miniBand = document.createElement("div");
+          miniBand.className = "miniScore";
+          miniBand.textContent = safeText(band?.label || "");
+
+          right.appendChild(mini);
+          right.appendChild(miniBand);
+
+          sum.appendChild(left);
+          sum.appendChild(right);
+
+          const body = document.createElement("div");
+          body.className = "secBody";
+
+          const meta = document.createElement("div");
+          meta.className = "secMeta";
+
+          const tag1 = document.createElement("div");
+          tag1.className = "tag";
+          tag1.innerHTML = `<span class="k">${safeText(getUi("labels.diagnosticFocus",""))}</span><span class="v">${safeText(sec.diagnosticFocus||"")}</span>`;
+
+          const tag2 = document.createElement("div");
+          tag2.className = "tag";
+          tag2.innerHTML = `<span class="k">${safeText(getUi("labels.porticoAxis",""))}</span><span class="v">${safeText(axisTitle(sec.porticoAxis))}</span>`;
+
+          const tag3 = document.createElement("div");
+          tag3.className = "tag";
+          tag3.innerHTML = `<span class="k">${safeText(getUi("labels.sectionVerse",""))}</span><span class="v">${safeText(sec.sectionVerse||"")}</span>`;
+
+          meta.appendChild(tag1);
+          meta.appendChild(tag2);
+          meta.appendChild(tag3);
+
+          const qList = document.createElement("div");
+          qList.className = "qList";
+
+          for(const q of (sec.questions||[])){
+            const qRow = document.createElement("div");
+            qRow.className = "q";
+
+            const qt = document.createElement("div");
+            qt.className = "qt";
+
+            const qId = document.createElement("div");
+            qId.className = "qId";
+            qId.textContent = safeText(q.id);
+
+            const qText = document.createElement("div");
+            qText.className = "qText";
+            qText.textContent = safeText(q.text);
+
+            qt.appendChild(qId);
+            qt.appendChild(qText);
+
+            const dots = makeDots(q.id, state.answers[q.id]);
+
+            qRow.appendChild(qt);
+            qRow.appendChild(dots);
+            qList.appendChild(qRow);
           }
 
-          qEl.appendChild(text);
-          qEl.appendChild(obs);
-          qEl.appendChild(row);
+          body.appendChild(meta);
+          body.appendChild(qList);
 
-          block.appendChild(qEl);
+          det.appendChild(sum);
+          det.appendChild(body);
+
+          // Click open modal from summary right side via double click
+          sum.addEventListener("dblclick", (e)=>{
+            e.preventDefault();
+            openModalForSection(sec.id);
+          });
+
+          ui.sections.appendChild(det);
+        }
+      }
+
+      function axisTitle(axisId){
+        const ax = (data.porticoModel?.axes || []).find(a=>a.id===axisId);
+        return ax ? safeText(ax.title) : safeText(axisId||"");
+      }
+
+      function renderAxesTable(computed){
+        ui.axes.body.innerHTML = "";
+        for(const ax of computed.axisScores){
+          const tr = document.createElement("tr");
+          const tdA = document.createElement("td");
+          tdA.textContent = safeText(ax.title || ax.id);
+          const tdS = document.createElement("td");
+          tdS.className = "mono";
+          tdS.textContent = `${fmt1(ax.avg)} / 5  ·  ${ax.answered}/${ax.totalQ}`;
+          const band = bandForScore(ax.avg);
+          const tdB = document.createElement("td");
+          tdB.textContent = safeText(band?.label || "");
+          tr.appendChild(tdA);
+          tr.appendChild(tdS);
+          tr.appendChild(tdB);
+          ui.axes.body.appendChild(tr);
+        }
+      }
+
+      function renderGlobal(computed){
+        const g = computed.global;
+
+        ui.kpis.gValue.textContent = `${fmt1(g.avg)} / 5`;
+        ui.kpis.aValue.textContent = computed.axisScores.length ? `${fmt1(avgOf(computed.axisScores.map(a=>a.avg)))} / 5` : `—`;
+        ui.kpis.sValue.textContent = computed.sectionScores.length ? `${fmt1(avgOf(computed.sectionScores.map(s=>s.avg)))} / 5` : `—`;
+
+        const band = bandForScore(g.avg);
+        ui.band.el.className = `band ${band.css || band.key || "aligned"}`;
+        ui.band.title.textContent = safeText(band.label || "");
+        ui.band.score.textContent = `${fmt1(g.avg)} / 5  ·  ${g.answered}/${g.totalQ}`;
+
+        ui.pills.global.textContent = safeText(getUi("pills.global","")) || safeText(band.label || "");
+        ui.pills.axis.textContent = safeText(getUi("pills.axis",""));
+      }
+
+      function avgOf(arr){
+        if(!arr.length) return 0;
+        let s=0; for(const n of arr) s += Number(n)||0;
+        return s/arr.length;
+      }
+
+      function renderBeforeAfter(computed){
+        const current = computed.global.avg;
+        const prev = lastSaved?.computed?.global?.avg;
+
+        const label = safeText(getUi("pills.beforeAfter",""));
+        if(prev==null){
+          ui.pills.beforeAfter.textContent = label ? label : "";
+          return;
+        }
+        const delta = current - prev;
+        const sign = delta>0 ? "+" : "";
+        ui.pills.beforeAfter.textContent = `${label ? (label+" ") : ""}${fmt1(prev)} → ${fmt1(current)} (${sign}${fmt1(delta)})`;
+      }
+
+      function buildSteps(){
+        ui.steps.innerHTML = "";
+        // Derive steps purely from JSON content; prefer meta.ui.steps[] or fallback to axes + flow model
+        const steps = data?.meta?.ui?.steps;
+        const list = Array.isArray(steps) && steps.length ? steps : deriveStepsFromModel();
+        for(const s of list){
+          const li = document.createElement("li");
+          li.textContent = safeText(s);
+          ui.steps.appendChild(li);
+        }
+      }
+
+      function deriveStepsFromModel(){
+        const sections = data.sections || [];
+        const axes = data.porticoModel?.axes || [];
+        const byAxis = new Map();
+        for(const a of axes) byAxis.set(a.id, []);
+        for(const sec of sections){
+          if(!byAxis.has(sec.porticoAxis)) byAxis.set(sec.porticoAxis, []);
+          byAxis.get(sec.porticoAxis).push(sec);
+        }
+        const out = [];
+        // Use axis order to generate a guided reading path
+        for(const ax of axes){
+          const secs = byAxis.get(ax.id) || [];
+          const line = safeText(ax.title || ax.id) + (secs.length ? ": " + secs.map(s=>safeText(s.title)).filter(Boolean).join(" · ") : "");
+          out.push(line);
+        }
+        return out.filter(Boolean);
+      }
+
+      function hookSvg(){
+        const svg = ui.svg.root;
+        const wrap = ui.svg.wrap;
+
+        function showTooltip(x,y,title,body){
+          ui.tooltip.t.textContent = safeText(title);
+          ui.tooltip.b.textContent = safeText(body);
+          ui.tooltip.box.style.left = x + "px";
+          ui.tooltip.box.style.top = y + "px";
+          ui.tooltip.box.classList.add("show");
+        }
+        function hideTooltip(){
+          ui.tooltip.box.classList.remove("show");
         }
 
-        sectionsRoot.appendChild(block);
-      }
-    }
+        function tipForTarget(t){
+          const part = t.closest("[data-part]");
+          const node = t.closest("[data-node]");
+          const load = t.closest("[data-load]");
 
-    function setAnswer(qid, val){
-      ANSWERS[qid] = clamp(val, 0, 5);
-      const qWrap = document.getElementById(`q_${qid}`);
-      if(qWrap){
-        qWrap.querySelectorAll(".scorePill").forEach(el=>{
-          el.classList.toggle("on", Number(el.dataset.val) === ANSWERS[qid]);
+          if(load){
+            const k = load.getAttribute("data-load");
+            const title = getUi(`svg.tooltips.loads.${k}.title`, "");
+            const body  = getUi(`svg.tooltips.loads.${k}.body`, "");
+            return {title, body, clickKey: `load:${k}`};
+          }
+          if(node){
+            const k = node.getAttribute("data-node");
+            const title = getUi(`svg.tooltips.nodes.${k}.title`, "");
+            const body  = getUi(`svg.tooltips.nodes.${k}.body`, "");
+            return {title, body, clickKey: `node:${k}`};
+          }
+          if(part){
+            const k = part.getAttribute("data-part");
+            const title = getUi(`svg.tooltips.parts.${k}.title`, "");
+            const body  = getUi(`svg.tooltips.parts.${k}.body`, "");
+            return {title, body, clickKey: `part:${k}`};
+          }
+          return null;
+        }
+
+        svg.addEventListener("mousemove", (e)=>{
+          const tip = tipForTarget(e.target);
+          if(!tip){ hideTooltip(); return; }
+          const r = wrap.getBoundingClientRect();
+          showTooltip(e.clientX - r.left, e.clientY - r.top, tip.title, tip.body);
         });
-      }
-      updateSectionBadgesLive();
-      updateButtonsState();
-    }
+        svg.addEventListener("mouseleave", hideTooltip);
 
-    function updateSectionBadgesLive(){
-      const sections = (DATA.sections || []).slice().sort((a,b)=>a.order-b.order);
-      for(const sec of sections){
-        const qids = (sec.questions||[]).map(q=>q.id);
-        const scores = qids.map(id => (id in ANSWERS) ? ANSWERS[id] : null).filter(v=>v!==null);
-        const el = document.getElementById(`band_${sec.id}`);
-        if(!el) continue;
-        if(scores.length === 0){
-          el.textContent = "—";
-          continue;
-        }
-        const a = avg(scores);
-        const b = bandByAvg(a);
-        el.textContent = `${b.label} (${a.toFixed(2)})`;
-      }
-    }
+        svg.addEventListener("click", (e)=>{
+          const tip = tipForTarget(e.target);
+          if(!tip) return;
 
-    function updateButtonsState(){
-      const totalQuestions = (DATA.sections||[]).reduce((n,s)=>n + (s.questions||[]).length, 0);
-      const answered = Object.keys(ANSWERS).length;
-      const complete = answered === totalQuestions;
-
-      btnShowResult.disabled = !complete;
-      const hasResult = !!LAST_RESULT;
-      btnDownloadTxt.disabled = !hasResult;
-      btnDownloadPdf.disabled = !hasResult;
-      btnDownloadPng.disabled = !hasResult;
-    }
-
-    // =========================
-    // SCORING & RESULTS
-    // =========================
-    function computeResults(){
-      const sections = (DATA.sections||[]).slice().sort((a,b)=>a.order-b.order);
-
-      const sectionResults = sections.map(sec=>{
-        const scores = (sec.questions||[]).map(q => ANSWERS[q.id] ?? null);
-        const filled = scores.filter(v=>v!==null);
-        const a = avg(filled);
-        const pct = percentFromAvg(a);
-        const band = bandByAvg(a);
-        return {
-          id: sec.id,
-          order: sec.order,
-          title: sec.title,
-          axis: sec.axis,
-          verse: sec.verse,
-          avg: Number(a.toFixed(3)),
-          percent: pct,
-          bandKey: band.key,
-          bandLabel: band.label,
-          bandSignal: band.signal
-        };
-      });
-
-      const byAxis = {comunion:[], congregacion:[], interseccion:[]};
-      sectionResults.forEach(r => byAxis[r.axis]?.push(r.avg));
-
-      const axisAverages = {};
-      const axisPercents = {};
-      const axisBands = {};
-      for(const k of Object.keys(byAxis)){
-        const a = avg(byAxis[k]);
-        axisAverages[k] = Number(a.toFixed(3));
-        axisPercents[k] = percentFromAvg(a);
-        axisBands[k] = bandByPercent(axisPercents[k]);
-      }
-
-      const globalAvg = avg(Object.values(axisAverages));
-      const globalPercent = percentFromAvg(globalAvg);
-      const globalBand = bandByPercent(globalPercent);
-
-      // top needs: lowest 3 sections
-      const needs = sectionResults.slice().sort((a,b)=>a.avg-b.avg).slice(0,3).map(s=>{
-        const manual = getManualForSection(s.id);
-        return {
-          sectionId: s.id,
-          title: s.title,
-          axis: s.axis,
-          bandLabel: s.bandLabel,
-          avg: s.avg,
-          percent: s.percent,
-          actions: (manual?.actions || []).slice(0,2),
-          keyVerse: manual?.keyVerse || s.verse || ""
-        };
-      });
-
-      return {
-        meta:{
-          fileName: DATA.meta?.fileName,
-          title: DATA.meta?.title,
-          createdAt: nowISO(),
-          createdAtLong: fmtDateLong()
-        },
-        totals:{
-          globalAvg: Number(globalAvg.toFixed(3)),
-          globalPercent,
-          globalBandKey: globalBand.key,
-          globalBandLabel: globalBand.label,
-          globalSummary: globalBand.summary,
-          pastoralTone: globalBand.pastoralTone
-        },
-        axes:{
-          comunion:{avg: axisAverages.comunion, percent: axisPercents.comunion, bandKey: axisBands.comunion.key, bandLabel: axisBands.comunion.label},
-          congregacion:{avg: axisAverages.congregacion, percent: axisPercents.congregacion, bandKey: axisBands.congregacion.key, bandLabel: axisBands.congregacion.label},
-          interseccion:{avg: axisAverages.interseccion, percent: axisPercents.interseccion, bandKey: axisBands.interseccion.key, bandLabel: axisBands.interseccion.label}
-        },
-        sections: sectionResults,
-        needs
-      };
-    }
-
-    function renderResults(result){
-      resultPills.innerHTML = "";
-      resultsRoot.innerHTML = "";
-
-      const gb = bandByPercent(result.totals.globalPercent);
-      resultHint.textContent = gb.summary || "";
-
-      const banner = document.createElement("div");
-      banner.className = "resultBanner";
-      banner.innerHTML = `
-        <div>
-          <div style="font-weight:950; font-size:14px; letter-spacing:.2px;">Diagnóstico global: <span class="badge ${badgeClass(gb.key)}">${gb.label}</span></div>
-          <div class="muted" style="margin-top:6px; font-size:12px;">${safeText(gb.summary)} • Enfoque: <b>${safeText(gb.pastoralTone)}</b></div>
-          <div class="muted" style="margin-top:4px; font-size:12px;">Fecha: <b>${safeText(result.meta.createdAtLong)}</b></div>
-        </div>
-        <div class="pill"><span class="muted">Global:</span> <b>${result.totals.globalPercent}%</b></div>
-      `;
-      resultsRoot.appendChild(banner);
-
-      const axPills = [
-        {k:"Comunión (Cimiento)", v:`${result.axes.comunion.percent}%`, cls: badgeClass(result.axes.comunion.bandKey)},
-        {k:"Congregación (Columna)", v:`${result.axes.congregacion.percent}%`, cls: badgeClass(result.axes.congregacion.bandKey)},
-        {k:"Intersección (Viga)", v:`${result.axes.interseccion.percent}%`, cls: badgeClass(result.axes.interseccion.bandKey)}
-      ];
-      for(const p of axPills){
-        const el = document.createElement("div");
-        el.className = `badge ${p.cls}`;
-        el.textContent = `${p.k}: ${p.v}`;
-        resultPills.appendChild(el);
-      }
-
-      const axisTable = document.createElement("table");
-      axisTable.innerHTML = `
-        <thead>
-          <tr>
-            <th>Eje</th>
-            <th>Elemento</th>
-            <th>Estado</th>
-            <th>Promedio</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>Comunión</b></td>
-            <td>Cimiento</td>
-            <td>${safeText(result.axes.comunion.bandLabel)}</td>
-            <td>${result.axes.comunion.avg.toFixed(2)}</td>
-            <td><b>${result.axes.comunion.percent}%</b></td>
-          </tr>
-          <tr>
-            <td><b>Congregación</b></td>
-            <td>Columna</td>
-            <td>${safeText(result.axes.congregacion.bandLabel)}</td>
-            <td>${result.axes.congregacion.avg.toFixed(2)}</td>
-            <td><b>${result.axes.congregacion.percent}%</b></td>
-          </tr>
-          <tr>
-            <td><b>Intersección</b></td>
-            <td>Viga</td>
-            <td>${safeText(result.axes.interseccion.bandLabel)}</td>
-            <td>${result.axes.interseccion.avg.toFixed(2)}</td>
-            <td><b>${result.axes.interseccion.percent}%</b></td>
-          </tr>
-        </tbody>
-      `;
-      resultsRoot.appendChild(axisTable);
-
-      const secTable = document.createElement("table");
-      const rows = result.sections.map(s=>`
-        <tr>
-          <td><b>${s.order}. ${safeText(s.title)}</b><div class="muted" style="margin-top:4px">${safeText(getAxisInfo(s.axis)?.label || s.axis)}</div></td>
-          <td>${safeText(s.bandLabel)}<div class="muted" style="margin-top:4px">${safeText(s.bandSignal)}</div></td>
-          <td>${s.avg.toFixed(2)}</td>
-          <td><b>${s.percent}%</b></td>
-        </tr>
-      `).join("");
-
-      secTable.innerHTML = `
-        <thead>
-          <tr>
-            <th>Sección</th>
-            <th>Señal</th>
-            <th>Prom.</th>
-            <th>%</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      `;
-      resultsRoot.appendChild(document.createElement("div")).style.height="10px";
-      resultsRoot.appendChild(secTable);
-
-      const plan = document.createElement("div");
-      plan.className = "sec";
-      plan.innerHTML = `<div style="font-weight:950; letter-spacing:.2px; font-size:14px;">Plan de enfoque (3 áreas de presión)</div>
-                        <div class="muted" style="margin-top:6px; font-size:12px;">Prioriza aliviar carga y restaurar flujo: percibir → expresar → transferir → reposar.</div>`;
-      for(const n of result.needs){
-        const ax = getAxisInfo(n.axis);
-        const box = document.createElement("div");
-        box.className = "q";
-        box.innerHTML = `
-          <div class="qText">${safeText(n.title)} <span class="muted">(${safeText(ax?.element || "")})</span></div>
-          <div class="qObs">Estado: <b>${safeText(n.bandLabel)}</b> • ${n.percent}%</div>
-          <div class="verse" style="margin-top:10px;">${safeText(n.keyVerse)}</div>
-          <div class="mini" style="margin-top:8px; font-weight:850; color:rgba(231,240,251,.92)">Acciones sugeridas</div>
-          <div class="mini" style="margin-top:6px;">
-            • ${safeText(n.actions?.[0] || "—")}<br/>
-            • ${safeText(n.actions?.[1] || "—")}
-          </div>
-        `;
-        plan.appendChild(box);
-      }
-      resultsRoot.appendChild(document.createElement("div")).style.height="10px";
-      resultsRoot.appendChild(plan);
-
-      const prev = loadPrevResult();
-      if(prev){
-        const deltas = {
-          comunion: result.axes.comunion.percent - prev.axes.comunion.percent,
-          congregacion: result.axes.congregacion.percent - prev.axes.congregacion.percent,
-          interseccion: result.axes.interseccion.percent - prev.axes.interseccion.percent
-        };
-        const deltaWrap = document.createElement("div");
-        deltaWrap.className = "deltaRow";
-        deltaWrap.innerHTML = `
-          <div class="delta"><b>Antes/Después</b> (medición previa detectada)</div>
-          <div class="delta">Comunión: <b>${fmtDelta(deltas.comunion)}</b></div>
-          <div class="delta">Congregación: <b>${fmtDelta(deltas.congregacion)}</b></div>
-          <div class="delta">Intersección: <b>${fmtDelta(deltas.interseccion)}</b></div>
-        `;
-        resultsRoot.insertBefore(deltaWrap, resultsRoot.children[1] || null);
-      }
-    }
-
-    function fmtDelta(n){
-      const s = (n>0?"+":"") + n.toString() + "%";
-      return s;
-    }
-
-    // =========================
-    // PÓRTICO: VISUALS + INTERACTIVITY
-    // =========================
-    function clearAxisClasses(el){
-      el.classList.remove("axis-good","axis-warn","axis-risk","axis-crit","pulseSoft","microVibe","dashAnim");
-      el.style.transform = "";
-    }
-
-    function applyAxisStyle(el, band){
-      if(!el || !band) return;
-      clearAxisClasses(el);
-
-      // Color band
-      if(band.key==="aligned") el.classList.add("axis-good");
-      else if(band.key==="adjust") el.classList.add("axis-warn");
-      else if(band.key==="risk") el.classList.add("axis-risk");
-      else el.classList.add("axis-crit");
-
-      // Animation rules (sutil)
-      if(band.key==="adjust") el.classList.add("pulseSoft");
-      if(band.key==="risk") el.classList.add("microVibe");
-      if(band.key==="critical") el.classList.add("dashAnim");
-    }
-
-    function updateLegend(result){
-      const profile = getProfile();
-      if(!lgCom || !lgCon || !lgInt || !lgFooter) return;
-
-      if(!result){
-        lgCom.textContent = "COMUNIÓN: —";
-        lgCon.textContent = "CONGREGACIÓN: —";
-        lgInt.textContent = "INTERSECCIÓN: —";
-        lgFooter.textContent = `Diagrama del pórtico — ${safeText(profile.paciente||"—")} — ${nowISO()}`;
-        return;
-      }
-
-      const com = result.axes.comunion;
-      const con = result.axes.congregacion;
-      const intl = result.axes.interseccion;
-
-      const bCom = bandByPercent(com.percent);
-      const bCon = bandByPercent(con.percent);
-      const bInt = bandByPercent(intl.percent);
-
-      lgCom.textContent = `COMUNIÓN: ${com.percent}% · ${fmtBandTextForPdf(bCom.key)}`;
-      lgCon.textContent = `CONGREGACIÓN: ${con.percent}% · ${fmtBandTextForPdf(bCon.key)}`;
-      lgInt.textContent = `INTERSECCIÓN: ${intl.percent}% · ${fmtBandTextForPdf(bInt.key)}`;
-      lgFooter.textContent = `Diagrama del pórtico — ${safeText(profile.paciente||"—")} — ${nowISO()}`;
-    }
-
-    function updatePorticoVisual(result){
-      // If no result yet: reset strokes and halos, keep overlays hidden if no prev
-      if(!result){
-        [elCimiento, elColumna, elViga].forEach(el=>{
-          clearAxisClasses(el);
-          el.setAttribute("stroke","rgba(231,240,251,.60)");
-        });
-        [haloComunion, haloCongregacion, haloInterseccion].forEach(h=>{
-          h.classList.remove("on");
-          h.setAttribute("stroke","var(--accent)");
-        });
-
-        // base hatch OFF
-        if(baseCritFill){
-          baseCritFill.setAttribute("opacity","0");
-          baseCritFill.setAttribute("fill","rgba(0,0,0,0)");
-        }
-
-        prevOverlay.setAttribute("opacity","0");
-        updateLegend(null);
-        return;
-      }
-
-      const ax = result.axes;
-      const bCom = bandByPercent(ax.comunion.percent);
-      const bCon = bandByPercent(ax.congregacion.percent);
-      const bInt = bandByPercent(ax.interseccion.percent);
-
-      applyAxisStyle(elCimiento, bCom);
-      applyAxisStyle(elColumna, bCon);
-      applyAxisStyle(elViga, bInt);
-
-      // Cimiento hatch (como referencia: base "rayada" cuando crítico)
-      if(baseCritFill){
-        if(bCom.key === "critical"){
-          baseCritFill.setAttribute("fill","url(#critHatch)");
-          baseCritFill.setAttribute("opacity","1");
-        }else{
-          baseCritFill.setAttribute("opacity","0");
-          baseCritFill.setAttribute("fill","rgba(0,0,0,0)");
-        }
-      }
-
-      // Node tension halos (difference > 20%)
-      const p = {
-        comunion: ax.comunion.percent,
-        congregacion: ax.congregacion.percent,
-        interseccion: ax.interseccion.percent
-      };
-      const keys = Object.keys(p);
-      let maxK = keys[0], minK = keys[0];
-      for(const k of keys){
-        if(p[k] > p[maxK]) maxK = k;
-        if(p[k] < p[minK]) minK = k;
-      }
-      const diff = Math.abs(p[maxK] - p[minK]);
-      const dominant = maxK;
-      const domVar = axisColorKey(dominant);
-
-      // reset halos
-      const haloMap = {
-        comunion: haloComunion,
-        congregacion: haloCongregacion,
-        interseccion: haloInterseccion
-      };
-      for(const k of keys){
-        haloMap[k].classList.remove("on");
-        haloMap[k].setAttribute("stroke","var(--accent)");
-      }
-
-      if(diff > 20){
-        for(const k of keys){
-          haloMap[k].classList.add("on");
-          haloMap[k].setAttribute("stroke", `var(${domVar})`);
-        }
-      }
-
-      // Previous overlay
-      renderPrevOverlayIfAny(result);
-
-      // Update legend (para exportar PNG/PDF con la misma estructura visual)
-      updateLegend(result);
-    }
-
-    function axisTooltip(axisKey, kind){
-      const r = LAST_RESULT;
-      const info = getAxisInfo(axisKey);
-      const pct = r ? r.axes?.[axisKey]?.percent : null;
-      const band = r ? bandByPercent(pct) : null;
-
-      if(kind === "element"){
-        if(axisKey==="comunion"){
-          return {
-            line1: `Cimiento / Comunión — ${pct ?? "—"}%`,
-            line2: band ? band.summary : safeText(info?.diagnosticFocus || "")
-          };
-        }
-        if(axisKey==="congregacion"){
-          const risk = band ? (band.key==="risk"||band.key==="critical" ? "Riesgo detectado" : "Sin riesgo crítico") : "—";
-          return {
-            line1: `Columna / Congregación — ${pct ?? "—"}%`,
-            line2: `Alineación del varón • ${risk}`
-          };
-        }
-        // interseccion
-        return {
-          line1: `Viga / Intersección — ${pct ?? "—"}%`,
-          line2: band ? (band.key==="risk"||band.key==="critical" ? "Sobrecarga y presión visible" : "Flujo saludable con ajustes menores") : safeText(info?.diagnosticFocus || "")
-        };
-      }
-
-      // node
-      const templates = info?.shortDiagnosisTemplates || [];
-      let diag = safeText(info?.diagnosticFocus || "");
-      if(band){
-        if(band.key==="aligned") diag = templates[0] || diag;
-        else if(band.key==="adjust") diag = templates[1] || diag;
-        else diag = templates[2] || diag;
-      }
-      return {
-        line1: `${safeText(info?.nodeLabel || info?.label || axisKey)} — ${pct ?? "—"}%`,
-        line2: diag
-      };
-    }
-
-    function showTooltipAt(clientX, clientY, html){
-      const pad = 14;
-      tooltip.innerHTML = html;
-      tooltip.classList.add("on");
-
-      const rect = tooltip.getBoundingClientRect();
-      let x = clientX + 12;
-      let y = clientY + 12;
-
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-
-      if(x + rect.width + pad > vw) x = clientX - rect.width - 12;
-      if(y + rect.height + pad > vh) y = clientY - rect.height - 12;
-
-      tooltip.style.left = `${x}px`;
-      tooltip.style.top = `${y}px`;
-    }
-
-    function hideTooltip(){
-      tooltip.classList.remove("on");
-    }
-
-    function openModalForAxis(axisKey, sourceLabel){
-      const info = getAxisInfo(axisKey);
-      const manual = getManualForAxis(axisKey);
-
-      modalTitle.textContent = `${safeText(info?.element || "Panel")} — ${safeText(info?.label || axisKey)}`;
-      modalSubtitle.textContent = safeText(sourceLabel || info?.diagnosticFocus || "");
-      modalVerse.textContent = safeText(manual?.keyVerse || info?.keyVerse || "");
-      modalTeaching.textContent = safeText(manual?.miniTeaching || info?.diagnosticFocus || "");
-
-      modalActions.innerHTML = "";
-      const acts = (manual?.actions || []).slice(0,2);
-      for(const a of acts){
-        const li = document.createElement("li");
-        li.textContent = safeText(a);
-        modalActions.appendChild(li);
-      }
-      if(acts.length === 0){
-        const li = document.createElement("li");
-        li.textContent = "Practiquen una conversación breve hoy: percibir → expresar → transferir → reposar.";
-        modalActions.appendChild(li);
-      }
-
-      modalBackdrop.classList.add("on");
-      modalBackdrop.setAttribute("aria-hidden","false");
-    }
-
-    function closeModal(){
-      modalBackdrop.classList.remove("on");
-      modalBackdrop.setAttribute("aria-hidden","true");
-    }
-
-    function wirePorticoInteractivity(){
-      const targets = [
-        {el: elCimiento, kind:"element", axis:"comunion"},
-        {el: elColumna, kind:"element", axis:"congregacion"},
-        {el: elViga, kind:"element", axis:"interseccion"},
-        {el: nodeComunion, kind:"node", axis:"comunion"},
-        {el: nodeCongregacion, kind:"node", axis:"congregacion"},
-        {el: nodeInterseccion, kind:"node", axis:"interseccion"},
-      ];
-
-      for(const t of targets){
-        t.el.style.cursor = "pointer";
-
-        const onMove = (e)=>{
-          if(GUIDED.on) return;
-          if(!LAST_RESULT){
-            showTooltipAt(e.clientX, e.clientY, `<div><b>${safeText(getAxisInfo(t.axis)?.element || "")}</b></div><div class="small">Completa el test para ver el estado.</div>`);
+          // If click corresponds to a known section mapping, open that section
+          const map = data?.meta?.ui?.svgClickMap || {};
+          const secId = map[tip.clickKey];
+          if(secId){
+            openModalForSection(secId);
+            // auto-open details
+            const det = document.querySelector(`details.sec[data-sec="${CSS.escape(secId)}"]`);
+            if(det) det.open = true;
             return;
           }
-          const tip = axisTooltip(t.axis, t.kind);
-          showTooltipAt(e.clientX, e.clientY, `<div><b>${safeText(tip.line1)}</b></div><div class="small">${safeText(tip.line2)}</div>`);
-        };
 
-        const onEnter = (e)=> onMove(e);
-        const onLeave = ()=> { if(!GUIDED.on) hideTooltip(); };
-
-        t.el.addEventListener("pointerenter", onEnter);
-        t.el.addEventListener("pointermove", onMove);
-        t.el.addEventListener("pointerleave", onLeave);
-
-        // Tap support
-        t.el.addEventListener("pointerdown", (e)=>{
-          if(GUIDED.on) return;
-          if(e.pointerType === "touch"){
-            onMove(e);
-            setTimeout(()=> hideTooltip(), 1400);
-          }
-        }, {passive:true});
-
-        // Click -> contextual panel
-        t.el.addEventListener("click", ()=>{
-          if(!LAST_RESULT){
-            openModalForAxis(t.axis, "Completa el test para habilitar diagnóstico por eje.");
-            return;
-          }
-          const pct = LAST_RESULT.axes?.[t.axis]?.percent ?? 0;
-          const b = bandByPercent(pct);
-          const label = (t.kind==="element")
-            ? `Estado actual: ${pct}% • ${safeText(b.label)}`
-            : `Diagnóstico del nudo: ${safeText(axisTooltip(t.axis, "node").line2)}`;
-
-          openModalForAxis(t.axis, label);
+          // else open a generic modal from ui text (still JSON-sourced)
+          openModalGeneric(tip.title, tip.body, getUi("modal.genericNote",""), []);
         });
       }
-    }
 
-    // =========================
-    // GUIDED MODE
-    // =========================
-    function stopGuided(){
-      GUIDED.on = false;
-      GUIDED.step = 0;
-      if(GUIDED.timer) clearTimeout(GUIDED.timer);
-      GUIDED.timer = null;
-      btnGuided.textContent = "Explícame este diagrama";
-      hideTooltip();
-      [elCimiento, elColumna, elViga].forEach(el=> el.style.filter = "");
-      [nodeComunion, nodeCongregacion, nodeInterseccion].forEach(el=> el.style.filter = "");
-    }
+      function openModalForSection(secId){
+        const sec = (data.sections||[]).find(s=>s.id===secId);
+        const man = (data.pastoralManual?.sections||[]).find(s=>s.id===secId);
 
-    function runGuidedStep(step){
-      const steps = [
-        {
-          el: elCimiento,
-          title: "1/4 — Cimiento",
-          text: "Aquí se diagnostica la base: descanso y dependencia de Cristo. Si el cimiento está bajo, todo se vuelve presión."
-        },
-        {
-          el: elColumna,
-          title: "2/4 — Columna",
-          text: "Aquí se ve la alineación del varón: presencia, cobertura y recepción de transferencia. Si la columna reacciona tarde, la viga se sobrecarga."
-        },
-        {
-          el: elViga,
-          title: "3/4 — Viga",
-          text: "Aquí se ve el clima del hogar: sensibilidad canalizada, convivencia y distribución del peso. Si acumula, aparecen fisuras emocionales."
-        },
-        {
-          el: nodeInterseccion,
-          title: "4/4 — Cargas",
-          text: "Las flechas representan presiones. El objetivo no es negar cargas, sino transferir y sostener con orden: viga → columna → cimiento."
+        const title = safeText(sec?.title || "");
+        const sub = safeText(sec?.diagnosticFocus || "");
+
+        const teaching = safeText(man?.teaching || man?.summary || "");
+        const verse = safeText(sec?.sectionVerse || man?.verse || "");
+        const actions = Array.isArray(man?.actions) ? man.actions : (Array.isArray(man?.steps) ? man.steps : []);
+
+        openModalGeneric(title, teaching, verse, actions, sub);
+      }
+
+      function openModalGeneric(title, teaching, verse, actions, sub=""){
+        ui.modal.title.textContent = safeText(title);
+        ui.modal.sub.textContent = safeText(sub);
+        ui.modal.teaching.textContent = safeText(teaching);
+        ui.modal.verse.textContent = safeText(verse);
+        ui.modal.actions.innerHTML = "";
+        for(const a of actions){
+          const li = document.createElement("li");
+          li.textContent = safeText(a);
+          ui.modal.actions.appendChild(li);
         }
-      ];
-
-      const s = steps[step];
-      if(!s){ stopGuided(); return; }
-
-      [elCimiento, elColumna, elViga].forEach(el=> el.style.filter = "");
-      [nodeComunion, nodeCongregacion, nodeInterseccion].forEach(el=> el.style.filter = "");
-      s.el.style.filter = "drop-shadow(0 0 10px rgba(111,177,255,.35))";
-
-      const host = porticoSvg.getBoundingClientRect();
-      showTooltipAt(Math.round(host.left + 16), Math.round(host.top + 16),
-        `<div><b>${safeText(s.title)}</b></div><div class="small">${safeText(s.text)}</div>`
-      );
-      tooltip.style.left = `${Math.round(host.left + 16)}px`;
-      tooltip.style.top = `${Math.round(host.top + 16)}px`;
-
-      GUIDED.timer = setTimeout(()=>{
-        GUIDED.step += 1;
-        runGuidedStep(GUIDED.step);
-      }, 2800);
-    }
-
-    function startGuided(){
-      if(GUIDED.on) return;
-      GUIDED.on = true;
-      GUIDED.step = 0;
-      btnGuided.textContent = "Detener lectura guiada";
-      runGuidedStep(0);
-    }
-
-    // =========================
-    // STORAGE (Before/After)
-    // =========================
-    function saveLastResult(result){
-      localStorage.setItem(STORAGE_KEY_LAST, JSON.stringify(result));
-    }
-    function loadLastResult(){
-      try{
-        const s = localStorage.getItem(STORAGE_KEY_LAST);
-        return s ? JSON.parse(s) : null;
-      }catch(_){ return null; }
-    }
-    function savePrevResult(result){
-      localStorage.setItem(STORAGE_KEY_PREV, JSON.stringify(result));
-    }
-    function loadPrevResult(){
-      try{
-        const s = localStorage.getItem(STORAGE_KEY_PREV);
-        return s ? JSON.parse(s) : null;
-      }catch(_){ return null; }
-    }
-    function hydratePrevOverlayFromStorage(){
-      const prev = loadPrevResult();
-      if(prev){
-        prevOverlay.setAttribute("opacity","0");
-      }
-    }
-
-    function renderPrevOverlayIfAny(currentResult){
-      const prev = loadPrevResult();
-      if(!prev){
-        prevOverlay.innerHTML = "";
-        prevOverlay.setAttribute("opacity","0");
-        return;
+        ui.modal.note.textContent = safeText(getUi("modal.note",""));
+        ui.modal.back.classList.add("show");
       }
 
-      const pc = prev.axes?.comunion?.percent ?? 0;
-      const pg = prev.axes?.congregacion?.percent ?? 0;
-      const pi = prev.axes?.interseccion?.percent ?? 0;
-
-      const bCom = bandByPercent(pc);
-      const bCon = bandByPercent(pg);
-      const bInt = bandByPercent(pi);
-
-      const colorClass = (key)=>{
-        if(key==="aligned") return "axis-good";
-        if(key==="adjust") return "axis-warn";
-        if(key==="risk") return "axis-risk";
-        return "axis-crit";
-      };
-
-      prevOverlay.innerHTML = `
-        <path d="M140 330 L720 330" class="ghostPrev ${colorClass(bCom.key)}" stroke-width="14" fill="none"/>
-        <path d="M200 330 L200 110" class="ghostPrev ${colorClass(bCon.key)}" stroke-width="14" fill="none"/>
-        <path d="M200 110 L720 110" class="ghostPrev ${colorClass(bInt.key)}" stroke-width="14" fill="none"/>
-      `;
-      prevOverlay.setAttribute("opacity","1");
-    }
-
-    // =========================
-    // EXPORTS
-    // =========================
-    function buildTxt(result){
-      const profile = getProfile();
-      const lines = [];
-      lines.push(`${safeText(result.meta.title)} — Auditoría Diagnóstica Pastoral`);
-      lines.push(`Paciente: ${safeText(profile.paciente||"—")} · Auditor: ${safeText(profile.auditor||"—")} · Fecha: ${safeText(result.meta.createdAtLong)} (${safeText(result.meta.createdAt)})`);
-      lines.push("");
-      lines.push(`Diagnóstico global: ${safeText(result.totals.globalBandLabel)} — ${result.totals.globalPercent}%`);
-      lines.push(`${safeText(result.totals.globalSummary)} (Enfoque: ${safeText(result.totals.pastoralTone)})`);
-      lines.push("");
-      lines.push("Ejes del pórtico:");
-      lines.push(`- Comunión / Cimiento: ${result.axes.comunion.percent}% (prom. ${result.axes.comunion.avg.toFixed(2)}) ${safeText(result.axes.comunion.bandLabel)}`);
-      lines.push(`- Congregación / Columna: ${result.axes.congregacion.percent}% (prom. ${result.axes.congregacion.avg.toFixed(2)}) ${safeText(result.axes.congregacion.bandLabel)}`);
-      lines.push(`- Intersección / Viga: ${result.axes.interseccion.percent}% (prom. ${result.axes.interseccion.avg.toFixed(2)}) ${safeText(result.axes.interseccion.bandLabel)}`);
-      lines.push("");
-      lines.push("Resultados por sección:");
-      for(const s of result.sections){
-        lines.push(`- ${s.order}. ${safeText(s.title)} [${safeText(getAxisInfo(s.axis)?.label || s.axis)}]: ${s.percent}% (prom. ${s.avg.toFixed(2)}) ${safeText(s.bandLabel)}`);
-      }
-      lines.push("");
-      lines.push("Plan de enfoque (3 áreas de presión):");
-      for(const n of result.needs){
-        lines.push(`• ${safeText(n.title)} — ${n.percent}% ${safeText(n.bandLabel)}`);
-        if(n.keyVerse) lines.push(`  ${safeText(n.keyVerse)}`);
-        if(n.actions?.[0]) lines.push(`  - ${safeText(n.actions[0])}`);
-        if(n.actions?.[1]) lines.push(`  - ${safeText(n.actions[1])}`);
-      }
-      return lines.join("\n");
-    }
-
-    function svgToDataUrl(svgString){
-      const encoded = encodeURIComponent(svgString)
-        .replace(/%0A/g, "")
-        .replace(/%20/g, " ")
-        .replace(/%3D/g, "=")
-        .replace(/%3A/g, ":")
-        .replace(/%2F/g, "/")
-        .replace(/%22/g, "'");
-      return `data:image/svg+xml;charset=utf-8,${encoded}`;
-    }
-
-    function buildExportSvg(includeTitleDate){
-      const svg = porticoSvg.cloneNode(true);
-
-      // Ensure overlay reflects current result
-      const prevG = svg.querySelector("#prevOverlay");
-      if(prevG && prevOverlay){
-        prevG.innerHTML = prevOverlay.innerHTML;
-        prevG.setAttribute("opacity", prevOverlay.getAttribute("opacity") || "0");
+      function closeModal(){
+        ui.modal.back.classList.remove("show");
       }
 
-      // Ensure legend text is updated on exported clone
-      const _lgCom = svg.querySelector("#lgCom");
-      const _lgCon = svg.querySelector("#lgCon");
-      const _lgInt = svg.querySelector("#lgInt");
-      const _lgFooter = svg.querySelector("#lgFooter");
-      if(_lgCom && lgCom) _lgCom.textContent = lgCom.textContent;
-      if(_lgCon && lgCon) _lgCon.textContent = lgCon.textContent;
-      if(_lgInt && lgInt) _lgInt.textContent = lgInt.textContent;
-      if(_lgFooter && lgFooter) _lgFooter.textContent = lgFooter.textContent;
-
-      // Add title + date INSIDE the image (optional)
-      if(includeTitleDate){
-        const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        t1.setAttribute("x", "18");
-        t1.setAttribute("y", "28");
-        t1.setAttribute("fill", "rgba(231,240,251,.92)");
-        t1.setAttribute("font-size", "16");
-        t1.setAttribute("font-weight", "900");
-        t1.textContent = safeText(DATA?.meta?.title || "Auditoría");
-
-        const t2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        t2.setAttribute("x", "18");
-        t2.setAttribute("y", "48");
-        t2.setAttribute("fill", "rgba(138,160,181,.92)");
-        t2.setAttribute("font-size", "12");
-        t2.setAttribute("font-weight", "800");
-        t2.textContent = `Fecha: ${fmtDateLong()}`;
-
-        svg.insertBefore(t2, svg.firstChild);
-        svg.insertBefore(t1, svg.firstChild);
+      function hookModal(){
+        ui.btns.closeModal.addEventListener("click", closeModal);
+        ui.modal.back.addEventListener("click", (e)=>{
+          if(e.target === ui.modal.back) closeModal();
+        });
+        window.addEventListener("keydown", (e)=>{
+          if(e.key==="Escape") closeModal();
+        });
       }
 
-      // Add background rectangle to keep dark mode on export
-      const bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-      bg.setAttribute("x","0"); bg.setAttribute("y","0");
-      bg.setAttribute("width","860"); bg.setAttribute("height","420");
-      bg.setAttribute("fill", "#0b0f14");
-      svg.insertBefore(bg, svg.firstChild);
+      function exportTxt(computed){
+        const lines = [];
+        const meta = data.meta || {};
+        lines.push(safeText(meta.title||""));
+        lines.push(safeText(meta.subtitle||""));
+        lines.push("");
 
-      const serializer = new XMLSerializer();
-      return serializer.serializeToString(svg);
-    }
+        const g = computed.global;
+        lines.push(`${safeText(getUi("exports.globalLine",""))}`.trim());
+        lines.push(`GLOBAL: ${fmt1(g.avg)} / 5  (${g.answered}/${g.totalQ})`);
+        lines.push("");
 
-    async function getPorticoPngDataUrl(includeTitleDate){
-      const svgStr = buildExportSvg(includeTitleDate);
-      const url = svgToDataUrl(svgStr);
+        lines.push("AXES:");
+        for(const ax of computed.axisScores){
+          lines.push(`- ${safeText(ax.title||ax.id)}: ${fmt1(ax.avg)} / 5  (${ax.answered}/${ax.totalQ})`);
+        }
+        lines.push("");
 
-      const canvas = document.createElement("canvas");
-      canvas.width = 860;
-      canvas.height = 420;
-      const ctx = canvas.getContext("2d");
+        lines.push("SECCIONES:");
+        for(const s of computed.sectionScores){
+          lines.push(`- ${safeText(s.title||s.id)}: ${fmt1(s.avg)} / 5  (${s.cnt}/${s.total})`);
+        }
+        lines.push("");
 
-      await new Promise((resolve, reject)=>{
-        const img = new Image();
-        img.onload = ()=>{ ctx.drawImage(img, 0, 0); resolve(); };
-        img.onerror = reject;
-        img.src = url;
-      });
+        lines.push("RESPUESTAS:");
+        for(const sec of (data.sections||[])){
+          lines.push(`\n[${safeText(sec.title)}]`);
+          for(const q of (sec.questions||[])){
+            const v = state.answers[q.id];
+            const vv = (v==null || v==="") ? "-" : String(v);
+            lines.push(`${safeText(q.id)}\t${vv}\t${safeText(q.text)}`);
+          }
+        }
 
-      return canvas.toDataURL("image/png");
-    }
+        const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+        downloadBlob(blob, (data.meta?.id || "auditoria") + ".txt");
+      }
 
-    async function exportPng(){
-      const pngUrl = await getPorticoPngDataUrl(true);
-      const a = document.createElement("a");
-      a.href = pngUrl;
-      a.download = `${safeText(DATA?.meta?.fileName || "portico")}-${nowISO()}.png`;
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(()=> a.remove(), 200);
-    }
+      function exportPdf(computed){
+        const { jsPDF } = window.jspdf || {};
+        if(!jsPDF) return;
 
-    function exportTxt(){
-      const txt = buildTxt(LAST_RESULT);
-      downloadBlob(`${safeText(DATA?.meta?.fileName || "auditoria")}-${nowISO()}.txt`, txt, "text/plain;charset=utf-8");
-    }
+        const doc = new jsPDF({ unit:"pt", format:"a4" });
+        const margin = 42;
+        let y = margin;
 
-    async function exportPdf(){
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({orientation:"p", unit:"pt", format:"a4"});
+        const title = safeText(data?.meta?.title||"");
+        const subtitle = safeText(data?.meta?.subtitle||"");
+        const desc = safeText(data?.meta?.description||"");
 
-      const W = doc.internal.pageSize.getWidth();
-      const H = doc.internal.pageSize.getHeight();
-      const margin = 44;
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text(title, margin, y);
+        y += 18;
 
-      const profile = getProfile();
-      const gb = bandByPercent(LAST_RESULT.totals.globalPercent);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        if(subtitle){
+          doc.text(subtitle, margin, y);
+          y += 14;
+        }
+        if(desc){
+          doc.setTextColor(120);
+          doc.text(doc.splitTextToSize(desc, 520), margin, y);
+          doc.setTextColor(0);
+          y += 28;
+        } else {
+          y += 10;
+        }
 
-      // Background
-      doc.setFillColor(15,22,32);
-      doc.rect(0,0,W,H,"F");
-
-      // Title
-      doc.setTextColor(231,240,251);
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(15);
-      doc.text(safeText(DATA?.meta?.title || "Auditoría Diagnóstica Pastoral"), margin, margin);
-
-      // Subtitle line (Paciente / Auditor / Fecha)
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(10);
-      doc.setTextColor(138,160,181);
-      doc.text(
-        `Paciente: ${safeText(profile.paciente||"—")} · Auditor: ${safeText(profile.auditor||"—")} · Fecha: ${safeText(LAST_RESULT?.meta?.createdAt || nowISO())}`,
-        margin, margin+18
-      );
-
-      // Global diagnosis
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(12);
-      doc.setTextColor(231,240,251);
-      doc.text(`Diagnóstico global: ${safeText(gb.label)} — ${LAST_RESULT.totals.globalPercent}%`, margin, margin+44);
-
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(10);
-      doc.setTextColor(138,160,181);
-      const summary = safeText(gb.summary || "");
-      doc.text(doc.splitTextToSize(summary, W - margin*2), margin, margin+62);
-
-      // Diagram image (mismo “look” que el SVG del panel)
-      const png = await getPorticoPngDataUrl(false);
-      const imgW = W - margin*2;
-      const imgH = Math.round(imgW * (420/860));
-      const yImg = margin + 120;
-      doc.addImage(png, "PNG", margin, yImg, imgW, imgH);
-
-      // Ejes (bloque breve)
-      const yAxes = yImg + imgH + 20;
-      doc.setTextColor(231,240,251);
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(11);
-      doc.text("Ejes del pórtico", margin, yAxes);
-
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(10);
-      doc.setTextColor(138,160,181);
-      doc.text(`Comunión: ${LAST_RESULT.axes.comunion.percent}% · ${fmtBandTextForPdf(bandByPercent(LAST_RESULT.axes.comunion.percent).key)}`, margin, yAxes+16);
-      doc.text(`Congregación: ${LAST_RESULT.axes.congregacion.percent}% · ${fmtBandTextForPdf(bandByPercent(LAST_RESULT.axes.congregacion.percent).key)}`, margin, yAxes+32);
-      doc.text(`Intersección: ${LAST_RESULT.axes.interseccion.percent}% · ${fmtBandTextForPdf(bandByPercent(LAST_RESULT.axes.interseccion.percent).key)}`, margin, yAxes+48);
-
-      // New page: Resultados por sección
-      doc.addPage();
-      doc.setFillColor(15,22,32);
-      doc.rect(0,0,W,H,"F");
-
-      doc.setTextColor(231,240,251);
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(13);
-      doc.text("Resultados por sección", margin, margin);
-
-      const secBody = LAST_RESULT.sections.map(s=>{
-        const axisLabel = safeText(getAxisInfo(s.axis)?.label || s.axis);
-        const diag = fmtBandTextForPdf(bandByAvg(s.avg).key);
-        const score = `${Math.round(s.avg*8)}/40`; // (visual) 8 preguntas * 5 = 40
-        return [safeText(s.title), diag, score, `${s.percent}%`, axisLabel, safeText(s.verse||"")];
-      });
-
-      doc.autoTable({
-        startY: margin+14,
-        head: [["Sección","Diagnóstico","Puntaje","%","Eje","Verso"]],
-        body: secBody,
-        theme: "grid",
-        styles: {font:"helvetica", fontSize:8.5, textColor: [231,240,251], lineColor:[34,50,70], fillColor:[15,22,32], cellPadding:6},
-        headStyles: {fillColor:[17,27,38], textColor:[231,240,251]},
-        alternateRowStyles: {fillColor:[13,19,28]},
-        margin: {left: margin, right: margin}
-      });
-
-      // New page: Enfoque pastoral (mini-manual por sección)
-      doc.addPage();
-      doc.setFillColor(15,22,32);
-      doc.rect(0,0,W,H,"F");
-
-      doc.setTextColor(231,240,251);
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(13);
-      doc.text("Enfoque pastoral por secciones", margin, margin);
-
-      let y = margin + 18;
-
-      for(const s of LAST_RESULT.sections){
-        const manual = getManualForSection(s.id);
-        const diag = fmtBandTextForPdf(bandByAvg(s.avg).key);
-        const header = `${safeText(s.title)} — ${diag} — ${s.percent}%`;
-        const enfoque = manual?.focus ? `Enfoque: ${safeText(manual.focus)}` : "";
-        const mini = manual?.miniTeaching ? `Mini-enseñanza: ${safeText(manual.miniTeaching)}` : "";
-        const verse = manual?.keyVerse || s.verse || "";
-        const actions = (manual?.actions || []).slice(0,5);
-
-        doc.setTextColor(231,240,251);
+        const g = computed.global;
         doc.setFont("helvetica","bold");
         doc.setFontSize(11);
-        doc.text(doc.splitTextToSize(header, W-margin*2), margin, y);
+        doc.text(`GLOBAL: ${fmt1(g.avg)} / 5  (${g.answered}/${g.totalQ})`, margin, y);
+        y += 10;
+
+        const band = bandForScore(g.avg);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(10);
+        doc.text(`${safeText(getUi("exports.bandLabel",""))} ${safeText(band.label||"")}`, margin, y);
         y += 16;
 
-        doc.setFont("helvetica","normal");
-        doc.setFontSize(9.5);
-        doc.setTextColor(138,160,181);
-        if(enfoque){
-          doc.text(doc.splitTextToSize(enfoque, W-margin*2), margin, y);
-          y += 14;
-        }
-        if(mini){
-          doc.text(doc.splitTextToSize(mini, W-margin*2), margin, y);
-          y +=ï = y; // (ignore) just to keep editor quiet if pasted in some linters
-          y += 14;
-        }
+        // Axes table
+        doc.setFont("helvetica","bold");
+        doc.text(safeText(getUi("exports.axesTitle","")) || "AXES", margin, y);
+        y += 8;
 
-        if(actions.length){
-          doc.setTextColor(231,240,251);
-          doc.text("• " + actions.map(a=>safeText(a)).join("\n• "), margin, y);
-          y += 12 + actions.length*11;
-        }
+        doc.autoTable({
+          startY: y,
+          head: [[safeText(getUi("tables.axis",""))||"Eje", safeText(getUi("tables.score",""))||"Puntaje", safeText(getUi("tables.band",""))||"Banda"]],
+          body: computed.axisScores.map(ax=>{
+            const b = bandForScore(ax.avg);
+            return [safeText(ax.title||ax.id), `${fmt1(ax.avg)} / 5  ·  ${ax.answered}/${ax.totalQ}`, safeText(b.label||"")];
+          }),
+          theme: "grid",
+          styles: { fontSize: 9 },
+          headStyles: { fillColor: [20,25,35] },
+          margin: { left: margin, right: margin },
+        });
 
-        if(verse){
-          doc.setTextColor(138,160,181);
-          doc.text(doc.splitTextToSize(`Verso: ${safeText(verse)}`, W-margin*2), margin, y);
-          y += 18;
-        }
+        y = doc.lastAutoTable.finalY + 14;
 
-        if(y > H - 90){
-          doc.addPage();
-          doc.setFillColor(15,22,32);
-          doc.rect(0,0,W,H,"F");
-          y = margin;
-        }
+        // Sections table
+        doc.setFont("helvetica","bold");
+        doc.text(safeText(getUi("exports.sectionsTitle","")) || "SECCIONES", margin, y);
+        y += 8;
+
+        doc.autoTable({
+          startY: y,
+          head: [[safeText(getUi("exports.sectionCol",""))||"Sección", safeText(getUi("tables.score",""))||"Puntaje", safeText(getUi("tables.band",""))||"Banda"]],
+          body: computed.sectionScores.map(s=>{
+            const b = sectionBandForScore(s.avg);
+            return [safeText(s.title||s.id), `${fmt1(s.avg)} / 5  ·  ${s.cnt}/${s.total}`, safeText(b.label||"")];
+          }),
+          theme: "grid",
+          styles: { fontSize: 9 },
+          headStyles: { fillColor: [20,25,35] },
+          margin: { left: margin, right: margin },
+        });
+
+        // Portico SVG snapshot as image (best-effort)
+        try{
+          const svgData = serializeSvgToDataUrl(ui.svg.root);
+          const img = new Image();
+          img.onload = function(){
+            const pageW = doc.internal.pageSize.getWidth();
+            const usableW = pageW - margin*2;
+            const ratio = img.width ? (usableW / img.width) : 1;
+            const h = img.height * ratio;
+            doc.addPage();
+            doc.setFont("helvetica","bold");
+            doc.setFontSize(11);
+            doc.text(safeText(getUi("exports.porticoTitle","")) || "", margin, margin);
+            doc.addImage(img, "PNG", margin, margin+14, usableW, h);
+            doc.save((data.meta?.id || "auditoria") + ".pdf");
+          };
+          img.onerror = function(){
+            doc.save((data.meta?.id || "auditoria") + ".pdf");
+          };
+          img.src = svgData;
+          return;
+        }catch(e){/* ignore */}
+
+        doc.save((data.meta?.id || "auditoria") + ".pdf");
       }
 
-      // Save
-      doc.save(`${safeText(DATA?.meta?.fileName || "auditoria")}-${nowISO()}.pdf`);
-    }
+      function exportPng(){
+        const url = serializeSvgToDataUrl(ui.svg.root);
+        const img = new Image();
+        img.onload = ()=>{
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob((blob)=>{
+            if(blob) downloadBlob(blob, (data.meta?.id || "portico") + ".png");
+          }, "image/png");
+        };
+        img.src = url;
+      }
 
-    // =========================
-    // BUTTONS / EVENTS
-    // =========================
-    function wireButtons(){
-      btnShowResult.addEventListener("click", ()=>{
-        const r = computeResults();
+      function serializeSvgToDataUrl(svgEl){
+        const clone = svgEl.cloneNode(true);
+        // inline computed styles for markers/currentColor (best-effort)
+        const cssVars = getComputedStyle(document.documentElement);
+        // Ensure currentColor resolves in markers
+        clone.querySelectorAll("[style]").forEach(()=>{});
 
-        // Move last -> prev (for progressive before/after)
-        const existingLast = loadLastResult();
-        if(existingLast) savePrevResult(existingLast);
+        const s = new XMLSerializer().serializeToString(clone);
+        const encoded = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
+        // Convert to PNG via canvas by drawing this SVG data URL
+        // For direct PNG downloads we create PNG later; for PDF addImage we need PNG, so we’ll render through canvas.
+        // However, jsPDF addImage needs image data; we return SVG URL and convert to PNG with canvas when needed.
+        // Here we create PNG data URL by rendering to canvas immediately (sync not possible); so return SVG URL for callers.
+        return encoded;
+      }
 
-        LAST_RESULT = r;
-        saveLastResult(r);
+      function downloadBlob(blob, filename){
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(()=>{
+          URL.revokeObjectURL(a.href);
+          a.remove();
+        }, 0);
+      }
 
-        renderResults(r);
-        updatePorticoVisual(r);
-        updateButtonsState();
+      function hookButtons(){
+        ui.btns.save.addEventListener("click", ()=>{
+          const computed = compute();
+          const payload = {
+            savedAt: new Date().toISOString(),
+            answers: state.answers,
+            computed
+          };
+          saveLocal(payload);
+          lastSaved = payload;
+          renderAll();
+        });
+
+        ui.btns.reset.addEventListener("click", ()=>{
+          // reset to last saved (if exists), else clear
+          const saved = loadLocal();
+          state.answers = {};
+          if(saved?.answers) state.answers = saved.answers;
+          renderAll();
+        });
+
+        ui.btns.clear.addEventListener("click", ()=>{
+          clearLocal();
+          lastSaved = null;
+          state.answers = {};
+          renderAll();
+        });
+
+        ui.btns.txt.addEventListener("click", ()=>{
+          exportTxt(compute());
+        });
+
+        ui.btns.pdf.addEventListener("click", ()=>{
+          exportPdf(compute());
+        });
+
+        ui.btns.png.addEventListener("click", ()=>{
+          exportPng();
+        });
+      }
+
+      function renderAll(){
+        const computed = compute();
+        renderGlobal(computed);
+        renderBeforeAfter(computed);
+        renderSections(computed);
+        renderAxesTable(computed);
+      }
+
+      async function init(){
+        const res = await fetch(JSON_PATH, {cache:"no-store"});
+        data = await res.json();
+
+        // load last saved
+        lastSaved = loadLocal();
+        hydrateFromSaved(lastSaved);
+
+        renderTop();
+        buildSteps();
+        hookSvg();
+        hookModal();
+        hookButtons();
+
+        renderAll();
+
+        // Default pill axis label from JSON
+        ui.pills.axis.textContent = safeText(getUi("pills.axis",""));
+      }
+
+      init().catch((e)=>{
+        // Avoid visible fixed error text; keep silent in UI.
+        console.error(e);
       });
-
-      btnDownloadTxt.addEventListener("click", ()=> exportTxt());
-      btnDownloadPng.addEventListener("click", ()=> exportPng());
-      btnDownloadPdf.addEventListener("click", ()=> exportPdf());
-
-      btnReset.addEventListener("click", ()=>{
-        stopGuided();
-        ANSWERS = {};
-        LAST_RESULT = null;
-
-        document.querySelectorAll(".scorePill.on").forEach(el=> el.classList.remove("on"));
-        document.querySelectorAll('[id^="band_sec-"]').forEach(el=> el.textContent="—");
-
-        resultsRoot.innerHTML = `<div class="muted">Completa el test para ver diagnóstico global, ejes, tensiones y plan de enfoque.</div>`;
-        resultPills.innerHTML = "";
-        resultHint.textContent = "Aparecerán cuando completes el test y presiones “Ver resultado”.";
-
-        updatePorticoVisual(null);
-        updateButtonsState();
-        hideTooltip();
-      });
-
-      btnGuided.addEventListener("click", ()=>{
-        if(GUIDED.on) stopGuided();
-        else startGuided();
-      });
-
-      modalClose.addEventListener("click", closeModal);
-      modalBackdrop.addEventListener("click", (e)=>{
-        if(e.target === modalBackdrop) closeModal();
-      });
-
-      window.addEventListener("keydown", (e)=>{
-        if(e.key === "Escape"){
-          if(modalBackdrop.classList.contains("on")) closeModal();
-          if(GUIDED.on) stopGuided();
-          hideTooltip();
-        }
-      });
-
-      document.addEventListener("scroll", ()=> { if(!GUIDED.on) hideTooltip(); }, {passive:true});
-    }
-
-    // =========================
-    // BOOT
-    // =========================
-    init().catch(err=>{
-      sectionsRoot.innerHTML = `<div class="sec"><div class="qText">Error al cargar</div><div class="qObs">${safeText(err?.message || err)}</div></div>`;
-    });
+    })();
   </script>
 </body>
 </html>
-
