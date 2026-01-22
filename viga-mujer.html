@@ -3,1608 +3,1594 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title></title>
-
-  <!-- Allowed CDNs -->
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
-
+  <title>🔴La viga: la mujer como alma del sistema</title>
   <style>
     :root{
       --bg:#0b0f14;
-      --panel:#0f1722;
-      --panel2:#0b1320;
-      --text:#e6eefc;
-      --muted:#a6b3c7;
-      --line:#1d2a3a;
-      --focus:#6aa6ff;
-      --good:#34d399;
-      --warn:#fbbf24;
-      --risk:#fb7185;
-      --crit:#ef4444;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 16px;
-      --radius2: 22px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --panel:#0f1620;
+      --panel2:#0c121a;
+      --text:#e8eef7;
+      --muted:#a7b3c4;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.45);
+      --accent:#7dd3fc;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --risk:#ef4444;
+      --crit:#fb7185;
+      --gray:#94a3b8;
+      --chip:#111a25;
+      --focus:rgba(125,211,252,.15);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: var(--sans);
-      background: radial-gradient(900px 600px at 18% -10%, rgba(106,166,255,.16), transparent 55%),
-                  radial-gradient(800px 520px at 96% 0%, rgba(52,211,153,.10), transparent 45%),
-                  radial-gradient(900px 700px at 60% 110%, rgba(251,191,36,.08), transparent 55%),
-                  var(--bg);
+      background:radial-gradient(1200px 700px at 20% 0%, rgba(125,211,252,.08), transparent 55%),
+                 radial-gradient(1100px 700px at 80% 10%, rgba(34,197,94,.06), transparent 60%),
+                 var(--bg);
       color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      letter-spacing:.2px;
     }
     a{color:inherit}
-    .wrap{
-      max-width:1180px;
-      margin:0 auto;
-      padding:28px 16px 64px;
-    }
+    .wrap{max-width:1200px;margin:0 auto;padding:18px 16px 48px}
     .topbar{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      justify-content:space-between;
-      margin-bottom:18px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;
+      padding:14px 14px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      position:sticky;top:10px;backdrop-filter: blur(8px); z-index:50;
     }
-    .brand{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
+    .titleBlock{min-width:260px;flex:1}
+    h1{margin:0;font-size:18px;font-weight:800;line-height:1.2}
+    .desc{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.35}
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;min-width:260px;
     }
-    .mark{
-      width:44px;height:44px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(106,166,255,.22), rgba(52,211,153,.12));
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .field{
+      display:flex;flex-direction:column;gap:6px;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      border-radius:14px;padding:10px 10px;min-width:160px;
     }
-    .mark:before{
-      content:"";
-      position:absolute;inset:-20%;
-      background: radial-gradient(circle at 30% 30%, rgba(106,166,255,.35), transparent 50%),
-                  radial-gradient(circle at 70% 60%, rgba(52,211,153,.28), transparent 55%),
-                  radial-gradient(circle at 40% 90%, rgba(251,191,36,.18), transparent 55%);
-      filter: blur(2px);
-    }
-    h1{
-      margin:0;
-      font-size:18px;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin-top:4px;
-      color:var(--muted);
+    .field label{font-size:11px;color:var(--muted)}
+    .field input{
+      width:100%;background:transparent;border:none;outline:none;color:var(--text);
       font-size:13px;
-      line-height:1.35;
-      max-width:64ch;
-    }
-    .toolbar{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      align-items:center;
     }
     .btn{
-      appearance:none;
-      border:1px solid rgba(255,255,255,.09);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      font-size:13px;
-      cursor:pointer;
-      box-shadow: 0 12px 30px rgba(0,0,0,.28);
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      padding:10px 12px;border-radius:14px;
+      font-size:12px;font-weight:700;cursor:pointer;
+      box-shadow:0 6px 16px rgba(0,0,0,.25);
+      transition:transform .06s ease, border-color .15s ease;
       user-select:none;
-      white-space:nowrap;
     }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.16);}
-    .btn:active{transform: translateY(0px);}
-    .btn.secondary{
-      background: rgba(255,255,255,.03);
-      box-shadow: none;
+    .btn:hover{transform:translateY(-1px);border-color:rgba(125,211,252,.35)}
+    .btn:active{transform:translateY(0px)}
+    .btn.primary{border-color:rgba(125,211,252,.45);background:linear-gradient(180deg, rgba(125,211,252,.18), rgba(255,255,255,.02))}
+    .btn.danger{border-color:rgba(239,68,68,.45);background:linear-gradient(180deg, rgba(239,68,68,.14), rgba(255,255,255,.02))}
+    .btn.ghost{background:transparent;box-shadow:none}
+    .toggle{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 10px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.02);
+      font-size:12px;font-weight:700;color:var(--text);
     }
-    .btn.danger{
-      border-color: rgba(239,68,68,.25);
-      background: linear-gradient(180deg, rgba(239,68,68,.16), rgba(239,68,68,.06));
-    }
-
+    .toggle input{accent-color: var(--accent)}
     .grid{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 420px 1fr;
       gap:14px;
-      align-items:start;
+      margin-top:14px;
     }
     @media (max-width: 980px){
-      .grid{grid-template-columns:1fr; }
-      .toolbar{justify-content:flex-start;}
+      .grid{grid-template-columns:1fr}
     }
-
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.07);
-      border-radius: var(--radius2);
-      padding:14px;
-      box-shadow: var(--shadow);
-    }
-    .card .head{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .card h2{
-      margin:0;
-      font-size:14px;
-      letter-spacing:.2px;
-    }
-    .muted{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      font-size:12px;
-      color:var(--muted);
-    }
-    .band{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:14px;
-      border
-:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      font-size:12px;
-      color:var(--muted);
-      width:100%;
-      justify-content:space-between;
-    }
-    .band strong{font-weight:650; color:var(--text);}
-    .band.aligned{border-color: rgba(52,211,153,.25); background: linear-gradient(180deg, rgba(52,211,153,.14), rgba(52,211,153,.05));}
-    .band.adjust{border-color: rgba(251,191,36,.25); background: linear-gradient(180deg, rgba(251,191,36,.14), rgba(251,191,36,.05));}
-    .band.risk{border-color: rgba(251,113,133,.25); background: linear-gradient(180deg, rgba(251,113,133,.14), rgba(251,113,133,.05));}
-    .band.critical{border-color: rgba(239,68,68,.25); background: linear-gradient(180deg, rgba(239,68,68,.16), rgba(239,68,68,.06));}
-
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-    .kpi{
-      flex:1 1 180px;
-      min-width:180px;
-      padding:12px;
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(0,0,0,.18);
-    }
-    .kpi .label{color:var(--muted); font-size:12px;}
-    .kpi .value{font-size:22px; margin-top:6px; font-weight:750; letter-spacing:.2px;}
-    .kpi .hint{color:var(--muted); font-size:12px; margin-top:6px; line-height:1.35;}
-
-    .divider{height:1px; background: rgba(255,255,255,.07); margin:12px 0;}
-
-    .sections{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    details.sec{
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(0,0,0,.16);
-      border-radius: var(--radius2);
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border-radius:18px;
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
-    details.sec[open]{
-      background: rgba(0,0,0,.20);
-      border-color: rgba(255,255,255,.10);
+    .cardHeader{
+      padding:12px 14px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background:rgba(0,0,0,.12);
     }
-    summary.secSum{
-      list-style:none;
-      cursor:pointer;
-      padding:12px 12px;
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      justify-content:space-between;
-      user-select:none;
-    }
-    summary.secSum::-webkit-details-marker{display:none}
-    .secLeft{display:flex; gap:12px; align-items:flex-start;}
-    .secIdx{
-      width:34px; height:34px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.04);
-      display:grid; place-items:center;
-      font-family: var(--mono);
-      color: var(--muted);
-      font-size:12px;
-      flex:0 0 auto;
-    }
-    .secTitles .t{margin:0; font-size:13px; font-weight:700;}
-    .secTitles .s{margin-top:3px; color:var(--muted); font-size:12px; line-height:1.35;}
-    .secRight{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex:0 0 auto;
-    }
-    .miniScore{
-      font-family: var(--mono);
-      color: var(--muted);
-      font-size:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-      border-radius: 999px;
-      padding:6px 10px;
+    .cardHeader h2{margin:0;font-size:13px;font-weight:900;letter-spacing:.3px}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(255,255,255,.02);font-size:11px;color:var(--muted);font-weight:700;
       white-space:nowrap;
     }
-    .secBody{
-      padding: 0 12px 12px;
+    .cardBody{padding:14px}
+    .statLine{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .bigPct{font-size:34px;font-weight:1000;letter-spacing:-.7px}
+    .bandPill{
+      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;border:1px solid var(--border);
+      background:rgba(255,255,255,.02);
     }
-    .secMeta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      margin-bottom:10px;
+    .bandPill.ok{border-color:rgba(34,197,94,.35); color: #b7f7c9}
+    .bandPill.warn{border-color:rgba(245,158,11,.35); color:#fde68a}
+    .bandPill.risk{border-color:rgba(239,68,68,.35); color:#fecaca}
+    .bandPill.crit{border-color:rgba(251,113,133,.35); color:#fecdd3}
+    .summary{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.45}
+    .verse{
+      margin-top:12px;padding:10px 12px;border-radius:16px;border:1px dashed rgba(125,211,252,.25);
+      background:rgba(125,211,252,.06);
+      color:var(--text);
+      font-size:12px;line-height:1.35;
     }
+    .verse .ref{color:var(--muted);font-weight:800;margin-top:6px;font-size:11px}
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    th,td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+    th{color:var(--muted);font-size:11px;text-align:left;font-weight:900;letter-spacing:.4px}
+    td{font-size:12px}
+    .tblWrap{overflow:auto;border:1px solid var(--border);border-radius:16px}
+    .tblWrap table{min-width:620px}
+    .muted{color:var(--muted)}
     .tag{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      color: var(--muted);
-      font-size:12px;
-      max-width: 100%;
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 8px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(255,255,255,.02);font-size:11px;font-weight:900;
     }
-    .tag .k{opacity:.8}
-    .tag .v{color: var(--text); font-weight:650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-    .qList{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .q{
-      padding:12px;
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(255,255,255,.02);
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      justify-content:space-between;
-    }
-    .q .qt{
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .q .qt .qId{
-      font-family: var(--mono);
-      font-size:11px;
-      color: var(--muted);
-      margin-bottom:6px;
-    }
-    .q .qt .qText{
-      font-size:13px;
-      line-height:1.4;
-      color: var(--text);
-    }
-
-    .scale{
-      flex: 0 0 auto;
-      display:flex;
-      gap:6px;
-      align-items:center;
-    }
-    .dot{
-      width:34px; height:34px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      color: var(--muted);
-      display:grid; place-items:center;
-      font-family: var(--mono);
-      font-size:12px;
-      cursor:pointer;
-      transition: transform .10s ease, border-color .12s ease, background .12s ease, color .12s ease;
-      user-select:none;
-    }
-    .dot:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.18);}
-    .dot.active{
-      color: var(--text);
-      border-color: rgba(106,166,255,.35);
-      background: rgba(106,166,255,.14);
-    }
-
-    .table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      overflow:hidden;
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(0,0,0,.16);
-    }
-    .table th, .table td{
-      padding:10px 10px;
-      font-size:12px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      text-align:left;
-      vertical-align:top;
-    }
-    .table th{color: var(--muted); font-weight:650; background: rgba(255,255,255,.02);}
-    .table tr:last-child td{border-bottom:none}
-    .mono{font-family: var(--mono);}
-
-    .svgWrap{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(0,0,0,.14);
-      padding:12px;
-      overflow:hidden;
-      position:relative;
-    }
-    .svgTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .legend{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .sw{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      font-size:12px;
-      color: var(--muted);
-    }
-    .sw i{
-      width:10px;height:10px;border-radius:999px; display:inline-block;
-      background: currentColor;
-    }
-    .sw.live{color: var(--good);}
-    .sw.dead{color: var(--crit);}
-    .sw.seis{color: #9aa6b2;}
-
-    svg#portico{
-      width:100%;
-      height:auto;
-      display:block;
-    }
-    .node{cursor:pointer}
-    .part{cursor:pointer}
-    .loadArrow{cursor:pointer}
-    .hoverGlow{filter: drop-shadow(0 0 14px rgba(106,166,255,.22));}
-
-    .tooltip{
-      position:absolute;
-      pointer-events:none;
-      z-index:20;
-      background: rgba(10,14,20,.92);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding:10px 12px;
-      max-width: 320px;
-      box-shadow: var(--shadow);
-      transform: translate(10px, 10px);
-      opacity:0;
-      transition: opacity .10s ease;
-    }
-    .tooltip .t{font-size:12px; font-weight:750; margin-bottom:4px;}
-    .tooltip .b{font-size:12px; color: var(--muted); line-height:1.35;}
-    .tooltip.show{opacity:1;}
-
-    .modalBackdrop{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      z-index:50;
-    }
-    .modalBackdrop.show{display:flex;}
-    .modal{
-      width: min(920px, 100%);
-      max-height: min(86vh, 920px);
-      overflow:auto;
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-    .modalHeader{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .modalTitle{margin:0; font-size:14px; letter-spacing:.2px;}
-    .modalBody{
+    .tag.ok{border-color:rgba(34,197,94,.35); color:#b7f7c9}
+    .tag.warn{border-color:rgba(245,158,11,.35); color:#fde68a}
+    .tag.risk{border-color:rgba(239,68,68,.35); color:#fecaca}
+    .tag.crit{border-color:rgba(251,113,133,.35); color:#fecdd3}
+    .tag.gray{border-color:rgba(148,163,184,.25); color:#e2e8f0}
+    .sections{
+      margin-top:14px;
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1fr;
       gap:12px;
-      align-items:start;
     }
-    @media (max-width: 900px){
-      .modalBody{grid-template-columns:1fr;}
-    }
-    .box{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(0,0,0,.16);
-      padding:12px;
-    }
-    .box h3{margin:0 0 8px; font-size:13px;}
-    .box p{margin:0; color: var(--muted); font-size:12px; line-height:1.5;}
-    .list{
-      margin:8px 0 0;
-      padding:0 0 0 16px;
-      color: var(--muted);
-      font-size:12px;
-      line-height:1.55;
-    }
-
-    .ghost{
-      opacity:.0;
-      height:0;
+    .sectionCard{
+      border:1px solid var(--border);
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012));
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
+    .sectionHead{
+      padding:12px 14px;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+      border-bottom:1px solid var(--border);
+      background:rgba(0,0,0,.10);
+    }
+    .sectionHead .left{min-width:240px;flex:1}
+    .sectionHead .t{font-size:13px;font-weight:1000;margin:0}
+    .sectionHead .st{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
+    .sectionHead .right{display:flex;flex-direction:column;gap:8px;align-items:flex-end;min-width:180px}
+    .miniLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .kpi{font-size:12px;font-weight:1000}
+    .sectionBody{padding:14px}
+    .qgrid{display:grid;grid-template-columns: 1fr 140px;gap:10px;align-items:center}
+    @media (max-width: 720px){
+      .qgrid{grid-template-columns:1fr}
+    }
+    .qitem{
+      padding:10px 12px;border:1px solid var(--border);border-radius:16px;
+      background:rgba(255,255,255,.02);
+      display:grid;grid-template-columns: 1fr 130px;gap:10px;align-items:center;
+    }
+    @media (max-width: 720px){
+      .qitem{grid-template-columns:1fr}
+    }
+    .qtext{font-size:12px;line-height:1.35}
+    .qctrl{
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;
+    }
+    select{
+      width:120px;
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:8px 10px;border-radius:12px;
+      outline:none;
+      font-weight:900;
+      font-size:12px;
+    }
+    .help{
+      margin-top:12px;
+      padding:12px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.18);
+    }
+    .helpTitle{font-size:12px;font-weight:1000;margin:0}
+    .helpText{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45}
+    .help ul{margin:8px 0 0 18px;color:var(--muted);font-size:12px;line-height:1.45}
+    .divider{height:1px;background:var(--border);margin:12px 0}
+    .obs{
+      width:100%;min-height:110px;resize:vertical;
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      border-radius:16px;
+      color:var(--text);
+      padding:10px 12px;
+      outline:none;
+      font-size:12px;
+      line-height:1.4;
+    }
+    .tooltip{
+      position:fixed;z-index:9999;
+      pointer-events:none;
+      padding:10px 10px;border-radius:14px;border:1px solid var(--border);
+      background:rgba(7,10,15,.95);
+      box-shadow:var(--shadow);
+      max-width:320px;
+      transform: translate(10px,10px);
+      opacity:0; transition:opacity .08s ease;
+      font-size:12px;line-height:1.35;
+    }
+    .tooltip .tt{font-weight:1000}
+    .tooltip .tm{margin-top:6px;color:var(--muted)}
+    .tooltip .tv{margin-top:8px;padding-top:8px;border-top:1px solid var(--border);color:#e2e8f0}
+    .tooltip .tr{margin-top:6px;color:var(--muted);font-size:11px;font-weight:900}
+    .modalBackdrop{
+      position:fixed;inset:0;background:rgba(0,0,0,.62);
+      display:none;align-items:center;justify-content:center;
+      padding:16px;z-index:2000;
+    }
+    .modal{
+      width:min(920px, 100%);
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:12px 14px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background:rgba(0,0,0,.18);
+    }
+    .modalHead .mh{font-weight:1000;font-size:13px;margin:0}
+    .modalBody{padding:14px}
+    .closeX{font-size:12px}
+    .kgrid{display:grid;grid-template-columns: 1fr 1fr;gap:12px}
+    @media (max-width: 820px){.kgrid{grid-template-columns:1fr}}
+    .list{
+      margin:10px 0 0 18px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .hint{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:10px 12px;border-radius:16px;border:1px dashed rgba(148,163,184,.25);
+      background:rgba(148,163,184,.06); color:var(--muted);
+      font-size:12px;line-height:1.4;
+    }
+    .footRow{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:10px
+    }
+    .small{font-size:11px;color:var(--muted);font-weight:700}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .sr{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <div class="topbar">
-      <div class="brand">
-        <div class="mark" aria-hidden="true"></div>
-        <div>
-          <h1 id="appTitle"></h1>
-          <div class="sub" id="appSubtitle"></div>
-        </div>
+      <div class="titleBlock">
+        <h1 id="title"></h1>
+        <div class="desc" id="desc"></div>
       </div>
 
-      <div class="toolbar">
-        <button class="btn secondary" id="btnSave" type="button">
-          <span id="lblSave"></span>
-          <span aria-hidden="true">💾</span>
-        </button>
-        <button class="btn secondary" id="btnReset" type="button">
-          <span id="lblReset"></span>
-          <span aria-hidden="true">↺</span>
-        </button>
-        <button class="btn" id="btnPdf" type="button">
-          <span id="lblPdf"></span>
-          <span aria-hidden="true">📄</span>
-        </button>
-        <button class="btn" id="btnPng" type="button">
-          <span id="lblPng"></span>
-          <span aria-hidden="true">🖼️</span>
-        </button>
-        <button class="btn" id="btnTxt" type="button">
-          <span id="lblTxt"></span>
-          <span aria-hidden="true">🧾</span>
-        </button>
-        <button class="btn danger" id="btnClearAll" type="button">
-          <span id="lblClear"></span>
-          <span aria-hidden="true">🗑️</span>
-        </button>
+      <div class="controls">
+        <div class="row">
+          <div class="field">
+            <label for="patient">Paciente</label>
+            <input id="patient" type="text" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="auditor">Auditor</label>
+            <input id="auditor" type="text" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="date">Fecha</label>
+            <input id="date" type="date" />
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn primary" id="btnExportPDF">Exportar PDF</button>
+          <button class="btn" id="btnExportPNG">Exportar PNG</button>
+          <button class="btn" id="btnExportTXT">Exportar TXT</button>
+          <button class="btn" id="btnSaveBefore">Guardar ANTES</button>
+          <button class="btn" id="btnSaveAfter">Guardar DESPUÉS</button>
+          <button class="btn danger" id="btnReset">Reset</button>
+          <label class="toggle" title="">
+            <input id="toggleGuide" type="checkbox" />
+            <span id="toggleGuideLabel"></span>
+          </label>
+          <label class="toggle" title="">
+            <input id="toggleDetailPDF" type="checkbox" />
+            <span id="toggleDetailPDFLabel"></span>
+          </label>
+        </div>
       </div>
     </div>
 
     <div class="grid">
       <div class="card">
-        <div class="head">
-          <div>
-            <h2 id="hdrAssessment"></h2>
-            <div class="muted" id="hdrAssessmentSub"></div>
-          </div>
-          <div class="pill" id="pillGlobal"></div>
+        <div class="cardHeader">
+          <h2 id="globalCardTitle"></h2>
+          <span class="chip" id="globalChip"></span>
         </div>
-
-        <div class="row" id="kpis">
-          <div class="kpi">
-            <div class="label" id="kpiGlobalLabel"></div>
-            <div class="value mono" id="kpiGlobalValue">—</div>
-            <div class="hint" id="kpiGlobalHint"></div>
+        <div class="cardBody">
+          <div class="statLine">
+            <div class="bigPct" id="globalPct">—</div>
+            <div class="bandPill" id="globalBandPill">—</div>
           </div>
-          <div class="kpi">
-            <div class="label" id="kpiAxisLabel"></div>
-            <div class="value mono" id="kpiAxisValue">—</div>
-            <div class="hint" id="kpiAxisHint"></div>
+          <div class="summary" id="globalSummary"></div>
+          <div class="verse" id="globalVerse">
+            <div id="globalVerseQ"></div>
+            <div class="ref" id="globalVerseR"></div>
           </div>
-          <div class="kpi">
-            <div class="label" id="kpiSectionsLabel"></div>
-            <div class="value mono" id="kpiSectionsValue">—</div>
-            <div class="hint" id="kpiSectionsHint"></div>
+
+          <div class="divider"></div>
+
+          <div class="cardHeader" style="padding:10px 0 0;border:0;background:transparent">
+            <h2 id="porticoTitle"></h2>
+            <span class="chip" id="porticoChip"></span>
           </div>
-        </div>
 
-        <div class="divider"></div>
+          <div style="margin-top:10px;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:rgba(0,0,0,.12)">
+            <div id="porticoWrap" style="position:relative;padding:12px">
+              <svg id="porticoSVG" width="100%" viewBox="0 0 520 340" role="img" aria-label="">
+                <defs>
+                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="2.6" result="blur"/>
+                    <feMerge>
+                      <feMergeNode in="blur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                  <marker id="arrowHead" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+                  </marker>
+                </defs>
 
-        <div id="globalBand" class="band aligned">
-          <strong id="bandTitle"></strong>
-          <span class="mono" id="bandScore"></span>
-        </div>
+                <!-- Base background grid lines -->
+                <g opacity="0.12">
+                  <path d="M40 300 H500" stroke="white" stroke-width="1"/>
+                  <path d="M40 260 H500" stroke="white" stroke-width="1"/>
+                  <path d="M40 220 H500" stroke="white" stroke-width="1"/>
+                  <path d="M40 180 H500" stroke="white" stroke-width="1"/>
+                  <path d="M40 140 H500" stroke="white" stroke-width="1"/>
+                  <path d="M40 100 H500" stroke="white" stroke-width="1"/>
+                  <path d="M40 60 H500" stroke="white" stroke-width="1"/>
+                </g>
 
-        <div class="divider"></div>
+                <!-- Cimiento (horizontal inferior) -->
+                <path id="elCimiento" d="M70 285 H460" stroke="white" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
+                <!-- Columna (vertical izquierda) -->
+                <path id="elColumna" d="M110 285 V70" stroke="white" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
+                <!-- Viga (horizontal superior) -->
+                <path id="elViga" d="M110 90 H430" stroke="white" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
 
-        <div class="sections" id="sections"></div>
-      </div>
+                <!-- Nudos -->
+                <g filter="url(#glow)">
+                  <circle id="nodoBase" cx="110" cy="285" r="12" fill="rgba(255,255,255,.75)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+                  <circle id="nodoArriba" cx="110" cy="90" r="12" fill="rgba(255,255,255,.75)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+                  <circle id="nodoExtremo" cx="430" cy="90" r="12" fill="rgba(255,255,255,.75)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+                </g>
 
-      <div class="card">
-        <div class="head">
-          <div>
-            <h2 id="hdrPortico"></h2>
-            <div class="muted" id="hdrPorticoSub"></div>
-          </div>
-          <div class="pill" id="pillBeforeAfter"></div>
-        </div>
+                <!-- Flechas de carga: viva (verde), muerta (roja), sísmica (gris) -->
+                <g id="flechas" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <g id="cargaViva" style="color: var(--ok)">
+                    <path d="M260 60 V85" stroke="currentColor" marker-end="url(#arrowHead)"/>
+                    <path d="M320 60 V85" stroke="currentColor" marker-end="url(#arrowHead)"/>
+                  </g>
+                  <g id="cargaMuerta" style="color: var(--risk)">
+                    <path d="M200 58 V85" stroke="currentColor" marker-end="url(#arrowHead)"/>
+                  </g>
+                  <g id="cargaSismica" style="color: var(--gray)">
+                    <path d="M80 210 H110" stroke="currentColor" marker-end="url(#arrowHead)"/>
+                    <path d="M80 170 H110" stroke="currentColor" marker-end="url(#arrowHead)"/>
+                  </g>
+                </g>
 
-        <div class="svgWrap" id="svgWrap">
-          <div class="svgTop">
-            <div class="pill" id="pillAxis"></div>
-            <div class="legend">
-              <span class="sw live"><i></i><span id="lblLive"></span></span>
-              <span class="sw dead"><i></i><span id="lblDead"></span></span>
-              <span class="sw seis"><i></i><span id="lblSeis"></span></span>
+                <!-- Hit areas for interaction -->
+                <g opacity="0" cursor="pointer">
+                  <rect id="hitComunion" x="78" y="70" width="64" height="220" rx="18"></rect>
+                  <rect id="hitCongregacion" x="110" y="62" width="330" height="56" rx="18"></rect>
+                  <rect id="hitInterseccion" x="78" y="258" width="100" height="64" rx="18"></rect>
+                </g>
+
+                <!-- Labels (non-doctrinal; text comes from JSON via JS) -->
+                <g font-size="12" font-weight="900" fill="rgba(255,255,255,.85)">
+                  <text id="lblComunion" x="22" y="155" transform="rotate(-90 22 155)"></text>
+                  <text id="lblCongregacion" x="220" y="36"></text>
+                  <text id="lblInterseccion" x="160" y="314"></text>
+                </g>
+              </svg>
             </div>
           </div>
 
-          <div class="tooltip" id="tooltip">
-            <div class="t" id="ttTitle"></div>
-            <div class="b" id="ttBody"></div>
+          <div class="divider"></div>
+
+          <div class="cardHeader" style="padding:10px 0 0;border:0;background:transparent">
+            <h2 id="axesTableTitle"></h2>
+            <span class="chip" id="axesChip"></span>
+          </div>
+          <div class="tblWrap" style="margin-top:10px">
+            <table>
+              <thead>
+                <tr>
+                  <th id="thAxis"></th>
+                  <th id="thScore"></th>
+                  <th id="thBand"></th>
+                  <th id="thKeyVerse"></th>
+                </tr>
+              </thead>
+              <tbody id="axesTbody"></tbody>
+            </table>
           </div>
 
-          <!-- REAL SVG Pórtico -->
-          <svg id="portico" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="">
-            <defs>
-              <linearGradient id="gPanel" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="rgba(255,255,255,.06)"/>
-                <stop offset="1" stop-color="rgba(255,255,255,.02)"/>
-              </linearGradient>
-              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
-              </marker>
-            </defs>
+          <div class="divider"></div>
 
-            <!-- Frame background -->
-            <rect x="18" y="18" width="864" height="524" rx="22" fill="url(#gPanel)" stroke="rgba(255,255,255,.08)"/>
+          <div class="cardHeader" style="padding:10px 0 0;border:0;background:transparent">
+            <h2 id="obsTitle"></h2>
+            <span class="chip" id="obsChip"></span>
+          </div>
+          <textarea class="obs" id="observations"></textarea>
 
-            <!-- Ground line -->
-            <path d="M 80 460 H 820" stroke="rgba(255,255,255,.08)" stroke-width="2"/>
-
-            <!-- CIMIENTO -->
-            <g class="part" data-part="cimiento">
-              <rect x="130" y="420" width="640" height="70" rx="18" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.10)" stroke-width="2"/>
-              <path d="M 150 450 H 750" stroke="rgba(255,255,255,.08)" stroke-width="2" stroke-dasharray="6 8"/>
-              <circle class="node" data-node="nudo-izq-cimiento" cx="220" cy="455" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
-              <circle class="node" data-node="nudo-der-cimiento" cx="680" cy="455" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
-            </g>
-
-            <!-- COLUMNA -->
-            <g class="part" data-part="columna">
-              <rect x="220" y="180" width="56" height="240" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.11)" stroke-width="2"/>
-              <circle class="node" data-node="nudo-columna-base" cx="248" cy="420" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
-              <circle class="node" data-node="nudo-columna-cabeza" cx="248" cy="180" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
-            </g>
-
-            <!-- VIGA -->
-            <g class="part" data-part="viga">
-              <rect x="248" y="150" width="470" height="56" rx="14" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.11)" stroke-width="2"/>
-              <circle class="node" data-node="nudo-viga-izq" cx="248" cy="178" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
-              <circle class="node" data-node="nudo-viga-der" cx="718" cy="178" r="7" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
-            </g>
-
-            <!-- Apoyo móvil (representado como rodillo) -->
-            <g class="part" data-part="apoyo">
-              <path d="M 705 206 L 731 206 L 718 228 Z" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
-              <circle cx="710" cy="235" r="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
-              <circle cx="726" cy="235" r="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" stroke-width="2"/>
-            </g>
-
-            <!-- Flechas de carga -->
-            <g class="loadArrow live" data-load="viva" style="color: var(--good);">
-              <path d="M 360 105 V 142" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
-              <path d="M 520 105 V 142" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
-            </g>
-            <g class="loadArrow dead" data-load="muerta" style="color: var(--crit);">
-              <path d="M 440 105 V 142" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
-            </g>
-            <g class="loadArrow seis" data-load="sismica" style="color: #9aa6b2;">
-              <path d="M 140 360 H 205" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
-              <path d="M 140 340 H 205" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)"/>
-            </g>
-
-            <!-- Etiquetas (vacías; se llenan desde JSON para cumplir regla de texto) -->
-            <g font-family="var(--sans)" font-size="13" fill="rgba(230,238,252,.90)">
-              <text id="svgLabelCimiento" x="160" y="445"></text>
-              <text id="svgLabelColumna" x="220" y="168"></text>
-              <text id="svgLabelViga" x="248" y="140"></text>
-              <text id="svgLabelApoyo" x="660" y="260"></text>
-            </g>
-          </svg>
+          <div class="footRow">
+            <div class="small mono" id="storageHint"></div>
+            <div class="small" id="versionHint"></div>
+          </div>
         </div>
+      </div>
 
-        <div class="divider"></div>
-
-        <div class="box">
-          <h3 id="hdrSteps"></h3>
-          <div class="muted" id="stepsIntro"></div>
-          <ol class="list" id="steps"></ol>
+      <div class="card">
+        <div class="cardHeader">
+          <h2 id="sectionsTitle"></h2>
+          <span class="chip" id="sectionsChip"></span>
         </div>
+        <div class="cardBody">
+          <div class="tblWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th id="thSection"></th>
+                  <th id="thAxisSmall"></th>
+                  <th id="thSectionScore"></th>
+                  <th id="thSectionBand"></th>
+                </tr>
+              </thead>
+              <tbody id="sectionsTbody"></tbody>
+            </table>
+          </div>
 
-        <div class="divider"></div>
-
-        <div class="box">
-          <h3 id="hdrAxes"></h3>
-          <table class="table" id="axesTable" aria-label="">
-            <thead>
-              <tr>
-                <th id="thAxis"></th>
-                <th id="thScore"></th>
-                <th id="thBand"></th>
-              </tr>
-            </thead>
-            <tbody id="axesBody"></tbody>
-          </table>
+          <div class="sections" id="sectionsCards"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="">
-    <div class="modal">
-      <div class="modalHeader">
-        <div>
-          <h3 class="modalTitle" id="modalTitle"></h3>
-          <div class="muted" id="modalSub"></div>
-        </div>
-        <button class="btn secondary" id="btnCloseModal" type="button">
-          <span id="lblClose"></span>
-          <span aria-hidden="true">✕</span>
-        </button>
-      </div>
+  <div class="tooltip" id="tooltip"></div>
 
-      <div class="modalBody">
-        <div class="box">
-          <h3 id="hdrTeaching"></h3>
-          <p id="modalTeaching"></p>
-          <div class="divider"></div>
-          <h3 id="hdrVerse"></h3>
-          <p id="modalVerse"></p>
+  <div class="modalBackdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modalHead">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="mh" id="modalTitle"></div>
+          <div class="small" id="modalSub"></div>
         </div>
-        <div class="box">
-          <h3 id="hdrActions"></h3>
-          <ul class="list" id="modalActions"></ul>
-          <div class="divider"></div>
-          <div class="muted" id="modalNote"></div>
-        </div>
+        <button class="btn ghost closeX" id="modalClose">Cerrar</button>
       </div>
+      <div class="modalBody" id="modalBody"></div>
     </div>
   </div>
+
+  <!-- libs -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <script>
-    (function(){
-      "use strict";
+    // ✅ AUTO-VALIDACIÓN REQUERIDA
+    const JSON_PATH = './🔴viga-mujer.json';
+    const TITLE = '🔴La viga: la mujer como alma del sistema';
 
-      const JSON_PATH = "viga-mujer.json";
-      const LS_KEY = "audit:viga-mujer";
+    const LS_KEY = 'pastoral_audit_viga_mujer_v1';
+    const LS_BEFORE_KEY = 'pastoral_audit_viga_mujer_before';
+    const LS_AFTER_KEY  = 'pastoral_audit_viga_mujer_after';
 
-      const $ = (id)=>document.getElementById(id);
-      const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
-      const fmt1 = (n)=> (Math.round(n*10)/10).toFixed(1);
-      const safeText = (v)=> (v==null ? "" : String(v));
-
-      let data = null;
-      let state = { answers: {} }; // qid -> 0..5 (null => unanswered)
-      let lastSaved = null;
-
-      const ui = {
-        title: $("appTitle"),
-        subtitle: $("appSubtitle"),
-        labels: {
-          save: $("lblSave"),
-          reset: $("lblReset"),
-          pdf: $("lblPdf"),
-          png: $("lblPng"),
-          txt: $("lblTxt"),
-          clear: $("lblClear"),
-          close: $("lblClose"),
-          live: $("lblLive"),
-          dead: $("lblDead"),
-          seis: $("lblSeis"),
-        },
-        headers: {
-          assessment: $("hdrAssessment"),
-          assessmentSub: $("hdrAssessmentSub"),
-          portico: $("hdrPortico"),
-          porticoSub: $("hdrPorticoSub"),
-          steps: $("hdrSteps"),
-          stepsIntro: $("stepsIntro"),
-          axes: $("hdrAxes"),
-          teaching: $("hdrTeaching"),
-          verse: $("hdrVerse"),
-          actions: $("hdrActions"),
-        },
-        pills: {
-          global: $("pillGlobal"),
-          axis: $("pillAxis"),
-          beforeAfter: $("pillBeforeAfter"),
-        },
-        kpis: {
-          gLabel: $("kpiGlobalLabel"),
-          gValue: $("kpiGlobalValue"),
-          gHint: $("kpiGlobalHint"),
-          aLabel: $("kpiAxisLabel"),
-          aValue: $("kpiAxisValue"),
-          aHint: $("kpiAxisHint"),
-          sLabel: $("kpiSectionsLabel"),
-          sValue: $("kpiSectionsValue"),
-          sHint: $("kpiSectionsHint"),
-        },
-        band: {
-          el: $("globalBand"),
-          title: $("bandTitle"),
-          score: $("bandScore"),
-        },
-        sections: $("sections"),
-        axes: {
-          table: $("axesTable"),
-          body: $("axesBody"),
-          thAxis: $("thAxis"),
-          thScore: $("thScore"),
-          thBand: $("thBand"),
-        },
-        tooltip: {
-          box: $("tooltip"),
-          t: $("ttTitle"),
-          b: $("ttBody"),
-        },
-        svg: {
-          wrap: $("svgWrap"),
-          root: $("portico"),
-          labelC: $("svgLabelCimiento"),
-          labelCol: $("svgLabelColumna"),
-          labelV: $("svgLabelViga"),
-          labelA: $("svgLabelApoyo"),
-        },
-        steps: $("steps"),
-        modal: {
-          back: $("modalBackdrop"),
-          title: $("modalTitle"),
-          sub: $("modalSub"),
-          teaching: $("modalTeaching"),
-          verse: $("modalVerse"),
-          actions: $("modalActions"),
-          note: $("modalNote"),
-        },
-        btns: {
-          save: $("btnSave"),
-          reset: $("btnReset"),
-          pdf: $("btnPdf"),
-          png: $("btnPng"),
-          txt: $("btnTxt"),
-          clear: $("btnClearAll"),
-          closeModal: $("btnCloseModal"),
-        },
-      };
-
-      function bandForScore(avg){
-        // 0..5 where 5 is best alignment.
-        const b = data?.rubrics?.globalBands || [];
-        // Expect bands with min/max inclusive; pick match. Fallback thresholds.
-        for(const band of b){
-          if(typeof band?.min==="number" && typeof band?.max==="number"){
-            if(avg>=band.min && avg<=band.max) return band;
-          }
-        }
-        // fallback
-        if(avg>=4.2) return {key:"aligned", label:"", css:"aligned"};
-        if(avg>=3.2) return {key:"adjust", label:"", css:"adjust"};
-        if(avg>=2.0) return {key:"risk", label:"", css:"risk"};
-        return {key:"critical", label:"", css:"critical"};
+    const state = {
+      data: null,
+      answers: {}, // qid -> value 0..5
+      meta: {
+        patient: '',
+        auditor: '',
+        date: '',
+        observations: '',
+        guideMode: false,
+        detailPDF: false
       }
+    };
 
-      function sectionBandForScore(avg){
-        const b = data?.rubrics?.sectionBands || [];
-        for(const band of b){
-          if(typeof band?.min==="number" && typeof band?.max==="number"){
-            if(avg>=band.min && avg<=band.max) return band;
-          }
-        }
-        return bandForScore(avg);
-      }
+    const $ = (id) => document.getElementById(id);
 
-      function getUi(path, fallback=""){
-        // meta.ui.* is optional; avoid visible fixed text if absent
-        const parts = path.split(".");
-        let cur = data?.meta?.ui;
-        for(const p of parts){
-          if(!cur || typeof cur!=="object") return fallback;
-          cur = cur[p];
-        }
-        return safeText(cur ?? fallback);
-      }
+    const ui = {
+      title: $('title'),
+      desc: $('desc'),
+      patient: $('patient'),
+      auditor: $('auditor'),
+      date: $('date'),
+      observations: $('observations'),
+      toggleGuide: $('toggleGuide'),
+      toggleGuideLabel: $('toggleGuideLabel'),
+      toggleDetailPDF: $('toggleDetailPDF'),
+      toggleDetailPDFLabel: $('toggleDetailPDFLabel'),
 
-      function loadLocal(){
-        try{
-          const raw = localStorage.getItem(LS_KEY);
-          if(!raw) return null;
-          return JSON.parse(raw);
-        }catch(e){ return null; }
-      }
+      btnExportPDF: $('btnExportPDF'),
+      btnExportPNG: $('btnExportPNG'),
+      btnExportTXT: $('btnExportTXT'),
+      btnSaveBefore: $('btnSaveBefore'),
+      btnSaveAfter: $('btnSaveAfter'),
+      btnReset: $('btnReset'),
 
-      function saveLocal(payload){
-        localStorage.setItem(LS_KEY, JSON.stringify(payload));
-      }
+      globalPct: $('globalPct'),
+      globalBandPill: $('globalBandPill'),
+      globalSummary: $('globalSummary'),
+      globalVerseQ: $('globalVerseQ'),
+      globalVerseR: $('globalVerseR'),
+      globalChip: $('globalChip'),
 
-      function clearLocal(){
-        localStorage.removeItem(LS_KEY);
-      }
+      axesTbody: $('axesTbody'),
+      sectionsTbody: $('sectionsTbody'),
+      sectionsCards: $('sectionsCards'),
 
-      function hydrateFromSaved(saved){
-        if(!saved) return;
-        if(saved.answers && typeof saved.answers==="object"){
-          state.answers = saved.answers;
+      tooltip: $('tooltip'),
+      modalBackdrop: $('modalBackdrop'),
+      modalClose: $('modalClose'),
+      modalTitle: $('modalTitle'),
+      modalSub: $('modalSub'),
+      modalBody: $('modalBody'),
+
+      // portico labels + hits
+      lblComunion: $('lblComunion'),
+      lblCongregacion: $('lblCongregacion'),
+      lblInterseccion: $('lblInterseccion'),
+      hitComunion: $('hitComunion'),
+      hitCongregacion: $('hitCongregacion'),
+      hitInterseccion: $('hitInterseccion'),
+
+      // titles that should not be doctrinal; only UI
+      globalCardTitle: $('globalCardTitle'),
+      porticoTitle: $('porticoTitle'),
+      axesTableTitle: $('axesTableTitle'),
+      obsTitle: $('obsTitle'),
+      sectionsTitle: $('sectionsTitle'),
+
+      thAxis: $('thAxis'),
+      thScore: $('thScore'),
+      thBand: $('thBand'),
+      thKeyVerse: $('thKeyVerse'),
+      thSection: $('thSection'),
+      thAxisSmall: $('thAxisSmall'),
+      thSectionScore: $('thSectionScore'),
+      thSectionBand: $('thSectionBand'),
+
+      porticoChip: $('porticoChip'),
+      axesChip: $('axesChip'),
+      obsChip: $('obsChip'),
+      sectionsChip: $('sectionsChip'),
+
+      storageHint: $('storageHint'),
+      versionHint: $('versionHint')
+    };
+
+    function todayISO(){
+      const d = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    }
+
+    function safeText(s){ return (s ?? '').toString(); }
+
+    function bandClassFromLabel(label){
+      const l = (label||'').toLowerCase();
+      if(l.includes('aline')) return 'ok';
+      if(l.includes('ajust')) return 'warn';
+      if(l.includes('ries')) return 'risk';
+      if(l.includes('crít') || l.includes('crit')) return 'crit';
+      return 'gray';
+    }
+
+    function axisBandByPct(pct){
+      if(pct >= 75) return { key:'Alineado', t:'Alineado' };
+      if(pct >= 55) return { key:'En ajuste', t:'En ajuste' };
+      if(pct >= 35) return { key:'En riesgo', t:'En riesgo' };
+      return { key:'Crítico', t:'Crítico' };
+    }
+
+    function sectionBandByPct(pct){
+      if(pct >= 75) return { key:'Alineado', t:'Alineado' };
+      if(pct >= 55) return { key:'Ajuste', t:'Ajuste' };
+      return { key:'Riesgo', t:'Riesgo' };
+    }
+
+    function globalBandByPct(pct){
+      // 4 bandas
+      if(pct >= 75) return { key:'Alineado', t:'Alineado' };
+      if(pct >= 55) return { key:'Ajuste', t:'Ajuste' };
+      if(pct >= 35) return { key:'Riesgo', t:'Riesgo' };
+      return { key:'Crítico', t:'Crítico' };
+    }
+
+    function pctFromRaw(raw, maxRaw){
+      if(maxRaw <= 0) return 0;
+      const v = (raw / maxRaw) * 100;
+      return Math.max(0, Math.min(100, v));
+    }
+
+    function getScaleLabel(value){
+      const opt = (state.data?.scale?.options || []).find(o => o.value === value);
+      return opt ? opt.label : String(value);
+    }
+
+    function ensureAllAnswers(){
+      for(const sec of state.data.sections){
+        for(const q of sec.questions){
+          const key = q.id;
+          if(!(key in state.answers)) state.answers[key] = 0;
         }
       }
+    }
 
-      function compute(){
-        const sections = data.sections || [];
-        const axes = (data.porticoModel && data.porticoModel.axes) ? data.porticoModel.axes : [];
-        const qMax = (data.scale && data.scale.options ? Math.max(...data.scale.options.map(o=>o.value)) : 5) || 5;
+    function computeSection(sec){
+      const qs = sec.questions;
+      const raw = qs.reduce((sum,q)=>sum+(Number(state.answers[q.id] ?? 0)),0);
+      const max = qs.length * 5;
+      const pct = pctFromRaw(raw, max);
+      const band = sectionBandByPct(pct);
+      const bandDef = (state.data.rubrics.sectionBands || []).find(b=>b.label === band.t) || null;
+      return { raw, max, pct, band, bandDef };
+    }
 
-        // Per section
-        const sectionScores = sections.map(sec=>{
-          const qs = sec.questions || [];
-          let sum=0, cnt=0;
-          for(const q of qs){
-            const v = state.answers[q.id];
-            if(v==null || v==="") continue;
-            sum += Number(v);
-            cnt += 1;
-          }
-          const avg = cnt ? sum/cnt : 0;
-          const pct = (avg / qMax) * 100;
-          return { id: sec.id, title: sec.title, avg, pct, cnt, total: qs.length, porticoAxis: sec.porticoAxis };
-        });
-
-        // Per axis (aggregate across sections that map to axis)
-        const axisScores = axes.map(ax=>{
-          const rel = sectionScores.filter(s=>s.porticoAxis===ax.id);
-          let sum=0, cnt=0, totalQ=0;
-          for(const s of rel){
-            const sec = sections.find(x=>x.id===s.id);
-            const qs = sec?.questions || [];
-            totalQ += qs.length;
-            // Weighted by answered questions in section
-            if(s.cnt){
-              sum += s.avg * s.cnt;
-              cnt += s.cnt;
-            }
-          }
-          const avg = cnt ? sum/cnt : 0;
-          const pct = (avg / qMax) * 100;
-          return { id: ax.id, title: ax.title, avg, pct, answered: cnt, totalQ };
-        });
-
-        // Global (all answered questions)
-        let gSum=0, gCnt=0, gTotal=0;
-        for(const sec of sections){
-          for(const q of (sec.questions||[])){
-            gTotal++;
-            const v = state.answers[q.id];
-            if(v==null || v==="") continue;
-            gSum += Number(v);
-            gCnt++;
-          }
-        }
-        const gAvg = gCnt ? gSum/gCnt : 0;
-        const gPct = (gAvg / qMax) * 100;
-
-        return { sectionScores, axisScores, global: { avg: gAvg, pct: gPct, answered: gCnt, totalQ: gTotal } };
+    function computeAxis(axisId){
+      const secs = state.data.sections.filter(s=>s.porticoAxis===axisId);
+      const raw = secs.reduce((sum,s)=>sum+computeSection(s).raw,0);
+      const max = secs.reduce((sum,s)=>sum+(s.questions.length*5),0);
+      const pct = pctFromRaw(raw, max);
+      const band = axisBandByPct(pct);
+      const axisDef = state.data.porticoModel.axes.find(a=>a.id===axisId);
+      const bandDef = axisDef?.bands?.find(b=>b.label.toLowerCase().includes(band.key.toLowerCase().split(' ')[1]||band.key.toLowerCase()) || b.label===band.t || b.label===band.key) || null;
+      // fallback: match by ranges for canonical
+      let best = bandDef;
+      if(!best && axisDef?.bands?.length){
+        const pick = (pct>=75)?axisDef.bands.find(b=>b.range==="75-100")
+                  : (pct>=55)?axisDef.bands.find(b=>b.range==="55-74")
+                  : (pct>=35)?axisDef.bands.find(b=>b.range==="35-54")
+                  : axisDef.bands.find(b=>b.range==="0-34");
+        best = pick || axisDef.bands[0];
       }
+      return { raw, max, pct, band, bandDef: best, axisDef, secs };
+    }
 
-      function renderTop(){
-        document.title = safeText(data?.meta?.title || "");
-        ui.title.textContent = safeText(data?.meta?.title || "");
-        ui.subtitle.textContent = safeText(data?.meta?.subtitle || "");
+    function computeGlobal(){
+      const secs = state.data.sections;
+      const raw = secs.reduce((sum,s)=>sum+computeSection(s).raw,0);
+      const max = secs.reduce((sum,s)=>sum+(s.questions.length*5),0);
+      const pct = pctFromRaw(raw, max);
+      const band = globalBandByPct(pct);
+      const bandDef = (state.data.rubrics.globalBands || []).find(b=>b.label===band.t) || null;
+      return { raw, max, pct, band, bandDef };
+    }
 
-        ui.labels.save.textContent = getUi("buttons.save", "");
-        ui.labels.reset.textContent = getUi("buttons.reset", "");
-        ui.labels.pdf.textContent = getUi("buttons.pdf", "");
-        ui.labels.png.textContent = getUi("buttons.png", "");
-        ui.labels.txt.textContent = getUi("buttons.txt", "");
-        ui.labels.clear.textContent = getUi("buttons.clear", "");
-        ui.labels.close.textContent = getUi("buttons.close", "");
+    function renderStaticUIStrings(){
+      // UI headings (no doctrina)
+      ui.globalCardTitle.textContent = 'Diagnóstico global';
+      ui.porticoTitle.textContent = 'Pórtico diagnóstico';
+      ui.axesTableTitle.textContent = 'Tabla de ejes';
+      ui.obsTitle.textContent = 'Observaciones';
+      ui.sectionsTitle.textContent = 'Secciones';
 
-        ui.headers.assessment.textContent = getUi("headers.assessment", "");
-        ui.headers.assessmentSub.textContent = safeText(data?.meta?.description || "");
+      ui.thAxis.textContent = 'Eje';
+      ui.thScore.textContent = 'Puntaje';
+      ui.thBand.textContent = 'Banda';
+      ui.thKeyVerse.textContent = 'Verso';
 
-        ui.headers.portico.textContent = getUi("headers.portico", "");
-        ui.headers.porticoSub.textContent = getUi("headers.porticoSub", "");
+      ui.thSection.textContent = 'Sección';
+      ui.thAxisSmall.textContent = 'Eje';
+      ui.thSectionScore.textContent = 'Puntaje';
+      ui.thSectionBand.textContent = 'Banda';
 
-        ui.headers.steps.textContent = getUi("headers.steps", "");
-        ui.headers.stepsIntro.textContent = getUi("headers.stepsIntro", "");
+      ui.toggleGuideLabel.textContent = 'Modo guía';
+      ui.toggleDetailPDFLabel.textContent = 'Detalle por pregunta en PDF';
 
-        ui.headers.axes.textContent = getUi("headers.axes", "");
+      ui.globalChip.textContent = '0–5 • 8 preguntas x sección • sin backend';
+      ui.porticoChip.textContent = 'Hover: tooltip • Click: modal';
+      ui.axesChip.textContent = '3 ejes • % por eje';
+      ui.obsChip.textContent = 'Incluido en exportaciones';
+      ui.sectionsChip.textContent = '8 secciones • 64 preguntas';
 
-        ui.headers.teaching.textContent = getUi("headers.teaching", "");
-        ui.headers.verse.textContent = getUi("headers.verse", "");
-        ui.headers.actions.textContent = getUi("headers.actions", "");
+      ui.versionHint.textContent = 'v1 • GitHub Pages';
+    }
 
-        ui.kpis.gLabel.textContent = getUi("kpis.globalLabel", "");
-        ui.kpis.gHint.textContent = getUi("kpis.globalHint", "");
-        ui.kpis.aLabel.textContent = getUi("kpis.axisLabel", "");
-        ui.kpis.aHint.textContent = getUi("kpis.axisHint", "");
-        ui.kpis.sLabel.textContent = getUi("kpis.sectionsLabel", "");
-        ui.kpis.sHint.textContent = getUi("kpis.sectionsHint", "");
+    function renderHeader(){
+      ui.title.textContent = safeText(state.data.meta.title || TITLE);
+      ui.desc.textContent = safeText(state.data.meta.description || '');
+      document.title = safeText(state.data.meta.title || TITLE);
 
-        ui.axes.thAxis.textContent = getUi("tables.axis", "");
-        ui.axes.thScore.textContent = getUi("tables.score", "");
-        ui.axes.thBand.textContent = getUi("tables.band", "");
-        ui.axes.table.setAttribute("aria-label", getUi("tables.axisAria", ""));
+      // Portico labels come from JSON axes labels
+      const ax = Object.fromEntries(state.data.porticoModel.axes.map(a=>[a.id,a]));
+      ui.lblComunion.textContent = safeText(ax.comunion?.label || 'Comunión');
+      ui.lblCongregacion.textContent = safeText(ax.congregacion?.label || 'Congregación');
+      ui.lblInterseccion.textContent = safeText(ax.interseccion?.label || 'Intersección');
 
-        ui.svg.root.setAttribute("aria-label", getUi("svg.aria", ""));
-        ui.modal.back.setAttribute("aria-label", getUi("modal.aria", ""));
+      // aria-label for svg
+      $('porticoSVG').setAttribute('aria-label', safeText(state.data.meta.title || TITLE));
+    }
 
-        ui.labels.live.textContent = getUi("legend.live", "");
-        ui.labels.dead.textContent = getUi("legend.dead", "");
-        ui.labels.seis.textContent = getUi("legend.seismic", "");
+    function renderAxesTable(){
+      ui.axesTbody.innerHTML = '';
+      const axes = state.data.porticoModel.axes;
 
-        ui.svg.labelC.textContent = getUi("svg.labels.cimiento", "");
-        ui.svg.labelCol.textContent = getUi("svg.labels.columna", "");
-        ui.svg.labelV.textContent = getUi("svg.labels.viga", "");
-        ui.svg.labelA.textContent = getUi("svg.labels.apoyo", "");
+      for(const a of axes){
+        const r = computeAxis(a.id);
+        const bandLabel = r.band.t;
+        const cls = bandClassFromLabel(bandLabel);
+        const tr = document.createElement('tr');
+
+        const tdA = document.createElement('td');
+        tdA.innerHTML = `<div style="font-weight:1000">${escapeHTML(a.label)}</div><div class="muted" style="margin-top:4px">${escapeHTML(a.description)}</div>`;
+        const tdS = document.createElement('td');
+        tdS.innerHTML = `<div class="mono" style="font-weight:1000">${Math.round(r.pct)}%</div><div class="muted">${r.raw}/${r.max}</div>`;
+        const tdB = document.createElement('td');
+        tdB.innerHTML = `<span class="tag ${cls}">${escapeHTML(bandLabel)}</span>`;
+        const tdV = document.createElement('td');
+        const vq = r.bandDef?.verse?.quote || '';
+        const vr = r.bandDef?.verse?.reference || '';
+        tdV.innerHTML = `<div>${escapeHTML(vq)}</div><div class="muted" style="margin-top:6px;font-weight:900;font-size:11px">${escapeHTML(vr)}</div>`;
+
+        tr.appendChild(tdA); tr.appendChild(tdS); tr.appendChild(tdB); tr.appendChild(tdV);
+        ui.axesTbody.appendChild(tr);
       }
+    }
 
-      function makeDots(qid, current){
-        const opts = (data.scale && data.scale.options) ? data.scale.options : [
-          {value:0,label:"0"},{value:1,label:"1"},{value:2,label:"2"},{value:3,label:"3"},{value:4,label:"4"},{value:5,label:"5"}
-        ];
-        const wrap = document.createElement("div");
-        wrap.className = "scale";
-        for(const o of opts){
-          const b = document.createElement("button");
-          b.type="button";
-          b.className = "dot" + (Number(current)===Number(o.value) ? " active" : "");
-          b.textContent = safeText(o.value);
-          b.addEventListener("click", ()=>{
-            state.answers[qid] = Number(o.value);
+    function renderSectionsTable(){
+      ui.sectionsTbody.innerHTML = '';
+      for(const sec of state.data.sections){
+        const r = computeSection(sec);
+        const cls = bandClassFromLabel(r.band.t);
+        const tr = document.createElement('tr');
+
+        const tdS = document.createElement('td');
+        tdS.innerHTML = `<div style="font-weight:1000">${escapeHTML(sec.title)}</div><div class="muted" style="margin-top:4px">${escapeHTML(sec.subtitle)}</div>`;
+        const tdA = document.createElement('td');
+        tdA.innerHTML = `<span class="tag gray">${escapeHTML(sec.porticoAxis)}</span>`;
+        const tdP = document.createElement('td');
+        tdP.innerHTML = `<div class="mono" style="font-weight:1000">${Math.round(r.pct)}%</div><div class="muted">${r.raw}/${r.max}</div>`;
+        const tdB = document.createElement('td');
+        tdB.innerHTML = `<span class="tag ${cls}">${escapeHTML(r.band.t)}</span>`;
+
+        tr.appendChild(tdS); tr.appendChild(tdA); tr.appendChild(tdP); tr.appendChild(tdB);
+        ui.sectionsTbody.appendChild(tr);
+      }
+    }
+
+    function renderSectionsCards(){
+      ui.sectionsCards.innerHTML = '';
+      const manualById = Object.fromEntries(state.data.pastoralManual.sections.map(s=>[s.id,s]));
+
+      for(const sec of state.data.sections){
+        const r = computeSection(sec);
+        const cls = bandClassFromLabel(r.band.t);
+
+        const card = document.createElement('div');
+        card.className = 'sectionCard';
+        card.setAttribute('data-sec', sec.id);
+
+        const head = document.createElement('div');
+        head.className = 'sectionHead';
+
+        const left = document.createElement('div');
+        left.className = 'left';
+        left.innerHTML = `
+          <div class="t">${escapeHTML(sec.title)}</div>
+          <div class="st">${escapeHTML(sec.subtitle)}</div>
+        `;
+
+        const right = document
+.createElement('div');
+        right.className = 'right';
+        right.innerHTML = `
+          <div class="miniLine">
+            <span class="kpi mono">${Math.round(r.pct)}%</span>
+            <span class="tag ${cls}">${escapeHTML(r.band.t)}</span>
+          </div>
+          <div class="miniLine">
+            <span class="tag gray">${escapeHTML(sec.porticoAxis)}</span>
+            <span class="muted mono">${r.raw}/${r.max}</span>
+          </div>
+        `;
+
+        head.appendChild(left);
+        head.appendChild(right);
+
+        const body = document.createElement('div');
+        body.className = 'sectionBody';
+
+        const verseQ = sec.sectionVerse?.quote || '';
+        const verseR = sec.sectionVerse?.reference || '';
+
+        const manual = manualById[sec.id]?.miniTeaching || null;
+
+        const guideBlock = document.createElement('div');
+        guideBlock.className = 'help';
+        guideBlock.style.display = state.meta.guideMode ? 'block' : 'none';
+        guideBlock.innerHTML = `
+          <div class="helpTitle">${escapeHTML(manual?.title || '')}</div>
+          <div class="helpText">${escapeHTML(sec.diagnosticFocus || '')}</div>
+          ${manual?.text?.length ? `<ul>${manual.text.map(t=>`<li>${escapeHTML(t)}</li>`).join('')}</ul>` : ''}
+          ${manual?.verse?.quote ? `
+            <div class="verse" style="margin-top:10px">
+              <div>${escapeHTML(manual.verse.quote)}</div>
+              <div class="ref">${escapeHTML(manual.verse.reference || '')}</div>
+            </div>
+          ` : ''}
+          ${manual?.oneWeekPlan?.length ? `
+            <div class="divider"></div>
+            <div class="helpTitle">${escapeHTML('Plan de 7 días')}</div>
+            <ul>${manual.oneWeekPlan.map(d=>`<li>${escapeHTML(d)}</li>`).join('')}</ul>
+          ` : ''}
+        `;
+
+        const sectionVerseBlock = document.createElement('div');
+        sectionVerseBlock.className = 'verse';
+        sectionVerseBlock.innerHTML = `
+          <div>${escapeHTML(verseQ)}</div>
+          <div class="ref">${escapeHTML(verseR)}</div>
+        `;
+
+        const qWrap = document.createElement('div');
+        qWrap.className = 'qgrid';
+
+        for(const q of sec.questions){
+          const qItem = document.createElement('div');
+          qItem.className = 'qitem';
+          qItem.setAttribute('data-qid', q.id);
+          qItem.innerHTML = `
+            <div class="qtext">
+              <div style="font-weight:900">${escapeHTML(q.id)}</div>
+              <div style="margin-top:6px">${escapeHTML(q.text)}</div>
+            </div>
+            <div class="qctrl">
+              <select aria-label="${escapeHTML(q.id)}"></select>
+            </div>
+          `;
+
+          const sel = qItem.querySelector('select');
+          for(const opt of state.data.scale.options){
+            const o = document.createElement('option');
+            o.value = String(opt.value);
+            o.textContent = opt.label;
+            sel.appendChild(o);
+          }
+          sel.value = String(state.answers[q.id] ?? 0);
+          sel.addEventListener('change', () => {
+            state.answers[q.id] = Number(sel.value);
+            persist();
             renderAll();
           });
-          wrap.appendChild(b);
+
+          qWrap.appendChild(qItem);
         }
-        return wrap;
+
+        body.appendChild(sectionVerseBlock);
+        body.appendChild(guideBlock);
+        body.appendChild(document.createElement('div')).className = 'divider';
+        body.appendChild(qWrap);
+
+        card.appendChild(head);
+        card.appendChild(body);
+        ui.sectionsCards.appendChild(card);
       }
+    }
 
-      function renderSections(computed){
-        ui.sections.innerHTML = "";
-        const sections = data.sections || [];
-        const secScoreMap = new Map(computed.sectionScores.map(s=>[s.id,s]));
+    function renderGlobal(){
+      const g = computeGlobal();
+      ui.globalPct.textContent = `${Math.round(g.pct)}%`;
 
-        let idx = 0;
-        for(const sec of sections){
-          idx++;
-          const det = document.createElement("details");
-          det.className = "sec";
-          det.dataset.sec = sec.id;
+      const cls = bandClassFromLabel(g.band.t);
+      ui.globalBandPill.className = `bandPill ${cls}`;
+      ui.globalBandPill.textContent = g.band.t;
 
-          const sum = document.createElement("summary");
-          sum.className = "secSum";
+      ui.globalSummary.textContent = safeText(g.bandDef?.summary || '');
+      ui.globalVerseQ.textContent = safeText(g.bandDef?.verse?.quote || '');
+      ui.globalVerseR.textContent = safeText(g.bandDef?.verse?.reference || '');
+    }
 
-          const left = document.createElement("div");
-          left.className = "secLeft";
+    function renderStorageHints(){
+      const hasMain = !!localStorage.getItem(LS_KEY);
+      const hasB = !!localStorage.getItem(LS_BEFORE_KEY);
+      const hasA = !!localStorage.getItem(LS_AFTER_KEY);
+      const parts = [];
+      parts.push(hasMain ? 'Auto-guardado: sí' : 'Auto-guardado: no');
+      parts.push(hasB ? 'ANTES: sí' : 'ANTES: no');
+      parts.push(hasA ? 'DESPUÉS: sí' : 'DESPUÉS: no');
+      ui.storageHint.textContent = parts.join(' • ');
+    }
 
-          const boxIdx = document.createElement("div");
-          boxIdx.className = "secIdx";
-          boxIdx.textContent = String(idx);
+    function renderAll(){
+      if(!state.data) return;
+      renderHeader();
+      renderGlobal();
+      renderAxesTable();
+      renderSectionsTable();
+      renderSectionsCards();
+      renderStorageHints();
+    }
 
-          const titles = document.createElement("div");
-          titles.className = "secTitles";
-          const t = document.createElement("div");
-          t.className = "t";
-          t.textContent = safeText(sec.title || "");
-          const s = document.createElement("div");
-          s.className = "s";
-          s.textContent = safeText(sec.subtitle || "");
-          titles.appendChild(t);
-          titles.appendChild(s);
+    function escapeHTML(str){
+      return safeText(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+    }
 
-          left.appendChild(boxIdx);
-          left.appendChild(titles);
+    function persist(){
+      const payload = {
+        answers: state.answers,
+        meta: state.meta
+      };
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(payload)); }catch(_){}
+    }
 
-          const right = document.createElement("div");
-          right.className = "secRight";
-
-          const score = secScoreMap.get(sec.id) || {avg:0,cnt:0,total:(sec.questions||[]).length};
-          const band = sectionBandForScore(score.avg);
-
-          const mini = document.createElement("div");
-          mini.className = "miniScore";
-          mini.textContent = `${fmt1(score.avg)} / 5  ·  ${score.cnt}/${score.total}`;
-
-          const miniBand = document.createElement("div");
-          miniBand.className = "miniScore";
-          miniBand.textContent = safeText(band?.label || "");
-
-          right.appendChild(mini);
-          right.appendChild(miniBand);
-
-          sum.appendChild(left);
-          sum.appendChild(right);
-
-          const body = document.createElement("div");
-          body.className = "secBody";
-
-          const meta = document.createElement("div");
-          meta.className = "secMeta";
-
-          const tag1 = document.createElement("div");
-          tag1.className = "tag";
-          tag1.innerHTML = `<span class="k">${safeText(getUi("labels.diagnosticFocus",""))}</span><span class="v">${safeText(sec.diagnosticFocus||"")}</span>`;
-
-          const tag2 = document.createElement("div");
-          tag2.className = "tag";
-          tag2.innerHTML = `<span class="k">${safeText(getUi("labels.porticoAxis",""))}</span><span class="v">${safeText(axisTitle(sec.porticoAxis))}</span>`;
-
-          const tag3 = document.createElement("div");
-          tag3.className = "tag";
-          tag3.innerHTML = `<span class="k">${safeText(getUi("labels.sectionVerse",""))}</span><span class="v">${safeText(sec.sectionVerse||"")}</span>`;
-
-          meta.appendChild(tag1);
-          meta.appendChild(tag2);
-          meta.appendChild(tag3);
-
-          const qList = document.createElement("div");
-          qList.className = "qList";
-
-          for(const q of (sec.questions||[])){
-            const qRow = document.createElement("div");
-            qRow.className = "q";
-
-            const qt = document.createElement("div");
-            qt.className = "qt";
-
-            const qId = document.createElement("div");
-            qId.className = "qId";
-            qId.textContent = safeText(q.id);
-
-            const qText = document.createElement("div");
-            qText.className = "qText";
-            qText.textContent = safeText(q.text);
-
-            qt.appendChild(qId);
-            qt.appendChild(qText);
-
-            const dots = makeDots(q.id, state.answers[q.id]);
-
-            qRow.appendChild(qt);
-            qRow.appendChild(dots);
-            qList.appendChild(qRow);
+    function hydrate(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return;
+        const obj = JSON.parse(raw);
+        if(obj && typeof obj === 'object'){
+          if(obj.answers && typeof obj.answers === 'object') state.answers = obj.answers;
+          if(obj.meta && typeof obj.meta === 'object'){
+            state.meta = { ...state.meta, ...obj.meta };
           }
-
-          body.appendChild(meta);
-          body.appendChild(qList);
-
-          det.appendChild(sum);
-          det.appendChild(body);
-
-          // Click open modal from summary right side via double click
-          sum.addEventListener("dblclick", (e)=>{
-            e.preventDefault();
-            openModalForSection(sec.id);
-          });
-
-          ui.sections.appendChild(det);
         }
-      }
+      }catch(_){}
+    }
 
-      function axisTitle(axisId){
-        const ax = (data.porticoModel?.axes || []).find(a=>a.id===axisId);
-        return ax ? safeText(ax.title) : safeText(axisId||"");
-      }
+    function setMetaInputs(){
+      ui.patient.value = state.meta.patient || '';
+      ui.auditor.value = state.meta.auditor || '';
+      ui.date.value = state.meta.date || '';
+      ui.observations.value = state.meta.observations || '';
+      ui.toggleGuide.checked = !!state.meta.guideMode;
+      ui.toggleDetailPDF.checked = !!state.meta.detailPDF;
+    }
 
-      function renderAxesTable(computed){
-        ui.axes.body.innerHTML = "";
-        for(const ax of computed.axisScores){
-          const tr = document.createElement("tr");
-          const tdA = document.createElement("td");
-          tdA.textContent = safeText(ax.title || ax.id);
-          const tdS = document.createElement("td");
-          tdS.className = "mono";
-          tdS.textContent = `${fmt1(ax.avg)} / 5  ·  ${ax.answered}/${ax.totalQ}`;
-          const band = bandForScore(ax.avg);
-          const tdB = document.createElement("td");
-          tdB.textContent = safeText(band?.label || "");
-          tr.appendChild(tdA);
-          tr.appendChild(tdS);
-          tr.appendChild(tdB);
-          ui.axes.body.appendChild(tr);
-        }
-      }
+    function bindMetaInputs(){
+      ui.patient.addEventListener('input', ()=>{ state.meta.patient = ui.patient.value; persist(); renderStorageHints(); });
+      ui.auditor.addEventListener('input', ()=>{ state.meta.auditor = ui.auditor.value; persist(); renderStorageHints(); });
+      ui.date.addEventListener('change', ()=>{ state.meta.date = ui.date.value; persist(); renderStorageHints(); });
+      ui.observations.addEventListener('input', ()=>{ state.meta.observations = ui.observations.value; persist(); renderStorageHints(); });
 
-      function renderGlobal(computed){
-        const g = computed.global;
+      ui.toggleGuide.addEventListener('change', ()=>{
+        state.meta.guideMode = !!ui.toggleGuide.checked;
+        persist();
+        renderAll();
+      });
 
-        ui.kpis.gValue.textContent = `${fmt1(g.avg)} / 5`;
-        ui.kpis.aValue.textContent = computed.axisScores.length ? `${fmt1(avgOf(computed.axisScores.map(a=>a.avg)))} / 5` : `—`;
-        ui.kpis.sValue.textContent = computed.sectionScores.length ? `${fmt1(avgOf(computed.sectionScores.map(s=>s.avg)))} / 5` : `—`;
+      ui.toggleDetailPDF.addEventListener('change', ()=>{
+        state.meta.detailPDF = !!ui.toggleDetailPDF.checked;
+        persist();
+        renderAll();
+      });
+    }
 
-        const band = bandForScore(g.avg);
-        ui.band.el.className = `band ${band.css || band.key || "aligned"}`;
-        ui.band.title.textContent = safeText(band.label || "");
-        ui.band.score.textContent = `${fmt1(g.avg)} / 5  ·  ${g.answered}/${g.totalQ}`;
+    function saveSnapshot(key){
+      const snap = {
+        savedAt: new Date().toISOString(),
+        dataTitle: safeText(state.data?.meta?.title || TITLE),
+        meta: { ...state.meta },
+        answers: { ...state.answers }
+      };
+      try{ localStorage.setItem(key, JSON.stringify(snap)); }catch(_){}
+      renderStorageHints();
+    }
 
-        ui.pills.global.textContent = safeText(getUi("pills.global","")) || safeText(band.label || "");
-        ui.pills.axis.textContent = safeText(getUi("pills.axis",""));
-      }
+    function resetAll(){
+      state.answers = {};
+      state.meta = {
+        patient: '',
+        auditor: '',
+        date: todayISO(),
+        observations: '',
+        guideMode: false,
+        detailPDF: false
+      };
+      try{
+        localStorage.removeItem(LS_KEY);
+      }catch(_){}
+      ensureAllAnswers();
+      setMetaInputs();
+      persist();
+      renderAll();
+    }
 
-      function avgOf(arr){
-        if(!arr.length) return 0;
-        let s=0; for(const n of arr) s += Number(n)||0;
-        return s/arr.length;
-      }
+    // ----------------------
+    // Tooltip + Modal (Pórtico)
+    // ----------------------
+    function showTooltip(x,y, html){
+      ui.tooltip.innerHTML = html;
+      ui.tooltip.style.left = `${x}px`;
+      ui.tooltip.style.top = `${y}px`;
+      ui.tooltip.style.opacity = '1';
+    }
+    function hideTooltip(){
+      ui.tooltip.style.opacity = '0';
+    }
 
-      function renderBeforeAfter(computed){
-        const current = computed.global.avg;
-        const prev = lastSaved?.computed?.global?.avg;
+    function axisTooltipHTML(axisId){
+      const r = computeAxis(axisId);
+      const a = r.axisDef;
+      const bandLabel = r.band.t;
+      const vq = r.bandDef?.verse?.quote || '';
+      const vr = r.bandDef?.verse?.reference || '';
+      return `
+        <div class="tt">${escapeHTML(a.label)} • <span class="mono">${Math.round(r.pct)}%</span></div>
+        <div class="tm">${escapeHTML(a.description)}</div>
+        <div class="tv">${escapeHTML(r.bandDef?.summary || '')}</div>
+        <div class="tr">${escapeHTML(bandLabel)} • ${escapeHTML(vr)}</div>
+        <div class="tm" style="margin-top:8px">${escapeHTML(vq)}</div>
+      `;
+    }
 
-        const label = safeText(getUi("pills.beforeAfter",""));
-        if(prev==null){
-          ui.pills.beforeAfter.textContent = label ? label : "";
-          return;
-        }
-        const delta = current - prev;
-        const sign = delta>0 ? "+" : "";
-        ui.pills.beforeAfter.textContent = `${label ? (label+" ") : ""}${fmt1(prev)} → ${fmt1(current)} (${sign}${fmt1(delta)})`;
-      }
+    function openModalForAxis(axisId){
+      const r = computeAxis(axisId);
+      const a = r.axisDef;
+      const bandLabel = r.band.t;
+      const cls = bandClassFromLabel(bandLabel);
 
-      function buildSteps(){
-        ui.steps.innerHTML = "";
-        // Derive steps purely from JSON content; prefer meta.ui.steps[] or fallback to axes + flow model
-        const steps = data?.meta?.ui?.steps;
-        const list = Array.isArray(steps) && steps.length ? steps : deriveStepsFromModel();
-        for(const s of list){
-          const li = document.createElement("li");
-          li.textContent = safeText(s);
-          ui.steps.appendChild(li);
-        }
-      }
+      ui.modalTitle.textContent = safeText(a.label);
+      ui.modalSub.textContent = `${Math.round(r.pct)}% • ${bandLabel}`;
+      ui.modalBody.innerHTML = `
+        <div class="kgrid">
+          <div class="card" style="box-shadow:none">
+            <div class="cardHeader"><h2>${escapeHTML('Enfoque')}</h2><span class="chip">${escapeHTML(a.id)}</span></div>
+            <div class="cardBody">
+              <div class="summary">${escapeHTML(a.description)}</div>
+              <div class="divider"></div>
+              <div class="bandPill ${cls}" style="display:inline-flex">${escapeHTML(bandLabel)}</div>
+              <div class="summary" style="margin-top:10px">${escapeHTML(r.bandDef?.summary || '')}</div>
+              <div class="verse">
+                <div>${escapeHTML(r.bandDef?.verse?.quote || '')}</div>
+                <div class="ref">${escapeHTML(r.bandDef?.verse?.reference || '')}</div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="box-shadow:none">
+            <div class="cardHeader"><h2>${escapeHTML('Acciones sugeridas')}</h2><span class="chip">${escapeHTML('Guía')}</span></div>
+            <div class="cardBody">
+              <div class="hint">
+                <div style="font-weight:1000">•</div>
+                <div>${escapeHTML('Use las secciones asociadas a este eje para priorizar conversación, oración y acuerdos prácticos.')}</div>
+              </div>
+              <div class="divider"></div>
+              <div style="font-weight:1000;font-size:12px">${escapeHTML('Secciones del eje')}</div>
+              <ul class="list">
+                ${r.secs.map(s=>{
+                  const sr = computeSection(s);
+                  return `<li><span style="font-weight:900">${escapeHTML(s.title)}</span> — <span class="mono">${Math.round(sr.pct)}%</span></li>`;
+                }).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
 
-      function deriveStepsFromModel(){
-        const sections = data.sections || [];
-        const axes = data.porticoModel?.axes || [];
-        const byAxis = new Map();
-        for(const a of axes) byAxis.set(a.id, []);
-        for(const sec of sections){
-          if(!byAxis.has(sec.porticoAxis)) byAxis.set(sec.porticoAxis, []);
-          byAxis.get(sec.porticoAxis).push(sec);
-        }
-        const out = [];
-        // Use axis order to generate a guided reading path
-        for(const ax of axes){
-          const secs = byAxis.get(ax.id) || [];
-          const line = safeText(ax.title || ax.id) + (secs.length ? ": " + secs.map(s=>safeText(s.title)).filter(Boolean).join(" · ") : "");
-          out.push(line);
-        }
-        return out.filter(Boolean);
-      }
+      ui.modalBackdrop.style.display = 'flex';
+      ui.modalBackdrop.setAttribute('aria-hidden','false');
+    }
 
-      function hookSvg(){
-        const svg = ui.svg.root;
-        const wrap = ui.svg.wrap;
+    function closeModal(){
+      ui.modalBackdrop.style.display = 'none';
+      ui.modalBackdrop.setAttribute('aria-hidden','true');
+      ui.modalBody.innerHTML = '';
+    }
 
-        function showTooltip(x,y,title,body){
-          ui.tooltip.t.textContent = safeText(title);
-          ui.tooltip.b.textContent = safeText(body);
-          ui.tooltip.box.style.left = x + "px";
-          ui.tooltip.box.style.top = y + "px";
-          ui.tooltip.box.classList.add("show");
-        }
-        function hideTooltip(){
-          ui.tooltip.box.classList.remove("show");
-        }
+    function bindPorticoInteractions(){
+      const hitMap = [
+        { el: ui.hitComunion, id: 'comunion' },
+        { el: ui.hitCongregacion, id: 'congregacion' },
+        { el: ui.hitInterseccion, id: 'interseccion' }
+      ];
 
-        function tipForTarget(t){
-          const part = t.closest("[data-part]");
-          const node = t.closest("[data-node]");
-          const load = t.closest("[data-load]");
-
-          if(load){
-            const k = load.getAttribute("data-load");
-            const title = getUi(`svg.tooltips.loads.${k}.title`, "");
-            const body  = getUi(`svg.tooltips.loads.${k}.body`, "");
-            return {title, body, clickKey: `load:${k}`};
-          }
-          if(node){
-            const k = node.getAttribute("data-node");
-            const title = getUi(`svg.tooltips.nodes.${k}.title`, "");
-            const body  = getUi(`svg.tooltips.nodes.${k}.body`, "");
-            return {title, body, clickKey: `node:${k}`};
-          }
-          if(part){
-            const k = part.getAttribute("data-part");
-            const title = getUi(`svg.tooltips.parts.${k}.title`, "");
-            const body  = getUi(`svg.tooltips.parts.${k}.body`, "");
-            return {title, body, clickKey: `part:${k}`};
-          }
-          return null;
-        }
-
-        svg.addEventListener("mousemove", (e)=>{
-          const tip = tipForTarget(e.target);
-          if(!tip){ hideTooltip(); return; }
-          const r = wrap.getBoundingClientRect();
-          showTooltip(e.clientX - r.left, e.clientY - r.top, tip.title, tip.body);
+      for(const item of hitMap){
+        item.el.addEventListener('mousemove', (e)=>{
+          showTooltip(e.clientX, e.clientY, axisTooltipHTML(item.id));
         });
-        svg.addEventListener("mouseleave", hideTooltip);
-
-        svg.addEventListener("click", (e)=>{
-          const tip = tipForTarget(e.target);
-          if(!tip) return;
-
-          // If click corresponds to a known section mapping, open that section
-          const map = data?.meta?.ui?.svgClickMap || {};
-          const secId = map[tip.clickKey];
-          if(secId){
-            openModalForSection(secId);
-            // auto-open details
-            const det = document.querySelector(`details.sec[data-sec="${CSS.escape(secId)}"]`);
-            if(det) det.open = true;
-            return;
-          }
-
-          // else open a generic modal from ui text (still JSON-sourced)
-          openModalGeneric(tip.title, tip.body, getUi("modal.genericNote",""), []);
-        });
+        item.el.addEventListener('mouseleave', ()=> hideTooltip());
+        item.el.addEventListener('click', ()=> openModalForAxis(item.id));
       }
 
-      function openModalForSection(secId){
-        const sec = (data.sections||[]).find(s=>s.id===secId);
-        const man = (data.pastoralManual?.sections||[]).find(s=>s.id===secId);
+      ui.modalBackdrop.addEventListener('click', (e)=>{
+        if(e.target === ui.modalBackdrop) closeModal();
+      });
+      ui.modalClose.addEventListener('click', closeModal);
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape') closeModal();
+      });
+    }
 
-        const title = safeText(sec?.title || "");
-        const sub = safeText(sec?.diagnosticFocus || "");
+    // ----------------------
+    // Export helpers
+    // ----------------------
+    function getHeaderMeta(){
+      const t = safeText(state.data?.meta?.title || TITLE);
+      const p = safeText(state.meta.patient || '');
+      const a = safeText(state.meta.auditor || '');
+      const d = safeText(state.meta.date || '');
+      return { t, p, a, d };
+    }
 
-        const teaching = safeText(man?.teaching || man?.summary || "");
-        const verse = safeText(sec?.sectionVerse || man?.verse || "");
-        const actions = Array.isArray(man?.actions) ? man.actions : (Array.isArray(man?.steps) ? man.steps : []);
+    function downloadBlob(filename, blob){
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
 
-        openModalGeneric(title, teaching, verse, actions, sub);
+    async function svgToPngDataUrl(svgEl, width=1200){
+      const clone = svgEl.cloneNode(true);
+      clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+
+      // Inline CSS vars by converting to computed styles where needed (simple approach: keep as-is)
+      const svgStr = new XMLSerializer().serializeToString(clone);
+      const svg64 = btoa(unescape(encodeURIComponent(svgStr)));
+      const imgSrc = `data:image/svg+xml;base64,${svg64}`;
+
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = imgSrc;
+
+      await new Promise((res, rej)=>{
+        img.onload = ()=>res();
+        img.onerror = (e)=>rej(e);
+      });
+
+      const aspect = img.height / img.width;
+      const h = Math.round(width * aspect);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+
+      // background
+      ctx.fillStyle = '#0b0f14';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      ctx.drawImage(img, 0, 0, width, h);
+      return canvas.toDataURL('image/png');
+    }
+
+    async function exportPNG(){
+      const svgEl = $('porticoSVG');
+      const pngUrl = await svgToPngDataUrl(svgEl, 1600);
+
+      const { t, p, a, d } = getHeaderMeta();
+
+      // add footer using canvas
+      const img = new Image();
+      img.src = pngUrl;
+      await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; });
+
+      const footerH = 110;
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height + footerH;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#0b0f14';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.drawImage(img, 0, 0);
+
+      ctx.fillStyle = 'rgba(255,255,255,.9)';
+      ctx.font = '700 28px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
+      ctx.fillText(t, 36, img.height + 42);
+
+      ctx.fillStyle = 'rgba(255,255,255,.75)';
+      ctx.font = '600 18px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+      const line = `Paciente: ${p || '—'}   •   Auditor: ${a || '—'}   •   Fecha: ${d || '—'}`;
+      ctx.fillText(line, 36, img.height + 78);
+
+      const out = canvas.toDataURL('image/png');
+      const b = await (await fetch(out)).blob();
+      downloadBlob(`portico_${slugify(t)}.png`, b);
+    }
+
+    function buildTXT(){
+      const { t, p, a, d } = getHeaderMeta();
+      const g = computeGlobal();
+
+      const lines = [];
+      lines.push(t);
+      lines.push(`Paciente: ${p || '—'}`);
+      lines.push(`Auditor: ${a || '—'}`);
+      lines.push(`Fecha: ${d || '—'}`);
+      lines.push('');
+      lines.push(`Diagnóstico global: ${Math.round(g.pct)}% • ${g.band.t}`);
+      lines.push(safeText(g.bandDef?.summary || ''));
+      lines.push(`Verso: ${safeText(g.bandDef?.verse?.quote || '')} (${safeText(g.bandDef?.verse?.reference || '')})`);
+      lines.push('');
+      lines.push('Ejes:');
+      for(const ax of state.data.porticoModel.axes){
+        const r = computeAxis(ax.id);
+        lines.push(`- ${ax.label}: ${Math.round(r.pct)}% • ${r.band.t}`);
+        lines.push(`  ${safeText(r.bandDef?.summary || '')}`);
+        lines.push(`  ${safeText(r.bandDef?.verse?.quote || '')} (${safeText(r.bandDef?.verse?.reference || '')})`);
       }
-
-      function openModalGeneric(title, teaching, verse, actions, sub=""){
-        ui.modal.title.textContent = safeText(title);
-        ui.modal.sub.textContent = safeText(sub);
-        ui.modal.teaching.textContent = safeText(teaching);
-        ui.modal.verse.textContent = safeText(verse);
-        ui.modal.actions.innerHTML = "";
-        for(const a of actions){
-          const li = document.createElement("li");
-          li.textContent = safeText(a);
-          ui.modal.actions.appendChild(li);
+      lines.push('');
+      lines.push('Secciones:');
+      const manualById = Object.fromEntries(state.data.pastoralManual.sections.map(s=>[s.id,s]));
+      for(const sec of state.data.sections){
+        const r = computeSection(sec);
+        const man = manualById[sec.id]?.miniTeaching || null;
+        lines.push(`- ${sec.title} [${sec.porticoAxis}] : ${Math.round(r.pct)}% • ${r.band.t}`);
+        lines.push(`  ${safeText(sec.subtitle || '')}`);
+        lines.push(`  Enfoque: ${safeText(sec.diagnosticFocus || '')}`);
+        lines.push(`  Verso: ${safeText(sec.sectionVerse?.quote || '')} (${safeText(sec.sectionVerse?.reference || '')})`);
+        if(man?.title){
+          lines.push(`  Mini-enseñanza: ${safeText(man.title)}`);
+          for(const t of (man.text || [])) lines.push(`   • ${safeText(t)}`);
         }
-        ui.modal.note.textContent = safeText(getUi("modal.note",""));
-        ui.modal.back.classList.add("show");
-      }
-
-      function closeModal(){
-        ui.modal.back.classList.remove("show");
-      }
-
-      function hookModal(){
-        ui.btns.closeModal.addEventListener("click", closeModal);
-        ui.modal.back.addEventListener("click", (e)=>{
-          if(e.target === ui.modal.back) closeModal();
-        });
-        window.addEventListener("keydown", (e)=>{
-          if(e.key==="Escape") closeModal();
-        });
-      }
-
-      function exportTxt(computed){
-        const lines = [];
-        const meta = data.meta || {};
-        lines.push(safeText(meta.title||""));
-        lines.push(safeText(meta.subtitle||""));
-        lines.push("");
-
-        const g = computed.global;
-        lines.push(`${safeText(getUi("exports.globalLine",""))}`.trim());
-        lines.push(`GLOBAL: ${fmt1(g.avg)} / 5  (${g.answered}/${g.totalQ})`);
-        lines.push("");
-
-        lines.push("AXES:");
-        for(const ax of computed.axisScores){
-          lines.push(`- ${safeText(ax.title||ax.id)}: ${fmt1(ax.avg)} / 5  (${ax.answered}/${ax.totalQ})`);
+        if(man?.oneWeekPlan?.length){
+          lines.push('  Plan 7 días:');
+          for(const d of man.oneWeekPlan) lines.push(`   • ${safeText(d)}`);
         }
-        lines.push("");
-
-        lines.push("SECCIONES:");
-        for(const s of computed.sectionScores){
-          lines.push(`- ${safeText(s.title||s.id)}: ${fmt1(s.avg)} / 5  (${s.cnt}/${s.total})`);
-        }
-        lines.push("");
-
-        lines.push("RESPUESTAS:");
-        for(const sec of (data.sections||[])){
-          lines.push(`\n[${safeText(sec.title)}]`);
-          for(const q of (sec.questions||[])){
-            const v = state.answers[q.id];
-            const vv = (v==null || v==="") ? "-" : String(v);
-            lines.push(`${safeText(q.id)}\t${vv}\t${safeText(q.text)}`);
-          }
-        }
-
-        const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
-        downloadBlob(blob, (data.meta?.id || "auditoria") + ".txt");
       }
 
-      function exportPdf(computed){
-        const { jsPDF } = window.jspdf || {};
-        if(!jsPDF) return;
+      lines.push('');
+      lines.push('Observaciones:');
+      lines.push(safeText(state.meta.observations || '—'));
+      lines.push('');
 
-        const doc = new jsPDF({ unit:"pt", format:"a4" });
-        const margin = 42;
-        let y = margin;
+      return lines.join('\n');
+    }
 
-        const title = safeText(data?.meta?.title||"");
-        const subtitle = safeText(data?.meta?.subtitle||"");
-        const desc = safeText(data?.meta?.description||"");
+    function exportTXT(){
+      const txt = buildTXT();
+      const blob = new Blob([txt], { type:'text/plain;charset=utf-8' });
+      downloadBlob(`auditoria_${slugify(safeText(state.data?.meta?.title||TITLE))}.txt`, blob);
+    }
 
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(14);
-        doc.text(title, margin, y);
-        y += 18;
+    function slugify(s){
+      return safeText(s)
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .replace(/[^a-z0-9]+/g,'_')
+        .replace(/^_+|_+$/g,'');
+    }
 
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(10);
-        if(subtitle){
-          doc.text(subtitle, margin, y);
+    function pdfAddTable(doc, startY, cols, rows, colWidths){
+      const left = 36;
+      let y = startY;
+      const lineH = 16;
+
+      doc.setFontSize(10);
+      doc.setTextColor(230,238,247);
+
+      // header
+      doc.setFont(undefined,'bold');
+      let x = left;
+      for(let i=0;i<cols.length;i++){
+        doc.text(cols[i], x, y);
+        x += colWidths[i];
+      }
+      y += 10;
+      doc.setDrawColor(255,255,255);
+      doc.setLineWidth(0.2);
+      doc.line(left, y, left + colWidths.reduce((a,b)=>a+b,0), y);
+      y += 10;
+
+      // rows
+      doc.setFont(undefined,'normal');
+      for(const r of rows){
+        x = left;
+        const maxLines = r.reduce((m,cell,i)=>{
+          const w = colWidths[i] - 6;
+          const lines = doc.splitTextToSize(String(cell), w);
+          return Math.max(m, lines.length);
+        }, 1);
+
+        for(let i=0;i<r.length;i++){
+          const w = colWidths[i] - 6;
+          const lines = doc.splitTextToSize(String(r[i]), w);
+          doc.text(lines, x, y);
+          x += colWidths[i];
+        }
+        y += (maxLines * lineH);
+        if(y > 770){
+          doc.addPage();
+          y = 48;
+        }
+      }
+      return y;
+    }
+
+    async function exportPDF(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit:'pt', format:'a4' });
+
+      const { t, p, a, d } = getHeaderMeta();
+      const g = computeGlobal();
+
+      const marginX = 36;
+      let y = 44;
+
+      // Header
+      doc.setTextColor(232,238,247);
+      doc.setFontSize(16);
+      doc.setFont(undefined,'bold');
+      doc.text(t, marginX, y);
+      y += 18;
+
+      doc.setFontSize(10);
+      doc.setFont(undefined,'normal');
+      doc.setTextColor(167,179,196);
+      doc.text(`Paciente: ${p || '—'}   •   Auditor: ${a || '—'}   •   Fecha: ${d || '—'}`, marginX, y);
+      y += 18;
+
+      // Diagnóstico global
+      doc.setTextColor(232,238,247);
+      doc.setFont(undefined,'bold');
+      doc.setFontSize(12);
+      doc.text(`Diagnóstico global: ${Math.round(g.pct)}% • ${g.band.t}`, marginX, y);
+      y += 14;
+
+      doc.setFont(undefined,'normal');
+      doc.setTextColor(167,179,196);
+      const sumLines = doc.splitTextToSize(safeText(g.bandDef?.summary || ''), 520);
+      doc.text(sumLines, marginX, y);
+      y += (sumLines.length * 14) + 6;
+
+      doc.setTextColor(232,238,247);
+      doc.setFontSize(10);
+      const vLine = `${safeText(g.bandDef?.verse?.quote || '')} (${safeText(g.bandDef?.verse?.reference || '')})`;
+      doc.text(doc.splitTextToSize(vLine, 520), marginX, y);
+      y += 18;
+
+      // Pórtico image
+      const svgEl = $('porticoSVG');
+      const pngUrl = await svgToPngDataUrl(svgEl, 1000);
+
+      // Fit in page
+      const imgW = 520;
+      const imgH = 340;
+      doc.addImage(pngUrl, 'PNG', marginX, y, imgW, imgH);
+      y += imgH + 16;
+
+      // Tabla de ejes
+      doc.setFont(undefined,'bold');
+      doc.setTextColor(232,238,247);
+      doc.setFontSize(12);
+      doc.text('Tabla de ejes', marginX, y);
+      y += 18;
+
+      const axesRows = state.data.porticoModel.axes.map(ax=>{
+        const r = computeAxis(ax.id);
+        const vq = safeText(r.bandDef?.verse?.quote || '');
+        const vr = safeText(r.bandDef?.verse?.reference || '');
+        return [
+          ax.label,
+          `${Math.round(r.pct)}% (${r.raw}/${r.max})`,
+          r.band.t,
+          `${vq} (${vr})`
+        ];
+      });
+      y = pdfAddTable(doc, y, ['Eje','Puntaje','Banda','Verso'], axesRows, [110,120,80,210]);
+      y += 14;
+
+      // Tabla de secciones
+      doc.setFont(undefined,'bold');
+      doc.setTextColor(232,238,247);
+      doc.setFontSize(12);
+      doc.text('Tabla de secciones', marginX, y);
+      y += 18;
+
+      const secRows = state.data.sections.map(sec=>{
+        const r = computeSection(sec);
+        return [
+          sec.title,
+          sec.porticoAxis,
+          `${Math.round(r.pct)}% (${r.raw}/${r.max})`,
+          r.band.t
+        ];
+      });
+      y = pdfAddTable(doc, y, ['Sección','Eje','Puntaje','Banda'], secRows, [220,90,120,90]);
+      y += 14;
+
+      // Enfoque pastoral por sección + Plan semanal automático
+      const manualById = Object.fromEntries(state.data.pastoralManual.sections.map(s=>[s.id,s]));
+      doc.addPage();
+      y = 44;
+
+      doc.setFont(undefined,'bold');
+      doc.setTextColor(232,238,247);
+      doc.setFontSize(14);
+      doc.text('Enfoque pastoral por sección', marginX, y);
+      y += 18;
+
+      doc.setFontSize(10);
+      doc.setFont(undefined,'normal');
+      doc.setTextColor(167,179,196);
+
+      for(const sec of state.data.sections){
+        const r = computeSection(sec);
+        const man = manualById[sec.id]?.miniTeaching || null;
+
+        doc.setTextColor(232,238,247);
+        doc.setFont(undefined,'bold');
+        doc.text(`${sec.title} — ${Math.round(r.pct)}% • ${r.band.t}`, marginX, y);
+        y += 14;
+
+        doc.setFont(undefined,'normal');
+        doc.setTextColor(167,179,196);
+
+        const focus = `Enfoque: ${safeText(sec.diagnosticFocus || '')}`;
+        const focusLines = doc.splitTextToSize(focus, 520);
+        doc.text(focusLines, marginX, y);
+        y += (focusLines.length * 14) + 2;
+
+        const verseLine = `${safeText(sec.sectionVerse?.quote || '')} (${safeText(sec.sectionVerse?.reference || '')})`;
+        const verseLines = doc.splitTextToSize(verseLine, 520);
+        doc.text(verseLines, marginX, y);
+        y += (verseLines.length * 14) + 6;
+
+        if(man?.title){
+          doc.setTextColor(232,238,247);
+          doc.setFont(undefined,'bold');
+          doc.text(safeText(man.title), marginX, y);
           y += 14;
+
+          doc.setFont(undefined,'normal');
+          doc.setTextColor(167,179,196);
+          for(const tline of (man.text || [])){
+            const tl = doc.splitTextToSize(`• ${safeText(tline)}`, 520);
+            doc.text(tl, marginX, y);
+            y += (tl.length * 14);
+          }
+          y += 6;
         }
-        if(desc){
-          doc.setTextColor(120);
-          doc.text(doc.splitTextToSize(desc, 520), margin, y);
-          doc.setTextColor(0);
-          y += 28;
-        } else {
+
+        if(man?.oneWeekPlan?.length){
+          doc.setTextColor(232,238,247);
+          doc.setFont(undefined,'bold');
+          doc.text('Plan de 7 días', marginX, y);
+          y += 14;
+
+          doc.setFont(undefined,'normal');
+          doc.setTextColor(167,179,196);
+          for(const dline of man.oneWeekPlan){
+            const dl = doc.splitTextToSize(`• ${safeText(dline)}`, 520);
+            doc.text(dl, marginX, y);
+            y += (dl.length * 14);
+          }
           y += 10;
         }
 
-        const g = computed.global;
-        doc.setFont("helvetica","bold");
-        doc.setFontSize(11);
-        doc.text(`GLOBAL: ${fmt1(g.avg)} / 5  (${g.answered}/${g.totalQ})`, margin, y);
-        y += 10;
+        if(state.meta.detailPDF){
+          doc.setTextColor(232,238,247);
+          doc.setFont(undefined,'bold');
+          doc.text('Detalle por pregunta', marginX, y);
+          y += 14;
 
-        const band = bandForScore(g.avg);
-        doc.setFont("helvetica","normal");
-        doc.setFontSize(10);
-        doc.text(`${safeText(getUi("exports.bandLabel",""))} ${safeText(band.label||"")}`, margin, y);
-        y += 16;
+          doc.setFont(undefined,'normal');
+          doc.setTextColor(167,179,196);
+          for(const q of sec.questions){
+            const val = Number(state.answers[q.id] ?? 0);
+            const line = `${q.id} (${val}/5): ${safeText(q.text)} — ${safeText(getScaleLabel(val))}`;
+            const qLines = doc.splitTextToSize(line, 520);
+            doc.text(qLines, marginX, y);
+            y += (qLines.length * 14);
+            if(y > 770){ doc.addPage(); y = 44; }
+          }
+          y += 10;
+        }
 
-        // Axes table
-        doc.setFont("helvetica","bold");
-        doc.text(safeText(getUi("exports.axesTitle","")) || "AXES", margin, y);
-        y += 8;
-
-        doc.autoTable({
-          startY: y,
-          head: [[safeText(getUi("tables.axis",""))||"Eje", safeText(getUi("tables.score",""))||"Puntaje", safeText(getUi("tables.band",""))||"Banda"]],
-          body: computed.axisScores.map(ax=>{
-            const b = bandForScore(ax.avg);
-            return [safeText(ax.title||ax.id), `${fmt1(ax.avg)} / 5  ·  ${ax.answered}/${ax.totalQ}`, safeText(b.label||"")];
-          }),
-          theme: "grid",
-          styles: { fontSize: 9 },
-          headStyles: { fillColor: [20,25,35] },
-          margin: { left: margin, right: margin },
-        });
-
-        y = doc.lastAutoTable.finalY + 14;
-
-        // Sections table
-        doc.setFont("helvetica","bold");
-        doc.text(safeText(getUi("exports.sectionsTitle","")) || "SECCIONES", margin, y);
-        y += 8;
-
-        doc.autoTable({
-          startY: y,
-          head: [[safeText(getUi("exports.sectionCol",""))||"Sección", safeText(getUi("tables.score",""))||"Puntaje", safeText(getUi("tables.band",""))||"Banda"]],
-          body: computed.sectionScores.map(s=>{
-            const b = sectionBandForScore(s.avg);
-            return [safeText(s.title||s.id), `${fmt1(s.avg)} / 5  ·  ${s.cnt}/${s.total}`, safeText(b.label||"")];
-          }),
-          theme: "grid",
-          styles: { fontSize: 9 },
-          headStyles: { fillColor: [20,25,35] },
-          margin: { left: margin, right: margin },
-        });
-
-        // Portico SVG snapshot as image (best-effort)
-        try{
-          const svgData = serializeSvgToDataUrl(ui.svg.root);
-          const img = new Image();
-          img.onload = function(){
-            const pageW = doc.internal.pageSize.getWidth();
-            const usableW = pageW - margin*2;
-            const ratio = img.width ? (usableW / img.width) : 1;
-            const h = img.height * ratio;
-            doc.addPage();
-            doc.setFont("helvetica","bold");
-            doc.setFontSize(11);
-            doc.text(safeText(getUi("exports.porticoTitle","")) || "", margin, margin);
-            doc.addImage(img, "PNG", margin, margin+14, usableW, h);
-            doc.save((data.meta?.id || "auditoria") + ".pdf");
-          };
-          img.onerror = function(){
-            doc.save((data.meta?.id || "auditoria") + ".pdf");
-          };
-          img.src = svgData;
-          return;
-        }catch(e){/* ignore */}
-
-        doc.save((data.meta?.id || "auditoria") + ".pdf");
+        if(y > 770){ doc.addPage(); y = 44; }
       }
 
-      function exportPng(){
-        const url = serializeSvgToDataUrl(ui.svg.root);
-        const img = new Image();
-        img.onload = ()=>{
-          const canvas = document.createElement("canvas");
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0);
-          canvas.toBlob((blob)=>{
-            if(blob) downloadBlob(blob, (data.meta?.id || "portico") + ".png");
-          }, "image/png");
-        };
-        img.src = url;
-      }
+      // Observaciones
+      doc.addPage();
+      y = 44;
+      doc.setTextColor(232,238,247);
+      doc.setFont(undefined,'bold');
+      doc.setFontSize(14);
+      doc.text('Observaciones', marginX, y);
+      y += 18;
 
-      function serializeSvgToDataUrl(svgEl){
-        const clone = svgEl.cloneNode(true);
-        // inline computed styles for markers/currentColor (best-effort)
-        const cssVars = getComputedStyle(document.documentElement);
-        // Ensure currentColor resolves in markers
-        clone.querySelectorAll("[style]").forEach(()=>{});
+      doc.setFontSize(10);
+      doc.setFont(undefined,'normal');
+      doc.setTextColor(167,179,196);
+      const obs = safeText(state.meta.observations || '—');
+      doc.text(doc.splitTextToSize(obs, 520), marginX, y);
 
-        const s = new XMLSerializer().serializeToString(clone);
-        const encoded = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
-        // Convert to PNG via canvas by drawing this SVG data URL
-        // For direct PNG downloads we create PNG later; for PDF addImage we need PNG, so we’ll render through canvas.
-        // However, jsPDF addImage needs image data; we return SVG URL and convert to PNG with canvas when needed.
-        // Here we create PNG data URL by rendering to canvas immediately (sync not possible); so return SVG URL for callers.
-        return encoded;
-      }
+      doc.save(`auditoria_${slugify(t)}.pdf`);
+    }
 
-      function downloadBlob(blob, filename){
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(()=>{
-          URL.revokeObjectURL(a.href);
-          a.remove();
-        }, 0);
-      }
-
-      function hookButtons(){
-        ui.btns.save.addEventListener("click", ()=>{
-          const computed = compute();
-          const payload = {
-            savedAt: new Date().toISOString(),
-            answers: state.answers,
-            computed
-          };
-          saveLocal(payload);
-          lastSaved = payload;
-          renderAll();
-        });
-
-        ui.btns.reset.addEventListener("click", ()=>{
-          // reset to last saved (if exists), else clear
-          const saved = loadLocal();
-          state.answers = {};
-          if(saved?.answers) state.answers = saved.answers;
-          renderAll();
-        });
-
-        ui.btns.clear.addEventListener("click", ()=>{
-          clearLocal();
-          lastSaved = null;
-          state.answers = {};
-          renderAll();
-        });
-
-        ui.btns.txt.addEventListener("click", ()=>{
-          exportTxt(compute());
-        });
-
-        ui.btns.pdf.addEventListener("click", ()=>{
-          exportPdf(compute());
-        });
-
-        ui.btns.png.addEventListener("click", ()=>{
-          exportPng();
-        });
-      }
-
-      function renderAll(){
-        const computed = compute();
-        renderGlobal(computed);
-        renderBeforeAfter(computed);
-        renderSections(computed);
-        renderAxesTable(computed);
-      }
-
-      async function init(){
-        const res = await fetch(JSON_PATH, {cache:"no-store"});
-        data = await res.json();
-
-        // load last saved
-        lastSaved = loadLocal();
-        hydrateFromSaved(lastSaved);
-
-        renderTop();
-        buildSteps();
-        hookSvg();
-        hookModal();
-        hookButtons();
-
-        renderAll();
-
-        // Default pill axis label from JSON
-        ui.pills.axis.textContent = safeText(getUi("pills.axis",""));
-      }
-
-      init().catch((e)=>{
-        // Avoid visible fixed error text; keep silent in UI.
-        console.error(e);
+    // ----------------------
+    // Buttons
+    // ----------------------
+    function bindButtons(){
+      ui.btnExportPNG.addEventListener('click', async ()=>{
+        ui.btnExportPNG.disabled = true;
+        try{ await exportPNG(); } finally { ui.btnExportPNG.disabled = false; }
       });
-    })();
+
+      ui.btnExportTXT.addEventListener('click', ()=> exportTXT());
+
+      ui.btnExportPDF.addEventListener('click', async ()=>{
+        ui.btnExportPDF.disabled = true;
+        try{ await exportPDF(); } finally { ui.btnExportPDF.disabled = false; }
+      });
+
+      ui.btnSaveBefore.addEventListener('click', ()=> saveSnapshot(LS_BEFORE_KEY));
+      ui.btnSaveAfter.addEventListener('click', ()=> saveSnapshot(LS_AFTER_KEY));
+
+      ui.btnReset.addEventListener('click', ()=>{
+        const ok = confirm('¿Resetear respuestas y meta?');
+        if(ok) resetAll();
+      });
+    }
+
+    // ----------------------
+    // Load JSON + init
+    // ----------------------
+    async function loadJSON(){
+      const res = await fetch(JSON_PATH, { cache:'no-store' });
+      if(!res.ok) throw new Error(`No se pudo cargar JSON: ${res.status}`);
+      return await res.json();
+    }
+
+    async function init(){
+      renderStaticUIStrings();
+
+      try{
+        state.data = await loadJSON();
+      }catch(err){
+        ui.title.textContent = TITLE;
+        ui.desc.textContent = 'No se pudo cargar el archivo JSON. Verifique la ruta y el nombre.';
+        console.error(err);
+        return;
+      }
+
+      hydrate();
+
+      // defaults
+      if(!state.meta.date) state.meta.date = todayISO();
+
+      ensureAllAnswers();
+      setMetaInputs();
+      bindMetaInputs();
+      bindButtons();
+      bindPorticoInteractions();
+
+      // initial render
+      renderAll();
+      persist();
+    }
+
+    init();
   </script>
 </body>
 </html>
+
+
