@@ -554,20 +554,23 @@
                 <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
                   <path d="M0,0 L10,5 L0,10 Z" fill="currentColor"></path>
                 </marker>
+
+                <!-- hatch (for critical base look like reference) -->
+                <pattern id="critHatch" patternUnits="userSpaceOnUse" width="12" height="12" patternTransform="rotate(25)">
+                  <rect width="12" height="12" fill="rgba(0,0,0,0)"></rect>
+                  <rect x="0" y="0" width="6" height="12" fill="rgba(255,77,109,.28)"></rect>
+                </pattern>
               </defs>
 
               <!-- CARGAS (coordenadas fijas) -->
-              <!-- Carga Viva (verde) -->
               <g id="loadLive" data-kind="load">
                 <line x1="740" y1="50" x2="740" y2="108" stroke="var(--good)" stroke-width="6" stroke-linecap="round" style="color:var(--good)" marker-end="url(#arrowHead)"/>
                 <text x="712" y="42" class="structSubLabel">CARGA VIVA</text>
               </g>
-              <!-- Carga Muerta (roja) -->
               <g id="loadDead" data-kind="load">
                 <line x1="780" y1="50" x2="780" y2="108" stroke="var(--crit)" stroke-width="6" stroke-linecap="round" style="color:var(--crit)" marker-end="url(#arrowHead)"/>
                 <text x="742" y="42" class="structSubLabel">CARGA MUERTA</text>
               </g>
-              <!-- Carga Sísmica (horizontal) -->
               <g id="loadSeismic" data-kind="load">
                 <line x1="810" y1="300" x2="728" y2="300" stroke="rgba(231,240,251,.75)" stroke-width="6" stroke-linecap="round" style="color:rgba(231,240,251,.75)" marker-end="url(#arrowHead)"/>
                 <text x="736" y="292" class="structSubLabel">CARGA SÍSMICA</text>
@@ -576,16 +579,16 @@
               <!-- PÓRTICO PREVIO (para Antes/Después) -->
               <g id="prevOverlay" opacity="0"></g>
 
+              <!-- CIMENTACIÓN VISUAL (solo como fondo, no cambia geometría del pórtico) -->
+              <rect id="baseCritFill" x="132" y="314" width="600" height="32" rx="16" fill="rgba(0,0,0,0)" opacity="0"></rect>
+
               <!-- PÓRTICO ACTUAL (L estructural) -->
-              <!-- Cimiento -->
               <path id="elCimiento" data-kind="element" data-axis="comunion"
                     d="M140 330 L720 330"
                     stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
-              <!-- Columna -->
               <path id="elColumna" data-kind="element" data-axis="congregacion"
                     d="M200 330 L200 110"
                     stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
-              <!-- Viga -->
               <path id="elViga" data-kind="element" data-axis="interseccion"
                     d="M200 110 L720 110"
                     stroke="rgba(231,240,251,.60)" stroke-width="22" stroke-linecap="round" fill="none"/>
@@ -594,7 +597,6 @@
               <text x="140" y="368" class="structLabel">CIMIENTO</text>
 
               <!-- Nudos -->
-              <!-- Halo/ring + nodo principal -->
               <g id="nodeComunion" data-kind="node" data-axis="comunion" style="cursor:pointer">
                 <circle id="haloComunion" class="nodeRing" cx="200" cy="330" r="22" stroke="var(--accent)"></circle>
                 <circle class="nodeCircle" cx="200" cy="330" r="14"></circle>
@@ -617,6 +619,23 @@
               <text x="248" y="325" class="structSubLabel">BASE / CRISTO</text>
               <text x="218" y="170" class="structSubLabel">COLUMNA / VARÓN</text>
               <text x="420" y="100" class="structSubLabel">VIGA / MUJER</text>
+
+              <!-- Leyenda (para PDF/PNG y referencia visual) -->
+              <g id="legendBlock" opacity="1">
+                <rect x="520" y="220" width="320" height="150" rx="16" fill="rgba(15,22,32,.72)" stroke="rgba(34,50,70,.8)"/>
+                <text x="540" y="246" class="structSubLabel" style="font-weight:950; fill:rgba(231,240,251,.92)">EJES DEL PÓRTICO</text>
+
+                <circle cx="540" cy="272" r="6" fill="var(--good)"></circle>
+                <text id="lgCom" x="554" y="277" class="structSubLabel" style="fill:rgba(231,240,251,.92)">COMUNIÓN: —</text>
+
+                <circle cx="540" cy="300" r="6" fill="var(--warn)"></circle>
+                <text id="lgCon" x="554" y="305" class="structSubLabel" style="fill:rgba(231,240,251,.92)">CONGREGACIÓN: —</text>
+
+                <circle cx="540" cy="328" r="6" fill="var(--risk)"></circle>
+                <text id="lgInt" x="554" y="333" class="structSubLabel" style="fill:rgba(231,240,251,.92)">INTERSECCIÓN: —</text>
+
+                <text id="lgFooter" x="540" y="360" class="structSubLabel" style="fill:rgba(138,160,181,.92)">Diagrama del pórtico — —</text>
+              </g>
             </svg>
           </div>
         </div>
@@ -663,6 +682,7 @@
     const JSON_PATH = "./viga-mujer.json";
     const STORAGE_KEY_LAST = "viga-mujer:lastResult";
     const STORAGE_KEY_PREV = "viga-mujer:prevResult";
+    const STORAGE_KEY_PROFILE = "viga-mujer:profile"; // {paciente, auditor}
 
     // =========================
     // STATE
@@ -716,6 +736,12 @@
     const modalVerse = document.getElementById("modalVerse");
     const modalTeaching = document.getElementById("modalTeaching");
     const modalActions = document.getElementById("modalActions");
+
+    const baseCritFill = document.getElementById("baseCritFill");
+    const lgCom = document.getElementById("lgCom");
+    const lgCon = document.getElementById("lgCon");
+    const lgInt = document.getElementById("lgInt");
+    const lgFooter = document.getElementById("lgFooter");
 
     // =========================
     // HELPERS
@@ -780,6 +806,30 @@
       setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
     }
 
+    function getProfile(){
+      const qp = new URLSearchParams(location.search);
+      const qpPaciente = qp.get("paciente");
+      const qpAuditor = qp.get("auditor");
+      if(qpPaciente || qpAuditor){
+        const p = {paciente: qpPaciente || "", auditor: qpAuditor || ""};
+        localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(p));
+        return p;
+      }
+      try{
+        const s = localStorage.getItem(STORAGE_KEY_PROFILE);
+        return s ? JSON.parse(s) : {paciente:"", auditor:""};
+      }catch(_){
+        return {paciente:"", auditor:""};
+      }
+    }
+
+    function fmtBandTextForPdf(bandKey){
+      if(bandKey==="aligned") return "Alineado";
+      if(bandKey==="adjust") return "Ajuste";
+      if(bandKey==="risk") return "En riesgo";
+      return "Crítico";
+    }
+
     // =========================
     // LOAD DATA
     // =========================
@@ -787,7 +837,6 @@
       const res = await fetch(JSON_PATH, {cache:"no-store"});
       DATA = await res.json();
 
-      // minimal validations (silent)
       if(!DATA?.sections?.length) throw new Error("JSON inválido: no sections");
       if((DATA.pastoralManual||[]).length !== (DATA.sections||[]).length) throw new Error("JSON inválido: pastoralManual no coincide 1:1");
 
@@ -803,15 +852,19 @@
       loadingState?.remove?.();
       updateButtonsState();
       updatePorticoVisual(null);
+      updateLegend(null);
     }
 
     function renderMeta(){
       metaPills.innerHTML = "";
+      const profile = getProfile();
       const pills = [
         {k:"Archivo", v: DATA.meta?.fileName},
         {k:"Versión", v: DATA.meta?.version},
         {k:"Fecha", v: DATA.meta?.createdAt},
-        {k:"Capítulo", v: DATA.meta?.chapterRef}
+        {k:"Capítulo", v: DATA.meta?.chapterRef},
+        {k:"Paciente", v: profile.paciente || "—"},
+        {k:"Auditor", v: profile.auditor || "—"}
       ];
       for(const p of pills){
         const el = document.createElement("div");
@@ -1039,7 +1092,6 @@
       `;
       resultsRoot.appendChild(banner);
 
-      // Pills axes
       const axPills = [
         {k:"Comunión (Cimiento)", v:`${result.axes.comunion.percent}%`, cls: badgeClass(result.axes.comunion.bandKey)},
         {k:"Congregación (Columna)", v:`${result.axes.congregacion.percent}%`, cls: badgeClass(result.axes.congregacion.bandKey)},
@@ -1052,7 +1104,6 @@
         resultPills.appendChild(el);
       }
 
-      // Axis table
       const axisTable = document.createElement("table");
       axisTable.innerHTML = `
         <thead>
@@ -1090,7 +1141,6 @@
       `;
       resultsRoot.appendChild(axisTable);
 
-      // Section table
       const secTable = document.createElement("table");
       const rows = result.sections.map(s=>`
         <tr>
@@ -1115,7 +1165,6 @@
       resultsRoot.appendChild(document.createElement("div")).style.height="10px";
       resultsRoot.appendChild(secTable);
 
-      // Plan
       const plan = document.createElement("div");
       plan.className = "sec";
       plan.innerHTML = `<div style="font-weight:950; letter-spacing:.2px; font-size:14px;">Plan de enfoque (3 áreas de presión)</div>
@@ -1139,7 +1188,6 @@
       resultsRoot.appendChild(document.createElement("div")).style.height="10px";
       resultsRoot.appendChild(plan);
 
-      // Before/After deltas (if previous exists)
       const prev = loadPrevResult();
       if(prev){
         const deltas = {
@@ -1169,9 +1217,9 @@
     // =========================
     function clearAxisClasses(el){
       el.classList.remove("axis-good","axis-warn","axis-risk","axis-crit","pulseSoft","microVibe","dashAnim");
+      el.style.transform = "";
     }
 
-    // ✅ FIX: faltaba el paréntesis y la llave de la función
     function applyAxisStyle(el, band){
       if(!el || !band) return;
       clearAxisClasses(el);
@@ -1188,6 +1236,32 @@
       if(band.key==="critical") el.classList.add("dashAnim");
     }
 
+    function updateLegend(result){
+      const profile = getProfile();
+      if(!lgCom || !lgCon || !lgInt || !lgFooter) return;
+
+      if(!result){
+        lgCom.textContent = "COMUNIÓN: —";
+        lgCon.textContent = "CONGREGACIÓN: —";
+        lgInt.textContent = "INTERSECCIÓN: —";
+        lgFooter.textContent = `Diagrama del pórtico — ${safeText(profile.paciente||"—")} — ${nowISO()}`;
+        return;
+      }
+
+      const com = result.axes.comunion;
+      const con = result.axes.congregacion;
+      const intl = result.axes.interseccion;
+
+      const bCom = bandByPercent(com.percent);
+      const bCon = bandByPercent(con.percent);
+      const bInt = bandByPercent(intl.percent);
+
+      lgCom.textContent = `COMUNIÓN: ${com.percent}% · ${fmtBandTextForPdf(bCom.key)}`;
+      lgCon.textContent = `CONGREGACIÓN: ${con.percent}% · ${fmtBandTextForPdf(bCon.key)}`;
+      lgInt.textContent = `INTERSECCIÓN: ${intl.percent}% · ${fmtBandTextForPdf(bInt.key)}`;
+      lgFooter.textContent = `Diagrama del pórtico — ${safeText(profile.paciente||"—")} — ${nowISO()}`;
+    }
+
     function updatePorticoVisual(result){
       // If no result yet: reset strokes and halos, keep overlays hidden if no prev
       if(!result){
@@ -1199,7 +1273,15 @@
           h.classList.remove("on");
           h.setAttribute("stroke","var(--accent)");
         });
+
+        // base hatch OFF
+        if(baseCritFill){
+          baseCritFill.setAttribute("opacity","0");
+          baseCritFill.setAttribute("fill","rgba(0,0,0,0)");
+        }
+
         prevOverlay.setAttribute("opacity","0");
+        updateLegend(null);
         return;
       }
 
@@ -1211,6 +1293,17 @@
       applyAxisStyle(elCimiento, bCom);
       applyAxisStyle(elColumna, bCon);
       applyAxisStyle(elViga, bInt);
+
+      // Cimiento hatch (como referencia: base "rayada" cuando crítico)
+      if(baseCritFill){
+        if(bCom.key === "critical"){
+          baseCritFill.setAttribute("fill","url(#critHatch)");
+          baseCritFill.setAttribute("opacity","1");
+        }else{
+          baseCritFill.setAttribute("opacity","0");
+          baseCritFill.setAttribute("fill","rgba(0,0,0,0)");
+        }
+      }
 
       // Node tension halos (difference > 20%)
       const p = {
@@ -1248,6 +1341,9 @@
 
       // Previous overlay
       renderPrevOverlayIfAny(result);
+
+      // Update legend (para exportar PNG/PDF con la misma estructura visual)
+      updateLegend(result);
     }
 
     function axisTooltip(axisKey, kind){
@@ -1273,7 +1369,7 @@
         // interseccion
         return {
           line1: `Viga / Intersección — ${pct ?? "—"}%`,
-          line2: band ? "Sobrecarga y presión visible" : safeText(info?.diagnosticFocus || "")
+          line2: band ? (band.key==="risk"||band.key==="critical" ? "Sobrecarga y presión visible" : "Flujo saludable con ajustes menores") : safeText(info?.diagnosticFocus || "")
         };
       }
 
@@ -1332,7 +1428,7 @@
       }
       if(acts.length === 0){
         const li = document.createElement("li");
-        li.textContent = "Practiquen una conversación breve de transferencia hoy: percibir → expresar → transferir → reposar.";
+        li.textContent = "Practiquen una conversación breve hoy: percibir → expresar → transferir → reposar.";
         modalActions.appendChild(li);
       }
 
@@ -1352,7 +1448,7 @@
         {el: elViga, kind:"element", axis:"interseccion"},
         {el: nodeComunion, kind:"node", axis:"comunion"},
         {el: nodeCongregacion, kind:"node", axis:"congregacion"},
-        {el: nodeInterseccion, kind:"node", axis:"interseccion"}
+        {el: nodeInterseccion, kind:"node", axis:"interseccion"},
       ];
 
       for(const t of targets){
@@ -1390,8 +1486,10 @@
             openModalForAxis(t.axis, "Completa el test para habilitar diagnóstico por eje.");
             return;
           }
+          const pct = LAST_RESULT.axes?.[t.axis]?.percent ?? 0;
+          const b = bandByPercent(pct);
           const label = (t.kind==="element")
-            ? `Estado actual: ${LAST_RESULT.axes?.[t.axis]?.percent ?? "—"}% • ${safeText(bandByPercent(LAST_RESULT.axes?.[t.axis]?.percent ?? 0).label)}`
+            ? `Estado actual: ${pct}% • ${safeText(b.label)}`
             : `Diagnóstico del nudo: ${safeText(axisTooltip(t.axis, "node").line2)}`;
 
           openModalForAxis(t.axis, label);
@@ -1409,7 +1507,6 @@
       GUIDED.timer = null;
       btnGuided.textContent = "Explícame este diagrama";
       hideTooltip();
-      // remove temporary emphasis
       [elCimiento, elColumna, elViga].forEach(el=> el.style.filter = "");
       [nodeComunion, nodeCongregacion, nodeInterseccion].forEach(el=> el.style.filter = "");
     }
@@ -1441,16 +1538,14 @@
       const s = steps[step];
       if(!s){ stopGuided(); return; }
 
-      // emphasis
       [elCimiento, elColumna, elViga].forEach(el=> el.style.filter = "");
       [nodeComunion, nodeCongregacion, nodeInterseccion].forEach(el=> el.style.filter = "");
       s.el.style.filter = "drop-shadow(0 0 10px rgba(111,177,255,.35))";
 
       const host = porticoSvg.getBoundingClientRect();
-      const cx = Math.round(host.left + host.width*0.5);
-      const cy = Math.round(host.top + 18);
-
-      showTooltipAt(cx, cy, `<div><b>${safeText(s.title)}</b></div><div class="small">${safeText(s.text)}</div>`);
+      showTooltipAt(Math.round(host.left + 16), Math.round(host.top + 16),
+        `<div><b>${safeText(s.title)}</b></div><div class="small">${safeText(s.text)}</div>`
+      );
       tooltip.style.left = `${Math.round(host.left + 16)}px`;
       tooltip.style.top = `${Math.round(host.top + 16)}px`;
 
@@ -1531,19 +1626,20 @@
     // EXPORTS
     // =========================
     function buildTxt(result){
+      const profile = getProfile();
       const lines = [];
       lines.push(`${safeText(result.meta.title)} — Auditoría Diagnóstica Pastoral`);
-      lines.push(`Fecha: ${safeText(result.meta.createdAtLong)} (${safeText(result.meta.createdAt)})`);
+      lines.push(`Paciente: ${safeText(profile.paciente||"—")} · Auditor: ${safeText(profile.auditor||"—")} · Fecha: ${safeText(result.meta.createdAtLong)} (${safeText(result.meta.createdAt)})`);
       lines.push("");
       lines.push(`Diagnóstico global: ${safeText(result.totals.globalBandLabel)} — ${result.totals.globalPercent}%`);
       lines.push(`${safeText(result.totals.globalSummary)} (Enfoque: ${safeText(result.totals.pastoralTone)})`);
       lines.push("");
-      lines.push("Ejes:");
+      lines.push("Ejes del pórtico:");
       lines.push(`- Comunión / Cimiento: ${result.axes.comunion.percent}% (prom. ${result.axes.comunion.avg.toFixed(2)}) ${safeText(result.axes.comunion.bandLabel)}`);
       lines.push(`- Congregación / Columna: ${result.axes.congregacion.percent}% (prom. ${result.axes.congregacion.avg.toFixed(2)}) ${safeText(result.axes.congregacion.bandLabel)}`);
       lines.push(`- Intersección / Viga: ${result.axes.interseccion.percent}% (prom. ${result.axes.interseccion.avg.toFixed(2)}) ${safeText(result.axes.interseccion.bandLabel)}`);
       lines.push("");
-      lines.push("Secciones:");
+      lines.push("Resultados por sección:");
       for(const s of result.sections){
         lines.push(`- ${s.order}. ${safeText(s.title)} [${safeText(getAxisInfo(s.axis)?.label || s.axis)}]: ${s.percent}% (prom. ${s.avg.toFixed(2)}) ${safeText(s.bandLabel)}`);
       }
@@ -1572,12 +1668,24 @@
     function buildExportSvg(includeTitleDate){
       const svg = porticoSvg.cloneNode(true);
 
+      // Ensure overlay reflects current result
       const prevG = svg.querySelector("#prevOverlay");
       if(prevG && prevOverlay){
         prevG.innerHTML = prevOverlay.innerHTML;
         prevG.setAttribute("opacity", prevOverlay.getAttribute("opacity") || "0");
       }
 
+      // Ensure legend text is updated on exported clone
+      const _lgCom = svg.querySelector("#lgCom");
+      const _lgCon = svg.querySelector("#lgCon");
+      const _lgInt = svg.querySelector("#lgInt");
+      const _lgFooter = svg.querySelector("#lgFooter");
+      if(_lgCom && lgCom) _lgCom.textContent = lgCom.textContent;
+      if(_lgCon && lgCon) _lgCon.textContent = lgCon.textContent;
+      if(_lgInt && lgInt) _lgInt.textContent = lgInt.textContent;
+      if(_lgFooter && lgFooter) _lgFooter.textContent = lgFooter.textContent;
+
+      // Add title + date INSIDE the image (optional)
       if(includeTitleDate){
         const t1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
         t1.setAttribute("x", "18");
@@ -1599,6 +1707,7 @@
         svg.insertBefore(t1, svg.firstChild);
       }
 
+      // Add background rectangle to keep dark mode on export
       const bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
       bg.setAttribute("x","0"); bg.setAttribute("y","0");
       bg.setAttribute("width","860"); bg.setAttribute("height","420");
@@ -1606,8 +1715,7 @@
       svg.insertBefore(bg, svg.firstChild);
 
       const serializer = new XMLSerializer();
-      const str = serializer.serializeToString(svg);
-      return str;
+      return serializer.serializeToString(svg);
     }
 
     async function getPorticoPngDataUrl(includeTitleDate){
@@ -1649,111 +1757,153 @@
       const doc = new jsPDF({orientation:"p", unit:"pt", format:"a4"});
 
       const W = doc.internal.pageSize.getWidth();
+      const H = doc.internal.pageSize.getHeight();
       const margin = 44;
 
+      const profile = getProfile();
+      const gb = bandByPercent(LAST_RESULT.totals.globalPercent);
+
+      // Background
       doc.setFillColor(15,22,32);
-      doc.rect(0,0,W,doc.internal.pageSize.getHeight(),"F");
+      doc.rect(0,0,W,H,"F");
 
-      doc.setDrawColor(231,240,251);
-      doc.setLineWidth(2);
-      doc.circle(margin+20, margin+20, 16, "S");
-      doc.line(margin+20, margin+10, margin+20, margin+30);
-      doc.line(margin+10, margin+20, margin+30, margin+20);
-
+      // Title
       doc.setTextColor(231,240,251);
       doc.setFont("helvetica","bold");
-      doc.setFontSize(16);
-      doc.text(safeText(DATA?.meta?.title || "Auditoría Diagnóstica Pastoral"), margin, margin+70);
+      doc.setFontSize(15);
+      doc.text(safeText(DATA?.meta?.title || "Auditoría Diagnóstica Pastoral"), margin, margin);
 
+      // Subtitle line (Paciente / Auditor / Fecha)
       doc.setFont("helvetica","normal");
       doc.setFontSize(10);
       doc.setTextColor(138,160,181);
-      doc.text(`${safeText(DATA?.meta?.chapterRef || "")} • ${safeText(DATA?.meta?.fileName || "")}`, margin, margin+90);
-      doc.text(`Fecha: ${safeText(LAST_RESULT?.meta?.createdAtLong || fmtDateLong())}`, margin, margin+105);
+      doc.text(
+        `Paciente: ${safeText(profile.paciente||"—")} · Auditor: ${safeText(profile.auditor||"—")} · Fecha: ${safeText(LAST_RESULT?.meta?.createdAt || nowISO())}`,
+        margin, margin+18
+      );
 
-      const gb = bandByPercent(LAST_RESULT.totals.globalPercent);
+      // Global diagnosis
       doc.setFont("helvetica","bold");
       doc.setFontSize(12);
       doc.setTextColor(231,240,251);
-      doc.text(`Diagnóstico global: ${safeText(gb.label)} — ${LAST_RESULT.totals.globalPercent}%`, margin, margin+132);
+      doc.text(`Diagnóstico global: ${safeText(gb.label)} — ${LAST_RESULT.totals.globalPercent}%`, margin, margin+44);
 
       doc.setFont("helvetica","normal");
       doc.setFontSize(10);
       doc.setTextColor(138,160,181);
-      doc.text(doc.splitTextToSize(safeText(gb.summary || ""), W - margin*2), margin, margin+150);
+      const summary = safeText(gb.summary || "");
+      doc.text(doc.splitTextToSize(summary, W - margin*2), margin, margin+62);
 
-      const png = await getPorticoPngDataUrl(true);
+      // Diagram image (mismo “look” que el SVG del panel)
+      const png = await getPorticoPngDataUrl(false);
       const imgW = W - margin*2;
       const imgH = Math.round(imgW * (420/860));
-      doc.addImage(png, "PNG", margin, margin+190, imgW, imgH);
+      const yImg = margin + 120;
+      doc.addImage(png, "PNG", margin, yImg, imgW, imgH);
 
-      doc.addPage();
+      // Ejes (bloque breve)
+      const yAxes = yImg + imgH + 20;
       doc.setTextColor(231,240,251);
       doc.setFont("helvetica","bold");
-      doc.setFontSize(14);
-      doc.text("Resumen por ejes", margin, margin);
+      doc.setFontSize(11);
+      doc.text("Ejes del pórtico", margin, yAxes);
 
-      doc.setFontSize(10);
       doc.setFont("helvetica","normal");
+      doc.setFontSize(10);
       doc.setTextColor(138,160,181);
-      doc.text("Diagnostica alineación, cargas y transferencia por eje.", margin, margin+16);
+      doc.text(`Comunión: ${LAST_RESULT.axes.comunion.percent}% · ${fmtBandTextForPdf(bandByPercent(LAST_RESULT.axes.comunion.percent).key)}`, margin, yAxes+16);
+      doc.text(`Congregación: ${LAST_RESULT.axes.congregacion.percent}% · ${fmtBandTextForPdf(bandByPercent(LAST_RESULT.axes.congregacion.percent).key)}`, margin, yAxes+32);
+      doc.text(`Intersección: ${LAST_RESULT.axes.interseccion.percent}% · ${fmtBandTextForPdf(bandByPercent(LAST_RESULT.axes.interseccion.percent).key)}`, margin, yAxes+48);
+
+      // New page: Resultados por sección
+      doc.addPage();
+      doc.setFillColor(15,22,32);
+      doc.rect(0,0,W,H,"F");
+
+      doc.setTextColor(231,240,251);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(13);
+      doc.text("Resultados por sección", margin, margin);
+
+      const secBody = LAST_RESULT.sections.map(s=>{
+        const axisLabel = safeText(getAxisInfo(s.axis)?.label || s.axis);
+        const diag = fmtBandTextForPdf(bandByAvg(s.avg).key);
+        const score = `${Math.round(s.avg*8)}/40`; // (visual) 8 preguntas * 5 = 40
+        return [safeText(s.title), diag, score, `${s.percent}%`, axisLabel, safeText(s.verse||"")];
+      });
 
       doc.autoTable({
-        startY: margin+28,
-        head: [["Eje","Elemento","Estado","Prom.","%"]],
-        body: [
-          ["Comunión","Cimiento", safeText(LAST_RESULT.axes.comunion.bandLabel), LAST_RESULT.axes.comunion.avg.toFixed(2), `${LAST_RESULT.axes.comunion.percent}%`],
-          ["Congregación","Columna", safeText(LAST_RESULT.axes.congregacion.bandLabel), LAST_RESULT.axes.congregacion.avg.toFixed(2), `${LAST_RESULT.axes.congregacion.percent}%`],
-          ["Intersección","Viga", safeText(LAST_RESULT.axes.interseccion.bandLabel), LAST_RESULT.axes.interseccion.avg.toFixed(2), `${LAST_RESULT.axes.interseccion.percent}%`]
-        ],
+        startY: margin+14,
+        head: [["Sección","Diagnóstico","Puntaje","%","Eje","Verso"]],
+        body: secBody,
         theme: "grid",
-        styles: {font:"helvetica", fontSize:9, textColor: [231,240,251], lineColor:[34,50,70], fillColor:[15,22,32]},
+        styles: {font:"helvetica", fontSize:8.5, textColor: [231,240,251], lineColor:[34,50,70], fillColor:[15,22,32], cellPadding:6},
         headStyles: {fillColor:[17,27,38], textColor:[231,240,251]},
         alternateRowStyles: {fillColor:[13,19,28]},
         margin: {left: margin, right: margin}
       });
 
+      // New page: Enfoque pastoral (mini-manual por sección)
       doc.addPage();
+      doc.setFillColor(15,22,32);
+      doc.rect(0,0,W,H,"F");
+
       doc.setTextColor(231,240,251);
       doc.setFont("helvetica","bold");
-      doc.setFontSize(14);
-      doc.text("Plan de enfoque (3 áreas de presión)", margin, margin);
+      doc.setFontSize(13);
+      doc.text("Enfoque pastoral por secciones", margin, margin);
 
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(10);
-      doc.setTextColor(138,160,181);
-      doc.text("Prioriza aliviar carga y restaurar flujo: percibir → expresar → transferir → reposar.", margin, margin+16);
+      let y = margin + 18;
 
-      const planBody = LAST_RESULT.needs.map(n=>{
-        const ax = getAxisInfo(n.axis);
-        const acts = (n.actions||[]).slice(0,2).join(" | ");
-        return [
-          safeText(n.title),
-          safeText(ax?.element || ""),
-          `${n.percent}%`,
-          safeText(n.keyVerse || ""),
-          acts
-        ];
-      });
+      for(const s of LAST_RESULT.sections){
+        const manual = getManualForSection(s.id);
+        const diag = fmtBandTextForPdf(bandByAvg(s.avg).key);
+        const header = `${safeText(s.title)} — ${diag} — ${s.percent}%`;
+        const enfoque = manual?.focus ? `Enfoque: ${safeText(manual.focus)}` : "";
+        const mini = manual?.miniTeaching ? `Mini-enseñanza: ${safeText(manual.miniTeaching)}` : "";
+        const verse = manual?.keyVerse || s.verse || "";
+        const actions = (manual?.actions || []).slice(0,5);
 
-      doc.autoTable({
-        startY: margin+28,
-        head: [["Área","Elemento","%","Verso clave","Acciones"]],
-        body: planBody,
-        theme: "grid",
-        styles: {font:"helvetica", fontSize:8, textColor: [231,240,251], lineColor:[34,50,70], fillColor:[15,22,32], cellPadding:6},
-        headStyles: {fillColor:[17,27,38], textColor:[231,240,251]},
-        alternateRowStyles: {fillColor:[13,19,28]},
-        margin: {left: margin, right: margin},
-        columnStyles: {
-          0: {cellWidth: 160},
-          1: {cellWidth: 70},
-          2: {cellWidth: 40},
-          3: {cellWidth: 170},
-          4: {cellWidth: 110}
+        doc.setTextColor(231,240,251);
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(11);
+        doc.text(doc.splitTextToSize(header, W-margin*2), margin, y);
+        y += 16;
+
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9.5);
+        doc.setTextColor(138,160,181);
+        if(enfoque){
+          doc.text(doc.splitTextToSize(enfoque, W-margin*2), margin, y);
+          y += 14;
         }
-      });
+        if(mini){
+          doc.text(doc.splitTextToSize(mini, W-margin*2), margin, y);
+          y +=ï = y; // (ignore) just to keep editor quiet if pasted in some linters
+          y += 14;
+        }
 
+        if(actions.length){
+          doc.setTextColor(231,240,251);
+          doc.text("• " + actions.map(a=>safeText(a)).join("\n• "), margin, y);
+          y += 12 + actions.length*11;
+        }
+
+        if(verse){
+          doc.setTextColor(138,160,181);
+          doc.text(doc.splitTextToSize(`Verso: ${safeText(verse)}`, W-margin*2), margin, y);
+          y += 18;
+        }
+
+        if(y > H - 90){
+          doc.addPage();
+          doc.setFillColor(15,22,32);
+          doc.rect(0,0,W,H,"F");
+          y = margin;
+        }
+      }
+
+      // Save
       doc.save(`${safeText(DATA?.meta?.fileName || "auditoria")}-${nowISO()}.pdf`);
     }
 
@@ -1764,6 +1914,7 @@
       btnShowResult.addEventListener("click", ()=>{
         const r = computeResults();
 
+        // Move last -> prev (for progressive before/after)
         const existingLast = loadLastResult();
         if(existingLast) savePrevResult(existingLast);
 
@@ -1785,7 +1936,7 @@
         LAST_RESULT = null;
 
         document.querySelectorAll(".scorePill.on").forEach(el=> el.classList.remove("on"));
-        document.querySelectorAll('[id^="band_"]').forEach(el=> el.textContent="—");
+        document.querySelectorAll('[id^="band_sec-"]').forEach(el=> el.textContent="—");
 
         resultsRoot.innerHTML = `<div class="muted">Completa el test para ver diagnóstico global, ejes, tensiones y plan de enfoque.</div>`;
         resultPills.innerHTML = "";
@@ -1826,3 +1977,4 @@
   </script>
 </body>
 </html>
+
