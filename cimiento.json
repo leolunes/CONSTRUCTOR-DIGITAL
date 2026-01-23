@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "title": "El cimiento: Cristo como fundamento absoluto del hogar",
+    "version": "1.0.0",
+    "lang": "es"
+  },
+  "scale": {
+    "label": "Escala 0–5",
+    "options": [
+      { "value": 0, "label": "0 — Nada / Ausente" },
+      { "value": 1, "label": "1 — Muy bajo" },
+      { "value": 2, "label": "2 — Bajo" },
+      { "value": 3, "label": "3 — Medio" },
+      { "value": 4, "label": "4 — Alto" },
+      { "value": 5, "label": "5 — Excelente" }
+    ]
+  },
+  "rubrics": {
+    "globalBands": [
+      {
+        "label": "Alineado",
+        "summary": "El hogar muestra un patrón consistente: Cristo no es un adorno, es el punto final de apoyo y dirección. Hay obediencia práctica, corrección humilde y acuerdos sostenibles.",
+        "verse": {
+          "quote": "Porque nadie puede poner otro fundamento que el que está puesto, el cual es Jesucristo.",
+          "reference": "1 Corintios 3:11"
+        }
+      },
+      {
+        "label": "Ajuste",
+        "summary": "Hay fundamento confesado, pero no siempre operado. Se necesita excavar, exponer y corregir hábitos que desplazan a Cristo hacia lo periférico.",
+        "verse": {
+          "quote": "Cualquiera que oye estas palabras y las hace, le compararé a un hombre prudente.",
+          "reference": "Mateo 7:24"
+        }
+      },
+      {
+        "label": "Riesgo",
+        "summary": "El hogar está bajo tensiones que revelan sustitutos de fundamento (personas, dinero, control, tradición, orgullo). Se requiere retorno intencional a la Roca con decisiones concretas.",
+        "verse": {
+          "quote": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+          "reference": "Salmo 127:1"
+        }
+      },
+      {
+        "label": "Crítico",
+        "summary": "El patrón dominante muestra desconexión del fundamento. La carga termina en personas y el sistema se fractura. Se requiere intervención pastoral, arrepentimiento y reconstrucción por etapas.",
+        "verse": {
+          "quote": "Separados de mí nada podéis hacer.",
+          "reference": "Juan 15:5"
+        }
+      }
+    ],
+    "sectionBands": [
+      {
+        "label": "Alineado",
+        "summary": "Esta sección muestra consistencia, obediencia práctica y estabilidad.",
+        "verse": {
+          "quote": "Mejor es confiar en Jehová que confiar en el hombre.",
+          "reference": "Salmo 118:8"
+        }
+      },
+      {
+        "label": "Ajuste",
+        "summary": "Hay señales buenas, pero falta continuidad y acuerdos claros.",
+        "verse": {
+          "quote": "Examinadlo todo; retened lo bueno.",
+          "reference": "1 Tesalonicenses 5:21"
+        }
+      },
+      {
+        "label": "Riesgo",
+        "summary": "Hay vulnerabilidad real: el peso está mal transferido o el fundamento está siendo reemplazado.",
+        "verse": {
+          "quote": "Mirad que nadie os engañe por medio de filosofías y huecas sutilezas.",
+          "reference": "Colosenses 2:8"
+        }
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "S01_ROCA",
+      "title": "Contacto con la Roca",
+      "subtitle": "¿Cristo es fundamento real o solo confesado?",
+      "diagnosticFocus": "Fundamento operativo: obediencia, dependencia, rendición.",
+      "porticoAxis": "comunion",
+      "sectionVerse": {
+        "quote": "El que viene a mí, y oye mis palabras y las hace... es como un hombre que edificó su casa, y cavó y ahondó, y puso el fundamento sobre la roca.",
+        "reference": "Lucas 6:47-48"
+      },
+      "questions": [
+        { "id": "Q01_CRISTO_PUNTO_FINAL", "text": "En decisiones del hogar (finanzas, crianza, conflicto), Cristo es el punto final de dirección (no solo una opinión más)." },
+        { "id": "Q02_OBEDIENCIA_PRACTICA", "text": "La Palabra se traduce en cambios prácticos (hábitos, límites, prioridades) sin excusas repetidas." },
+        { "id": "Q03_ORACION_REAL", "text": "Existe oración real (no ritual): entrega de cargas, confesión y búsqueda de dirección." },
+        { "id": "Q04_ARREPENTIMIENTO", "text": "Cuando fallamos, hay arrepentimiento (cambio de dirección), no solo remordimiento o promesas." }
+      ]
+    },
+    {
+      "id": "S02_EXCAVAR",
+      "title": "Excavar y Exponer",
+      "subtitle": "Remover tierra blanda y ver lo que sostiene el alma",
+      "diagnosticFocus": "Verdad sin maquillaje: hablar, confesar, sacar a luz.",
+      "porticoAxis": "comunion",
+      "sectionVerse": {
+        "quote": "El que practica la verdad viene a la luz, para que sea manifiesto que sus obras son hechas en Dios.",
+        "reference": "Juan 3:21"
+      },
+      "questions": [
+        { "id": "Q05_HONESTIDAD_SIN_TERROR", "text": "Se puede hablar con honestidad sin castigo, burla o amenaza (ambiente seguro)." },
+        { "id": "Q06_RECONOCER_PATRONES", "text": "Reconocemos patrones dañinos (control, evasión, manipulación, silencio) y los nombramos." },
+        { "id": "Q07_CONSEJERIA_PASTORAL", "text": "Existe apertura real a mentoría/consejería cuando el hogar se estanca." },
+        { "id": "Q08_VERDAD_CON_AMOR", "text": "Se confronta con amor y verdad: sin violencia, sin chantaje, sin humillación." }
+      ]
+    },
+    {
+      "id": "S03_EMPOTRAMIENTO",
+      "title": "Empotramiento real",
+      "subtitle": "La casa no solo toca la roca: se afirma en ella",
+      "diagnosticFocus": "Afirmación y continuidad: disciplina espiritual y acuerdos.",
+      "porticoAxis": "congregacion",
+      "sectionVerse": {
+        "quote": "Pero el que me oye y no hace, es semejante a un hombre que edificó su casa sobre tierra, sin fundamento.",
+        "reference": "Lucas 6:49"
+      },
+      "questions": [
+        { "id": "Q09_RITMOS_SOSTENIBLES", "text": "Hay ritmos sostenibles (devocional, congregación, orden) que no dependen del ánimo del día." },
+        { "id": "Q10_ACUERDOS_ESCRITOS", "text": "Los acuerdos importantes se definen y se revisan (no quedan solo en palabras)." },
+        { "id": "Q11_AUTORIDAD_SANA", "text": "La autoridad se ejerce como servicio: firmeza sin abuso; humildad sin pasividad." },
+        { "id": "Q12_CUIDADO_MUTUO", "text": "Hay cuidado mutuo: escuchar, ayudar, proteger tiempos de descanso y salud emocional." }
+      ]
+    },
+    {
+      "id": "S04_REEMPLAZOS",
+      "title": "Reemplazos de fundamento",
+      "subtitle": "Lo que intenta ocupar el lugar de Cristo",
+      "diagnosticFocus": "Idolatrías funcionales: control, dinero, aprobación, tradición, placer.",
+      "porticoAxis": "comunion",
+      "sectionVerse": {
+        "quote": "Hijitos, guardaos de los ídolos.",
+        "reference": "1 Juan 5:21"
+      },
+      "questions": [
+        { "id": "Q13_CONTROL", "text": "El control (imposición, vigilancia, amenazas) no gobierna el hogar." },
+        { "id": "Q14_DINERO", "text": "El dinero no dicta la paz del hogar (la ansiedad financiera no dirige la casa)." },
+        { "id": "Q15_APROBACION", "text": "La opinión externa (familia, redes, cultura) no reemplaza la obediencia a Cristo." },
+        { "id": "Q16_PLACER_ESCAPE", "text": "El escape (pantallas, sustancias, pornografía, aislamiento) no es refugio dominante." }
+      ]
+    },
+    {
+      "id": "S05_ALINEACION",
+      "title": "Alineación al fundamento",
+      "subtitle": "Cómo se transfiere el peso sin fracturar la casa",
+      "diagnosticFocus": "Intersección: acuerdos, comunicación, resolución de conflicto.",
+      "porticoAxis": "interseccion",
+      "sectionVerse": {
+        "quote": "Dos son mejor que uno... y cordón de tres dobleces no se rompe pronto.",
+        "reference": "Eclesiastés 4:9-12"
+      },
+      "questions": [
+        { "id": "Q17_CONFLICTO_SANO", "text": "Los conflictos se procesan sin violencia: se escucha, se repara y se cierra con acuerdos." },
+        { "id": "Q18_PERDON_REPARACION", "text": "Se practica perdón con reparación: no se barre debajo de la alfombra ni se repite lo mismo sin cambio." },
+        { "id": "Q19_UNIDAD_PRIORIDAD", "text": "La unidad del hogar se protege (límites con terceros, prioridades claras) sin aislamiento malsano." },
+        { "id": "Q20_TRANSFERENCIA_CARGA", "text": "La carga termina en Cristo: no se deposita de forma injusta sobre un miembro de la familia." }
+      ]
+    },
+    {
+      "id": "S06_CONGREGAR",
+      "title": "Congregación y Cobertura",
+      "subtitle": "Columna visible: pertenencia, rendición de cuentas, crecimiento",
+      "diagnosticFocus": "Congregación: disciplina comunitaria y cobertura espiritual.",
+      "porticoAxis": "congregacion",
+      "sectionVerse": {
+        "quote": "No dejando de congregarnos, como algunos tienen por costumbre.",
+        "reference": "Hebreos 10:25"
+      },
+      "questions": [
+        { "id": "Q21_CONGREGACION_CONSTANTE", "text": "Hay congregación constante (no esporádica), con sentido de pertenencia y aprendizaje." },
+        { "id": "Q22_RENDICION_CUENTAS", "text": "Existe rendición de cuentas sana (mentoría, acompañamiento, corrección amorosa)." },
+        { "id": "Q23_SERVICIO", "text": "El hogar practica servicio (no solo consumo espiritual): se da, se ayuda, se participa." },
+        { "id": "Q24_DISCIPLINA_ESPIRITUAL", "text": "Hay disciplina espiritual conjunta (al menos 1 hábito compartido semanal) sin legalismo." }
+      ]
+    }
+  ],
+  "pastoralManual": {
+    "sections": [
+      {
+        "id": "S01_ROCA",
+        "miniTeaching": {
+          "title": "La Roca como punto final, no como accesorio",
+          "text": [
+            "Fundamento operativo significa que Cristo decide el cierre, no solo la apertura del tema.",
+            "La prueba del fundamento aparece bajo presión: ¿dónde termina el peso?",
+            "Cuando Cristo es fundamento, el hogar aprende obediencia pequeña pero constante."
+          ],
+          "oneWeekPlan": [
+            "2 minutos diarios: oración de entrega específica (nombra una carga concreta).",
+            "Elige 1 hábito a rendir (ej. gritos, sarcasmo, evasión) y define una señal de alerta.",
+            "Lee Lucas 6:46–49 una vez en la semana y anota una acción práctica."
+          ],
+          "verse": {
+            "quote": "¿Por qué me llamáis, Señor, Señor, y no hacéis lo que yo digo?",
+            "reference": "Lucas 6:46"
+          }
+        }
+      },
+      {
+        "id": "S02_EXCAVAR",
+        "miniTeaching": {
+          "title": "Excavar duele, pero salva",
+          "text": [
+            "Excavar es quitar tierra blanda: autoengaño, secretos, excusas, orgullo.",
+            "Exponer no es humillar: es traer a luz para sanar.",
+            "Sin verdad, el hogar construye sobre fantasías."
+          ],
+          "oneWeekPlan": [
+            "Haz una conversación de 15 min: “¿Qué estamos evitando decir?” (sin interrumpir).",
+            "Define una regla: no discutir con sarcasmo o burla (pausa + reinicio).",
+            "Busca apoyo: agenda mentoría/pastoral si llevan meses estancados."
+          ],
+          "verse": {
+            "quote": "Confesaos vuestras ofensas unos a otros, y orad unos por otros, para que seáis sanados.",
+            "reference": "Santiago 5:16"
+          }
+        }
+      },
+      {
+        "id": "S03_EMPOTRAMIENTO",
+        "miniTeaching": {
+          "title": "Empotramiento: continuidad que sostiene",
+          "text": [
+            "El hogar se afirma cuando lo espiritual se vuelve ritmo, no evento.",
+            "Los acuerdos sostienen cuando la emoción cae.",
+            "Autoridad sana no aplasta ni huye: sirve y guía."
+          ],
+          "oneWeekPlan": [
+            "Escribe 2 acuerdos (máximo) y pégalos en un lugar visible.",
+            "Define 1 rutina compartida semanal (15–30 min) para revisar la semana.",
+            "Practica una frase: “Me equivoqué, lo reparo así…”"
+          ],
+          "verse": {
+            "quote": "Sed hacedores de la palabra, y no tan solamente oidores.",
+            "reference": "Santiago 1:22"
+          }
+        }
+      },
+      {
+        "id": "S04_REEMPLAZOS",
+        "miniTeaching": {
+          "title": "Los sustitutos de fundamento siempre cobran intereses",
+          "text": [
+            "El control promete seguridad, pero produce miedo y mentira.",
+            "El dinero como refugio alimenta ansiedad; Cristo da paz y dirección.",
+            "La aprobación externa rompe límites y desplaza obediencia."
+          ],
+          "oneWeekPlan": [
+            "Identifica 1 ídolo funcional (control/dinero/aprobación/escape) y nómbralo en oración.",
+            "Define un límite: “Cuando aparezca X, haremos Y” (acción concreta).",
+            "Sustituye escape por refugio: 10 min de oración/lectura/respiración guiada."
+          ],
+          "verse": {
+            "quote": "No os conforméis a este siglo, sino transformaos por medio de la renovación de vuestro entendimiento.",
+            "reference": "Romanos 12:2"
+          }
+        }
+      },
+      {
+        "id": "S05_ALINEACION",
+        "miniTeaching": {
+          "title": "La carga debe cruzar la viga y descansar en la Roca",
+          "text": [
+            "Intersección es donde se ven los acuerdos: comunicación, perdón y reparación.",
+            "Si la carga queda entre dos, aparece tensión: resentimiento, competencia, agotamiento.",
+            "La madurez se mide por la reparación, no por la ausencia de conflicto."
+          ],
+          "oneWeekPlan": [
+            "Reunión de 20 min: un conflicto, una reparación, un acuerdo.",
+            "Practica el cierre: “Quedo en paz porque esto queda delante de Cristo”.",
+            "Elimina “siempre/nunca” por 7 días; habla en hechos y tiempos."
+          ],
+          "verse": {
+            "quote": "Soportaos unos a otros, y perdonaos unos a otros... así también hacedlo vosotros.",
+            "reference": "Colosenses 3:13"
+          }
+        }
+      },
+      {
+        "id": "S06_CONGREGAR",
+        "miniTeaching": {
+          "title": "Columna visible: pertenencia y cobertura",
+          "text": [
+            "Sin congregación, la columna se debilita: el hogar queda sin corrección y sin soporte.",
+            "La cobertura no controla: acompaña, enseña, corrige con amor.",
+            "Servir estabiliza: saca al hogar del egocentrismo."
+          ],
+          "oneWeekPlan": [
+            "Asiste a una reunión congregacional esta semana y toma una nota aplicable.",
+            "Escribe a un mentor/pastor: pide oración por un tema específico.",
+            "Sirve en algo pequeño (15–30 min) como familia o individuo."
+          ],
+          "verse": {
+            "quote": "Obedeced a vuestros pastores, y sujetaos a ellos; porque ellos velan por vuestras almas.",
+            "reference": "Hebreos 13:17"
+          }
+        }
+      }
+    ]
+  }
+}

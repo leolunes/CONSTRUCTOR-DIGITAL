@@ -1,0 +1,2005 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>El cimiento: Cristo como fundamento absoluto del hogar — Test</title>
+
+  <!-- jsPDF + autoTable (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111a2e;
+      --card2:#0f172a;
+      --text:#e8eefc;
+      --muted:#aab7d6;
+      --line:#22304e;
+      --accent:#7dd3fc;
+      --accent2:#a7f3d0;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --good:#34d399;
+      --orange:#fb923c;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(125,211,252,.22), transparent 60%),
+                  radial-gradient(1200px 700px at 85% 0%, rgba(167,243,208,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.35;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+    header{
+      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      padding:18px 18px;border:1px solid var(--line);background:rgba(17,26,46,.72);
+      border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter: blur(8px);
+      position:sticky;top:0;z-index:30;
+    }
+    .titleBlock{display:flex;gap:14px;align-items:center;min-width:280px}
+    .logo{
+      width:44px;height:44px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);padding:6px;
+    }
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:12.5px;margin-top:2px}
+    .live{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.7);
+      font-size:12.5px;
+    }
+    .pill b{font-family:var(--mono);font-size:12.5px}
+    .pill .dot{width:9px;height:9px;border-radius:999px;background:var(--accent)}
+    .pill.good .dot{background:var(--good)}
+    .pill.warn .dot{background:var(--warn)}
+    .pill.risk .dot{background:var(--orange)}
+    .pill.bad .dot{background:var(--bad)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{
+      background:rgba(17,26,46,.75);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      backdrop-filter: blur(8px);
+    }
+    .card h2{margin:0 0 10px;font-size:15px}
+    .fields{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    }
+    @media(max-width:700px){.fields{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input[type="text"], input[type="date"], textarea{
+      width:100%;
+      background:rgba(15,23,42,.75);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+    }
+    textarea{min-height:110px;resize:vertical}
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px
+    }
+    button{
+      appearance:none;border:0;cursor:pointer;
+      padding:10px 12px;border-radius:14px;
+      background:linear-gradient(180deg, rgba(125,211,252,.22), rgba(125,211,252,.12));
+      color:var(--text);
+      border:1px solid rgba(125,211,252,.35);
+      font-weight:600;
+    }
+    button.secondary{
+      background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:600;
+    }
+    button.danger{
+      background:linear-gradient(180deg, rgba(251,113,133,.22), rgba(251,113,133,.12));
+      border:1px solid rgba(251,113,133,.38);
+    }
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .smallNote{color:var(--muted);font-size:12px;margin-top:8px}
+    .toggle{
+      display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12.5px;
+      margin-left:auto;
+    }
+    .toggle input{transform: translateY(1px)}
+    .section{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:rgba(17,26,46,.62);
+      box-shadow:var(--shadow);
+    }
+    .sectionHead{
+      padding:14px 14px;
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      background:rgba(15,23,42,.65);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .sectionHead h3{margin:0;font-size:14px}
+    .sectionHead .metaLine{color:var(--muted);font-size:12.5px;margin-top:4px}
+    .sectionBody{padding:10px 14px 14px}
+    .q{
+      padding:12px 0;border-bottom:1px dashed rgba(255,255,255,.12);
+    }
+    .q:last-child{border-bottom:0}
+    .q .qText{font-size:13.5px;margin-bottom:8px}
+    .scaleRow{display:flex;flex-wrap:wrap;gap:8px}
+    .opt{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;background:rgba(15,23,42,.55);
+      font-size:12.5px;color:var(--text);
+      user-select:none;
+    }
+    .opt input{margin:0}
+    .opt:hover{border-color: rgba(125,211,252,.35)}
+    .results{
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(15,23,42,.62);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .resultsHead{
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      padding:14px;border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(17,26,46,.75);
+    }
+    .resultsHead h2{margin:0;font-size:15px}
+    .resBody{padding:14px}
+    .bandBox{
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.35);
+    }
+    .bandTop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      border-radius:999px;
+      padding:7px 10px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.65);
+      font-size:12.5px;font-weight:700;
+    }
+    .tag.good{border-color: rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
+    .tag.warn{border-color: rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
+    .tag.risk{border-color: rgba(251,146,60,.38);background:rgba(251,146,60,.12)}
+    .tag.bad{border-color: rgba(251,113,133,.35);background:rgba(251,113,133,.12)}
+    .verse{
+      margin-top:10px;color:var(--muted);font-size:12.5px;
+      border-left:3px solid rgba(125,211,252,.35);
+      padding-left:10px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      font-size:12.5px;
+    }
+    th,td{
+      text-align:left;
+      padding:10px 8px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      vertical-align:top;
+    }
+    th{color:var(--muted);font-weight:700}
+    .muted{color:var(--muted)}
+    .plan{margin-top:14px;display:grid;grid-template-columns:1fr;gap:10px}
+    .day{
+      padding:10px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.30);
+    }
+    .day b{font-family:var(--mono);font-size:12.5px}
+    .err{
+      margin-top:14px;
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(251,113,133,.38);
+      background:rgba(251,113,133,.10);
+      color:var(--text);
+    }
+    .footerNote{margin-top:18px;color:var(--muted);font-size:12px}
+
+    /* Pórtico */
+    .porticoWrap{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}
+    .porticoTop{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+    .porticoSvgBox{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.30);
+      border-radius:16px;
+      padding:10px;
+      overflow:auto;
+      position:relative;
+    }
+    .legendRow{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;align-items:center}
+    .lg{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(15,23,42,.55);
+    }
+
+    /* Tooltip */
+    .svgTip{
+      position:absolute;
+      pointer-events:none;
+      z-index:5;
+      max-width:320px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.92);
+      color:var(--text);
+      box-shadow:var(--shadow);
+      transform: translate(12px, 12px);
+      display:none;
+    }
+    .svgTip .t{font-weight:800;font-size:12.5px;margin-bottom:4px}
+    .svgTip .d{font-size:12.5px;color:var(--muted);line-height:1.25}
+    .svgTip .k{font-family:var(--mono);font-size:12px;color:rgba(232,238,252,.9);margin-top:6px}
+
+    /* Modal panel */
+    .modalBack{
+      position:fixed; inset:0; display:none; z-index:60;
+      background:rgba(0,0,0,.55);
+      padding:18px;
+    }
+    .modal{
+      max-width:820px; margin:40px auto 0;
+      background:rgba(17,26,46,.92);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:14px 14px;border-bottom:1px solid rgba(255,255,255,.10);
+      background:rgba(15,23,42,.72);
+    }
+    .modalHead b{font-size:14px}
+    .modalBody{padding:14px}
+    .modalClose{
+      background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      padding:8px 10px;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    /* Guided mode */
+    .guideBar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      margin-top:10px;
+    }
+    .guideBox{
+      display:none;
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.40);
+    }
+    .guideBox .title{font-weight:800}
+    .guideBox .desc{color:var(--muted);font-size:12.5px;margin-top:6px}
+    .guideBox .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="titleBlock">
+        <img class="logo" src="logo.png" alt="Logo" onerror="this.style.display='none'">
+        <div>
+          <h1>El cimiento: Cristo como fundamento absoluto del hogar</h1>
+          <div class="sub">Auditoría diagnóstica basada en la enseñanza: “El cimiento”</div>
+        </div>
+      </div>
+      <div class="live">
+        <div id="liveScorePill" class="pill"><span class="dot"></span><span>Puntaje:</span> <b id="liveScore">0</b><span class="muted">/</span><b id="liveMax">0</b></div>
+        <div id="livePercentPill" class="pill"><span class="dot"></span><span>Progreso:</span> <b id="liveAnswered">0</b><span class="muted">/</span><b id="liveTotalQ">0</b></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Datos del informe</h2>
+        <div class="fields">
+          <div>
+            <label for="patientName">Nombre del paciente</label>
+            <input id="patientName" type="text" placeholder="Ej: Juan Pérez" />
+          </div>
+          <div>
+            <label for="auditorName">Nombre del auditor</label>
+            <input id="auditorName" type="text" placeholder="Ej: Pastor / Mentor / Auditor" />
+          </div>
+          <div>
+            <label for="dateField">Fecha</label>
+            <input id="dateField" type="date" />
+          </div>
+          <div>
+            <label for="includeDetails">Detalle por pregunta (para TXT/PDF)</label>
+            <div class="toggle" style="margin-left:0">
+              <input id="includeDetails" type="checkbox" />
+              <span>Incluir detalles</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="notes">Observaciones libres</label>
+          <textarea id="notes" placeholder="Notas del auditor, contexto, acuerdos, etc."></textarea>
+        </div>
+
+        <div class="controls">
+          <button id="btnResults">Ver resultado</button>
+          <button id="btnTxt" class="secondary">Descargar TXT</button>
+          <button id="btnPdf" class="secondary">Descargar PDF bonito</button>
+          <button id="btnPng" class="secondary">Descargar Imagen (PNG)</button>
+          <button id="btnReset" class="danger">Reiniciar</button>
+          <div class="toggle">
+            <input id="autoScroll" type="checkbox" checked />
+            <span>Auto-bajar a resultados</span>
+          </div>
+        </div>
+        <div class="smallNote">Escala 0–5 (radio buttons). No se permiten números escritos manualmente.</div>
+        <div id="loadError" class="err" style="display:none"></div>
+      </div>
+
+      <div class="card">
+        <h2>Guía rápida de lectura</h2>
+        <div class="bandBox">
+          <div class="muted" style="font-size:12.5px">
+            Este test evalúa si el hogar está <b>fundado en Cristo</b> de forma <b>operativa</b>:
+            <b>contacto con la Roca</b>, <b>excavar y exponer</b>, <b>empotramiento real</b>, <b>reemplazos de fundamento</b>,
+            y <b>alineación al fundamento</b> (Cristo no se negocia).
+            <br><br>
+            Incluye <b>Diagrama del pórtico</b> (Comunión, Congregación, Intersección) para visualizar estabilidad y transferencia de cargas.
+          </div>
+        </div>
+        <div class="footerNote">
+          Archivos requeridos: <span class="muted">cimiento.json</span>, <span class="muted">cimiento.html</span> y <span class="muted">logo.png</span> (opcional) en la misma carpeta.
+        </div>
+      </div>
+    </div>
+
+    <div id="testRoot"></div>
+
+    <div id="resultsRoot" class="results" style="display:none">
+      <div class="resultsHead">
+        <h2>Resultados</h2>
+        <div class="pill"><span class="dot"></span><span>Total:</span> <b id="resTotal">0</b><span class="muted">/</span><b id="resMax">0</b> <span class="muted">·</span> <b id="resPct">0%</b></div>
+      </div>
+      <div class="resBody">
+        <div id="globalBox" class="bandBox"></div>
+
+        <!-- Diagrama del pórtico -->
+        <div style="margin-top:12px">
+          <h2 style="margin:0 0 10px;font-size:14px">Diagrama del pórtico</h2>
+          <div class="bandBox">
+            <div class="porticoTop">
+              <div class="muted" style="font-size:12.5px">
+                Visual estructural (Cimiento/Comunión, Columna/Congregación, Viga/Intersección) calculado desde el test.
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <div id="pillComunion" class="pill"><span class="dot"></span><span>Comunión:</span> <b id="pctComunion">0%</b></div>
+                <div id="pillCongregacion" class="pill"><span class="dot"></span><span>Congregación:</span> <b id="pctCongregacion">0%</b></div>
+                <div id="pillInterseccion" class="pill"><span class="dot"></span><span>Intersección:</span> <b id="pctInterseccion">0%</b></div>
+              </div>
+            </div>
+
+            <div class="porticoWrap">
+              <div class="porticoSvgBox" id="porticoBox">
+                <div id="porticoSvgMount"></div>
+                <div id="svgTip" class="svgTip">
+                  <div class="t" id="tipTitle">—</div>
+                  <div class="d" id="tipDesc">—</div>
+                  <div class="k" id="tipKpi" style="display:none"></div>
+                </div>
+              </div>
+
+              <div class="guideBar">
+                <div class="legendRow">
+                  <span class="lg">🟢 Alineado</span>
+                  <span class="lg">🟡 En ajuste</span>
+                  <span class="lg">🟠 En riesgo</span>
+                  <span class="lg">🔴 Crítico</span>
+                  <span class="lg" title="Comparación automática con el último resultado guardado en este navegador">↔︎ Antes/Después</span>
+                </div>
+                <button id="btnGuide" class="secondary">Explícame este diagrama</button>
+              </div>
+
+              <div id="guideBox" class="guideBox">
+                <div class="title" id="guideTitle">—</div>
+                <div class="desc" id="guideDesc">—</div>
+                <div class="acts">
+                  <button id="btnGuideNext" class="secondary">Siguiente</button>
+                  <button id="btnGuideClose" class="danger">Cerrar</button>
+                </div>
+              </div>
+
+              <div class="smallNote">Tip: pasa el cursor o toca el diagrama para ver tooltips. Haz clic para abrir enfoque pastoral del elemento.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h2 style="margin:0 0 10px;font-size:14px">Resultados por sección</h2>
+          <div style="overflow:auto">
+            <table id="sectionTable">
+              <thead>
+                <tr>
+                  <th>Sección</th>
+                  <th>Diagnóstico</th>
+                  <th>Puntaje</th>
+                  <th>%</th>
+                  <th>Enfoque</th>
+                  <th>Verso</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2 style="margin:0 0 10px;font-size:14px">Enfoque pastoral por secciones</h2>
+          <div id="pastoralBlocks"></div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2 style="margin:0 0 10px;font-size:14px">Plan semanal automático (7 días)</h2>
+          <div class="muted" style="font-size:12.5px;margin-bottom:8px">
+            Basado en las secciones con mayor tensión (menor %). Se prioriza restauración con pasos pequeños y sostenibles.
+          </div>
+          <div id="weeklyPlan" class="plan"></div>
+        </div>
+
+        <div class="footerNote">Tip: descarga el PDF para una lectura ordenada con portada, tablas, diagrama, plan y enfoque pastoral.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal contextual -->
+  <div id="modalBack" class="modalBack" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modalHead">
+        <b id="modalTitle">—</b>
+        <button id="modalClose" class="modalClose">Cerrar</button>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const JSON_PATH = './cimiento.json';
+  const TITLE = 'El cimiento: Cristo como fundamento absoluto del hogar';
+
+  // Umbrales por porcentaje (0..1) para diagnósticos texto
+  const GLOBAL_THRESHOLDS = [
+    { min: 0.85, band: 'Alineado' },
+    { min: 0.65, band: 'Ajuste' },
+    { min: 0.40, band: 'Riesgo' },
+    { min: 0.00, band: 'Crítico' }
+  ];
+  const SECTION_THRESHOLDS = [
+    { min: 0.75, band: 'Alineado' },
+    { min: 0.50, band: 'Ajuste' },
+    { min: 0.00, band: 'Riesgo' }
+  ];
+
+  // Bandas del Pórtico (0..100)
+  const PORTICO_BANDS = [
+    { min: 75, label: 'Alineado', key: 'good', emoji:'🟢' },
+    { min: 55, label: 'En ajuste', key: 'warn', emoji:'🟡' },
+    { min: 35, label: 'En riesgo', key: 'risk', emoji:'🟠' },
+    { min: 0,  label: 'Crítico',  key: 'bad',  emoji:'🔴' }
+  ];
+
+  const el = (id) => document.getElementById(id);
+
+  const state = {
+    data: null,
+    answers: new Map(),
+    totalQuestions: 0,
+    maxPerQuestion: 5,
+    maxTotal: 0,
+    lastPorticoPNG: null,
+    porticoHighlight: null,
+    guideActive: false,
+    guideStep: 0
+  };
+
+  // Defaults
+  try {
+    const today = new Date();
+    const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    el('dateField').value = iso;
+  } catch {}
+
+  function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
+  function fmtPct(p){ return `${Math.round(p*100)}%`; }
+  function safeText(s){ return (s ?? '').toString(); }
+
+  function getScaleOptions(){
+    const opts = state.data?.scale?.options || [];
+    const nums = opts.map(o => Number(o.value)).filter(v => Number.isFinite(v));
+    const max = nums.length ? Math.max(...nums) : 5;
+    state.maxPerQuestion = max;
+    return opts;
+  }
+
+  function computeTotals(){
+    let total = 0;
+    let answered = 0;
+    for (const [, val] of state.answers.entries()){
+      if (Number.isFinite(val)){ total += val; answered += 1; }
+    }
+    return { total, answered };
+  }
+
+  function pickBand(pct, thresholds, kind){
+    const p = clamp(pct, 0, 1);
+    const chosen = thresholds.find(t => p >= t.min) || thresholds[thresholds.length - 1];
+    const label = chosen.band;
+
+    if (kind === 'global'){
+      const bandObj = (state.data.rubrics.globalBands || []).find(b => b.label === label);
+      return bandObj || (state.data.rubrics.globalBands || [])[0] || { label, summary:'', verse:{quote:'',reference:''} };
+    } else {
+      const bandObj = (state.data.rubrics.sectionBands || []).find(b => b.label === label);
+      return bandObj || (state.data.rubrics.sectionBands || [])[0] || { label, summary:'', verse:{quote:'',reference:''} };
+    }
+  }
+
+  function computeBySection(){
+    const sections = state.data.sections || [];
+    const by = [];
+    for (const s of sections){
+      let score = 0;
+      let answered = 0;
+      const qCount = (s.questions || []).length;
+      for (const q of (s.questions || [])){
+        const v = state.answers.get(q.id);
+        if (Number.isFinite(v)){ score += v; answered += 1; }
+      }
+      const max = qCount * state.maxPerQuestion;
+      const pct = max > 0 ? (score / max) : 0;
+      const band = pickBand(pct, SECTION_THRESHOLDS, 'section');
+      by.push({ section: s, score, max, pct, answered, qCount, band });
+    }
+    by.sort((a,b) => a.pct - b.pct);
+    return by;
+  }
+
+  function bandClass(label){
+    const l = (label || '').toLowerCase();
+    if (l.includes('aline')) return 'good';
+    if (l.includes('ajust')) return 'warn';
+    if (l.includes('riesg')) return 'bad';
+    if (l.includes('crít') || l.includes('crit')) return 'bad';
+    return '';
+
+    if (l.includes('riesg')) return 'bad';
+    if (l.includes('crít') || l.includes('crit')) return 'bad';
+    return '';
+  }
+
+  function porticoBandFromPct100(p){
+    const v = clamp(Math.round(p), 0, 100);
+    const chosen = PORTICO_BANDS.find(b => v >= b.min) || PORTICO_BANDS[PORTICO_BANDS.length - 1];
+    return chosen;
+  }
+
+  function colorForPorticoKey(key){
+    if (key === 'good') return '#34d399';
+    if (key === 'warn') return '#fbbf24';
+    if (key === 'risk') return '#fb923c';
+    return '#fb7185';
+  }
+
+  function renderTest(){
+    const root = el('testRoot');
+    root.innerHTML = '';
+
+    const data = state.data;
+    const scale = getScaleOptions();
+    const sections = data.sections || [];
+
+    let totalQ = 0;
+    for (const s of sections) totalQ += (s.questions || []).length;
+    state.totalQuestions = totalQ;
+    state.maxTotal = totalQ * state.maxPerQuestion;
+
+    el('liveMax').textContent = state.maxTotal;
+    el('liveTotalQ').textContent = totalQ;
+
+    for (const s of sections){
+      const sec = document.createElement('div');
+      sec.className = 'section';
+      sec.dataset.sectionId = s.id;
+
+      const head = document.createElement('div');
+      head.className = 'sectionHead';
+
+      const left = document.createElement('div');
+      const h = document.createElement('h3');
+      h.textContent = s.title;
+      const meta = document.createElement('div');
+      meta.className = 'metaLine';
+      meta.textContent = `${safeText(s.subtitle)} · Enfoque: ${safeText(s.diagnosticFocus)}`;
+      left.appendChild(h);
+      left.appendChild(meta);
+
+      const right = document.createElement('div');
+      right.style.display = 'flex';
+      right.style.gap = '10px';
+      right.style.alignItems = 'center';
+      right.style.flexWrap = 'wrap';
+      right.innerHTML = `
+        <div class="pill"><span class="dot"></span><span>Sección:</span> <b id="secScore_${s.id}">0</b><span class="muted">/</span><b id="secMax_${s.id}">0</b></div>
+      `;
+
+      head.appendChild(left);
+      head.appendChild(right);
+
+      const body = document.createElement('div');
+      body.className = 'sectionBody';
+
+      for (const q of (s.questions || [])){
+        const qWrap = document.createElement('div');
+        qWrap.className = 'q';
+
+        const qText = document.createElement('div');
+        qText.className = 'qText';
+        qText.textContent = q.text;
+
+        const row = document.createElement('div');
+        row.className = 'scaleRow';
+
+        for (const opt of scale){
+          const id = `${q.id}_v${opt.value}`;
+          const lab = document.createElement('label');
+          lab.className = 'opt';
+          lab.setAttribute('for', id);
+
+          const inp = document.createElement('input');
+          inp.type = 'radio';
+          inp.name = q.id;
+          inp.id = id;
+          inp.value = String(opt.value);
+          inp.addEventListener('change', () => {
+            state.answers.set(q.id, Number(inp.value));
+            state.lastPorticoPNG = null;
+            updateLive();
+          });
+
+          const span = document.createElement('span');
+          span.textContent = `${opt.label}`;
+
+          lab.appendChild(inp);
+          lab.appendChild(span);
+          row.appendChild(lab);
+        }
+
+        qWrap.appendChild(qText);
+        qWrap.appendChild(row);
+        body.appendChild(qWrap);
+      }
+
+      sec.appendChild(head);
+      sec.appendChild(body);
+      root.appendChild(sec);
+
+      const secMax = (s.questions || []).length * state.maxPerQuestion;
+      const maxEl = el(`secMax_${s.id}`);
+      if (maxEl) maxEl.textContent = secMax;
+    }
+
+    updateLive();
+  }
+
+  function computePorticoAxes(){
+    const by = computeBySection();
+    const axisAgg = {
+      comunion: { score:0, max:0 },
+      congregacion: { score:0, max:0 },
+      interseccion: { score:0, max:0 }
+    };
+    for (const it of by){
+      const axis = it.section.porticoAxis || 'comunion';
+      if (!axisAgg[axis]) continue;
+      axisAgg[axis].score += it.score;
+      axisAgg[axis].max += it.max;
+    }
+    const toPct100 = (obj) => obj.max > 0 ? (obj.score / obj.max) * 100 : 0;
+
+    const comunionPct = toPct100(axisAgg.comunion);
+    const congregacionPct = toPct100(axisAgg.congregacion);
+    const interseccionPct = toPct100(axisAgg.interseccion);
+
+    return {
+      comunion: { pct: comunionPct, band: porticoBandFromPct100(comunionPct) },
+      congregacion: { pct: congregacionPct, band: porticoBandFromPct100(congregacionPct) },
+      interseccion: { pct: interseccionPct, band: porticoBandFromPct100(interseccionPct) }
+    };
+  }
+
+  function updatePorticoUI(){
+    const axes = computePorticoAxes();
+
+    const setPill = (pillId, pctId, axis) => {
+      const pill = el(pillId);
+      const pctEl = el(pctId);
+      if (!pill || !pctEl) return;
+      pctEl.textContent = `${Math.round(axes[axis].pct)}%`;
+      pill.classList.remove('good','warn','risk','bad');
+      pill.classList.add(axes[axis].band.key);
+    };
+
+    setPill('pillComunion', 'pctComunion', 'comunion');
+    setPill('pillCongregacion', 'pctCongregacion', 'congregacion');
+    setPill('pillInterseccion', 'pctInterseccion', 'interseccion');
+
+    renderPorticoSVG();
+    attachPorticoInteractions();
+  }
+
+  function updateLive(){
+    const { total, answered } = computeTotals();
+
+    el('liveScore').textContent = total;
+    el('liveAnswered').textContent = answered;
+
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const pill = el('liveScorePill');
+    pill.classList.remove('good','warn','bad','risk');
+    const label = pickBand(pct, GLOBAL_THRESHOLDS, 'global').label || '';
+    const cls = bandClass(label);
+    if (cls) pill.classList.add(cls);
+
+    const pill2 = el('livePercentPill');
+    pill2.classList.remove('good','warn','bad','risk');
+    if (answered === state.totalQuestions && state.totalQuestions > 0) pill2.classList.add('good');
+    else if (answered > 0) pill2.classList.add('warn');
+
+    const bySection = computeBySection().reduce((acc, it) => { acc[it.section.id] = it; return acc; }, {});
+    for (const s of (state.data.sections || [])){
+      const it = bySection[s.id];
+      const scoreEl = el(`secScore_${s.id}`);
+      if (scoreEl) scoreEl.textContent = it ? it.score : 0;
+    }
+
+    if (el('resultsRoot').style.display !== 'none'){
+      updatePorticoUI();
+    }
+  }
+
+  function buildGlobalBox(globalBand, pct){
+    const cls = bandClass(globalBand.label);
+    const tagClass = cls ? `tag ${cls}` : 'tag';
+    const verse = globalBand.verse || { quote:'', reference:'' };
+
+    return `
+      <div class="bandTop">
+        <span class="${tagClass}">Diagnóstico global: ${safeText(globalBand.label)}</span>
+        <span class="pill"><span class="dot"></span><span>Porcentaje:</span> <b>${fmtPct(pct)}</b></span>
+      </div>
+      <div style="margin-top:10px;color:var(--text);font-size:13px">${safeText(globalBand.summary)}</div>
+      <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+    `;
+  }
+
+  function getMiniTeachingForSection(sectionId){
+    const list = state.data?.pastoralManual?.sections || [];
+    return list.find(x => x.id === sectionId)?.miniTeaching || null;
+  }
+
+  function buildWeeklyPlanFromSections(bySectionSortedLow){
+    const priority = bySectionSortedLow.slice(0, 3);
+    const pools = priority.map(it => {
+      const mini = getMiniTeachingForSection(it.section.id);
+      return { title: it.section.title, actions: (mini?.oneWeekPlan || []).slice() };
+    }).filter(p => p.actions.length);
+
+    const days = [];
+    for (let i=0;i<7;i++){
+      const picks = [];
+      for (let j=0;j<pools.length;j++){
+        const pool = pools[(i + j) % pools.length];
+        const act = pool.actions[i % pool.actions.length];
+        if (act) picks.push({ sec: pool.title, act });
+        if (picks.length >= 2) break;
+      }
+      if (!picks.length){
+        picks.push({ sec: 'Fundamento en Cristo', act: 'Ora: “Cristo, único fundamento, te entrego el peso de mi hogar. Excava lo que deba ser removido y empótrame en la Roca.”' });
+      }
+      days.push(picks);
+    }
+    return days;
+  }
+
+  // -------------------------
+  // PÓRTICO: SVG + Tooltips + Modal + Guía + Antes/Después
+  // -------------------------
+  function getPrevAxes(){
+    try{
+      const key = `portico_prev_axes__${TITLE}`;
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj?.comunion || !obj?.congregacion || !obj?.interseccion) return null;
+      return obj;
+    }catch{ return null; }
+  }
+  function savePrevAxes(axes){
+    try{
+      const key = `portico_prev_axes__${TITLE}`;
+      localStorage.setItem(key, JSON.stringify({
+        comunion: { pct: axes.comunion.pct },
+        congregacion: { pct: axes.congregacion.pct },
+        interseccion: { pct: axes.interseccion.pct }
+      }));
+    }catch{}
+  }
+
+  function axisKeyToLabel(k){
+    if (k === 'comunion') return 'Comunión';
+    if (k === 'congregacion') return 'Congregación';
+    return 'Intersección';
+  }
+
+  function pickRepresentativeSectionForAxis(axisId){
+    const by = computeBySection();
+    const filtered = by.filter(it => (it.section.porticoAxis || '') === axisId);
+    return filtered.length ? filtered[0].section : null;
+  }
+
+  function computeTensionHalos(axes){
+    const a = [
+      { id:'comunion', pct: axes.comunion.pct, key: axes.comunion.band.key },
+      { id:'congregacion', pct: axes.congregacion.pct, key: axes.congregacion.band.key },
+      { id:'interseccion', pct: axes.interseccion.pct, key: axes.interseccion.band.key }
+    ];
+    let max = a[0], min = a[0];
+    for (const x of a){
+      if (x.pct > max.pct) max = x;
+      if (x.pct < min.pct) min = x;
+    }
+    const diff = Math.round(max.pct - min.pct);
+    return { diff, dominant: max, weakest: min };
+  }
+
+  function buildPorticoSVGMarkup(){
+    const axes = computePorticoAxes();
+    const prev = getPrevAxes();
+
+    const patient = safeText(el('patientName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+
+    const comm = axes.comunion;
+    const cong = axes.congregacion;
+    const inter = axes.interseccion;
+
+    const cComm = colorForPorticoKey(comm.band.key);
+    const cCong = colorForPorticoKey(cong.band.key);
+    const cInter = colorForPorticoKey(inter.band.key);
+
+    const labelBand = (a) => `${a.band.emoji} ${a.band.label} (${Math.round(a.pct)}%)`;
+
+    const W = 860, H = 420;
+
+    // Geometría fija
+    const foundation = { x:110, y:320, w:220, h:48, rx:14 };
+    const col = { x:220, y1:310, y2:130 };
+    const beam = { x1:220, y:130, x2:660 };
+    const nCom = { x:220, y:310, r:14 };
+    const nCong = { x:220, y:130, r:14 };
+    const nInter = { x:660, y:130, r:14 };
+
+    // Cargas (fijas)
+    const liveLoad = { x:380, y1:82, y2:122 };
+    const deadLoad = { x:500, y1:82, y2:122 };
+    const seismic = { x1:70, y:130, x2:206 };
+
+    const GREEN = '#34d399';
+    const RED = '#fb7185';
+
+    const hl = state.porticoHighlight;
+    const hlOpacity = 0.92;
+    const hlStroke = 'rgba(232,238,252,0.75)';
+
+    const overlayFor = (what) => (hl === what ? `stroke="${hlStroke}" stroke-width="30" opacity="${hlOpacity}"` : `opacity="0"`);
+
+    const animPulse = (key) => key === 'warn'
+      ? `<animate attributeName="opacity" values="0.78;1;0.78" dur="2.6s" repeatCount="indefinite" />`
+      : '';
+    const animRisk = (key) => key === 'risk'
+      ? `<animateTransform attributeName="transform" type="translate" values="0 0; 2 0; 0 0; -2 0; 0 0" dur="1.8s" repeatCount="indefinite" />`
+      : '';
+    const animCriticalDash = (key) => key === 'bad'
+      ? `<animate attributeName="stroke-dashoffset" values="0;120" dur="2.2s" repeatCount="indefinite" />`
+      : '';
+
+    const dashIfCritical = (key) => key === 'bad' ? `stroke-dasharray="10 10"` : '';
+
+    const tension = computeTensionHalos(axes);
+    const showHalo = tension.diff > 20;
+    const haloColor = colorForPorticoKey(tension.dominant.key);
+
+    // Antes/Después (trazo punteado)
+    let prevDraw = '';
+    if (prev){
+      const pc = clamp(Number(prev.comunion?.pct ?? 0), 0, 100);
+      const pg = clamp(Number(prev.congregacion?.pct ?? 0), 0, 100);
+      const pi = clamp(Number(prev.interseccion?.pct ?? 0), 0, 100);
+
+      const pComm = porticoBandFromPct100(pc);
+      const pCong = porticoBandFromPct100(pg);
+      const pInter = porticoBandFromPct100(pi);
+
+      const pCComm = colorForPorticoKey(pComm.key);
+      const pCCong = colorForPorticoKey(pCong.key);
+      const pCInter = colorForPorticoKey(pInter.key);
+
+      prevDraw = `
+        <g opacity="0.55">
+          <rect x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+                fill="rgba(0,0,0,0)" stroke="${pCComm}" stroke-width="10" stroke-dasharray="8 8" stroke-linejoin="round"/>
+          <path d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+                fill="none" stroke="${pCCong}" stroke-width="10" stroke-dasharray="8 8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+                fill="none" stroke="${pCInter}" stroke-width="10" stroke-dasharray="8 8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      `;
+    }
+
+    const deltaText = (axisId) => {
+      if (!prev) return '';
+      const now = Math.round(axes[axisId].pct);
+      const old = Math.round(clamp(Number(prev[axisId]?.pct ?? 0), 0, 100));
+      const d = now - old;
+      const s = d === 0 ? '0' : (d > 0 ? `+${d}` : `${d}`);
+      return `Δ ${s} pts`;
+    };
+
+    const titleLine = `Diagrama del pórtico — ${patient ? patient : 'Paciente'} — ${date || 'Fecha'}`;
+
+    return `
+<svg id="porticoSvg" xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <marker id="arrowGreenDown" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="${GREEN}"></path>
+    </marker>
+    <marker id="arrowRedDown" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="${RED}"></path>
+    </marker>
+    <marker id="arrowSeismic" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="rgba(232,238,252,0.90)"></path>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="${W}" height="${H}" rx="22" fill="#0b1220"/>
+  <rect x="18" y="18" width="${W-36}" height="${H-36}" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
+
+  ${prevDraw}
+
+  <!-- CARGAS -->
+  <g id="loadsGroup" data-hit="loads" style="cursor:pointer">
+    <line id="loadLive" x1="${liveLoad.x}" y1="${liveLoad.y1}" x2="${liveLoad.x}" y2="${liveLoad.y2}"
+          stroke="${GREEN}" stroke-width="4" marker-end="url(#arrowGreenDown)" />
+    <text x="${liveLoad.x}" y="${liveLoad.y1 - 10}" fill="${GREEN}"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">Carga Viva</text>
+
+    <line id="loadDead" x1="${deadLoad.x}" y1="${deadLoad.y1}" x2="${deadLoad.x}" y2="${deadLoad.y2}"
+          stroke="${RED}" stroke-width="4" marker-end="url(#arrowRedDown)" />
+    <text x="${deadLoad.x}" y="${deadLoad.y1 - 10}" fill="${RED}"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">Carga Muerta</text>
+
+    <line id="loadSeismic" x1="${seismic.x1}" y1="${seismic.y}" x2="${seismic.x2}" y2="${seismic.y}"
+          stroke="rgba(232,238,252,0.70)" stroke-width="4" marker-end="url(#arrowSeismic)" />
+    <text x="${(seismic.x1 + seismic.x2)/2}" y="${seismic.y - 12}" fill="rgba(232,238,252,0.85)"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">Carga Sísmica</text>
+
+    <rect x="250" y="54" width="450" height="92" rx="18" fill="rgba(0,0,0,0)" ${overlayFor('loads')} />
+  </g>
+
+  <!-- FOUNDATION (CIMIENTO / COMUNIÓN) -->
+  <g id="foundationGroup" data-hit="foundation" style="cursor:pointer">
+    <rect id="foundationRect" x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+          fill="rgba(0,0,0,0)" stroke="${cComm}" stroke-width="22" stroke-linejoin="round" ${dashIfCritical(comm.band.key)}>
+      ${animCriticalDash(comm.band.key)}
+      ${animPulse(comm.band.key)}
+    </rect>
+
+    <rect x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+          fill="rgba(0,0,0,0)" ${overlayFor('foundation')} />
+
+    <text id="txtCimiento" x="${foundation.x + foundation.w/2}" y="${foundation.y + foundation.h/2 - 2}"
+          fill="rgba(232,238,252,0.90)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">CIMIENTO</text>
+  </g>
+
+  <!-- COLUMN (COLUMNA / CONGREGACIÓN) -->
+  <g id="columnGroup" data-hit="column" style="cursor:pointer">
+    <path id="columnPath" d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+          fill="none" stroke="${cCong}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"
+          ${dashIfCritical(cong.band.key)}>
+      ${animCriticalDash(cong.band.key)}
+      ${animPulse(cong.band.key)}
+      ${animRisk(cong.band.key)}
+    </path>
+
+    <path d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+          fill="none" ${overlayFor('column')} stroke-linecap="round" stroke-linejoin="round" />
+
+    <text x="${col.x - 52}" y="${(col.y1 + col.y2)/2}" fill="rgba(232,238,252,0.90)"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle"
+          transform="rotate(-90 ${col.x - 52} ${(col.y1 + col.y2)/2})">COLUMNA</text>
+  </g>
+
+  <!-- BEAM (VIGA / INTERSECCIÓN) -->
+  <g id="beamGroup" data-hit="beam" style="cursor:pointer">
+    <path id="beamPath" d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+          fill="none" stroke="${cInter}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"
+          ${dashIfCritical(inter.band.key)}>
+      ${animCriticalDash(inter.band.key)}
+      ${animPulse(inter.band.key)}
+      ${animRisk(inter.band.key)}
+    </path>
+
+    <path d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+          fill="none" ${overlayFor('beam')} stroke-linecap="round" stroke-linejoin="round" />
+
+    <text x="${(beam.x1 + beam.x2)/2}" y="${beam.y - 24}" fill="rgba(232,238,252,0.90)"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">VIGA</text>
+  </g>
+
+  <!-- NODES -->
+  <g id="nodesGroup">
+    ${showHalo ? `
+      <circle cx="${(tension.weakest.id === 'interseccion') ? nInter.x : (tension.weakest.id === 'congregacion' ? nCong.x : nCom.x)}"
+              cy="${(tension.weakest.id === 'interseccion') ? nInter.y : (tension.weakest.id === 'congregacion' ? nCong.y : nCom.y)}"
+              r="26" fill="rgba(0,0,0,0)" stroke="${haloColor}" stroke-width="6" opacity="0.35"/>
+    ` : ``}
+
+    <g id="nodeComGroup" data-hit="node_comunion" style="cursor:pointer">
+      <circle id="nodeCom" cx="${nCom.x}" cy="${nCom.y}" r="${nCom.r}" fill="#0f172a" stroke="${cComm}" stroke-width="10"/>
+      <circle cx="${nCom.x}" cy="${nCom.y}" r="26" fill="rgba(0,0,0,0)" ${overlayFor('node_comunion')} />
+      <text id="txtComunion" x="${nCom.x}" y="${nCom.y + 66}" fill="rgba(232,238,252,0.90)"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="13" font-weight="700" text-anchor="middle">COMUNIÓN</text>
+    </g>
+
+    <g id="nodeCongGroup" data-hit="node_congregacion" style="cursor:pointer">
+      <circle id="nodeCong" cx="${nCong.x}" cy="${nCong.y}" r="${nCong.r}" fill="#0f172a" stroke="${cCong}" stroke-width="10"/>
+      <circle cx="${nCong.x}" cy="${nCong.y}" r="26" fill="rgba(0,0,0,0)" ${overlayFor('node_congregacion')} />
+      <text x="${nCong.x + 18}" y="${nCong.y - 26}" fill="rgba(232,238,252,0.90)"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="13" font-weight="700" text-anchor="start">CONGREGACIÓN</text>
+    </g>
+
+    <g id="nodeInterGroup" data-hit="node_interseccion" style="cursor:pointer">
+      <circle id="nodeInter" cx="${nInter.x}" cy="${nInter.y}" r="${nInter.r}" fill="#0f172a" stroke="${cInter}" stroke-width="10"/>
+      <circle cx="${nInter.x}" cy="${nInter.y}" r="26" fill="rgba(0,0,0,0)" ${overlayFor('node_interseccion')} />
+      <text x="${nInter.x}" y="${nInter.y - 26}" fill="rgba(232,238,252,0.90)"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="13" font-weight="700" text-anchor="middle">INTERSECCIÓN</text>
+    </g>
+  </g>
+
+  <!-- Axis status box -->
+  <g>
+    <rect x="520" y="250" width="300" height="118" rx="16" fill="rgba(11,18,32,0.55)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="540" y="278" fill="rgba(170,183,214,0.95)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace"
+          font-size="12">EJES DEL PÓRTICO</text>
+
+    <circle cx="542" cy="300" r="6" fill="${cComm}"/>
+    <text x="555" y="305" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
+      COMUNIÓN: ${labelBand(comm)}
+    </text>
+    <text x="555" y="320" fill="rgba(170,183,214,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="11">
+      ${deltaText('comunion')}
+    </text>
+
+    <circle cx="542" cy="326" r="6" fill="${cCong}"/>
+    <text x="555" y="331" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
+      CONGREGACIÓN: ${labelBand(cong)}
+    </text>
+    <text x="555" y="346" fill="rgba(170,183,214,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="11">
+      ${deltaText('congregacion')}
+    </text>
+
+    <circle cx="542" cy="352" r="6" fill="${cInter}"/>
+    <text x="555" y="357" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
+      INTERSECCIÓN: ${labelBand(inter)}
+    </text>
+    <text x="555" y="372" fill="rgba(170,183,214,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="11">
+      ${deltaText('interseccion')}
+    </text>
+  </g>
+
+  <text x="${W/2}" y="${H - 26}" fill="rgba(170,183,214,0.92)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="12" text-anchor="middle">${titleLine}</text>
+</svg>
+    `;
+  }
+
+  function renderPorticoSVG(){
+    const mount = el('porticoSvgMount');
+    if (!mount) return;
+    mount.innerHTML = buildPorticoSVGMarkup();
+  }
+
+  async function exportPorticoPNG(){
+    if (state.lastPorticoPNG) return state.lastPorticoPNG;
+
+    const svgEl = document.getElementById('porticoSvg');
+    if (!svgEl) renderPorticoSVG();
+
+    const svg = document.getElementById('porticoSvg');
+    if (!svg) return null;
+
+    const serializer = new XMLSerializer();
+    let svgStr = serializer.serializeToString(svg);
+
+    if (!svgStr.includes('http://www.w3.org/2000/svg')) {
+      svgStr = svgStr.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+
+    const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+
+    const W = 860, H = 420;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    const dataUrl = await new Promise((resolve) => {
+      img.onload = () => {
+        ctx.clearRect(0,0,W,H);
+        ctx.drawImage(img, 0, 0, W, H);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(null);
+      };
+      img.src = url;
+    });
+
+    state.lastPorticoPNG = dataUrl;
+    return dataUrl;
+  }
+
+  function downloadDataUrl(dataUrl, filename){
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  // -------------------------
+  // Tooltips + Modal + Guided mode
+  // -------------------------
+  function showTip(x,y,title,desc,kpi){
+    const box = el('svgTip');
+    if (!box) return;
+    el('tipTitle').textContent = title || '—';
+    el('tipDesc').textContent = desc || '—';
+    
+const k = el('tipKpi');
+    if (kpi){
+      k.style.display = 'block';
+      k.textContent = kpi;
+    } else {
+      k.style.display = 'none';
+      k.textContent = '';
+    }
+    box.style.left = `${x}px`;
+    box.style.top = `${y}px`;
+    box.style.display = 'block';
+  }
+  function hideTip(){
+    const box = el('svgTip');
+    if (box) box.style.display = 'none';
+  }
+
+  function openModal(title, html){
+    el('modalTitle').textContent = title || 'Detalle';
+    el('modalBody').innerHTML = html || '';
+    el('modalBack').style.display = 'block';
+  }
+  function closeModal(){
+    el('modalBack').style.display = 'none';
+  }
+
+  function axisTooltipContent(axisId){
+    const axes = computePorticoAxes();
+    const a = axes[axisId];
+    const pct = Math.round(a.pct);
+    const label = a.band.label;
+
+    if (axisId === 'comunion'){
+      return {
+        title: 'CIMIENTO / COMUNIÓN',
+        desc: 'Contacto con la Roca: el hogar descansa cuando Cristo es el punto final de transferencia (no un símbolo).',
+        kpi: `${label} · ${pct}%`
+      };
+    }
+    if (axisId === 'congregacion'){
+      return {
+        title: 'COLUMNA / CONGREGACIÓN',
+        desc: 'Alineación del eje: presencia, dirección y obediencia práctica para que el sistema se adapte al fundamento.',
+        kpi: `${label} · ${pct}%`
+      };
+    }
+    return {
+      title: 'VIGA / INTERSECCIÓN',
+      desc: 'Transferencia del peso: acuerdos y acciones que evitan que la carga quede entre personas (y vuelva tensión).',
+      kpi: `${label} · ${pct}%`
+    };
+  }
+
+  function hitToAxis(hit){
+    if (hit === 'foundation' || hit === 'node_comunion') return 'comunion';
+    if (hit === 'column' || hit === 'node_congregacion') return 'congregacion';
+    if (hit === 'beam' || hit === 'node_interseccion') return 'interseccion';
+    return null;
+  }
+
+  function buildModalForHit(hit){
+    const axisId = hitToAxis(hit);
+    const axes = computePorticoAxes();
+
+    if (hit === 'loads'){
+      const inter = axes.interseccion;
+      const label = inter.band.label;
+      const pct = Math.round(inter.pct);
+      return {
+        title: 'Cargas estructurales (diagnóstico)',
+        html: `
+          <div class="bandBox">
+            <div class="bandTop">
+              <span class="tag ${inter.band.key}">Intersección: ${label} · ${pct}%</span>
+              <span class="pill"><span class="dot"></span><span>Lectura:</span> <b>¿Dónde termina el peso?</b></span>
+            </div>
+            <div style="margin-top:10px;color:var(--muted);font-size:12.5px">
+              <b>Carga Viva</b>: lo impredecible del día (emociones, conflictos, agenda).<br/>
+              <b>Carga Muerta</b>: lo constante (finanzas, hábitos, responsabilidades).<br/>
+              <b>Carga Sísmica</b>: crisis que empujan el sistema (tensión externa, cambios, pérdidas).
+            </div>
+            <div style="margin-top:10px;color:var(--text);font-size:13px">
+              Principio: <b>todo lo que no descansa en Cristo termina descansando en personas</b>.
+              Enfoque: vuelve a conducir el peso al fundamento (Cristo) y ciérralo con acuerdos concretos.
+            </div>
+          </div>
+        `
+      };
+    }
+
+    if (!axisId){
+      return { title: 'Detalle', html: `<div class="muted">Sin detalle disponible.</div>` };
+    }
+
+    const tip = axisTooltipContent(axisId);
+    const repSection = pickRepresentativeSectionForAxis(axisId);
+    const mini = repSection ? getMiniTeachingForSection(repSection.id) : null;
+
+    const verse = mini?.verse || (repSection?.sectionVerse) || { quote:'', reference:'' };
+    const bullets = Array.isArray(mini?.text) ? mini.text : [];
+    const plan = Array.isArray(mini?.oneWeekPlan) ? mini.oneWeekPlan : [];
+
+    const quickActs = (plan.slice(0,2).map(x => `<li>${safeText(x)}</li>`).join('')) || `
+      <li>Ora 2 minutos: “Cristo, fundamento eterno, te entrego este peso”.</li>
+      <li>Define un acuerdo pequeño y escrito para quitar fricción esta semana.</li>
+    `;
+
+    const sectionBadge = repSection ? `
+      <div class="pill"><span class="dot"></span><span>Sección relacionada:</span> <b>${safeText(repSection.title)}</b></div>
+    ` : '';
+
+    const axisBand = axes[axisId];
+    const axisTag = `<span class="tag ${axisBand.band.key}">${axisKeyToLabel(axisId)}: ${axisBand.band.label} · ${Math.round(axisBand.pct)}%</span>`;
+
+    return {
+      title: `${tip.title}`,
+      html: `
+        <div class="bandBox">
+          <div class="bandTop" style="justify-content:space-between">
+            ${axisTag}
+            ${sectionBadge}
+          </div>
+
+          <div style="margin-top:10px;color:var(--text);font-size:13px">${safeText(tip.desc)}</div>
+
+          <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+
+          ${mini ? `
+            <div style="margin-top:12px">
+              <b style="font-size:13px">${safeText(mini.title)}</b>
+              <ul style="margin:8px 0 0 18px;color:var(--muted);font-size:12.5px">
+                ${bullets.slice(0,6).map(t => `<li>${safeText(t)}</li>`).join('')}
+              </ul>
+            </div>
+          ` : ''}
+
+          <div style="margin-top:12px">
+            <b style="font-size:13px">Acciones sugeridas (hoy/mañana)</b>
+            <ul style="margin:8px 0 0 18px;color:var(--muted);font-size:12.5px">${quickActs}</ul>
+          </div>
+        </div>
+      `
+    };
+  }
+
+  function attachPorticoInteractions(){
+    const svg = document.getElementById('porticoSvg');
+    const box = el('porticoBox');
+    if (!svg || !box) return;
+
+    const toLocal = (evt) => {
+      const r = box.getBoundingClientRect();
+      const x = (evt.clientX ?? (evt.touches?.[0]?.clientX)) - r.left;
+      const y = (evt.clientY ?? (evt.touches?.[0]?.clientY)) - r.top;
+      return { x: clamp(x, 8, r.width - 20), y: clamp(y, 8, r.height - 20) };
+    };
+
+    const onMove = (evt) => {
+      const t = evt.target;
+      const hit = t?.closest?.('[data-hit]')?.getAttribute?.('data-hit');
+      if (!hit){ hideTip(); return; }
+
+      const p = toLocal(evt);
+      const axes = computePorticoAxes();
+
+      let title = '—', desc = '—', kpi = null;
+
+      if (hit === 'loads'){
+        title = 'CARGAS';
+        desc = 'Vida (verde), muerta (rojo) y sísmica (horizontal). Diagnóstico: ¿la carga termina en Cristo o queda en personas?';
+        kpi = `Intersección · ${axes.interseccion.band.label} · ${Math.round(axes.interseccion.pct)}%`;
+      } else {
+        const axisId = hitToAxis(hit);
+        if (axisId){
+          const tip = axisTooltipContent(axisId);
+          title = tip.title; desc = tip.desc; kpi = tip.kpi;
+        }
+      }
+
+      showTip(p.x, p.y, title, desc, kpi);
+    };
+
+    const onLeave = () => hideTip();
+
+    const onClick = (evt) => {
+      const t = evt.target;
+      const hit = t?.closest?.('[data-hit]')?.getAttribute?.('data-hit');
+      if (!hit) return;
+
+      state.porticoHighlight = hit;
+      renderPorticoSVG();
+      attachPorticoInteractions();
+
+      const m = buildModalForHit(hit);
+      openModal(m.title, m.html);
+    };
+
+    svg.addEventListener('mousemove', onMove);
+    svg.addEventListener('mouseleave', onLeave);
+    svg.addEventListener('click', onClick);
+
+    svg.addEventListener('touchstart', (evt) => {
+      const t = evt.target;
+      const hit = t?.closest?.('[data-hit]')?.getAttribute?.('data-hit');
+      if (!hit) return;
+      const p = toLocal(evt);
+      const axisId = hitToAxis(hit);
+
+      if (hit === 'loads'){
+        showTip(p.x, p.y, 'CARGAS', 'Vida (verde), muerta (rojo) y sísmica (horizontal).', `Intersección · ${Math.round(computePorticoAxes().interseccion.pct)}%`);
+      } else if (axisId){
+        const tip = axisTooltipContent(axisId);
+        showTip(p.x, p.y, tip.title, tip.desc, tip.kpi);
+      }
+    }, { passive:true });
+
+    svg.addEventListener('touchend', () => {
+      setTimeout(() => hideTip(), 900);
+    }, { passive:true });
+  }
+
+  function setGuide(active){
+    state.guideActive = active;
+    state.guideStep = 0;
+    el('guideBox').style.display = active ? 'block' : 'none';
+    if (!active){
+      state.porticoHighlight = null;
+      renderPorticoSVG();
+      attachPorticoInteractions();
+    } else {
+      runGuideStep();
+    }
+  }
+
+  function runGuideStep(){
+    const steps = [
+      {
+        key: 'foundation',
+        title: '1) Cimiento / Comunión',
+        desc: 'Aquí se decide todo: Cristo como fundamento operativo. ¿La casa está sobre la Roca o sobre “tierra blanda”?'
+      },
+      {
+        key: 'column',
+        title: '2) Columna / Congregación',
+        desc: 'El sistema se adapta al fundamento: presencia y obediencia práctica sostienen dirección sin dominar ni huir.'
+      },
+      {
+        key: 'beam',
+        title: '3) Viga / Intersección',
+        desc: 'Transferencia práctica: acuerdos y acciones que impiden que la carga quede entre personas (y se vuelva tensión).'
+      },
+      {
+        key: 'loads',
+        title: '4) Cargas',
+        desc: 'Vida, muerta y sísmica. Principio: lo que no se entrega a Cristo, termina pesando sobre el alma.'
+      }
+    ];
+
+    const s = steps[state.guideStep % steps.length];
+    el('guideTitle').textContent = s.title;
+    el('guideDesc').textContent = s.desc;
+
+    state.porticoHighlight = s.key;
+    renderPorticoSVG();
+    attachPorticoInteractions();
+  }
+
+  // -------------------------
+  // Resultados UI
+  // -------------------------
+  function renderResults(){
+    const { total } = computeTotals();
+    const max = state.maxTotal || 0;
+    const pct = max ? (total / max) : 0;
+
+    el('resTotal').textContent = total;
+    el('resMax').textContent = max;
+    el('resPct').textContent = fmtPct(pct);
+
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    el('globalBox').innerHTML = buildGlobalBox(globalBand, pct);
+
+    const by = computeBySection(); // low->high
+    const tbody = el('sectionTable').querySelector('tbody');
+    tbody.innerHTML = '';
+
+    const pastoralRoot = el('pastoralBlocks');
+    pastoralRoot.innerHTML = '';
+
+    for (const it of by.slice().sort((a,b)=> (a.section.title||'').localeCompare(b.section.title||''))){
+      const s = it.section;
+      const band = it.band;
+
+      const cls = bandClass(band.label);
+      const mini = getMiniTeachingForSection(s.id);
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><b>${safeText(s.title)}</b><div class="muted" style="margin-top:4px">${safeText(s.subtitle)}</div></td>
+        <td><span class="tag ${cls}">${safeText(band.label)}</span></td>
+        <td><span class="muted">${it.score}</span> / ${it.max}</td>
+        <td>${fmtPct(it.pct)}</td>
+        <td class="muted">${safeText(s.diagnosticFocus)}</td>
+        <td class="muted">“${safeText(s.sectionVerse?.quote)}” (${safeText(s.sectionVerse?.reference)})</td>
+      `;
+      tbody.appendChild(tr);
+
+      const block = document.createElement('div');
+      block.className = 'bandBox';
+      block.style.marginTop = '10px';
+
+      const verse = mini?.verse || s.sectionVerse || { quote:'', reference:'' };
+      const bullets = Array.isArray(mini?.text) ? mini.text : [];
+      const plan = Array.isArray(mini?.oneWeekPlan) ? mini.oneWeekPlan : [];
+
+      block.innerHTML = `
+        <div class="bandTop">
+          <span class="tag ${cls}">${safeText(s.title)} · ${safeText(band.label)} · ${fmtPct(it.pct)}</span>
+          <span class="pill"><span class="dot"></span><span>Eje:</span> <b>${axisKeyToLabel(s.porticoAxis)}</b></span>
+        </div>
+        ${mini ? `<div style="margin-top:10px"><b style="font-size:13px">${safeText(mini.title)}</b></div>` : ''}
+        ${bullets.length ? `<ul style="margin:8px 0 0 18px;color:var(--muted);font-size:12.5px">${bullets.map(t => `<li>${safeText(t)}</li>`).join('')}</ul>` : ''}
+        <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+        ${plan.length ? `<div class="muted" style="margin-top:10px;font-size:12.5px"><b>Plan 7 días (sección)</b>: ${safeText(plan[0])}</div>` : ''}
+      `;
+      pastoralRoot.appendChild(block);
+    }
+
+    // Weekly plan
+    const weekly = buildWeeklyPlanFromSections(by);
+    const planRoot = el('weeklyPlan');
+    planRoot.innerHTML = '';
+    weekly.forEach((picks, idx) => {
+      const div = document.createElement('div');
+      div.className = 'day';
+      const lines = picks.map(p => `<div style="margin-top:6px"><span class="muted">(${safeText(p.sec)})</span> ${safeText(p.act)}</div>`).join('');
+      div.innerHTML = `<b>Día ${idx+1}</b>${lines}`;
+      planRoot.appendChild(div);
+    });
+
+    // Show & update pórtico
+    el('resultsRoot').style.display = 'block';
+    updatePorticoUI();
+
+    // Save prev (after render)
+    savePrevAxes(computePorticoAxes());
+
+    if (el('autoScroll').checked){
+      el('resultsRoot').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  }
+
+  // -------------------------
+  // TXT export
+  // -------------------------
+  function buildTxtReport(){
+    const patient = safeText(el('patientName').value).trim();
+    const auditor = safeText(el('auditorName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const notes = safeText(el('notes').value).trim();
+    const include = !!el('includeDetails').checked;
+
+    const { total } = computeTotals();
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    const axes = computePorticoAxes();
+    const by = computeBySection();
+
+    const lines = [];
+    lines.push(`${TITLE}`);
+    lines.push(`Paciente: ${patient || '—'}`);
+    lines.push(`Auditor: ${auditor || '—'}`);
+    lines.push(`Fecha: ${date || '—'}`);
+    lines.push('');
+    lines.push(`DIAGNÓSTICO GLOBAL: ${safeText(globalBand.label)} (${fmtPct(pct)})`);
+    lines.push(`${safeText(globalBand.summary)}`);
+    lines.push(`Verso: “${safeText(globalBand.verse?.quote)}” (${safeText(globalBand.verse?.reference)})`);
+    lines.push('');
+    lines.push('EJES DEL PÓRTICO');
+    lines.push(`- Comunión (Cimiento): ${Math.round(axes.comunion.pct)}% · ${axes.comunion.band.label}`);
+    lines.push(`- Congregación (Columna): ${Math.round(axes.congregacion.pct)}% · ${axes.congregacion.band.label}`);
+    lines.push(`- Intersección (Viga): ${Math.round(axes.interseccion.pct)}% · ${axes.interseccion.band.label}`);
+    lines.push('');
+
+    lines.push('RESULTADOS POR SECCIÓN');
+    for (const it of by.slice().sort((a,b)=> (a.section.title||'').localeCompare(b.section.title||''))){
+      const s = it.section;
+      lines.push(`• ${safeText(s.title)} — ${safeText(it.band.label)} — ${it.score}/${it.max} — ${fmtPct(it.pct)} — Eje: ${axisKeyToLabel(s.porticoAxis)}`);
+      lines.push(`  Enfoque: ${safeText(s.diagnosticFocus)}`);
+      lines.push(`  Verso: “${safeText(s.sectionVerse?.quote)}” (${safeText(s.sectionVerse?.reference)})`);
+
+      const mini = getMiniTeachingForSection(s.id);
+      if (mini){
+        lines.push(`  Mini-enseñanza: ${safeText(mini.title)}`);
+        (mini.text || []).forEach(t => lines.push(`   - ${safeText(t)}`));
+      }
+
+      if (include){
+        lines.push('  Detalle por pregunta:');
+        for (const q of (s.questions || [])){
+          const v = state.answers.get(q.id);
+          const vv = Number.isFinite(v) ? v : '—';
+          lines.push(`   [${q.id}] (${vv}) ${safeText(q.text)}`);
+        }
+      }
+      lines.push('');
+    }
+
+    const weekly = buildWeeklyPlanFromSections(by);
+    lines.push('PLAN 7 DÍAS (AUTOMÁTICO)');
+    weekly.forEach((picks, i) => {
+      lines.push(`Día ${i+1}:`);
+      picks.forEach(p => lines.push(` - (${safeText(p.sec)}) ${safeText(p.act)}`));
+    });
+
+    lines.push('');
+    lines.push('OBSERVACIONES');
+    lines.push(notes || '—');
+
+    return lines.join('\n');
+  }
+
+  function sanitizeFilePart(s){
+    return (s || '')
+      .toString()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-zA-Z0-9_-]+/g,'_')
+      .replace(/_+/g,'_')
+      .replace(/^_+|_+$/g,'')
+      .slice(0,60) || 'reporte';
+  }
+
+  // -------------------------
+  // PDF export
+  // -------------------------
+  async function exportPdf(){
+    const patient = safeText(el('patientName').value).trim();
+    const auditor = safeText(el('auditorName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const notes = safeText(el('notes').value).trim();
+    const include = !!el('includeDetails').checked;
+
+    const { total } = computeTotals();
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    const by = computeBySection().slice().sort((a,b)=> (a.section.title||'').localeCompare(b.section.title||''));
+
+    const axes = computePorticoAxes();
+    const porticoPng = await exportPorticoPNG();
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:'pt', format:'a4' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+
+    const margin = 48;
+    let y = margin;
+
+    // Header
+    const logo = new Image();
+    let logoOk = false;
+    try{
+      await new Promise((res) => {
+        logo.onload = () => { logoOk = true; res(); };
+        logo.onerror = () => res();
+        logo.src = 'logo.png';
+      });
+    }catch{}
+
+    if (logoOk){
+      doc.addImage(logo, 'PNG', margin, y, 44, 44);
+    }
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(16);
+    doc.text(TITLE, margin + (logoOk ? 58 : 0), y + 18);
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10.5);
+    doc.setTextColor(120);
+    doc.text(`Paciente: ${patient || '—'}   ·   Auditor: ${auditor || '—'}   ·   Fecha: ${date || '—'}`, margin, y + 62);
+
+    y += 86;
+
+    // Global band block
+    doc.setTextColor(20);
+    doc.setFillColor(240, 245, 255);
+    doc.roundedRect(margin, y, pageW - margin*2, 52, 10, 10, 'F');
+    doc.setTextColor(10);
+    doc.setFont('helvetica','bold'); doc.setFontSize(12);
+    doc.text(`Diagnóstico global: ${safeText(globalBand.label)} — ${Math.round(pct*100)}%`, margin + 14, y + 20);
+    doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+    doc.setTextColor(60);
+    doc.text(doc.splitTextToSize(safeText(globalBand.summary), pageW - margin*2 - 28), margin + 14, y + 38);
+
+    y += 70;
+
+    // Verse global
+    doc.setTextColor(80);
+    doc.setFont('helvetica','italic'); doc.setFontSize(10.5);
+    doc.text(`“${safeText(globalBand.verse?.quote)}” (${safeText(globalBand.verse?.reference)})`, margin, y);
+    doc.setFont('helvetica','normal');
+    y += 16;
+
+    // Portico image
+    if (porticoPng){
+      const imgW = 430;
+      const imgH = 210;
+      const x = (pageW - imgW) / 2;
+      if (y + imgH > pageH - margin) { doc.addPage(); y = margin; }
+      doc.addImage(porticoPng, 'PNG', x, y, imgW, imgH);
+      y += imgH + 10;
+    }
+
+    // Axes quick
+    doc.setFont('helvetica','bold'); doc.setFontSize(11);
+    doc.setTextColor(30);
+    doc.text('Ejes del pórtico', margin, y + 14);
+    doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+    doc.setTextColor(70);
+    doc.text(`Comunión (Cimiento): ${Math.round(axes.comunion.pct)}% · ${axes.comunion.band.label}`, margin, y + 32);
+    doc.text(`Congregación (Columna): ${Math.round(axes.congregacion.pct)}% · ${axes.congregacion.band.label}`, margin, y + 48);
+    doc.text(`Intersección (Viga): ${Math.round(axes.interseccion.pct)}% · ${axes.interseccion.band.label}`, margin, y + 64);
+    y += 86;
+
+    // Table sections
+    if (y > pageH - margin - 120) { doc.addPage(); y = margin; }
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text('Resultados por sección', margin, y);
+    y += 10;
+
+    const rows = by.map(it => [
+      safeText(it.section.title),
+      safeText(it.band.label),
+      `${it.score}/${it.max}`,
+      `${Math.round(it.pct*100)}%`,
+      axisKeyToLabel(it.section.porticoAxis),
+      `${safeText(it.section.sectionVerse?.reference)}`
+    ]);
+
+    doc.autoTable({
+      startY: y + 10,
+      head: [['Sección','Diagnóstico','Puntaje','%','Eje','Verso']],
+      body: rows,
+      styles: { fontSize: 9.5, cellPadding: 6 },
+      headStyles: { fillColor: [235, 240, 250], textColor: 20 },
+      margin: { left: margin, right: margin }
+    });
+
+    y = doc.lastAutoTable.finalY + 18;
+
+    // Pastoral focus blocks
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    if (y > pageH - margin - 80) { doc.addPage(); y = margin; }
+    doc.text('Enfoque pastoral por secciones', margin, y);
+    y += 14;
+
+    for (const it of by){
+      const s = it.section;
+      const mini = getMiniTeachingForSection(s.id);
+
+      const header = `${safeText(s.title)} — ${safeText(it.band.label)} — ${Math.round(it.pct*100)}%`;
+      const body = [
+        `Enfoque: ${safeText(s.diagnosticFocus)}`,
+        mini?.title ? `Mini-enseñanza: ${safeText(mini.title)}` : '',
+        ...(mini?.text || []).map(t => `• ${safeText(t)}`),
+        `Verso: “${safeText((mini?.verse || s.sectionVerse)?.quote)}” (${safeText((mini?.verse || s.sectionVerse)?.reference)})`
+      ].filter(Boolean).join('\n');
+
+      const block = doc.splitTextToSize(body, pageW - margin*2);
+      const hNeeded = 14 + block.length * 12 + 18;
+
+      if (y + hNeeded > pageH - margin){
+        doc.addPage(); y = margin;
+      }
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(10.8); doc.setTextColor(20);
+      doc.text(header, margin, y);
+      y += 12;
+
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+      doc.text(block, margin, y);
+      y += block.length * 12 + 14;
+    }
+
+    // Weekly plan
+    const weekly = buildWeeklyPlanFromSections(computeBySection());
+    if (y > pageH - margin - 120) { doc.addPage(); y = margin; }
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text('Plan semanal automático (7 días)', margin, y);
+    y += 14;
+
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+    for (let i=0;i<weekly.length;i++){
+      const picks = weekly[i];
+      const line = `Día ${i+1}: ${picks.map(p => `(${safeText(p.sec)}) ${safeText(p.act)}`).join(' · ')}`;
+      const wrapped = doc.splitTextToSize(line, pageW - margin*2);
+      const hNeeded = wrapped.length * 12 + 6;
+      if (y + hNeeded > pageH - margin){ doc.addPage(); y = margin; }
+      doc.text(wrapped, margin, y);
+      y += wrapped.length * 12 + 6;
+    }
+
+    // Observations
+    if (y > pageH - margin - 120) { doc.addPage(); y = margin; }
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text('Observaciones', margin, y);
+    y += 14;
+
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+    const obs = doc.splitTextToSize(notes || '—', pageW - margin*2);
+    doc.text(obs, margin, y);
+    y += obs.length * 12 + 10;
+
+    // Details per question (optional)
+    if (include){
+      doc.addPage();
+      y = margin;
+      doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+      doc.text('Detalle por pregunta', margin, y);
+      y += 12;
+
+      for (const it of by){
+        const s = it.section;
+        const header = s.title;
+        if (y > pageH - margin - 40){ doc.addPage(); y = margin; }
+        doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(30);
+        doc.text(header, margin, y);
+        y += 10;
+
+        doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(80);
+        for (const q of (s.questions || [])){
+          const v = state.answers.get(q.id);
+          const vv = Number.isFinite(v) ? v : '—';
+          const line = `[${q.id}] (${vv}) ${safeText(q.text)}`;
+          const wrapped = doc.splitTextToSize(line, pageW - margin*2);
+          const need = wrapped.length * 11 + 4;
+          if (y + need > pageH - margin){ doc.addPage(); y = margin; }
+          doc.text(wrapped, margin, y);
+          y += wrapped.length * 11 + 4;
+        }
+        y += 10;
+      }
+    }
+
+    const file = `reporte_${sanitizeFilePart(patient)}_${sanitizeFilePart(date)}.pdf`;
+    doc.save(file);
+  }
+
+  // -------------------------
+  // Actions
+  // -------------------------
+  async function onDownloadPNG(){
+    const patient = safeText(el('patientName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const dataUrl = await exportPorticoPNG();
+    if (!dataUrl) return;
+    downloadDataUrl(dataUrl, `portico_${sanitizeFilePart(patient)}_${sanitizeFilePart(date)}.png`);
+  }
+
+  function onDownloadTXT(){
+    const patient = safeText(el('patientName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const txt = buildTxtReport();
+    const blob = new Blob([txt], { type:'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reporte_${sanitizeFilePart(patient)}_${sanitizeFilePart(date)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=> URL.revokeObjectURL(url), 300);
+  }
+
+  function resetAll(){
+    state.answers.clear();
+    state.lastPorticoPNG = null;
+    state.porticoHighlight = null;
+    state.guideActive = false;
+    state.guideStep = 0;
+    el('guideBox').style.display = 'none';
+    el('resultsRoot').style.display = 'none';
+    hideTip();
+    closeModal();
+
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    updateLive();
+  }
+
+  // -------------------------
+  // Load JSON
+  // -------------------------
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, { cache:'no-store' });
+      if (!res.ok) throw new Error(`No se pudo cargar ${JSON_PATH} (${res.status})`);
+      const data = await res.json();
+      state.data = data;
+
+      // Basic validation
+      const ids = new Set();
+      for (const s of (data.sections || [])){
+        if (ids.has(s.id)) throw new Error(`Sección duplicada: ${s.id}`);
+        ids.add(s.id);
+        for (const q of (s.questions || [])){
+          if (ids.has(q.id)) throw new Error(`Pregunta duplicada: ${q.id}`);
+          ids.add(q.id);
+        }
+      }
+      const pm = data?.pastoralManual?.sections || [];
+      const sIds = new Set((data.sections||[]).map(s => s.id));
+      for (const p of pm){
+        if (!sIds.has(p.id)) throw new Error(`pastoralManual no coincide: ${p.id}`);
+      }
+
+      renderTest();
+
+      // Events
+      el('btnResults').addEventListener('click', () => {
+        renderResults();
+      });
+      el('btnTxt').addEventListener('click', () => {
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        onDownloadTXT();
+      });
+      el('btnPdf').addEventListener('click', async () => {
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        await exportPdf();
+      });
+      el('btnPng').addEventListener('click', async () => {
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        await onDownloadPNG();
+      });
+      el('btnReset').addEventListener('click', () => resetAll());
+
+      el('modalClose').addEventListener('click', () => closeModal());
+      el('modalBack').addEventListener('click', (e) => {
+        if (e.target === el('modalBack')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape'){
+          closeModal();
+          hideTip();
+          if (state.guideActive) setGuide(false);
+        }
+      });
+
+      el('btnGuide').addEventListener('click', () => {
+        setGuide(!state.guideActive);
+      });
+      el('btnGuideNext').addEventListener('click', () => {
+        state.guideStep = (state.guideStep + 1) % 4;
+        runGuideStep();
+      });
+      el('btnGuideClose').addEventListener('click', () => setGuide(false));
+
+    }catch(err){
+      el('loadError').style.display = 'block';
+      el('loadError').textContent = `Error: ${err?.message || err}`;
+    }
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>
+
+
+
