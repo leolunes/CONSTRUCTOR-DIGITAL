@@ -3,1594 +3,1967 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>🔴La viga: la mujer como alma del sistema</title>
+  <title>La viga: la mujer como distribución del diseño divino — Test</title>
+
+  <!-- jsPDF + autoTable (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#0f1620;
-      --panel2:#0c121a;
-      --text:#e8eef7;
-      --muted:#a7b3c4;
-      --border:rgba(255,255,255,.08);
-      --shadow:0 10px 30px rgba(0,0,0,.45);
+      --bg:#0b1220;
+      --card:#111a2e;
+      --card2:#0f172a;
+      --text:#e8eefc;
+      --muted:#aab7d6;
+      --line:#22304e;
       --accent:#7dd3fc;
-      --ok:#22c55e;
-      --warn:#f59e0b;
-      --risk:#ef4444;
-      --crit:#fb7185;
-      --gray:#94a3b8;
-      --chip:#111a25;
-      --focus:rgba(125,211,252,.15);
+      --accent2:#a7f3d0;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --good:#34d399;
+      --orange:#fb923c;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      background:radial-gradient(1200px 700px at 20% 0%, rgba(125,211,252,.08), transparent 55%),
-                 radial-gradient(1100px 700px at 80% 10%, rgba(34,197,94,.06), transparent 60%),
-                 var(--bg);
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(125,211,252,.22), transparent 60%),
+                  radial-gradient(1200px 700px at 85% 0%, rgba(167,243,208,.14), transparent 55%),
+                  var(--bg);
       color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      letter-spacing:.2px;
+      font-family:var(--sans);
+      line-height:1.35;
     }
-    a{color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:18px 16px 48px}
-    .topbar{
-      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;
-      padding:14px 14px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      box-shadow:var(--shadow);
-      position:sticky;top:10px;backdrop-filter: blur(8px); z-index:50;
+    a{color:var(--accent)}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+    header{
+      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      padding:18px 18px;border:1px solid var(--line);background:rgba(17,26,46,.72);
+      border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter: blur(8px);
+      position:sticky;top:0;z-index:30;
     }
-    .titleBlock{min-width:260px;flex:1}
-    h1{margin:0;font-size:18px;font-weight:800;line-height:1.2}
-    .desc{margin-top:6px;color:var(--muted);font-size:13px;line-height:1.35}
-    .controls{
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;min-width:260px;
+    .titleBlock{display:flex;gap:14px;align-items:center;min-width:280px}
+    .logo{
+      width:44px;height:44px;border-radius:12px;object-fit:contain;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);padding:6px;
     }
-    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    .field{
-      display:flex;flex-direction:column;gap:6px;
-      background:rgba(255,255,255,.02);
-      border:1px solid var(--border);
-      border-radius:14px;padding:10px 10px;min-width:160px;
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:12.5px;margin-top:2px}
+    .live{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
     }
-    .field label{font-size:11px;color:var(--muted)}
-    .field input{
-      width:100%;background:transparent;border:none;outline:none;color:var(--text);
-      font-size:13px;
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.7);
+      font-size:12.5px;
     }
-    .btn{
-      border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      color:var(--text);
-      padding:10px 12px;border-radius:14px;
-      font-size:12px;font-weight:700;cursor:pointer;
-      box-shadow:0 6px 16px rgba(0,0,0,.25);
-      transition:transform .06s ease, border-color .15s ease;
-      user-select:none;
-    }
-    .btn:hover{transform:translateY(-1px);border-color:rgba(125,211,252,.35)}
-    .btn:active{transform:translateY(0px)}
-    .btn.primary{border-color:rgba(125,211,252,.45);background:linear-gradient(180deg, rgba(125,211,252,.18), rgba(255,255,255,.02))}
-    .btn.danger{border-color:rgba(239,68,68,.45);background:linear-gradient(180deg, rgba(239,68,68,.14), rgba(255,255,255,.02))}
-    .btn.ghost{background:transparent;box-shadow:none}
-    .toggle{
-      display:flex;align-items:center;gap:8px;
-      padding:10px 10px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.02);
-      font-size:12px;font-weight:700;color:var(--text);
-    }
-    .toggle input{accent-color: var(--accent)}
+    .pill b{font-family:var(--mono);font-size:12.5px}
+    .pill .dot{width:9px;height:9px;border-radius:999px;background:var(--accent)}
+    .pill.good .dot{background:var(--good)}
+    .pill.warn .dot{background:var(--warn)}
+    .pill.risk .dot{background:var(--orange)}
+    .pill.bad .dot{background:var(--bad)}
     .grid{
       display:grid;
-      grid-template-columns: 420px 1fr;
-      gap:14px;
-      margin-top:14px;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+      margin-top:16px;
     }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
     .card{
-      border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      border-radius:18px;
+      background:rgba(17,26,46,.75);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
       box-shadow:var(--shadow);
-      overflow:hidden;
+      padding:16px;
+      backdrop-filter: blur(8px);
     }
-    .cardHeader{
-      padding:12px 14px;border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      background:rgba(0,0,0,.12);
+    .card h2{margin:0 0 10px;font-size:15px}
+    .fields{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
     }
-    .cardHeader h2{margin:0;font-size:13px;font-weight:900;letter-spacing:.3px}
-    .chip{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
-      background:rgba(255,255,255,.02);font-size:11px;color:var(--muted);font-weight:700;
-      white-space:nowrap;
-    }
-    .cardBody{padding:14px}
-    .statLine{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .bigPct{font-size:34px;font-weight:1000;letter-spacing:-.7px}
-    .bandPill{
-      padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;border:1px solid var(--border);
-      background:rgba(255,255,255,.02);
-    }
-    .bandPill.ok{border-color:rgba(34,197,94,.35); color: #b7f7c9}
-    .bandPill.warn{border-color:rgba(245,158,11,.35); color:#fde68a}
-    .bandPill.risk{border-color:rgba(239,68,68,.35); color:#fecaca}
-    .bandPill.crit{border-color:rgba(251,113,133,.35); color:#fecdd3}
-    .summary{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.45}
-    .verse{
-      margin-top:12px;padding:10px 12px;border-radius:16px;border:1px dashed rgba(125,211,252,.25);
-      background:rgba(125,211,252,.06);
+    @media(max-width:700px){.fields{grid-template-columns:1fr}}
+    label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px}
+    input[type="text"], input[type="date"], textarea{
+      width:100%;
+      background:rgba(15,23,42,.75);
+      border:1px solid rgba(255,255,255,.14);
       color:var(--text);
-      font-size:12px;line-height:1.35;
-    }
-    .verse .ref{color:var(--muted);font-weight:800;margin-top:6px;font-size:11px}
-    table{width:100%;border-collapse:separate;border-spacing:0}
-    th,td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:top}
-    th{color:var(--muted);font-size:11px;text-align:left;font-weight:900;letter-spacing:.4px}
-    td{font-size:12px}
-    .tblWrap{overflow:auto;border:1px solid var(--border);border-radius:16px}
-    .tblWrap table{min-width:620px}
-    .muted{color:var(--muted)}
-    .tag{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:5px 8px;border-radius:999px;border:1px solid var(--border);
-      background:rgba(255,255,255,.02);font-size:11px;font-weight:900;
-    }
-    .tag.ok{border-color:rgba(34,197,94,.35); color:#b7f7c9}
-    .tag.warn{border-color:rgba(245,158,11,.35); color:#fde68a}
-    .tag.risk{border-color:rgba(239,68,68,.35); color:#fecaca}
-    .tag.crit{border-color:rgba(251,113,133,.35); color:#fecdd3}
-    .tag.gray{border-color:rgba(148,163,184,.25); color:#e2e8f0}
-    .sections{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-    }
-    .sectionCard{
-      border:1px solid var(--border);
-      border-radius:18px;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012));
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-    .sectionHead{
-      padding:12px 14px;
-      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
-      border-bottom:1px solid var(--border);
-      background:rgba(0,0,0,.10);
-    }
-    .sectionHead .left{min-width:240px;flex:1}
-    .sectionHead .t{font-size:13px;font-weight:1000;margin:0}
-    .sectionHead .st{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.35}
-    .sectionHead .right{display:flex;flex-direction:column;gap:8px;align-items:flex-end;min-width:180px}
-    .miniLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-    .kpi{font-size:12px;font-weight:1000}
-    .sectionBody{padding:14px}
-    .qgrid{display:grid;grid-template-columns: 1fr 140px;gap:10px;align-items:center}
-    @media (max-width: 720px){
-      .qgrid{grid-template-columns:1fr}
-    }
-    .qitem{
-      padding:10px 12px;border:1px solid var(--border);border-radius:16px;
-      background:rgba(255,255,255,.02);
-      display:grid;grid-template-columns: 1fr 130px;gap:10px;align-items:center;
-    }
-    @media (max-width: 720px){
-      .qitem{grid-template-columns:1fr}
-    }
-    .qtext{font-size:12px;line-height:1.35}
-    .qctrl{
-      display:flex;align-items:center;justify-content:flex-end;gap:8px;
-    }
-    select{
-      width:120px;
-      background:rgba(0,0,0,.25);
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:8px 10px;border-radius:12px;
-      outline:none;
-      font-weight:900;
-      font-size:12px;
-    }
-    .help{
-      margin-top:12px;
-      padding:12px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.08);
-      background:rgba(0,0,0,.18);
-    }
-    .helpTitle{font-size:12px;font-weight:1000;margin:0}
-    .helpText{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45}
-    .help ul{margin:8px 0 0 18px;color:var(--muted);font-size:12px;line-height:1.45}
-    .divider{height:1px;background:var(--border);margin:12px 0}
-    .obs{
-      width:100%;min-height:110px;resize:vertical;
-      background:rgba(0,0,0,.25);
-      border:1px solid var(--border);
-      border-radius:16px;
-      color:var(--text);
+      border-radius:12px;
       padding:10px 12px;
       outline:none;
-      font-size:12px;
-      line-height:1.4;
     }
-    .tooltip{
-      position:fixed;z-index:9999;
-      pointer-events:none;
-      padding:10px 10px;border-radius:14px;border:1px solid var(--border);
-      background:rgba(7,10,15,.95);
+    textarea{min-height:110px;resize:vertical}
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px
+    }
+    button{
+      appearance:none;border:0;cursor:pointer;
+      padding:10px 12px;border-radius:14px;
+      background:linear-gradient(180deg, rgba(125,211,252,.22), rgba(125,211,252,.12));
+      color:var(--text);
+      border:1px solid rgba(125,211,252,.35);
+      font-weight:600;
+    }
+    button.secondary{
+      background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:600;
+    }
+    button.danger{
+      background:linear-gradient(180deg, rgba(251,113,133,.22), rgba(251,113,133,.12));
+      border:1px solid rgba(251,113,133,.38);
+    }
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .smallNote{color:var(--muted);font-size:12px;margin-top:8px}
+    .toggle{
+      display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12.5px;
+      margin-left:auto;
+    }
+    .toggle input{transform: translateY(1px)}
+    .section{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:rgba(17,26,46,.62);
       box-shadow:var(--shadow);
-      max-width:320px;
-      transform: translate(10px,10px);
-      opacity:0; transition:opacity .08s ease;
-      font-size:12px;line-height:1.35;
     }
-    .tooltip .tt{font-weight:1000}
-    .tooltip .tm{margin-top:6px;color:var(--muted)}
-    .tooltip .tv{margin-top:8px;padding-top:8px;border-top:1px solid var(--border);color:#e2e8f0}
-    .tooltip .tr{margin-top:6px;color:var(--muted);font-size:11px;font-weight:900}
-    .modalBackdrop{
-      position:fixed;inset:0;background:rgba(0,0,0,.62);
-      display:none;align-items:center;justify-content:center;
-      padding:16px;z-index:2000;
+    .sectionHead{
+      padding:14px 14px;
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      background:rgba(15,23,42,.65);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .sectionHead h3{margin:0;font-size:14px}
+    .sectionHead .metaLine{color:var(--muted);font-size:12.5px;margin-top:4px}
+    .sectionBody{padding:10px 14px 14px}
+    .q{
+      padding:12px 0;border-bottom:1px dashed rgba(255,255,255,.12);
+    }
+    .q:last-child{border-bottom:0}
+    .q .qText{font-size:13.5px;margin-bottom:8px}
+    .scaleRow{display:flex;flex-wrap:wrap;gap:8px}
+    .opt{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;background:rgba(15,23,42,.55);
+      font-size:12.5px;color:var(--text);
+      user-select:none;
+    }
+    .opt input{margin:0}
+    .opt:hover{border-color: rgba(125,211,252,.35)}
+    .results{
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(15,23,42,.62);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .resultsHead{
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      padding:14px;border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(17,26,46,.75);
+    }
+    .resultsHead h2{margin:0;font-size:15px}
+    .resBody{padding:14px}
+    .bandBox{
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.35);
+    }
+    .bandTop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      border-radius:999px;
+      padding:7px 10px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.65);
+      font-size:12.5px;font-weight:700;
+    }
+    .tag.good{border-color: rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
+    .tag.warn{border-color: rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
+    .tag.risk{border-color: rgba(251,146,60,.38);background:rgba(251,146,60,.12)}
+    .tag.bad{border-color: rgba(251,113,133,.35);background:rgba(251,113,133,.12)}
+    .verse{
+      margin-top:10px;color:var(--muted);font-size:12.5px;
+      border-left:3px solid rgba(125,211,252,.35);
+      padding-left:10px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+      font-size:12.5px;
+    }
+    th,td{
+      text-align:left;
+      padding:10px 8px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      vertical-align:top;
+    }
+    th{color:var(--muted);font-weight:700}
+    .muted{color:var(--muted)}
+    .plan{margin-top:14px;display:grid;grid-template-columns:1fr;gap:10px}
+    .day{
+      padding:10px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.30);
+    }
+    .day b{font-family:var(--mono);font-size:12.5px}
+    .err{
+      margin-top:14px;
+      padding:12px;border-radius:16px;
+      border:1px solid rgba(251,113,133,.38);
+      background:rgba(251,113,133,.10);
+      color:var(--text);
+    }
+    .footerNote{margin-top:18px;color:var(--muted);font-size:12px}
+
+    /* Pórtico */
+    .porticoWrap{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}
+    .porticoTop{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+    .porticoSvgBox{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.30);
+      border-radius:16px;
+      padding:10px;
+      overflow:auto;
+      position:relative;
+    }
+    .legendRow{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;align-items:center}
+    .lg{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(15,23,42,.55);
+    }
+
+    /* Tooltip */
+    .svgTip{
+      position:absolute;
+      pointer-events:none;
+      z-index:5;
+      max-width:320px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(15,23,42,.92);
+      color:var(--text);
+      box-shadow:var(--shadow);
+      transform: translate(12px, 12px);
+      display:none;
+    }
+    .svgTip .t{font-weight:800;font-size:12.5px;margin-bottom:4px}
+    .svgTip .d{font-size:12.5px;color:var(--muted);line-height:1.25}
+    .svgTip .k{font-family:var(--mono);font-size:12px;color:rgba(232,238,252,.9);margin-top:6px}
+
+    /* Modal panel */
+    .modalBack{
+      position:fixed; inset:0; display:none; z-index:60;
+      background:rgba(0,0,0,.55);
+      padding:18px;
     }
     .modal{
-      width:min(920px, 100%);
-      border:1px solid var(--border);
-      border-radius:20px;
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      max-width:820px; margin:40px auto 0;
+      background:rgba(17,26,46,.92);
+      border:1px solid var(--line);
+      border-radius:18px;
       box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
       overflow:hidden;
     }
     .modalHead{
-      padding:12px 14px;border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      background:rgba(0,0,0,.18);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:14px 14px;border-bottom:1px solid rgba(255,255,255,.10);
+      background:rgba(15,23,42,.72);
     }
-    .modalHead .mh{font-weight:1000;font-size:13px;margin:0}
+    .modalHead b{font-size:14px}
     .modalBody{padding:14px}
-    .closeX{font-size:12px}
-    .kgrid{display:grid;grid-template-columns: 1fr 1fr;gap:12px}
-    @media (max-width: 820px){.kgrid{grid-template-columns:1fr}}
-    .list{
-      margin:10px 0 0 18px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
+    .modalClose{
+      background:rgba(15,23,42,.7);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:12px;
+      padding:8px 10px;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:700;
     }
-    .hint{
-      display:flex;gap:10px;align-items:flex-start;
-      padding:10px 12px;border-radius:16px;border:1px dashed rgba(148,163,184,.25);
-      background:rgba(148,163,184,.06); color:var(--muted);
-      font-size:12px;line-height:1.4;
+
+    /* Guided mode */
+    .guideBar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      margin-top:10px;
     }
-    .footRow{
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:10px
+    .guideBox{
+      display:none;
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,18,32,.40);
     }
-    .small{font-size:11px;color:var(--muted);font-weight:700}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-    .sr{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .guideBox .title{font-weight:800}
+    .guideBox .desc{color:var(--muted);font-size:12.5px;margin-top:6px}
+    .guideBox .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <div class="topbar">
+
+    <header>
       <div class="titleBlock">
-        <h1 id="title"></h1>
-        <div class="desc" id="desc"></div>
-      </div>
-
-      <div class="controls">
-        <div class="row">
-          <div class="field">
-            <label for="patient">Paciente</label>
-            <input id="patient" type="text" autocomplete="off" />
-          </div>
-          <div class="field">
-            <label for="auditor">Auditor</label>
-            <input id="auditor" type="text" autocomplete="off" />
-          </div>
-          <div class="field">
-            <label for="date">Fecha</label>
-            <input id="date" type="date" />
-          </div>
-        </div>
-
-        <div class="row">
-          <button class="btn primary" id="btnExportPDF">Exportar PDF</button>
-          <button class="btn" id="btnExportPNG">Exportar PNG</button>
-          <button class="btn" id="btnExportTXT">Exportar TXT</button>
-          <button class="btn" id="btnSaveBefore">Guardar ANTES</button>
-          <button class="btn" id="btnSaveAfter">Guardar DESPUÉS</button>
-          <button class="btn danger" id="btnReset">Reset</button>
-          <label class="toggle" title="">
-            <input id="toggleGuide" type="checkbox" />
-            <span id="toggleGuideLabel"></span>
-          </label>
-          <label class="toggle" title="">
-            <input id="toggleDetailPDF" type="checkbox" />
-            <span id="toggleDetailPDFLabel"></span>
-          </label>
+        <img class="logo" src="logo.png" alt="Logo" onerror="this.style.display='none'">
+        <div>
+          <h1>La viga: la mujer como distribución del diseño divino</h1>
+          <div class="sub">Auditoría diagnóstica basada en “La viga” (mujer como elemento de distribución)</div>
         </div>
       </div>
-    </div>
+      <div class="live">
+        <div id="liveScorePill" class="pill"><span class="dot"></span><span>Puntaje:</span> <b id="liveScore">0</b><span class="muted">/</span><b id="liveMax">0</b></div>
+        <div id="livePercentPill" class="pill"><span class="dot"></span><span>Progreso:</span> <b id="liveAnswered">0</b><span class="muted">/</span><b id="liveTotalQ">0</b></div>
+      </div>
+    </header>
 
     <div class="grid">
       <div class="card">
-        <div class="cardHeader">
-          <h2 id="globalCardTitle"></h2>
-          <span class="chip" id="globalChip"></span>
-        </div>
-        <div class="cardBody">
-          <div class="statLine">
-            <div class="bigPct" id="globalPct">—</div>
-            <div class="bandPill" id="globalBandPill">—</div>
+        <h2>Datos del informe</h2>
+        <div class="fields">
+          <div>
+            <label for="patientName">Nombre del paciente</label>
+            <input id="patientName" type="text" placeholder="Ej: María Pérez" />
           </div>
-          <div class="summary" id="globalSummary"></div>
-          <div class="verse" id="globalVerse">
-            <div id="globalVerseQ"></div>
-            <div class="ref" id="globalVerseR"></div>
+          <div>
+            <label for="auditorName">Nombre del auditor</label>
+            <input id="auditorName" type="text" placeholder="Ej: Pastora / Mentora / Auditora" />
           </div>
-
-          <div class="divider"></div>
-
-          <div class="cardHeader" style="padding:10px 0 0;border:0;background:transparent">
-            <h2 id="porticoTitle"></h2>
-            <span class="chip" id="porticoChip"></span>
+          <div>
+            <label for="dateField">Fecha</label>
+            <input id="dateField" type="date" />
           </div>
-
-          <div style="margin-top:10px;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:rgba(0,0,0,.12)">
-            <div id="porticoWrap" style="position:relative;padding:12px">
-              <svg id="porticoSVG" width="100%" viewBox="0 0 520 340" role="img" aria-label="">
-                <defs>
-                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="2.6" result="blur"/>
-                    <feMerge>
-                      <feMergeNode in="blur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                  <marker id="arrowHead" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
-                  </marker>
-                </defs>
-
-                <!-- Base background grid lines -->
-                <g opacity="0.12">
-                  <path d="M40 300 H500" stroke="white" stroke-width="1"/>
-                  <path d="M40 260 H500" stroke="white" stroke-width="1"/>
-                  <path d="M40 220 H500" stroke="white" stroke-width="1"/>
-                  <path d="M40 180 H500" stroke="white" stroke-width="1"/>
-                  <path d="M40 140 H500" stroke="white" stroke-width="1"/>
-                  <path d="M40 100 H500" stroke="white" stroke-width="1"/>
-                  <path d="M40 60 H500" stroke="white" stroke-width="1"/>
-                </g>
-
-                <!-- Cimiento (horizontal inferior) -->
-                <path id="elCimiento" d="M70 285 H460" stroke="white" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
-                <!-- Columna (vertical izquierda) -->
-                <path id="elColumna" d="M110 285 V70" stroke="white" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
-                <!-- Viga (horizontal superior) -->
-                <path id="elViga" d="M110 90 H430" stroke="white" stroke-opacity="0.55" stroke-width="14" stroke-linecap="round"/>
-
-                <!-- Nudos -->
-                <g filter="url(#glow)">
-                  <circle id="nodoBase" cx="110" cy="285" r="12" fill="rgba(255,255,255,.75)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
-                  <circle id="nodoArriba" cx="110" cy="90" r="12" fill="rgba(255,255,255,.75)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
-                  <circle id="nodoExtremo" cx="430" cy="90" r="12" fill="rgba(255,255,255,.75)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
-                </g>
-
-                <!-- Flechas de carga: viva (verde), muerta (roja), sísmica (gris) -->
-                <g id="flechas" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <g id="cargaViva" style="color: var(--ok)">
-                    <path d="M260 60 V85" stroke="currentColor" marker-end="url(#arrowHead)"/>
-                    <path d="M320 60 V85" stroke="currentColor" marker-end="url(#arrowHead)"/>
-                  </g>
-                  <g id="cargaMuerta" style="color: var(--risk)">
-                    <path d="M200 58 V85" stroke="currentColor" marker-end="url(#arrowHead)"/>
-                  </g>
-                  <g id="cargaSismica" style="color: var(--gray)">
-                    <path d="M80 210 H110" stroke="currentColor" marker-end="url(#arrowHead)"/>
-                    <path d="M80 170 H110" stroke="currentColor" marker-end="url(#arrowHead)"/>
-                  </g>
-                </g>
-
-                <!-- Hit areas for interaction -->
-                <g opacity="0" cursor="pointer">
-                  <rect id="hitComunion" x="78" y="70" width="64" height="220" rx="18"></rect>
-                  <rect id="hitCongregacion" x="110" y="62" width="330" height="56" rx="18"></rect>
-                  <rect id="hitInterseccion" x="78" y="258" width="100" height="64" rx="18"></rect>
-                </g>
-
-                <!-- Labels (non-doctrinal; text comes from JSON via JS) -->
-                <g font-size="12" font-weight="900" fill="rgba(255,255,255,.85)">
-                  <text id="lblComunion" x="22" y="155" transform="rotate(-90 22 155)"></text>
-                  <text id="lblCongregacion" x="220" y="36"></text>
-                  <text id="lblInterseccion" x="160" y="314"></text>
-                </g>
-              </svg>
+          <div>
+            <label for="includeDetails">Detalle por pregunta (para TXT/PDF)</label>
+            <div class="toggle" style="margin-left:0">
+              <input id="includeDetails" type="checkbox" />
+              <span>Incluir detalles</span>
             </div>
           </div>
+        </div>
+        <div style="margin-top:12px">
+          <label for="notes">Observaciones libres</label>
+          <textarea id="notes" placeholder="Notas del auditor, contexto, acuerdos, etc."></textarea>
+        </div>
 
-          <div class="divider"></div>
-
-          <div class="cardHeader" style="padding:10px 0 0;border:0;background:transparent">
-            <h2 id="axesTableTitle"></h2>
-            <span class="chip" id="axesChip"></span>
-          </div>
-          <div class="tblWrap" style="margin-top:10px">
-            <table>
-              <thead>
-                <tr>
-                  <th id="thAxis"></th>
-                  <th id="thScore"></th>
-                  <th id="thBand"></th>
-                  <th id="thKeyVerse"></th>
-                </tr>
-              </thead>
-              <tbody id="axesTbody"></tbody>
-            </table>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="cardHeader" style="padding:10px 0 0;border:0;background:transparent">
-            <h2 id="obsTitle"></h2>
-            <span class="chip" id="obsChip"></span>
-          </div>
-          <textarea class="obs" id="observations"></textarea>
-
-          <div class="footRow">
-            <div class="small mono" id="storageHint"></div>
-            <div class="small" id="versionHint"></div>
+        <div class="controls">
+          <button id="btnResults">Ver resultado</button>
+          <button id="btnTxt" class="secondary">Descargar TXT</button>
+          <button id="btnPdf" class="secondary">Descargar PDF bonito</button>
+          <button id="btnPng" class="secondary">Descargar Imagen (PNG)</button>
+          <button id="btnReset" class="danger">Reiniciar</button>
+          <div class="toggle">
+            <input id="autoScroll" type="checkbox" checked />
+            <span>Auto-bajar a resultados</span>
           </div>
         </div>
+        <div class="smallNote">Escala 0–5 (radio buttons). No se permiten números escritos manualmente.</div>
+        <div id="loadError" class="err" style="display:none"></div>
       </div>
 
       <div class="card">
-        <div class="cardHeader">
-          <h2 id="sectionsTitle"></h2>
-          <span class="chip" id="sectionsChip"></span>
-        </div>
-        <div class="cardBody">
-          <div class="tblWrap">
-            <table>
-              <thead>
-                <tr>
-                  <th id="thSection"></th>
-                  <th id="thAxisSmall"></th>
-                  <th id="thSectionScore"></th>
-                  <th id="thSectionBand"></th>
-                </tr>
-              </thead>
-              <tbody id="sectionsTbody"></tbody>
-            </table>
+        <h2>Guía rápida de lectura</h2>
+        <div class="bandBox">
+          <div class="muted" style="font-size:12.5px">
+            Este test evalúa el rol de la mujer como <b>viga</b>: <b>percibir y distribuir</b>, <b>horizontalidad</b> (relación/expresión),
+            <b>apoyo móvil</b> (obra del Espíritu Santo), y <b>transferencia</b> (viga → columna → cimiento).
+            <br><br>
+            Incluye <b>Diagrama del pórtico</b> para visualizar el estado del flujo y la carga del sistema.
           </div>
-
-          <div class="sections" id="sectionsCards"></div>
+        </div>
+        <div class="footerNote">
+          Archivos requeridos: <span class="muted">viga-mujer.json</span>, <span class="muted">viga-mujer.html</span> y <span class="muted">logo.png</span> en la misma carpeta.
         </div>
       </div>
     </div>
+
+    <div id="testRoot"></div>
+
+    <div id="resultsRoot" class="results" style="display:none">
+      <div class="resultsHead">
+        <h2>Resultados</h2>
+        <div class="pill"><span class="dot"></span><span>Total:</span> <b id="resTotal">0</b><span class="muted">/</span><b id="resMax">0</b> <span class="muted">·</span> <b id="resPct">0%</b></div>
+      </div>
+      <div class="resBody">
+        <div id="globalBox" class="bandBox"></div>
+
+        <!-- Diagrama del pórtico -->
+        <div style="margin-top:12px">
+          <h2 style="margin:0 0 10px;font-size:14px">Diagrama del pórtico</h2>
+          <div class="bandBox">
+            <div class="porticoTop">
+              <div class="muted" style="font-size:12.5px">
+                Visual estructural calculado desde el test (Apoyo / Horizontalidad / Transferencia).
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <div id="pillComunion" class="pill"><span class="dot"></span><span>Apoyo:</span> <b id="pctComunion">0%</b></div>
+                <div id="pillCongregacion" class="pill"><span class="dot"></span><span>Horizontalidad:</span> <b id="pctCongregacion">0%</b></div>
+                <div id="pillInterseccion" class="pill"><span class="dot"></span><span>Transferencia:</span> <b id="pctInterseccion">0%</b></div>
+              </div>
+            </div>
+
+            <div class="porticoWrap">
+              <div class="porticoSvgBox" id="porticoBox">
+                <div id="porticoSvgMount"></div>
+                <div id="svgTip" class="svgTip">
+                  <div class="t" id="tipTitle">—</div>
+                  <div class="d" id="tipDesc">—</div>
+                  <div class="k" id="tipKpi" style="display:none"></div>
+                </div>
+              </div>
+
+              <div class="guideBar">
+                <div class="legendRow">
+                  <span class="lg">🟢 Alineado</span>
+                  <span class="lg">🟡 En ajuste</span>
+                  <span class="lg">🟠 En riesgo</span>
+                  <span class="lg">🔴 Crítico</span>
+                  <span class="lg" title="Comparación automática con el último resultado guardado en este navegador">↔︎ Antes/Después</span>
+                </div>
+                <button id="btnGuide" class="secondary">Explícame este diagrama</button>
+              </div>
+
+              <div id="guideBox" class="guideBox">
+                <div class="title" id="guideTitle">—</div>
+                <div class="desc" id="guideDesc">—</div>
+                <div class="acts">
+                  <button id="btnGuideNext" class="secondary">Siguiente</button>
+                  <button id="btnGuideClose" class="danger">Cerrar</button>
+                </div>
+              </div>
+
+              <div class="smallNote">Tip: pasa el cursor o toca el diagrama para ver tooltips. Haz clic para abrir enfoque pastoral del elemento.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h2 style="margin:0 0 10px;font-size:14px">Resultados por sección</h2>
+          <div style="overflow:auto">
+            <table id="sectionTable">
+              <thead>
+                <tr>
+                  <th>Sección</th>
+                  <th>Diagnóstico</th>
+                  <th>Puntaje</th>
+                  <th>%</th>
+                  <th>Enfoque</th>
+                  <th>Verso</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2 style="margin:0 0 10px;font-size:14px">Enfoque pastoral por secciones</h2>
+          <div id="pastoralBlocks"></div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h2 style="margin:0 0 10px;font-size:14px">Plan semanal automático (7 días)</h2>
+          <div class="muted" style="font-size:12.5px;margin-bottom:8px">
+            Basado en las secciones con mayor tensión (menor %). Se prioriza restauración con pasos pequeños y sostenibles.
+          </div>
+          <div id="weeklyPlan" class="plan"></div>
+        </div>
+
+        <div class="footerNote">Tip: descarga el PDF para una lectura ordenada con portada, tablas, diagrama, plan y enfoque pastoral.</div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="tooltip" id="tooltip"></div>
-
-  <div class="modalBackdrop" id="modalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <!-- Modal contextual -->
+  <div id="modalBack" class="modalBack" role="dialog" aria-modal="true">
+    <div class="modal">
       <div class="modalHead">
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div class="mh" id="modalTitle"></div>
-          <div class="small" id="modalSub"></div>
-        </div>
-        <button class="btn ghost closeX" id="modalClose">Cerrar</button>
+        <b id="modalTitle">—</b>
+        <button id="modalClose" class="modalClose">Cerrar</button>
       </div>
       <div class="modalBody" id="modalBody"></div>
     </div>
   </div>
 
-  <!-- libs -->
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+(() => {
+  const JSON_PATH = './viga-mujer.json';
+  const TITLE = 'La viga: la mujer como distribución del diseño divino';
 
-  <script>
-    // ✅ AUTO-VALIDACIÓN REQUERIDA
-    const JSON_PATH = './🔴viga-mujer.json';
-    const TITLE = '🔴La viga: la mujer como alma del sistema';
+  // Umbrales por porcentaje (0..1) para diagnósticos texto
+  const GLOBAL_THRESHOLDS = [
+    { min: 0.85, band: 'Alineado' },
+    { min: 0.65, band: 'Ajuste' },
+    { min: 0.40, band: 'Riesgo' },
+    { min: 0.00, band: 'Crítico' }
+  ];
+  const SECTION_THRESHOLDS = [
+    { min: 0.75, band: 'Alineado' },
+    { min: 0.50, band: 'Ajuste' },
+    { min: 0.00, band: 'Riesgo' }
+  ];
 
-    const LS_KEY = 'pastoral_audit_viga_mujer_v1';
-    const LS_BEFORE_KEY = 'pastoral_audit_viga_mujer_before';
-    const LS_AFTER_KEY  = 'pastoral_audit_viga_mujer_after';
+  // Bandas del Pórtico (0..100)
+  const PORTICO_BANDS = [
+    { min: 75, label: 'Alineado', key: 'good', emoji:'🟢' },
+    { min: 55, label: 'En ajuste', key: 'warn', emoji:'🟡' },
+    { min: 35, label: 'En riesgo', key: 'risk', emoji:'🟠' },
+    { min: 0,  label: 'Crítico',  key: 'bad',  emoji:'🔴' }
+  ];
 
-    const state = {
-      data: null,
-      answers: {}, // qid -> value 0..5
-      meta: {
-        patient: '',
-        auditor: '',
-        date: '',
-        observations: '',
-        guideMode: false,
-        detailPDF: false
+  const el = (id) => document.getElementById(id);
+
+  const state = {
+    data: null,
+    answers: new Map(),
+    totalQuestions: 0,
+    maxPerQuestion: 5,
+    maxTotal: 0,
+    lastPorticoPNG: null,
+    porticoHighlight: null,
+    guideActive: false,
+    guideStep: 0
+  };
+
+  // Defaults
+  try {
+    const today = new Date();
+    const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    el('dateField').value = iso;
+  } catch {}
+
+  function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
+  function fmtPct(p){ return `${Math.round(p*100)}%`; }
+  function safeText(s){ return (s ?? '').toString(); }
+
+  function getScaleOptions(){
+    const opts = state.data?.scale?.options || [];
+    const nums = opts.map(o => Number(o.value)).filter(v => Number.isFinite(v));
+    const max = nums.length ? Math.max(...nums) : 5;
+    state.maxPerQuestion = max;
+    return opts;
+  }
+
+  function computeTotals(){
+    let total = 0;
+    let answered = 0;
+    for (const [, val] of state.answers.entries()){
+      if (Number.isFinite(val)){ total += val; answered += 1; }
+    }
+    return { total, answered };
+  }
+
+  function pickBand(pct, thresholds, kind){
+    const p = clamp(pct, 0, 1);
+    const chosen = thresholds.find(t => p >= t.min) || thresholds[thresholds.length - 1];
+    const label = chosen.band;
+
+    if (kind === 'global'){
+      const bandObj = (state.data.rubrics.globalBands || []).find(b => b.label === label);
+      return bandObj || (state.data.rubrics.globalBands || [])[0] || { label, summary:'', verse:{quote:'',reference:''} };
+    } else {
+      const bandObj = (state.data.rubrics.sectionBands || []).find(b => b.label === label);
+      return bandObj || (state.data.rubrics.sectionBands || [])[0] || { label, summary:'', verse:{quote:'',reference:''} };
+    }
+  }
+
+  function computeBySection(){
+    const sections = state.data.sections || [];
+    const by = [];
+    for (const s of sections){
+      let score = 0;
+      let answered = 0;
+      const qCount = (s.questions || []).length;
+      for (const q of (s.questions || [])){
+        const v = state.answers.get(q.id);
+        if (Number.isFinite(v)){ score += v; answered += 1; }
       }
-    };
-
-    const $ = (id) => document.getElementById(id);
-
-    const ui = {
-      title: $('title'),
-      desc: $('desc'),
-      patient: $('patient'),
-      auditor: $('auditor'),
-      date: $('date'),
-      observations: $('observations'),
-      toggleGuide: $('toggleGuide'),
-      toggleGuideLabel: $('toggleGuideLabel'),
-      toggleDetailPDF: $('toggleDetailPDF'),
-      toggleDetailPDFLabel: $('toggleDetailPDFLabel'),
-
-      btnExportPDF: $('btnExportPDF'),
-      btnExportPNG: $('btnExportPNG'),
-      btnExportTXT: $('btnExportTXT'),
-      btnSaveBefore: $('btnSaveBefore'),
-      btnSaveAfter: $('btnSaveAfter'),
-      btnReset: $('btnReset'),
-
-      globalPct: $('globalPct'),
-      globalBandPill: $('globalBandPill'),
-      globalSummary: $('globalSummary'),
-      globalVerseQ: $('globalVerseQ'),
-      globalVerseR: $('globalVerseR'),
-      globalChip: $('globalChip'),
-
-      axesTbody: $('axesTbody'),
-      sectionsTbody: $('sectionsTbody'),
-      sectionsCards: $('sectionsCards'),
-
-      tooltip: $('tooltip'),
-      modalBackdrop: $('modalBackdrop'),
-      modalClose: $('modalClose'),
-      modalTitle: $('modalTitle'),
-      modalSub: $('modalSub'),
-      modalBody: $('modalBody'),
-
-      // portico labels + hits
-      lblComunion: $('lblComunion'),
-      lblCongregacion: $('lblCongregacion'),
-      lblInterseccion: $('lblInterseccion'),
-      hitComunion: $('hitComunion'),
-      hitCongregacion: $('hitCongregacion'),
-      hitInterseccion: $('hitInterseccion'),
-
-      // titles that should not be doctrinal; only UI
-      globalCardTitle: $('globalCardTitle'),
-      porticoTitle: $('porticoTitle'),
-      axesTableTitle: $('axesTableTitle'),
-      obsTitle: $('obsTitle'),
-      sectionsTitle: $('sectionsTitle'),
-
-      thAxis: $('thAxis'),
-      thScore: $('thScore'),
-      thBand: $('thBand'),
-      thKeyVerse: $('thKeyVerse'),
-      thSection: $('thSection'),
-      thAxisSmall: $('thAxisSmall'),
-      thSectionScore: $('thSectionScore'),
-      thSectionBand: $('thSectionBand'),
-
-      porticoChip: $('porticoChip'),
-      axesChip: $('axesChip'),
-      obsChip: $('obsChip'),
-      sectionsChip: $('sectionsChip'),
-
-      storageHint: $('storageHint'),
-      versionHint: $('versionHint')
-    };
-
-    function todayISO(){
-      const d = new Date();
-      const pad = n => String(n).padStart(2,'0');
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+      const max = qCount * state.maxPerQuestion;
+      const pct = max > 0 ? (score / max) : 0;
+      const band = pickBand(pct, SECTION_THRESHOLDS, 'section');
+      by.push({ section: s, score, max, pct, answered, qCount, band });
     }
+    by.sort((a,b) => a.pct - b.pct);
+    return by;
+  }
 
-    function safeText(s){ return (s ?? '').toString(); }
+  function bandClass(label){
+    const l = (label || '').toLowerCase();
+    if (l.includes('aline')) return 'good';
+    if (l.includes('ajust')) return 'warn';
+    if (l.includes('riesg')) return 'bad';
+    if (l.includes('crít') || l.includes('crit')) return 'bad';
+    return '';
+  }
 
-    function bandClassFromLabel(label){
-      const l = (label||'').toLowerCase();
-      if(l.includes('aline')) return 'ok';
-      if(l.includes('ajust')) return 'warn';
-      if(l.includes('ries')) return 'risk';
-      if(l.includes('crít') || l.includes('crit')) return 'crit';
-      return 'gray';
-    }
+  function porticoBandFromPct100(p){
+    const v = clamp(Math.round(p), 0, 100);
+    const chosen = PORTICO_BANDS.find(b => v >= b.min) || PORTICO_BANDS[PORTICO_BANDS.length - 1];
+    return chosen;
+  }
 
-    function axisBandByPct(pct){
-      if(pct >= 75) return { key:'Alineado', t:'Alineado' };
-      if(pct >= 55) return { key:'En ajuste', t:'En ajuste' };
-      if(pct >= 35) return { key:'En riesgo', t:'En riesgo' };
-      return { key:'Crítico', t:'Crítico' };
-    }
+  function colorForPorticoKey(key){
+    if (key === 'good') return '#34d399';
+    if (key === 'warn') return '#fbbf24';
+    if (key === 'risk') return '#fb923c';
+    return '#fb7185';
+  }
 
-    function sectionBandByPct(pct){
-      if(pct >= 75) return { key:'Alineado', t:'Alineado' };
-      if(pct >= 55) return { key:'Ajuste', t:'Ajuste' };
-      return { key:'Riesgo', t:'Riesgo' };
-    }
+  // AXIS LABELS (adaptado a “La viga”)
+  function axisKeyToLabel(k){
+    if (k === 'comunion') return 'Apoyo (Espíritu Santo)';
+    if (k === 'congregacion') return 'Horizontalidad (relación/expresión)';
+    return 'Transferencia (viga → columna → cimiento)';
+  }
 
-    function globalBandByPct(pct){
-      // 4 bandas
-      if(pct >= 75) return { key:'Alineado', t:'Alineado' };
-      if(pct >= 55) return { key:'Ajuste', t:'Ajuste' };
-      if(pct >= 35) return { key:'Riesgo', t:'Riesgo' };
-      return { key:'Crítico', t:'Crítico' };
-    }
+  function renderTest(){
+    const root = el('testRoot');
+    root.innerHTML = '';
 
-    function pctFromRaw(raw, maxRaw){
-      if(maxRaw <= 0) return 0;
-      const v = (raw / maxRaw) * 100;
-      return Math.max(0, Math.min(100, v));
-    }
+    const data = state.data;
+    const scale = getScaleOptions();
+    const sections = data.sections || [];
 
-    function getScaleLabel(value){
-      const opt = (state.data?.scale?.options || []).find(o => o.value === value);
-      return opt ? opt.label : String(value);
-    }
+    let totalQ = 0;
+    for (const s of sections) totalQ += (s.questions || []).length;
+    state.totalQuestions = totalQ;
+    state.maxTotal = totalQ * state.maxPerQuestion;
 
-    function ensureAllAnswers(){
-      for(const sec of state.data.sections){
-        for(const q of sec.questions){
-          const key = q.id;
-          if(!(key in state.answers)) state.answers[key] = 0;
-        }
-      }
-    }
+    el('liveMax').textContent = state.maxTotal;
+    el('liveTotalQ').textContent = totalQ;
 
-    function computeSection(sec){
-      const qs = sec.questions;
-      const raw = qs.reduce((sum,q)=>sum+(Number(state.answers[q.id] ?? 0)),0);
-      const max = qs.length * 5;
-      const pct = pctFromRaw(raw, max);
-      const band = sectionBandByPct(pct);
-      const bandDef = (state.data.rubrics.sectionBands || []).find(b=>b.label === band.t) || null;
-      return { raw, max, pct, band, bandDef };
-    }
+    for (const s of sections){
+      const sec = document.createElement('div');
+      sec.className = 'section';
+      sec.dataset.sectionId = s.id;
 
-    function computeAxis(axisId){
-      const secs = state.data.sections.filter(s=>s.porticoAxis===axisId);
-      const raw = secs.reduce((sum,s)=>sum+computeSection(s).raw,0);
-      const max = secs.reduce((sum,s)=>sum+(s.questions.length*5),0);
-      const pct = pctFromRaw(raw, max);
-      const band = axisBandByPct(pct);
-      const axisDef = state.data.porticoModel.axes.find(a=>a.id===axisId);
-      const bandDef = axisDef?.bands?.find(b=>b.label.toLowerCase().includes(band.key.toLowerCase().split(' ')[1]||band.key.toLowerCase()) || b.label===band.t || b.label===band.key) || null;
-      // fallback: match by ranges for canonical
-      let best = bandDef;
-      if(!best && axisDef?.bands?.length){
-        const pick = (pct>=75)?axisDef.bands.find(b=>b.range==="75-100")
-                  : (pct>=55)?axisDef.bands.find(b=>b.range==="55-74")
-                  : (pct>=35)?axisDef.bands.find(b=>b.range==="35-54")
-                  : axisDef.bands.find(b=>b.range==="0-34");
-        best = pick || axisDef.bands[0];
-      }
-      return { raw, max, pct, band, bandDef: best, axisDef, secs };
-    }
+      const head = document.createElement('div');
+      head.className = 'sectionHead';
 
-    function computeGlobal(){
-      const secs = state.data.sections;
-      const raw = secs.reduce((sum,s)=>sum+computeSection(s).raw,0);
-      const max = secs.reduce((sum,s)=>sum+(s.questions.length*5),0);
-      const pct = pctFromRaw(raw, max);
-      const band = globalBandByPct(pct);
-      const bandDef = (state.data.rubrics.globalBands || []).find(b=>b.label===band.t) || null;
-      return { raw, max, pct, band, bandDef };
-    }
+      const left = document.createElement('div');
+      const h = document.createElement('h3');
+      h.textContent = s.title;
+      const meta = document.createElement('div');
+      meta.className = 'metaLine';
+      meta.textContent = `${safeText(s.subtitle)} · Enfoque: ${safeText(s.diagnosticFocus)}`;
+      left.appendChild(h);
+      left.appendChild(meta);
 
-    function renderStaticUIStrings(){
-      // UI headings (no doctrina)
-      ui.globalCardTitle.textContent = 'Diagnóstico global';
-      ui.porticoTitle.textContent = 'Pórtico diagnóstico';
-      ui.axesTableTitle.textContent = 'Tabla de ejes';
-      ui.obsTitle.textContent = 'Observaciones';
-      ui.sectionsTitle.textContent = 'Secciones';
+      const right = document.createElement('div');
+      right.style.display = 'flex';
+      right.style.gap = '10px';
+      right.style.alignItems = 'center';
+      right.style.flexWrap = 'wrap';
+      right.innerHTML = `
+        <div class="pill"><span class="dot"></span><span>Sección:</span> <b id="secScore_${s.id}">0</b><span class="muted">/</span><b id="secMax_${s.id}">0</b></div>
+      `;
 
-      ui.thAxis.textContent = 'Eje';
-      ui.thScore.textContent = 'Puntaje';
-      ui.thBand.textContent = 'Banda';
-      ui.thKeyVerse.textContent = 'Verso';
+      head.appendChild(left);
+      head.appendChild(right);
 
-      ui.thSection.textContent = 'Sección';
-      ui.thAxisSmall.textContent = 'Eje';
-      ui.thSectionScore.textContent = 'Puntaje';
-      ui.thSectionBand.textContent = 'Banda';
+      const body = document.createElement('div');
+      body.className = 'sectionBody';
 
-      ui.toggleGuideLabel.textContent = 'Modo guía';
-      ui.toggleDetailPDFLabel.textContent = 'Detalle por pregunta en PDF';
-
-      ui.globalChip.textContent = '0–5 • 8 preguntas x sección • sin backend';
-      ui.porticoChip.textContent = 'Hover: tooltip • Click: modal';
-      ui.axesChip.textContent = '3 ejes • % por eje';
-      ui.obsChip.textContent = 'Incluido en exportaciones';
-      ui.sectionsChip.textContent = '8 secciones • 64 preguntas';
-
-      ui.versionHint.textContent = 'v1 • GitHub Pages';
-    }
-
-    function renderHeader(){
-      ui.title.textContent = safeText(state.data.meta.title || TITLE);
-      ui.desc.textContent = safeText(state.data.meta.description || '');
-      document.title = safeText(state.data.meta.title || TITLE);
-
-      // Portico labels come from JSON axes labels
-      const ax = Object.fromEntries(state.data.porticoModel.axes.map(a=>[a.id,a]));
-      ui.lblComunion.textContent = safeText(ax.comunion?.label || 'Comunión');
-      ui.lblCongregacion.textContent = safeText(ax.congregacion?.label || 'Congregación');
-      ui.lblInterseccion.textContent = safeText(ax.interseccion?.label || 'Intersección');
-
-      // aria-label for svg
-      $('porticoSVG').setAttribute('aria-label', safeText(state.data.meta.title || TITLE));
-    }
-
-    function renderAxesTable(){
-      ui.axesTbody.innerHTML = '';
-      const axes = state.data.porticoModel.axes;
-
-      for(const a of axes){
-        const r = computeAxis(a.id);
-        const bandLabel = r.band.t;
-        const cls = bandClassFromLabel(bandLabel);
-        const tr = document.createElement('tr');
-
-        const tdA = document.createElement('td');
-        tdA.innerHTML = `<div style="font-weight:1000">${escapeHTML(a.label)}</div><div class="muted" style="margin-top:4px">${escapeHTML(a.description)}</div>`;
-        const tdS = document.createElement('td');
-        tdS.innerHTML = `<div class="mono" style="font-weight:1000">${Math.round(r.pct)}%</div><div class="muted">${r.raw}/${r.max}</div>`;
-        const tdB = document.createElement('td');
-        tdB.innerHTML = `<span class="tag ${cls}">${escapeHTML(bandLabel)}</span>`;
-        const tdV = document.createElement('td');
-        const vq = r.bandDef?.verse?.quote || '';
-        const vr = r.bandDef?.verse?.reference || '';
-        tdV.innerHTML = `<div>${escapeHTML(vq)}</div><div class="muted" style="margin-top:6px;font-weight:900;font-size:11px">${escapeHTML(vr)}</div>`;
-
-        tr.appendChild(tdA); tr.appendChild(tdS); tr.appendChild(tdB); tr.appendChild(tdV);
-        ui.axesTbody.appendChild(tr);
-      }
-    }
-
-    function renderSectionsTable(){
-      ui.sectionsTbody.innerHTML = '';
-      for(const sec of state.data.sections){
-        const r = computeSection(sec);
-        const cls = bandClassFromLabel(r.band.t);
-        const tr = document.createElement('tr');
-
-        const tdS = document.createElement('td');
-        tdS.innerHTML = `<div style="font-weight:1000">${escapeHTML(sec.title)}</div><div class="muted" style="margin-top:4px">${escapeHTML(sec.subtitle)}</div>`;
-        const tdA = document.createElement('td');
-        tdA.innerHTML = `<span class="tag gray">${escapeHTML(sec.porticoAxis)}</span>`;
-        const tdP = document.createElement('td');
-        tdP.innerHTML = `<div class="mono" style="font-weight:1000">${Math.round(r.pct)}%</div><div class="muted">${r.raw}/${r.max}</div>`;
-        const tdB = document.createElement('td');
-        tdB.innerHTML = `<span class="tag ${cls}">${escapeHTML(r.band.t)}</span>`;
-
-        tr.appendChild(tdS); tr.appendChild(tdA); tr.appendChild(tdP); tr.appendChild(tdB);
-        ui.sectionsTbody.appendChild(tr);
-      }
-    }
-
-    function renderSectionsCards(){
-      ui.sectionsCards.innerHTML = '';
-      const manualById = Object.fromEntries(state.data.pastoralManual.sections.map(s=>[s.id,s]));
-
-      for(const sec of state.data.sections){
-        const r = computeSection(sec);
-        const cls = bandClassFromLabel(r.band.t);
-
-        const card = document.createElement('div');
-        card.className = 'sectionCard';
-        card.setAttribute('data-sec', sec.id);
-
-        const head = document.createElement('div');
-        head.className = 'sectionHead';
-
-        const left = document.createElement('div');
-        left.className = 'left';
-        left.innerHTML = `
-          <div class="t">${escapeHTML(sec.title)}</div>
-          <div class="st">${escapeHTML(sec.subtitle)}</div>
-        `;
-
-        const right = document
-.createElement('div');
-        right.className = 'right';
-        right.innerHTML = `
-          <div class="miniLine">
-            <span class="kpi mono">${Math.round(r.pct)}%</span>
-            <span class="tag ${cls}">${escapeHTML(r.band.t)}</span>
-          </div>
-          <div class="miniLine">
-            <span class="tag gray">${escapeHTML(sec.porticoAxis)}</span>
-            <span class="muted mono">${r.raw}/${r.max}</span>
-          </div>
-        `;
-
-        head.appendChild(left);
-        head.appendChild(right);
-
-        const body = document.createElement('div');
-        body.className = 'sectionBody';
-
-        const verseQ = sec.sectionVerse?.quote || '';
-        const verseR = sec.sectionVerse?.reference || '';
-
-        const manual = manualById[sec.id]?.miniTeaching || null;
-
-        const guideBlock = document.createElement('div');
-        guideBlock.className = 'help';
-        guideBlock.style.display = state.meta.guideMode ? 'block' : 'none';
-        guideBlock.innerHTML = `
-          <div class="helpTitle">${escapeHTML(manual?.title || '')}</div>
-          <div class="helpText">${escapeHTML(sec.diagnosticFocus || '')}</div>
-          ${manual?.text?.length ? `<ul>${manual.text.map(t=>`<li>${escapeHTML(t)}</li>`).join('')}</ul>` : ''}
-          ${manual?.verse?.quote ? `
-            <div class="verse" style="margin-top:10px">
-              <div>${escapeHTML(manual.verse.quote)}</div>
-              <div class="ref">${escapeHTML(manual.verse.reference || '')}</div>
-            </div>
-          ` : ''}
-          ${manual?.oneWeekPlan?.length ? `
-            <div class="divider"></div>
-            <div class="helpTitle">${escapeHTML('Plan de 7 días')}</div>
-            <ul>${manual.oneWeekPlan.map(d=>`<li>${escapeHTML(d)}</li>`).join('')}</ul>
-          ` : ''}
-        `;
-
-        const sectionVerseBlock = document.createElement('div');
-        sectionVerseBlock.className = 'verse';
-        sectionVerseBlock.innerHTML = `
-          <div>${escapeHTML(verseQ)}</div>
-          <div class="ref">${escapeHTML(verseR)}</div>
-        `;
-
+      for (const q of (s.questions || [])){
         const qWrap = document.createElement('div');
-        qWrap.className = 'qgrid';
+        qWrap.className = 'q';
 
-        for(const q of sec.questions){
-          const qItem = document.createElement('div');
-          qItem.className = 'qitem';
-          qItem.setAttribute('data-qid', q.id);
-          qItem.innerHTML = `
-            <div class="qtext">
-              <div style="font-weight:900">${escapeHTML(q.id)}</div>
-              <div style="margin-top:6px">${escapeHTML(q.text)}</div>
-            </div>
-            <div class="qctrl">
-              <select aria-label="${escapeHTML(q.id)}"></select>
-            </div>
-          `;
+        const qText = document.createElement('div');
+        qText.className = 'qText';
+        qText.textContent = q.text;
 
-          const sel = qItem.querySelector('select');
-          for(const opt of state.data.scale.options){
-            const o = document.createElement('option');
-            o.value = String(opt.value);
-            o.textContent = opt.label;
-            sel.appendChild(o);
-          }
-          sel.value = String(state.answers[q.id] ?? 0);
-          sel.addEventListener('change', () => {
-            state.answers[q.id] = Number(sel.value);
-            persist();
-            renderAll();
+        const row = document.createElement('div');
+        row.className = 'scaleRow';
+
+        for (const opt of scale){
+          const id = `${q.id}_v${opt.value}`;
+          const lab = document.createElement('label');
+          lab.className = 'opt';
+          lab.setAttribute('for', id);
+
+          const inp = document.createElement('input');
+          inp.type = 'radio';
+          inp.name = q.id;
+          inp.id = id;
+          inp.value = String(opt.value);
+          inp.addEventListener('change', () => {
+            state.answers.set(q.id, Number(inp.value));
+            state.lastPorticoPNG = null;
+            updateLive();
           });
 
-          qWrap.appendChild(qItem);
+          const span = document.createElement('span');
+          span.textContent = `${opt.label}`;
+
+          lab.appendChild(inp);
+          lab.appendChild(span);
+          row.appendChild(lab);
         }
 
-        body.appendChild(sectionVerseBlock);
-        body.appendChild(guideBlock);
-        body.appendChild(document.createElement('div')).className = 'divider';
+        qWrap.appendChild(qText);
+        qWrap.appendChild(row);
         body.appendChild(qWrap);
-
-        card.appendChild(head);
-        card.appendChild(body);
-        ui.sectionsCards.appendChild(card);
       }
+
+      sec.appendChild(head);
+      sec.appendChild(body);
+      root.appendChild(sec);
+
+      const secMax = (s.questions || []).length * state.maxPerQuestion;
+      const maxEl = el(`secMax_${s.id}`);
+      if (maxEl) maxEl.textContent = secMax;
     }
 
-    function renderGlobal(){
-      const g = computeGlobal();
-      ui.globalPct.textContent = `${Math.round(g.pct)}%`;
+    updateLive();
+  }
 
-      const cls = bandClassFromLabel(g.band.t);
-      ui.globalBandPill.className = `bandPill ${cls}`;
-      ui.globalBandPill.textContent = g.band.t;
+  function computePorticoAxes(){
+    const by = computeBySection();
+    const axisAgg = {
+      comunion: { score:0, max:0 },
+      congregacion: { score:0, max:0 },
+      interseccion: { score:0, max:0 }
+    };
+    for (const it of by){
+      const axis = it.section.porticoAxis || 'interseccion';
+      if (!axisAgg[axis]) continue;
+      axisAgg[axis].score += it.score;
+      axisAgg[axis].max += it.max;
+    }
+    const toPct100 = (obj) => obj.max > 0 ? (obj.score / obj.max) * 100 : 0;
 
-      ui.globalSummary.textContent = safeText(g.bandDef?.summary || '');
-      ui.globalVerseQ.textContent = safeText(g.bandDef?.verse?.quote || '');
-      ui.globalVerseR.textContent = safeText(g.bandDef?.verse?.reference || '');
+    const comunionPct = toPct100(axisAgg.comunion);
+    const congregacionPct = toPct100(axisAgg.congregacion);
+    const interseccionPct = toPct100(axisAgg.interseccion);
+
+    return {
+      comunion: { pct: comunionPct, band: porticoBandFromPct100(comunionPct) },
+      congregacion: { pct: congregacionPct, band: porticoBandFromPct100(congregacionPct) },
+      interseccion: { pct: interseccionPct, band: porticoBandFromPct100(interseccionPct) }
+    };
+  }
+
+  function updatePorticoUI(){
+    const axes = computePorticoAxes();
+
+    const setPill = (pillId, pctId, axis) => {
+      const pill = el(pillId);
+      const pctEl = el(pctId);
+      if (!pill || !pctEl) return;
+      pctEl.textContent = `${Math.round(axes[axis].pct)}%`;
+      pill.classList.remove('good','warn','risk','bad');
+      pill.classList.add(axes[axis].band.key);
+    };
+
+    setPill('pillComunion', 'pctComunion', 'comunion');
+    setPill('pillCongregacion', 'pctCongregacion', 'congregacion');
+    setPill('pillInterseccion', 'pctInterseccion', 'interseccion');
+
+    renderPorticoSVG();
+    attachPorticoInteractions();
+  }
+
+  function updateLive(){
+    const { total, answered } = computeTotals();
+
+    el('liveScore').textContent = total;
+    el('liveAnswered').textContent = answered;
+
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const pill = el('liveScorePill');
+    pill.classList.remove('good','warn','bad','risk');
+    const label = pickBand(pct, GLOBAL_THRESHOLDS, 'global').label || '';
+    const cls = bandClass(label);
+    if (cls) pill.classList.add(cls);
+
+    const pill2 = el('livePercentPill');
+    pill2.classList.remove('good','warn','bad','risk');
+    if (answered === state.totalQuestions && state.totalQuestions > 0) pill2.classList.add('good');
+    else if (answered > 0) pill2.classList.add('warn');
+
+    const bySection = computeBySection().reduce((acc, it) => { acc[it.section.id] = it; return acc; }, {});
+    for (const s of (state.data.sections || [])){
+      const it = bySection[s.id];
+      const scoreEl = el(`secScore_${s.id}`);
+      if (scoreEl) scoreEl.textContent = it ? it.score : 0;
     }
 
-    function renderStorageHints(){
-      const hasMain = !!localStorage.getItem(LS_KEY);
-      const hasB = !!localStorage.getItem(LS_BEFORE_KEY);
-      const hasA = !!localStorage.getItem(LS_AFTER_KEY);
-      const parts = [];
-      parts.push(hasMain ? 'Auto-guardado: sí' : 'Auto-guardado: no');
-      parts.push(hasB ? 'ANTES: sí' : 'ANTES: no');
-      parts.push(hasA ? 'DESPUÉS: sí' : 'DESPUÉS: no');
-      ui.storageHint.textContent = parts.join(' • ');
+    if (el('resultsRoot').style.display !== 'none'){
+      updatePorticoUI();
     }
+  }
 
-    function renderAll(){
-      if(!state.data) return;
-      renderHeader();
-      renderGlobal();
-      renderAxesTable();
-      renderSectionsTable();
-      renderSectionsCards();
-      renderStorageHints();
+  function buildGlobalBox(globalBand, pct){
+    const cls = bandClass(globalBand.label);
+    const tagClass = cls ? `tag ${cls}` : 'tag';
+    const verse = globalBand.verse || { quote:'', reference:'' };
+
+    return `
+      <div class="bandTop">
+        <span class="${tagClass}">Diagnóstico global: ${safeText(globalBand.label)}</span>
+        <span class="pill"><span class="dot"></span><span>Porcentaje:</span> <b>${fmtPct(pct)}</b></span>
+      </div>
+      <div style="margin-top:10px;color:var(--text);font-size:13px">${safeText(globalBand.summary)}</div>
+      <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+    `;
+  }
+
+  function getMiniTeachingForSection(sectionId){
+    const list = state.data?.pastoralManual?.sections || [];
+    return list.find(x => x.id === sectionId)?.miniTeaching || null;
+  }
+
+  function buildWeeklyPlanFromSections(bySectionSortedLow){
+    const priority = bySectionSortedLow.slice(0, 3);
+    const pools = priority.map(it => {
+      const mini = getMiniTeachingForSection(it.section.id);
+      return { title: it.section.title, actions: (mini?.oneWeekPlan || []).slice() };
+    }).filter(p => p.actions.length);
+
+    const days = [];
+    for (let i=0;i<7;i++){
+      const picks = [];
+      for (let j=0;j<pools.length;j++){
+        const pool = pools[(i + j) % pools.length];
+        const act = pool.actions[i % pool.actions.length];
+        if (act) picks.push({ sec: pool.title, act });
+        if (picks.length >= 2) break;
+      }
+      if (!picks.length){
+        picks.push({ sec: 'Alineación general', act: 'Ora: “Espíritu Santo, sostén mi alma; enséñame a percibir sin cargar y a transferir sin temor.”' });
+      }
+      days.push(picks);
     }
+    return days;
+  }
 
-    function escapeHTML(str){
-      return safeText(str)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
+  // -------------------------
+  // PÓRTICO (misma geometría; tooltips adaptados a “La viga”)
+  // -------------------------
+  function getPrevAxes(){
+    try{
+      const key = `portico_prev_axes__${TITLE}`;
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj?.comunion || !obj?.congregacion || !obj?.interseccion) return null;
+      return obj;
+    }catch{ return null; }
+  }
+  function savePrevAxes(axes){
+    try{
+      const key = `portico_prev_axes__${TITLE}`;
+      localStorage.setItem(key, JSON.stringify({
+        comunion: { pct: axes.comunion.pct },
+        congregacion: { pct: axes.congregacion.pct },
+        interseccion: { pct: axes.interseccion.pct }
+      }));
+    }catch{}
+  }
+
+  function pickRepresentativeSectionForAxis(axisId){
+    const by = computeBySection();
+    const filtered = by.filter(it => (it.section.porticoAxis || '') === axisId);
+    return filtered.length ? filtered[0].section : null;
+  }
+
+  function computeTensionHalos(axes){
+    const a = [
+      { id:'comunion', pct: axes.comunion.pct, key: axes.comunion.band.key },
+      { id:'congregacion', pct: axes.congregacion.pct, key: axes.congregacion.band.key },
+      { id:'interseccion', pct: axes.interseccion.pct, key: axes.interseccion.band.key }
+    ];
+    let max = a[0], min = a[0];
+    for (const x of a){
+      if (x.pct > max.pct) max = x;
+      if (x.pct < min.pct) min = x;
     }
+    const diff = Math.round(max.pct - min.pct);
+    return { diff, dominant: max, weakest: min };
+  }
 
-    function persist(){
-      const payload = {
-        answers: state.answers,
-        meta: state.meta
-      };
-      try{ localStorage.setItem(LS_KEY, JSON.stringify(payload)); }catch(_){}
-    }
+  function buildPorticoSVGMarkup(){
+    const axes = computePorticoAxes();
+    const prev = getPrevAxes();
 
-    function hydrate(){
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        if(!raw) return;
-        const obj = JSON.parse(raw);
-        if(obj && typeof obj === 'object'){
-          if(obj.answers && typeof obj.answers === 'object') state.answers = obj.answers;
-          if(obj.meta && typeof obj.meta === 'object'){
-            state.meta = { ...state.meta, ...obj.meta };
-          }
-        }
-      }catch(_){}
-    }
+    const patient = safeText(el('patientName').value).trim();
+    const date = safeText(el('dateField').value).trim();
 
-    function setMetaInputs(){
-      ui.patient.value = state.meta.patient || '';
-      ui.auditor.value = state.meta.auditor || '';
-      ui.date.value = state.meta.date || '';
-      ui.observations.value = state.meta.observations || '';
-      ui.toggleGuide.checked = !!state.meta.guideMode;
-      ui.toggleDetailPDF.checked = !!state.meta.detailPDF;
-    }
+    const comm = axes.comunion;
+    const cong = axes.congregacion;
+    const inter = axes.interseccion;
 
-    function bindMetaInputs(){
-      ui.patient.addEventListener('input', ()=>{ state.meta.patient = ui.patient.value; persist(); renderStorageHints(); });
-      ui.auditor.addEventListener('input', ()=>{ state.meta.auditor = ui.auditor.value; persist(); renderStorageHints(); });
-      ui.date.addEventListener('change', ()=>{ state.meta.date = ui.date.value; persist(); renderStorageHints(); });
-      ui.observations.addEventListener('input', ()=>{ state.meta.observations = ui.observations.value; persist(); renderStorageHints(); });
+    const cComm = colorForPorticoKey(comm.band.key);
+    const cCong = colorForPorticoKey(cong.band.key);
+    const cInter = colorForPorticoKey(inter.band.key);
 
-      ui.toggleGuide.addEventListener('change', ()=>{
-        state.meta.guideMode = !!ui.toggleGuide.checked;
-        persist();
-        renderAll();
-      });
+    const labelBand = (a) => `${a.band.emoji} ${a.band.label} (${Math.round(a.pct)}%)`;
 
-      ui.toggleDetailPDF.addEventListener('change', ()=>{
-        state.meta.detailPDF = !!ui.toggleDetailPDF.checked;
-        persist();
-        renderAll();
-      });
-    }
+    const W = 860, H = 420;
 
-    function saveSnapshot(key){
-      const snap = {
-        savedAt: new Date().toISOString(),
-        dataTitle: safeText(state.data?.meta?.title || TITLE),
-        meta: { ...state.meta },
-        answers: { ...state.answers }
-      };
-      try{ localStorage.setItem(key, JSON.stringify(snap)); }catch(_){}
-      renderStorageHints();
-    }
+    // Geometría fija (NO CAMBIAR)
+    const foundation = { x:110, y:320, w:220, h:48, rx:14 };
+    const col = { x:220, y1:310, y2:130 };
+    const beam = { x1:220, y:130, x2:660 };
+    const nCom = { x:220, y:310, r:14 };
+    const nCong = { x:220, y:130, r:14 };
+    const nInter = { x:660, y:130, r:14 };
 
-    function resetAll(){
-      state.answers = {};
-      state.meta = {
-        patient: '',
-        auditor: '',
-        date: todayISO(),
-        observations: '',
-        guideMode: false,
-        detailPDF: false
-      };
-      try{
-        localStorage.removeItem(LS_KEY);
-      }catch(_){}
-      ensureAllAnswers();
-      setMetaInputs();
-      persist();
-      renderAll();
-    }
+    // Cargas (fijas)
+    const liveLoad = { x:380, y1:82, y2:122 };
+    const deadLoad = { x:500, y1:82, y2:122 };
+    const seismic = { x1:70, y:130, x2:206 };
 
-    // ----------------------
-    // Tooltip + Modal (Pórtico)
-    // ----------------------
-    function showTooltip(x,y, html){
-      ui.tooltip.innerHTML = html;
-      ui.tooltip.style.left = `${x}px`;
-      ui.tooltip.style.top = `${y}px`;
-      ui.tooltip.style.opacity = '1';
-    }
-    function hideTooltip(){
-      ui.tooltip.style.opacity = '0';
-    }
+    const GREEN = '#34d399';
+    const RED = '#fb7185';
 
-    function axisTooltipHTML(axisId){
-      const r = computeAxis(axisId);
-      const a = r.axisDef;
-      const bandLabel = r.band.t;
-      const vq = r.bandDef?.verse?.quote || '';
-      const vr = r.bandDef?.verse?.reference || '';
-      return `
-        <div class="tt">${escapeHTML(a.label)} • <span class="mono">${Math.round(r.pct)}%</span></div>
-        <div class="tm">${escapeHTML(a.description)}</div>
-        <div class="tv">${escapeHTML(r.bandDef?.summary || '')}</div>
-        <div class="tr">${escapeHTML(bandLabel)} • ${escapeHTML(vr)}</div>
-        <div class="tm" style="margin-top:8px">${escapeHTML(vq)}</div>
+    const hl = state.porticoHighlight;
+    const hlOpacity = 0.92;
+    const hlStroke = 'rgba(232,238,252,0.75)';
+
+    const overlayFor = (what) => (hl === what ? `stroke="${hlStroke}" stroke-width="30" opacity="${hlOpacity}"` : `opacity="0"`);
+
+    const animPulse = (key) => key === 'warn'
+      ? `<animate attributeName="opacity" values="0.78;1;0.78" dur="2.6s" repeatCount="indefinite" />`
+      : '';
+    const animRisk = (key) => key === 'risk'
+      ? `<animateTransform attributeName="transform" type="translate"
+           values="0 0; 2 0; 0 0; -2 0; 0 0" dur="1.8s" repeatCount="indefinite" />`
+      : '';
+    const animCriticalDash = (key) => key === 'bad'
+      ? `<animate attributeName="stroke-dashoffset" values="0;120" dur="2.2s" repeatCount="indefinite" />`
+      : '';
+
+    const dashIfCritical = (key) => key === 'bad' ? `stroke-dasharray="10 10"` : '';
+
+    const tension = computeTensionHalos(axes);
+    const showHalo = tension.diff > 20;
+    const haloColor = colorForPorticoKey(tension.dominant.key);
+
+    let prevDraw = '';
+    if (prev){
+      const pc = clamp(Number(prev.comunion?.pct ?? 0), 0, 100);
+      const pg = clamp(Number(prev.congregacion?.pct ?? 0), 0, 100);
+      const pi = clamp(Number(prev.interseccion?.pct ?? 0), 0, 100);
+
+      const pComm = porticoBandFromPct100(pc);
+      const pCong = porticoBandFromPct100(pg);
+      const pInter = porticoBandFromPct100(pi);
+
+      const pCComm = colorForPorticoKey(pComm.key);
+      const pCCong = colorForPorticoKey(pCong.key);
+      const pCInter = colorForPorticoKey(pInter.key);
+
+      prevDraw = `
+        <g opacity="0.55">
+          <rect x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+                fill="rgba(0,0,0,0)" stroke="${pCComm}" stroke-width="10" stroke-dasharray="8 8" stroke-linejoin="round"/>
+          <path d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+                fill="none" stroke="${pCCong}" stroke-width="10" stroke-dasharray="8 8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+                fill="none" stroke="${pCInter}" stroke-width="10" stroke-dasharray="8 8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
       `;
     }
 
-    function openModalForAxis(axisId){
-      const r = computeAxis(axisId);
-      const a = r.axisDef;
-      const bandLabel = r.band.t;
-      const cls = bandClassFromLabel(bandLabel);
+    const deltaText = (axisId) => {
+      if (!prev) return '';
+      const now = Math.round(axes[axisId].pct);
+      const old = Math.round(clamp(Number(prev[axisId]?.pct ?? 0), 0, 100));
+      const d = now - old;
+      const s = d === 0 ? '0' : (d > 0 ? `+${d}` : `${d}`);
+      return `Δ ${s} pts`;
+    };
 
-      ui.modalTitle.textContent = safeText(a.label);
-      ui.modalSub.textContent = `${Math.round(r.pct)}% • ${bandLabel}`;
-      ui.modalBody.innerHTML = `
-        <div class="kgrid">
-          <div class="card" style="box-shadow:none">
-            <div class="cardHeader"><h2>${escapeHTML('Enfoque')}</h2><span class="chip">${escapeHTML(a.id)}</span></div>
-            <div class="cardBody">
-              <div class="summary">${escapeHTML(a.description)}</div>
-              <div class="divider"></div>
-              <div class="bandPill ${cls}" style="display:inline-flex">${escapeHTML(bandLabel)}</div>
-              <div class="summary" style="margin-top:10px">${escapeHTML(r.bandDef?.summary || '')}</div>
-              <div class="verse">
-                <div>${escapeHTML(r.bandDef?.verse?.quote || '')}</div>
-                <div class="ref">${escapeHTML(r.bandDef?.verse?.reference || '')}</div>
-              </div>
+    const titleLine = `Diagrama del pórtico — ${patient ? patient : 'Paciente'} — ${date || 'Fecha'}`;
+
+    return `
+<svg id="porticoSvg" xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <marker id="arrowGreenDown" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="${GREEN}"></path>
+    </marker>
+    <marker id="arrowRedDown" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="${RED}"></path>
+    </marker>
+    <marker id="arrowSeismic" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="rgba(232,238,252,0.90)"></path>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="${W}" height="${H}" rx="22" fill="#0b1220"/>
+  <rect x="18" y="18" width="${W-36}" height="${H-36}" rx="18" fill="#0f172a" stroke="rgba(255,255,255,0.10)"/>
+
+  ${prevDraw}
+
+  <g id="loadsGroup" data-hit="loads" style="cursor:pointer">
+    <line id="loadLive" x1="${liveLoad.x}" y1="${liveLoad.y1}" x2="${liveLoad.x}" y2="${liveLoad.y2}"
+          stroke="${GREEN}" stroke-width="4" marker-end="url(#arrowGreenDown)" />
+    <text x="${liveLoad.x}" y="${liveLoad.y1 - 10}" fill="${GREEN}"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">Carga Viva</text>
+
+    <line id="loadDead" x1="${deadLoad.x}" y1="${deadLoad.y1}" x2="${deadLoad.x}" y2="${deadLoad.y2}"
+          stroke="${RED}" stroke-width="4" marker-end="url(#arrowRedDown)" />
+    <text x="${deadLoad.x}" y="${deadLoad.y1 - 10}" fill="${RED}"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">Carga Muerta</text>
+
+    <line id="loadSeismic" x1="${seismic.x1}" y1="${seismic.y}" x2="${seismic.x2}" y2="${seismic.y}"
+          stroke="rgba(232,238,252,0.70)" stroke-width="4" marker-end="url(#arrowSeismic)" />
+    <text x="${(seismic.x1 + seismic.x2)/2}" y="${seismic.y - 12}" fill="rgba(232,238,252,0.85)"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">Carga Sísmica</text>
+
+    <rect x="250" y="54" width="450" height="92" rx="18" fill="rgba(0,0,0,0)" ${overlayFor('loads')} />
+  </g>
+
+  <g id="foundationGroup" data-hit="foundation" style="cursor:pointer">
+    <rect id="foundationRect" x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+          fill="rgba(0,0,0,0)" stroke="${cComm}" stroke-width="22" stroke-linejoin="round" ${dashIfCritical(comm.band.key)}>
+      ${animCriticalDash(comm.band.key)}
+      ${animPulse(comm.band.key)}
+    </rect>
+    <rect x="${foundation.x}" y="${foundation.y}" width="${foundation.w}" height="${foundation.h}" rx="${foundation.rx}"
+          fill="rgba(0,0,0,0)" ${overlayFor('foundation')} />
+    <text id="txtCimiento" x="${foundation.x + foundation.w/2}" y="${foundation.y + foundation.h/2 - 2}"
+          fill="rgba(232,238,252,0.90)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">CIMIENTO</text>
+  </g>
+
+  <g id="columnGroup" data-hit="column" style="cursor:pointer">
+    <path id="columnPath" d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+          fill="none" stroke="${cCong}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"
+          ${dashIfCritical(cong.band.key)}>
+      ${animCriticalDash(cong.band.key)}
+      ${animPulse(cong.band.key)}
+      ${animRisk(cong.band.key)}
+    </path>
+    <path d="M ${col.x} ${col.y1} L ${col.x} ${col.y2}"
+          fill="none" ${overlayFor('column')} stroke-linecap="round" stroke-linejoin="round" />
+    <text x="${col.x - 52}" y="${(col.y1 + col.y2)/2}" fill="rgba(232,238,252,0.90)"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle"
+          transform="rotate(-90 ${col.x - 52} ${(col.y1 + col.y2)/2})">COLUMNA (VARÓN)</text>
+  </g>
+
+  <g id="beamGroup" data-hit="beam" style="cursor:pointer">
+    <path id="beamPath" d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+          fill="none" stroke="${cInter}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"
+          ${dashIfCritical(inter.band.key)}>
+      ${animCriticalDash(inter.band.key)}
+      ${animPulse(inter.band.key)}
+      ${animRisk(inter.band.key)}
+    </path>
+    <path d="M ${beam.x1} ${beam.y} L ${beam.x2} ${beam.y}"
+          fill="none" ${overlayFor('beam')} stroke-linecap="round" stroke-linejoin="round" />
+    <text x="${(beam.x1 + beam.x2)/2}" y="${beam.y - 24}" fill="rgba(232,238,252,0.90)"
+          font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+          font-size="13" font-weight="700" text-anchor="middle">VIGA (MUJER)</text>
+  </g>
+
+  <g id="nodesGroup">
+    ${showHalo ? `
+      <circle cx="${(tension.weakest.id === 'interseccion') ? nInter.x : (tension.weakest.id === 'congregacion' ? nCong.x : nCom.x)}"
+              cy="${(tension.weakest.id === 'interseccion') ? nInter.y : (tension.weakest.id === 'congregacion' ? nCong.y : nCom.y)}"
+              r="26" fill="rgba(0,0,0,0)" stroke="${haloColor}" stroke-width="6" opacity="0.35"/>
+    ` : ``}
+
+    <g id="nodeComGroup" data-hit="node_comunion" style="cursor:pointer">
+      <circle id="nodeCom" cx="${nCom.x}" cy="${nCom.y}" r="${nCom.r}" fill="#0f172a" stroke="${cComm}" stroke-width="10"/>
+      <circle cx="${nCom.x}" cy="${nCom.y}" r="26" fill="rgba(0,0,0,0)" ${overlayFor('node_comunion')} />
+      <text id="txtComunion" x="${nCom.x}" y="${nCom.y + 66}" fill="rgba(232,238,252,0.90)"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="13" font-weight="700" text-anchor="middle">APOYO</text>
+    </g>
+
+    <g id="nodeCongGroup" data-hit="node_congregacion" style="cursor:pointer">
+      <circle id="nodeCong" cx="${nCong.x}" cy="${nCong.y}" r="${nCong.r}" fill="#0f172a" stroke="${cCong}" stroke-width="10"/>
+      <circle cx="${nCong.x}" cy="${nCong.y}" r="26" fill="rgba(0,0,0,0)" ${overlayFor('node_congregacion')} />
+      <text x="${nCong.x + 18}" y="${nCong.y - 26}" fill="rgba(232,238,252,0.90)"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="13" font-weight="700" text-anchor="start">HORIZONTALIDAD</text>
+    </g>
+
+    <g id="nodeInterGroup" data-hit="node_interseccion" style="cursor:pointer">
+      <circle id="nodeInter" cx="${nInter.x}" cy="${nInter.y}" r="${nInter.r}" fill="#0f172a" stroke="${cInter}" stroke-width="10"/>
+      <circle cx="${nInter.x}" cy="${nInter.y}" r="26" fill="rgba(0,0,0,0)" ${overlayFor('node_interseccion')} />
+      <text x="${nInter.x}" y="${nInter.y - 26}" fill="rgba(232,238,252,0.90)"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="13" font-weight="700" text-anchor="middle">TRANSFERENCIA</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="520" y="250" width="300" height="118" rx="16" fill="rgba(11,18,32,0.55)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="540" y="278" fill="rgba(170,183,214,0.95)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace"
+          font-size="12">EJES DEL PÓRTICO</text>
+
+    <circle cx="542" cy="300" r="6" fill="${cComm}"/>
+    <text x="555" y="305" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
+      APOYO: ${labelBand(comm)}
+    </text>
+    <text x="555" y="320" fill="rgba(170,183,214,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="11">
+      ${deltaText('comunion')}
+    </text>
+
+    <circle cx="542" cy="326" r="6" fill="${cCong}"/>
+    <text x="555" y="331" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
+      HORIZONTALIDAD: ${labelBand(cong)}
+    </text>
+    <text x="555" y="346" fill="rgba(170,183,214,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="11">
+      ${deltaText('congregacion')}
+    </text>
+
+    <circle cx="542" cy="352" r="6" fill="${cInter}"/>
+    <text x="555" y="357" fill="rgba(232,238,252,0.92)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="13">
+      TRANSFERENCIA: ${labelBand(inter)}
+    </text>
+    <text x="555" y="372" fill="rgba(170,183,214,0.92)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace" font-size="11">
+      ${deltaText('interseccion')}
+    </text>
+  </g>
+
+  <text x="${W/2}" y="${H - 26}" fill="rgba(170,183,214,0.92)"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+        font-size="12" text-anchor="middle">${titleLine}</text>
+</svg>
+    `;
+  }
+
+  function renderPorticoSVG(){
+    const mount = el('porticoSvgMount');
+    if (!mount) return;
+    mount.innerHTML = buildPorticoSVGMarkup();
+  }
+
+  async function exportPorticoPNG(){
+    if (state.lastPorticoPNG) return state.lastPorticoPNG;
+
+    const svgEl = document.getElementById('porticoSvg');
+    if (!svgEl) renderPorticoSVG();
+
+    const svg = document.getElementById('porticoSvg');
+    if (!svg) return null;
+
+    const serializer = new XMLSerializer();
+    let svgStr = serializer.serializeToString(svg);
+
+    if (!svgStr.includes('http://www.w3.org/2000/svg')) {
+      svgStr = svgStr.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+
+    const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+
+    const W = 860, H = 420;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    const dataUrl = await new Promise((resolve) => {
+      img.onload = () => {
+        ctx.clearRect(0,0,W,H);
+        ctx.drawImage(img, 0, 0, W, H);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(null);
+      };
+      img.src = url;
+    });
+
+    state.lastPorticoPNG = dataUrl;
+    return dataUrl;
+  }
+
+  function downloadDataUrl(dataUrl, filename){
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  // -------------------------
+  // Tooltips + Modal + Guided mode
+  // -------------------------
+  function showTip(x,y,title,desc,kpi){
+    const box = el('svgTip');
+    if (!box) return;
+    el('tipTitle').textContent = title || '—';
+    el('tipDesc').textContent = desc || '—';
+    const k = el('tipKpi');
+    if (kpi){
+      k.style.display = 'block';
+      k.textContent = kpi;
+    } else {
+      k.style.display = 'none';
+      k.textContent = '';
+    }
+    box.style.left = `${x}px`;
+    box.style.top = `${y}px`;
+    box.style.display = 'block';
+  }
+  function hideTip(){
+    const box = el('svgTip');
+    if (box) box.style.display = 'none';
+  }
+
+  function openModal(title, html){
+    el('modalTitle').textContent = title || 'Detalle';
+    el('modalBody').innerHTML = html || '';
+    el('modalBack').style.display = 'block';
+  }
+  function closeModal(){
+    el('modalBack').style.display = 'none';
+  }
+
+  function axisTooltipContent(axisId){
+    const axes = computePorticoAxes();
+    const a = axes[axisId];
+    const pct = Math.round(a.pct);
+    const label = a.band.label;
+
+    if (axisId === 'comunion'){
+      return {
+        title: 'APOYO (ESPÍRITU SANTO) / FUNDAMENTO',
+        
+desc: 'Sostén interior: el Espíritu Santo ayuda al alma sin quitar sensibilidad; trae libertad sin colapso.',
+        kpi: `${label} · ${pct}%`
+      };
+    }
+    if (axisId === 'congregacion'){
+      return {
+        title: 'HORIZONTALIDAD (RELACIÓN / EXPRESIÓN)',
+        desc: 'Eje de convivencia: la mujer expresa el clima del hogar y revela tensiones que deben ser procesadas, no ignoradas.',
+        kpi: `${label} · ${pct}%`
+      };
+    }
+    return {
+      title: 'TRANSFERENCIA (VIGA → COLUMNA → CIMIENTO)',
+      desc: 'Flujo correcto: percibir sin cargar, expresar sin acumular y entregar el peso para que sea conducido al fundamento.',
+      kpi: `${label} · ${pct}%`
+    };
+  }
+
+  function hitToAxis(hit){
+    if (hit === 'foundation' || hit === 'node_comunion') return 'comunion';
+    if (hit === 'column' || hit === 'node_congregacion') return 'congregacion';
+    if (hit === 'beam' || hit === 'node_interseccion') return 'interseccion';
+    return null;
+  }
+
+  function buildModalForHit(hit){
+    const axisId = hitToAxis(hit);
+    const axes = computePorticoAxes();
+
+    if (hit === 'loads'){
+      const inter = axes.interseccion;
+      const label = inter.band.label;
+      const pct = Math.round(inter.pct);
+      return {
+        title: 'Cargas estructurales (diagnóstico)',
+        html: `
+          <div class="bandBox">
+            <div class="bandTop">
+              <span class="tag ${inter.band.key}">Transferencia: ${label} · ${pct}%</span>
+              <span class="pill"><span class="dot"></span><span>Lectura:</span> <b>¿Se está acumulando el peso?</b></span>
+            </div>
+            <div style="margin-top:10px;color:var(--muted);font-size:12.5px">
+              <b>Carga Viva</b>: emociones, conversaciones, cambios diarios.<br/>
+              <b>Carga Muerta</b>: rutinas, finanzas, responsabilidades constantes.<br/>
+              <b>Carga Sísmica</b>: crisis, pérdidas, presión externa que “empuja” el sistema.
+            </div>
+            <div style="margin-top:10px;color:var(--text);font-size:13px">
+              Enfoque: no cargues sola; expresa, transfiere y busca apoyo del Espíritu para sostener el alma.
             </div>
           </div>
-          <div class="card" style="box-shadow:none">
-            <div class="cardHeader"><h2>${escapeHTML('Acciones sugeridas')}</h2><span class="chip">${escapeHTML('Guía')}</span></div>
-            <div class="cardBody">
-              <div class="hint">
-                <div style="font-weight:1000">•</div>
-                <div>${escapeHTML('Use las secciones asociadas a este eje para priorizar conversación, oración y acuerdos prácticos.')}</div>
-              </div>
-              <div class="divider"></div>
-              <div style="font-weight:1000;font-size:12px">${escapeHTML('Secciones del eje')}</div>
-              <ul class="list">
-                ${r.secs.map(s=>{
-                  const sr = computeSection(s);
-                  return `<li><span style="font-weight:900">${escapeHTML(s.title)}</span> — <span class="mono">${Math.round(sr.pct)}%</span></li>`;
-                }).join('')}
+        `
+      };
+    }
+
+    if (!axisId){
+      return { title: 'Detalle', html: `<div class="muted">Sin detalle disponible.</div>` };
+    }
+
+    const tip = axisTooltipContent(axisId);
+    const repSection = pickRepresentativeSectionForAxis(axisId);
+    const mini = repSection ? getMiniTeachingForSection(repSection.id) : null;
+
+    const verse = mini?.verse || (repSection?.sectionVerse) || { quote:'', reference:'' };
+    const bullets = Array.isArray(mini?.text) ? mini.text : [];
+    const plan = Array.isArray(mini?.oneWeekPlan) ? mini.oneWeekPlan : [];
+
+    const quickActs = (plan.slice(0,2).map(x => `<li>${safeText(x)}</li>`).join('')) || `
+      <li>Ora: “Espíritu Santo, sostén mi alma; muéstrame qué debo soltar hoy”.</li>
+      <li>Transfiere una carga concreta: exprésala con claridad y pide un acuerdo práctico.</li>
+    `;
+
+    const sectionBadge = repSection ? `
+      <div class="pill"><span class="dot"></span><span>Sección relacionada:</span> <b>${safeText(repSection.title)}</b></div>
+    ` : '';
+
+    const axisBand = axes[axisId];
+    const axisTag = `<span class="tag ${axisBand.band.key}">${axisKeyToLabel(axisId)}: ${axisBand.band.label} · ${Math.round(axisBand.pct)}%</span>`;
+
+    return {
+      title: `${tip.title}`,
+      html: `
+        <div class="bandBox">
+          <div class="bandTop" style="justify-content:space-between">
+            ${axisTag}
+            ${sectionBadge}
+          </div>
+
+          <div style="margin-top:10px;color:var(--text);font-size:13px">${safeText(tip.desc)}</div>
+
+          <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+
+          ${mini ? `
+            <div style="margin-top:12px">
+              <b style="font-size:13px">${safeText(mini.title)}</b>
+              <ul style="margin:8px 0 0 18px;color:var(--muted);font-size:12.5px">
+                ${bullets.slice(0,6).map(t => `<li>${safeText(t)}</li>`).join('')}
               </ul>
             </div>
+          ` : ''}
+
+          <div style="margin-top:12px">
+            <b style="font-size:13px">Acciones sugeridas (hoy/mañana)</b>
+            <ul style="margin:8px 0 0 18px;color:var(--muted);font-size:12.5px">${quickActs}</ul>
           </div>
         </div>
+      `
+    };
+  }
+
+  function attachPorticoInteractions(){
+    const svg = document.getElementById('porticoSvg');
+    const box = el('porticoBox');
+    if (!svg || !box) return;
+
+    const toLocal = (evt) => {
+      const r = box.getBoundingClientRect();
+      const x = (evt.clientX ?? (evt.touches?.[0]?.clientX)) - r.left;
+      const y = (evt.clientY ?? (evt.touches?.[0]?.clientY)) - r.top;
+      return { x: clamp(x, 8, r.width - 20), y: clamp(y, 8, r.height - 20) };
+    };
+
+    const onMove = (evt) => {
+      const t = evt.target;
+      const hit = t?.closest?.('[data-hit]')?.getAttribute?.('data-hit');
+      if (!hit){ hideTip(); return; }
+
+      const p = toLocal(evt);
+      const axes = computePorticoAxes();
+
+      let title = '—', desc = '—', kpi = null;
+
+      if (hit === 'loads'){
+        title = 'CARGAS';
+        desc = 'Lectura rápida: vida (verde), muerta (rojo) y sísmica (horizontal). Evalúa si el peso se está acumulando en la viga.';
+        kpi = `Transferencia · ${axes.interseccion.band.label} · ${Math.round(axes.interseccion.pct)}%`;
+      } else {
+        const axisId = hitToAxis(hit);
+        if (axisId){
+          const tip = axisTooltipContent(axisId);
+          title = tip.title; desc = tip.desc; kpi = tip.kpi;
+        }
+      }
+
+      showTip(p.x, p.y, title, desc, kpi);
+    };
+
+    const onLeave = () => hideTip();
+
+    const onClick = (evt) => {
+      const t = evt.target;
+      const hit = t?.closest?.('[data-hit]')?.getAttribute?.('data-hit');
+      if (!hit) return;
+
+      state.porticoHighlight = hit;
+      renderPorticoSVG();
+      attachPorticoInteractions();
+
+      const m = buildModalForHit(hit);
+      openModal(m.title, m.html);
+    };
+
+    svg.addEventListener('mousemove', onMove);
+    svg.addEventListener('mouseleave', onLeave);
+    svg.addEventListener('click', onClick);
+
+    svg.addEventListener('touchstart', (evt) => {
+      const t = evt.target;
+      const hit = t?.closest?.('[data-hit]')?.getAttribute?.('data-hit');
+      if (!hit) return;
+      const p = toLocal(evt);
+      const axisId = hitToAxis(hit);
+      if (hit === 'loads'){
+        showTip(p.x, p.y, 'CARGAS', 'Vida (verde), muerta (rojo) y sísmica (horizontal).', `Transferencia · ${Math.round(computePorticoAxes().interseccion.pct)}%`);
+      } else if (axisId){
+        const tip = axisTooltipContent(axisId);
+        showTip(p.x, p.y, tip.title, tip.desc, tip.kpi);
+      }
+    }, { passive:true });
+
+    svg.addEventListener('touchend', () => {
+      setTimeout(() => hideTip(), 900);
+    }, { passive:true });
+  }
+
+  function setGuide(active){
+    state.guideActive = active;
+    state.guideStep = 0;
+    el('guideBox').style.display = active ? 'block' : 'none';
+    if (!active){
+      state.porticoHighlight = null;
+      renderPorticoSVG();
+      attachPorticoInteractions();
+    } else {
+      runGuideStep();
+    }
+  }
+
+  function runGuideStep(){
+    const steps = [
+      {
+        key: 'foundation',
+        title: '1) Apoyo (Espíritu Santo)',
+        desc: 'El sostén interior del alma: el Espíritu ayuda sin anular sensibilidad y trae libertad sin fisura.'
+      },
+      {
+        key: 'beam',
+        title: '2) Viga (percibir y distribuir)',
+        desc: 'La viga recibe primero: percibe, distribuye y entrega; no fue diseñada para cargar sola.'
+      },
+      {
+        key: 'column',
+        title: '3) Horizontalidad (relación / expresión)',
+        desc: 'El eje de convivencia: lo que expresas revela el clima del hogar y debe ser escuchado, no minimizado.'
+      },
+      {
+        key: 'loads',
+        title: '4) Cargas y transferencia',
+        desc: 'Vida, muerta y sísmica. Diagnóstico: ¿estás acumulando o transfiriendo correctamente?'
+      }
+    ];
+
+    const s = steps[state.guideStep % steps.length];
+    el('guideTitle').textContent = s.title;
+    el('guideDesc').textContent = s.desc;
+
+    state.porticoHighlight = s.key;
+    renderPorticoSVG();
+    attachPorticoInteractions();
+  }
+
+  // -------------------------
+  // Resultados UI
+  // -------------------------
+  function renderResults(){
+    const { total } = computeTotals();
+    const max = state.maxTotal || 0;
+    const pct = max ? (total / max) : 0;
+
+    el('resTotal').textContent = total;
+    el('resMax').textContent = max;
+    el('resPct').textContent = fmtPct(pct);
+
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    el('globalBox').innerHTML = buildGlobalBox(globalBand, pct);
+
+    const by = computeBySection(); // low->high
+    const tbody = el('sectionTable').querySelector('tbody');
+    tbody.innerHTML = '';
+
+    const pastoralRoot = el('pastoralBlocks');
+    pastoralRoot.innerHTML = '';
+
+    for (const it of by.slice().sort((a,b)=> (a.section.title||'').localeCompare(b.section.title||''))){
+      const s = it.section;
+      const band = it.band;
+      const cls = bandClass(band.label);
+      const mini = getMiniTeachingForSection(s.id);
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><b>${safeText(s.title)}</b><div class="muted" style="margin-top:4px">${safeText(s.subtitle)}</div></td>
+        <td><span class="tag ${cls}">${safeText(band.label)}</span></td>
+        <td><span class="muted">${it.score}</span> / ${it.max}</td>
+        <td>${fmtPct(it.pct)}</td>
+        <td class="muted">${safeText(s.diagnosticFocus)}</td>
+        <td class="muted">“${safeText(s.sectionVerse?.quote)}” (${safeText(s.sectionVerse?.reference)})</td>
       `;
+      tbody.appendChild(tr);
 
-      ui.modalBackdrop.style.display = 'flex';
-      ui.modalBackdrop.setAttribute('aria-hidden','false');
+      const block = document.createElement('div');
+      block.className = 'bandBox';
+      block.style.marginTop = '10px';
+
+      const verse = mini?.verse || s.sectionVerse || { quote:'', reference:'' };
+      const bullets = Array.isArray(mini?.text) ? mini.text : [];
+      const plan = Array.isArray(mini?.oneWeekPlan) ? mini.oneWeekPlan : [];
+
+      block.innerHTML = `
+        <div class="bandTop">
+          <span class="tag ${cls}">${safeText(s.title)} · ${safeText(band.label)} · ${fmtPct(it.pct)}</span>
+          <span class="pill"><span class="dot"></span><span>Eje:</span> <b>${axisKeyToLabel(s.porticoAxis)}</b></span>
+        </div>
+        ${mini ? `<div style="margin-top:10px"><b style="font-size:13px">${safeText(mini.title)}</b></div>` : ''}
+        ${bullets.length ? `<ul style="margin:8px 0 0 18px;color:var(--muted);font-size:12.5px">${bullets.map(t => `<li>${safeText(t)}</li>`).join('')}</ul>` : ''}
+        <div class="verse">📖 “${safeText(verse.quote)}” <span class="muted">(${safeText(verse.reference)})</span></div>
+        ${plan.length ? `<div class="muted" style="margin-top:10px;font-size:12.5px"><b>Plan 7 días (sección)</b>: ${safeText(plan[0])}</div>` : ''}
+      `;
+      pastoralRoot.appendChild(block);
     }
 
-    function closeModal(){
-      ui.modalBackdrop.style.display = 'none';
-      ui.modalBackdrop.setAttribute('aria-hidden','true');
-      ui.modalBody.innerHTML = '';
+    const weekly = buildWeeklyPlanFromSections(by);
+    const planRoot = el('weeklyPlan');
+    planRoot.innerHTML = '';
+    weekly.forEach((picks, idx) => {
+      const div = document.createElement('div');
+      div.className = 'day';
+      const lines = picks.map(p => `<div style="margin-top:6px"><span class="muted">(${safeText(p.sec)})</span> ${safeText(p.act)}</div>`).join('');
+      div.innerHTML = `<b>Día ${idx+1}</b>${lines}`;
+      planRoot.appendChild(div);
+    });
+
+    el('resultsRoot').style.display = 'block';
+    updatePorticoUI();
+
+    savePrevAxes(computePorticoAxes());
+
+    if (el('autoScroll').checked){
+      el('resultsRoot').scrollIntoView({ behavior:'smooth', block:'start' });
     }
+  }
 
-    function bindPorticoInteractions(){
-      const hitMap = [
-        { el: ui.hitComunion, id: 'comunion' },
-        { el: ui.hitCongregacion, id: 'congregacion' },
-        { el: ui.hitInterseccion, id: 'interseccion' }
-      ];
+  // -------------------------
+  // TXT export
+  // -------------------------
+  function buildTxtReport(){
+    const patient = safeText(el('patientName').value).trim();
+    const auditor = safeText(el('auditorName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const notes = safeText(el('notes').value).trim();
+    const include = !!el('includeDetails').checked;
 
-      for(const item of hitMap){
-        item.el.addEventListener('mousemove', (e)=>{
-          showTooltip(e.clientX, e.clientY, axisTooltipHTML(item.id));
-        });
-        item.el.addEventListener('mouseleave', ()=> hideTooltip());
-        item.el.addEventListener('click', ()=> openModalForAxis(item.id));
+    const { total } = computeTotals();
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    const axes = computePorticoAxes();
+    const by = computeBySection();
+
+    const lines = [];
+    lines.push(`${TITLE}`);
+    lines.push(`Paciente: ${patient || '—'}`);
+    lines.push(`Auditor: ${auditor || '—'}`);
+    lines.push(`Fecha: ${date || '—'}`);
+    lines.push('');
+    lines.push(`DIAGNÓSTICO GLOBAL: ${safeText(globalBand.label)} (${fmtPct(pct)})`);
+    lines.push(`${safeText(globalBand.summary)}`);
+    lines.push(`Verso: “${safeText(globalBand.verse?.quote)}” (${safeText(globalBand.verse?.reference)})`);
+    lines.push('');
+    lines.push('EJES DEL PÓRTICO');
+    lines.push(`- Apoyo: ${Math.round(axes.comunion.pct)}% · ${axes.comunion.band.label}`);
+    lines.push(`- Horizontalidad: ${Math.round(axes.congregacion.pct)}% · ${axes.congregacion.band.label}`);
+    lines.push(`- Transferencia: ${Math.round(axes.interseccion.pct)}% · ${axes.interseccion.band.label}`);
+    lines.push('');
+
+    lines.push('RESULTADOS POR SECCIÓN');
+    for (const it of by.slice().sort((a,b)=> (a.section.title||'').localeCompare(b.section.title||''))){
+      const s = it.section;
+      lines.push(`• ${safeText(s.title)} — ${safeText(it.band.label)} — ${it.score}/${it.max} — ${fmtPct(it.pct)} — Eje: ${axisKeyToLabel(s.porticoAxis)}`);
+      lines.push(`  Enfoque: ${safeText(s.diagnosticFocus)}`);
+      lines.push(`  Verso: “${safeText(s.sectionVerse?.quote)}” (${safeText(s.sectionVerse?.reference)})`);
+
+      const mini = getMiniTeachingForSection(s.id);
+      if (mini){
+        lines.push(`  Mini-enseñanza: ${safeText(mini.title)}`);
+        (mini.text || []).forEach(t => lines.push(`   - ${safeText(t)}`));
       }
 
-      ui.modalBackdrop.addEventListener('click', (e)=>{
-        if(e.target === ui.modalBackdrop) closeModal();
-      });
-      ui.modalClose.addEventListener('click', closeModal);
-      document.addEventListener('keydown', (e)=>{
-        if(e.key === 'Escape') closeModal();
-      });
-    }
-
-    // ----------------------
-    // Export helpers
-    // ----------------------
-    function getHeaderMeta(){
-      const t = safeText(state.data?.meta?.title || TITLE);
-      const p = safeText(state.meta.patient || '');
-      const a = safeText(state.meta.auditor || '');
-      const d = safeText(state.meta.date || '');
-      return { t, p, a, d };
-    }
-
-    function downloadBlob(filename, blob){
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    async function svgToPngDataUrl(svgEl, width=1200){
-      const clone = svgEl.cloneNode(true);
-      clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
-
-      // Inline CSS vars by converting to computed styles where needed (simple approach: keep as-is)
-      const svgStr = new XMLSerializer().serializeToString(clone);
-      const svg64 = btoa(unescape(encodeURIComponent(svgStr)));
-      const imgSrc = `data:image/svg+xml;base64,${svg64}`;
-
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = imgSrc;
-
-      await new Promise((res, rej)=>{
-        img.onload = ()=>res();
-        img.onerror = (e)=>rej(e);
-      });
-
-      const aspect = img.height / img.width;
-      const h = Math.round(width * aspect);
-
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-
-      // background
-      ctx.fillStyle = '#0b0f14';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      ctx.drawImage(img, 0, 0, width, h);
-      return canvas.toDataURL('image/png');
-    }
-
-    async function exportPNG(){
-      const svgEl = $('porticoSVG');
-      const pngUrl = await svgToPngDataUrl(svgEl, 1600);
-
-      const { t, p, a, d } = getHeaderMeta();
-
-      // add footer using canvas
-      const img = new Image();
-      img.src = pngUrl;
-      await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; });
-
-      const footerH = 110;
-      const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height + footerH;
-      const ctx = canvas.getContext('2d');
-
-      ctx.fillStyle = '#0b0f14';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.drawImage(img, 0, 0);
-
-      ctx.fillStyle = 'rgba(255,255,255,.9)';
-      ctx.font = '700 28px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
-      ctx.fillText(t, 36, img.height + 42);
-
-      ctx.fillStyle = 'rgba(255,255,255,.75)';
-      ctx.font = '600 18px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
-      const line = `Paciente: ${p || '—'}   •   Auditor: ${a || '—'}   •   Fecha: ${d || '—'}`;
-      ctx.fillText(line, 36, img.height + 78);
-
-      const out = canvas.toDataURL('image/png');
-      const b = await (await fetch(out)).blob();
-      downloadBlob(`portico_${slugify(t)}.png`, b);
-    }
-
-    function buildTXT(){
-      const { t, p, a, d } = getHeaderMeta();
-      const g = computeGlobal();
-
-      const lines = [];
-      lines.push(t);
-      lines.push(`Paciente: ${p || '—'}`);
-      lines.push(`Auditor: ${a || '—'}`);
-      lines.push(`Fecha: ${d || '—'}`);
-      lines.push('');
-      lines.push(`Diagnóstico global: ${Math.round(g.pct)}% • ${g.band.t}`);
-      lines.push(safeText(g.bandDef?.summary || ''));
-      lines.push(`Verso: ${safeText(g.bandDef?.verse?.quote || '')} (${safeText(g.bandDef?.verse?.reference || '')})`);
-      lines.push('');
-      lines.push('Ejes:');
-      for(const ax of state.data.porticoModel.axes){
-        const r = computeAxis(ax.id);
-        lines.push(`- ${ax.label}: ${Math.round(r.pct)}% • ${r.band.t}`);
-        lines.push(`  ${safeText(r.bandDef?.summary || '')}`);
-        lines.push(`  ${safeText(r.bandDef?.verse?.quote || '')} (${safeText(r.bandDef?.verse?.reference || '')})`);
-      }
-      lines.push('');
-      lines.push('Secciones:');
-      const manualById = Object.fromEntries(state.data.pastoralManual.sections.map(s=>[s.id,s]));
-      for(const sec of state.data.sections){
-        const r = computeSection(sec);
-        const man = manualById[sec.id]?.miniTeaching || null;
-        lines.push(`- ${sec.title} [${sec.porticoAxis}] : ${Math.round(r.pct)}% • ${r.band.t}`);
-        lines.push(`  ${safeText(sec.subtitle || '')}`);
-        lines.push(`  Enfoque: ${safeText(sec.diagnosticFocus || '')}`);
-        lines.push(`  Verso: ${safeText(sec.sectionVerse?.quote || '')} (${safeText(sec.sectionVerse?.reference || '')})`);
-        if(man?.title){
-          lines.push(`  Mini-enseñanza: ${safeText(man.title)}`);
-          for(const t of (man.text || [])) lines.push(`   • ${safeText(t)}`);
-        }
-        if(man?.oneWeekPlan?.length){
-          lines.push('  Plan 7 días:');
-          for(const d of man.oneWeekPlan) lines.push(`   • ${safeText(d)}`);
+      if (include){
+        lines.push('  Detalle por pregunta:');
+        for (const q of (s.questions || [])){
+          const v = state.answers.get(q.id);
+          const vv = Number.isFinite(v) ? v : '—';
+          lines.push(`   [${q.id}] (${vv}) ${safeText(q.text)}`);
         }
       }
-
       lines.push('');
-      lines.push('Observaciones:');
-      lines.push(safeText(state.meta.observations || '—'));
-      lines.push('');
-
-      return lines.join('\n');
     }
 
-    function exportTXT(){
-      const txt = buildTXT();
-      const blob = new Blob([txt], { type:'text/plain;charset=utf-8' });
-      downloadBlob(`auditoria_${slugify(safeText(state.data?.meta?.title||TITLE))}.txt`, blob);
-    }
+    const weekly = buildWeeklyPlanFromSections(by);
+    lines.push('PLAN 7 DÍAS (AUTOMÁTICO)');
+    weekly.forEach((picks, i) => {
+      lines.push(`Día ${i+1}:`);
+      picks.forEach(p => lines.push(` - (${safeText(p.sec)}) ${safeText(p.act)}`));
+    });
 
-    function slugify(s){
-      return safeText(s)
-        .toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-        .replace(/[^a-z0-9]+/g,'_')
-        .replace(/^_+|_+$/g,'');
-    }
+    lines.push('');
+    lines.push('OBSERVACIONES');
+    lines.push(notes || '—');
 
-    function pdfAddTable(doc, startY, cols, rows, colWidths){
-      const left = 36;
-      let y = startY;
-      const lineH = 16;
+    return lines.join('\n');
+  }
 
-      doc.setFontSize(10);
-      doc.setTextColor(230,238,247);
+  function sanitizeFilePart(s){
+    return (s || '')
+      .toString()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-zA-Z0-9_-]+/g,'_')
+      .replace(/_+/g,'_')
+      .replace(/^_+|_+$/g,'')
+      .slice(0,60) || 'reporte';
+  }
 
-      // header
-      doc.setFont(undefined,'bold');
-      let x = left;
-      for(let i=0;i<cols.length;i++){
-        doc.text(cols[i], x, y);
-        x += colWidths[i];
-      }
-      y += 10;
-      doc.setDrawColor(255,255,255);
-      doc.setLineWidth(0.2);
-      doc.line(left, y, left + colWidths.reduce((a,b)=>a+b,0), y);
-      y += 10;
+  // -------------------------
+  // PDF export
+  // -------------------------
+  async function exportPdf(){
+    const patient = safeText(el('patientName').value).trim();
+    const auditor = safeText(el('auditorName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const notes = safeText(el('notes').value).trim();
+    const include = !!el('includeDetails').checked;
 
-      // rows
-      doc.setFont(undefined,'normal');
-      for(const r of rows){
-        x = left;
-        const maxLines = r.reduce((m,cell,i)=>{
-          const w = colWidths[i] - 6;
-          const lines = doc.splitTextToSize(String(cell), w);
-          return Math.max(m, lines.length);
-        }, 1);
+    const { total } = computeTotals();
+    const pct = state.maxTotal ? total / state.maxTotal : 0;
+    const globalBand = pickBand(pct, GLOBAL_THRESHOLDS, 'global');
+    const by = computeBySection().slice().sort((a,b)=> (a.section.title||'').localeCompare(b.section.title||''));
 
-        for(let i=0;i<r.length;i++){
-          const w = colWidths[i] - 6;
-          const lines = doc.splitTextToSize(String(r[i]), w);
-          doc.text(lines, x, y);
-          x += colWidths[i];
-        }
-        y += (maxLines * lineH);
-        if(y > 770){
-          doc.addPage();
-          y = 48;
-        }
-      }
-      return y;
-    }
+    const axes = computePorticoAxes();
+    const porticoPng = await exportPorticoPNG();
 
-    async function exportPDF(){
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit:'pt', format:'a4' });
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:'pt', format:'a4' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
 
-      const { t, p, a, d } = getHeaderMeta();
-      const g = computeGlobal();
+    const margin = 48;
+    let y = margin;
 
-      const marginX = 36;
-      let y = 44;
-
-      // Header
-      doc.setTextColor(232,238,247);
-      doc.setFontSize(16);
-      doc.setFont(undefined,'bold');
-      doc.text(t, marginX, y);
-      y += 18;
-
-      doc.setFontSize(10);
-      doc.setFont(undefined,'normal');
-      doc.setTextColor(167,179,196);
-      doc.text(`Paciente: ${p || '—'}   •   Auditor: ${a || '—'}   •   Fecha: ${d || '—'}`, marginX, y);
-      y += 18;
-
-      // Diagnóstico global
-      doc.setTextColor(232,238,247);
-      doc.setFont(undefined,'bold');
-      doc.setFontSize(12);
-      doc.text(`Diagnóstico global: ${Math.round(g.pct)}% • ${g.band.t}`, marginX, y);
-      y += 14;
-
-      doc.setFont(undefined,'normal');
-      doc.setTextColor(167,179,196);
-      const sumLines = doc.splitTextToSize(safeText(g.bandDef?.summary || ''), 520);
-      doc.text(sumLines, marginX, y);
-      y += (sumLines.length * 14) + 6;
-
-      doc.setTextColor(232,238,247);
-      doc.setFontSize(10);
-      const vLine = `${safeText(g.bandDef?.verse?.quote || '')} (${safeText(g.bandDef?.verse?.reference || '')})`;
-      doc.text(doc.splitTextToSize(vLine, 520), marginX, y);
-      y += 18;
-
-      // Pórtico image
-      const svgEl = $('porticoSVG');
-      const pngUrl = await svgToPngDataUrl(svgEl, 1000);
-
-      // Fit in page
-      const imgW = 520;
-      const imgH = 340;
-      doc.addImage(pngUrl, 'PNG', marginX, y, imgW, imgH);
-      y += imgH + 16;
-
-      // Tabla de ejes
-      doc.setFont(undefined,'bold');
-      doc.setTextColor(232,238,247);
-      doc.setFontSize(12);
-      doc.text('Tabla de ejes', marginX, y);
-      y += 18;
-
-      const axesRows = state.data.porticoModel.axes.map(ax=>{
-        const r = computeAxis(ax.id);
-        const vq = safeText(r.bandDef?.verse?.quote || '');
-        const vr = safeText(r.bandDef?.verse?.reference || '');
-        return [
-          ax.label,
-          `${Math.round(r.pct)}% (${r.raw}/${r.max})`,
-          r.band.t,
-          `${vq} (${vr})`
-        ];
+    const logo = new Image();
+    let logoOk = false;
+    try{
+      await new Promise((res) => {
+        logo.onload = () => { logoOk = true; res(); };
+        logo.onerror = () => res();
+        logo.src = 'logo.png';
       });
-      y = pdfAddTable(doc, y, ['Eje','Puntaje','Banda','Verso'], axesRows, [110,120,80,210]);
-      y += 14;
+    }catch{}
 
-      // Tabla de secciones
-      doc.setFont(undefined,'bold');
-      doc.setTextColor(232,238,247);
-      doc.setFontSize(12);
-      doc.text('Tabla de secciones', marginX, y);
-      y += 18;
+    if (logoOk){
+      doc.addImage(logo, 'PNG', margin, y, 44, 44);
+    }
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(16);
+    doc.text(TITLE, margin + (logoOk ? 58 : 0), y + 18);
 
-      const secRows = state.data.sections.map(sec=>{
-        const r = computeSection(sec);
-        return [
-          sec.title,
-          sec.porticoAxis,
-          `${Math.round(r.pct)}% (${r.raw}/${r.max})`,
-          r.band.t
-        ];
-      });
-      y = pdfAddTable(doc, y, ['Sección','Eje','Puntaje','Banda'], secRows, [220,90,120,90]);
-      y += 14;
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10.5);
+    doc.setTextColor(120);
+    doc.text(`Paciente: ${patient || '—'}   ·   Auditor: ${auditor || '—'}   ·   Fecha: ${date || '—'}`, margin, y + 62);
 
-      // Enfoque pastoral por sección + Plan semanal automático
-      const manualById = Object.fromEntries(state.data.pastoralManual.sections.map(s=>[s.id,s]));
+    y += 86;
+
+    doc.setTextColor(20);
+    doc.setFillColor(240, 245, 255);
+    doc.roundedRect(margin, y, pageW - margin*2, 52, 10, 10, 'F');
+    doc.setTextColor(10);
+    doc.setFont('helvetica','bold'); doc.setFontSize(12);
+    doc.text(`Diagnóstico global: ${safeText(globalBand.label)} — ${Math.round(pct*100)}%`, margin + 14, y + 20);
+    doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+    doc.setTextColor(60);
+    doc.text(doc.splitTextToSize(safeText(globalBand.summary), pageW - margin*2 - 28), margin + 14, y + 38);
+
+    y += 70;
+
+    doc.setTextColor(80);
+    doc.setFont('helvetica','italic'); doc.setFontSize(10.5);
+    doc.text(`“${safeText(globalBand.verse?.quote)}” (${safeText(globalBand.verse?.reference)})`, margin, y);
+    doc.setFont('helvetica','normal');
+    y += 16;
+
+    if (porticoPng){
+      const imgW = 430;
+      const imgH = 210;
+      const x = (pageW - imgW) / 2;
+      if (y + imgH > pageH - margin) { doc.addPage(); y = margin; }
+      doc.addImage(porticoPng, 'PNG', x, y, imgW, imgH);
+      y += imgH + 10;
+    }
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(11);
+    doc.setTextColor(30);
+    doc.text('Ejes del pórtico', margin, y + 14);
+    doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+    doc.setTextColor(70);
+    doc.text(`Apoyo: ${Math.round(axes.comunion.pct)}% · ${axes.comunion.band.label}`, margin, y + 32);
+    doc.text(`Horizontalidad: ${Math.round(axes.congregacion.pct)}% · ${axes.congregacion.band.label}`, margin, y + 48);
+    doc.text(`Transferencia: ${Math.round(axes.interseccion.pct)}% · ${axes.interseccion.band.label}`, margin, y + 64);
+    y += 86;
+
+    if (y > pageH - margin - 120) { doc.addPage(); y = margin; }
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text('Resultados por sección', margin, y);
+    y += 10;
+
+    const rows = by.map(it => [
+      safeText(it.section.title),
+      safeText(it.band.label),
+      `${it.score}/${it.max}`,
+      `${Math.round(it.pct*100)}%`,
+      axisKeyToLabel(it.section.porticoAxis),
+      `${safeText(it.section.sectionVerse?.reference)}`
+    ]);
+
+    doc.autoTable({
+      startY: y + 10,
+      head: [['Sección','Diagnóstico','Puntaje','%','Eje','Verso']],
+      body: rows,
+      styles: { fontSize: 9.5, cellPadding: 6 },
+      headStyles: { fillColor: [235, 240, 250], textColor: 20 },
+      margin: { left: margin, right: margin }
+    });
+
+    y = doc.lastAutoTable.finalY + 18;
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    if (y > pageH - margin - 80) { doc.addPage(); y = margin; }
+    doc.text('Enfoque pastoral por secciones', margin, y);
+    y += 14;
+
+    for (const it of by){
+      const s = it.section;
+      const mini = getMiniTeachingForSection(s.id);
+
+      const header = `${safeText(s.title)} — ${safeText(it.band.label)} — ${Math.round(it.pct*100)}%`;
+      const body = [
+        `Enfoque: ${safeText(s.diagnosticFocus)}`,
+        mini?.title ? `Mini-enseñanza: ${safeText(mini.title)}` : '',
+        ...(mini?.text || []).map(t => `• ${safeText(t)}`),
+        `Verso: “${safeText((mini?.verse || s.sectionVerse)?.quote)}” (${safeText((mini?.verse || s.sectionVerse)?.reference)})`
+      ].filter(Boolean).join('\n');
+
+      const block = doc.splitTextToSize(body, pageW - margin*2);
+      const hNeeded = 14 + block.length * 12 + 18;
+
+      if (y + hNeeded > pageH - margin){
+        doc.addPage(); y = margin;
+      }
+
+      doc.setFont('helvetica','bold'); doc.setFontSize(10.8); doc.setTextColor(20);
+      doc.text(header, margin, y);
+      y += 12;
+
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+      doc.text(block, margin, y);
+      y += block.length * 12 + 14;
+    }
+
+    const weekly = buildWeeklyPlanFromSections(computeBySection());
+    if (y > pageH - margin - 120) { doc.addPage(); y = margin; }
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text('Plan semanal automático (7 días)', margin, y);
+    y += 14;
+
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+    for (let i=0;i<weekly.length;i++){
+      const picks = weekly[i];
+      const line = `Día ${i+1}: ${picks.map(p => `(${safeText(p.sec)}) ${safeText(p.act)}`).join(' · ')}`;
+      const wrapped = doc.splitTextToSize(line, pageW - margin*2);
+      const hNeeded = wrapped.length * 12 + 6;
+      if (y + hNeeded > pageH - margin){ doc.addPage(); y = margin; }
+      doc.text(wrapped, margin, y);
+      y += wrapped.length * 12 + 6;
+    }
+
+    if (y > pageH - margin - 120) { doc.addPage(); y = margin; }
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+    doc.text('Observaciones', margin, y);
+    y += 14;
+
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+    const obs = doc.splitTextToSize(notes || '—', pageW - margin*2);
+    doc.text(obs, margin, y);
+    y += obs.length * 12 + 10;
+
+    if (include){
       doc.addPage();
-      y = 44;
+      y = margin;
+      doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(20);
+      doc.text('Detalle por pregunta', margin, y);
+      y += 12;
 
-      doc.setFont(undefined,'bold');
-      doc.setTextColor(232,238,247);
-      doc.setFontSize(14);
-      doc.text('Enfoque pastoral por sección', marginX, y);
-      y += 18;
+      for (const it of by){
+        const s = it.section;
+        const header = s.title;
+        if (y > pageH - margin - 40){ doc.addPage(); y = margin; }
+        doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(30);
+        doc.text(header, margin, y);
+        y += 10;
 
-      doc.setFontSize(10);
-      doc.setFont(undefined,'normal');
-      doc.setTextColor(167,179,196);
-
-      for(const sec of state.data.sections){
-        const r = computeSection(sec);
-        const man = manualById[sec.id]?.miniTeaching || null;
-
-        doc.setTextColor(232,238,247);
-        doc.setFont(undefined,'bold');
-        doc.text(`${sec.title} — ${Math.round(r.pct)}% • ${r.band.t}`, marginX, y);
-        y += 14;
-
-        doc.setFont(undefined,'normal');
-        doc.setTextColor(167,179,196);
-
-        const focus = `Enfoque: ${safeText(sec.diagnosticFocus || '')}`;
-        const focusLines = doc.splitTextToSize(focus, 520);
-        doc.text(focusLines, marginX, y);
-        y += (focusLines.length * 14) + 2;
-
-        const verseLine = `${safeText(sec.sectionVerse?.quote || '')} (${safeText(sec.sectionVerse?.reference || '')})`;
-        const verseLines = doc.splitTextToSize(verseLine, 520);
-        doc.text(verseLines, marginX, y);
-        y += (verseLines.length * 14) + 6;
-
-        if(man?.title){
-          doc.setTextColor(232,238,247);
-          doc.setFont(undefined,'bold');
-          doc.text(safeText(man.title), marginX, y);
-          y += 14;
-
-          doc.setFont(undefined,'normal');
-          doc.setTextColor(167,179,196);
-          for(const tline of (man.text || [])){
-            const tl = doc.splitTextToSize(`• ${safeText(tline)}`, 520);
-            doc.text(tl, marginX, y);
-            y += (tl.length * 14);
-          }
-          y += 6;
+        doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(80);
+        for (const q of (s.questions || [])){
+          const v = state.answers.get(q.id);
+          const vv = Number.isFinite(v) ? v : '—';
+          const line = `[${q.id}] (${vv}) ${safeText(q.text)}`;
+          const wrapped = doc.splitTextToSize(line, pageW - margin*2);
+          const need = wrapped.length * 11 + 4;
+          if (y + need > pageH - margin){ doc.addPage(); y = margin; }
+          doc.text(wrapped, margin, y);
+          y += wrapped.length * 11 + 4;
         }
-
-        if(man?.oneWeekPlan?.length){
-          doc.setTextColor(232,238,247);
-          doc.setFont(undefined,'bold');
-          doc.text('Plan de 7 días', marginX, y);
-          y += 14;
-
-          doc.setFont(undefined,'normal');
-          doc.setTextColor(167,179,196);
-          for(const dline of man.oneWeekPlan){
-            const dl = doc.splitTextToSize(`• ${safeText(dline)}`, 520);
-            doc.text(dl, marginX, y);
-            y += (dl.length * 14);
-          }
-          y += 10;
-        }
-
-        if(state.meta.detailPDF){
-          doc.setTextColor(232,238,247);
-          doc.setFont(undefined,'bold');
-          doc.text('Detalle por pregunta', marginX, y);
-          y += 14;
-
-          doc.setFont(undefined,'normal');
-          doc.setTextColor(167,179,196);
-          for(const q of sec.questions){
-            const val = Number(state.answers[q.id] ?? 0);
-            const line = `${q.id} (${val}/5): ${safeText(q.text)} — ${safeText(getScaleLabel(val))}`;
-            const qLines = doc.splitTextToSize(line, 520);
-            doc.text(qLines, marginX, y);
-            y += (qLines.length * 14);
-            if(y > 770){ doc.addPage(); y = 44; }
-          }
-          y += 10;
-        }
-
-        if(y > 770){ doc.addPage(); y = 44; }
+        y += 10;
       }
-
-      // Observaciones
-      doc.addPage();
-      y = 44;
-      doc.setTextColor(232,238,247);
-      doc.setFont(undefined,'bold');
-      doc.setFontSize(14);
-      doc.text('Observaciones', marginX, y);
-      y += 18;
-
-      doc.setFontSize(10);
-      doc.setFont(undefined,'normal');
-      doc.setTextColor(167,179,196);
-      const obs = safeText(state.meta.observations || '—');
-      doc.text(doc.splitTextToSize(obs, 520), marginX, y);
-
-      doc.save(`auditoria_${slugify(t)}.pdf`);
     }
 
-    // ----------------------
-    // Buttons
-    // ----------------------
-    function bindButtons(){
-      ui.btnExportPNG.addEventListener('click', async ()=>{
-        ui.btnExportPNG.disabled = true;
-        try{ await exportPNG(); } finally { ui.btnExportPNG.disabled = false; }
-      });
+    const file = `reporte_${sanitizeFilePart(patient)}_${sanitizeFilePart(date)}.pdf`;
+    doc.save(file);
+  }
 
-      ui.btnExportTXT.addEventListener('click', ()=> exportTXT());
+  // -------------------------
+  // Actions
+  // -------------------------
+  async function onDownloadPNG(){
+    const patient = safeText(el('patientName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const dataUrl = await exportPorticoPNG();
+    if (!dataUrl) return;
+    downloadDataUrl(dataUrl, `portico_${sanitizeFilePart(patient)}_${sanitizeFilePart(date)}.png`);
+  }
 
-      ui.btnExportPDF.addEventListener('click', async ()=>{
-        ui.btnExportPDF.disabled = true;
-        try{ await exportPDF(); } finally { ui.btnExportPDF.disabled = false; }
-      });
+  function onDownloadTXT(){
+    const patient = safeText(el('patientName').value).trim();
+    const date = safeText(el('dateField').value).trim();
+    const txt = buildTxtReport();
+    const blob = new Blob([txt], { type:'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reporte_${sanitizeFilePart(patient)}_${sanitizeFilePart(date)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=> URL.revokeObjectURL(url), 300);
+  }
 
-      ui.btnSaveBefore.addEventListener('click', ()=> saveSnapshot(LS_BEFORE_KEY));
-      ui.btnSaveAfter.addEventListener('click', ()=> saveSnapshot(LS_AFTER_KEY));
+  function resetAll(){
+    state.answers.clear();
+    state.lastPorticoPNG = null;
+    state.porticoHighlight = null;
+    state.guideActive = false;
+    state.guideStep = 0;
+    el('guideBox').style.display = 'none';
+    el('resultsRoot').style.display = 'none';
+    hideTip();
+    closeModal();
 
-      ui.btnReset.addEventListener('click', ()=>{
-        const ok = confirm('¿Resetear respuestas y meta?');
-        if(ok) resetAll();
-      });
-    }
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    updateLive();
+  }
 
-    // ----------------------
-    // Load JSON + init
-    // ----------------------
-    async function loadJSON(){
+  // -------------------------
+  // Load JSON
+  // -------------------------
+  async function init(){
+    try{
       const res = await fetch(JSON_PATH, { cache:'no-store' });
-      if(!res.ok) throw new Error(`No se pudo cargar JSON: ${res.status}`);
-      return await res.json();
-    }
+      if (!res.ok) throw new Error(`No se pudo cargar ${JSON_PATH} (${res.status})`);
+      const data = await res.json();
+      state.data = data;
 
-    async function init(){
-      renderStaticUIStrings();
-
-      try{
-        state.data = await loadJSON();
-      }catch(err){
-        ui.title.textContent = TITLE;
-        ui.desc.textContent = 'No se pudo cargar el archivo JSON. Verifique la ruta y el nombre.';
-        console.error(err);
-        return;
+      const ids = new Set();
+      for (const s of (data.sections || [])){
+        if (ids.has(s.id)) throw new Error(`Sección duplicada: ${s.id}`);
+        ids.add(s.id);
+        for (const q of (s.questions || [])){
+          if (ids.has(q.id)) throw new Error(`Pregunta duplicada: ${q.id}`);
+          ids.add(q.id);
+        }
+      }
+      const pm = data?.pastoralManual?.sections || [];
+      const sIds = new Set((data.sections||[]).map(s => s.id));
+      for (const p of pm){
+        if (!sIds.has(p.id)) throw new Error(`pastoralManual no coincide: ${p.id}`);
       }
 
-      hydrate();
+      renderTest();
 
-      // defaults
-      if(!state.meta.date) state.meta.date = todayISO();
+      el('btnResults').addEventListener('click', () => {
+        renderResults();
+      });
+      el('btnTxt').addEventListener('click', () => {
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        onDownloadTXT();
+      });
+      el('btnPdf').addEventListener('click', async () => {
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        await exportPdf();
+      });
+      el('btnPng').addEventListener('click', async () => {
+        if (el('resultsRoot').style.display === 'none') renderResults();
+        await onDownloadPNG();
+      });
+      el('btnReset').addEventListener('click', () => resetAll());
 
-      ensureAllAnswers();
-      setMetaInputs();
-      bindMetaInputs();
-      bindButtons();
-      bindPorticoInteractions();
+      el('modalClose').addEventListener('click', () => closeModal());
+      el('modalBack').addEventListener('click', (e) => {
+        if (e.target === el('modalBack')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape'){
+          closeModal();
+          hideTip();
+          if (state.guideActive) setGuide(false);
+        }
+      });
 
-      // initial render
-      renderAll();
-      persist();
+      el('btnGuide').addEventListener('click', () => {
+        setGuide(!state.guideActive);
+      });
+      el('btnGuideNext').addEventListener('click', () => {
+        state.guideStep = (state.guideStep + 1) % 4;
+        runGuideStep();
+      });
+      el('btnGuideClose').addEventListener('click', () => setGuide(false));
+
+    }catch(err){
+      el('loadError').style.display = 'block';
+      el('loadError').textContent = `Error: ${err?.message || err}`;
     }
+  }
 
-    init();
-  </script>
+  init();
+})();
+</script>
+
 </body>
 </html>
-
 
