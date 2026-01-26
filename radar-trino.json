@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "title": "Radar Trino — Gobierno Interior",
+    "description": "Diagnóstico del orden trino (espíritu gobierna, alma traduce, cuerpo expresa) con guía por secciones y plan semanal."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Alineación trina estable",
+      "min": 0,
+      "max": 6,
+      "summary": "El orden interior está firme. El espíritu gobierna, el alma acompaña y el cuerpo expresa con paz. Mantener hábitos y protección del altar.",
+      "verse": {
+        "quote": "Y el Dios de paz os santifique por completo; y todo vuestro ser, espíritu, alma y cuerpo, sea guardado irreprensible.",
+        "reference": "1 Tesalonicenses 5:23 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Alineación en ajuste",
+      "min": 7,
+      "max": 13,
+      "summary": "Hay áreas que están tomando el timón por momentos. No es crisis: es invitación a volver al orden antes de que el desgaste hable.",
+      "verse": {
+        "quote": "En quietud y en confianza será vuestra fortaleza.",
+        "reference": "Isaías 30:15 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Desorden en riesgo",
+      "min": 14,
+      "max": 20,
+      "summary": "El alma está sosteniendo cargas que no le corresponden o el cuerpo está pagando el precio. Requiere volver a presencia, obediencia simple y reposo real.",
+      "verse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Desorden crítico (requiere proceso)",
+      "min": 21,
+      "max": 27,
+      "summary": "No se resuelve con presión: se restaura con proceso. Prioriza altar, acompañamiento, y decisiones pequeñas sostenidas. El objetivo es reordenar gobierno interno.",
+      "verse": {
+        "quote": "No por fuerza, ni por poder, sino por mi Espíritu, dice Jehová de los ejércitos.",
+        "reference": "Zacarías 4:6 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "presencia",
+      "dimension": "spirit",
+      "node": "N_presencia",
+      "title": "1. Presencia (permanecer antes que producir)",
+      "diagnosticFocus": "¿Estoy viviendo desde el permanecer o desde el rendimiento?",
+      "verse": {
+        "quote": "Separados de mí, nada podéis hacer.",
+        "reference": "Juan 15:5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La presencia no es un momento: es el lugar de gobierno.",
+        "Cuando falta presencia, el alma reemplaza comunión por actividad.",
+        "El fruto no se fabrica: aparece donde hay permanencia."
+      ],
+      "actions": [
+        "10 minutos hoy: silencio + una frase: ‘Toma el trono’.",
+        "Eliminar una distracción que roba altar (una concreta).",
+        "Antes de decidir, respirar y preguntar: ‘¿Qué dices Tú?’"
+      ]
+    },
+    {
+      "id": "escucha",
+      "dimension": "spirit",
+      "node": "N_escucha",
+      "title": "2. Escucha (discernir antes de actuar)",
+      "diagnosticFocus": "¿Oigo al Espíritu o interpreto desde la prisa del alma?",
+      "verse": {
+        "quote": "El Hijo no puede hacer nada por sí mismo, sino lo que ve hacer al Padre.",
+        "reference": "Juan 5:19 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La obediencia comienza con oír correctamente.",
+        "El ruido del alma compite con la voz del Espíritu.",
+        "Una instrucción clara vale más que cien planes."
+      ],
+      "actions": [
+        "Escribir 1 cosa que el Espíritu ya te mostró y no obedeciste.",
+        "Obediencia simple hoy: un ‘sí’ pequeño y real.",
+        "Practicar 2 pausas santas antes de responder."
+      ]
+    },
+    {
+      "id": "dependencia",
+      "dimension": "spirit",
+      "node": "N_dependencia",
+      "title": "3. Dependencia (gracia, no autosuficiencia)",
+      "diagnosticFocus": "¿Estoy en herencia o en esfuerzo? ¿Confío o controlo?",
+      "verse": {
+        "quote": "Mi gracia te basta; porque mi poder se perfecciona en la debilidad.",
+        "reference": "2 Corintios 12:9 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El espíritu gobierna por comunión, no por fuerza.",
+        "La autosuficiencia es independencia disfrazada de madurez.",
+        "La gracia no te impulsa a correr: te enseña a reposar."
+      ],
+      "actions": [
+        "Confesar 1 área donde estás controlando por miedo.",
+        "Orar entregando esa área (sin negociar).",
+        "Pedir ayuda: a Dios y a una persona sabia (si aplica)."
+      ]
+    },
+    {
+      "id": "emociones",
+      "dimension": "soul",
+      "node": "N_emociones",
+      "title": "4. Emociones (paz vs reactividad)",
+      "diagnosticFocus": "¿Reacciono desde emoción o respondo desde el espíritu?",
+      "verse": {
+        "quote": "El espíritu está dispuesto, pero la carne es débil.",
+        "reference": "Mateo 26:41 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El alma no es enemiga: es puente que necesita gobierno.",
+        "La emoción sin sujeción se vuelve timón.",
+        "La paz no es ausencia de problemas: es orden interior."
+      ],
+      "actions": [
+        "Nombrar la emoción dominante hoy (sin juicio).",
+        "Pausa de 60 segundos antes de responder a tensión.",
+        "Orar: ‘Aquieta mi alma bajo tu voz’."
+      ]
+    },
+    {
+      "id": "pensamientos",
+      "dimension": "soul",
+      "node": "N_pensamientos",
+      "title": "5. Pensamientos (letra vs revelación)",
+      "diagnosticFocus": "¿Mi mente argumenta o se rinde a la revelación?",
+      "verse": {
+        "quote": "Transformaos por medio de la renovación de vuestro entendimiento.",
+        "reference": "Romanos 12:2 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El conocimiento informa; la revelación transforma.",
+        "La mente cambia por gobierno nuevo, no por datos nuevos.",
+        "Pensar ‘en diseño’ es interpretar desde el Espíritu."
+      ],
+      "actions": [
+        "Detectar un pensamiento repetitivo que drena tu fe.",
+        "Reemplazarlo por una verdad bíblica (una).",
+        "Llevar cautivo ese pensamiento 3 veces hoy."
+      ]
+    },
+    {
+      "id": "voluntad",
+      "dimension": "soul",
+      "node": "N_voluntad",
+      "title": "6. Voluntad (rendición vs negociación)",
+      "diagnosticFocus": "¿Mi voluntad se inclina o negocia con Dios?",
+      "verse": {
+        "quote": "Padre, no se haga mi voluntad, sino la tuya.",
+        "reference": "Lucas 22:42 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La rendición no es pérdida: es alineación.",
+        "El propósito nace donde la voluntad se entrega.",
+        "Getsemaní es el lugar donde el alma aprende a obedecer."
+      ],
+      "actions": [
+        "Escribir 1 ‘no’ que Dios te está pidiendo soltar.",
+        "Tomar una decisión obediente (pequeña, concreta).",
+        "Celebrar la dirección en vez de sufrir la renuncia."
+      ]
+    },
+    {
+      "id": "habitos",
+      "dimension": "body",
+      "node": "N_habitos",
+      "title": "7. Hábitos (cuerpo como altar)",
+      "diagnosticFocus": "¿Mis hábitos expresan presencia o cansancio del alma?",
+      "verse": {
+        "quote": "Presenten sus cuerpos en sacrificio vivo, santo, agradable a Dios.",
+        "reference": "Romanos 12:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El cuerpo manifiesta lo que gobierna adentro.",
+        "El altar no es un lugar: es una vida ofrecida.",
+        "La disciplina no es religión: es evidencia de orden."
+      ],
+      "actions": [
+        "Elegir 1 hábito que fortalece altar (mínimo viable).",
+        "Quitar 1 hábito que roba reposo (uno).",
+        "Convertir una acción cotidiana en adoración (intención)."
+      ]
+    },
+    {
+      "id": "ritmos",
+      "dimension": "body",
+      "node": "N_ritmos",
+      "title": "8. Ritmos (reposo, sueño, pausas)",
+      "diagnosticFocus": "¿Vivo acelerado o en ritmo del Reino?",
+      "verse": {
+        "quote": "Queda un reposo para el pueblo de Dios.",
+        "reference": "Hebreos 4:9 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El descanso no es pasividad: es confianza.",
+        "El reposo revela madurez: el que confía no corre.",
+        "Sin ritmo, el cuerpo paga la prisa del alma."
+      ],
+      "actions": [
+        "Definir hora de descanso hoy (aunque sea breve).",
+        "Hacer una pausa santa de 3 minutos (2 veces).",
+        "Dormir es espiritual cuando es obediencia al diseño."
+      ]
+    },
+    {
+      "id": "respuestas",
+      "dimension": "body",
+      "node": "N_respuestas",
+      "title": "9. Respuestas (reacción vs obediencia)",
+      "diagnosticFocus": "¿Mi cuerpo responde al espíritu o reacciona al impulso?",
+      "verse": {
+        "quote": "Orad sin cesar.",
+        "reference": "1 Tesalonicenses 5:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Habitar no es visitar: es conexión continua.",
+        "Cuando el espíritu gobierna, el cuerpo se alinea sin fuerza.",
+        "La obediencia se vuelve estilo de vida, no evento."
+      ],
+      "actions": [
+        "Antes de hablar, respirar y bendecir (una vez hoy).",
+        "Practicar ‘respuesta lenta’ ante provocación (una ocasión).",
+        "Cierre del día: revisar 1 reacción y reescribirla en obediencia."
+      ]
+    }
+  ]
+}
