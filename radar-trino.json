@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Radar Trino — Gobierno Interior",
-    "description": "Diagnóstico del orden trino (espíritu gobierna, alma traduce, cuerpo expresa) con guía por secciones y plan semanal."
+    "title": "Radar del Pórtico — Auditoría Estructural Espiritual",
+    "description": "Mapa visual de estabilidad del hogar (columna = varón, viga = mujer) con diagnóstico por secciones y plan semanal."
   },
   "levels": [
     { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
@@ -12,237 +12,237 @@
   "globalBands": [
     {
       "key": "g_alineado",
-      "label": "Alineación trina estable",
+      "label": "Hogar alineado",
       "min": 0,
       "max": 6,
-      "summary": "El orden interior está firme. El espíritu gobierna, el alma acompaña y el cuerpo expresa con paz. Mantener hábitos y protección del altar.",
+      "summary": "Hay estabilidad funcional. El hogar sostiene peso sin desgaste crónico. Mantener hábitos y cuidado preventivo.",
       "verse": {
-        "quote": "Y el Dios de paz os santifique por completo; y todo vuestro ser, espíritu, alma y cuerpo, sea guardado irreprensible.",
-        "reference": "1 Tesalonicenses 5:23 (RVR1960)"
+        "quote": "Por tanto, el que me oye estas palabras y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca.",
+        "reference": "Mateo 7:24 (RVR1960)"
       }
     },
     {
       "key": "g_ajuste",
-      "label": "Alineación en ajuste",
+      "label": "Hogar en ajuste",
       "min": 7,
       "max": 13,
-      "summary": "Hay áreas que están tomando el timón por momentos. No es crisis: es invitación a volver al orden antes de que el desgaste hable.",
+      "summary": "La estructura funciona, pero hay áreas que están cargando de más. Se recomienda ajustar antes de que aparezca fisura.",
       "verse": {
-        "quote": "En quietud y en confianza será vuestra fortaleza.",
-        "reference": "Isaías 30:15 (RVR1960)"
+        "quote": "Mejor es el fin del negocio que su principio; mejor es el sufrido de espíritu que el altivo de espíritu.",
+        "reference": "Eclesiastés 7:8 (RVR1960)"
       }
     },
     {
       "key": "g_riesgo",
-      "label": "Desorden en riesgo",
+      "label": "Hogar en riesgo",
       "min": 14,
       "max": 20,
-      "summary": "El alma está sosteniendo cargas que no le corresponden o el cuerpo está pagando el precio. Requiere volver a presencia, obediencia simple y reposo real.",
+      "summary": "Hay señales de sobreesfuerzo. Si no se corrige la transferencia de cargas, la deriva aumentará.",
       "verse": {
-        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
-        "reference": "Mateo 11:28 (RVR1960)"
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
       }
     },
     {
       "key": "g_critico",
-      "label": "Desorden crítico (requiere proceso)",
+      "label": "Hogar crítico (requiere proceso)",
       "min": 21,
       "max": 27,
-      "summary": "No se resuelve con presión: se restaura con proceso. Prioriza altar, acompañamiento, y decisiones pequeñas sostenidas. El objetivo es reordenar gobierno interno.",
+      "summary": "No requiere corrección rápida, requiere proceso pastoral. No más presión: restauración y orden.",
       "verse": {
-        "quote": "No por fuerza, ni por poder, sino por mi Espíritu, dice Jehová de los ejércitos.",
-        "reference": "Zacarías 4:6 (RVR1960)"
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare; por medio de la verdad traerá justicia.",
+        "reference": "Isaías 42:3 (RVR1960)"
       }
     }
   ],
   "sections": [
     {
-      "id": "presencia",
-      "dimension": "spirit",
-      "node": "N_presencia",
-      "title": "1. Presencia (permanecer antes que producir)",
-      "diagnosticFocus": "¿Estoy viviendo desde el permanecer o desde el rendimiento?",
+      "id": "comunion",
+      "title": "1. Comunión (Columna ↔ Cimiento)",
+      "node": "N1",
+      "element": "foundation",
+      "diagnosticFocus": "¿Está el varón anclado en Cristo o funcionando desde sí mismo?",
       "verse": {
-        "quote": "Separados de mí, nada podéis hacer.",
-        "reference": "Juan 15:5 (RVR1960)"
+        "quote": "Permaneced en mí, y yo en vosotros. Como el pámpano no puede llevar fruto por sí mismo, si no permanece en la vid, así tampoco vosotros, si no permanecéis en mí.",
+        "reference": "Juan 15:4 (RVR1960)"
       },
       "miniTeaching": [
-        "La presencia no es un momento: es el lugar de gobierno.",
-        "Cuando falta presencia, el alma reemplaza comunión por actividad.",
-        "El fruto no se fabrica: aparece donde hay permanencia."
+        "La columna no fue creada para sostenerse sola.",
+        "Cuando la comunión se debilita, el hogar se vuelve un sistema de esfuerzo.",
+        "La comunión no es ritual: es anclaje real."
       ],
       "actions": [
-        "10 minutos hoy: silencio + una frase: ‘Toma el trono’.",
-        "Eliminar una distracción que roba altar (una concreta).",
-        "Antes de decidir, respirar y preguntar: ‘¿Qué dices Tú?’"
+        "10–15 min diarios: Palabra + oración (no negociable).",
+        "Una decisión de obediencia esta semana (concreto, medible).",
+        "Cortar una fuente de distracción que te roba altar."
       ]
     },
     {
-      "id": "escucha",
-      "dimension": "spirit",
-      "node": "N_escucha",
-      "title": "2. Escucha (discernir antes de actuar)",
-      "diagnosticFocus": "¿Oigo al Espíritu o interpreto desde la prisa del alma?",
+      "id": "columna",
+      "title": "2. Columna (Varón: verticalidad)",
+      "node": "COL",
+      "element": "column",
+      "diagnosticFocus": "¿Hay verticalidad (identidad sana) o inclinación (ego/baja autoestima)?",
       "verse": {
-        "quote": "El Hijo no puede hacer nada por sí mismo, sino lo que ve hacer al Padre.",
-        "reference": "Juan 5:19 (RVR1960)"
+        "quote": "Esforzaos y cobrad ánimo; no temáis, ni tengáis miedo... porque Jehová tu Dios es el que va contigo; no te dejará, ni te desamparará.",
+        "reference": "Deuteronomio 31:6 (RVR1960)"
       },
       "miniTeaching": [
-        "La obediencia comienza con oír correctamente.",
-        "El ruido del alma compite con la voz del Espíritu.",
-        "Una instrucción clara vale más que cien planes."
+        "La columna no manda: sostiene y alinea.",
+        "La inclinación produce tensiones adicionales (P–Δ espiritual).",
+        "Verticalidad es orientación correcta, no perfección."
       ],
       "actions": [
-        "Escribir 1 cosa que el Espíritu ya te mostró y no obedeciste.",
-        "Obediencia simple hoy: un ‘sí’ pequeño y real.",
-        "Practicar 2 pausas santas antes de responder."
+        "Identificar tu inclinación: ¿evasión o autosuficiencia?",
+        "Pedir perdón por una omisión concreta (si aplica).",
+        "Establecer un límite sano: menos impulsos, más dirección."
       ]
     },
     {
-      "id": "dependencia",
-      "dimension": "spirit",
-      "node": "N_dependencia",
-      "title": "3. Dependencia (gracia, no autosuficiencia)",
-      "diagnosticFocus": "¿Estoy en herencia o en esfuerzo? ¿Confío o controlo?",
+      "id": "congregacion",
+      "title": "3. Congregación (Nudo: Columna ↔ Viga)",
+      "node": "N2",
+      "element": "joint",
+      "diagnosticFocus": "¿Hay culto efectivo, comunicación y pacto, o el nudo está suelto?",
       "verse": {
-        "quote": "Mi gracia te basta; porque mi poder se perfecciona en la debilidad.",
-        "reference": "2 Corintios 12:9 (RVR1960)"
+        "quote": "Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.",
+        "reference": "Mateo 18:20 (RVR1960)"
       },
       "miniTeaching": [
-        "El espíritu gobierna por comunión, no por fuerza.",
-        "La autosuficiencia es independencia disfrazada de madurez.",
-        "La gracia no te impulsa a correr: te enseña a reposar."
+        "El nudo es el punto más atacado por fuerzas horizontales.",
+        "Sin congregación real, la carga se concentra y aparece fisura.",
+        "Congregación no es solo ir a la iglesia: es unión diaria del hogar."
       ],
       "actions": [
-        "Confesar 1 área donde estás controlando por miedo.",
-        "Orar entregando esa área (sin negociar).",
-        "Pedir ayuda: a Dios y a una persona sabia (si aplica)."
+        "Un culto en casa esta semana (20–30 min).",
+        "Una conversación con acuerdos claros (no discusiones largas).",
+        "Restaurar la honra: 1 reconocimiento por día."
       ]
     },
     {
-      "id": "emociones",
-      "dimension": "soul",
-      "node": "N_emociones",
-      "title": "4. Emociones (paz vs reactividad)",
-      "diagnosticFocus": "¿Reacciono desde emoción o respondo desde el espíritu?",
+      "id": "viga",
+      "title": "4. Viga (Mujer: sensibilidad y transferencia)",
+      "node": "BEAM",
+      "element": "beam",
+      "diagnosticFocus": "¿La mujer canaliza cargas o está cargando sola?",
       "verse": {
-        "quote": "El espíritu está dispuesto, pero la carne es débil.",
-        "reference": "Mateo 26:41 (RVR1960)"
+        "quote": "Mejor son dos que uno; porque tienen mejor paga de su trabajo. Porque si cayeren, el uno levantará a su compañero.",
+        "reference": "Eclesiastés 4:9–10 (RVR1960)"
       },
       "miniTeaching": [
-        "El alma no es enemiga: es puente que necesita gobierno.",
-        "La emoción sin sujeción se vuelve timón.",
-        "La paz no es ausencia de problemas: es orden interior."
+        "La viga percibe primero la carga: eso es diseño.",
+        "Pero no fue diseñada para cargar sola: fue diseñada para transferir.",
+        "Cuando la viga se sobrecarga, el hogar se agota."
       ],
       "actions": [
-        "Nombrar la emoción dominante hoy (sin juicio).",
-        "Pausa de 60 segundos antes de responder a tensión.",
-        "Orar: ‘Aquieta mi alma bajo tu voz’."
+        "Nombrar 1 carga que estás sosteniendo sola.",
+        "Transferirla a la columna con una petición clara.",
+        "Pedir ayuda al Espíritu Santo antes de reaccionar."
       ]
     },
     {
-      "id": "pensamientos",
-      "dimension": "soul",
-      "node": "N_pensamientos",
-      "title": "5. Pensamientos (letra vs revelación)",
-      "diagnosticFocus": "¿Mi mente argumenta o se rinde a la revelación?",
+      "id": "interseccion",
+      "title": "5. Intersección (Apoyo móvil: Espíritu Santo ↔ Viga)",
+      "node": "N3",
+      "element": "roller",
+      "diagnosticFocus": "¿Hay soporte con libertad o rigidez / abandono emocional?",
       "verse": {
-        "quote": "Transformaos por medio de la renovación de vuestro entendimiento.",
-        "reference": "Romanos 12:2 (RVR1960)"
+        "quote": "Asimismo el Espíritu nos ayuda en nuestra debilidad... el Espíritu mismo intercede por nosotros con gemidos indecibles.",
+        "reference": "Romanos 8:26 (RVR1960)"
       },
       "miniTeaching": [
-        "El conocimiento informa; la revelación transforma.",
-        "La mente cambia por gobierno nuevo, no por datos nuevos.",
-        "Pensar ‘en diseño’ es interpretar desde el Espíritu."
+        "El apoyo móvil sostiene sin aprisionar.",
+        "Un sistema demasiado rígido se fisura.",
+        "El Espíritu Santo sostiene el alma para que no colapse."
       ],
       "actions": [
-        "Detectar un pensamiento repetitivo que drena tu fe.",
-        "Reemplazarlo por una verdad bíblica (una).",
-        "Llevar cautivo ese pensamiento 3 veces hoy."
+        "Practicar un ‘descanso santo’ (pausa antes de responder).",
+        "Sustituir control por intercesión (orar antes de exigir).",
+        "Establecer un espacio semanal de reposo emocional."
       ]
     },
     {
-      "id": "voluntad",
-      "dimension": "soul",
-      "node": "N_voluntad",
-      "title": "6. Voluntad (rendición vs negociación)",
-      "diagnosticFocus": "¿Mi voluntad se inclina o negocia con Dios?",
+      "id": "cargas",
+      "title": "6. Cargas (Muertas, vivas y sísmicas)",
+      "node": "LOAD",
+      "element": "loads",
+      "diagnosticFocus": "¿Se distribuyen las cargas o se concentran en uno solo?",
       "verse": {
-        "quote": "Padre, no se haga mi voluntad, sino la tuya.",
-        "reference": "Lucas 22:42 (RVR1960)"
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
       },
       "miniTeaching": [
-        "La rendición no es pérdida: es alineación.",
-        "El propósito nace donde la voluntad se entrega.",
-        "Getsemaní es el lugar donde el alma aprende a obedecer."
+        "Las cargas verticales son normales: hijos, trabajo, provisión.",
+        "Las fuerzas horizontales prueban el nudo (decisiones, conflictos, crisis).",
+        "No destruyen por sí solas: revelan desalineación."
       ],
       "actions": [
-        "Escribir 1 ‘no’ que Dios te está pidiendo soltar.",
-        "Tomar una decisión obediente (pequeña, concreta).",
-        "Celebrar la dirección en vez de sufrir la renuncia."
+        "Hacer lista de cargas: ¿muertas, vivas, sísmicas?",
+        "Definir quién sostiene qué esta semana.",
+        "Entregar 1 ansiedad concreta a Cristo (orar + soltar control)."
       ]
     },
     {
-      "id": "habitos",
-      "dimension": "body",
-      "node": "N_habitos",
-      "title": "7. Hábitos (cuerpo como altar)",
-      "diagnosticFocus": "¿Mis hábitos expresan presencia o cansancio del alma?",
+      "id": "equilibrio",
+      "title": "7. Equilibrio (∑Fy=0, ∑Fx=0, ∑M=0)",
+      "node": "EQ",
+      "element": "equilibrium",
+      "diagnosticFocus": "¿Hay reposo estructural o todo está ‘girando’ y ‘desplazándose’?",
       "verse": {
-        "quote": "Presenten sus cuerpos en sacrificio vivo, santo, agradable a Dios.",
-        "reference": "Romanos 12:1 (RVR1960)"
+        "quote": "Dios no es Dios de confusión, sino de paz.",
+        "reference": "1 Corintios 14:33 (RVR1960)"
       },
       "miniTeaching": [
-        "El cuerpo manifiesta lo que gobierna adentro.",
-        "El altar no es un lugar: es una vida ofrecida.",
-        "La disciplina no es religión: es evidencia de orden."
+        "∑Fy=0: el peso encuentra soporte, no aplasta.",
+        "∑Fx=0: la presión horizontal no desplaza la casa.",
+        "∑M=0: nada hace girar el sistema porque el anclaje está firme."
       ],
       "actions": [
-        "Elegir 1 hábito que fortalece altar (mínimo viable).",
-        "Quitar 1 hábito que roba reposo (uno).",
-        "Convertir una acción cotidiana en adoración (intención)."
+        "Identificar qué está ‘empujando’ horizontalmente (estrés, decisiones).",
+        "Reforzar el nudo (congregación + acuerdos).",
+        "Tomar una decisión desde altar, no desde urgencia."
       ]
     },
     {
-      "id": "ritmos",
-      "dimension": "body",
-      "node": "N_ritmos",
-      "title": "8. Ritmos (reposo, sueño, pausas)",
-      "diagnosticFocus": "¿Vivo acelerado o en ritmo del Reino?",
+      "id": "material",
+      "title": "8. Material (Palabra + Espíritu + fe + aportes)",
+      "node": "MAT",
+      "element": "material",
+      "diagnosticFocus": "¿La mezcla espiritual está sana o hay vacíos, revuelto o agua equivocada?",
       "verse": {
-        "quote": "Queda un reposo para el pueblo de Dios.",
-        "reference": "Hebreos 4:9 (RVR1960)"
+        "quote": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+        "reference": "Salmo 127:1 (RVR1960)"
       },
       "miniTeaching": [
-        "El descanso no es pasividad: es confianza.",
-        "El reposo revela madurez: el que confía no corre.",
-        "Sin ritmo, el cuerpo paga la prisa del alma."
+        "Diseño correcto con material débil sigue siendo vulnerable.",
+        "La Palabra (cemento) y el Espíritu (agua) determinan resistencia.",
+        "La fe (acero) puede ser poca, pero real y funcional."
       ],
       "actions": [
-        "Definir hora de descanso hoy (aunque sea breve).",
-        "Hacer una pausa santa de 3 minutos (2 veces).",
-        "Dormir es espiritual cuando es obediencia al diseño."
+        "Aumentar Palabra (cemento) en casa esta semana.",
+        "Revisar relación agua/cemento (dependencia del Espíritu).",
+        "Eliminar ‘mezcla fácil’: hábitos que abaratan pero debilitan."
       ]
     },
     {
-      "id": "respuestas",
-      "dimension": "body",
-      "node": "N_respuestas",
-      "title": "9. Respuestas (reacción vs obediencia)",
-      "diagnosticFocus": "¿Mi cuerpo responde al espíritu o reacciona al impulso?",
+      "id": "mantenimiento",
+      "title": "9. Mantenimiento (refuerzo, curado y hábitos)",
+      "node": "MAIN",
+      "element": "maintenance",
+      "diagnosticFocus": "¿Se hace mantenimiento o solo se repara cuando ya hay crisis?",
       "verse": {
-        "quote": "Orad sin cesar.",
-        "reference": "1 Tesalonicenses 5:17 (RVR1960)"
+        "quote": "Examinadlo todo; retened lo bueno.",
+        "reference": "1 Tesalonicenses 5:21 (RVR1960)"
       },
       "miniTeaching": [
-        "Habitar no es visitar: es conexión continua.",
-        "Cuando el espíritu gobierna, el cuerpo se alinea sin fuerza.",
-        "La obediencia se vuelve estilo de vida, no evento."
+        "El mantenimiento evita el colapso.",
+        "Curado es proceso: no se acelera sin fisurar.",
+        "Refuerzo es sabiduría: no es señal de fracaso."
       ],
       "actions": [
-        "Antes de hablar, respirar y bendecir (una vez hoy).",
-        "Practicar ‘respuesta lenta’ ante provocación (una ocasión).",
-        "Cierre del día: revisar 1 reacción y reescribirla en obediencia."
+        "Definir 1 práctica semanal fija (culto, conversación, acuerdos).",
+        "Hacer revisión mensual por secciones (10 min).",
+        "Buscar acompañamiento si el sistema está en riesgo."
       ]
     }
   ]

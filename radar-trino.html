@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Radar Trino — Gobierno Interior</title>
+  <title>Radar del Pórtico — Auditoría</title>
 
   <style>
     :root{
@@ -52,12 +52,47 @@
     .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
     .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
     .toggleRow input{transform:scale(1.1)}
+
+    /* ===== MODAL ===== */
+    .modal{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.55); padding:18px; z-index:9999;
+    }
+    .modalCard{
+      width:min(880px, 100%); max-height:min(86vh, 900px); overflow:hidden;
+      background:var(--card); border:1px solid var(--line); border-radius:18px;
+      box-shadow:0 20px 80px rgba(0,0,0,.45);
+    }
+    .modalHeader{
+      display:flex; justify-content:space-between; gap:12px; align-items:flex-start;
+      padding:14px 14px 10px; border-bottom:1px solid var(--line);
+    }
+    .modalTitle{font-weight:950; font-size:16px;}
+    .modalSub{color:var(--muted); font-size:12.5px; margin-top:4px; line-height:1.3;}
+    .modalClose{
+      background:transparent; border:1px solid rgba(255,255,255,.18); color:var(--text);
+      border-radius:12px; padding:8px 10px; cursor:pointer; font-weight:900;
+    }
+    .modalBody{
+      padding:14px; overflow:auto; max-height:calc(86vh - 120px);
+      color:var(--text);
+    }
+    .modalBody h3{margin:12px 0 6px; font-size:14px;}
+    .modalBody p, .modalBody li{color:var(--muted); line-height:1.5; font-size:13px;}
+    .modalBody code{
+      background:rgba(255,255,255,.05); padding:2px 6px; border-radius:8px; border:1px solid var(--line);
+      color:var(--text);
+    }
+    .modalFooter{
+      display:flex; justify-content:flex-end; gap:10px; padding:12px 14px;
+      border-top:1px solid var(--line);
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
-      <h1 id="t">Radar Trino — Gobierno Interior</h1>
+      <h1 id="t">Radar del Pórtico — Auditoría Estructural Espiritual</h1>
       <p class="sub" id="d"></p>
       <div style="margin-top:10px">
         <span class="pill" id="pMax"></span>
@@ -71,86 +106,60 @@
       <div class="card">
         <div class="row">
           <div>
-            <b>Diagrama trino</b>
+            <b>Diagrama del pórtico</b>
             <div class="muted" style="font-size:13px;margin-top:4px;">
-              Espíritu (gobierna) · Alma (traduce) · Cuerpo (expresa)
+              Columna = varón (vertical) · Viga = mujer (horizontal) · Nudos = comunión / congregación / intersección
             </div>
           </div>
           <span class="pill" id="liveGlobal">Global: —</span>
         </div>
 
         <div class="svgBox" style="margin-top:10px;">
-          <!-- TRIÁNGULO SVG -->
-          <svg id="trino" viewBox="0 0 520 360" width="100%" height="auto" aria-label="Radar Trino">
-            <defs>
-              <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(94,234,212,.35)"/>
-                <stop offset="1" stop-color="rgba(99,102,241,.25)"/>
-              </linearGradient>
-            </defs>
+          <!-- Portico SVG -->
+          <svg id="portico" viewBox="0 0 520 360" width="100%" height="auto" aria-label="Pórtico isostático espiritual">
+            <!-- ground -->
+            <rect x="0" y="320" width="520" height="40" fill="rgba(255,255,255,.05)"></rect>
 
-            <!-- background -->
-            <rect x="0" y="0" width="520" height="360" fill="rgba(255,255,255,.01)"></rect>
+            <!-- foundation block -->
+            <rect id="foundation" x="75" y="280" width="120" height="40" rx="8" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
+            <text x="135" y="305" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO</text>
 
-            <!-- outer triangle -->
-            <polygon id="triOuter" points="260,50 85,300 435,300"
-              fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.14)" stroke-width="2"/>
+            <!-- column -->
+            <rect id="column" x="125" y="95" width="20" height="185" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="135" y="88" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA (VARÓN)</text>
 
-            <!-- inner fill (global) -->
-            <polygon id="triFill" points="260,80 120,285 400,285"
-              fill="url(#glow)" opacity="0.25" stroke="rgba(255,255,255,.06)"/>
+            <!-- beam -->
+            <rect id="beam" x="135" y="95" width="250" height="18" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="260" y="82" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA (MUJER)</text>
 
-            <!-- axis lines -->
-            <line x1="260" y1="50" x2="260" y2="300" stroke="rgba(255,255,255,.10)"/>
-            <line x1="85" y1="300" x2="435" y2="300" stroke="rgba(255,255,255,.10)"/>
-            <line x1="85" y1="300" x2="260" y2="50" stroke="rgba(255,255,255,.07)"/>
-            <line x1="435" y1="300" x2="260" y2="50" stroke="rgba(255,255,255,.07)"/>
+            <!-- roller support -->
+            <circle id="rollerBase" cx="395" cy="123" r="10" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
+            <rect x="375" y="133" width="40" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
+            <text x="395" y="162" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">APOYO MÓVIL</text>
 
-            <!-- vertices -->
-            <circle id="V_spirit" cx="260" cy="50" r="12" fill="#64748b"></circle>
-            <text x="260" y="30" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.85)" font-weight="800">ESPÍRITU</text>
+            <!-- nodes -->
+            <circle id="N1" cx="135" cy="280" r="10" fill="#64748b"></circle>
+            <text x="150" y="284" font-size="12" fill="rgba(255,255,255,.75)">1</text>
+            <text x="135" y="270" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COMUNIÓN</text>
 
-            <circle id="V_soul" cx="85" cy="300" r="12" fill="#64748b"></circle>
-            <text x="85" y="330" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.85)" font-weight="800">ALMA</text>
+            <circle id="N2" cx="135" cy="104" r="10" fill="#64748b"></circle>
+            <text x="150" y="108" font-size="12" fill="rgba(255,255,255,.75)">2</text>
+            <text x="135" y="130" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CONGREGACIÓN</text>
 
-            <circle id="V_body" cx="435" cy="300" r="12" fill="#64748b"></circle>
-            <text x="435" y="330" text-anchor="middle" font-size="13" fill="rgba(255,255,255,.85)" font-weight="800">CUERPO</text>
+            <circle id="N3" cx="395" cy="123" r="10" fill="#64748b"></circle>
+            <text x="410" y="127" font-size="12" fill="rgba(255,255,255,.75)">3</text>
+            <text x="395" y="175" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
 
-            <!-- 9 nodes -->
-            <!-- Spirit -->
-            <circle id="N_presencia" cx="260" cy="95" r="10" fill="#64748b"></circle>
-            <text x="275" y="100" font-size="12" fill="rgba(255,255,255,.75)">1</text>
-
-            <circle id="N_escucha" cx="235" cy="125" r="10" fill="#64748b"></circle>
-            <text x="250" y="130" font-size="12" fill="rgba(255,255,255,.75)">2</text>
-
-            <circle id="N_dependencia" cx="285" cy="125" r="10" fill="#64748b"></circle>
-            <text x="300" y="130" font-size="12" fill="rgba(255,255,255,.75)">3</text>
-
-            <!-- Soul -->
-            <circle id="N_emociones" cx="140" cy="265" r="10" fill="#64748b"></circle>
-            <text x="155" y="270" font-size="12" fill="rgba(255,255,255,.75)">4</text>
-
-            <circle id="N_pensamientos" cx="170" cy="235" r="10" fill="#64748b"></circle>
-            <text x="185" y="240" font-size="12" fill="rgba(255,255,255,.75)">5</text>
-
-            <circle id="N_voluntad" cx="120" cy="235" r="10" fill="#64748b"></circle>
-            <text x="135" y="240" font-size="12" fill="rgba(255,255,255,.75)">6</text>
-
-            <!-- Body -->
-            <circle id="N_habitos" cx="380" cy="265" r="10" fill="#64748b"></circle>
-            <text x="395" y="270" font-size="12" fill="rgba(255,255,255,.75)">7</text>
-
-            <circle id="N_ritmos" cx="350" cy="235" r="10" fill="#64748b"></circle>
-            <text x="365" y="240" font-size="12" fill="rgba(255,255,255,.75)">8</text>
-
-            <circle id="N_respuestas" cx="410" cy="235" r="10" fill="#64748b"></circle>
-            <text x="425" y="240" font-size="12" fill="rgba(255,255,255,.75)">9</text>
-
-            <!-- labels small -->
-            <text x="260" y="155" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.60)">Gobierno</text>
-            <text x="150" y="300" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.60)">Traducción</text>
-            <text x="370" y="300" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.60)">Expresión</text>
+            <!-- loads -->
+            <g id="loads" opacity="0.9">
+              <line x1="210" y1="40" x2="210" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="210,95 203,84 217,84" fill="rgba(255,255,255,.55)"/>
+              <line x1="260" y1="40" x2="260" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="260,95 253,84 267,84" fill="rgba(255,255,255,.55)"/>
+              <line x1="310" y1="40" x2="310" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="310,95 303,84 317,84" fill="rgba(255,255,255,.55)"/>
+              <text x="260" y="30" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CARGAS (vivas + muertas)</text>
+            </g>
           </svg>
 
           <div class="legend">
@@ -168,20 +177,20 @@
       <div class="card">
         <div class="row">
           <div>
-            <b>Datos de sesión</b>
-            <div class="muted" style="font-size:13px;margin-top:4px;">No se envía a servidor (offline). Exporta TXT/PDF.</div>
+            <b>Datos de auditoría</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">Se incluyen en el informe. No se envía a servidor.</div>
           </div>
           <span class="pill">Cabecera</span>
         </div>
 
         <div class="fieldgrid" style="margin-top:10px;">
           <div>
-            <label>Nombre del participante</label>
-            <input id="person" placeholder="Ej: Juan Pérez">
+            <label>Nombre del paciente</label>
+            <input id="patient" placeholder="Ej: Juan y María Pérez">
           </div>
           <div>
-            <label>Nombre del mentor / facilitador</label>
-            <input id="mentor" placeholder="Ej: Mentor / Pastor">
+            <label>Nombre del auditor</label>
+            <input id="auditor" placeholder="Ej: Consejero / Pastor">
           </div>
           <div>
             <label>Fecha (editable)</label>
@@ -204,9 +213,30 @@
           <button class="primary" id="btnResult">Ver resultado</button>
           <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
           <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnHelp">Ayuda / Manual</button>
           <button class="ghost" id="btnReset">Reiniciar</button>
           <span class="muted" id="live">Puntaje: 0</span>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL MANUAL -->
+  <div id="helpModal" class="modal" aria-hidden="true" role="dialog" aria-label="Manual de uso">
+    <div class="modalCard">
+      <div class="modalHeader">
+        <div>
+          <div class="modalTitle" id="manualTitle">Manual de uso — Radar del Pórtico</div>
+          <div class="modalSub">Guía para talleres, mentorías y acompañamiento (sin envío a servidor).</div>
+        </div>
+        <button class="modalClose" id="btnHelpClose" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="modalBody" id="manualContent"></div>
+
+      <div class="modalFooter">
+        <button class="ghost" id="btnHelpCopy">Copiar manual</button>
+        <button class="primary" id="btnHelpOk">Entendido</button>
       </div>
     </div>
   </div>
@@ -216,7 +246,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-  const JSON_PATH = "radar-trino.json";
+  const JSON_PATH = "radar-portico.json";
   const LOGO_PATH = "logo.png";
 
   let DATA=null;
@@ -228,8 +258,8 @@
   const resBox = document.getElementById("resBox");
   const pdfWarn = document.getElementById("pdfWarn");
 
-  const personEl = document.getElementById("person");
-  const mentorEl = document.getElementById("mentor");
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
   const dateEl = document.getElementById("date");
   const notesEl = document.getElementById("notes");
   const detailsEl = document.getElementById("details");
@@ -238,6 +268,89 @@
   const liveGlobal = document.getElementById("liveGlobal");
   const btnTxt = document.getElementById("btnTxt");
   const btnPdf = document.getElementById("btnPdf");
+
+  // ===== MANUAL (fuente única: se usa en Modal + PDF) =====
+  const MANUAL = {
+    title: "Manual de uso — Radar del Pórtico",
+    sections: [
+      {
+        h: "Propósito",
+        p: [
+          "Herramienta de diagnóstico pastoral para evaluar estabilidad del hogar (columna=varón, viga=mujer) por secciones, obtener un resultado global y generar un plan automático de 7 días.",
+          "No envía datos a servidor: todo queda en tu dispositivo."
+        ]
+      },
+      {
+        h: "Cómo usar (paso a paso)",
+        li: [
+          "Completa: paciente, auditor y fecha. (Opcional: observaciones).",
+          "Selecciona el nivel (0–3) en cada sección.",
+          "Haz clic en “Ver resultado” para ver el diagnóstico global.",
+          "Descarga TXT (registro rápido) o PDF (informe formal).",
+          "Aplica el plan de 7 días y repite el Radar para comparar."
+        ]
+      },
+      {
+        h: "Interpretación de niveles",
+        li: [
+          "0 Alineado: área estable, mantiene orden sin desgaste.",
+          "1 En ajuste: desalineación leve, conviene corregir a tiempo.",
+          "2 En riesgo: sobrecarga / transferencia incorrecta, aparece desgaste.",
+          "3 Crítico: requiere proceso pastoral; no más presión, sino restauración."
+        ]
+      },
+      {
+        h: "Buenas prácticas para mentoría/taller",
+        li: [
+          "El Radar no etiqueta personas: revela tensiones para ordenar el diseño.",
+          "En “Crítico”, prioriza reposo + pasos pequeños sostenibles.",
+          "Trabaja primero presencia/altar/obediencia simple antes de “hacer más”."
+        ]
+      },
+      {
+        h: "Solución rápida",
+        li: [
+          "Si no carga el formulario: verifica que radar-portico.json esté en la misma carpeta.",
+          "Si el PDF se deshabilita: revisa internet (CDN). El TXT sigue funcionando.",
+          "Si el logo no aparece en PDF: confirma que exista logo.png en la carpeta."
+        ]
+      }
+    ]
+  };
+
+  function manualToHTML(m){
+    const parts = [];
+    parts.push(`<h3>${m.title}</h3>`);
+    m.sections.forEach(s=>{
+      parts.push(`<h3>${s.h}</h3>`);
+      if(s.p){
+        s.p.forEach(x=> parts.push(`<p>${x}</p>`));
+      }
+      if(s.li){
+        parts.push("<ul>");
+        s.li.forEach(x=> parts.push(`<li>${x}</li>`));
+        parts.push("</ul>");
+      }
+    });
+    return parts.join("");
+  }
+
+  function manualToPlainText(m){
+    const L = [];
+    L.push(m.title);
+    L.push("");
+    m.sections.forEach(s=>{
+      L.push(s.h.toUpperCase());
+      if(s.p){
+        s.p.forEach(x=> L.push(x));
+      }
+      if(s.li){
+        s.li.forEach(x=> L.push("• "+x));
+      }
+      L.push("");
+    });
+    return L.join("\n").trim();
+  }
 
   function setDefaultDateIfEmpty(){
     if(dateEl.value) return;
@@ -263,38 +376,49 @@
     return b || DATA.globalBands[0];
   }
 
-  function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
-
   function updateSVG(){
-    // nodos
+    // Si varias secciones apuntan a mismo elemento, gana el peor (max)
+    const elementWorst = {};
+
     DATA.sections.forEach(sec=>{
       const v = scores[sec.id] ?? 0;
-      const nodeId = sec.node;
-      const nodeEl = document.getElementById(nodeId);
-      if(nodeEl){
-        nodeEl.setAttribute("fill", levelByValue(v).color);
+
+      // Nodo (N1,N2,N3, etc)
+      if(sec.node){
+        const nodeEl = document.getElementById(sec.node);
+        if(nodeEl) nodeEl.setAttribute("fill", levelByValue(v).color);
+      }
+
+      // Elemento
+      if(sec.element){
+        elementWorst[sec.element] = Math.max(elementWorst[sec.element] ?? 0, v);
       }
     });
 
-    // vertices: peor (max) por dimensión
-    const spiritIds = DATA.sections.filter(s=>s.dimension==="spirit").map(s=>s.id);
-    const soulIds   = DATA.sections.filter(s=>s.dimension==="soul").map(s=>s.id);
-    const bodyIds   = DATA.sections.filter(s=>s.dimension==="body").map(s=>s.id);
+    const paint = (id, v)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      const col = levelByValue(v).color;
+      el.setAttribute("fill", col);
+      el.setAttribute("stroke", "rgba(255,255,255,.20)");
+    };
 
-    const worst = (ids)=> ids.reduce((m,id)=> Math.max(m, scores[id] ?? 0), 0);
+    // Pintar elementos principales del pórtico
+    if(elementWorst.foundation!=null) paint("foundation", elementWorst.foundation);
+    if(elementWorst.column!=null) paint("column", elementWorst.column);
+    if(elementWorst.beam!=null) paint("beam", elementWorst.beam);
 
-    const wS = worst(spiritIds);
-    const wA = worst(soulIds);
-    const wC = worst(bodyIds);
+    // roller base
+    if(elementWorst.roller!=null){
+      const rb = document.getElementById("rollerBase");
+      if(rb) rb.setAttribute("fill", levelByValue(elementWorst.roller).color);
+    }
 
-    document.getElementById("V_spirit").setAttribute("fill", levelByValue(wS).color);
-    document.getElementById("V_soul").setAttribute("fill", levelByValue(wA).color);
-    document.getElementById("V_body").setAttribute("fill", levelByValue(wC).color);
-
-    // triFill opacity según puntaje global
-    const sum = totalScore();
-    const op = 0.18 + (sum / (DATA.sections.length*3)) * 0.55;
-    document.getElementById("triFill").setAttribute("opacity", String(clamp(op, 0.18, 0.75)));
+    // loads (opacidad según tensión)
+    if(elementWorst.loads!=null){
+      const g = document.getElementById("loads");
+      if(g) g.setAttribute("opacity", String(0.55 + (elementWorst.loads/3)*0.45));
+    }
   }
 
   function updateLive(){
@@ -355,8 +479,8 @@
 
   function buildPayload(){
     const header = {
-      person: personEl.value.trim() || "(no especificado)",
-      mentor: mentorEl.value.trim() || "(no especificado)",
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
       date: dateEl.value || "(no especificada)",
       notes: notesEl.value.trim() || ""
     };
@@ -369,7 +493,6 @@
       const level = levelByValue(v);
       return {
         id: sec.id,
-        dimension: sec.dimension,
         title: sec.title,
         levelValue: v,
         levelKey: level.key,
@@ -382,42 +505,42 @@
       };
     });
 
-    // ordenar por peor a mejor
+    // ordenar por peor a mejor (crítico arriba)
     sections.sort((a,b)=> b.levelValue - a.levelValue);
 
-    const top3 = sections.slice(0,3);
-
+    // plan 7 días: prioriza top 3 tensiones, pero cubre mantenimiento
+    const top = sections.slice(0,3);
     const plan7 = [
-      { day:1, title:`Regresar al gobierno del espíritu (${top3[0]?.title || "Sección"})`, items:[
-        `Leer y orar: ${top3[0]?.verse?.quote || ""} (${top3[0]?.verse?.reference || ""})`,
-        "Silencio 5 minutos: ‘Espíritu Santo, toma el trono’.",
-        "Entrega concreta: soltar un control hoy."
+      { day:1, title:`Volver al fundamento (${top[0]?.title || "Sección"})`, items:[
+        `Leer y orar: ${top[0]?.verse?.quote || ""} (${top[0]?.verse?.reference || ""})`,
+        "Conversación sin culpa: ¿qué está fuera de diseño?",
+        "Entregar una carga a Cristo en oración."
       ].filter(Boolean)},
-      { day:2, title:`Ajuste dirigido: ${top3[0]?.title || "Sección"}`, items:[
-        ...(top3[0]?.actions?.slice(0,2) || []),
-        "Cierre: oración breve de alineación (1 minuto)."
+      { day:2, title:`Ajuste dirigido: ${top[0]?.title || "Sección"}`, items:[
+        ...(top[0]?.actions?.slice(0,2) || []),
+        "Cierre del día: oración breve de alineación."
       ]},
-      { day:3, title:`Ajuste dirigido: ${top3[1]?.title || top3[0]?.title || "Sección"}`, items:[
-        ...(top3[1]?.actions?.slice(0,2) || []),
-        "Ejercicio: pausar antes de reaccionar (2 veces hoy)."
+      { day:3, title:`Ajuste dirigido: ${top[1]?.title || top[0]?.title || "Sección"}`, items:[
+        ...(top[1]?.actions?.slice(0,2) || []),
+        "Un acuerdo práctico: corto, claro, sin debate largo."
       ]},
-      { day:4, title:`Ajuste dirigido: ${top3[2]?.title || top3[0]?.title || "Sección"}`, items:[
-        ...(top3[2]?.actions?.slice(0,2) || []),
-        "Escribir 1 decisión tomada ‘desde el espíritu’."
+      { day:4, title:`Ajuste dirigido: ${top[2]?.title || top[0]?.title || "Sección"}`, items:[
+        ...(top[2]?.actions?.slice(0,2) || []),
+        "Ejercicio: ‘pausa antes de reaccionar’ (2 veces hoy)."
       ]},
-      { day:5, title:"Culto interior (habitar, no visitar)", items:[
-        "15–20 min: Palabra + oración sin prisa.",
-        "Practicar gratitud: 3 gracias concretas.",
-        "Un acto de obediencia simple (pequeño, real)."
+      { day:5, title:"Culto efectivo (Congregación del hogar)", items:[
+        "20–30 min: Palabra + oración + acuerdos.",
+        "Honra mutua: reconocer 1 esfuerzo del otro.",
+        "Definir mantenimiento semanal fijo."
       ]},
-      { day:6, title:"Revisión trina (espíritu, alma, cuerpo)", items:[
-        "¿Qué dominó hoy: espíritu, alma o cuerpo?",
-        "Elegir 1 microajuste por dimensión.",
-        "Orar: ‘Alinea mi interior al diseño’."
+      { day:6, title:"Mantenimiento del sistema (todas las áreas)", items:[
+        "Revisión rápida por sección: ¿subió o bajó la tensión?",
+        "Elegir 1 microajuste por sección.",
+        "Oración: entrega de cargas al fundamento."
       ]},
       { day:7, title:"Revisión y continuidad", items:[
-        "¿Qué tensión bajó? ¿Qué persiste?",
-        "Elegir 1 práctica que sostendrás por 4 semanas.",
+        "¿Qué cambió en 7 días? ¿Qué permanece?",
+        "Elegir 1 práctica que se sostendrá por 4 semanas.",
         "Repetir el Radar para comparar."
       ]}
     ];
@@ -446,7 +569,7 @@
       <div class="row">
         <div>
           <span class="badge ${badge}">${b.label}</span>
-          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / ${DATA.sections.length*3}</div>
+          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / 27</div>
           <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
         </div>
       </div>
@@ -466,22 +589,22 @@
   function downloadTXT(){
     if(!last) return;
     const L = [];
-    L.push((last.meta.title||"RADAR TRINO").toUpperCase());
+    L.push(last.meta.title.toUpperCase());
     L.push("");
     L.push("DATOS");
-    L.push(`Participante: ${last.header.person}`);
-    L.push(`Mentor: ${last.header.mentor}`);
+    L.push(`Paciente: ${last.header.patient}`);
+    L.push(`Auditor: ${last.header.auditor}`);
     L.push(`Fecha: ${last.header.date}`);
     L.push("Observaciones:");
     L.push(last.header.notes || "(sin observaciones)");
     L.push("");
     L.push("RESULTADO GLOBAL");
-    L.push(`Puntaje: ${last.global.sum}/${DATA.sections.length*3}`);
+    L.push(`Puntaje: ${last.global.sum}/27`);
     L.push(`Diagnóstico: ${last.global.band.label}`);
     L.push(last.global.band.summary);
     L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
     L.push("");
-    L.push("ENFOQUE POR SECCIONES");
+    L.push("ENFOQUE PASTORAL POR SECCIONES");
     L.push("--------------------------------------------------");
     last.sections.slice().reverse().forEach(s=>{
       L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
@@ -508,10 +631,15 @@
       L.push("");
     });
 
+    L.push("MANUAL (RESUMEN)");
+    L.push("--------------------------------------------------");
+    L.push(manualToPlainText(MANUAL));
+    L.push("");
+
     const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "radar_trino.txt";
+    a.download = "radar_portico.txt";
     a.click();
     URL.revokeObjectURL(a.href);
   }
@@ -541,7 +669,7 @@
   }
 
   function safeName(name){
-    return (name||"radar_trino")
+    return (name||"radar_portico")
       .toLowerCase()
       .replace(/\s+/g,"_")
       .replace(/[^a-z0-9_\-]/g,"")
@@ -565,7 +693,7 @@
     const H = doc.internal.pageSize.getHeight();
     const M = 44;
 
-    const COLORS = { ink:[22,33,58], muted:[90,102,130] };
+    const COLORS = { ink:[22,33,58], muted:[90,102,130], white:[255,255,255] };
 
     function addLogo(x,y,w,h){
       if(!logoDataUrl) return;
@@ -577,7 +705,7 @@
       doc.setFont("helvetica","bold");
       doc.setFontSize(12);
       doc.setTextColor(...COLORS.ink);
-      doc.text("Radar Trino — Gobierno Interior", W/2, 36, {align:"center"});
+      doc.text("Radar del Pórtico — Auditoría", W/2, 36, {align:"center"});
       doc.setDrawColor(230);
       doc.line(M, 52, W-M, 52);
       return 74;
@@ -590,12 +718,12 @@
         doc.setFont("helvetica","normal");
         doc.setFontSize(9);
         doc.setTextColor(...COLORS.muted);
-        doc.text("Del Diseño al Propósito — Gobierno Interior", M, H-18);
+        doc.text("Constructores del Reino — Auditoría del Hogar", M, H-18);
         doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
       }
     }
 
-    // PORTADA
+    // ===== PORTADA =====
     doc.setFillColor(22,33,58);
     doc.rect(0,0,W,96,"F");
     addLogo(W - M - 56, 18, 56, 56);
@@ -603,12 +731,12 @@
     doc.setFont("helvetica","bold");
     doc.setFontSize(22);
     doc.setTextColor(255,255,255);
-    doc.text("RADAR TRINO", M, 50);
+    doc.text("RADAR DEL PÓRTICO", M, 50);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(12);
     doc.setTextColor(210,230,255);
-    doc.text("Diagnóstico del gobierno interior + plan semanal", M, 72);
+    doc.text("Diagnóstico por secciones + plan semanal", M, 72);
 
     // datos
     doc.setFillColor(245,247,255);
@@ -616,26 +744,27 @@
     doc.setTextColor(...COLORS.ink);
     doc.setFont("helvetica","bold");
     doc.setFontSize(12);
-    doc.text("Datos de sesión", M+14, 145);
+    doc.text("Datos de auditoría", M+14, 145);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    doc.text(`Participante: ${last.header.person}`, M+14, 172);
-    doc.text(`Mentor: ${last.header.mentor}`, M+14, 192);
+    doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
+    doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
     doc.text(`Fecha: ${last.header.date}`, M+14, 212);
 
-    // global
+    // tarjeta global
     const band = last.global.band;
     const c = levelColor(band.label);
 
     doc.setFillColor(255,255,255);
-    doc.roundedRect(M, 260, W-M*2, 190, 12, 12, "F");
+    doc.roundedRect(M, 260, W-M*2, 185, 12, 12, "F");
 
+    // BADGE auto-ajustado
     const badgeText = (band.label||"").toUpperCase();
     doc.setFont("helvetica","bold");
     let fs = 10;
     doc.setFontSize(fs);
-    const maxW = 260;
+    const maxW = 240;
     while(doc.getTextWidth(badgeText) > maxW && fs > 8){
       fs -= 1; doc.setFontSize(fs);
     }
@@ -650,26 +779,26 @@
 
     doc.setTextColor(...COLORS.ink);
     doc.setFontSize(12);
-    doc.text(`Puntaje global: ${last.global.sum}/${DATA.sections.length*3}`, M+14, 332);
+    doc.text(`Puntaje global: ${last.global.sum}/27`, M+14, 332);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
     const sumLines = doc.splitTextToSize(band.summary, W-M*2-28);
     doc.text(sumLines, M+14, 354);
 
-    // verso
+    // verso global
     doc.setFillColor(240,253,250);
-    doc.roundedRect(M, 396, W-M*2, 58, 10, 10, "F");
+    doc.roundedRect(M, 392, W-M*2, 58, 10, 10, "F");
     doc.setFont("times","italic");
     doc.setFontSize(11);
     doc.setTextColor(20,60,70);
-    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 416);
+    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 412);
     doc.setFont("helvetica","normal");
     doc.setFontSize(9);
     doc.setTextColor(70,90,110);
-    doc.text(`(${band.verse.reference})`, M+10, 442);
+    doc.text(`(${band.verse.reference})`, M+10, 438);
 
-    // TABLA SECCIONES
+    // ===== Tabla secciones =====
     doc.addPage();
     let y = header();
 
@@ -684,7 +813,6 @@
 
     const rows = last.sections.slice().reverse().map(s=>[
       s.title,
-      s.dimension.toUpperCase(),
       s.levelLabel,
       String(s.levelValue),
       `${s.verse.quote} (${s.verse.reference})`
@@ -692,13 +820,13 @@
 
     doc.autoTable({
       startY: y,
-      head: [["Sección", "Dimensión", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      head: [["Sección", "Diagnóstico", "Nivel", "Porción bíblica"]],
       body: rows,
       theme: "grid",
       styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
       headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
       didParseCell: function(data){
-        if(data.section==="body" && data.column.index===2){
+        if(data.section==="body" && data.column.index===1){
           const v = data.cell.raw || "";
           const cc = levelColor(v);
           data.cell.styles.fillColor = cc;
@@ -709,54 +837,52 @@
       margin: {left:M, right:M}
     });
 
-    // DETALLE POR SECCIONES (si includeDetails)
-    if(last.includeDetails){
-      doc.addPage();
-      y = header();
+    // ===== Enfoque pastoral =====
+    doc.addPage();
+    y = header();
 
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(14);
-      doc.setTextColor(...COLORS.ink);
-      doc.text("Guía por secciones (mini-enseñanza + acciones)", M, y);
-      y += 12;
-      doc.setDrawColor(230);
-      doc.line(M, y, W-M, y);
-      y += 12;
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Enfoque pastoral por secciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
 
-      const pRows = last.sections.slice().reverse().map(s=>[
-        s.title,
-        s.levelLabel,
-        (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
-        (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
-      ]);
+    const pRows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+      (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+    ]);
 
-      doc.autoTable({
-        startY: y,
-        head: [["Sección", "Diagnóstico", "Mini-enseñanza", "Acciones sugeridas"]],
-        body: pRows,
-        theme: "grid",
-        styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
-        headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
-        didParseCell: function(data){
-          if(data.section==="body" && data.column.index===1){
-            const v = data.cell.raw || "";
-            const cc = levelColor(v);
-            data.cell.styles.fillColor = cc;
-            data.cell.styles.textColor = [255,255,255];
-            data.cell.styles.fontStyle = "bold";
-          }
-        },
-        columnStyles: {
-          0:{cellWidth:170},
-          1:{cellWidth:95},
-          2:{cellWidth:(W - M*2 - 170 - 95)/2},
-          3:{cellWidth:(W - M*2 - 170 - 95)/2}
-        },
-        margin: {left:M, right:M}
-      });
-    }
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Guía pastoral (mini-enseñanza)", "Acciones sugeridas"]],
+      body: pRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0:{cellWidth:140},
+        1:{cellWidth:90},
+        2:{cellWidth: (W - M*2 - 140 - 90)/2},
+        3:{cellWidth: (W - M*2 - 140 - 90)/2}
+      },
+      margin: {left:M, right:M}
+    });
 
-    // PLAN 7 DÍAS
+    // ===== Plan 7 días =====
     doc.addPage();
     y = header();
 
@@ -784,20 +910,19 @@
       headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
       columnStyles: {
         0:{cellWidth:70},
-        1:{cellWidth:220},
-        2:{cellWidth:(W - M*2 - 70 - 220)}
+        1:{cellWidth:190},
+        2:{cellWidth: (W - M*2 - 70 - 190)}
       },
       margin: {left:M, right:M}
     });
 
-    // OBSERVACIONES
+    // ===== Observaciones =====
     doc.addPage();
     y = header();
-
     doc.setFont("helvetica","bold");
     doc.setFontSize(14);
     doc.setTextColor(...COLORS.ink);
-    doc.text("Observaciones del mentor", M, y);
+    doc.text("Observaciones del auditor", M, y);
     y += 12;
     doc.setDrawColor(230);
     doc.line(M, y, W-M, y);
@@ -811,10 +936,28 @@
     const notes = last.header.notes || "(sin observaciones)";
     doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
 
+    // ===== MANUAL (página final) =====
+    doc.addPage();
+    y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Manual de uso (resumen)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 16;
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const manualText = manualToPlainText(MANUAL);
+    doc.text(doc.splitTextToSize(manualText, W - M*2), M, y);
+
     footer();
 
-    const name = safeName(last.header.person || "radar_trino");
-    doc.save(`${name}_radar_trino.pdf`);
+    const name = safeName(last.header.patient || "radar_portico");
+    doc.save(`${name}_radar_portico.pdf`);
   }
 
   function resetAll(){
@@ -833,12 +976,53 @@
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
+  // ===== MODAL MANUAL =====
+  const helpModal = document.getElementById("helpModal");
+  const btnHelp = document.getElementById("btnHelp");
+  const btnHelpOk = document.getElementById("btnHelpOk");
+  const btnHelpClose = document.getElementById("btnHelpClose");
+  const btnHelpCopy = document.getElementById("btnHelpCopy");
+  const manualContent = document.getElementById("manualContent");
+
+  function openHelp(){
+    manualContent.innerHTML = manualToHTML(MANUAL);
+    helpModal.style.display = "flex";
+    helpModal.setAttribute("aria-hidden","false");
+  }
+  function closeHelp(){
+    helpModal.style.display = "none";
+    helpModal.setAttribute("aria-hidden","true");
+  }
+
+  btnHelp.addEventListener("click", openHelp);
+  btnHelpOk.addEventListener("click", closeHelp);
+  btnHelpClose.addEventListener("click", closeHelp);
+
+  helpModal.addEventListener("click", (e)=>{
+    if(e.target === helpModal) closeHelp();
+  });
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape" && helpModal.style.display === "flex") closeHelp();
+  });
+
+  btnHelpCopy.addEventListener("click", async ()=>{
+    try{
+      const text = manualToPlainText(MANUAL);
+      await navigator.clipboard.writeText(text);
+      btnHelpCopy.textContent = "Copiado ✓";
+      setTimeout(()=> btnHelpCopy.textContent = "Copiar manual", 1200);
+    }catch(err){
+      alert("No se pudo copiar. Selecciona el texto manualmente.");
+    }
+  });
+
   async function init(){
     try{
       const res = await fetch(JSON_PATH, {cache:"no-store"});
       if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
       DATA = await res.json();
-      document.getElementById("t").textContent = DATA.meta.title || "Radar Trino";
+      document.getElementById("t").textContent = DATA.meta.title || "Radar del Pórtico";
       document.getElementById("d").textContent = DATA.meta.description || "";
       document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
 
