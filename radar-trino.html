@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Radar del Pórtico — Auditoría</title>
+  <title>Radar Trino — Gobierno Interior</title>
 
   <style>
     :root{
@@ -79,10 +79,6 @@
     }
     .modalBody h3{margin:12px 0 6px; font-size:14px;}
     .modalBody p, .modalBody li{color:var(--muted); line-height:1.5; font-size:13px;}
-    .modalBody code{
-      background:rgba(255,255,255,.05); padding:2px 6px; border-radius:8px; border:1px solid var(--line);
-      color:var(--text);
-    }
     .modalFooter{
       display:flex; justify-content:flex-end; gap:10px; padding:12px 14px;
       border-top:1px solid var(--line);
@@ -92,7 +88,7 @@
 <body>
   <div class="wrap">
     <div class="hero">
-      <h1 id="t">Radar del Pórtico — Auditoría Estructural Espiritual</h1>
+      <h1 id="t">Radar Trino — Gobierno Interior</h1>
       <p class="sub" id="d"></p>
       <div style="margin-top:10px">
         <span class="pill" id="pMax"></span>
@@ -106,60 +102,63 @@
       <div class="card">
         <div class="row">
           <div>
-            <b>Diagrama del pórtico</b>
+            <b>Diagrama del gobierno interior</b>
             <div class="muted" style="font-size:13px;margin-top:4px;">
-              Columna = varón (vertical) · Viga = mujer (horizontal) · Nudos = comunión / congregación / intersección
+              Espíritu (trono) → Alma (intérprete) → Cuerpo (expresión). El orden produce reposo.
             </div>
           </div>
           <span class="pill" id="liveGlobal">Global: —</span>
         </div>
 
         <div class="svgBox" style="margin-top:10px;">
-          <!-- Portico SVG -->
-          <svg id="portico" viewBox="0 0 520 360" width="100%" height="auto" aria-label="Pórtico isostático espiritual">
-            <!-- ground -->
-            <rect x="0" y="320" width="520" height="40" fill="rgba(255,255,255,.05)"></rect>
+          <!-- Trino SVG -->
+          <svg id="trino" viewBox="0 0 520 360" width="100%" height="auto" aria-label="Gobierno interior trino">
+            <!-- fondo suave -->
+            <rect x="0" y="0" width="520" height="360" rx="18" fill="rgba(255,255,255,.02)"></rect>
 
-            <!-- foundation block -->
-            <rect id="foundation" x="75" y="280" width="120" height="40" rx="8" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"></rect>
-            <text x="135" y="305" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CIMIENTO</text>
+            <!-- flechas (orden) -->
+            <g id="flows" opacity="0.9">
+              <line id="flowSA" x1="260" y1="100" x2="260" y2="160" stroke="rgba(255,255,255,.25)" stroke-width="6" stroke-linecap="round"/>
+              <polygon points="260,168 248,152 272,152" fill="rgba(255,255,255,.25)"/>
 
-            <!-- column -->
-            <rect id="column" x="125" y="95" width="20" height="185" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
-            <text x="135" y="88" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COLUMNA (VARÓN)</text>
-
-            <!-- beam -->
-            <rect id="beam" x="135" y="95" width="250" height="18" rx="8" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
-            <text x="260" y="82" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">VIGA (MUJER)</text>
-
-            <!-- roller support -->
-            <circle id="rollerBase" cx="395" cy="123" r="10" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
-            <rect x="375" y="133" width="40" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
-            <text x="395" y="162" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">APOYO MÓVIL</text>
-
-            <!-- nodes -->
-            <circle id="N1" cx="135" cy="280" r="10" fill="#64748b"></circle>
-            <text x="150" y="284" font-size="12" fill="rgba(255,255,255,.75)">1</text>
-            <text x="135" y="270" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COMUNIÓN</text>
-
-            <circle id="N2" cx="135" cy="104" r="10" fill="#64748b"></circle>
-            <text x="150" y="108" font-size="12" fill="rgba(255,255,255,.75)">2</text>
-            <text x="135" y="130" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CONGREGACIÓN</text>
-
-            <circle id="N3" cx="395" cy="123" r="10" fill="#64748b"></circle>
-            <text x="410" y="127" font-size="12" fill="rgba(255,255,255,.75)">3</text>
-            <text x="395" y="175" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
-
-            <!-- loads -->
-            <g id="loads" opacity="0.9">
-              <line x1="210" y1="40" x2="210" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
-              <polygon points="210,95 203,84 217,84" fill="rgba(255,255,255,.55)"/>
-              <line x1="260" y1="40" x2="260" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
-              <polygon points="260,95 253,84 267,84" fill="rgba(255,255,255,.55)"/>
-              <line x1="310" y1="40" x2="310" y2="90" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
-              <polygon points="310,95 303,84 317,84" fill="rgba(255,255,255,.55)"/>
-              <text x="260" y="30" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CARGAS (vivas + muertas)</text>
+              <line id="flowAC" x1="260" y1="210" x2="260" y2="270" stroke="rgba(255,255,255,.25)" stroke-width="6" stroke-linecap="round"/>
+              <polygon points="260,278 248,262 272,262" fill="rgba(255,255,255,.25)"/>
             </g>
+
+            <!-- NODOS PRINCIPALES -->
+            <circle id="SPIRIT" cx="260" cy="75" r="58" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)" stroke-width="2"/>
+            <text x="260" y="68" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.88)" style="font-weight:900">ESPÍRITU</text>
+            <text x="260" y="88" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.70)">Trono / Voz / Dirección</text>
+
+            <circle id="SOUL" cx="260" cy="185" r="58" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)" stroke-width="2"/>
+            <text x="260" y="178" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.88)" style="font-weight:900">ALMA</text>
+            <text x="260" y="198" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.70)">Interpretación / Convicción</text>
+
+            <circle id="BODY" cx="260" cy="295" r="58" fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)" stroke-width="2"/>
+            <text x="260" y="288" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.88)" style="font-weight:900">CUERPO</text>
+            <text x="260" y="308" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.70)">Acción / Hábitos / Ritmo</text>
+
+            <!-- indicadores laterales -->
+            <rect id="ALTAR" x="38" y="36" width="160" height="52" rx="14" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)"/>
+            <text x="118" y="58" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)" style="font-weight:900">ALTAR / COMUNIÓN</text>
+            <text x="118" y="76" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.65)">Habitar, no visitar</text>
+
+            <rect id="OBEDIENCE" x="322" y="36" width="160" height="52" rx="14" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)"/>
+            <text x="402" y="58" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)" style="font-weight:900">OBEDIENCIA</text>
+            <text x="402" y="76" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.65)">Revelada, no impuesta</text>
+
+            <rect id="GRACE" x="38" y="272" width="160" height="52" rx="14" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)"/>
+            <text x="118" y="294" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)" style="font-weight:900">GRACIA / HERENCIA</text>
+            <text x="118" y="312" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.65)">Hijo, no empleado</text>
+
+            <rect id="REST" x="322" y="272" width="160" height="52" rx="14" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)"/>
+            <text x="402" y="294" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)" style="font-weight:900">REPOSO</text>
+            <text x="402" y="312" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.65)">Obra terminada</text>
+
+            <!-- pie -->
+            <text x="260" y="346" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.65)">
+              Si el orden se invierte, el cuerpo paga lo que el alma calla.
+            </text>
           </svg>
 
           <div class="legend">
@@ -177,7 +176,7 @@
       <div class="card">
         <div class="row">
           <div>
-            <b>Datos de auditoría</b>
+            <b>Datos de sesión</b>
             <div class="muted" style="font-size:13px;margin-top:4px;">Se incluyen en el informe. No se envía a servidor.</div>
           </div>
           <span class="pill">Cabecera</span>
@@ -185,12 +184,12 @@
 
         <div class="fieldgrid" style="margin-top:10px;">
           <div>
-            <label>Nombre del paciente</label>
-            <input id="patient" placeholder="Ej: Juan y María Pérez">
+            <label>Nombre del participante</label>
+            <input id="patient" placeholder="Ej: Juan Pérez">
           </div>
           <div>
-            <label>Nombre del auditor</label>
-            <input id="auditor" placeholder="Ej: Consejero / Pastor">
+            <label>Mentor / Facilitador</label>
+            <input id="auditor" placeholder="Ej: Mentor / Pastor">
           </div>
           <div>
             <label>Fecha (editable)</label>
@@ -226,7 +225,7 @@
     <div class="modalCard">
       <div class="modalHeader">
         <div>
-          <div class="modalTitle" id="manualTitle">Manual de uso — Radar del Pórtico</div>
+          <div class="modalTitle" id="manualTitle">Manual de uso — Radar Trino</div>
           <div class="modalSub">Guía para talleres, mentorías y acompañamiento (sin envío a servidor).</div>
         </div>
         <button class="modalClose" id="btnHelpClose" aria-label="Cerrar">✕</button>
@@ -246,7 +245,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-  const JSON_PATH = "radar-portico.json";
+  const JSON_PATH = "radar-trino.json";
   const LOGO_PATH = "logo.png";
 
   let DATA=null;
@@ -269,50 +268,50 @@
   const btnTxt = document.getElementById("btnTxt");
   const btnPdf = document.getElementById("btnPdf");
 
-  // ===== MANUAL (fuente única: se usa en Modal + PDF) =====
+  // ===== MANUAL (fuente única: modal + PDF + TXT) =====
   const MANUAL = {
-    title: "Manual de uso — Radar del Pórtico",
+    title: "Manual de uso — Radar Trino (Gobierno Interior)",
     sections: [
       {
         h: "Propósito",
         p: [
-          "Herramienta de diagnóstico pastoral para evaluar estabilidad del hogar (columna=varón, viga=mujer) por secciones, obtener un resultado global y generar un plan automático de 7 días.",
-          "No envía datos a servidor: todo queda en tu dispositivo."
+          "Diagnosticar el orden interno espíritu–alma–cuerpo para acompañar procesos de gobierno interior.",
+          "La herramienta revela tensiones: dónde el alma está decidiendo sola, dónde el cuerpo está pagando y dónde el espíritu perdió el trono."
         ]
       },
       {
         h: "Cómo usar (paso a paso)",
         li: [
-          "Completa: paciente, auditor y fecha. (Opcional: observaciones).",
+          "Completa la cabecera: participante, mentor y fecha. (Opcional: observaciones).",
           "Selecciona el nivel (0–3) en cada sección.",
-          "Haz clic en “Ver resultado” para ver el diagnóstico global.",
+          "Haz clic en “Ver resultado” para ver diagnóstico global.",
           "Descarga TXT (registro rápido) o PDF (informe formal).",
-          "Aplica el plan de 7 días y repite el Radar para comparar."
+          "Aplica el plan de 7 días y repite el Radar para medir progreso."
         ]
       },
       {
         h: "Interpretación de niveles",
         li: [
-          "0 Alineado: área estable, mantiene orden sin desgaste.",
-          "1 En ajuste: desalineación leve, conviene corregir a tiempo.",
-          "2 En riesgo: sobrecarga / transferencia incorrecta, aparece desgaste.",
-          "3 Crítico: requiere proceso pastoral; no más presión, sino restauración."
+          "0 Alineado: el Espíritu gobierna, el alma descansa, el cuerpo responde.",
+          "1 En ajuste: hay desalineación leve; se corrige con prácticas simples.",
+          "2 En riesgo: hay sobrecarga emocional/mental; requiere orden y ritmo.",
+          "3 Crítico: no más presión: reposo, gracia y acompañamiento cercano."
         ]
       },
       {
-        h: "Buenas prácticas para mentoría/taller",
+        h: "Sugerencia para taller/mentoría",
         li: [
-          "El Radar no etiqueta personas: revela tensiones para ordenar el diseño.",
-          "En “Crítico”, prioriza reposo + pasos pequeños sostenibles.",
-          "Trabaja primero presencia/altar/obediencia simple antes de “hacer más”."
+          "No uses el Radar para culpar: úsalo para ordenar.",
+          "Trabaja primero el ‘trono’ (escucha/presencia) antes de exigir conductas.",
+          "Cierra con 1–3 acciones medibles y una oración breve."
         ]
       },
       {
         h: "Solución rápida",
         li: [
-          "Si no carga el formulario: verifica que radar-portico.json esté en la misma carpeta.",
-          "Si el PDF se deshabilita: revisa internet (CDN). El TXT sigue funcionando.",
-          "Si el logo no aparece en PDF: confirma que exista logo.png en la carpeta."
+          "Si no carga el formulario: confirma que radar-trino.json esté en la misma carpeta.",
+          "Si el PDF está deshabilitado: revisa internet (CDN). TXT seguirá funcionando.",
+          "Si el logo no aparece en PDF: confirma logo.png en la carpeta."
         ]
       }
     ]
@@ -323,9 +322,7 @@
     parts.push(`<h3>${m.title}</h3>`);
     m.sections.forEach(s=>{
       parts.push(`<h3>${s.h}</h3>`);
-      if(s.p){
-        s.p.forEach(x=> parts.push(`<p>${x}</p>`));
-      }
+      if(s.p){ s.p.forEach(x=> parts.push(`<p>${x}</p>`)); }
       if(s.li){
         parts.push("<ul>");
         s.li.forEach(x=> parts.push(`<li>${x}</li>`));
@@ -341,12 +338,8 @@
     L.push("");
     m.sections.forEach(s=>{
       L.push(s.h.toUpperCase());
-      if(s.p){
-        s.p.forEach(x=> L.push(x));
-      }
-      if(s.li){
-        s.li.forEach(x=> L.push("• "+x));
-      }
+      if(s.p){ s.p.forEach(x=> L.push(x)); }
+      if(s.li){ s.li.forEach(x=> L.push("• "+x)); }
       L.push("");
     });
     return L.join("\n").trim();
@@ -359,7 +352,8 @@
   }
 
   function okPdfLib(){
-    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+    return !!(window.jspdf && window.jspdf.jsPDF) &&
+      !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
   }
 
   function levelByValue(v){
@@ -371,25 +365,17 @@
   }
 
   function globalBand(sum){
-    // 9 secciones, cada una 0..3 => total 0..27
     const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
     return b || DATA.globalBands[0];
   }
 
   function updateSVG(){
-    // Si varias secciones apuntan a mismo elemento, gana el peor (max)
+    // si varias secciones apuntan al mismo elemento, gana el peor (max)
     const elementWorst = {};
 
     DATA.sections.forEach(sec=>{
       const v = scores[sec.id] ?? 0;
 
-      // Nodo (N1,N2,N3, etc)
-      if(sec.node){
-        const nodeEl = document.getElementById(sec.node);
-        if(nodeEl) nodeEl.setAttribute("fill", levelByValue(v).color);
-      }
-
-      // Elemento
       if(sec.element){
         elementWorst[sec.element] = Math.max(elementWorst[sec.element] ?? 0, v);
       }
@@ -403,22 +389,24 @@
       el.setAttribute("stroke", "rgba(255,255,255,.20)");
     };
 
-    // Pintar elementos principales del pórtico
-    if(elementWorst.foundation!=null) paint("foundation", elementWorst.foundation);
-    if(elementWorst.column!=null) paint("column", elementWorst.column);
-    if(elementWorst.beam!=null) paint("beam", elementWorst.beam);
+    // principales
+    if(elementWorst.spirit!=null) paint("SPIRIT", elementWorst.spirit);
+    if(elementWorst.soul!=null) paint("SOUL", elementWorst.soul);
+    if(elementWorst.body!=null) paint("BODY", elementWorst.body);
 
-    // roller base
-    if(elementWorst.roller!=null){
-      const rb = document.getElementById("rollerBase");
-      if(rb) rb.setAttribute("fill", levelByValue(elementWorst.roller).color);
-    }
+    // laterales
+    if(elementWorst.altar!=null) paint("ALTAR", elementWorst.altar);
+    if(elementWorst.obedience!=null) paint("OBEDIENCE", elementWorst.obedience);
+    if(elementWorst.grace!=null) paint("GRACE", elementWorst.grace);
+    if(elementWorst.rest!=null) paint("REST", elementWorst.rest);
 
-    // loads (opacidad según tensión)
-    if(elementWorst.loads!=null){
-      const g = document.getElementById("loads");
-      if(g) g.setAttribute("opacity", String(0.55 + (elementWorst.loads/3)*0.45));
-    }
+    // flujos (opacidad según tensión: peor => más opaco, como “fricción”)
+    const flowSA = document.getElementById("flowSA");
+    const flowAC = document.getElementById("flowAC");
+    const a = Math.max(elementWorst.spirit ?? 0, elementWorst.soul ?? 0);
+    const b = Math.max(elementWorst.soul ?? 0, elementWorst.body ?? 0);
+    if(flowSA) flowSA.setAttribute("stroke", `rgba(255,255,255,${0.18 + (a/3)*0.38})`);
+    if(flowAC) flowAC.setAttribute("stroke", `rgba(255,255,255,${0.18 + (b/3)*0.38})`);
   }
 
   function updateLive(){
@@ -505,42 +493,40 @@
       };
     });
 
-    // ordenar por peor a mejor (crítico arriba)
     sections.sort((a,b)=> b.levelValue - a.levelValue);
 
-    // plan 7 días: prioriza top 3 tensiones, pero cubre mantenimiento
     const top = sections.slice(0,3);
     const plan7 = [
-      { day:1, title:`Volver al fundamento (${top[0]?.title || "Sección"})`, items:[
+      { day:1, title:`Restaurar el trono (Espíritu primero)`, items:[
         `Leer y orar: ${top[0]?.verse?.quote || ""} (${top[0]?.verse?.reference || ""})`,
-        "Conversación sin culpa: ¿qué está fuera de diseño?",
-        "Entregar una carga a Cristo en oración."
+        "Silencio 5–10 min: oír antes de actuar.",
+        "Escribir 1 instrucción sencilla que el Espíritu esté señalando."
       ].filter(Boolean)},
       { day:2, title:`Ajuste dirigido: ${top[0]?.title || "Sección"}`, items:[
         ...(top[0]?.actions?.slice(0,2) || []),
-        "Cierre del día: oración breve de alineación."
+        "Cierre: oración corta de alineación (sin promesas grandes)."
       ]},
       { day:3, title:`Ajuste dirigido: ${top[1]?.title || top[0]?.title || "Sección"}`, items:[
         ...(top[1]?.actions?.slice(0,2) || []),
-        "Un acuerdo práctico: corto, claro, sin debate largo."
+        "Práctica: pausa antes de reaccionar (2 veces hoy)."
       ]},
       { day:4, title:`Ajuste dirigido: ${top[2]?.title || top[0]?.title || "Sección"}`, items:[
         ...(top[2]?.actions?.slice(0,2) || []),
-        "Ejercicio: ‘pausa antes de reaccionar’ (2 veces hoy)."
+        "Un acuerdo medible: qué sí haré hoy."
       ]},
-      { day:5, title:"Culto efectivo (Congregación del hogar)", items:[
-        "20–30 min: Palabra + oración + acuerdos.",
-        "Honra mutua: reconocer 1 esfuerzo del otro.",
-        "Definir mantenimiento semanal fijo."
+      { day:5, title:"Gracia y descanso", items:[
+        "Detectar 1 esfuerzo por aprobación y soltarlo en oración.",
+        "Hacer una acción desde identidad (no desde culpa).",
+        "Dormir/pausar a tiempo: reposo como obediencia."
       ]},
-      { day:6, title:"Mantenimiento del sistema (todas las áreas)", items:[
-        "Revisión rápida por sección: ¿subió o bajó la tensión?",
-        "Elegir 1 microajuste por sección.",
-        "Oración: entrega de cargas al fundamento."
+      { day:6, title:"Cuerpo como altar (ritmo)", items:[
+        "Ordenar 1 hábito: horarios, alimentación, pantalla o movimiento.",
+        "Reducir un disparador de ansiedad (noticias/redes/urgencia).",
+        "Oración breve al iniciar y al cerrar el día."
       ]},
       { day:7, title:"Revisión y continuidad", items:[
-        "¿Qué cambió en 7 días? ¿Qué permanece?",
-        "Elegir 1 práctica que se sostendrá por 4 semanas.",
+        "¿Qué cambió esta semana? ¿Qué se sostuvo?",
+        "Elegir 1 práctica para 4 semanas.",
         "Repetir el Radar para comparar."
       ]}
     ];
@@ -569,7 +555,7 @@
       <div class="row">
         <div>
           <span class="badge ${badge}">${b.label}</span>
-          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / 27</div>
+          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / ${DATA.sections.length * 3}</div>
           <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
         </div>
       </div>
@@ -592,19 +578,19 @@
     L.push(last.meta.title.toUpperCase());
     L.push("");
     L.push("DATOS");
-    L.push(`Paciente: ${last.header.patient}`);
-    L.push(`Auditor: ${last.header.auditor}`);
+    L.push(`Participante: ${last.header.patient}`);
+    L.push(`Mentor: ${last.header.auditor}`);
     L.push(`Fecha: ${last.header.date}`);
     L.push("Observaciones:");
     L.push(last.header.notes || "(sin observaciones)");
     L.push("");
     L.push("RESULTADO GLOBAL");
-    L.push(`Puntaje: ${last.global.sum}/27`);
+    L.push(`Puntaje: ${last.global.sum}/${DATA.sections.length * 3}`);
     L.push(`Diagnóstico: ${last.global.band.label}`);
     L.push(last.global.band.summary);
     L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
     L.push("");
-    L.push("ENFOQUE PASTORAL POR SECCIONES");
+    L.push("ENFOQUE POR SECCIONES");
     L.push("--------------------------------------------------");
     last.sections.slice().reverse().forEach(s=>{
       L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
@@ -639,7 +625,7 @@
     const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "radar_portico.txt";
+    a.download = "radar_trino.txt";
     a.click();
     URL.revokeObjectURL(a.href);
   }
@@ -669,7 +655,7 @@
   }
 
   function safeName(name){
-    return (name||"radar_portico")
+    return (name||"radar_trino")
       .toLowerCase()
       .replace(/\s+/g,"_")
       .replace(/[^a-z0-9_\-]/g,"")
@@ -705,7 +691,7 @@
       doc.setFont("helvetica","bold");
       doc.setFontSize(12);
       doc.setTextColor(...COLORS.ink);
-      doc.text("Radar del Pórtico — Auditoría", W/2, 36, {align:"center"});
+      doc.text("Radar Trino — Gobierno Interior", W/2, 36, {align:"center"});
       doc.setDrawColor(230);
       doc.line(M, 52, W-M, 52);
       return 74;
@@ -718,7 +704,7 @@
         doc.setFont("helvetica","normal");
         doc.setFontSize(9);
         doc.setTextColor(...COLORS.muted);
-        doc.text("Constructores del Reino — Auditoría del Hogar", M, H-18);
+        doc.text("Gobierno Interior — Diagnóstico Trino", M, H-18);
         doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
       }
     }
@@ -731,12 +717,12 @@
     doc.setFont("helvetica","bold");
     doc.setFontSize(22);
     doc.setTextColor(255,255,255);
-    doc.text("RADAR DEL PÓRTICO", M, 50);
+    doc.text("RADAR TRINO", M, 50);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(12);
     doc.setTextColor(210,230,255);
-    doc.text("Diagnóstico por secciones + plan semanal", M, 72);
+    doc.text("Gobierno interior: Espíritu → Alma → Cuerpo", M, 72);
 
     // datos
     doc.setFillColor(245,247,255);
@@ -744,12 +730,12 @@
     doc.setTextColor(...COLORS.ink);
     doc.setFont("helvetica","bold");
     doc.setFontSize(12);
-    doc.text("Datos de auditoría", M+14, 145);
+    doc.text("Datos de sesión", M+14, 145);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
-    doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Participante: ${last.header.patient}`, M+14, 172);
+    doc.text(`Mentor: ${last.header.auditor}`, M+14, 192);
     doc.text(`Fecha: ${last.header.date}`, M+14, 212);
 
     // tarjeta global
@@ -759,12 +745,11 @@
     doc.setFillColor(255,255,255);
     doc.roundedRect(M, 260, W-M*2, 185, 12, 12, "F");
 
-    // BADGE auto-ajustado
     const badgeText = (band.label||"").toUpperCase();
     doc.setFont("helvetica","bold");
     let fs = 10;
     doc.setFontSize(fs);
-    const maxW = 240;
+    const maxW = 260;
     while(doc.getTextWidth(badgeText) > maxW && fs > 8){
       fs -= 1; doc.setFontSize(fs);
     }
@@ -779,12 +764,11 @@
 
     doc.setTextColor(...COLORS.ink);
     doc.setFontSize(12);
-    doc.text(`Puntaje global: ${last.global.sum}/27`, M+14, 332);
+    doc.text(`Puntaje global: ${last.global.sum}/${DATA.sections.length * 3}`, M+14, 332);
 
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
-    const sumLines = doc.splitTextToSize(band.summary, W-M*2-28);
-    doc.text(sumLines, M+14, 354);
+    doc.text(doc.splitTextToSize(band.summary, W-M*2-28), M+14, 354);
 
     // verso global
     doc.setFillColor(240,253,250);
@@ -844,7 +828,7 @@
     doc.setFont("helvetica","bold");
     doc.setFontSize(14);
     doc.setTextColor(...COLORS.ink);
-    doc.text("Enfoque pastoral por secciones", M, y);
+    doc.text("Enfoque por secciones", M, y);
     y += 12;
     doc.setDrawColor(230);
     doc.line(M, y, W-M, y);
@@ -859,7 +843,7 @@
 
     doc.autoTable({
       startY: y,
-      head: [["Sección", "Diagnóstico", "Guía pastoral (mini-enseñanza)", "Acciones sugeridas"]],
+      head: [["Sección", "Diagnóstico", "Guía (mini-enseñanza)", "Acciones sugeridas"]],
       body: pRows,
       theme: "grid",
       styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
@@ -874,10 +858,10 @@
         }
       },
       columnStyles: {
-        0:{cellWidth:140},
+        0:{cellWidth:150},
         1:{cellWidth:90},
-        2:{cellWidth: (W - M*2 - 140 - 90)/2},
-        3:{cellWidth: (W - M*2 - 140 - 90)/2}
+        2:{cellWidth: (W - M*2 - 150 - 90)/2},
+        3:{cellWidth: (W - M*2 - 150 - 90)/2}
       },
       margin: {left:M, right:M}
     });
@@ -908,11 +892,7 @@
       theme: "grid",
       styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
       headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
-      columnStyles: {
-        0:{cellWidth:70},
-        1:{cellWidth:190},
-        2:{cellWidth: (W - M*2 - 70 - 190)}
-      },
+      columnStyles: { 0:{cellWidth:70}, 1:{cellWidth:190}, 2:{cellWidth: (W - M*2 - 70 - 190)} },
       margin: {left:M, right:M}
     });
 
@@ -922,7 +902,7 @@
     doc.setFont("helvetica","bold");
     doc.setFontSize(14);
     doc.setTextColor(...COLORS.ink);
-    doc.text("Observaciones del auditor", M, y);
+    doc.text("Observaciones del mentor", M, y);
     y += 12;
     doc.setDrawColor(230);
     doc.line(M, y, W-M, y);
@@ -936,7 +916,7 @@
     const notes = last.header.notes || "(sin observaciones)";
     doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
 
-    // ===== MANUAL (página final) =====
+    // ===== Manual =====
     doc.addPage();
     y = header();
     doc.setFont("helvetica","bold");
@@ -951,13 +931,12 @@
     doc.setFont("helvetica","normal");
     doc.setFontSize(11);
     doc.setTextColor(...COLORS.ink);
-    const manualText = manualToPlainText(MANUAL);
-    doc.text(doc.splitTextToSize(manualText, W - M*2), M, y);
+    doc.text(doc.splitTextToSize(manualToPlainText(MANUAL), W - M*2), M, y);
 
     footer();
 
-    const name = safeName(last.header.patient || "radar_portico");
-    doc.save(`${name}_radar_portico.pdf`);
+    const name = safeName(last.header.patient || "radar_trino");
+    doc.save(`${name}_radar_trino.pdf`);
   }
 
   function resetAll(){
@@ -976,7 +955,7 @@
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  // ===== MODAL MANUAL =====
+  // ===== MODAL =====
   const helpModal = document.getElementById("helpModal");
   const btnHelp = document.getElementById("btnHelp");
   const btnHelpOk = document.getElementById("btnHelpOk");
@@ -1022,7 +1001,7 @@
       const res = await fetch(JSON_PATH, {cache:"no-store"});
       if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
       DATA = await res.json();
-      document.getElementById("t").textContent = DATA.meta.title || "Radar del Pórtico";
+      document.getElementById("t").textContent = DATA.meta.title || "Radar Trino";
       document.getElementById("d").textContent = DATA.meta.description || "";
       document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
 
