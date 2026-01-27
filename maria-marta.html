@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Diagnóstico María vs Marta — Ruido ↔ Reposo</title>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1150px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:520px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
+    .callout{margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;}
+
+    .meterBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:12px;margin-top:10px;}
+    .meterHead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .meterTitle{font-weight:900}
+    .meterSub{font-size:13px;color:var(--muted);margin-top:4px;}
+    .bar{
+      height:18px;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);position:relative;
+    }
+    .fill{
+      height:100%;width:0%;
+      background:linear-gradient(90deg, rgba(244,63,94,.9), rgba(245,158,11,.9), rgba(16,185,129,.9));
+      transition:width .25s ease;
+    }
+    .ticks{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--muted);}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Diagnóstico María vs Marta — Activismo vs Presencia</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px">
+        <span class="pill" id="pMax"></span>
+        <span class="pill" id="pHow">Niveles: 0–3 (Presencia → Activismo)</span>
+      </div>
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+    </div>
+
+    <div class="grid">
+      <!-- IZQ: MEDIDOR -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Medidor Ruido → Reposo</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              A mayor puntaje, más “Marta” (activismo). A menor puntaje, más “María” (presencia).
+            </div>
+          </div>
+          <span class="pill" id="liveGlobal">Global: —</span>
+        </div>
+
+        <div class="meterBox">
+          <div class="meterHead">
+            <div>
+              <div class="meterTitle">Índice de reposo</div>
+              <div class="meterSub">0–100 (más alto = más reposo)</div>
+            </div>
+            <span class="pill" id="restIndex">—</span>
+          </div>
+
+          <div style="margin-top:12px;">
+            <div class="bar" aria-label="Barra de reposo">
+              <div class="fill" id="fill"></div>
+            </div>
+            <div class="ticks">
+              <span>Ruido</span><span>Mixto</span><span>Reposo</span>
+            </div>
+          </div>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Reposo</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>Mixto</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>Ruido alto</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Burnout espiritual</div>
+          </div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+      </div>
+
+      <!-- DER: FORMULARIO -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de sesión</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">Se incluyen en el informe. No se envía a servidor.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Nombre</label>
+            <input id="patient" placeholder="Ej: Juan Pérez">
+          </div>
+          <div>
+            <label>Mentor / facilitador</label>
+            <input id="auditor" placeholder="Ej: Mentor / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Observaciones</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, foco del taller, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="muted" style="font-size:13px;">Incluir detalle por sección en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+          <span class="muted" id="live">Puntaje: 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "maria-marta.json";
+  const LOGO_PATH = "logo.png";
+
+  let DATA=null;
+  let logoDataUrl=null;
+  const scores = {};
+  let last=null;
+
+  const secForm = document.getElementById("secForm");
+  const resBox = document.getElementById("resBox");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
+  const detailsEl = document.getElementById("details");
+
+  const liveEl = document.getElementById("live");
+  const liveGlobal = document.getElementById("liveGlobal");
+  const btnTxt = document.getElementById("btnTxt");
+  const btnPdf = document.getElementById("btnPdf");
+
+  const fillEl = document.getElementById("fill");
+  const restIndexEl = document.getElementById("restIndex");
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function levelByValue(v){
+    return DATA.levels.find(x=>Number(x.value)===Number(v)) || DATA.levels[0];
+  }
+
+  function totalScore(){
+    return DATA.sections.reduce((acc,s)=> acc + (scores[s.id] ?? 0), 0);
+  }
+
+  function globalBand(sum){
+    const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
+    return b || DATA.globalBands[0];
+  }
+
+  function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+
+  function restIndex(sum){
+    // max = secciones*3. a mayor sum => menos reposo.
+    const max = DATA.sections.length * 3;
+    const idx = max ? Math.round((1 - (sum/max)) * 100) : 100;
+    return clamp(idx, 0, 100);
+  }
+
+  function updateMeter(){
+    const sum = totalScore();
+    const idx = restIndex(sum);
+    fillEl.style.width = `${idx}%`;
+    restIndexEl.textContent = `Reposo: ${idx}/100`;
+
+    const g = globalBand(sum);
+    liveGlobal.textContent = `Global: ${g.label}`;
+  }
+
+  function updateLive(){
+    const sum = totalScore();
+    liveEl.textContent = `Puntaje: ${sum}`;
+    updateMeter();
+  }
+
+  function renderForm(){
+    secForm.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px;">
+      Selecciona el nivel por sección. 0=Presencia/reposo, 1=Mixto, 2=Ruido alto, 3=Activismo/Burnout.
+    </div>`;
+
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = 0;
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${sec.title}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">${sec.diagnosticFocus || ""}</div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">Presencia</span>
+        </div>
+        <div class="opts" role="radiogroup" aria-label="${sec.title}">
+          ${DATA.levels.map(l=>`
+            <label class="opt">
+              <input type="radio" name="${sec.id}" value="${l.value}" ${l.value===0?"checked":""}>
+              <span>${l.label} (${l.value})</span>
+            </label>
+          `).join("")}
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:10px;">
+          <b>📖</b> ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+        </div>
+      `;
+
+      div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+        inp.addEventListener("change", (e)=>{
+          const v = Number(e.target.value);
+          scores[sec.id] = v;
+          const lev = levelByValue(v);
+          const pill = document.getElementById(`pill_${sec.id}`);
+          if(pill) pill.textContent = lev.label;
+          updateLive();
+        });
+      });
+
+      secForm.appendChild(div);
+    });
+
+    updateLive();
+  }
+
+  function buildPayload(){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      notes: notesEl.value.trim() || ""
+    };
+
+    const sum = totalScore();
+    const idx = restIndex(sum);
+    const g = globalBand(sum);
+
+    const sections = DATA.sections.map(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const level = levelByValue(v);
+      return {
+        id: sec.id,
+        title: sec.title,
+        levelValue: v,
+        levelKey: level.key,
+        levelLabel: level.label,
+        color: level.color,
+        verse: sec.verse,
+        focus: sec.diagnosticFocus || "",
+        miniTeaching: sec.miniTeaching || [],
+        actions: sec.actions || []
+      };
+    });
+
+    sections.sort((a,b)=> b.levelValue - a.levelValue);
+    const top = sections.slice(0,3);
+
+    const plan7 = [
+      { day:1, title:`Volver a la mejor parte (${top[0]?.title || "Enfoque"})`, items:[
+        `Leer y orar: ${g.verse.quote} (${g.verse.reference})`,
+        "Hacer 1 pausa santa: 5 min sin pantallas.",
+        "Definir 1 ‘no’ para proteger altar."
+      ].filter(Boolean)},
+      { day:2, title:`Ajuste 1: ${top[0]?.title || "Área"}`, items:[
+        ...(top[0]?.actions?.slice(0,2) || []),
+        "Cierre del día: gratitud breve (3 puntos)."
+      ]},
+      { day:3, title:`Ajuste 2: ${top[1]?.title || top[0]?.title || "Área"}`, items:[
+        ...(top[1]?.actions?.slice(0,2) || []),
+        "Orar antes de responder: 30 segundos."
+      ]},
+      { day:4, title:`Ajuste 3: ${top[2]?.title || top[0]?.title || "Área"}`, items:[
+        ...(top[2]?.actions?.slice(0,2) || []),
+        "Ordenar agenda: 1 bloque de 20–30 min de presencia."
+      ]},
+      { day:5, title:"Servicio con gracia (no con deuda)", items:[
+        "Servir 1 cosa pequeña desde amor, no desde urgencia.",
+        "Evitar multitarea por 2 horas.",
+        "Pausa: respiración 3 ciclos (inhala/exhala)."
+      ]},
+      { day:6, title:"Reposo práctico", items:[
+        "Dormir/descansar sin culpa (acto espiritual).",
+        "Caminar 10–15 min para bajar ruido.",
+        "Revisar: ¿qué ‘aprobación’ estoy buscando?"
+      ]},
+      { day:7, title:"Revisión y continuidad", items:[
+        `Índice de reposo actual: ${idx}/100. ¿Qué lo subió?`,
+        "Elegir 1 práctica fija por 4 semanas.",
+        "Repetir diagnóstico para comparar."
+      ]}
+    ];
+
+    return {
+      meta: DATA.meta,
+      header,
+      global: { sum, restIndex: idx, band: g },
+      sections,
+      includeDetails: detailsEl.checked,
+      plan7
+    };
+  }
+
+  function showResult(){
+    last = buildPayload();
+    const b = last.global.band;
+
+    const badge =
+      b.key==="g_reposo" ? "bG" :
+      b.key==="g_mixto" ? "bY" :
+      b.key==="g_ruido" ? "bO" : "bR";
+
+    resBox.style.display = "block";
+    resBox.innerHTML = `
+      <div class="row">
+        <div>
+          <span class="badge ${badge}">${b.label}</span>
+          <div class="muted" style="margin-top:6px;font-size:13px;">
+            Puntaje activismo: <b>${last.global.sum}</b> / ${DATA.sections.length*3} · Índice de reposo: <b>${last.global.restIndex}/100</b>
+          </div>
+          <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div style="font-style:italic;">${b.verse.quote}</div>
+        <div class="muted" style="margin-top:6px;">(${b.verse.reference})</div>
+      </div>
+
+      <div class="sec" style="margin-top:12px;">
+        <div style="font-weight:900;margin-bottom:6px;">Top 3 fuentes de ruido (prioridad)</div>
+        <div class="muted" style="font-size:13px;line-height:1.5">
+          ${last.sections.slice(0,3).map(s=>`• <b>${s.title}</b> — ${s.levelLabel} (${s.levelValue})`).join("<br>")}
+        </div>
+      </div>
+    `;
+
+    btnTxt.disabled = false;
+
+    const ok = okPdfLib();
+    btnPdf.disabled = !ok;
+    pdfWarn.style.display = ok ? "none" : "block";
+  }
+
+  function downloadTXT(){
+    if(!last) return;
+    const L = [];
+    L.push((last.meta.title||"MARIA VS MARTA").toUpperCase());
+    L.push("");
+    L.push("DATOS");
+    L.push(`Nombre: ${last.header.patient}`);
+    L.push(`Mentor/Facilitador: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
+    L.push("");
+    L.push("RESULTADO GLOBAL");
+    L.push(`Puntaje activismo: ${last.global.sum}/${DATA.sections.length*3}`);
+    L.push(`Índice de reposo: ${last.global.restIndex}/100`);
+    L.push(`Diagnóstico: ${last.global.band.label}`);
+    L.push(last.global.band.summary);
+    L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
+    L.push("");
+    L.push("TOP 3 FUENTES DE RUIDO");
+    L.push("--------------------------------------------------");
+    last.sections.slice(0,3).forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+    });
+    L.push("");
+    L.push("DIAGNÓSTICO POR SECCIONES");
+    L.push("--------------------------------------------------");
+    last.sections.slice().reverse().forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+      L.push(`Enfoque: ${s.focus}`);
+      L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+      if(last.includeDetails){
+        if(s.miniTeaching?.length){
+          L.push("Mini-enseñanza:");
+          s.miniTeaching.forEach(x=> L.push("• "+x));
+        }
+        if(s.actions?.length){
+          L.push("Acciones sugeridas:");
+          s.actions.forEach(x=> L.push("• "+x));
+        }
+      }
+      L.push("");
+    });
+
+    L.push("PLAN SEMANAL 7 DÍAS");
+    L.push("--------------------------------------------------");
+    last.plan7.forEach(d=>{
+      L.push(`Día ${d.day}: ${d.title}`);
+      d.items.forEach(i=> L.push("• "+i));
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "maria_marta.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise((resolve)=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){
+      return null;
+    }
+  }
+
+  function levelColor(label){
+    const s = (label||"").toLowerCase();
+    if(s.includes("presencia") || s.includes("reposo")) return [16,185,129];
+    if(s.includes("mixto")) return [245,158,11];
+    if(s.includes("ruido")) return [249,115,22];
+    return [244,63,94];
+  }
+
+  function safeName(name){
+    return (name||"maria_marta")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  async function downloadPDF(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+
+    if(logoDataUrl===null){
+      logoDataUrl = await loadLogo();
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const COLORS = { ink:[22,33,58], muted:[90,102,130] };
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(){
+      addLogo(M, 16, 34, 34);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Diagnóstico María vs Marta", W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...COLORS.muted);
+        doc.text("Constructor Digital — Liderazgo sano", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // PORTADA
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W - M - 56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(255,255,255);
+    doc.text("MARÍA VS MARTA", M, 50);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Activismo vs Presencia — índice de reposo", M, 72);
+
+    // datos
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
+    doc.setTextColor(...COLORS.ink);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos de sesión", M+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`Nombre: ${last.header.patient}`, M+14, 172);
+    doc.text(`Mentor/Facilitador: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+
+    // tarjeta global
+    const band = last.global.band;
+    const c = levelColor(band.label);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 260, W-M*2, 210, 12, 12, "F");
+
+    const badgeText = (band.label||"").toUpperCase();
+    doc.setFont("helvetica","bold");
+    let fs = 10;
+    doc.setFontSize(fs);
+    const maxW = 320;
+    while(doc.getTextWidth(badgeText) > maxW && fs > 8){
+      fs -= 1; doc.setFontSize(fs);
+    }
+    const pad = 18;
+    const bw = Math.min(maxW, doc.getTextWidth(badgeText) + pad*2);
+    const bh = 26;
+
+    doc.setFillColor(...c);
+    doc.roundedRect(M+14, 282, bw, bh, 12, 12, "F");
+    doc.setTextColor(255,255,255);
+    doc.text(badgeText, M+14 + bw/2, 300, {align:"center"});
+
+    doc.setTextColor(...COLORS.ink);
+    doc.setFontSize(12);
+    doc.text(`Puntaje activismo: ${last.global.sum}/${DATA.sections.length*3}`, M+14, 332);
+    doc.text(`Índice de reposo: ${last.global.restIndex}/100`, M+14, 352);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(doc.splitTextToSize(band.summary, W-M*2-28), M+14, 374);
+
+    // verso global
+    doc.setFillColor(240,253,250);
+    doc.roundedRect(M, 414, W-M*2, 58, 10, 10, "F");
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 434);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${band.verse.reference})`, M+10, 460);
+
+    // TABLA SECCIONES
+    doc.addPage();
+    let y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico por secciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const rows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      String(s.levelValue),
+      `${s.verse.quote} (${s.verse.reference})`
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: rows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: {left:M, right:M}
+    });
+
+    // GUÍA POR SECCIONES
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Guía por secciones (mini-enseñanza + acciones)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const pRows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+      (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Mini-enseñanza", "Acciones sugeridas"]],
+      body: pRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0:{cellWidth:150},
+        1:{cellWidth:95},
+        2:{cellWidth:(W - M*2 - 150 - 95)/2},
+        3:{cellWidth:(W - M*2 - 150 - 95)/2}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // PLAN 7 DÍAS
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Plan semanal automático (7 días)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const planRows = last.plan7.map(d=>[
+      `Día ${d.day}`,
+      d.title,
+      d.items.join(" • ")
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles: {
+        0:{cellWidth:70},
+        1:{cellWidth:210},
+        2:{cellWidth:(W - M*2 - 70 - 210)}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // OBSERVACIONES
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Observaciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const notes = last.header.notes || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+    footer();
+
+    const name = safeName(last.header.patient || "maria_marta");
+    doc.save(`${name}_maria_marta.pdf`);
+  }
+
+  function resetAll(){
+    DATA.sections.forEach(s=> scores[s.id]=0);
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      if(i.value==="0") i.checked=true;
+      else i.checked=false;
+    });
+    document.querySelectorAll('[id^="pill_"]').forEach(p=> p.textContent=DATA.levels[0].label);
+    updateLive();
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled=true;
+    btnPdf.disabled=true;
+    last=null;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+
+      document.getElementById("t").textContent = DATA.meta.title || "María vs Marta";
+      document.getElementById("d").textContent = DATA.meta.description || "";
+      document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
+
+      setDefaultDateIfEmpty();
+      renderForm();
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    }catch(e){
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+      <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>`;
+    }
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  init();
+</script>
+</body>
+</html>

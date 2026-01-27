@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "title": "Diagnóstico María vs Marta — Activismo vs Presencia",
+    "description": "Detecta si la vida/ministerio se sostiene desde ruido (urgencia, aprobación, control) o desde reposo (presencia, gracia, obediencia). Útil para liderazgo sano y prevención de burnout."
+  },
+  "levels": [
+    { "key": "presencia", "label": "Presencia (reposo)", "value": 0, "color": "#10b981" },
+    { "key": "mixto", "label": "Mixto (a veces)", "value": 1, "color": "#f59e0b" },
+    { "key": "ruido", "label": "Ruido alto (tensión)", "value": 2, "color": "#f97316" },
+    { "key": "burnout", "label": "Activismo/Burnout", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_reposo",
+      "label": "María: presencia que gobierna",
+      "min": 0,
+      "max": 6,
+      "summary": "La vida está sostenida desde comunión y reposo. Sirves sin deuda y decides sin prisa. Mantén límites y hábitos de presencia.",
+      "verse": {
+        "quote": "María escogió la buena parte, la cual no le será quitada.",
+        "reference": "Lucas 10:42 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_mixto",
+      "label": "Mixto: alternancia entre altar y agenda",
+      "min": 7,
+      "max": 13,
+      "summary": "Hay momentos de presencia real, pero la urgencia interrumpe. Ajustes en agenda, motivación y pausas santas elevarán el reposo.",
+      "verse": {
+        "quote": "Buscad primeramente el reino de Dios y su justicia.",
+        "reference": "Mateo 6:33 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ruido",
+      "label": "Marta: activismo con carga",
+      "min": 14,
+      "max": 20,
+      "summary": "La presión y la urgencia están gobernando. El servicio empieza a pesar y la obediencia se vuelve reacción. Urge volver a presencia, límites y gracia.",
+      "verse": {
+        "quote": "Marta, Marta, afanada y turbada estás con muchas cosas.",
+        "reference": "Lucas 10:41 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_burnout",
+      "label": "Burnout espiritual: ruido crónico",
+      "min": 21,
+      "max": 27,
+      "summary": "Hay desgaste sostenido. No necesitas más tareas: necesitas reposo, orden interior y acompañamiento. Recupera altar antes de ampliar agenda.",
+      "verse": {
+        "quote": "Venid vosotros aparte... y descansad un poco.",
+        "reference": "Marcos 6:31 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "agenda_altar",
+      "title": "1. Agenda vs Altar",
+      "diagnosticFocus": "¿Tu día lo gobierna la agenda o la presencia?",
+      "verse": {
+        "quote": "Buscad primeramente el reino de Dios y su justicia.",
+        "reference": "Mateo 6:33 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La agenda sin altar produce urgencia permanente.",
+        "El altar ordena la agenda: no al revés.",
+        "Presencia primero: productividad luego."
+      ],
+      "actions": [
+        "Bloquear 20–30 min de presencia (sin pantallas) hoy.",
+        "Elegir 1 cosa para NO hacer esta semana (límite santo).",
+        "Antes de una reunión: 60 segundos de silencio."
+      ]
+    },
+    {
+      "id": "aprobacion_afirmacion",
+      "title": "2. Aprobación vs Afirmación",
+      "diagnosticFocus": "¿Sirves para ser visto o porque ya fuiste afirmado?",
+      "verse": {
+        "quote": "Este es mi Hijo amado, en quien tengo complacencia.",
+        "reference": "Mateo 3:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Cuando falta afirmación, el alma busca aprobación.",
+        "Aprobación produce ansiedad; afirmación produce reposo.",
+        "El servicio sano nace de identidad, no de deuda."
+      ],
+      "actions": [
+        "Escribir: “No sirvo para ser aceptado; sirvo porque fui amado”.",
+        "Cancelar una autoexigencia por 24 horas.",
+        "Pedir retroalimentación real (no halagos)."
+      ]
+    },
+    {
+      "id": "urgencia_obediencia",
+      "title": "3. Urgencia vs Obediencia",
+      "diagnosticFocus": "¿Actúas por presión o por instrucción del Espíritu?",
+      "verse": {
+        "quote": "El Hijo no puede hacer nada por sí mismo, sino lo que ve hacer al Padre.",
+        "reference": "Juan 5:19 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Urgencia es prisa sin voz.",
+        "Obediencia es movimiento con dirección.",
+        "La pausa protege la voluntad de Dios."
+      ],
+      "actions": [
+        "Antes de decidir: preguntar “¿Qué dice el Espíritu?”.",
+        "Practicar 2 pausas de 90 segundos antes de responder.",
+        "Eliminar una urgencia artificial (notificaciones)."
+      ]
+    },
+    {
+      "id": "servicio_carga_gracia",
+      "title": "4. Servicio con carga vs Servicio con gracia",
+      "diagnosticFocus": "¿Tu servicio te drena o te renueva?",
+      "verse": {
+        "quote": "Mi yugo es fácil, y ligera mi carga.",
+        "reference": "Mateo 11:30 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La gracia no quita responsabilidad: quita peso inútil.",
+        "Si todo pesa, algo está fuera de orden.",
+        "Servir con gracia es servir desde reposo."
+      ],
+      "actions": [
+        "Delegar una tarea (aunque sea pequeña).",
+        "Definir un ritmo sostenible (horas/límites).",
+        "Hacer un ‘sí’ y un ‘no’ desde paz, no desde culpa."
+      ]
+    },
+    {
+      "id": "multitarea_presencia",
+      "title": "5. Multitarea vs Presencia plena",
+      "diagnosticFocus": "¿Vives fragmentado o presente en una cosa a la vez?",
+      "verse": {
+        "quote": "Una cosa he demandado a Jehová... que esté yo en la casa de Jehová todos los días.",
+        "reference": "Salmos 27:4 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La multitarea baja discernimiento y sube ansiedad.",
+        "La presencia plena aumenta claridad y gozo.",
+        "El Reino se manifiesta en lo simple sostenido."
+      ],
+      "actions": [
+        "Bloque de 45 min: una sola tarea sin interrupciones.",
+        "Comer sin pantalla una vez hoy.",
+        "Oración corta entre transiciones (30 segundos)."
+      ]
+    },
+    {
+      "id": "culpa_descansar",
+      "title": "6. Culpa al descansar",
+      "diagnosticFocus": "¿Te sientes culpable cuando paras?",
+      "verse": {
+        "quote": "Venid vosotros aparte... y descansad un poco.",
+        "reference": "Marcos 6:31 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Descansar no es pereza: es obediencia al diseño.",
+        "La culpa es señal de mentalidad de mérito.",
+        "Reposo es ambiente del fruto duradero."
+      ],
+      "actions": [
+        "Dormir/descansar hoy como acto espiritual (sin culpa).",
+        "Definir hora de desconexión de pantalla.",
+        "Escribir: “Mi valor no depende de mi rendimiento”."
+      ]
+    },
+    {
+      "id": "control_confianza",
+      "title": "7. Control vs Confianza",
+      "diagnosticFocus": "¿Sostienes todo por control o entregas procesos al Padre?",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Control es ansiedad maquillada.",
+        "Confianza permite reposo y claridad.",
+        "Soltar no es abandono: es gobierno del Espíritu."
+      ],
+      "actions": [
+        "Entregar una ansiedad específica en oración (nombre + entrega).",
+        "Hacer una lista: ‘lo que depende de mí / lo que no’.",
+        "Soltar una conversación que solo busca controlar."
+      ]
+    },
+    {
+      "id": "ruido_interno",
+      "title": "8. Ruido interno (mente acelerada)",
+      "diagnosticFocus": "¿Tu mente puede aquietarse o vive acelerada?",
+      "verse": {
+        "quote": "En quietud y en confianza será vuestra fortaleza.",
+        "reference": "Isaías 30:15 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La mente acelerada interpreta mal la voz.",
+        "Quietud no es vacío: es alineación.",
+        "Reposo interno sostiene liderazgo sano."
+      ],
+      "actions": [
+        "Respiración: 3 ciclos (inhala: ‘Señor’, exhala: ‘me rindo’).",
+        "Cortar cafeína/pantallas tarde (si aplica).",
+        "Caminar 10–15 min para bajar activación."
+      ]
+    },
+    {
+      "id": "limites_santos",
+      "title": "9. Límites santos (ritmo sostenible)",
+      "diagnosticFocus": "¿Tienes límites claros o todo se vuelve ‘sí’?",
+      "verse": {
+        "quote": "Sea vuestro hablar: Sí, sí; no, no.",
+        "reference": "Mateo 5:37 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Sin límites, el fuego se apaga por exceso de viento.",
+        "Un ‘no’ santo protege el ‘sí’ verdadero.",
+        "El ritmo sostenido vale más que los picos."
+      ],
+      "actions": [
+        "Definir un límite semanal (día/hora de reposo).",
+        "Revisar compromisos y cancelar uno (si aplica).",
+        "Elegir 1 práctica fija de altar por 4 semanas."
+      ]
+    }
+  ]
+}
