@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "title": "Mapa del Altar — Fuego Continuo",
+    "description": "Auditoría del altar interior (comunión, rendición, fuego y reposo). Útil para talleres de encender el altar y seguimiento semanal."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Encendido", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo (brasas)", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico (apagado)", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Fuego continuo (altar habitado)",
+      "min": 0,
+      "max": 6,
+      "summary": "El altar está encendido de forma estable. Hay permanencia, rendición y reposo. Mantener ritmo y cuidado preventivo.",
+      "verse": {
+        "quote": "El fuego arderá continuamente en el altar; no se apagará.",
+        "reference": "Levítico 6:13 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Fuego intermitente (requiere ajuste)",
+      "min": 7,
+      "max": 13,
+      "summary": "La llama está viva, pero hay interrupciones (ruido, prisa, dispersión). Ajustes pequeños a tiempo estabilizan el fuego.",
+      "verse": {
+        "quote": "María escogió la mejor parte, la cual no le será quitada.",
+        "reference": "Lucas 10:42 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Brasas bajo humo (desgaste activo)",
+      "min": 14,
+      "max": 20,
+      "summary": "Hay señales de agotamiento interior. El altar sigue ahí, pero el ruido y el control están drenando el fuego. Urge volver al reposo y a la rendición.",
+      "verse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Altar apagado (requiere proceso y acompañamiento)",
+      "min": 21,
+      "max": 27,
+      "summary": "Alta tensión y desconexión. No más presión: restauración del orden interior, tiempos de silencio, gracia y acompañamiento cercano.",
+      "verse": {
+        "quote": "No por fuerza, ni por poder, sino por mi Espíritu, ha dicho Jehová de los ejércitos.",
+        "reference": "Zacarías 4:6 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "permanencia",
+      "title": "1. Permanencia (habitar, no visitar)",
+      "element": "abide",
+      "diagnosticFocus": "¿La presencia es morada o solo un momento ocasional?",
+      "verse": {
+        "quote": "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente.",
+        "reference": "Salmos 91:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Visitar produce experiencia; habitar produce transformación.",
+        "La comunión no se programa: se sostiene en conciencia.",
+        "El altar se enciende con permanencia, no con intensidad emocional."
+      ],
+      "actions": [
+        "Definir una práctica diaria fija (10–15 min) sin negociación.",
+        "Reducir una interrupción que rompe comunión (pantalla/ruido).",
+        "Cerrar el día con 60 segundos de gratitud."
+      ]
+    },
+    {
+      "id": "silencio",
+      "title": "2. Silencio (quietud que oye)",
+      "element": "silence",
+      "diagnosticFocus": "¿El alma sabe callar para escuchar al Espíritu?",
+      "verse": {
+        "quote": "Estad quietos, y conoced que yo soy Dios.",
+        "reference": "Salmos 46:10 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El ruido produce resultados; el reposo produce revelación.",
+        "Dios no compite con el grito del alma: guía en quietud.",
+        "El silencio no es vacío: es alineación."
+      ],
+      "actions": [
+        "Silencio 5–10 min antes de hablar/decidir.",
+        "Anotar una frase de convicción (simple y obedecible).",
+        "Practicar una pausa santa (90 segundos) dos veces hoy."
+      ]
+    },
+    {
+      "id": "palabra_viva",
+      "title": "3. Palabra viva (no letra, vida)",
+      "element": "word",
+      "diagnosticFocus": "¿La Palabra me informa o me gobierna?",
+      "verse": {
+        "quote": "La letra mata, mas el Espíritu vivifica.",
+        "reference": "2 Corintios 3:6 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La Palabra sin comunión se vuelve carga; con Espíritu se vuelve vida.",
+        "Una verdad obedecida transforma más que muchas verdades acumuladas.",
+        "El altar se alimenta de Palabra viva."
+      ],
+      "actions": [
+        "Leer un pasaje breve y obedecer una sola cosa hoy.",
+        "Reemplazar explicación por práctica (una acción concreta).",
+        "Compartir una verdad con alguien en forma de servicio."
+      ]
+    },
+    {
+      "id": "oracion_respiracion",
+      "title": "4. Oración-respiración (orad sin cesar)",
+      "element": "prayer",
+      "diagnosticFocus": "¿Mi oración es evento o flujo continuo durante el día?",
+      "verse": {
+        "quote": "Orad sin cesar.",
+        "reference": "1 Tesalonicenses 5:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Orar sin cesar no es repetir; es permanecer conectado.",
+        "La oración madura incluye escucha y respuesta.",
+        "Respirar con el Espíritu sostiene el fuego sin agotamiento."
+      ],
+      "actions": [
+        "Tres pausas al día: 30–60 segundos (inhala: ‘Señor’, exhala: ‘me rindo’).",
+        "Orar antes de responder un conflicto.",
+        "Cerrar el día con una oración simple: ‘Gracias, aquí estoy’."
+      ]
+    },
+    {
+      "id": "rendicion_control",
+      "title": "5. Rendición del control (altar, no ansiedad)",
+      "element": "surrender",
+      "diagnosticFocus": "¿Qué área sigo gobernando desde el alma por miedo?",
+      "verse": {
+        "quote": "Padre... no se haga mi voluntad, sino la tuya.",
+        "reference": "Lucas 22:42 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El altar no se construye con esfuerzo, sino con rendición.",
+        "Control es miedo con uniforme de sabiduría.",
+        "Donde el alma suelta, el Espíritu dirige."
+      ],
+      "actions": [
+        "Nombrar una ansiedad concreta y entregarla en oración.",
+        "Soltar una exigencia interna por 24 horas.",
+        "Elegir obediencia pequeña en vez de plan grande."
+      ]
+    },
+    {
+      "id": "limpieza",
+      "title": "6. Limpieza del altar (perdón y confesión)",
+      "element": "clean",
+      "diagnosticFocus": "¿Hay cenizas acumuladas (rencor, culpa, omisión) que apagan el fuego?",
+      "verse": {
+        "quote": "Confesaos vuestras ofensas unos a otros... y orad unos por otros, para que seáis sanados.",
+        "reference": "Santiago 5:16 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El fuego se apaga cuando el alma guarda lo que debe rendir.",
+        "Perdonar no niega el dolor: lo entrega al gobierno de Dios.",
+        "Confesión sana quita humo del altar."
+      ],
+      "actions": [
+        "Identificar un rencor o culpa activa.",
+        "Hacer una oración de perdón (nombre + entrega).",
+        "Si corresponde, pedir perdón por una omisión concreta."
+      ]
+    },
+    {
+      "id": "gratitud",
+      "title": "7. Gratitud (aceite del fuego)",
+      "element": "thanks",
+      "diagnosticFocus": "¿Mi interior está más en queja o en gratitud?",
+      "verse": {
+        "quote": "Dad gracias en todo, porque esta es la voluntad de Dios.",
+        "reference": "1 Tesalonicenses 5:18 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La gratitud no niega batallas: sostiene visión.",
+        "Queja constante drena el fuego; gratitud lo protege.",
+        "El corazón agradecido se vuelve altar estable."
+      ],
+      "actions": [
+        "Anotar 3 gracias reales hoy (simples).",
+        "Cambiar una queja por una oración.",
+        "Afirmar a alguien con una palabra de honra."
+      ]
+    },
+    {
+      "id": "reposo_ritmo",
+      "title": "8. Reposo (ritmo del Reino)",
+      "element": "rest",
+      "diagnosticFocus": "¿Descanso desde confianza o paro desde agotamiento?",
+      "verse": {
+        "quote": "En quietud y en confianza será vuestra fortaleza.",
+        "reference": "Isaías 30:15 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El reposo no es inactividad: es dependencia.",
+        "El alma agitada no discierne la voz con claridad.",
+        "Donde hay reposo, hay gobierno."
+      ],
+      "actions": [
+        "Definir hora de desconexión (pantalla) hoy.",
+        "Dormir/descansar como acto de obediencia.",
+        "Caminar 10–15 min para bajar ruido interior."
+      ]
+    },
+    {
+      "id": "consistencia",
+      "title": "9. Consistencia (fuego continuo, no ocasional)",
+      "element": "rhythm",
+      "diagnosticFocus": "¿Hay un mínimo semanal estable o solo picos emocionales?",
+      "verse": {
+        "quote": "El fuego arderá continuamente en el altar; no se apagará.",
+        "reference": "Levítico 6:13 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El fuego continuo se cuida con hábitos simples, no con eventos grandes.",
+        "La constancia vence la dispersión.",
+        "Lo que se sostiene en lo oculto se manifiesta sin esfuerzo."
+      ],
+      "actions": [
+        "Elegir 1 práctica semanal fija (20–30 min) y sostenerla 4 semanas.",
+        "Hacer una revisión breve por secciones (10 min) cada semana.",
+        "Repetir el Mapa del Altar para medir antes/después."
+      ]
+    }
+  ]
+}
