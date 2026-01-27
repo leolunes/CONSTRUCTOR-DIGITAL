@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Casa-Huerto — Paternidad espiritual</title>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1150px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:520px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
+    .mini{font-size:13px;line-height:1.4;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Casa-Huerto — Paternidad espiritual</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px">
+        <span class="pill" id="pMax"></span>
+        <span class="pill" id="pHow">Niveles: 0–3 (Fértil → Seco)</span>
+      </div>
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+    </div>
+
+    <div class="grid">
+      <!-- IZQ: VISUAL HUERTO -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Huerto del hogar (4 zonas)</b>
+            <div class="mini" style="margin-top:4px;">
+              Agua = clima (honra) · Poda = ritmo/límites · Semilla = altar/afirmación · Cerco = cobertura/oración
+            </div>
+          </div>
+          <span class="pill" id="liveGlobal">Global: —</span>
+        </div>
+
+        <div class="svgBox" style="margin-top:10px;">
+          <!-- Garden SVG -->
+          <svg id="garden" viewBox="0 0 520 360" width="100%" height="auto" aria-label="Casa-Huerto">
+            <!-- marco -->
+            <rect x="40" y="35" width="440" height="290" rx="22" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.16)" stroke-width="2"></rect>
+
+            <!-- cuadrantes (zonas) -->
+            <rect id="zone_semilla" x="48" y="43" width="216" height="138" rx="16" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.10)"></rect>
+            <rect id="zone_cerco"   x="272" y="43" width="200" height="138" rx="16" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.10)"></rect>
+            <rect id="zone_agua"    x="48" y="189" width="216" height="128" rx="16" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.10)"></rect>
+            <rect id="zone_poda"    x="272" y="189" width="200" height="128" rx="16" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.10)"></rect>
+
+            <!-- etiquetas -->
+            <text x="156" y="75" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.85)" font-weight="800">SEMILLA</text>
+            <text x="372" y="75" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.85)" font-weight="800">CERCO</text>
+            <text x="156" y="222" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.85)" font-weight="800">AGUA</text>
+            <text x="372" y="222" text-anchor="middle" font-size="14" fill="rgba(255,255,255,.85)" font-weight="800">PODA</text>
+
+            <!-- iconos simples -->
+            <!-- semilla -->
+            <circle cx="110" cy="120" r="16" fill="rgba(255,255,255,.18)"></circle>
+            <path d="M110 112 C118 112, 122 120, 110 130 C98 120, 102 112, 110 112 Z" fill="rgba(255,255,255,.35)"></path>
+            <!-- cerco -->
+            <rect x="318" y="100" width="110" height="58" rx="12" fill="rgba(255,255,255,.12)"></rect>
+            <path d="M330 108 v42 M350 108 v42 M370 108 v42 M390 108 v42 M410 108 v42" stroke="rgba(255,255,255,.35)" stroke-width="3" stroke-linecap="round"></path>
+            <!-- agua -->
+            <path d="M120 275 C120 255, 150 245, 150 220 C150 245, 180 255, 180 275 C180 295, 165 310, 150 310 C135 310, 120 295, 120 275 Z"
+                  fill="rgba(255,255,255,.20)"></path>
+            <!-- poda -->
+            <path d="M340 292 C356 278, 380 278, 396 292" stroke="rgba(255,255,255,.35)" stroke-width="4" fill="none" stroke-linecap="round"></path>
+            <path d="M360 270 L388 315" stroke="rgba(255,255,255,.35)" stroke-width="4" stroke-linecap="round"></path>
+            <path d="M388 270 L360 315" stroke="rgba(255,255,255,.35)" stroke-width="4" stroke-linecap="round"></path>
+
+            <!-- chip top tensiones -->
+            <text id="top1" x="260" y="350" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)"></text>
+          </svg>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Huerto fértil</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Huerto seco</div>
+          </div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+      </div>
+
+      <!-- DER: FORM -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de acompañamiento</b>
+            <div class="mini" style="margin-top:4px;">Se incluye en el informe. No se envía a servidor.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Familia / hogar</label>
+            <input id="patient" placeholder="Ej: Familia Pérez">
+          </div>
+          <div>
+            <label>Mentor / facilitador</label>
+            <input id="auditor" placeholder="Ej: Mentor / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Observaciones</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="mini">Incluir detalle por sección en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+          <span class="muted" id="live">Puntaje: 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "casa-huerto.json";
+  const LOGO_PATH = "logo.png";
+
+  let DATA=null;
+  let logoDataUrl=null;
+  const scores = {}; // sectionId -> 0..3
+  let last=null;
+
+  const secForm = document.getElementById("secForm");
+  const resBox = document.getElementById("resBox");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
+  const detailsEl = document.getElementById("details");
+
+  const liveEl = document.getElementById("live");
+  const liveGlobal = document.getElementById("liveGlobal");
+  const btnTxt = document.getElementById("btnTxt");
+  const btnPdf = document.getElementById("btnPdf");
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function levelByValue(v){
+    return DATA.levels.find(x=>Number(x.value)===Number(v)) || DATA.levels[0];
+  }
+
+  function totalScore(){
+    return DATA.sections.reduce((acc,s)=> acc + (scores[s.id] ?? 0), 0);
+  }
+
+  function globalBand(sum){
+    const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
+    return b || DATA.globalBands[0];
+  }
+
+  function updateGarden(){
+    // Peor nivel por zona
+    const worst = { agua:0, poda:0, semilla:0, cerco:0 };
+
+    DATA.sections.forEach(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const z = (sec.zone || "").toLowerCase();
+      if(worst[z] != null) worst[z] = Math.max(worst[z], v);
+    });
+
+    const paint = (id, v)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.setAttribute("fill", levelByValue(v).color);
+      el.setAttribute("opacity", "0.55");
+      el.setAttribute("stroke", "rgba(255,255,255,.18)");
+    };
+
+    paint("zone_agua", worst.agua);
+    paint("zone_poda", worst.poda);
+    paint("zone_semilla", worst.semilla);
+    paint("zone_cerco", worst.cerco);
+
+    // Top 3 tensiones (texto abajo)
+    const ordered = DATA.sections
+      .map(s=>({title:s.title, v:(scores[s.id]??0)}))
+      .sort((a,b)=>b.v-a.v)
+      .slice(0,3)
+      .filter(x=>x.v>0);
+
+    const t = ordered.length
+      ? `Top tensiones: ${ordered.map(x=> x.title.replace(/^\d+\.\s*/,"").split(" (")[0]).join(" · ")}`
+      : `Top tensiones: (ninguna)`;
+
+    const top1 = document.getElementById("top1");
+    if(top1) top1.textContent = t;
+  }
+
+  function updateLive(){
+    const sum = totalScore();
+    liveEl.textContent = `Puntaje: ${sum}`;
+    const g = globalBand(sum);
+    liveGlobal.textContent = `Global: ${g.label}`;
+    updateGarden();
+  }
+
+  function renderForm(){
+    secForm.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px;">
+      Selecciona el nivel por sección. 0=Fértil, 1=Ajuste, 2=Riesgo, 3=Seco.
+    </div>`;
+
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = 0;
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${sec.title}</div>
+            <div class="mini" style="margin-top:4px">${sec.diagnosticFocus || ""}</div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">${DATA.levels[0].label}</span>
+        </div>
+        <div class="opts" role="radiogroup" aria-label="${sec.title}">
+          ${DATA.levels.map(l=>`
+            <label class="opt">
+              <input type="radio" name="${sec.id}" value="${l.value}" ${l.value===0?"checked":""}>
+              <span>${l.label} (${l.value})</span>
+            </label>
+          `).join("")}
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:10px;">
+          <b>📖</b> ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+        </div>
+      `;
+
+      div.querySelectorAll(\`input[name="${sec.id}"]\`).forEach(inp=>{
+        inp.addEventListener("change", (e)=>{
+          const v = Number(e.target.value);
+          scores[sec.id] = v;
+          const lev = levelByValue(v);
+          const pill = document.getElementById(\`pill_${sec.id}\`);
+          if(pill) pill.textContent = lev.label;
+          updateLive();
+        });
+      });
+
+      secForm.appendChild(div);
+    });
+
+    updateLive();
+  }
+
+  function buildPayload(){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      notes: notesEl.value.trim() || ""
+    };
+
+    const sum = totalScore();
+    const g = globalBand(sum);
+
+    const sections = DATA.sections.map(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const level = levelByValue(v);
+      return {
+        id: sec.id,
+        title: sec.title,
+        zone: sec.zone || "",
+        levelValue: v,
+        levelKey: level.key,
+        levelLabel: level.label,
+        color: level.color,
+        verse: sec.verse,
+        focus: sec.diagnosticFocus || "",
+        miniTeaching: sec.miniTeaching || [],
+        actions: sec.actions || []
+      };
+    });
+
+    sections.sort((a,b)=> b.levelValue - a.levelValue);
+
+    const top = sections.slice(0,3);
+
+    const plan7 = [
+      { day:1, title:`Volver al altar (${top[0]?.title || "Sección"})`, items:[
+        `Leer y orar: ${top[0]?.verse?.quote || ""} (${top[0]?.verse?.reference || ""})`,
+        "Conversación sin culpa: ¿qué necesita cultivo hoy?",
+        "Un acto de rendición: soltar control y escuchar."
+      ].filter(Boolean)},
+      { day:2, title:`Semilla (afirmación)`, items:[
+        "Decir 1 afirmación específica por persona.",
+        "Reemplazar crítica por instrucción con honra.",
+        "Cerrar con gratitud."
+      ]},
+      { day:3, title:`Cerco (cobertura/oración)`, items:[
+        "Orar 2–3 min por la casa (constante).",
+        "Antes de corregir: 60s de oración.",
+        "Hacer 1 acuerdo que proteja la paz."
+      ]},
+      { day:4, title:`Agua (honra)`, items:[
+        "1 reconocimiento diario por 7 días.",
+        "Cortar sarcasmo/ironía (acuerdo).",
+        "Pregunta: “¿qué necesitas de mí hoy?”"
+      ]},
+      { day:5, title:`Poda (ritmo/límites)`, items:[
+        "Cancelar 1 compromiso innecesario.",
+        "Definir un bloque de reposo familiar.",
+        "Dejar una noche sin pantallas."
+      ]},
+      { day:6, title:`Ajuste dirigido (Top 2–3 tensiones)`, items:[
+        ...(top[0]?.actions?.slice(0,2) || []),
+        ...(top[1]?.actions?.slice(0,1) || []),
+        "Revisar: ¿qué cambió en el clima?"
+      ]},
+      { day:7, title:`Revisión y continuidad`, items:[
+        "¿Qué práctica se sostendrá 4 semanas?",
+        "Definir día fijo de ‘congregación del hogar’ (20–30 min).",
+        "Repetir Casa-Huerto para comparar."
+      ]}
+    ];
+
+    return {
+      meta: DATA.meta,
+      header,
+      global: { sum, band: g, max: DATA.sections.length * 3 },
+      sections,
+      includeDetails: detailsEl.checked,
+      plan7
+    };
+  }
+
+  function showResult(){
+    last = buildPayload();
+    const b = last.global.band;
+
+    const badge =
+      b.key==="g_alineado" ? "bG" :
+      b.key==="g_ajuste" ? "bY" :
+      b.key==="g_riesgo" ? "bO" : "bR";
+
+    const top = last.sections.slice(0,3).filter(s=>s.levelValue>0);
+
+    resBox.style.display = "block";
+    resBox.innerHTML = `
+      <div class="row">
+        <div>
+          <span class="badge ${badge}">${b.label}</span>
+          <div class="muted" style="margin-top:6px;font-size:13px;">Puntaje global: <b>${last.global.sum}</b> / ${last.global.max}</div>
+          <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
+        <div style="font-style:italic;">${b.verse.quote}</div>
+        <div class="muted" style="margin-top:6px;">(${b.verse.reference})</div>
+      </div>
+
+      <div class="sec">
+        <b>Top 3 tensiones</b>
+        <div class="mini" style="margin-top:6px;">
+          ${top.length ? top.map(s=>`• <b>${s.title}</b> — ${s.levelLabel} (${s.levelValue})`).join("<br>") : "• (sin tensiones registradas)"}
+        </div>
+      </div>
+    `;
+
+    btnTxt.disabled = false;
+
+    const ok = okPdfLib();
+    btnPdf.disabled = !ok;
+    pdfWarn.style.display = ok ? "none" : "block";
+  }
+
+  function downloadTXT(){
+    if(!last) return;
+    const L = [];
+    L.push((last.meta.title||"CASA-HUERTO").toUpperCase());
+    L.push("");
+    L.push("DATOS");
+    L.push(`Hogar/Familia: ${last.header.patient}`);
+    L.push(`Mentor/Facilitador: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
+    L.push("");
+    L.push("RESULTADO GLOBAL");
+    L.push(`Puntaje: ${last.global.sum}/${last.global.max}`);
+    L.push(`Diagnóstico: ${last.global.band.label}`);
+    L.push(last.global.band.summary);
+    L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
+    L.push("");
+    L.push("SECCIONES (de mayor tensión a menor)");
+    L.push("--------------------------------------------------");
+    last.sections.forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue}) [Zona: ${s.zone}]`);
+      L.push(`Enfoque: ${s.focus}`);
+      L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+      if(last.includeDetails){
+        if(s.miniTeaching?.length){
+          L.push("Mini-enseñanza:");
+          s.miniTeaching.forEach(x=> L.push("• "+x));
+        }
+        if(s.actions?.length){
+          L.push("Acciones sugeridas:");
+          s.actions.forEach(x=> L.push("• "+x));
+        }
+      }
+      L.push("");
+    });
+
+    L.push("PLAN SEMANAL 7 DÍAS");
+    L.push("--------------------------------------------------");
+    last.plan7.forEach(d=>{
+      L.push(`Día ${d.day}: ${d.title}`);
+      d.items.forEach(i=> L.push("• "+i));
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "casa_huerto.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise((resolve)=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){
+      return null;
+    }
+  }
+
+  function levelColor(label){
+    const s = (label||"").toLowerCase();
+    if(s.includes("fértil") || s.includes("continuo") || s.includes("encendido")) return [16,185,129];
+    if(s.includes("ajuste") || s.includes("intermitente")) return [245,158,11];
+    if(s.includes("riesgo") || s.includes("débil")) return [249,115,22];
+    return [244,63,94];
+  }
+
+  function safeName(name){
+    return (name||"casa_huerto")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  async function downloadPDF(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+
+    if(logoDataUrl===null){
+      logoDataUrl = await loadLogo();
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const COLORS = { ink:[22,33,58], muted:[90,102,130] };
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(){
+      addLogo(M, 16, 34, 34);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Casa-Huerto — Diagnóstico del hogar", W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...COLORS.muted);
+        doc.text("Constructor Digital — Casa-Huerto", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // PORTADA
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W - M - 56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(255,255,255);
+    doc.text("CASA-HUERTO", M, 50);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Paternidad espiritual · Hogar como huerto", M, 72);
+
+    // datos
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
+    doc.setTextColor(...COLORS.ink);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos", M+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`Hogar/Familia: ${last.header.patient}`, M+14, 172);
+    doc.text(`Mentor/Facilitador: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+
+    // tarjeta global
+    const band = last.global.band;
+    const c = levelColor(band.label);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 260, W-M*2, 190, 12, 12, "F");
+
+    const badgeText = (band.label||"").toUpperCase();
+    doc.setFont("helvetica","bold");
+    let fs = 10;
+    doc.setFontSize(fs);
+    const maxW = 300;
+    while(doc.getTextWidth(badgeText) > maxW && fs > 8){
+      fs -= 1; doc.setFontSize(fs);
+    }
+    const pad = 18;
+    const bw = Math.min(maxW, doc.getTextWidth(badgeText) + pad*2);
+    const bh = 26;
+
+    doc.setFillColor(...c);
+    doc.roundedRect(M+14, 282, bw, bh, 12, 12, "F");
+    doc.setTextColor(255,255,255);
+    doc.text(badgeText, M+14 + bw/2, 300, {align:"center"});
+
+    doc.setTextColor(...COLORS.ink);
+    doc.setFontSize(12);
+    doc.text(`Puntaje global: ${last.global.sum}/${last.global.max}`, M+14, 332);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    const sumLines = doc.splitTextToSize(band.summary, W-M*2-28);
+    doc.text(sumLines, M+14, 354);
+
+    // verso global
+    doc.setFillColor(240,253,250);
+    doc.roundedRect(M, 398, W-M*2, 56, 10, 10, "F");
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 418);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${band.verse.reference})`, M+10, 444);
+
+    // TABLA SECCIONES
+    doc.addPage();
+    let y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico por secciones", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const rows = last.sections.map(s=>[
+      s.title,
+      s.zone || "-",
+      s.levelLabel,
+      String(s.levelValue),
+      `${s.verse.quote} (${s.verse.reference})`
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Zona", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: rows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===2){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: { 1:{cellWidth:70}, 2:{cellWidth:120}, 3:{cellWidth:45} },
+      margin: {left:M, right:M}
+    });
+
+    // ENFOQUE PASTORAL
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Guía por secciones (mini-enseñanza + acciones)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const pRows = last.sections.map(s=>[
+      s.title,
+      s.levelLabel,
+      (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+      (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Sección", "Diagnóstico", "Mini-enseñanza", "Acciones sugeridas"]],
+      body: pRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0:{cellWidth:160},
+        1:{cellWidth:110},
+        2:{cellWidth:(W - M*2 - 160 - 110)/2},
+        3:{cellWidth:(W - M*2 - 160 - 110)/2}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // PLAN 7 DÍAS
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Plan semanal (7 días)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const planRows = last.plan7.map(d=>[
+      `Día ${d.day}`,
+      d.title,
+      d.items.join(" • ")
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles: { 0:{cellWidth:70}, 1:{cellWidth:200}, 2:{cellWidth:(W - M*2 - 70 - 200)} },
+      margin: {left:M, right:M}
+    });
+
+    // OBSERVACIONES
+    doc.addPage();
+    y = header();
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Observaciones del mentor/facilitador", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const notes = last.header.notes || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+    footer();
+
+    const name = safeName(last.header.patient || "casa_huerto");
+    doc.save(`${name}_casa_huerto.pdf`);
+  }
+
+  function resetAll(){
+    DATA.sections.forEach(s=> scores[s.id]=0);
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      if(i.value==="0") i.checked=true;
+      else i.checked=false;
+    });
+    document.querySelectorAll('[id^="pill_"]').forEach(p=> p.textContent = DATA.levels[0].label);
+    updateLive();
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled=true;
+    btnPdf.disabled=true;
+    last=null;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+
+      document.getElementById("t").textContent = DATA.meta.title || "Casa-Huerto";
+      document.getElementById("d").textContent = DATA.meta.description || "";
+      document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
+
+      setDefaultDateIfEmpty();
+      renderForm();
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    }catch(e){
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+      <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>`;
+    }
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  init();
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "title": "Casa-Huerto — Paternidad espiritual (Gobierno del hogar)",
+    "description": "Diagnóstico para talleres y mentorías: evaluar el hogar como huerto (cultivo, cobertura y afirmación). Visual en 4 zonas: Agua, Poda, Semilla, Cerco."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Huerto fértil", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "Huerto en ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "Huerto en riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Huerto seco", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Casa-Huerto fértil (altar encendido)",
+      "min": 0,
+      "max": 4,
+      "summary": "El hogar refleja gobierno interior: hay altar, cobertura sana, afirmación y ritmo. Mantener prácticas y proteger la comunión.",
+      "verse": {
+        "quote": "Y tomó Jehová Dios al hombre, y lo puso en el huerto de Edén, para que lo labrara y lo guardase.",
+        "reference": "Génesis 2:15 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Casa-Huerto en ajuste (fuego intermitente)",
+      "min": 5,
+      "max": 8,
+      "summary": "El huerto existe, pero hay zonas sin riego o sin cerco. Ajustes simples y consistentes restauran estabilidad sin presión.",
+      "verse": {
+        "quote": "Cristo es la cabeza de todo varón.",
+        "reference": "1 Corintios 11:3 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Casa-Huerto en riesgo (carga y confusión)",
+      "min": 9,
+      "max": 13,
+      "summary": "Aumenta el desgaste: el hombre se esconde, la casa se organiza por presión y no por presencia. Urge volver al altar, a la honra y a acuerdos claros.",
+      "verse": {
+        "quote": "Y oyendo la voz de Jehová Dios, se escondió el hombre.",
+        "reference": "Génesis 3:8 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Casa-Huerto seco (requiere proceso)",
+      "min": 14,
+      "max": 18,
+      "summary": "Alta tensión familiar. No se corrige con control: requiere restauración del altar, acompañamiento cercano y reconstrucción de confianza.",
+      "verse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "altar_varon",
+      "title": "1. Altar del varón (fuego que gobierna)",
+      "element": "seed",
+      "zone": "semilla",
+      "diagnosticFocus": "¿El varón gobierna desde presencia (altar) o desde fuerza/cansancio?",
+      "verse": {
+        "quote": "Levántate, edifica altar a Jehová.",
+        "reference": "Génesis 35:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Donde el varón tiene altar, la casa tiene dirección.",
+        "La autoridad del Reino no nace del control, sino de la rendición.",
+        "El altar no se construye con discurso: se sostiene con constancia."
+      ],
+      "actions": [
+        "Definir 10–15 min diarios de altar (no negociable).",
+        "Hacer 1 acto de obediencia concreto esta semana (simple y medible).",
+        "Quitar 1 distracción que apaga el fuego (pantalla/agenda/ruido)."
+      ]
+    },
+    {
+      "id": "cobertura_no_control",
+      "title": "2. Cobertura (no control)",
+      "element": "fence",
+      "zone": "cerco",
+      "diagnosticFocus": "¿La autoridad protege y cubre o domina e intimida?",
+      "verse": {
+        "quote": "El buen pastor su vida da por las ovejas.",
+        "reference": "Juan 10:11 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Ser cabeza no es mandar: es morir primero (servir primero).",
+        "El control produce miedo; la cobertura produce identidad.",
+        "La autoridad sana crea seguridad, no tensión."
+      ],
+      "actions": [
+        "Cambiar una exigencia por una conversación con acuerdos.",
+        "Practicar ‘preguntar antes de imponer’ (1 situación real).",
+        "Acordar 1 límite sano que proteja la paz del hogar."
+      ]
+    },
+    {
+      "id": "palabra_afirmacion",
+      "title": "3. Palabra sembrada (afirmación e identidad)",
+      "element": "seed",
+      "zone": "semilla",
+      "diagnosticFocus": "¿Las palabras del padre afirman destino o solo corrigen conducta?",
+      "verse": {
+        "quote": "Este es mi Hijo amado, en quien tengo complacencia.",
+        "reference": "Mateo 3:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La paternidad comienza con afirmación, no con instrucciones.",
+        "La voz del padre es el primer ‘cielo’ que un hijo escucha.",
+        "Afirmar no es consentir: es sembrar identidad."
+      ],
+      "actions": [
+        "Decir 1 afirmación diaria por 7 días (específica, no genérica).",
+        "Reemplazar una crítica por una instrucción con honra.",
+        "Escribir 3 frases de identidad para esposa/hijos (y decirlas)."
+      ]
+    },
+    {
+      "id": "oracion_cerco",
+      "title": "4. Oración como cerco (protección del huerto)",
+      "element": "fence",
+      "zone": "cerco",
+      "diagnosticFocus": "¿La oración protege el hogar o solo aparece cuando hay crisis?",
+      "verse": {
+        "quote": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+        "reference": "Salmo 127:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El cerco no es control: es intercesión y cobertura espiritual.",
+        "Un hogar sin cerco se vuelve vulnerable a ruido y resentimiento.",
+        "La oración sostenida previene lo que el esfuerzo solo repara."
+      ],
+      "actions": [
+        "Oración breve diaria por la casa (2–3 minutos constantes).",
+        "Elegir 1 día fijo semanal para orar juntos (simple y realista).",
+        "Antes de corregir: orar 60 segundos (1 vez por día)."
+      ]
+    },
+    {
+      "id": "cultura_honra",
+      "title": "5. Cultura de honra (clima del hogar)",
+      "element": "water",
+      "zone": "agua",
+      "diagnosticFocus": "¿La casa se alimenta de honra o de reclamo/competencia?",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La honra riega el huerto: la queja lo seca.",
+        "Honrar no niega problemas, pero cambia el tono del corazón.",
+        "Sin honra, toda corrección se vuelve guerra."
+      ],
+      "actions": [
+        "Regla de 7 días: 1 reconocimiento diario por persona.",
+        "Cortar sarcasmo/ironía como ‘maleza’ (acuerdo familiar).",
+        "Reunión breve: ‘¿qué necesitas de mí esta semana?’"
+      ]
+    },
+    {
+      "id": "ritmo_reposo",
+      "title": "6. Ritmo familiar (reposo que ordena)",
+      "element": "prune",
+      "zone": "poda",
+      "diagnosticFocus": "¿El hogar vive en urgencia o en un ritmo sano del Reino?",
+      "verse": {
+        "quote": "En descanso y en reposo seréis salvos; en quietud y en confianza será vuestra fortaleza.",
+        "reference": "Isaías 30:15 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Sin ritmo, el huerto se agota por exceso de demanda.",
+        "Poda no es castigo: es sabiduría (menos ruido, más vida).",
+        "El reposo es evidencia de gobierno, no de pereza."
+      ],
+      "actions": [
+        "Definir 1 bloque semanal de reposo familiar (protegerlo).",
+        "Cancelar 1 compromiso que rompe el ritmo (poda real).",
+        "Establecer 1 práctica fija: comida juntos, culto, paseo o charla."
+      ]
+    }
+  ]
+}
