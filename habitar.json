@@ -1,0 +1,186 @@
+{
+  "meta": {
+    "title": "Habitar — Intimidad continua (Cap. 13)",
+    "description": "Diagnóstico para talleres y mentorías: detectar si “visitas” a Dios por momentos o si “habitas” en Él como estado continuo."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Habitar (presencia estable)", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "Intermitente (presencia por momentos)", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "Desconexión frecuente (ruido domina)", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Rutina sin presencia (visita sin morar)", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_habitar",
+      "label": "Habitar (luz encendida)",
+      "min": 0,
+      "max": 5,
+      "summary": "Hay conciencia continua de presencia. La vida diaria se vuelve altar: trabajo, familia, descanso y servicio fluyen desde comunión.",
+      "verse": {
+        "quote": "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente.",
+        "reference": "Salmo 91:1 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_intermitente",
+      "label": "Intermitente (visitas frecuentes)",
+      "min": 6,
+      "max": 9,
+      "summary": "Hay momentos de presencia, pero se interrumpen por prisa o distracción. Ajustes simples: pausas santas y escucha durante el día.",
+      "verse": {
+        "quote": "Orad sin cesar.",
+        "reference": "1 Tesalonicenses 5:17 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_desconexion",
+      "label": "Desconexión frecuente (ruido y urgencia)",
+      "min": 10,
+      "max": 13,
+      "summary": "La vida se fragmenta: se ora por momentos, pero el día se gobierna por urgencia. Volver a hábitos de presencia y rendición.",
+      "verse": {
+        "quote": "Separados de mí nada podéis hacer.",
+        "reference": "Juan 15:5 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Rutina sin presencia (orfandad funcional)",
+      "min": 14,
+      "max": 18,
+      "summary": "Alta desconexión interior. No se resuelve con presión: requiere retorno al altar interior, acompañamiento, y reconstrucción de hábitos de comunión.",
+      "verse": {
+        "quote": "El Hijo no puede hacer nada por sí mismo, sino lo que ve hacer al Padre.",
+        "reference": "Juan 5:19 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "conciencia_presencia",
+      "title": "1. Conciencia de presencia",
+      "room": "R6",
+      "roomLabel": "Altar interior",
+      "diagnosticFocus": "¿Reconozco a Dios durante el día o solo en momentos devocionales?",
+      "verse": {
+        "quote": "Permaneced en mí, y yo en vosotros.",
+        "reference": "Juan 15:4 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La intimidad no se programa: se habita.",
+        "Habitar es conciencia sostenida, no emoción momentánea.",
+        "Cuando hay permanencia, el alma se aquieta."
+      ],
+      "actions": [
+        "Tres veces al día: 30 segundos para reconocer presencia.",
+        "Antes de hablar: una respiración consciente.",
+        "Cerrar el día con gratitud simple (3 cosas)."
+      ]
+    },
+    {
+      "id": "escucha_dia",
+      "title": "2. Escucha durante el día",
+      "room": "R1",
+      "roomLabel": "Trabajo",
+      "diagnosticFocus": "¿Escucho al Espíritu en decisiones pequeñas o vivo en piloto automático?",
+      "verse": {
+        "quote": "Mis ovejas oyen mi voz... y me siguen.",
+        "reference": "Juan 10:27 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Orar sin cesar es respirar con el Espíritu.",
+        "Escuchar es más importante que correr.",
+        "La voz guía, el alma interpreta, el cuerpo obedece."
+      ],
+      "actions": [
+        "Antes de una decisión: preguntar “¿Qué dice el Espíritu?”.",
+        "Anotar 1 instrucción sencilla del día.",
+        "Eliminar una urgencia artificial (pantalla/agenda)."
+      ]
+    },
+    {
+      "id": "pausas_santas",
+      "title": "3. Pausas santas",
+      "room": "R3",
+      "roomLabel": "Descanso",
+      "diagnosticFocus": "¿Tengo pausas reales para volver al centro o solo sigo por inercia?",
+      "verse": {
+        "quote": "En descanso y en reposo seréis salvos; en quietud y en confianza será vuestra fortaleza.",
+        "reference": "Isaías 30:15 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La pausa no es pérdida de tiempo: es dirección.",
+        "El ruido roba discernimiento.",
+        "Permanecer es moverse desde la presencia."
+      ],
+      "actions": [
+        "Dos pausas de 60–90 segundos (respirar + rendir).",
+        "Poner un recordatorio en el teléfono: “habita”.",
+        "Antes de reaccionar: pausa y pregunta."
+      ]
+    },
+    {
+      "id": "gratitud",
+      "title": "4. Gratitud (lenguaje de permanencia)",
+      "room": "R2",
+      "roomLabel": "Familia",
+      "diagnosticFocus": "¿Mi interior se queja o agradece? La gratitud mantiene conciencia de presencia.",
+      "verse": {
+        "quote": "Dad gracias en todo.",
+        "reference": "1 Tesalonicenses 5:18 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La gratitud sostiene la presencia en lo cotidiano.",
+        "Un corazón agradecido disminuye el ruido del alma.",
+        "La gratitud vuelve el hogar un santuario."
+      ],
+      "actions": [
+        "Decir 1 gratitud específica a alguien en casa.",
+        "Anotar 3 gratitudes al final del día.",
+        "Cambiar “tengo que” por “tengo la gracia de”."
+      ]
+    },
+    {
+      "id": "conversacion_interna",
+      "title": "5. Conversación interna (monólogo vs comunión)",
+      "room": "R4",
+      "roomLabel": "Servicio",
+      "diagnosticFocus": "¿Mi mente hace monólogo ansioso o conversación con Dios?",
+      "verse": {
+        "quote": "Sea conocida vuestra petición delante de Dios en toda oración y ruego, con acción de gracias.",
+        "reference": "Filipenses 4:6 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La oración no es rito: es conexión.",
+        "La comunión no empieza cuando hablas, sino cuando permaneces.",
+        "El monólogo del alma se calma al rendirse."
+      ],
+      "actions": [
+        "Cuando te preocupes: convertirlo en oración breve.",
+        "Reducir argumentos internos: rendirlos al Padre.",
+        "Una frase ancla: “Estoy en Él y Él en mí”."
+      ]
+    },
+    {
+      "id": "permanencia",
+      "title": "6. Permanencia (consistencia sin interrupción)",
+      "room": "R6",
+      "roomLabel": "Altar interior",
+      "diagnosticFocus": "¿Mi comunión es constante o depende de estados/entornos?",
+      "verse": {
+        "quote": "Orad sin cesar.",
+        "reference": "1 Tesalonicenses 5:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Visitar produce experiencia; habitar produce transformación.",
+        "La permanencia es el secreto del fruto.",
+        "El altar interior se enciende con continuidad."
+      ],
+      "actions": [
+        "Un bloque diario corto (10–15 min) no negociable.",
+        "Un ‘check-in’ de presencia al mediodía.",
+        "Domingo: revisar la semana y ajustar hábitos."
+      ]
+    }
+  ]
+}

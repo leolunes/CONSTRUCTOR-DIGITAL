@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Habitar — Intimidad continua</title>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1150px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:980px){.grid{grid-template-columns:520px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .muted{color:var(--muted);}
+    .small{font-size:12px}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea{
+      width:100%;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Habitar — Intimidad continua</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <span class="pill" id="pMax"></span>
+        <span class="pill">Niveles: 0–3 (Habitar → Desconexión)</span>
+        <span class="pill" id="liveGlobal">Global: —</span>
+      </div>
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+    </div>
+
+    <div class="grid">
+      <!-- IZQ: VISUAL CASA -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Casa interior — “habitaciones” de presencia</b>
+            <div class="muted small" style="margin-top:4px;">
+              Cada habitación representa un área diaria. Si la presencia mora, la luz permanece.
+            </div>
+          </div>
+          <span class="pill" id="liveScore">Puntaje: 0</span>
+        </div>
+
+        <div class="svgBox" style="margin-top:10px;">
+          <svg viewBox="0 0 520 360" width="100%" height="auto" aria-label="Casa con habitaciones encendidas">
+            <!-- sky -->
+            <rect x="0" y="0" width="520" height="360" fill="rgba(255,255,255,.02)"></rect>
+
+            <!-- roof -->
+            <polygon points="120,120 260,40 400,120" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.18)"></polygon>
+
+            <!-- house body -->
+            <rect x="140" y="120" width="240" height="200" rx="16" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.18)"></rect>
+
+            <!-- rooms grid -->
+            <rect id="R1" x="155" y="140" width="110" height="75" rx="12" fill="#64748b" opacity="0.92"></rect>
+            <text x="210" y="182" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.92)">1</text>
+            <text x="210" y="206" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.78)">Trabajo</text>
+
+            <rect id="R2" x="275" y="140" width="90" height="75" rx="12" fill="#64748b" opacity="0.92"></rect>
+            <text x="320" y="182" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.92)">2</text>
+            <text x="320" y="206" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.78)">Familia</text>
+
+            <rect id="R3" x="155" y="225" width="110" height="75" rx="12" fill="#64748b" opacity="0.92"></rect>
+            <text x="210" y="267" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.92)">3</text>
+            <text x="210" y="291" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.78)">Descanso</text>
+
+            <rect id="R4" x="275" y="225" width="90" height="75" rx="12" fill="#64748b" opacity="0.92"></rect>
+            <text x="320" y="267" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.92)">4</text>
+            <text x="320" y="291" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.78)">Servicio</text>
+
+            <!-- hallway / inner altar -->
+            <rect id="R5" x="370" y="140" width="0" height="0" rx="12" fill="#64748b" opacity="0"></rect>
+
+            <!-- door -->
+            <rect x="246" y="250" width="28" height="70" rx="10" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.16)"></rect>
+            <circle cx="268" cy="286" r="3" fill="rgba(255,255,255,.45)"></circle>
+            <text x="260" y="338" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CASA INTERIOR</text>
+
+            <!-- inner altar room (center) -->
+            <rect id="R6" x="190" y="108" width="140" height="26" rx="13" fill="#64748b" opacity="0.95"></rect>
+            <text x="260" y="126" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.9)">6 · Altar interior</text>
+
+            <!-- legend note -->
+            <text x="260" y="20" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.70)">Habitar = luz estable · Visitar = luz intermitente</text>
+          </svg>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Habitar</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>Intermitente</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>Desconexión frecuente</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Rutina sin presencia</div>
+          </div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+      </div>
+
+      <!-- DER: FORM -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de sesión</b>
+            <div class="muted small" style="margin-top:4px;">Se incluye en el informe. No se envía a servidor.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Nombre del participante</label>
+            <input id="patient" placeholder="Ej: Juan Pérez">
+          </div>
+          <div>
+            <label>Mentor / facilitador</label>
+            <input id="auditor" placeholder="Ej: Mentor / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Observaciones</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, resistencias, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="muted small">Incluir detalle por sección en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    "use strict";
+
+    const JSON_PATH = "habitar.json";
+    const LOGO_PATH = "logo.png";
+
+    let DATA = null;
+    let logoDataUrl = null;
+    const scores = {};
+    let last = null;
+
+    const secForm = document.getElementById("secForm");
+    const resBox = document.getElementById("resBox");
+    const pdfWarn = document.getElementById("pdfWarn");
+
+    const patientEl = document.getElementById("patient");
+    const auditorEl = document.getElementById("auditor");
+    const dateEl = document.getElementById("date");
+    const notesEl = document.getElementById("notes");
+    const detailsEl = document.getElementById("details");
+
+    const liveScore = document.getElementById("liveScore");
+    const liveGlobal = document.getElementById("liveGlobal");
+    const btnTxt = document.getElementById("btnTxt");
+    const btnPdf = document.getElementById("btnPdf");
+
+    function setDefaultDateIfEmpty(){
+      if(dateEl.value) return;
+      const d = new Date();
+      dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    }
+
+    function okPdfLib(){
+      return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+    }
+
+    function levelByValue(v){
+      const found = DATA.levels.find(x => Number(x.value) === Number(v));
+      return found || DATA.levels[0];
+    }
+
+    function totalScore(){
+      return DATA.sections.reduce((acc,s) => acc + (scores[s.id] ?? 0), 0);
+    }
+
+    function globalBand(sum){
+      const b = DATA.globalBands.find(x => sum >= x.min && sum <= x.max);
+      return b || DATA.globalBands[0];
+    }
+
+    function badgeClassForBandKey(key){
+      if(key === "g_habitar") return "bG";
+      if(key === "g_intermitente") return "bY";
+      if(key === "g_desconexion") return "bO";
+      return "bR";
+    }
+
+    function updateRooms(){
+      DATA.sections.forEach(sec => {
+        const roomId = sec.room;
+        if(!roomId) return;
+        const el = document.getElementById(roomId);
+        if(!el) return;
+        const v = scores[sec.id] ?? 0;
+        el.setAttribute("fill", levelByValue(v).color);
+      });
+    }
+
+    function updateLive(){
+      const sum = totalScore();
+      liveScore.textContent = `Puntaje: ${sum}`;
+      const g = globalBand(sum);
+      liveGlobal.textContent = `Global: ${g.label}`;
+      updateRooms();
+    }
+
+    function renderForm(){
+      secForm.innerHTML = `
+        <div class="muted small" style="margin-bottom:10px;">
+          Selecciona el nivel por sección. 0=Habitar, 1=Intermitente, 2=Desconexión frecuente, 3=Rutina sin presencia.
+        </div>
+      `;
+
+      DATA.sections.forEach(sec => {
+        scores[sec.id] = 0;
+
+        const div = document.createElement("div");
+        div.className = "sec";
+        div.innerHTML = `
+          <div class="row">
+            <div>
+              <div style="font-weight:900">${sec.title}</div>
+              <div class="muted small" style="margin-top:4px;">${sec.diagnosticFocus || ""}</div>
+              <div class="muted small" style="margin-top:4px;">Habitación: <b>${sec.roomLabel || sec.room || "—"}</b></div>
+            </div>
+            <span class="pill" id="pill_${sec.id}">${DATA.levels[0].label}</span>
+          </div>
+
+          <div class="opts" role="radiogroup" aria-label="${sec.title}">
+            ${DATA.levels.map(l => `
+              <label class="opt">
+                <input type="radio" name="${sec.id}" value="${l.value}" ${l.value === 0 ? "checked" : ""}>
+                <span>${l.label} (${l.value})</span>
+              </label>
+            `).join("")}
+          </div>
+
+          <div class="muted small" style="margin-top:10px;">
+            <b>📖</b> ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+          </div>
+        `;
+
+        div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp => {
+          inp.addEventListener("change", (e) => {
+            const v = Number(e.target.value);
+            scores[sec.id] = v;
+
+            const lev = levelByValue(v);
+            const pill = document.getElementById(`pill_${sec.id}`);
+            if(pill) pill.textContent = lev.label;
+
+            updateLive();
+          });
+        });
+
+        secForm.appendChild(div);
+      });
+
+      updateLive();
+    }
+
+    function buildPayload(){
+      const header = {
+        patient: patientEl.value.trim() || "(no especificado)",
+        auditor: auditorEl.value.trim() || "(no especificado)",
+        date: dateEl.value || "(no especificada)",
+        notes: notesEl.value.trim() || ""
+      };
+
+      const sum = totalScore();
+      const g = globalBand(sum);
+
+      const sections = DATA.sections.map(sec => {
+        const v = scores[sec.id] ?? 0;
+        const level = levelByValue(v);
+        return {
+          id: sec.id,
+          title: sec.title,
+          levelValue: v,
+          levelKey: level.key,
+          levelLabel: level.label,
+          color: level.color,
+          verse: sec.verse,
+          focus: sec.diagnosticFocus || "",
+          miniTeaching: sec.miniTeaching || [],
+          actions: sec.actions || []
+        };
+      });
+
+      sections.sort((a,b) => b.levelValue - a.levelValue);
+      const top = sections.slice(0,3);
+
+      const plan7 = [
+        { day: 1, title: `Volver a la casa (conciencia) — ${top[0]?.title || "Sección"}`, items: [
+          "Pausa 5 min: respirar y reconocer presencia.",
+          `Leer y orar: ${top[0]?.verse?.quote || ""} (${top[0]?.verse?.reference || ""})`,
+          "Anotar: ¿dónde ‘visito’ a Dios y dónde ‘habito’?"
+        ].filter(Boolean)},
+        { day: 2, title: `Micro-hábito de presencia — ${top[0]?.title || "Sección"}`, items: [
+          ...(top[0]?.actions?.slice(0,2) || []),
+          "Cerrar el día con gratitud simple."
+        ]},
+        { day: 3, title: `Habitar en lo cotidiano — ${top[1]?.title || top[0]?.title || "Sección"}`, items: [
+          ...(top[1]?.actions?.slice(0,2) || []),
+          "Practicar ‘escuchar antes de responder’ 2 veces."
+        ]},
+        { day: 4, title: `Pausas santas — ${top[2]?.title || top[0]?.title || "Sección"}`, items: [
+          ...(top[2]?.actions?.slice(0,2) || []),
+          "Pausa 60–90 s antes de una decisión."
+        ]},
+        { day: 5, title: "Casa encendida (todas las áreas)", items: [
+          "Elegir 1 hábito por habitación (trabajo/familia/descanso/servicio).",
+          "Reducir una distracción que corta comunión.",
+          "Oración breve de rendición."
+        ]},
+        { day: 6, title: "Revisión de presencia", items: [
+          "¿Qué momento del día tuvo más conciencia de Dios?",
+          "¿Qué activó desconexión? (urgencia, miedo, pantalla).",
+          "Definir 1 ajuste para mañana."
+        ]},
+        { day: 7, title: "Continuidad", items: [
+          "Repetir el test y comparar puntaje.",
+          "Elegir 1 práctica por 4 semanas.",
+          "Celebrar progreso (sin culpa)."
+        ]}
+      ];
+
+      return {
+        meta: DATA.meta,
+        header,
+        global: { sum, band: g },
+        sections,
+        includeDetails: detailsEl.checked,
+        plan7
+      };
+    }
+
+    function showResult(){
+      last = buildPayload();
+      const b = last.global.band;
+      const badge = badgeClassForBandKey(b.key);
+
+      resBox.style.display = "block";
+      resBox.innerHTML = `
+        <div class="row">
+          <div>
+            <span class="badge ${badge}">${b.label}</span>
+            <div class="muted" style="margin-top:6px;font-size:13px;">
+              Puntaje global: <b>${last.global.sum}</b> / ${DATA.sections.length * 3}
+            </div>
+            <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
+          <div style="font-style:italic;">${b.verse.quote}</div>
+          <div class="muted" style="margin-top:6px;">(${b.verse.reference})</div>
+        </div>
+      `;
+
+      btnTxt.disabled = false;
+      const ok = okPdfLib();
+      btnPdf.disabled = !ok;
+      pdfWarn.style.display = ok ? "none" : "block";
+    }
+
+    function downloadTXT(){
+      if(!last) return;
+
+      const L = [];
+      L.push((last.meta.title || "").toUpperCase());
+      L.push("");
+      L.push("DATOS");
+      L.push(`Participante: ${last.header.patient}`);
+      L.push(`Mentor/Facilitador: ${last.header.auditor}`);
+      L.push(`Fecha: ${last.header.date}`);
+      L.push("Observaciones:");
+      L.push(last.header.notes || "(sin observaciones)");
+      L.push("");
+      L.push("RESULTADO GLOBAL");
+      L.push(`Puntaje: ${last.global.sum}/${DATA.sections.length * 3}`);
+      L.push(`Diagnóstico: ${last.global.band.label}`);
+      L.push(last.global.band.summary);
+      L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
+      L.push("");
+      L.push("SECCIONES (peor → mejor)");
+      L.push("--------------------------------------------------");
+
+      last.sections.forEach(s => {
+        L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+        L.push(`Enfoque: ${s.focus}`);
+        L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+        if(last.includeDetails){
+          if(s.miniTeaching && s.miniTeaching.length){
+            L.push("Mini-enseñanza:");
+            s.miniTeaching.forEach(x => L.push("• " + x));
+          }
+          if(s.actions && s.actions.length){
+            L.push("Acciones sugeridas:");
+            s.actions.forEach(x => L.push("• " + x));
+          }
+        }
+        L.push("");
+      });
+
+      L.push("PLAN SEMANAL 7 DÍAS");
+      L.push("--------------------------------------------------");
+      last.plan7.forEach(d => {
+        L.push(`Día ${d.day}: ${d.title}`);
+        d.items.forEach(i => L.push("• " + i));
+        L.push("");
+      });
+
+      const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "habitar.txt";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    async function loadLogo(){
+      try{
+        const res = await fetch(LOGO_PATH, { cache:"no-store" });
+        if(!res.ok) return null;
+        const blob = await res.blob();
+        return await new Promise((resolve) => {
+          const fr = new FileReader();
+          fr.onload = () => resolve(fr.result);
+          fr.onerror = () => resolve(null);
+          fr.readAsDataURL(blob);
+        });
+      }catch(_e){
+        return null;
+      }
+    }
+
+    function levelColorRGB(label){
+      const s = (label || "").toLowerCase();
+      if(s.includes("habitar")) return [16,185,129];
+      if(s.includes("intermit")) return [245,158,11];
+      if(s.includes("desconex")) return [249,115,22];
+      return [244,63,94];
+    }
+
+    function safeName(name){
+      return (name || "habitar")
+        .toLowerCase()
+        .replace(/\s+/g,"_")
+        .replace(/[^a-z0-9_\-]/g,"")
+        .slice(0,60);
+    }
+
+    async function downloadPDF(){
+      if(!last) return;
+      if(!okPdfLib()){
+        pdfWarn.style.display = "block";
+        return;
+      }
+
+      if(logoDataUrl === null){
+        logoDataUrl = await loadLogo();
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit:"pt", format:"letter" });
+      const W = doc.internal.pageSize.getWidth();
+      const H = doc.internal.pageSize.getHeight();
+      const M = 44;
+
+      const COLORS = { ink:[22,33,58], muted:[90,102,130] };
+
+      function addLogo(x,y,w,h){
+        if(!logoDataUrl) return;
+        try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(_e){}
+      }
+
+      function header(){
+        addLogo(M, 16, 34, 34);
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(12);
+        doc.setTextColor(...COLORS.ink);
+        doc.text("Habitar — Informe", W/2, 36, {align:"center"});
+        doc.setDrawColor(230);
+        doc.line(M, 52, W-M, 52);
+        return 74;
+      }
+
+      function footer(){
+        const n = doc.getNumberOfPages();
+        for(let i=1;i<=n;i++){
+          doc.setPage(i);
+          doc.setFont("helvetica","normal");
+          doc.setFontSize(9);
+          doc.setTextColor(...COLORS.muted);
+          doc.text("Intimidad continua — habitar, no visitar", M, H-18);
+          doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+        }
+      }
+
+      // PORTADA
+      doc.setFillColor(22,33,58);
+      doc.rect(0,0,W,96,"F");
+      addLogo(W - M - 56, 18, 56, 56);
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(22);
+      doc.setTextColor(255,255,255);
+      doc.text("HABITAR", M, 50);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(12);
+      doc.setTextColor(210,230,255);
+      doc.text("Intimidad continua (Cap. 13)", M, 72);
+
+      doc.setFillColor(245,247,255);
+      doc.roundedRect(M, 120, W-M*2, 120, 12, 12, "F");
+      doc.setTextColor(...COLORS.ink);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.text("Datos", M+14, 145);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.text(`Participante: ${last.header.patient}`, M+14, 172);
+      doc.text(`Mentor/Facilitador: ${last.header.auditor}`, M+14, 192);
+      doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+
+      // GLOBAL
+      const band = last.global.band;
+      const c = levelColorRGB(band.label);
+
+      doc.setFillColor(255,255,255);
+      doc.roundedRect(M, 260, W-M*2, 185, 12, 12, "F");
+
+      const badgeText = (band.label || "").toUpperCase();
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(10);
+      const pad = 18;
+      const maxW = 320;
+      const bw = Math.min(maxW, doc.getTextWidth(badgeText) + pad*2);
+      const bh = 26;
+
+      doc.setFillColor(...c);
+      doc.roundedRect(M+14, 282, bw, bh, 12, 12, "F");
+      doc.setTextColor(255,255,255);
+      doc.text(badgeText, M+14 + bw/2, 300, {align:"center"});
+
+      doc.setTextColor(...COLORS.ink);
+      doc.setFontSize(12);
+      doc.text(`Puntaje global: ${last.global.sum}/${DATA.sections.length * 3}`, M+14, 332);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.text(doc.splitTextToSize(band.summary, W-M*2-28), M+14, 354);
+
+      doc.setFillColor(240,253,250);
+      doc.roundedRect(M, 392, W-M*2, 58, 10, 10, "F");
+      doc.setFont("times","italic");
+      doc.setFontSize(11);
+      doc.setTextColor(20,60,70);
+      doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 412);
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(9);
+      doc.setTextColor(70,90,110);
+      doc.text(`(${band.verse.reference})`, M+10, 438);
+
+      // TABLA SECCIONES
+      doc.addPage();
+      let y = header();
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Diagnóstico por secciones", M, y);
+      y += 12;
+      doc.setDrawColor(230);
+      doc.line(M, y, W-M, y);
+      y += 12;
+
+      const rows = last.sections.slice().reverse().map(s => [
+        s.title,
+        s.levelLabel,
+        String(s.levelValue),
+        `${s.verse.quote} (${s.verse.reference})`
+      ]);
+
+      doc.autoTable({
+        startY: y,
+        head: [["Sección", "Estado", "Nivel", "Porción bíblica"]],
+        body: rows,
+        theme: "grid",
+        styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+        headStyles: {fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+        didParseCell: function(data){
+          if(data.section==="body" && data.column.index===1){
+            const v = data.cell.raw || "";
+            const cc = levelColorRGB(v);
+            data.cell.styles.fillColor = cc;
+            data.cell.styles.textColor = [255,255,255];
+            data.cell.styles.fontStyle = "bold";
+          }
+        },
+        margin: {left:M, right:M}
+      });
+
+      // DETALLE
+      doc.addPage();
+      y = header();
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Guía pastoral por secciones", M, y);
+      y += 12;
+      doc.setDrawColor(230);
+      doc.line(M, y, W-M, y);
+      y += 12;
+
+      const dRows = last.sections.slice().reverse().map(s => [
+        s.title,
+        s.levelLabel,
+        (last.includeDetails && s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin detalle)",
+        (last.includeDetails && s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+      ]);
+
+      doc.autoTable({
+        startY: y,
+        head: [["Sección", "Estado", "Mini-enseñanza", "Acciones"]],
+        body: dRows,
+        theme: "grid",
+        styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+        headStyles: {fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+        didParseCell: function(data){
+          if(data.section==="body" && data.column.index===1){
+            const v = data.cell.raw || "";
+            const cc = levelColorRGB(v);
+            data.cell.styles.fillColor = cc;
+            data.cell.styles.textColor = [255,255,255];
+            data.cell.styles.fontStyle = "bold";
+          }
+        },
+        columnStyles: {
+          0:{cellWidth:160},
+          1:{cellWidth:90},
+          2:{cellWidth:(W - M*2 - 160 - 90)/2},
+          3:{cellWidth:(W - M*2 - 160 - 90)/2}
+        },
+        margin: {left:M, right:M}
+      });
+
+      // PLAN 7 DÍAS
+      doc.addPage();
+      y = header();
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Plan semanal (7 días)", M, y);
+      y += 12;
+      doc.setDrawColor(230);
+      doc.line(M, y, W-M, y);
+      y += 12;
+
+      const planRows = last.plan7.map(d => [
+        `Día ${d.day}`,
+        d.title,
+        d.items.join(" • ")
+      ]);
+
+      doc.autoTable({
+        startY: y,
+        head: [["Día", "Enfoque", "Acciones"]],
+        body: planRows,
+        theme: "grid",
+        styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+        headStyles: {fillColor:[22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+        columnStyles: {0:{cellWidth:70}, 1:{cellWidth:190}, 2:{cellWidth:(W - M*2 - 70 - 190)}},
+        margin: {left:M, right:M}
+      });
+
+      // OBSERVACIONES
+      doc.addPage();
+      y = header();
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Observaciones", M, y);
+      y += 12;
+      doc.setDrawColor(230);
+      doc.line(M, y, W-M, y);
+      y += 14;
+
+      doc.setFillColor(255,255,255);
+      doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(11);
+      doc.setTextColor(...COLORS.ink);
+      const notes = last.header.notes || "(sin observaciones)";
+      doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+      footer();
+
+      const name = safeName(last.header.patient || "habitar");
+      doc.save(`${name}_habitar.pdf`);
+    }
+
+    function resetAll(){
+      DATA.sections.forEach(s => { scores[s.id] = 0; });
+
+      document.querySelectorAll('input[type="radio"]').forEach(i => {
+        i.checked = (i.value === "0");
+      });
+
+      document.querySelectorAll('[id^="pill_"]').forEach(p => {
+        p.textContent = DATA.levels[0].label;
+      });
+
+      updateLive();
+      resBox.style.display = "none";
+      resBox.innerHTML = "";
+      btnTxt.disabled = true;
+      btnPdf.disabled = true;
+      last = null;
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    async function init(){
+      try{
+        const res = await fetch(JSON_PATH, {cache:"no-store"});
+        if(!res.ok) throw new Error("No se pudo cargar el JSON: " + res.status);
+        DATA = await res.json();
+
+        document.getElementById("t").textContent = DATA.meta.title || "Habitar";
+        document.getElementById("d").textContent = DATA.meta.description || "";
+        document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
+
+        setDefaultDateIfEmpty();
+        renderForm();
+
+        pdfWarn.style.display = okPdfLib() ? "none" : "block";
+      }catch(e){
+        secForm.innerHTML = `
+          <div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+          <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>
+        `;
+      }
+    }
+
+    document.getElementById("btnResult").addEventListener("click", showResult);
+    document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+    document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+    document.getElementById("btnReset").addEventListener("click", resetAll);
+
+    init();
+  </script>
+</body>
+</html>
