@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "title": "Gracia vs Mérito — Heredero o Empleado",
+    "description": "Diagnóstico para talleres y mentorías: detectar mentalidad de empleado (deuda/ansiedad) vs hijo (herencia/reposo).",
+    "keyVerse": {
+      "quote": "De gracia recibisteis, dad de gracia.",
+      "reference": "Mateo 10:8 (RVR1960)"
+    }
+  },
+  "levels": [
+    { "key": "heredero", "label": "Heredero (gracia)", "value": 0, "color": "#10b981" },
+    { "key": "mixto", "label": "Mixto (en ajuste)", "value": 1, "color": "#f59e0b" },
+    { "key": "empleado", "label": "Empleado (en riesgo)", "value": 2, "color": "#f97316" },
+    { "key": "deuda", "label": "Deuda/ansiedad (crítico)", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_heredero",
+      "label": "Heredero estable (gracia y reposo)",
+      "min": 0,
+      "max": 3,
+      "summary": "Predomina la identidad de hijo. Sirves sin culpa, recibes sin negociar y descansas con confianza. Mantén gratitud, permanencia y generosidad.",
+      "verse": {
+        "quote": "Ya no os llamaré siervos… os he llamado amigos.",
+        "reference": "Juan 15:15 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_mixto",
+      "label": "Mezcla (gracia con presión)",
+      "min": 4,
+      "max": 7,
+      "summary": "Hay herencia real, pero algunas áreas aún operan con mérito. Ajustes simples: recibir sin deuda, servir desde afirmación y proteger reposo.",
+      "verse": {
+        "quote": "Mi gracia te basta.",
+        "reference": "2 Corintios 12:9 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_empleado",
+      "label": "Empleado dominante (mérito activo)",
+      "min": 8,
+      "max": 11,
+      "summary": "Aumenta la lógica de salario: aprobación, comparación y culpa. No más presión: vuelve a la gracia, redefine motivaciones y practica reposo.",
+      "verse": {
+        "quote": "Porque por gracia sois salvos por medio de la fe; y esto no de vosotros.",
+        "reference": "Efesios 2:8 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_deuda",
+      "label": "Deuda/ansiedad (requiere acompañamiento)",
+      "min": 12,
+      "max": 15,
+      "summary": "Alta tensión interna: desempeño, control y agotamiento. Requiere descanso, gracia diaria y acompañamiento cercano para romper la deuda espiritual.",
+      "verse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "aprobacion",
+      "title": "1. Necesidad de aprobación",
+      "diagnosticFocus": "¿Sirvo para ser visto/aprobado o porque ya fui afirmado en el Padre?",
+      "verse": {
+        "quote": "Este es mi Hijo amado, en quien tengo complacencia.",
+        "reference": "Mateo 3:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El empleado busca aprobación; el hijo ya la tiene.",
+        "La afirmación precede al propósito.",
+        "Cuando la identidad está firme, el servicio deja de ser ansiedad."
+      ],
+      "actions": [
+        "Escribir: “No sirvo para ser aceptado; sirvo porque fui amado”.",
+        "Identificar 1 lugar donde buscas reconocimiento.",
+        "Practicar 1 servicio oculto (sin contarlo)."
+      ]
+    },
+    {
+      "id": "culpa_descansar",
+      "title": "2. Culpa por descansar",
+      "diagnosticFocus": "¿Puedo detenerme sin sentir que estoy fallando?",
+      "verse": {
+        "quote": "Queda un reposo para el pueblo de Dios.",
+        "reference": "Hebreos 4:9 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El descanso es señal de herencia, no de pereza.",
+        "El empleado se mide por rendimiento; el hijo por permanencia.",
+        "Reposo no es ausencia de actividad: es presencia de dirección."
+      ],
+      "actions": [
+        "Agendar 30–60 min de reposo sin culpa esta semana.",
+        "Soltar 1 tarea que nace de presión (no de dirección).",
+        "Orar 2–3 min en silencio y recibir paz."
+      ]
+    },
+    {
+      "id": "comparacion",
+      "title": "3. Comparación",
+      "diagnosticFocus": "¿Me comparo para validar valor o descanso en mi identidad?",
+      "verse": {
+        "quote": "No nos gloriemos vanagloriosamente, irritándonos unos a otros, envidiándonos unos a otros.",
+        "reference": "Gálatas 5:26 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La comparación alimenta deuda: nunca alcanza.",
+        "La gracia sana la mente de la competencia.",
+        "El hijo coopera; el empleado compite."
+      ],
+      "actions": [
+        "Ayuno de comparación: 24h sin medir tu valor por resultados.",
+        "Bendecir a alguien que te despierta competencia.",
+        "Anotar 3 evidencias de gracia en tu vida (sin compararlas)."
+      ]
+    },
+    {
+      "id": "recibir",
+      "title": "4. Capacidad de recibir",
+      "diagnosticFocus": "¿Recibo sin deuda o siento que debo pagar todo?",
+      "verse": {
+        "quote": "Nos hizo aptos para participar de la herencia de los santos en luz.",
+        "reference": "Colosenses 1:12 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La herencia se recibe, no se compra.",
+        "Donde hay gracia no hay deuda: hay gratitud.",
+        "Recibir sana la necesidad de controlar."
+      ],
+      "actions": [
+        "Recibir ayuda hoy sin justificarte.",
+        "Decir: “Gracias” sin explicar por qué mereces.",
+        "Leer Mateo 10:8 y agradecer 5 regalos recibidos."
+      ]
+    },
+    {
+      "id": "generosidad",
+      "title": "5. Generosidad sin cálculo",
+      "diagnosticFocus": "¿Doy para obtener o doy desde abundancia y libertad?",
+      "verse": {
+        "quote": "De gracia recibisteis, dad de gracia.",
+        "reference": "Mateo 10:8 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El empleado calcula; el heredero comparte.",
+        "La generosidad sin cálculo evidencia identidad.",
+        "La gracia transforma el deber en deleite."
+      ],
+      "actions": [
+        "Dar algo esta semana sin esperar retorno (tiempo/ayuda/recursos).",
+        "Hacer una “ofrenda” de honra: afirmar con palabras a alguien.",
+        "Revisar: ¿tu dar nace de culpa o de gratitud?"
+      ]
+    }
+  ]
+}
