@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "title": "Radar de Obediencia Revelada — Amor que guarda la Palabra",
+    "description": "Diagnóstico práctico para talleres y mentorías: detectar si la obediencia nace del amor (revelación) o del temor (esfuerzo), y ordenar la secuencia Espíritu→Alma→Cuerpo."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Obediencia en deleite (amor gobierna)",
+      "min": 0,
+      "max": 6,
+      "summary": "El amor está produciendo obediencia natural. Hay escucha, convicción y acción con gozo. Mantener hábitos y permanencia en la voz.",
+      "verse": {
+        "quote": "El que me ama guardará mi palabra.",
+        "reference": "Juan 14:23 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Obediencia en ajuste (voz intermitente)",
+      "min": 7,
+      "max": 13,
+      "summary": "Se oye a Dios, pero hay áreas donde la razón o la presión compiten con la voz. Ajustes simples a tiempo previenen cansancio.",
+      "verse": {
+        "quote": "El obedecer es mejor que los sacrificios.",
+        "reference": "1 Samuel 15:22 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Obediencia por esfuerzo (temor activo)",
+      "min": 14,
+      "max": 20,
+      "summary": "Aumenta la obediencia por obligación. Se reemplaza la voz por la lógica; aparece agotamiento y culpa. Urge volver al amor y al orden trino.",
+      "verse": {
+        "quote": "El espíritu a la verdad está dispuesto, pero la carne es débil.",
+        "reference": "Mateo 26:41 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Obediencia bajo presión (requiere reposo)",
+      "min": 21,
+      "max": 27,
+      "summary": "Alta tensión interior. No más presión: reposo, gracia y acompañamiento cercano. Restaurar la voz del Espíritu y la identidad de hijo.",
+      "verse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "amor_fuente",
+      "title": "1. Amor: la fuente de la obediencia",
+      "element": "love",
+      "diagnosticFocus": "¿Obedezco para ser aceptado o porque ya fui amado?",
+      "verse": {
+        "quote": "En esto consiste el amor: en que guardemos sus mandamientos.",
+        "reference": "1 Juan 5:3 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La obediencia no prueba amor: el amor produce obediencia.",
+        "El temor genera esfuerzo; el amor genera entrega.",
+        "La identidad afirmada obedece con gozo."
+      ],
+      "actions": [
+        "Escribir: “No obedezco para ser aceptado; obedezco porque fui afirmado”.",
+        "Identificar 1 área donde obedezco por culpa.",
+        "Hacer 1 obediencia pequeña hoy desde gratitud."
+      ]
+    },
+    {
+      "id": "oir_voz",
+      "title": "2. Oír: la voz antes que la razón",
+      "element": "hear",
+      "diagnosticFocus": "¿La voz del Espíritu guía mis decisiones o la razón la reemplaza?",
+      "verse": {
+        "quote": "Mis ovejas oyen mi voz, y yo las conozco, y me siguen.",
+        "reference": "Juan 10:27 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La desobediencia no nace del desconocimiento, sino del reemplazo de la voz.",
+        "Obedecer sin revelación es actuar sin raíz.",
+        "La obediencia comienza con oír correctamente."
+      ],
+      "actions": [
+        "Silencio 5–10 min: oír antes de actuar.",
+        "Anotar 1 instrucción sencilla y clara.",
+        "Evitar una urgencia artificial (pantalla/agenda)."
+      ]
+    },
+    {
+      "id": "orden_trino",
+      "title": "3. Orden: Espíritu→Alma→Cuerpo",
+      "element": "convict",
+      "diagnosticFocus": "¿Sigo la secuencia correcta o decido desde el alma sola?",
+      "verse": {
+        "quote": "El espíritu a la verdad está dispuesto, pero la carne es débil.",
+        "reference": "Mateo 26:41 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El Espíritu escucha la instrucción.",
+        "El alma la traduce en convicción.",
+        "El cuerpo la expresa en acción."
+      ],
+      "actions": [
+        "Antes de decidir: preguntar “¿Qué dice el Espíritu?”.",
+        "Escribir convicción en 1 frase.",
+        "Ejecutar 1 acción pequeña hoy."
+      ]
+    },
+    {
+      "id": "alma_conviccion",
+      "title": "4. Alma: convicción sin culpa",
+      "element": "convict",
+      "diagnosticFocus": "¿Mi alma traduce la voz del cielo o la lógica del mundo?",
+      "verse": {
+        "quote": "Renovaos en el espíritu de vuestra mente.",
+        "reference": "Efesios 4:23 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La convicción sana no acusa: alinea.",
+        "La culpa presiona; el amor ordena.",
+        "Una mente rendida manifiesta diseño."
+      ],
+      "actions": [
+        "Rendir un pensamiento repetitivo (ansiedad/culpa).",
+        "Cambiar “tengo que” por “respondo al amor”.",
+        "Cerrar con gratitud en vez de promesas grandes."
+      ]
+    },
+    {
+      "id": "cuerpo_accion",
+      "title": "5. Cuerpo: acción como adoración",
+      "element": "act",
+      "diagnosticFocus": "¿Mi cuerpo expresa la obediencia o sabotea por impulso/hábito?",
+      "verse": {
+        "quote": "Presenten sus cuerpos en sacrificio vivo, santo, agradable a Dios.",
+        "reference": "Romanos 12:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La obediencia no es teoría: se encarna.",
+        "Un hábito pequeño sostenido vence una emoción grande.",
+        "El cuerpo se alinea cuando el Espíritu guía."
+      ],
+      "actions": [
+        "Definir 1 hábito diario fijo (10–15 min).",
+        "Reducir un disparador de impulso (pantalla/urgencia).",
+        "Pausa 90 segundos antes de reaccionar (2 veces hoy)."
+      ]
+    },
+    {
+      "id": "temor_esfuerzo",
+      "title": "6. Temor: obediencia por obligación",
+      "element": "fear",
+      "diagnosticFocus": "¿Obedezco para no fallar o porque amo?",
+      "verse": {
+        "quote": "En el amor no hay temor, sino que el perfecto amor echa fuera el temor.",
+        "reference": "1 Juan 4:18 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La obediencia sin amor es sumisión; con amor, adoración.",
+        "El temor genera distancia; el amor genera pertenencia.",
+        "Presión produce agotamiento, no fruto."
+      ],
+      "actions": [
+        "Identificar 1 miedo (castigo/rechazo/pérdida).",
+        "Orar: “Padre, enséñame a obedecer desde el amor”.",
+        "Soltar una exigencia interna por 24 horas."
+      ]
+    },
+    {
+      "id": "gozo_deleite",
+      "title": "7. Gozo: deleite en la voluntad",
+      "element": "act",
+      "diagnosticFocus": "¿Obedecer me trae paz o agotamiento?",
+      "verse": {
+      "quote": "Me deleito en hacer tu voluntad, oh Dios mío.",
+        "reference": "Salmos 40:8 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Cuando el alma se alinea, obedecer deja de ser carga.",
+        "No se obedece para alcanzar la voluntad, sino para permanecer en ella.",
+        "El gozo es señal de obediencia revelada."
+      ],
+      "actions": [
+        "Identificar si hoy obedecí con paz o con tensión.",
+        "Celebrar una renuncia como dirección, no como pérdida.",
+        "Cerrar el día agradeciendo una obediencia concreta."
+      ]
+    },
+    {
+      "id": "reposo_obediencia",
+      "title": "8. Reposo: obedecer sin ansiedad",
+      "element": "rest",
+      "diagnosticFocus": "¿Mi obediencia nace del reposo o de la urgencia?",
+      "verse": {
+        "quote": "En descanso y en reposo seréis salvos.",
+        "reference": "Isaías 30:15 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La obediencia revelada no corre: fluye.",
+        "La ansiedad es señal de que el alma volvió a gobernar.",
+        "El reposo confirma que el Espíritu dirige."
+      ],
+      "actions": [
+        "Practicar una obediencia sin apuro hoy.",
+        "Decir no a una autoexigencia innecesaria.",
+        "Hacer una pausa consciente antes de decidir."
+      ]
+    },
+    {
+      "id": "permanecer",
+      "title": "9. Permanecer: obediencia como estilo de vida",
+      "element": "abide",
+      "diagnosticFocus": "¿Mi obediencia es un acto aislado o una comunión continua?",
+      "verse": {
+        "quote": "El que permanece en mí, y yo en él, éste lleva mucho fruto.",
+        "reference": "Juan 15:5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La obediencia madura es fruto de permanecer, no de esforzarse.",
+        "El que habita no negocia: responde.",
+        "La comunión constante convierte la obediencia en naturaleza."
+      ],
+      "actions": [
+        "Definir una práctica diaria fija de comunión.",
+        "Reducir interrupciones que rompen la permanencia.",
+        "Elegir obedecer hoy sin explicarse ni justificarse."
+      ]
+    }
+  ]
+}
+
