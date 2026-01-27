@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "title": "Termómetro del Cuerpo — Sanidad integral",
+    "description": "Herramienta pastoral para identificar señales de desgaste corporal asociadas a desorden interior. No sustituye evaluación médica.",
+    "disclaimer": "Esta herramienta es pastoral y formativa. No reemplaza diagnóstico ni tratamiento médico o psicológico profesional."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Cuerpo en reposo", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "Tensión leve", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "Desgaste sostenido", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Alerta corporal", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_reposo",
+      "label": "Cuerpo en reposo (alineación sana)",
+      "min": 0,
+      "max": 5,
+      "summary": "El cuerpo refleja orden interior: hay descanso, ritmos sanos y bajo nivel de tensión. Mantener hábitos y escucha corporal.",
+      "verse": {
+        "quote": "Amado, yo deseo que tú seas prosperado en todas las cosas, y que tengas salud.",
+        "reference": "3 Juan 1:2 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Cuerpo en ajuste (señales tempranas)",
+      "min": 6,
+      "max": 9,
+      "summary": "El cuerpo comienza a expresar carga. Ajustes simples en ritmos, descanso y emociones previenen mayor desgaste.",
+      "verse": {
+        "quote": "Mejor es el reposo que la agitación.",
+        "reference": "Eclesiastés 4:6 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_desgaste",
+      "label": "Desgaste corporal (riesgo)",
+      "min": 10,
+      "max": 13,
+      "summary": "Hay señales claras de agotamiento físico-emocional. El cuerpo está sosteniendo cargas que no le corresponden.",
+      "verse": {
+        "quote": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        "reference": "Mateo 11:28 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_alerta",
+      "label": "Alerta corporal (requiere acompañamiento)",
+      "min": 14,
+      "max": 18,
+      "summary": "Alta tensión sostenida. No se trata de forzar cambios: requiere reposo, acompañamiento pastoral y, si corresponde, evaluación profesional.",
+      "verse": {
+        "quote": "Él da esfuerzo al cansado, y multiplica las fuerzas al que no tiene ningunas.",
+        "reference": "Isaías 40:29 (RVR1960)"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "descanso_sueno",
+      "title": "1. Descanso y sueño",
+      "diagnosticFocus": "¿Duermes y descansas lo suficiente o vives en deuda de reposo?",
+      "verse": {
+        "quote": "En paz me acostaré, y asimismo dormiré.",
+        "reference": "Salmos 4:8 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El sueño es un acto de confianza, no de debilidad.",
+        "La falta de descanso sostenido afecta alma y cuerpo.",
+        "Dios gobierna incluso cuando duermes."
+      ],
+      "actions": [
+        "Establecer un horario fijo de descanso.",
+        "Reducir pantallas 60 min antes de dormir.",
+        "Orar brevemente entregando el día antes de acostarte."
+      ]
+    },
+    {
+      "id": "ansiedad",
+      "title": "2. Ansiedad sostenida",
+      "diagnosticFocus": "¿Tu cuerpo vive en alerta constante?",
+      "verse": {
+        "quote": "Por nada estéis afanosos.",
+        "reference": "Filipenses 4:6 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La ansiedad prolongada agota el sistema corporal.",
+        "El cuerpo reacciona cuando el alma no suelta control.",
+        "La paz se practica, no solo se declara."
+      ],
+      "actions": [
+        "Respiración consciente 3 veces al día.",
+        "Identificar un pensamiento repetitivo de preocupación.",
+        "Entregar una carga concreta en oración."
+      ]
+    },
+    {
+      "id": "tension_corporal",
+      "title": "3. Tensión corporal",
+      "diagnosticFocus": "¿Hay zonas del cuerpo que cargan tensión (cuello, espalda, mandíbula)?",
+      "verse": {
+        "quote": "Mi carne reposará confiadamente.",
+        "reference": "Salmos 16:9 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El cuerpo recuerda lo que el alma no procesa.",
+        "La tensión es un lenguaje, no un enemigo.",
+        "Escuchar al cuerpo evita somatización mayor."
+      ],
+      "actions": [
+        "Estiramiento suave diario (5–10 min).",
+        "Pausa consciente para soltar tensión (2 veces al día).",
+        "Nombrar la emoción asociada a la tensión."
+      ]
+    },
+    {
+      "id": "ritmos",
+      "title": "4. Ritmos corporales (comida y movimiento)",
+      "diagnosticFocus": "¿Tus ritmos sostienen vida o sobrevives a base de urgencia?",
+      "verse": {
+        "quote": "Todo me es lícito, mas no todo conviene.",
+        "reference": "1 Corintios 6:12 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El cuerpo necesita constancia más que extremos.",
+        "Pequeños hábitos sostenidos producen sanidad.",
+        "El movimiento y la nutrición son parte del diseño."
+      ],
+      "actions": [
+        "Establecer horarios simples de comida.",
+        "Incluir caminata o movimiento ligero diario.",
+        "Evitar decisiones corporales impulsivas."
+      ]
+    },
+    {
+      "id": "carga_emocional",
+      "title": "5. Perdón y carga emocional",
+      "diagnosticFocus": "¿Tu cuerpo carga emociones no resueltas?",
+      "verse": {
+        "quote": "Llevad mis cargas, y yo os haré descansar.",
+        "reference": "Mateo 11:29 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La falta de perdón suele expresarse en el cuerpo.",
+        "Soltar carga emocional libera energía vital.",
+        "El proceso es gradual, no forzado."
+      ],
+      "actions": [
+        "Identificar una emoción retenida.",
+        "Orar soltando esa carga (sin forzar perdón).",
+        "Hablarlo con alguien de confianza."
+      ]
+    },
+    {
+      "id": "practicas_reposo",
+      "title": "6. Prácticas de reposo",
+      "diagnosticFocus": "¿Tienes prácticas reales de reposo o solo pausas ocasionales?",
+      "verse": {
+        "quote": "El día séptimo reposó.",
+        "reference": "Génesis 2:2 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El reposo es diseño, no premio.",
+        "Sin reposo, el cuerpo entra en supervivencia.",
+        "Practicar reposo es obediencia corporal."
+      ],
+      "actions": [
+        "Definir una práctica semanal de reposo.",
+        "Proteger ese espacio sin culpa.",
+        "Cerrar el día con gratitud corporal."
+      ]
+    }
+  ]
+}
