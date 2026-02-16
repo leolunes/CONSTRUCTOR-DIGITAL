@@ -1,0 +1,102 @@
+{
+  "appTitle": "SOY JONATHAN PINEDA",
+  "subtitle": "Candidato por Santander a la Cámara de Representantes",
+
+  "featured": [
+    {
+      "id": "feat-votar",
+      "label": "Destacado",
+      "img": "assets/img/logo1.jpeg",
+      "title": "¿Por qué debemos votar?",
+      "targetSectionId": "porque-debemos-votar"
+    },
+    {
+      "id": "feat-centro",
+      "label": "Destacado",
+      "img": "assets/img/logo2.jpeg",
+      "title": "¿Por qué escogí el Centro Democrático?",
+      "targetSectionId": "porque-centro-democratico"
+    }
+  ],
+
+  "groups": [
+    {
+      "id": "conoceme",
+      "heading": "CONÓCEME!",
+      "sectionIds": [
+        "quien-soy",
+        "en-que-creo",
+        "mi-experiencia",
+        "mi-compromiso",
+        "porque-quiero-ser-su-representante"
+      ]
+    },
+    {
+      "id": "como-votar",
+      "heading": "CÓMO VOTAR ESTE 8 DE MARZO DE 2026",
+      "sectionIds": [
+        "como-votar-jonathan",
+        "como-votar-senado"
+      ]
+    }
+  ],
+
+  "sections": [
+    {
+      "id": "porque-debemos-votar",
+      "title": "¿Por qué debemos votar?",
+      "content": "Vivimos tiempos donde es fácil que la política nos divida. Pero como creyente, estoy convencido de que por encima de cualquier sistema humano está Dios, quien establece las autoridades y nos llama a procurar el bienestar de nuestra tierra.\n\nLa Biblia nos enseña a orar por quienes gobiernan, pero también a buscar la paz de nuestra ciudad, porque en su paz tendremos nosotros paz. Por eso, para mí, votar no es simplemente un acto político; es un acto de responsabilidad y de conciencia delante de Dios.\n\nVotar es participar activamente en el bienestar de nuestra nación. Es ejercer con sabiduría el derecho que tenemos para influir en el rumbo de nuestra sociedad. No se trata solo de partidos o ideologías; se trata de principios.\n\nCreo que debemos votar porque:\n• Es una forma de procurar el bien de nuestra región.\n• Es una manera de respaldar un liderazgo con valores.\n• Es una oportunidad de apoyar propuestas fundamentadas en principios.\n• Es una responsabilidad que impacta a nuestras familias y a las futuras generaciones.\n\nMás allá de cualquier elección, oro para que Dios guíe cada decisión y que Su voluntad sea hecha en nuestra nación.\n\nPorque cuando votamos con conciencia y principios, no solo participamos en una elección: sembramos futuro.",
+      "pdf": "assets/img/pdf/porque-debemos-votar.pdf"
+    },
+    {
+      "id": "porque-centro-democratico",
+      "title": "¿Por qué escogí el Centro Democrático?",
+      "content": "Quiero hablarles con claridad y de frente.\n\nEscogí el Centro Democrático porque creo en la importancia de tener principios firmes en la vida pública.\n\nCreo en la legalidad como base del desarrollo, en la seguridad como condición para el progreso y en respaldar el trabajo honesto, el emprendimiento y la empresa privada.\n\nMi decisión fue de convicción: desde aquí puedo defender mejor a las familias, a la gente trabajadora y a los municipios de Santander.\n\nNo se trata de colores; se trata de convicciones. Y mi compromiso es con ustedes.",
+      "pdf": "assets/img/pdf/porque-centro-democratico.pdf"
+    },
+    {
+      "id": "quien-soy",
+      "title": "¿Quién soy?",
+      "content": "Soy un hombre visionario de 37 años, orgullosamente santandereano.\n\nSoy abogado y Magíster en Derecho Público.\n\nEstoy casado con Sara Reyes y soy papá de Fátima y Martín. Mi familia es mi mayor motivación para trabajar por un futuro con oportunidades, seguridad y esperanza.",
+      "pdf": "assets/img/pdf/quien-soy.pdf"
+    },
+    {
+      "id": "en-que-creo",
+      "title": "¿En qué creo?",
+      "content": "Creo en Dios y en la familia como base de la sociedad.\n\nCreo en la seguridad como condición para el progreso.\n\nCreo en el trabajo, el emprendimiento y la empresa privada.\n\nCreo en un Estado responsable que cuide los recursos de la gente.\n\nY creo firmemente que el ciudadano honesto debe estar siempre por encima del delincuente.",
+      "pdf": "assets/img/pdf/en-que-creo.pdf"
+    },
+    {
+      "id": "mi-experiencia",
+      "title": "Mi experiencia",
+      "content": "He servido desde lo público y lo privado.\n\nFui Secretario de Hacienda y Jefe de Cobro Coactivo en Girón.\n\nHe sido asesor de entidades como la Dirección de Tránsito de Bucaramanga, el Hospital Universitario de Santander, los Ministerios de Justicia y de Ciencia, Tecnología e Innovación, y el IGAC.\n\nTambién he generado empresa en Salud, Educación, Alimentos y Entretenimiento.",
+      "pdf": "assets/img/pdf/mi-experiencia.pdf"
+    },
+    {
+      "id": "mi-compromiso",
+      "title": "Mi compromiso",
+      "content": "Fortalecer la legalidad y la seguridad.\n\nEjercer control político serio contra la corrupción.\n\nRespaldar la Fuerza Pública.\n\nCombatir la impunidad y el microtráfico.\n\nTrabajar por la inversión, el turismo y una infraestructura vial digna que conecte y reactive los 87 municipios de Santander.",
+      "pdf": "assets/img/pdf/mi-compromiso.pdf"
+    },
+    {
+      "id": "porque-quiero-ser-su-representante",
+      "title": "¿Por qué quiero ser su representante?",
+      "content": "Para defender con carácter a la gente trabajadora, a las familias y a los municipios de Santander que hoy se sienten abandonados.\n\nSantander necesita una voz firme, preparada y comprometida con el bienestar de la gente.",
+      "pdf": "assets/img/pdf/porque-quiero-ser-su-representante.pdf"
+    },
+    {
+      "id": "como-votar-jonathan",
+      "title": "Cómo votar por Jonathan Pineda (8 marzo 2026)",
+      "content": "Guía para votar por Jonathan Pineda.\n\n(Completa aquí el paso a paso según el tarjetón y tus indicaciones).",
+      "pdf": "assets/img/pdf/como-votar-jonathan.pdf"
+    },
+    {
+      "id": "como-votar-senado",
+      "title": "Cómo votar por el Senado (8 marzo 2026)",
+      "content": "Guía para votar por el Senado.\n\n(Completa aquí el paso a paso según el tarjetón y tus indicaciones).",
+      "pdf": "assets/img/pdf/como-votar-senado.pdf"
+    }
+  ],
+
+  "closingQuote": "Quiero ser su voz en el Congreso de la República.\nSantander necesita quien lo defienda."
+}

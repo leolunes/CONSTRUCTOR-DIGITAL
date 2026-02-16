@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "title": "Mapa de Cargas — Auditoría del Hogar",
+    "description": "Diagnóstico individual (esposo o esposa) para identificar cargas muertas, vivas y sísmicas (Fx), concentración (M↑) y su efecto: deriva e inclinación del pórtico. Incluye micro-recomendaciones y plan 7 días."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Cargas controladas (alineado)",
+      "min": 0,
+      "max": 4,
+      "summary": "Las cargas están dentro de lo normal. No hay deriva notable. Mantén mantenimiento y acuerdos preventivos.",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Cargas en ajuste",
+      "min": 5,
+      "max": 8,
+      "summary": "Hay cargas subiendo o concentrándose. Ajusta ahora para evitar fatiga y conflicto acumulado.",
+      "verse": {
+        "quote": "Mejor es el fin del negocio que su principio; mejor es el sufrido de espíritu que el altivo de espíritu.",
+        "reference": "Eclesiastés 7:8 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Cargas en riesgo",
+      "min": 9,
+      "max": 12,
+      "summary": "La estructura está bajo sobreesfuerzo: vertical alto (peso) y/o empujes laterales (Fx). Requiere redistribución, límites y transferencia.",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Cargas críticas (requiere proceso)",
+      "min": 13,
+      "max": 18,
+      "summary": "Empujes (Fx) + concentración (M↑) o peso crónico elevado. No es corrección rápida: es proceso pastoral con orden, límites y curado.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare; por medio de la verdad traerá justicia.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "svgClickMap": {
+    "foundation": "entrega",
+    "N1": "entrega",
+    "N2": "sismicas",
+    "N3": "entrega",
+    "deadLoads": "muertas",
+    "liveLoads": "vivas",
+    "seismicFx": "sismicas",
+    "momentM": "concentracion",
+    "column": "concentracion",
+    "beam": "vivas",
+    "rollerBase": "entrega"
+  },
+  "sections": [
+    {
+      "id": "muertas",
+      "title": "1) Cargas muertas (peso fijo / crónico)",
+      "node": "N1",
+      "element": "foundation",
+      "diagnosticFocus": "¿Qué peso fijo está siempre presente y desgasta si no se ordena?",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Las cargas muertas no se sienten “urgentes”, pero si se acumulan fatigan el sistema.",
+        "Lo fijo sin orden se vuelve opresión silenciosa."
+      ],
+      "actions": [
+        "Escribe 3 cargas fijas (deudas, responsabilidades, rutinas).",
+        "Elige 1 que se reducirá esta semana (acción concreta).",
+        "Entrega al fundamento lo que no puedes controlar (oración + obediencia)."
+      ],
+      "items": [
+        { "id": "deuda", "title": "Deudas / pagos fijos", "desc": "Obligaciones permanentes que presionan cada mes." },
+        { "id": "agotamiento", "title": "Agotamiento crónico", "desc": "Cansancio sostenido, sueño insuficiente, desgaste." },
+        { "id": "cuidado", "title": "Responsabilidades de cuidado", "desc": "Cuidado de hijos, familiares, tareas ineludibles." },
+        { "id": "rutinas", "title": "Rutinas sin orden", "desc": "Casa y vida diaria sin estructura, todo se vuelve peso." }
+      ]
+    },
+    {
+      "id": "vivas",
+      "title": "2) Cargas vivas (demanda diaria / variable)",
+      "node": "N2",
+      "element": "beam",
+      "diagnosticFocus": "¿Qué demanda del día a día se está saliendo de control?",
+      "verse": {
+        "quote": "Mejor son dos que uno... porque si cayeren, el uno levantará a su compañero.",
+        "reference": "Eclesiastés 4:9–10 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Las cargas vivas suben y bajan: hijos, trabajo, horarios, presiones del día.",
+        "Cuando no se conversa, se vuelven tensión emocional y discusiones."
+      ],
+      "actions": [
+        "Define 2 prioridades reales para esta semana (no 10).",
+        "Convierte expectativa en acuerdo (claro, corto).",
+        "Reduce una demanda diaria (límite / delegar / simplificar)."
+      ],
+      "items": [
+        { "id": "trabajo", "title": "Trabajo / horarios", "desc": "Jornadas, turnos, cambios, exceso de ocupación." },
+        { "id": "hijos", "title": "Hijos / crianza", "desc": "Demandas de crianza, escuela, conductas, logística." },
+        { "id": "conflictos", "title": "Conflictos cotidianos", "desc": "Roce diario, discusiones repetitivas, irritabilidad." },
+        { "id": "tiempo", "title": "Falta de tiempo / prisa", "desc": "Todo rápido, nadie alcanza, se vive en urgencia." }
+      ]
+    },
+    {
+      "id": "sismicas",
+      "title": "3) Cargas sísmicas (Fx: empujes laterales)",
+      "node": "N2",
+      "element": "seismicFx",
+      "diagnosticFocus": "¿Qué empuje lateral está moviendo el sistema? (crisis, terceros, decisiones, pasado).",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Las fuerzas laterales no siempre se ven, pero desplazan el hogar.",
+        "Cuando Fx sube, el nudo se vuelve el punto más atacado."
+      ],
+      "actions": [
+        "Identifica el empuje principal (Fx) en una frase.",
+        "Define un límite sano (terceros / decisiones / crisis).",
+        "No respondas desde urgencia: ora y decide desde el altar."
+      ],
+      "items": [
+        { "id": "terceros", "title": "Interferencia de terceros", "desc": "Familia extendida, amistades, opiniones, presiones." },
+        { "id": "crisis", "title": "Crisis inesperadas", "desc": "Salud, pérdidas, cambios bruscos, noticias difíciles." },
+        { "id": "decisiones", "title": "Decisiones grandes sin unidad", "desc": "Mudanza, dinero, trabajo, rumbo, sin acuerdo." },
+        { "id": "pasado", "title": "Heridas del pasado activas", "desc": "Trauma, comparaciones, resentimientos, recuerdos que empujan." }
+      ]
+    },
+    {
+      "id": "concentracion",
+      "title": "4) Concentración (M↑: peso en uno solo)",
+      "node": "N3",
+      "element": "momentM",
+      "diagnosticFocus": "¿El peso está repartido o está recayendo en una sola persona?",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Cuando el peso se concentra, aparece momento (M↑): el sistema se inclina.",
+        "La concentración no es diseño: es desgaste y resentimiento."
+      ],
+      "actions": [
+        "Nombra 1 cosa que estás cargando solo(a).",
+        "Pide ayuda con una petición específica (no general).",
+        "Acordar una redistribución esta semana (1–2 cambios reales)."
+      ]
+    },
+    {
+      "id": "entrega",
+      "title": "5) Entrega al fundamento (transferencia)",
+      "node": "N1",
+      "element": "foundation",
+      "diagnosticFocus": "¿Se transfiere el peso a Cristo o se intenta sostener desde autosuficiencia/control?",
+      "verse": {
+        "quote": "Separados de mí, nada podéis hacer.",
+        "reference": "Juan 15:5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "No todo peso se elimina: se transfiere al fundamento.",
+        "La entrega no es pasividad: es obediencia y orden bajo Dios."
+      ],
+      "actions": [
+        "Oración breve diaria: “Señor, te entrego esta carga concreta”.",
+        "Obedece un paso (pequeño, real) en lugar de solo pensar.",
+        "Busca acompañamiento si el sistema está en riesgo alto."
+      ]
+    },
+    {
+      "id": "mantenimiento",
+      "title": "6) Mantenimiento (revisión semanal)",
+      "node": "N2",
+      "element": "rollerBase",
+      "diagnosticFocus": "¿Se revisa el sistema o solo se reacciona cuando ya hay crisis?",
+      "verse": {
+        "quote": "Examinadlo todo; retened lo bueno.",
+        "reference": "1 Tesalonicenses 5:21 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Lo que se revisa se corrige temprano; lo que se ignora se rompe tarde.",
+        "Mantenimiento es sabiduría, no fracaso."
+      ],
+      "actions": [
+        "10 minutos semanales: revisar cargas y redistribuir.",
+        "Una conversación corta con acuerdos.",
+        "Repetir este mapa cada 7 días por 4 semanas."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,650 @@
+{
+  "meta": {
+    "title": "Radar del Diseño — Auditoría Estructural Divina",
+    "description": "Diagnóstico individual (esposo o esposa) con diagrama del pórtico + “concreto espiritual” (Cemento/Agua/Triturado/Arena/Acero) y plan semanal."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Diseño estable (alineado)",
+      "min": 0,
+      "max": 10,
+      "summary": "Hay estabilidad funcional. El sistema sostiene carga sin desgaste crónico. Mantén hábitos y refuerzo preventivo.",
+      "verse": {
+        "quote": "Por tanto, el que me oye estas palabras y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca.",
+        "reference": "Mateo 7:24 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Diseño en ajuste",
+      "min": 11,
+      "max": 22,
+      "summary": "La estructura funciona, pero hay áreas que están cargando de más. Ajusta hoy para evitar fisuras mañana.",
+      "verse": {
+        "quote": "Mejor es el fin del negocio que su principio; mejor es el sufrido de espíritu que el altivo de espíritu.",
+        "reference": "Eclesiastés 7:8 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Diseño en riesgo",
+      "min": 23,
+      "max": 33,
+      "summary": "Hay señales de sobreesfuerzo y deriva. Requiere orden, transferencia de cargas y decisiones desde el altar.",
+      "verse": {
+        "quote": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+        "reference": "Gálatas 6:2 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Diseño crítico (requiere proceso)",
+      "min": 34,
+      "max": 42,
+      "summary": "No requiere corrección rápida, requiere proceso pastoral: restauración, límites y curado. No más presión: orden y cuidado.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare; por medio de la verdad traerá justicia.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "svgClickMap": {
+    "foundation": "comunion",
+    "N1": "comunion",
+    "column": "columna",
+    "beam": "viga",
+    "N2": "congregacion",
+    "rollerBase": "interseccion",
+    "loads": "cargas",
+    "mixTank": "cemento",
+    "layer_cemento": "cemento",
+    "layer_agua": "agua",
+    "layer_triturado": "triturado",
+    "layer_arena": "arena",
+    "rebar": "acero",
+    "rebar_1": "acero",
+    "rebar_2": "acero",
+    "rebar_3": "acero"
+  },
+  "sections": [
+    {
+      "id": "comunion",
+      "title": "1) Comunión (Columna ↔ Cimiento)",
+      "node": "N1",
+      "element": "foundation",
+      "diagnosticFocus": "¿Está tu vida anclada en Cristo o funcionando desde autosuficiencia?",
+      "verse": {
+        "quote": "Permaneced en mí, y yo en vosotros... porque separados de mí nada podéis hacer.",
+        "reference": "Juan 15:4–5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El anclaje no elimina empujes, evita desplazamiento.",
+        "La comunión no es ritual: es transferencia real al fundamento."
+      ],
+      "actions": [
+        "10–15 min diarios: Palabra + oración (no negociable).",
+        "Una obediencia concreta esta semana (medible).",
+        "Corta una distracción que te roba altar."
+      ],
+      "teaching": {
+        "title": "Anclaje real: cuando el hogar no se desplaza",
+        "textBase": "Permaneced en mí… porque separados de mí nada podéis hacer. (Juan 15:4–5)",
+        "hook": "Un hogar puede sostener peso… y aun así moverse. Muchas crisis no vienen por exceso de carga, sino por falta de anclaje. La comunión no es emoción: es empotramiento en el fundamento.",
+        "principle": "El anclaje no evita el empuje; evita el desplazamiento.",
+        "revelation": "Cristo no elimina la presión; impide la pérdida de lugar.",
+        "points": [
+          "La comunión no es un hábito decorativo: es el punto donde la carga se transfiere.",
+          "Cuando el anclaje se debilita, el hogar se vuelve un sistema de esfuerzo.",
+          "Permanecer es decisión diaria: volver al fundamento antes de reaccionar."
+        ],
+        "application": [
+          "Haz altar breve diario: Palabra + oración (constante, no perfecto).",
+          "Antes de decidir: 2 minutos de silencio y entrega.",
+          "Corta una fuente de distracción que te roba comunión."
+        ],
+        "questions": [
+          "¿Qué fuerza me está desplazando sin que lo note?",
+          "¿Dónde reaccioné en lugar de permanecer?",
+          "¿Qué carga estoy sosteniendo sin transferirla al fundamento?"
+        ],
+        "prayer": "Señor, afirma mis pasos. Profundiza mi anclaje en Ti. Enséñame a permanecer cuando todo empuja y a transferir la carga al fundamento. Amén.",
+        "closing": "Un hogar anclado no se mueve, aunque todo empuje."
+      }
+    },
+    {
+      "id": "columna",
+      "title": "2) Columna (Verticalidad del varón / eje)",
+      "node": "N2",
+      "element": "column",
+      "diagnosticFocus": "¿Hay verticalidad (identidad alineada) o inclinación (ego/evasión)?",
+      "verse": {
+        "quote": "Esforzaos y cobrad ánimo... porque Jehová tu Dios es el que va contigo; no te dejará.",
+        "reference": "Deuteronomio 31:6 (RVR1960)"
+      },
+      "miniTeaching": [
+        "No es la fuerza la que hace girar: es el eje torcido.",
+        "Verticalidad es orientación correcta, no perfección."
+      ],
+      "actions": [
+        "Identifica tu inclinación: ¿evasión o control?",
+        "Pide perdón por una omisión concreta (si aplica).",
+        "Un límite sano: menos impulso, más dirección."
+      ],
+      "teaching": {
+        "title": "Eje recto: cuando nada hace girar el sistema",
+        "textBase": "Esforzaos… porque Jehová tu Dios es el que va contigo. (Deuteronomio 31:6)",
+        "hook": "Hay hogares que no colapsan por peso, sino por giro. La presión se vuelve crisis cuando el eje está torcido. La verticalidad no es perfección: es orientación correcta.",
+        "principle": "Donde no hay alineación, cualquier empuje produce giro.",
+        "revelation": "No es la fuerza la que hace girar: es el eje torcido.",
+        "points": [
+          "La columna sostiene y alinea; no vive desde ego ni desde evasión.",
+          "La desalineación aumenta la exigencia interna (P–Δ espiritual).",
+          "La firmeza sana nace del altar, no del control."
+        ],
+        "application": [
+          "Identifica tu inclinación (evasión o control) y nómbrala.",
+          "Haz una corrección práctica esta semana (un límite o una decisión).",
+          "Busca cobertura: no decidas en soledad."
+        ],
+        "questions": [
+          "¿Estoy girando por emoción o permaneciendo en el eje?",
+          "¿Qué parte de mí gobierna hoy: altar o autosuficiencia?",
+          "¿Qué empuje pequeño me está desalineando?"
+        ],
+        "prayer": "Señor, endereza mi eje. Quita la inclinación del ego y la evasión. Enséñame a sostener con diseño, no con dureza. Amén.",
+        "closing": "La estabilidad no depende de cuánto soportas, sino de qué te mantiene firme."
+      }
+    },
+    {
+      "id": "congregacion",
+      "title": "3) Congregación (Nudo del hogar)",
+      "node": "N2",
+      "element": "joint",
+      "diagnosticFocus": "¿Hay conversación + pacto + culto efectivo, o el nudo está suelto?",
+      "verse": {
+        "quote": "Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.",
+        "reference": "Mateo 18:20 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El nudo es el punto más atacado por fuerzas horizontales.",
+        "Lo que se conversa a tiempo no se convierte en fractura."
+      ],
+      "actions": [
+        "Un culto en casa esta semana (20–30 min).",
+        "Una conversación con acuerdos claros (sin discusiones largas).",
+        "Restaurar honra: 1 reconocimiento por día."
+      ],
+      "teaching": {
+        "title": "El nudo del hogar: donde la presión intenta romper cohesión",
+        "textBase": "Donde están dos o tres congregados… allí estoy yo. (Mateo 18:20)",
+        "hook": "Las fuerzas horizontales no aplastan: desplazan. La presión busca romper el nudo, no la viga. Por eso muchos hogares no caen por peso, sino por desconexión.",
+        "principle": "Lo que no se conversa con diseño termina dominando por insistencia.",
+        "revelation": "La congregación es descarga estructural: evita que la tensión se concentre.",
+        "points": [
+          "El nudo es el punto más atacado: comunicación, acuerdos, honra.",
+          "Silencios prolongados crean fisuras invisibles.",
+          "Congregación no es solo templo: es unión diaria del hogar."
+        ],
+        "application": [
+          "Haz un culto corto esta semana: Palabra + oración + acuerdos.",
+          "Define un acuerdo pequeño y medible (sin debate largo).",
+          "Restaura honra: un reconocimiento por día."
+        ],
+        "questions": [
+          "¿Qué conversación estamos postergando?",
+          "¿Qué resentimiento está aflojando el nudo?",
+          "¿Qué acuerdo simple evitaría una fisura?"
+        ],
+        "prayer": "Señor, une nuestro nudo. Danos gracia para conversar sin culpa, acordar sin pelear y honrar sin orgullo. Amén.",
+        "closing": "Lo que se conversa a tiempo no se convierte en fractura."
+      }
+    },
+    {
+      "id": "viga",
+      "title": "4) Viga (Sensibilidad y transferencia de la mujer)",
+      "node": "N3",
+      "element": "beam",
+      "diagnosticFocus": "¿Se canalizan cargas o se acumulan tensiones en el alma?",
+      "verse": {
+        "quote": "Mejor son dos que uno... porque si cayeren, el uno levantará a su compañero.",
+        "reference": "Eclesiastés 4:9–10 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La viga percibe primero la carga: eso es diseño.",
+        "La viga no fue diseñada para retener, sino para transferir."
+      ],
+      "actions": [
+        "Nombra 1 carga que estás sosteniendo en silencio.",
+        "Transfiérela con una petición clara (sin reproche).",
+        "Ora antes de reaccionar (pausa santa)."
+      ],
+      "teaching": {
+        "title": "Momentos en la viga: cuando lo que no se transfiere se convierte en tensión",
+        "textBase": "Mejor son dos que uno… (Eclesiastés 4:9–10)",
+        "hook": "La tensión no destruye el sistema; lo destruye la mala distribución de la tensión. La viga fue diseñada para percibir y transferir, no para retener.",
+        "principle": "Lo que no se transfiere, se transforma en tensión.",
+        "revelation": "Un hogar no colapsa por tener presión, sino por cargarla en el lugar equivocado.",
+        "points": [
+          "La viga percibe temprano: eso es función, no debilidad.",
+          "Cuando la viga guarda lo que debía expresarse, el momento se concentra.",
+          "La descarga correcta es conversación + altar."
+        ],
+        "application": [
+          "Nombra una carga específica (no general) y exprésala con claridad.",
+          "Pide una acción concreta (petición, no reproche).",
+          "Ora antes de reaccionar: pausa santa."
+        ],
+        "questions": [
+          "¿Qué estoy sosteniendo sola que debía transferirse?",
+          "¿Dónde he callado para evitar conflicto, pero creé vacíos?",
+          "¿Qué conversación necesito tener hoy, no después?"
+        ],
+        "prayer": "Señor, enséñame a descargar a tiempo. Que lo que percibo no se convierta en tensión acumulada, sino en guía para volver al diseño. Amén.",
+        "closing": "La tensión bien distribuida fortalece; la acumulada fractura."
+      }
+    },
+    {
+      "id": "interseccion",
+      "title": "5) Intersección (Apoyo móvil: Espíritu Santo)",
+      "node": "N3",
+      "element": "roller",
+      "diagnosticFocus": "¿Hay soporte con libertad (reposo) o rigidez/abandono emocional?",
+      "verse": {
+        "quote": "Asimismo el Espíritu nos ayuda en nuestra debilidad... intercede por nosotros.",
+        "reference": "Romanos 8:26 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El apoyo móvil sostiene sin aprisionar.",
+        "El Espíritu no elimina la presión: evita la pérdida de lugar."
+      ],
+      "actions": [
+        "Practica ‘descanso santo’: pausa antes de responder.",
+        "Cambia control por intercesión (orar antes de exigir).",
+        "Un espacio semanal de reposo emocional."
+      ],
+      "teaching": {
+        "title": "Apoyo móvil: sostén con libertad",
+        "textBase": "El Espíritu nos ayuda… intercede por nosotros. (Romanos 8:26)",
+        "hook": "Un sistema demasiado rígido se fisura. Un sistema sin soporte se desplaza. El Espíritu Santo sostiene el alma sin aprisionarla: ese es el apoyo móvil del diseño.",
+        "principle": "El apoyo correcto sostiene sin controlar.",
+        "revelation": "Cristo no elimina presión; el Espíritu impide la pérdida de lugar.",
+        "points": [
+          "El apoyo móvil da reposo: evita la rigidez y la fractura.",
+          "La intercesión sustituye el control: orar antes de exigir.",
+          "El descanso santo protege el proceso del hogar."
+        ],
+        "application": [
+          "Pausa antes de responder: 10 segundos + oración breve.",
+          "Define un espacio semanal de reposo emocional.",
+          "Practica intercesión antes de corrección."
+        ],
+        "questions": [
+          "¿Estoy sosteniendo con libertad o controlando por miedo?",
+          "¿Qué parte del hogar necesita reposo, no presión?",
+          "¿Estoy orando antes de hablar?"
+        ],
+        "prayer": "Espíritu Santo, ayúdanos en nuestra debilidad. Sostén sin aprisionar, guía sin confundir y trae reposo bajo carga. Amén.",
+        "closing": "La verdad ancla sin endurecer."
+      }
+    },
+    {
+      "id": "cargas",
+      "title": "6) Cargas (vivas, muertas y sísmicas)",
+      "node": "N1",
+      "element": "loads",
+      "diagnosticFocus": "¿Se distribuyen las cargas o se concentran en uno solo?",
+      "verse": {
+        "quote": "Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros.",
+        "reference": "1 Pedro 5:7 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Las cargas verticales son normales: trabajo, hijos, provisión.",
+        "Las fuerzas horizontales revelan desalineación."
+      ],
+      "actions": [
+        "Lista de cargas: ¿muertas, vivas, sísmicas?",
+        "Define quién sostiene qué esta semana.",
+        "Entrega 1 ansiedad concreta a Cristo (orar + soltar)."
+      ],
+      "teaching": {
+        "title": "Cargas: el problema no es el peso, es dónde quedó depositado",
+        "textBase": "Echando toda vuestra ansiedad sobre él… (1 Pedro 5:7)",
+        "hook": "Las cargas no son el enemigo. El enemigo es que el peso se quede en el alma en vez de llegar al fundamento. Muchas casas no caen: se desgastan.",
+        "principle": "El peso mal transferido fatiga; el peso bien transferido descansa.",
+        "revelation": "Dios no prometió hogares sin peso; prometió un diseño suficiente para sostenerlo.",
+        "points": [
+          "Cargas vivas y muertas son normales: lo peligroso es la concentración.",
+          "Las fuerzas horizontales revelan el punto débil (nudo/eje).",
+          "Transferir al fundamento es una práctica, no una frase."
+        ],
+        "application": [
+          "Clasifica cargas hoy: muertas, vivas, sísmicas.",
+          "Reasigna una carga esta semana (acuerdo práctico).",
+          "Entrega una ansiedad específica en oración y suelta control."
+        ],
+        "questions": [
+          "¿Qué está pesando más de lo debido y por qué?",
+          "¿Dónde se concentró la carga?",
+          "¿Qué carga puedo transferir hoy?"
+        ],
+        "prayer": "Señor, enséñanos a transferir. Que el peso no se quede en el alma, sino que llegue al fundamento. Amén.",
+        "closing": "No todo cansancio viene del peso; muchos vienen de la deriva."
+      }
+    },
+    {
+      "id": "equilibrio",
+      "title": "7) Equilibrio (∑Fy=0, ∑Fx=0, ∑M=0)",
+      "node": "N2",
+      "element": "equilibrium",
+      "diagnosticFocus": "¿Hay reposo estructural o el hogar está ‘girando’ y ‘desplazándose’?",
+      "verse": {
+        "quote": "Dios no es Dios de confusión, sino de paz.",
+        "reference": "1 Corintios 14:33 (RVR1960)"
+      },
+      "miniTeaching": [
+        "∑Fx=0: la presión no desplaza la casa.",
+        "∑M=0: nada hace girar porque el eje está firme."
+      ],
+      "actions": [
+        "Identifica qué empuja horizontalmente (estrés, terceros, crisis).",
+        "Refuerza el nudo con acuerdos simples.",
+        "Decide desde altar, no desde urgencia."
+      ],
+      "teaching": {
+        "title": "Equilibrio total: cuando el diseño gobierna fuerzas",
+        "textBase": "Dios no es Dios de confusión, sino de paz. (1 Corintios 14:33)",
+        "hook": "No basta con que el peso esté equilibrado. Un hogar puede sostener cargas verticales y aun así girar o desplazarse. El equilibrio no es ausencia de fuerzas: es gobierno correcto.",
+        "principle": "∑M = 0 y ∑Fx = 0 no significan ausencia de fuerzas, significan gobierno correcto del diseño.",
+        "revelation": "La paz no viene de calma externa, sino de equilibrio interno.",
+        "points": [
+          "Las fuerzas horizontales empujan: no aplastan; desplazan.",
+          "Sin alineación, cualquier empuje produce giro.",
+          "El anclaje impide pérdida de lugar: Cristo como fundamento."
+        ],
+        "application": [
+          "Nombra qué empuja hoy (cultura, terceros, conflicto, crisis).",
+          "Define un acuerdo simple para no reaccionar impulsivamente.",
+          "Decide desde altar: oración antes de acción."
+        ],
+        "questions": [
+          "¿Qué fuerzas intentan mover mi hogar?",
+          "¿Estoy girando alrededor de emociones o permaneciendo en el eje?",
+          "¿Qué anclaje debe profundizarse hoy?"
+        ],
+        "prayer": "Señor, alinea nuestro eje y profundiza nuestro anclaje. Enséñanos a permanecer cuando todo empuja. Amén.",
+        "closing": "Un hogar anclado no se mueve, aunque todo empuje."
+      }
+    },
+    {
+      "id": "cemento",
+      "title": "8) Cemento (Palabra: cohesión)",
+      "node": "N1",
+      "element": "layer_cemento",
+      "diagnosticFocus": "¿La Palabra está dando cohesión real o se reemplazó por opinión y conveniencia?",
+      "verse": {
+        "quote": "Santifícalos en tu verdad; tu palabra es verdad.",
+        "reference": "Juan 17:17 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El cemento une. Sin Palabra hay emoción, pero no consolidación.",
+        "La verdad no endurece: estabiliza."
+      ],
+      "actions": [
+        "Aumenta Palabra en casa esta semana (lectura breve diaria).",
+        "Una verdad aplicada (no solo leída).",
+        "Elimina una fuente de ‘opinión’ que sustituye diseño."
+      ],
+      "teaching": {
+        "title": "Cemento espiritual: la Palabra que cohesiona",
+        "textBase": "Tu palabra es verdad. (Juan 17:17)",
+        "hook": "El diseño define la forma, pero el material define la resistencia. Sin cemento, la mezcla se desarma. Un hogar puede emocionar, pero no consolidar si la Palabra no une.",
+        "principle": "Un hogar sin Palabra puede emocionar, pero no consolidar.",
+        "revelation": "La verdad no endurece; estabiliza.",
+        "points": [
+          "El cemento no adorna: une y da forma.",
+          "Palabra sin aplicación crea apariencia, no densidad.",
+          "La verdad dicha a tiempo evita refuerzos dolorosos después."
+        ],
+        "application": [
+          "Lectura breve diaria (constante).",
+          "Una verdad aplicada esta semana (obediencia medible).",
+          "Quita una voz de opinión que compite con la Palabra."
+        ],
+        "questions": [
+          "¿Qué guía mi casa: Palabra o conveniencia?",
+          "¿Dónde diluí verdad para evitar tensión?",
+          "¿Qué obediencia concreta debo hacer?"
+        ],
+        "prayer": "Señor, danos cemento real. Une nuestro hogar con tu Palabra y hazla vivible. Amén.",
+        "closing": "El tiempo no prueba el diseño; prueba el material."
+      }
+    },
+    {
+      "id": "agua",
+      "title": "9) Agua (Espíritu Santo: activación)",
+      "node": "N3",
+      "element": "layer_agua",
+      "diagnosticFocus": "¿La vida se activa desde la Fuente (Cristo) o desde cisternas (carne/control/miedo)?",
+      "verse": {
+        "quote": "Separados de mí, nada podéis hacer.",
+        "reference": "Juan 15:5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La Palabra sin Espíritu se vuelve letra; el Espíritu sin Palabra se vuelve emoción.",
+        "No todo lo que hidrata activa: importa la fuente."
+      ],
+      "actions": [
+        "Antes de una conversación difícil: 2 minutos de oración juntos o en secreto.",
+        "Identifica ‘cisternas’: control, orgullo, miedo, pasado.",
+        "Pide dirección del Espíritu y obedece un paso."
+      ],
+      "teaching": {
+        "title": "La fuente del agua: no toda agua da vida",
+        "textBase": "Separados de mí, nada podéis hacer. (Juan 15:5)",
+        "hook": "Con los mismos materiales, el resultado cambia según la fuente del agua. El problema final de muchos hogares no es diseño ni materiales, sino desde dónde activan su vida.",
+        "principle": "No todo lo que hidrata activa; solo lo que fluye desde Cristo produce vida estructural.",
+        "revelation": "La Palabra activada por la carne produce forma, no vida.",
+        "points": [
+          "Agua de cisterna: decisiones desde carne, miedo, control.",
+          "Agua de la Fuente: comunión real y dependencia diaria.",
+          "La mezcla solo es sana cuando la fuente es una."
+        ],
+        "application": [
+          "Antes de conversar: oración breve (en secreto si estás solo).",
+          "Identifica tu cisterna dominante (miedo/control/pasado).",
+          "Obedece un paso pequeño guiado por el Espíritu."
+        ],
+        "questions": [
+          "¿Desde dónde se activan mis reacciones?",
+          "¿Qué fuente gobierna mis decisiones hoy?",
+          "¿Qué cisterna debo cerrar?"
+        ],
+        "prayer": "Señor, no queremos vivir desde cisternas. Conéctanos a la Fuente viva y activa nuestro hogar desde Ti. Amén.",
+        "closing": "El diseño responde solo cuando es activado desde la Fuente viva."
+      }
+    },
+    {
+      "id": "triturado",
+      "title": "10) Triturado (Aporte del esposo: soporte)",
+      "node": "N2",
+      "element": "layer_triturado",
+      "diagnosticFocus": "¿Hay soporte responsable y transferencia al altar, o la estructura recae en el alma (arena)?",
+      "verse": {
+        "quote": "Velad, estad firmes en la fe; portaos varonilmente, y esforzaos.",
+        "reference": "1 Corintios 16:13 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El triturado soporta carga, pero no absorbe: transfiere.",
+        "La firmeza no es dureza: es capacidad de sostener con diseño."
+      ],
+      "actions": [
+        "Asume 1 responsabilidad concreta esta semana (sin excusas).",
+        "Transfiere 1 carga al altar (orar + obedecer).",
+        "Haz 1 decisión con cobertura (no en soledad)."
+      ],
+      "teaching": {
+        "title": "Triturado: el soporte que no se ve elegante, pero sostiene",
+        "textBase": "Portaos varonilmente, y esforzaos. (1 Corintios 16:13)",
+        "hook": "En el concreto, el triturado no es fino. Pero sin él, nada se sostiene. En el hogar, el aporte del varón no es ornamental: es estructural.",
+        "principle": "El varón no fue diseñado para absorber cargas, sino para transferirlas.",
+        "revelation": "La fortaleza sin descarga se convierte en fatiga.",
+        "points": [
+          "El triturado recibe la mayor carga, pero no reemplaza el fundamento.",
+          "Sostener en silencio sin transferir genera fisuras internas.",
+          "Soporte con fe: confianza que evita control."
+        ],
+        "application": [
+          "Asume una responsabilidad concreta y medible esta semana.",
+          "Transfiere una carga al altar (orar + obedecer).",
+          "Decide con cobertura: no en soledad."
+        ],
+        "questions": [
+          "¿Estoy sosteniendo o absorbiendo?",
+          "¿Qué peso debo transferir al altar?",
+          "¿Confundí firmeza con dureza?"
+        ],
+        "prayer": "Señor, enséñame a sostener conforme a tu diseño. Quita dureza y dame firmeza que transfiere. Amén.",
+        "closing": "El verdadero soporte no se impone; permanece."
+      }
+    },
+    {
+      "id": "arena",
+      "title": "11) Arena (Aporte de la esposa: integración)",
+      "node": "N3",
+      "element": "layer_arena",
+      "diagnosticFocus": "¿Hay integración (escucha, sensibilidad honrada) o vacíos/silencios que debilitan la mezcla?",
+      "verse": {
+        "quote": "La mujer sabia edifica su casa; mas la necia con sus manos la derriba.",
+        "reference": "Proverbios 14:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La arena integra y llena vacíos: hace habitable la estructura.",
+        "La sensibilidad no es debilidad: es función estructural."
+      ],
+      "actions": [
+        "Expresa 1 percepción sin acusar (dato + sentimiento + petición).",
+        "Nombra 1 vacío antes de que sea grieta.",
+        "Pide honra específica (no general)."
+      ],
+      "teaching": {
+        "title": "Arena: la integración que llena vacíos invisibles",
+        "textBase": "La mujer sabia edifica su casa… (Proverbios 14:1)",
+        "hook": "La arena no soporta la carga principal, pero sin arena el concreto queda tosco, con vacíos y fisuras. La integración hace habitable lo que la estructura sostiene.",
+        "principle": "Un hogar no se rompe por exceso de peso, sino por vacíos no atendidos.",
+        "revelation": "La sensibilidad no es debilidad; es función estructural.",
+        "points": [
+          "La arena llena espacios y mejora trabajabilidad: conversaciones posibles.",
+          "Cuando la arena se sobrecarga, se desgasta en silencio.",
+          "La fortaleza nace de integración correcta, no de competencia."
+        ],
+        "application": [
+          "Expresa una percepción en formato: dato + sentimiento + petición.",
+          "Nombra un vacío hoy, antes de que sea grieta.",
+          "Pide honra específica (qué necesitas, cuándo, cómo)."
+        ],
+        "questions": [
+          "¿Estoy integrando o cargando de más?",
+          "¿Qué vacío percibí y no expresé?",
+          "¿Mi sensibilidad está siendo honrada o ignorada?"
+        ],
+        "prayer": "Señor, enséñanos a integrar conforme a tu diseño. Danos oído para escuchar lo que la sensibilidad percibe. Amén.",
+        "closing": "La integración correcta hace habitable lo que la estructura sostiene."
+      }
+    },
+    {
+      "id": "acero",
+      "title": "12) Acero (Fe: refuerzo invisible)",
+      "node": "N1",
+      "element": "rebar",
+      "diagnosticFocus": "¿Hay fe persistente (refuerzo) o solo emoción pasajera (sin tensión)?",
+      "verse": {
+        "quote": "Ahora bien, la fe es la certeza de lo que se espera, la convicción de lo que no se ve.",
+        "reference": "Hebreos 11:1 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El acero no evita fisuras: evita colapsos.",
+        "La fe no grita: sostiene."
+      ],
+      "actions": [
+        "Sostén 1 promesa bíblica por 7 días (sin negociar).",
+        "Ora aunque no sientas (persistencia).",
+        "Un paso de obediencia aunque no haya evidencia."
+      ],
+      "teaching": {
+        "title": "Fe como acero: refuerzo interno bajo tensión",
+        "textBase": "La fe… la convicción de lo que no se ve. (Hebreos 11:1)",
+        "hook": "El concreto soporta peso, pero no soporta bien la tensión. Por eso necesita acero. La fe es ese refuerzo invisible que impide el colapso cuando todo empuja.",
+        "principle": "La fe no elimina la tensión; evita el colapso.",
+        "revelation": "No se necesita mucha fe; se necesita fe bien ubicada.",
+        "points": [
+          "El acero trabaja en tensión: la fe aparece donde el diseño es probado.",
+          "Fe no es emoción: es decisión interna de confiar en el diseño.",
+          "La fe no grita; sostiene en silencio."
+        ],
+        "application": [
+          "Sostén una promesa 7 días (sin negociar).",
+          "Ora aunque no sientas (persistencia).",
+          "Da un paso de obediencia sin evidencia inmediata."
+        ],
+        "questions": [
+          "¿Dónde estoy enfrentando tensión sin refuerzo?",
+          "¿He confundido fe con emoción?",
+          "¿Qué área necesita fe persistente y silenciosa?"
+        ],
+        "prayer": "Señor, fortalece nuestra fe. No para impresionar, sino para permanecer. Refuerza nuestro hogar por dentro. Amén.",
+        "closing": "La fe no se ve, pero se siente cuando todo empuja."
+      }
+    },
+    {
+      "id": "mantenimiento",
+      "title": "13) Mantenimiento (curado + refuerzo + hábitos)",
+      "node": "N2",
+      "element": "maintenance",
+      "diagnosticFocus": "¿Se cuida lo cotidiano o solo se repara cuando ya hay crisis?",
+      "verse": {
+        "quote": "Antes exhortaos los unos a los otros cada día... para que ninguno se endurezca.",
+        "reference": "Hebreos 3:13 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Lo que no se cuida, se debilita; lo que no se revisa, se deteriora.",
+        "Curado es proceso: no se acelera sin fisurar."
+      ],
+      "actions": [
+        "Define 1 práctica semanal fija (culto/diálogo/acuerdos).",
+        "Revisión mensual de 10 minutos por módulos.",
+        "Si hay riesgo alto: buscar acompañamiento pastoral."
+      ],
+      "teaching": {
+        "title": "Refuerzo y mantenimiento: la permanencia es disciplina",
+        "textBase": "Exhortaos cada día… (Hebreos 3:13)",
+        "hook": "Ninguna obra queda “terminada para siempre”. Lo que no se cuida, se deteriora. Muchos hogares no colapsan por pecado abierto, sino por desgaste acumulado no atendido.",
+        "principle": "Lo cotidiano bien atendido evita lo extraordinario doloroso.",
+        "revelation": "El mantenimiento no es falla: es valor por lo construido.",
+        "points": [
+          "Refuerzo es prevención, no acusación.",
+          "Curado es tiempo: no se acelera sin fisurar.",
+          "Revisar señales es sabiduría: irritación, silencios, descuido."
+        ],
+        "application": [
+          "Define una práctica semanal fija (culto/diálogo/acuerdos).",
+          "Haz revisión mensual de 10 minutos por módulos.",
+          "Si hay riesgo alto, busca acompañamiento pastoral."
+        ],
+        "questions": [
+          "¿Qué señales hemos minimizado?",
+          "¿Qué hábito se descuidó y abrió desgaste?",
+          "¿Qué ajuste pequeño evita una crisis grande?"
+        ],
+        "prayer": "Señor, enséñanos a cuidar lo que Tú edificas. Danos humildad para aceptar refuerzo y constancia para mantener. Amén.",
+        "closing": "La permanencia se construye en el cuidado diario."
+      }
+    }
+  ]
+}

@@ -1,0 +1,1601 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Radar del Diseño — Auditoría</title>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:1040px){.grid{grid-template-columns:560px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea, select{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
+    .tip{font-size:12px;color:var(--muted);line-height:1.35}
+    .hint{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(94,234,212,.25);background:rgba(94,234,212,.06);color:#bff7ee}
+    .small{font-size:12px}
+    .clicky{cursor:pointer}
+
+    /* === NUEVO: bloque enseñanza + casos === */
+    .panel{
+      margin-top:12px;
+      border-radius:18px;border:1px solid var(--line);
+      padding:12px;background:rgba(255,255,255,.03);
+    }
+    .panel h3{margin:0 0 8px;font-size:14px}
+    .row2{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .miniBtn{padding:10px 12px;border-radius:14px;font-weight:900}
+    .ok{border:1px solid rgba(16,185,129,.35);background:rgba(16,185,129,.10);color:#a7f3d0}
+    .danger{border:1px solid rgba(244,63,94,.35);background:rgba(244,63,94,.10);color:#fecdd3}
+    .box{
+      width:100%;
+      min-height:140px;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;
+      line-height:1.45;
+    }
+    .hr{height:1px;background:var(--line);margin:10px 0}
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid rgba(255,255,255,.12);color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Radar del Diseño — Auditoría Estructural Divina</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px">
+        <span class="pill" id="pMax"></span>
+        <span class="pill" id="pHow">Niveles: 0–3 (Alineado → Crítico)</span>
+        <span class="pill" id="liveGlobal">Global: —</span>
+      </div>
+      <div class="hint">
+        <div style="font-weight:900">Cómo usarlo (individual)</div>
+        <div class="tip">
+          Puedes responder como <b>esposo</b> o <b>esposa</b>. El radar refleja <i>tu percepción</i> del diseño.
+          En “Triturado/Arena” no “hablas por el otro”: evalúas cómo se está viviendo el rol en el sistema.
+        </div>
+      </div>
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+    </div>
+
+    <div class="grid">
+      <!-- IZQ: DIAGRAMA -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Diagrama del diseño</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              Pórtico (hogar) + Concreto espiritual (material interno). <span class="small">Haz clic en elementos para ir al módulo.</span>
+            </div>
+          </div>
+          <span class="pill" id="liveScorePill">Puntaje: 0</span>
+        </div>
+
+        <div class="svgBox" style="margin-top:10px;">
+          <!-- SVG: Pórtico + Tanque -->
+          <svg id="designSVG" viewBox="0 0 760 380" width="100%" height="auto" aria-label="Diseño estructural espiritual">
+            <!-- fondo suelo -->
+            <rect x="0" y="330" width="760" height="50" fill="rgba(255,255,255,.04)"></rect>
+
+            <!-- ===== PÓRTICO (izquierda) ===== -->
+            <!-- foundation block -->
+            <rect id="foundation" class="clicky" x="70" y="288" width="150" height="42" rx="10"
+              fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="145" y="314" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)">CIMIENTO (CRISTO)</text>
+
+            <!-- column -->
+            <rect id="column" class="clicky" x="132" y="96" width="26" height="192" rx="10"
+              fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="145" y="86" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)">COLUMNA (VARÓN)</text>
+
+            <!-- beam -->
+            <rect id="beam" class="clicky" x="145" y="96" width="260" height="20" rx="10"
+              fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="275" y="84" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)">VIGA (MUJER)</text>
+
+            <!-- roller support -->
+            <circle id="rollerBase" class="clicky" cx="410" cy="126" r="12"
+              fill="rgba(255,255,255,.10)" stroke="rgba(255,255,255,.22)"></circle>
+            <rect id="rollerPlate" x="385" y="140" width="50" height="10" rx="4" fill="rgba(255,255,255,.08)"></rect>
+            <text x="410" y="166" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)">APOYO MÓVIL (ESPÍRITU)</text>
+
+            <!-- nodes -->
+            <circle id="N1" class="clicky" cx="145" cy="288" r="10" fill="#64748b"></circle>
+            <text x="160" y="292" font-size="12" fill="rgba(255,255,255,.75)">1</text>
+            <text x="145" y="276" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">COMUNIÓN</text>
+
+            <circle id="N2" class="clicky" cx="145" cy="106" r="10" fill="#64748b"></circle>
+            <text x="160" y="110" font-size="12" fill="rgba(255,255,255,.75)">2</text>
+            <text x="145" y="132" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CONGREGACIÓN</text>
+
+            <circle id="N3" class="clicky" cx="410" cy="126" r="10" fill="#64748b"></circle>
+            <text x="425" y="130" font-size="12" fill="rgba(255,255,255,.75)">3</text>
+            <text x="410" y="182" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">INTERSECCIÓN</text>
+
+            <!-- loads -->
+            <g id="loads" class="clicky" opacity="0.75">
+              <line x1="230" y1="36" x2="230" y2="92" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="230,96 222,84 238,84" fill="rgba(255,255,255,.55)"/>
+              <line x1="280" y1="36" x2="280" y2="92" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="280,96 272,84 288,84" fill="rgba(255,255,255,.55)"/>
+              <line x1="330" y1="36" x2="330" y2="92" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+              <polygon points="330,96 322,84 338,84" fill="rgba(255,255,255,.55)"/>
+              <text x="280" y="28" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.75)">CARGAS</text>
+            </g>
+
+            <!-- ===== TANQUE: CONCRETO ESPIRITUAL (derecha) ===== -->
+            <!-- tank frame -->
+            <rect id="mixTank" class="clicky" x="520" y="70" width="190" height="260" rx="16"
+              fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.20)"></rect>
+            <text x="615" y="54" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)">
+              CONCRETO ESPIRITUAL
+            </text>
+
+            <!-- inner cavity (clip) -->
+            <defs>
+              <clipPath id="tankClip">
+                <rect x="536" y="86" width="158" height="228" rx="12"></rect>
+              </clipPath>
+            </defs>
+
+            <!-- layers inside tank -->
+            <g clip-path="url(#tankClip)">
+              <!-- Cemento (base cohesiva) -->
+              <rect id="layer_cemento" class="clicky" x="536" y="230" width="158" height="84"
+                fill="rgba(255,255,255,.10)"></rect>
+              <!-- Triturado -->
+              <rect id="layer_triturado" class="clicky" x="536" y="170" width="158" height="60"
+                fill="rgba(255,255,255,.10)"></rect>
+              <!-- Arena -->
+              <rect id="layer_arena" class="clicky" x="536" y="130" width="158" height="40"
+                fill="rgba(255,255,255,.10)"></rect>
+
+              <!-- Agua (nivel variable) -->
+              <rect id="layer_agua" class="clicky" x="536" y="86" width="158" height="44"
+                fill="rgba(56,189,248,.18)"></rect>
+
+              <!-- Vacíos (se activan visualmente si falta integración) -->
+              <g id="voids" opacity="0">
+                <circle cx="575" cy="210" r="6" fill="rgba(255,255,255,.18)"></circle>
+                <circle cx="640" cy="195" r="5" fill="rgba(255,255,255,.16)"></circle>
+                <circle cx="605" cy="155" r="6" fill="rgba(255,255,255,.15)"></circle>
+                <circle cx="670" cy="240" r="5" fill="rgba(255,255,255,.16)"></circle>
+              </g>
+
+              <!-- Acero (fe) -->
+              <g id="rebar" class="clicky" opacity="0.9">
+                <rect id="rebar_1" x="560" y="98" width="6" height="210" rx="3" fill="rgba(255,255,255,.28)"></rect>
+                <rect id="rebar_2" x="612" y="98" width="6" height="210" rx="3" fill="rgba(255,255,255,.28)"></rect>
+                <rect id="rebar_3" x="664" y="98" width="6" height="210" rx="3" fill="rgba(255,255,255,.28)"></rect>
+              </g>
+            </g>
+
+            <!-- small labels -->
+            <text x="700" y="102" font-size="11" fill="rgba(255,255,255,.72)">Agua</text>
+            <text x="700" y="150" font-size="11" fill="rgba(255,255,255,.72)">Arena</text>
+            <text x="700" y="198" font-size="11" fill="rgba(255,255,255,.72)">Triturado</text>
+            <text x="700" y="272" font-size="11" fill="rgba(255,255,255,.72)">Cemento</text>
+            <text x="700" y="318" font-size="11" fill="rgba(255,255,255,.72)">Acero</text>
+          </svg>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Alineado</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Crítico</div>
+          </div>
+
+          <div class="muted small" style="margin-top:10px;">
+            Tip: si el agua está baja (Espíritu), el tanque “se seca”. Si la fe está baja, el acero se “corta”. Si falta integración, aparecen “vacíos”.
+          </div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+
+        <!-- === NUEVO: panel enseñanza (izq, opcional) === -->
+        <div class="panel" id="teachPanel" style="display:none;">
+          <div class="row">
+            <div>
+              <b>Enseñanza (lista para predicar)</b>
+              <div class="muted small" id="teachMeta"></div>
+            </div>
+            <span class="tag">Basada en el libro</span>
+          </div>
+          <div class="hr"></div>
+          <textarea id="teachOut" class="box" readonly></textarea>
+          <div class="row2" style="margin-top:10px;">
+            <button class="ghost miniBtn" id="btnTeachCopy">Copiar</button>
+            <button class="ghost miniBtn" id="btnTeachTxt">Descargar TXT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DER: FORMULARIO -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de auditoría</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">No se envía a servidor. Todo queda en tu navegador.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Nombre del paciente</label>
+            <input id="patient" placeholder="Ej: Juan Pérez">
+          </div>
+          <div>
+            <label>Nombre del auditor</label>
+            <input id="auditor" placeholder="Ej: Consejero / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Responde como</label>
+            <select id="role">
+              <option value="esposo">Esposo</option>
+              <option value="esposa">Esposa</option>
+              <option value="individual">Individual</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1;">
+            <label>Observaciones libres</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="muted" style="font-size:13px;">Incluir detalle por sección en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+          <span class="muted" id="live">Puntaje: 0</span>
+        </div>
+
+        <!-- === NUEVO: Guardar / Cargar casos === -->
+        <div class="panel">
+          <div class="row">
+            <div>
+              <b>Casos guardados</b>
+              <div class="muted small">Se guardan en este navegador (local). Útil para citas posteriores.</div>
+            </div>
+            <span class="tag" id="casesCount">0 casos</span>
+          </div>
+          <div class="hr"></div>
+          <div class="row2">
+            <button class="ghost miniBtn ok" id="btnSaveCase">Guardar caso</button>
+            <select id="casesSelect" style="min-width:260px;flex:1">
+              <option value="">— Selecciona un caso —</option>
+            </select>
+            <button class="ghost miniBtn" id="btnLoadCase">Cargar</button>
+            <button class="ghost miniBtn danger" id="btnDeleteCase">Eliminar</button>
+          </div>
+          <div class="muted small" id="casesHint" style="margin-top:8px;"></div>
+        </div>
+
+        <!-- === NUEVO: Enseñanza automática === -->
+        <div class="panel">
+          <div class="row">
+            <div>
+              <b>Enseñanza automática</b>
+              <div class="muted small">Genera una enseñanza lista para predicar, según el módulo con mayor tensión.</div>
+            </div>
+            <span class="tag">Predicación</span>
+          </div>
+          <div class="hr"></div>
+          <div class="row2">
+            <button class="ghost miniBtn" id="btnTeach" disabled>Generar enseñanza</button>
+            <span class="muted small" id="teachStatus">Primero presiona “Ver resultado”.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "radar-diseno.json";
+  const LOGO_PATH = "logo.png"; // opcional (si existe en la carpeta)
+
+  // === NUEVO: storage key ===
+  const CASES_KEY = "radar_diseno_cases_v1";
+
+  let DATA=null;
+  let logoDataUrl=null;
+  const scores = {}; // sectionId -> 0..3
+  let last=null;
+
+  const secForm = document.getElementById("secForm");
+  const resBox = document.getElementById("resBox");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
+  const roleEl = document.getElementById("role");
+  const detailsEl = document.getElementById("details");
+
+  const liveEl = document.getElementById("live");
+  const liveGlobal = document.getElementById("liveGlobal");
+  const liveScorePill = document.getElementById("liveScorePill");
+  const btnTxt = document.getElementById("btnTxt");
+  const btnPdf = document.getElementById("btnPdf");
+
+  // === NUEVO: UI casos + enseñanza ===
+  const btnSaveCase = document.getElementById("btnSaveCase");
+  const btnLoadCase = document.getElementById("btnLoadCase");
+  const btnDeleteCase = document.getElementById("btnDeleteCase");
+  const casesSelect = document.getElementById("casesSelect");
+  const casesCount = document.getElementById("casesCount");
+  const casesHint = document.getElementById("casesHint");
+
+  const btnTeach = document.getElementById("btnTeach");
+  const teachStatus = document.getElementById("teachStatus");
+  const teachPanel = document.getElementById("teachPanel");
+  const teachOut = document.getElementById("teachOut");
+  const teachMeta = document.getElementById("teachMeta");
+  const btnTeachCopy = document.getElementById("btnTeachCopy");
+  const btnTeachTxt = document.getElementById("btnTeachTxt");
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function levelByValue(v){
+    return DATA.levels.find(x=>Number(x.value)===Number(v)) || DATA.levels[0];
+  }
+
+  function totalScore(){
+    return DATA.sections.reduce((acc,s)=> acc + (scores[s.id] ?? 0), 0);
+  }
+
+  function globalBand(sum){
+    const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
+    return b || DATA.globalBands[0];
+  }
+
+  function paintFill(id, v){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.setAttribute("fill", levelByValue(v).color);
+  }
+
+  function setOpacity(id, val){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.setAttribute("opacity", String(val));
+  }
+
+  function setHeight(id, y, h){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.setAttribute("y", String(y));
+    el.setAttribute("height", String(h));
+  }
+
+  function updateSVG(){
+    // PÓRTICO (peor gana si varios apuntan al mismo elemento)
+    const elementWorst = {};
+    DATA.sections.forEach(sec=>{
+      const v = scores[sec.id] ?? 0;
+      if(sec.node){
+        const nodeEl = document.getElementById(sec.node);
+        if(nodeEl) nodeEl.setAttribute("fill", levelByValue(v).color);
+      }
+      if(sec.element){
+        elementWorst[sec.element] = Math.max(elementWorst[sec.element] ?? 0, v);
+      }
+    });
+
+    // pintar pórtico
+    if(elementWorst.foundation!=null) paintFill("foundation", elementWorst.foundation);
+    if(elementWorst.column!=null) paintFill("column", elementWorst.column);
+    if(elementWorst.beam!=null) paintFill("beam", elementWorst.beam);
+    if(elementWorst.roller!=null) paintFill("rollerBase", elementWorst.roller);
+
+    // cargas: opacidad según tensión
+    if(elementWorst.loads!=null){
+      const g = document.getElementById("loads");
+      if(g) g.setAttribute("opacity", String(0.55 + (elementWorst.loads/3)*0.45));
+    }
+
+    // TANQUE: 5 capas del libro
+    const vCemento = scores["cemento"] ?? 0;
+    const vAgua = scores["agua"] ?? 0;
+    const vTriturado = scores["triturado"] ?? 0;
+    const vArena = scores["arena"] ?? 0;
+    const vAcero = scores["acero"] ?? 0;
+
+    paintFill("layer_cemento", vCemento);
+    paintFill("layer_triturado", vTriturado);
+    paintFill("layer_arena", vArena);
+
+    // Agua: nivel (más crítico => más baja)
+    const maxH = 70;
+    const minH = 14;
+    const h = Math.round(maxH - (vAgua/3)*(maxH-minH));  // 0=>max, 3=>min
+    const y = 86 + (44 - h);
+    const water = document.getElementById("layer_agua");
+    if(water){
+      water.setAttribute("fill", levelByValue(vAgua).color);
+      setHeight("layer_agua", y, h);
+      setOpacity("layer_agua", 0.22 + (1 - vAgua/3)*0.18);
+    }
+
+    // Acero: si riesgo/critico => “cortes”
+    const rebars = ["rebar_1","rebar_2","rebar_3"];
+    rebars.forEach((rid)=>{
+      const el = document.getElementById(rid);
+      if(!el) return;
+      el.setAttribute("fill", levelByValue(vAcero).color);
+      const baseOpacity = 0.85;
+      const op = baseOpacity - (vAcero/3)*0.45;
+      el.setAttribute("opacity", String(op));
+
+      if(vAcero>=2){
+        const cut = (vAcero===2) ? 26 : 46;
+        const y0 = 98 + cut;
+        const h0 = 210 - cut;
+        el.setAttribute("y", String(y0));
+        el.setAttribute("height", String(h0));
+      }else{
+        el.setAttribute("y", "98");
+        el.setAttribute("height", "210");
+      }
+    });
+
+    // Vacíos: aparecen si arena o triturado están en riesgo/critico, o si cemento en riesgo/critico
+    const showVoids = (vArena>=2 || vTriturado>=2 || vCemento>=2);
+    setOpacity("voids", showVoids ? 0.65 : 0);
+  }
+
+  function updateLive(){
+    const sum = totalScore();
+    liveEl.textContent = `Puntaje: ${sum}`;
+    liveScorePill.textContent = `Puntaje: ${sum}`;
+    const g = globalBand(sum);
+    liveGlobal.textContent = `Global: ${g.label}`;
+    updateSVG();
+  }
+
+  function renderForm(){
+    secForm.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px;">
+      Selecciona el nivel por módulo. 0=Alineado, 1=Ajuste, 2=Riesgo, 3=Crítico.
+    </div>`;
+
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = 0;
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.id = `sec_${sec.id}`;
+
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${sec.title}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">${sec.diagnosticFocus || ""}</div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">Alineado</span>
+        </div>
+        <div class="opts" role="radiogroup" aria-label="${sec.title}">
+          ${DATA.levels.map(l=>`
+            <label class="opt">
+              <input type="radio" name="${sec.id}" value="${l.value}" ${l.value===0?"checked":""}>
+              <span>${l.label} (${l.value})</span>
+            </label>
+          `).join("")}
+        </div>
+        <div class="muted" style="font-size:13px;margin-top:10px;">
+          <b>📖</b> ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+        </div>
+      `;
+
+      div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+        inp.addEventListener("change", (e)=>{
+          const v = Number(e.target.value);
+          scores[sec.id] = v;
+          const lev = levelByValue(v);
+          const pill = document.getElementById(`pill_${sec.id}`);
+          if(pill) pill.textContent = lev.label;
+          updateLive();
+        });
+      });
+
+      secForm.appendChild(div);
+    });
+
+    updateLive();
+  }
+
+  // === NUEVO: Diagnóstico de concreto (5 capas) ===
+  function computeConcrete(){
+    const ids = ["cemento","agua","triturado","arena","acero"];
+    const labels = {
+      cemento: "Cemento (Palabra)",
+      agua: "Agua (Espíritu Santo)",
+      triturado: "Triturado (Aporte del esposo)",
+      arena: "Arena (Aporte de la esposa)",
+      acero: "Acero (Fe)"
+    };
+
+    const layers = ids.map(id=>{
+      const v = scores[id] ?? 0;
+      const lvl = levelByValue(v);
+      const sec = DATA.sections.find(s=>s.id===id);
+      return {
+        id,
+        label: labels[id] || id,
+        levelValue: v,
+        levelLabel: lvl.label,
+        levelKey: lvl.key,
+        color: lvl.color,
+        verse: sec?.verse || {quote:"", reference:""},
+        focus: sec?.diagnosticFocus || ""
+      };
+    });
+
+    // Reglas (micro-recomendaciones) — basadas en el libro
+    // Nota: valores más altos => más crítico
+    const vC = scores["cemento"] ?? 0;
+    const vA = scores["agua"] ?? 0;
+    const vT = scores["triturado"] ?? 0;
+    const vAr = scores["arena"] ?? 0;
+    const vAc = scores["acero"] ?? 0;
+
+    const recs = [];
+
+    // regla pedida por ti (tal cual la frase)
+    if(vC >= 2 && vA >= 2){
+      recs.push({
+        key:"cisterna",
+        title:"Mezcla activada desde cisterna",
+        text:"Hay Palabra presente, pero la activación no está fluyendo desde la Fuente (Cristo): la mezcla se vuelve forma sin vida. Volver a comunión + dependencia del Espíritu antes de decidir.",
+        verse:{ quote:"Me dejaron a mí, fuente de agua viva…", reference:"Jeremías 2:13 (RVR1960)" },
+        priority: 1
+      });
+    }
+
+    // Palabra débil => poca cohesión
+    if(vC >= 2){
+      recs.push({
+        key:"poca_cohesion",
+        title:"Cohesión debilitada (cemento bajo)",
+        text:"Sin Palabra como cemento, la casa puede emocionar, pero no consolidar. La verdad dicha a tiempo densifica y estabiliza.",
+        verse:{ quote:"Santifícalos en tu verdad; tu palabra es verdad.", reference:"Juan 17:17 (RVR1960)" },
+        priority: 2
+      });
+    }
+
+    // Espíritu (agua) en riesgo => activación incorrecta
+    if(vA >= 2){
+      recs.push({
+        key:"agua_fuente",
+        title:"Activación sin Fuente (agua en riesgo)",
+        text:"No todo lo que hidrata activa. Si las decisiones se activan desde miedo/control/pasado, la mezcla se contamina. Orar antes de conversar: la Fuente gobierna la reacción.",
+        verse:{ quote:"Separados de mí, nada podéis hacer.", reference:"Juan 15:5 (RVR1960)" },
+        priority: 3
+      });
+    }
+
+    // Triturado (esposo) en riesgo => arena sobrecargada
+    if(vT >= 2 && vAr <= 1){
+      recs.push({
+        key:"arena_sobrecargada",
+        title:"Arena sobrecargada por falta de soporte",
+        text:"Cuando el triturado no asume su función, la mezcla se sostiene con alma y emoción. Eso une, pero no sostiene. Volver a responsabilidad + transferencia al altar.",
+        verse:{ quote:"Portaos varonilmente, y esforzaos.", reference:"1 Corintios 16:13 (RVR1960)" },
+        priority: 4
+      });
+    }
+
+    // Arena en riesgo => vacíos y silencios
+    if(vAr >= 2){
+      recs.push({
+        key:"vacios",
+        title:"Vacíos internos (integración en riesgo)",
+        text:"Los vacíos no pesan, pero debilitan. Silencios y conversaciones evitadas crean huecos estructurales. La verdad con amor densifica el hogar.",
+        verse:{ quote:"No hay nada oculto que no haya de ser manifestado.", reference:"Lucas 8:17 (RVR1960)" },
+        priority: 5
+      });
+    }
+
+    // Fe (acero) en riesgo => tensión sin refuerzo
+    if(vAc >= 2){
+      recs.push({
+        key:"sin_refuerzo",
+        title:"Tensión sin refuerzo (acero bajo)",
+        text:"La fe no elimina la presión: evita el colapso bajo presión. No se necesita volumen; se necesita permanencia silenciosa.",
+        verse:{ quote:"La fe… la convicción de lo que no se ve.", reference:"Hebreos 11:1 (RVR1960)" },
+        priority: 6
+      });
+    }
+
+    // si no hay ninguna recomendación, dar mantenimiento
+    if(recs.length === 0){
+      recs.push({
+        key:"mantener",
+        title:"Mezcla sana (mantener)",
+        text:"Las capas del concreto se ven alineadas. Mantén curado: Palabra + Espíritu + acuerdos + hábitos.",
+        verse:{ quote:"Con sabiduría se edificará la casa…", reference:"Proverbios 24:3 (RVR1960)" },
+        priority: 9
+      });
+    }
+
+    recs.sort((a,b)=>a.priority-b.priority);
+
+    return { layers, recs };
+  }
+
+  function buildPayload(){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      role: roleEl.value,
+      notes: notesEl.value.trim() || ""
+    };
+
+    const sum = totalScore();
+    const g = globalBand(sum);
+
+    const sections = DATA.sections.map(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const level = levelByValue(v);
+      return {
+        id: sec.id,
+        title: sec.title,
+        levelValue: v,
+        levelKey: level.key,
+        levelLabel: level.label,
+        color: level.color,
+        verse: sec.verse,
+        focus: sec.diagnosticFocus || "",
+        miniTeaching: sec.miniTeaching || [],
+        actions: sec.actions || [],
+        teaching: sec.teaching || null
+      };
+    });
+
+    // peor a mejor
+    sections.sort((a,b)=> b.levelValue - a.levelValue);
+
+    const top = sections.slice(0,3);
+
+    const plan7 = [
+      { day:1, title:`Volver al fundamento (${top[0]?.title || "Módulo"})`, items:[
+        `Leer y orar: ${top[0]?.verse?.quote || ""} (${top[0]?.verse?.reference || ""})`,
+        "Conversación sin culpa: ¿qué está fuera de diseño?",
+        "Entregar una carga a Cristo en oración."
+      ].filter(Boolean)},
+      { day:2, title:`Ajuste dirigido: ${top[0]?.title || "Módulo"}`, items:[
+        ...(top[0]?.actions?.slice(0,2) || []),
+        "Cierre del día: oración breve de alineación."
+      ]},
+      { day:3, title:`Ajuste dirigido: ${top[1]?.title || top[0]?.title || "Módulo"}`, items:[
+        ...(top[1]?.actions?.slice(0,2) || []),
+        "Un acuerdo práctico: corto, claro, sin debate largo."
+      ]},
+      { day:4, title:`Ajuste dirigido: ${top[2]?.title || top[0]?.title || "Módulo"}`, items:[
+        ...(top[2]?.actions?.slice(0,2) || []),
+        "Ejercicio: ‘pausa antes de reaccionar’ (2 veces hoy)."
+      ]},
+      { day:5, title:"Culto efectivo (Congregación del hogar)", items:[
+        "20–30 min: Palabra + oración + acuerdos.",
+        "Honra mutua: reconocer 1 esfuerzo (aunque sea pequeño).",
+        "Definir mantenimiento semanal fijo."
+      ]},
+      { day:6, title:"Mantenimiento del sistema (visión global)", items:[
+        "Revisión rápida: ¿subió o bajó la tensión hoy?",
+        "Elegir 2 microajustes (máximo) para sostener 7 días.",
+        "Oración: entrega de cargas al fundamento."
+      ]},
+      { day:7, title:"Revisión y continuidad", items:[
+        "¿Qué cambió en 7 días? ¿Qué permanece?",
+        "Elegir 1 práctica que se sostendrá por 4 semanas.",
+        "Repetir el Radar para comparar."
+      ]}
+    ];
+
+    const concrete = computeConcrete();
+
+    return {
+      meta: DATA.meta,
+      header,
+      global: { sum, band: g, max: DATA.sections.length * 3 },
+      sections,
+      includeDetails: detailsEl.checked,
+      plan7,
+      concrete
+    };
+  }
+
+  function showResult(){
+    last = buildPayload();
+    const b = last.global.band;
+
+    const badge =
+      b.key==="g_alineado" ? "bG" :
+      b.key==="g_ajuste" ? "bY" :
+      b.key==="g_riesgo" ? "bO" : "bR";
+
+    // === NUEVO: micro recomendaciones para mostrar en resultado ===
+    const recHTML = (last.concrete?.recs || []).map(r=>`
+      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.35);background:rgba(255,255,255,.03);padding:10px 12px;border-radius:12px;">
+        <div style="font-weight:900">${r.title}</div>
+        <div class="muted small" style="margin-top:6px">${r.text}</div>
+        <div class="muted small" style="margin-top:6px"><b>📖</b> ${r.verse.quote} <span class="muted">(${r.verse.reference})</span></div>
+      </div>
+    `).join("");
+
+    resBox.style.display = "block";
+    resBox.innerHTML = `
+      <div class="row">
+        <div>
+          <span class="badge ${badge}">${b.label}</span>
+          <div class="muted" style="margin-top:6px;font-size:13px;">
+            Puntaje global: <b>${last.global.sum}</b> / ${last.global.max}
+          </div>
+          <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
+        <div style="font-style:italic;">${b.verse.quote}</div>
+        <div class="muted" style="margin-top:6px;">(${b.verse.reference})</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div style="font-weight:900;margin-bottom:8px;">Diagnóstico rápido del Concreto espiritual</div>
+        ${recHTML}
+      </div>
+    `;
+
+    btnTxt.disabled = false;
+
+    const ok = okPdfLib();
+    btnPdf.disabled = !ok;
+    pdfWarn.style.display = ok ? "none" : "block";
+
+    // === NUEVO: habilitar enseñanza ===
+    btnTeach.disabled = false;
+    teachStatus.textContent = "Listo: puedes generar la enseñanza según el diagnóstico.";
+  }
+
+  function downloadTXT(){
+    if(!last) return;
+    const L = [];
+    L.push((last.meta.title || "RADAR DEL DISEÑO").toUpperCase());
+    L.push("");
+    L.push("DATOS");
+    L.push(`Paciente: ${last.header.patient}`);
+    L.push(`Auditor: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push(`Responde como: ${last.header.role}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
+    L.push("");
+    L.push("RESULTADO GLOBAL");
+    L.push(`Puntaje: ${last.global.sum}/${last.global.max}`);
+    L.push(`Diagnóstico: ${last.global.band.label}`);
+    L.push(last.global.band.summary);
+    L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
+    L.push("");
+
+    // === NUEVO: concreto espiritual ===
+    L.push("DIAGNÓSTICO DEL CONCRETO ESPIRITUAL (5 CAPAS)");
+    L.push("--------------------------------------------------");
+    (last.concrete?.layers || []).forEach(x=>{
+      L.push(`${x.label} — ${x.levelLabel} (${x.levelValue})`);
+    });
+    L.push("");
+    L.push("MICRO-RECOMENDACIONES (REGLAS)");
+    L.push("--------------------------------------------------");
+    (last.concrete?.recs || []).forEach(r=>{
+      L.push(`• ${r.title}: ${r.text}`);
+      L.push(`  📖 ${r.verse.quote} (${r.verse.reference})`);
+    });
+    L.push("");
+
+    L.push("ENFOQUE POR MÓDULOS");
+    L.push("--------------------------------------------------");
+    last.sections.slice().reverse().forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+      L.push(`Enfoque: ${s.focus}`);
+      L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+      if(last.includeDetails){
+        if(s.miniTeaching?.length){
+          L.push("Mini-enseñanza:");
+          s.miniTeaching.forEach(x=> L.push("• "+x));
+        }
+        if(s.actions?.length){
+          L.push("Acciones sugeridas:");
+          s.actions.forEach(x=> L.push("• "+x));
+        }
+      }
+      L.push("");
+    });
+
+    L.push("PLAN SEMANAL 7 DÍAS");
+    L.push("--------------------------------------------------");
+    last.plan7.forEach(d=>{
+      L.push(`Día ${d.day}: ${d.title}`);
+      d.items.forEach(i=> L.push("• "+i));
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "radar_diseno.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise((resolve)=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){
+      return null;
+    }
+  }
+
+  function levelColor(label){
+    const s = (label||"").toLowerCase();
+    if(s.includes("aline")) return [16,185,129];
+    if(s.includes("ajus")) return [245,158,11];
+    if(s.includes("ries")) return [249,115,22];
+    return [244,63,94];
+  }
+
+  function safeName(name){
+    return (name||"radar_diseno")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  async function downloadPDF(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+
+    if(logoDataUrl===null){
+      logoDataUrl = await loadLogo();
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const COLORS = { ink:[22,33,58], muted:[90,102,130], white:[255,255,255] };
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(){
+      addLogo(M, 16, 34, 34);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Radar del Diseño — Auditoría", W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...COLORS.muted);
+        doc.text("Constructor Digital — Auditoría del Hogar", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // ===== PORTADA =====
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W - M - 56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(255,255,255);
+    doc.text("RADAR DEL DISEÑO", M, 50);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Diagnóstico por módulos + plan semanal", M, 72);
+
+    // datos
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 135, 12, 12, "F");
+    doc.setTextColor(...COLORS.ink);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos de auditoría", M+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
+    doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+    doc.text(`Responde como: ${last.header.role}`, M+14, 232);
+
+    // tarjeta global
+    const band = last.global.band;
+    const c = levelColor(band.label);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 275, W-M*2, 190, 12, 12, "F");
+
+    const badgeText = (band.label||"").toUpperCase();
+    doc.setFont("helvetica","bold");
+    let fs = 10;
+    doc.setFontSize(fs);
+    const maxW = 260;
+    while(doc.getTextWidth(badgeText) > maxW && fs > 8){
+      fs -= 1; doc.setFontSize(fs);
+    }
+    const pad = 18;
+    const bw = Math.min(maxW, doc.getTextWidth(badgeText) + pad*2);
+    const bh = 26;
+
+    doc.setFillColor(...c);
+    doc.roundedRect(M+14, 295, bw, bh, 12, 12, "F");
+    doc.setTextColor(255,255,255);
+    doc.text(badgeText, M+14 + bw/2, 313, {align:"center"});
+
+    doc.setTextColor(...COLORS.ink);
+    doc.setFontSize(12);
+    doc.text(`Puntaje global: ${last.global.sum}/${last.global.max}`, M+14, 346);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    const sumLines = doc.splitTextToSize(band.summary, W-M*2-28);
+    doc.text(sumLines, M+14, 368);
+
+    // verso global
+    doc.setFillColor(240,253,250);
+    doc.roundedRect(M, 410, W-M*2, 58, 10, 10, "F");
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 430);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${band.verse.reference})`, M+10, 456);
+
+    // ===== Tabla módulos =====
+    doc.addPage();
+    let y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico por módulos", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const rows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      String(s.levelValue),
+      `${s.verse.quote} (${s.verse.reference})`
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Módulo", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: rows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: {left:M, right:M}
+    });
+
+    // === NUEVO: Página extra "Diagnóstico del Concreto espiritual" ===
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico del Concreto espiritual (5 capas)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
+
+    const layerRows = (last.concrete?.layers || []).map(L=>[
+      L.label,
+      L.levelLabel,
+      String(L.levelValue),
+      `${L.verse?.quote || ""} (${L.verse?.reference || ""})`
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Capa", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: layerRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: {left:M, right:M}
+    });
+
+    // Micro-recomendaciones bajo la tabla
+    let yAfter = doc.lastAutoTable.finalY + 14;
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Micro-recomendaciones (reglas)", M, yAfter);
+    yAfter += 10;
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.setTextColor(20,30,50);
+
+    const recs = (last.concrete?.recs || []).slice(0,6);
+    const recText = recs.map(r=>`• ${r.title}: ${r.text}  (${r.verse.reference})`).join("\n");
+    const recLines = doc.splitTextToSize(recText || "• (sin recomendaciones)", W - M*2);
+    doc.text(recLines, M, yAfter + 14);
+
+    // ===== Enfoque por módulos =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Enfoque y acciones por módulos", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const pRows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+      (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Módulo", "Diagnóstico", "Guía (mini-enseñanza)", "Acciones sugeridas"]],
+      body: pRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0:{cellWidth:170},
+        1:{cellWidth:90},
+        2:{cellWidth: (W - M*2 - 170 - 90)/2},
+        3:{cellWidth: (W - M*2 - 170 - 90)/2}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Plan 7 días =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Plan semanal automático (7 días)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const planRows = last.plan7.map(d=>[
+      `Día ${d.day}`,
+      d.title,
+      d.items.join(" • ")
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles: {
+        0:{cellWidth:70},
+        1:{cellWidth:210},
+        2:{cellWidth: (W - M*2 - 70 - 210)}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Observaciones =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Observaciones del auditor", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const notes = last.header.notes || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+    footer();
+
+    const name = safeName(last.header.patient || "radar_diseno");
+    doc.save(`${name}_radar_diseno.pdf`);
+  }
+
+  function resetAll(){
+    DATA.sections.forEach(s=> scores[s.id]=0);
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      i.checked = (i.value==="0");
+    });
+    document.querySelectorAll('[id^="pill_"]').forEach(p=> p.textContent="Alineado");
+    updateLive();
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled=true;
+    btnPdf.disabled=true;
+    last=null;
+
+    // === NUEVO ===
+    btnTeach.disabled = true;
+    teachStatus.textContent = "Primero presiona “Ver resultado”.";
+    teachPanel.style.display = "none";
+    teachOut.value = "";
+    teachMeta.textContent = "";
+
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function scrollToSection(sectionId){
+    const el = document.getElementById(`sec_${sectionId}`);
+    if(!el) return;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+    el.style.boxShadow = "0 0 0 2px rgba(94,234,212,.25)";
+    setTimeout(()=> el.style.boxShadow = "none", 900);
+  }
+
+  function wireSVGClicks(){
+    const map = DATA.svgClickMap || {};
+    Object.keys(map).forEach(svgId=>{
+      const el = document.getElementById(svgId);
+      if(!el) return;
+      el.addEventListener("click", ()=> scrollToSection(map[svgId]));
+      el.setAttribute("title", "Clic para ir al módulo");
+    });
+  }
+
+  // =========================
+  // === NUEVO: CASOS (CRUD) ===
+  // =========================
+  function readCases(){
+    try{
+      const raw = localStorage.getItem(CASES_KEY);
+      if(!raw) return [];
+      const arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr : [];
+    }catch(e){
+      return [];
+    }
+  }
+
+  function writeCases(arr){
+    localStorage.setItem(CASES_KEY, JSON.stringify(arr));
+  }
+
+  function caseLabel(c){
+    const p = (c?.header?.patient || "Paciente").trim();
+    const d = (c?.header?.date || "").trim();
+    const r = (c?.header?.role || "").trim();
+    return `${p} — ${d} — ${r}`.slice(0, 90);
+  }
+
+  function refreshCasesUI(){
+    const cases = readCases().sort((a,b)=> (b.savedAt||0) - (a.savedAt||0));
+    casesSelect.innerHTML = `<option value="">— Selecciona un caso —</option>` +
+      cases.map(c=>`<option value="${c.id}">${caseLabel(c)}</option>`).join("");
+
+    casesCount.textContent = `${cases.length} casos`;
+    casesHint.textContent = cases.length
+      ? "Tip: guarda después de cada cita para conservar notas y puntajes."
+      : "Aún no hay casos guardados.";
+  }
+
+  function makeId(){
+    return "C" + Math.random().toString(16).slice(2) + Date.now().toString(16);
+  }
+
+  function saveCase(){
+    // exige al menos paciente o notas para evitar basura
+    const patient = patientEl.value.trim();
+    const notes = notesEl.value.trim();
+    if(!patient && !notes){
+      alert("Para guardar, escribe al menos el nombre del paciente o una observación.");
+      return;
+    }
+
+    const payload = buildPayload();
+
+    const c = {
+      id: makeId(),
+      savedAt: Date.now(),
+      header: payload.header,
+      scores: {...scores}
+    };
+
+    const cases = readCases();
+    cases.push(c);
+    writeCases(cases);
+    refreshCasesUI();
+
+    alert("Caso guardado.");
+  }
+
+  function loadCase(){
+    const id = casesSelect.value;
+    if(!id){
+      alert("Selecciona un caso primero.");
+      return;
+    }
+    const cases = readCases();
+    const c = cases.find(x=>x.id===id);
+    if(!c){
+      alert("No se encontró el caso.");
+      return;
+    }
+
+    // cargar cabecera
+    patientEl.value = c.header?.patient || "";
+    auditorEl.value = c.header?.auditor || "";
+    dateEl.value = c.header?.date || dateEl.value;
+    roleEl.value = c.header?.role || "individual";
+    notesEl.value = c.header?.notes || "";
+
+    // cargar scores + radios + pills
+    DATA.sections.forEach(sec=>{
+      const v = Number(c.scores?.[sec.id] ?? 0);
+      scores[sec.id] = v;
+
+      // radios
+      document.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+        inp.checked = (Number(inp.value)===v);
+      });
+
+      // pill
+      const lev = levelByValue(v);
+      const pill = document.getElementById(`pill_${sec.id}`);
+      if(pill) pill.textContent = lev.label;
+    });
+
+    updateLive();
+    resBox.style.display = "none";
+    resBox.innerHTML = "";
+    btnTxt.disabled = true;
+    btnPdf.disabled = true;
+    last = null;
+
+    // enseñanza se reinicia
+    btnTeach.disabled = true;
+    teachStatus.textContent = "Caso cargado. Presiona “Ver resultado” para regenerar diagnóstico.";
+    teachPanel.style.display = "none";
+    teachOut.value = "";
+    teachMeta.textContent = "";
+
+    window.scrollTo({top:0, behavior:"smooth"});
+    alert("Caso cargado.");
+  }
+
+  function deleteCase(){
+    const id = casesSelect.value;
+    if(!id){
+      alert("Selecciona un caso primero.");
+      return;
+    }
+    if(!confirm("¿Eliminar este caso? Esta acción no se puede deshacer.")) return;
+
+    const cases = readCases().filter(x=>x.id!==id);
+    writeCases(cases);
+    refreshCasesUI();
+    alert("Caso eliminado.");
+  }
+
+  // =========================
+  // === NUEVO: ENSEÑANZA ====
+  // =========================
+  function getWorstModule(){
+    if(!last) return null;
+    // toma el peor (primero, porque ya está ordenado peor->mejor)
+    const worst = last.sections[0];
+    return worst || null;
+  }
+
+  function buildTeachingText(section){
+    if(!section) return { meta:"", text:"" };
+    const base = section.teaching || null;
+
+    // si por alguna razón no hay plantilla, fallback desde miniTeaching/actions
+    if(!base){
+      const txt = [
+        `TÍTULO: Volver al diseño — ${section.title}`,
+        ``,
+        `Texto base: ${section.verse.quote} (${section.verse.reference})`,
+        ``,
+        `Principio: ${section.focus}`,
+        ``,
+        `Guía:`,
+        ...(section.miniTeaching||[]).map(x=>`- ${x}`),
+        ``,
+        `Aplicación:`,
+        ...(section.actions||[]).map(x=>`- ${x}`),
+        ``,
+        `Cierre: Un hogar permanece cuando el diseño gobierna, no la presión.`
+      ].join("\n");
+      return { meta:`Tema: ${section.title}`, text:txt };
+    }
+
+    const lines = [];
+    lines.push(`TÍTULO: ${base.title}`);
+    lines.push("");
+    lines.push(`📖 Texto base: ${base.textBase || (section.verse.quote + " ("+section.verse.reference+")")}`);
+    lines.push("");
+    if(base.hook){
+      lines.push(`INTRODUCCIÓN`);
+      lines.push(base.hook);
+      lines.push("");
+    }
+    if(base.principle){
+      lines.push(`PRINCIPIO`);
+      lines.push(base.principle);
+      lines.push("");
+    }
+    if(base.revelation){
+      lines.push(`REVELACIÓN`);
+      lines.push(base.revelation);
+      lines.push("");
+    }
+    if(base.points && base.points.length){
+      lines.push(`DESARROLLO`);
+      base.points.forEach((p,i)=>{
+        lines.push(`${i+1}. ${p}`);
+      });
+      lines.push("");
+    }
+    if(base.application && base.application.length){
+      lines.push(`APLICACIÓN (HOY)`);
+      base.application.forEach(a=> lines.push(`- ${a}`));
+      lines.push("");
+    }
+    if(base.questions && base.questions.length){
+      lines.push(`PREGUNTAS DE DISCERNIMIENTO`);
+      base.questions.forEach(q=> lines.push(`- ${q}`));
+      lines.push("");
+    }
+    if(base.prayer){
+      lines.push(`ORACIÓN`);
+      lines.push(base.prayer);
+      lines.push("");
+    }
+    if(base.closing){
+      lines.push(`FRASE DE CIERRE`);
+      lines.push(base.closing);
+    }
+
+    return {
+      meta: `Tema: ${section.title} · Diagnóstico: ${section.levelLabel} (${section.levelValue})`,
+      text: lines.join("\n")
+    };
+  }
+
+  function generateTeaching(){
+    if(!last){
+      alert("Primero presiona “Ver resultado”.");
+      return;
+    }
+    const worst = getWorstModule();
+    if(!worst){
+      alert("No se encontró un módulo para generar la enseñanza.");
+      return;
+    }
+
+    const t = buildTeachingText(worst);
+    teachMeta.textContent = t.meta;
+    teachOut.value = t.text;
+    teachPanel.style.display = "block";
+
+    // scroll suave al panel (izquierda)
+    teachPanel.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function copyTeaching(){
+    const txt = teachOut.value || "";
+    if(!txt) return;
+    navigator.clipboard?.writeText(txt).then(()=>{
+      alert("Enseñanza copiada.");
+    }).catch(()=>{
+      // fallback
+      teachOut.select();
+      document.execCommand("copy");
+      alert("Enseñanza copiada.");
+    });
+  }
+
+  function downloadTeachingTXT(){
+    const txt = teachOut.value || "";
+    if(!txt){
+      alert("Genera la enseñanza primero.");
+      return;
+    }
+    const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    const name = safeName((patientEl.value||"ensenanza") + "_ensenanza");
+    a.download = `${name}.txt`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+
+      document.getElementById("t").textContent = DATA.meta.title || "Radar del Diseño";
+      document.getElementById("d").textContent = DATA.meta.description || "";
+      document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
+
+      setDefaultDateIfEmpty();
+      renderForm();
+      wireSVGClicks();
+
+      refreshCasesUI();
+
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    }catch(e){
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+      <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>`;
+    }
+  }
+
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  // === NUEVO: listeners casos + enseñanza ===
+  btnSaveCase.addEventListener("click", saveCase);
+  btnLoadCase.addEventListener("click", loadCase);
+  btnDeleteCase.addEventListener("click", deleteCase);
+
+  btnTeach.addEventListener("click", generateTeaching);
+  btnTeachCopy.addEventListener("click", copyTeaching);
+  btnTeachTxt.addEventListener("click", downloadTeachingTXT);
+
+  init();
+</script>
+</body>
+</html>

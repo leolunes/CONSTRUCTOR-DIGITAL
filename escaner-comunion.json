@@ -1,0 +1,255 @@
+{
+  "meta": {
+    "title": "Escáner de Comunión — Auditoría de Anclaje",
+    "description": "Diagnóstico individual (esposo o esposa) para evaluar anclaje en Cristo, fuente vs cisterna, empujes laterales, deriva (P–Δ) y hábitos de altar. Incluye micro-recomendaciones y plan 7 días."
+  },
+  "levels": [
+    { "key": "alineado", "label": "Alineado", "value": 0, "color": "#10b981" },
+    { "key": "ajuste", "label": "En ajuste", "value": 1, "color": "#f59e0b" },
+    { "key": "riesgo", "label": "En riesgo", "value": 2, "color": "#f97316" },
+    { "key": "critico", "label": "Crítico", "value": 3, "color": "#f43f5e" }
+  ],
+  "globalBands": [
+    {
+      "key": "g_alineado",
+      "label": "Anclaje estable (alineado)",
+      "min": 0,
+      "max": 6,
+      "summary": "Hay comunión operativa y decisiones desde la Fuente. Mantén hábitos y cuidado preventivo para no derivar.",
+      "verse": {
+        "quote": "El Señor afirma los pasos del hombre, y se complace en su camino.",
+        "reference": "Salmos 37:23 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_ajuste",
+      "label": "Anclaje en ajuste",
+      "min": 7,
+      "max": 13,
+      "summary": "El sistema funciona, pero hay señales de activación desde esfuerzo o falta de hábito. Ajusta hoy antes de que aparezca deriva.",
+      "verse": {
+        "quote": "Mirad, pues, con diligencia cómo andéis, no como necios sino como sabios.",
+        "reference": "Efesios 5:15 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_riesgo",
+      "label": "Anclaje en riesgo",
+      "min": 14,
+      "max": 20,
+      "summary": "Empujes laterales + anclaje debilitado generan momento (M) y deriva (Δ). Requiere volver al fundamento y ordenar hábitos.",
+      "verse": {
+        "quote": "Enderezad, pues, las sendas para vuestros pies, para que lo cojo no se salga del camino.",
+        "reference": "Hebreos 12:13 (RVR1960)"
+      }
+    },
+    {
+      "key": "g_critico",
+      "label": "Anclaje crítico (requiere proceso)",
+      "min": 21,
+      "max": 27,
+      "summary": "No requiere corrección rápida: requiere proceso pastoral y curado. La prioridad es restaurar la Fuente y el altar, sin presión.",
+      "verse": {
+        "quote": "No quebrará la caña cascada, ni apagará el pábilo que humeare; por medio de la verdad traerá justicia.",
+        "reference": "Isaías 42:3 (RVR1960)"
+      }
+    }
+  ],
+  "svgClickMap": {
+    "rock": "comunion",
+    "anchorBlock": "comunion",
+    "axis": "eje",
+    "decisionNode": "obediencia",
+    "push": "empujes",
+    "moment": "empujes",
+    "delta": "deriva",
+    "sourcePanel": "fuente",
+    "fountain": "fuente",
+    "fountainWater": "fuente",
+    "cistern": "cisterna",
+    "cisternWater": "cisterna",
+    "cisternCracks": "cisterna"
+  },
+  "sections": [
+    {
+      "id": "comunion",
+      "title": "1) Comunión (Anclaje real en Cristo)",
+      "node": "",
+      "element": "anchor",
+      "diagnosticFocus": "¿Estás anclado en Cristo o funcionando desde autosuficiencia y esfuerzo?",
+      "verse": {
+        "quote": "Permaneced en mí, y yo en vosotros... porque separados de mí nada podéis hacer.",
+        "reference": "Juan 15:4–5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El anclaje no elimina empujes; evita desplazamiento.",
+        "La comunión no es ritual: es transferencia real al fundamento."
+      ],
+      "actions": [
+        "10–15 min diarios: Palabra + oración (no negociable).",
+        "Una obediencia concreta esta semana (medible).",
+        "Corta una distracción que te roba altar."
+      ]
+    },
+    {
+      "id": "fuente",
+      "title": "2) Fuente (Agua viva: activación desde Cristo)",
+      "node": "",
+      "element": "fountain",
+      "diagnosticFocus": "¿Tu vida se activa desde la Fuente (Cristo) o estás seco por falta de dependencia diaria?",
+      "verse": {
+        "quote": "Mas el que bebiere del agua que yo le daré, no tendrá sed jamás.",
+        "reference": "Juan 4:14 (RVR1960)"
+      },
+      "miniTeaching": [
+        "El agua activa la mezcla: sin Fuente, hay forma pero no vida.",
+        "Dependencia diaria produce estabilidad interna."
+      ],
+      "actions": [
+        "Antes de decidir: 2 minutos de oración (en secreto si estás solo).",
+        "Identifica qué te seca (afán, orgullo, control).",
+        "Obedece un paso pequeño que el Espíritu te marque."
+      ]
+    },
+    {
+      "id": "cisterna",
+      "title": "3) Cisterna (Agua equivocada: carne/control/miedo)",
+      "node": "",
+      "element": "cistern",
+      "diagnosticFocus": "¿Estás activando reacciones desde cisternas rotas (control, miedo, pasado) en vez de la Fuente?",
+      "verse": {
+        "quote": "Me dejaron a mí, fuente de agua viva, y cavaron para sí cisternas rotas que no retienen agua.",
+        "reference": "Jeremías 2:13 (RVR1960)"
+      },
+      "miniTeaching": [
+        "No todo lo que hidrata activa: importa la fuente.",
+        "La cisterna parece suficiente, pero no sostiene vida."
+      ],
+      "actions": [
+        "Nombra tu cisterna principal (control/miedo/orgullo/pasado).",
+        "Cambia una reacción por una oración (hoy).",
+        "Pide perdón si tu cisterna dañó el nudo (si aplica)."
+      ]
+    },
+    {
+      "id": "eje",
+      "title": "4) Eje (Verticalidad: identidad alineada)",
+      "node": "",
+      "element": "axis",
+      "diagnosticFocus": "¿Tu eje está vertical (alineado) o inclinado (ego/evasión) generando momentos (M)?",
+      "verse": {
+        "quote": "El doble ánimo es inconstante en todos sus caminos.",
+        "reference": "Santiago 1:8 (RVR1960)"
+      },
+      "miniTeaching": [
+        "No es la fuerza la que hace girar: es el eje torcido.",
+        "Verticalidad es orientación correcta, no perfección."
+      ],
+      "actions": [
+        "Identifica inclinación: ¿evasión o control?",
+        "Una conversación/consulta antes de decidir (no en soledad).",
+        "Un límite sano para volver al eje."
+      ]
+    },
+    {
+      "id": "empujes",
+      "title": "5) Empujes laterales (Fx: presión/cultura/terceros)",
+      "node": "",
+      "element": "push",
+      "diagnosticFocus": "¿Qué fuerzas están intentando mover y girar tu vida hoy?",
+      "verse": {
+        "quote": "No seas vencido de lo malo, sino vence con el bien el mal.",
+        "reference": "Romanos 12:21 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Las fuerzas horizontales no buscan aplastar: buscan desplazar.",
+        "Lo que no se enfrenta con anclaje termina dominando por insistencia."
+      ],
+      "actions": [
+        "Escribe el empuje principal (una frase).",
+        "Define una respuesta desde el altar (no desde urgencia).",
+        "No negocies fundamento por presión."
+      ]
+    },
+    {
+      "id": "deriva",
+      "title": "6) Deriva y efecto P–Δ (pequeñas desviaciones)",
+      "node": "",
+      "element": "delta",
+      "diagnosticFocus": "¿Qué se ha ido moviendo sin notarlo, haciendo que todo pese más?",
+      "verse": {
+        "quote": "Enderezad vuestras sendas.",
+        "reference": "Hebreos 12:13 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La deriva no rompe hoy, pero cambia el eje.",
+        "El efecto P–Δ no aumenta el peso; aumenta la exigencia por desalineación."
+      ],
+      "actions": [
+        "Detecta una desviación pequeña pero sostenida.",
+        "Corrige hoy un hábito (aunque sea mínimo).",
+        "Vuelve al eje antes del refuerzo doloroso."
+      ]
+    },
+    {
+      "id": "altar",
+      "title": "7) Altar (hábito mínimo y transferencia)",
+      "node": "",
+      "element": "anchor",
+      "diagnosticFocus": "¿Hay rutina mínima de altar, o solo se busca a Dios en crisis?",
+      "verse": {
+        "quote": "Acuérdate, por tanto, de dónde has caído, y arrepiéntete.",
+        "reference": "Apocalipsis 2:5 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Sin altar, el sistema vive de esfuerzo y emoción.",
+        "El altar absorbe lo que el alma no puede sostener."
+      ],
+      "actions": [
+        "Define un horario fijo de 10–15 min (7 días).",
+        "Una oración de entrega específica (1 carga).",
+        "Una obediencia pequeña como evidencia de retorno."
+      ]
+    },
+    {
+      "id": "obediencia",
+      "title": "8) Obediencia (paso concreto, no emoción)",
+      "node": "",
+      "element": "decision",
+      "diagnosticFocus": "¿Tu fe está produciendo obediencia medible o solo intención/emoción?",
+      "verse": {
+        "quote": "El corazón del hombre piensa su camino; mas Jehová endereza sus pasos.",
+        "reference": "Proverbios 16:9 (RVR1960)"
+      },
+      "miniTeaching": [
+        "La fe no grita: sostiene y obedece.",
+        "La obediencia ordena el sistema y corta la deriva."
+      ],
+      "actions": [
+        "Define 1 paso concreto esta semana (medible).",
+        "No decidas en soledad si estás bajo presión.",
+        "Cierra el día con una oración breve de alineación."
+      ]
+    },
+    {
+      "id": "descanso",
+      "title": "9) Descanso santo (reposo bajo carga)",
+      "node": "",
+      "element": "",
+      "diagnosticFocus": "¿Estás descansando en Cristo o sobreviviendo por tensión constante?",
+      "verse": {
+        "quote": "Mi yugo es fácil, y ligera mi carga.",
+        "reference": "Mateo 11:30 (RVR1960)"
+      },
+      "miniTeaching": [
+        "Permanecer no es aguantar: es reposar bajo carga.",
+        "El descanso santo evita fisuras por fatiga."
+      ],
+      "actions": [
+        "Agenda un espacio semanal de reposo (30–60 min).",
+        "Pausa antes de responder (2 veces hoy).",
+        "Entrega una ansiedad concreta (1 Pedro 5:7)."
+      ]
+    }
+  ]
+}

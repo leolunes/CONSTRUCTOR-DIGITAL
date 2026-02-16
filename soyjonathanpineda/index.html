@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>soyjonathanpineda</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --text:#e8eefc;
+      --muted:#a9b7df;
+      --line:rgba(255,255,255,.14);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 20% 0%, #182a54 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    .wrap{ max-width: 980px; margin: 0 auto; padding: 18px 14px 46px; }
+
+    header{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px 14px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.28);
+    }
+    h1{ margin:0; font-size: 24px; letter-spacing:.4px; }
+    .sub{ margin:6px 0 0; color: var(--muted); font-size: 14px; }
+
+    .grid{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 760px){ .grid{ grid-template-columns: 1fr 1fr; } }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    }
+
+    .big-heading{
+      margin: 18px 0 10px;
+      text-align:center;
+      font-weight: 900;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      font-size: 16px;
+    }
+
+    /* Featured */
+    .featured-label{
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .featured-img{
+      width: 100%;
+      height: 160px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.25);
+      object-fit: contain;
+      object-position: center;
+      display:block;
+    }
+    @media (min-width: 760px){
+      .featured-img{ height: 190px; }
+    }
+
+    .featured-title{
+      margin: 12px 0 10px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .featured-open{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-size: 14px;
+      width: fit-content;
+    }
+    .featured-open:hover{ background: rgba(255,255,255,.08); }
+
+    /* Accordion */
+    .acc{ display:flex; flex-direction:column; gap:10px; }
+    .acc-btn{
+      width:100%;
+      text-align:left;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding: 14px 14px;
+      border-radius: 14px;
+      font-size: 15px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .acc-btn:hover{ background: rgba(255,255,255,.06); }
+    .chev{ transition: transform .18s ease; opacity:.9; }
+    .acc-btn[aria-expanded="true"] .chev{ transform: rotate(180deg); }
+
+    .acc-panel{
+      display:none;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      border-radius: 14px;
+      padding: 12px 14px 14px;
+      color: var(--text);
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .acc-panel.open{ display:block; }
+
+    .panel-actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-size: 14px;
+      text-decoration:none;
+    }
+    .btn:hover{ background: rgba(255,255,255,.08); }
+    .btn.secondary{ background: rgba(0,0,0,.20); }
+
+    /* Modal base */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:stretch;
+      justify-content:center;
+      background: rgba(0,0,0,.70);
+      padding: 12px;
+    }
+    .modal.open{ display:flex; }
+
+    .modal-box{
+      width: min(1020px, 100%);
+      background: rgba(10,14,24,.96);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .modal-top{
+      padding: 12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+    }
+    .modal-title{
+      font-weight: 800;
+      font-size: 14px;
+      margin:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    /* ✅ Z-INDEX: PDF por encima del texto */
+    #textModal { z-index: 9000; }
+    #pdfModal  { z-index: 9999; }
+
+    .modal-body{
+      position:relative;
+      flex: 1 1 auto;
+      min-height: 60vh;
+      background: rgba(0,0,0,.18);
+    }
+    .pdf-frame{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+      background: transparent;
+    }
+
+    .text-body{
+      padding: 14px 14px 16px;
+      overflow:auto;
+      white-space: pre-wrap;
+      line-height: 1.55;
+      max-height: 70vh;
+    }
+
+    .closing{
+      margin-top: 18px;
+      text-align:center;
+      padding: 16px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+      white-space: pre-wrap;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    footer{
+      margin-top:12px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header id="top">
+      <h1 id="appTitle">SOY JONATHAN PINEDA</h1>
+      <p class="sub" id="subtitle">Candidato por Santander a la Cámara de Representantes</p>
+      <div class="grid" id="featuredGrid"></div>
+    </header>
+
+    <div class="big-heading" id="headingConoceme">CONÓCEME!</div>
+    <div class="card">
+      <div class="acc" id="accConoceme"></div>
+    </div>
+
+    <div class="big-heading" id="headingComoVotar">CÓMO VOTAR ESTE 8 DE MARZO DE 2026</div>
+    <div class="card">
+      <div class="acc" id="accComoVotar"></div>
+    </div>
+
+    <div class="closing" id="closingQuote"></div>
+
+    <footer>
+      <div>App informativa • soyjonathanpineda</div>
+    </footer>
+  </div>
+
+  <!-- PDF Modal -->
+  <div class="modal" id="pdfModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+      <div class="modal-top">
+        <div style="min-width:0;">
+          <p class="modal-title" id="pdfModalTitle">Documento</p>
+        </div>
+        <div class="modal-actions">
+          <a class="btn secondary" id="pdfDownload" href="#" download>⬇️ Descargar PDF</a>
+          <button class="btn secondary" id="backHomeFromPdf" type="button">🏠 Volver al inicio</button>
+          <button class="btn" id="pdfClose" type="button">✖️ Cerrar</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe class="pdf-frame" id="pdfFrame" title="PDF"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Text Modal -->
+  <div class="modal" id="textModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="textModalTitle">
+      <div class="modal-top">
+        <div style="min-width:0;">
+          <p class="modal-title" id="textModalTitle">Sección</p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn secondary" id="textViewPdf" type="button">📄 Ver PDF</button>
+          <a class="btn secondary" id="textDownloadPdf" href="#" download>⬇️ Descargar PDF</a>
+          <button class="btn secondary" id="backHomeFromText" type="button">🏠 Volver al inicio</button>
+          <button class="btn" id="textClose" type="button">✖️ Cerrar</button>
+        </div>
+      </div>
+      <div class="text-body" id="textModalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    let SECTION_MAP = new Map();
+
+    async function loadData() {
+      const res = await fetch('./data.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('No pude cargar data.json');
+      return await res.json();
+    }
+
+    function closeAllAccordions() {
+      document.querySelectorAll('.acc-btn').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+      document.querySelectorAll('.acc-panel').forEach(p => p.classList.remove('open'));
+    }
+
+    function closePdfModal() {
+      const modal = document.getElementById('pdfModal');
+      const frame = document.getElementById('pdfFrame');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.src = '';
+      if (!document.getElementById('textModal').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeTextModal() {
+      const modal = document.getElementById('textModal');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      if (!document.getElementById('pdfModal').classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    function resetToHome() {
+      closePdfModal();
+      closeTextModal();
+      closeAllAccordions();
+      document.getElementById('top').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function openPdfModal({ title, pdfPath }) {
+      // ✅ Clave: si el modal de texto está abierto, lo cerramos para que no tape el PDF
+      if (document.getElementById('textModal').classList.contains('open')) {
+        closeTextModal();
+      }
+
+      const modal = document.getElementById('pdfModal');
+      const frame = document.getElementById('pdfFrame');
+      const modalTitle = document.getElementById('pdfModalTitle');
+      const download = document.getElementById('pdfDownload');
+
+      modalTitle.textContent = title || 'Documento';
+      frame.src = pdfPath;
+
+      download.href = pdfPath;
+      download.setAttribute('download', '');
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function openTextModalBySectionId(sectionId) {
+      const section = SECTION_MAP.get(sectionId);
+      if (!section) return;
+
+      const modal = document.getElementById('textModal');
+      const titleEl = document.getElementById('textModalTitle');
+      const bodyEl = document.getElementById('textModalBody');
+      const viewPdfBtn = document.getElementById('textViewPdf');
+      const downloadPdf = document.getElementById('textDownloadPdf');
+
+      titleEl.textContent = section.title || 'Sección';
+      bodyEl.textContent = section.content || '';
+
+      if (section.pdf) {
+        viewPdfBtn.disabled = false;
+        viewPdfBtn.style.opacity = '1';
+
+        // ✅ Clave: cerrar texto y abrir PDF (para que sí se vea)
+        viewPdfBtn.onclick = () => openPdfModal({ title: section.title, pdfPath: section.pdf });
+
+        downloadPdf.href = section.pdf;
+        downloadPdf.setAttribute('download', '');
+        downloadPdf.style.pointerEvents = 'auto';
+        downloadPdf.style.opacity = '1';
+      } else {
+        viewPdfBtn.disabled = true;
+        viewPdfBtn.style.opacity = '.5';
+        viewPdfBtn.onclick = null;
+
+        downloadPdf.href = '#';
+        downloadPdf.style.pointerEvents = 'none';
+        downloadPdf.style.opacity = '.5';
+      }
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function makeDownloadLink(pdfPath){
+      const a = document.createElement('a');
+      a.className = 'btn secondary';
+      a.href = pdfPath;
+      a.textContent = '⬇️ Descargar PDF';
+      a.setAttribute('download', '');
+      return a;
+    }
+
+    function makeAccordionItem(section) {
+      const btnId = `acc-btn-${section.id}`;
+      const panelId = `acc-panel-${section.id}`;
+
+      const wrapper = document.createElement('div');
+
+      const btn = document.createElement('button');
+      btn.className = 'acc-btn';
+      btn.id = btnId;
+      btn.type = 'button';
+      btn.dataset.sectionId = section.id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', panelId);
+      btn.innerHTML = `<span>${section.title}</span><span class="chev">▼</span>`;
+
+      const panel = document.createElement('div');
+      panel.className = 'acc-panel';
+      panel.id = panelId;
+      panel.setAttribute('role', 'region');
+      panel.setAttribute('aria-labelledby', btnId);
+
+      const text = document.createElement('div');
+      text.textContent = section.content || '';
+      panel.appendChild(text);
+
+      const actions = document.createElement('div');
+      actions.className = 'panel-actions';
+
+      if (section.pdf) {
+        const viewBtn = document.createElement('button');
+        viewBtn.className = 'btn';
+        viewBtn.type = 'button';
+        viewBtn.textContent = '📄 Ver PDF';
+        viewBtn.addEventListener('click', () => openPdfModal({ title: section.title, pdfPath: section.pdf }));
+        actions.appendChild(viewBtn);
+
+        actions.appendChild(makeDownloadLink(section.pdf));
+      }
+
+      const homeBtn = document.createElement('button');
+      homeBtn.className = 'btn secondary';
+      homeBtn.type = 'button';
+      homeBtn.textContent = '🏠 Volver al inicio';
+      homeBtn.addEventListener('click', resetToHome);
+      actions.appendChild(homeBtn);
+
+      panel.appendChild(actions);
+
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!isOpen));
+        panel.classList.toggle('open', !isOpen);
+      });
+
+      wrapper.appendChild(btn);
+      wrapper.appendChild(panel);
+      return wrapper;
+    }
+
+    function renderFeatured(featured) {
+      const grid = document.getElementById('featuredGrid');
+      grid.innerHTML = '';
+
+      (featured || []).forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const label = document.createElement('div');
+        label.className = 'featured-label';
+        label.textContent = item.label || 'Destacado';
+
+        const img = document.createElement('img');
+        img.className = 'featured-img';
+        img.src = item.img;
+        img.alt = item.title || 'Destacado';
+
+        const title = document.createElement('div');
+        title.className = 'featured-title';
+        title.textContent = item.title || '';
+
+        const open = document.createElement('button');
+        open.className = 'featured-open';
+        open.type = 'button';
+        open.textContent = 'ABRIR';
+        open.addEventListener('click', () => openTextModalBySectionId(item.targetSectionId));
+
+        card.appendChild(label);
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(open);
+
+        grid.appendChild(card);
+      });
+    }
+
+    (async () => {
+      const data = await loadData();
+
+      document.getElementById('appTitle').textContent = data.appTitle || '';
+      document.getElementById('subtitle').textContent = data.subtitle || '';
+
+      SECTION_MAP = new Map((data.sections || []).map(s => [s.id, s]));
+
+      renderFeatured(data.featured || []);
+
+      const groups = data.groups || [];
+      const conoceme = groups.find(g => g.id === 'conoceme');
+      const comoVotar = groups.find(g => g.id === 'como-votar');
+
+      document.getElementById('headingConoceme').textContent = (conoceme && conoceme.heading) ? conoceme.heading : 'CONÓCEME!';
+      document.getElementById('headingComoVotar').textContent = (comoVotar && comoVotar.heading) ? comoVotar.heading : 'CÓMO VOTAR ESTE 8 DE MARZO DE 2026';
+
+      const accConoceme = document.getElementById('accConoceme');
+      accConoceme.innerHTML = '';
+      (conoceme?.sectionIds || []).forEach(id => {
+        const s = SECTION_MAP.get(id);
+        if (s) accConoceme.appendChild(makeAccordionItem(s));
+      });
+
+      const accComoVotar = document.getElementById('accComoVotar');
+      accComoVotar.innerHTML = '';
+      (comoVotar?.sectionIds || []).forEach(id => {
+        const s = SECTION_MAP.get(id);
+        if (s) accComoVotar.appendChild(makeAccordionItem(s));
+      });
+
+      document.getElementById('closingQuote').textContent = data.closingQuote || '';
+
+      // PDF modal
+      document.getElementById('pdfClose').addEventListener('click', closePdfModal);
+      document.getElementById('backHomeFromPdf').addEventListener('click', resetToHome);
+      document.getElementById('pdfModal').addEventListener('click', (e) => {
+        if (e.target.id === 'pdfModal') closePdfModal();
+      });
+
+      // Text modal
+      document.getElementById('textClose').addEventListener('click', closeTextModal);
+      document.getElementById('backHomeFromText').addEventListener('click', resetToHome);
+      document.getElementById('textModal').addEventListener('click', (e) => {
+        if (e.target.id === 'textModal') closeTextModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closePdfModal();
+          closeTextModal();
+        }
+      });
+
+    })().catch(err => {
+      alert('Error cargando la app: ' + err.message);
+      console.error(err);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1666 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Mapa de Cargas — Auditoría</title>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --text:#e7eefc; --muted:#a7b4d6;
+      --line:rgba(255,255,255,.10); --accent:#5eead4;
+      --g:#10b981; --y:#f59e0b; --o:#f97316; --r:#f43f5e;
+
+      --dead:#a78bfa;   /* cargas muertas */
+      --live:#f59e0b;   /* cargas vivas */
+      --seis:#38bdf8;   /* cargas sísmicas */
+    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+    .hero{border:1px solid var(--line);border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(94,234,212,.10), rgba(99,102,241,.08));}
+    h1{margin:0 0 6px;font-size:26px;}
+    .sub{margin:0;color:var(--muted);line-height:1.4}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;}
+    @media(min-width:1040px){.grid{grid-template-columns:560px 1fr;}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;}
+    .sec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+    .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);font-size:12px;}
+    .fieldgrid{display:grid;grid-template-columns:1fr;gap:10px;}
+    @media(min-width:740px){.fieldgrid{grid-template-columns:1fr 1fr;}}
+    label{font-weight:750;font-size:13px;}
+    input, textarea, select{
+      width:100%;box-sizing:border-box;background:rgba(255,255,255,.04);color:var(--text);
+      border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;outline:none;
+    }
+    textarea{min-height:88px;resize:vertical;}
+    .opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .opt{display:flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 10px;cursor:pointer;user-select:none;}
+    .opt input{width:auto}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+    button{border:0;border-radius:14px;padding:11px 14px;font-weight:900;cursor:pointer;}
+    .primary{background:var(--accent);color:#071018;}
+    .ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.18);}
+    .muted{color:var(--muted);}
+    .result{display:none;margin-top:12px;border-radius:18px;border:1px solid var(--line);padding:14px;background:rgba(255,255,255,.04);}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;font-weight:900;font-size:12px;letter-spacing:.4px;}
+    .bG{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);}
+    .bY{background:rgba(245,158,11,.18);color:#fcd34d;border:1px solid rgba(245,158,11,.35);}
+    .bO{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.35);}
+    .bR{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.35);}
+    .svgBox{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block;margin-right:6px;}
+    .k{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;}
+    .warn{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#fcd34d;}
+    .toggleRow{margin-top:10px;display:flex;gap:10px;align-items:center;}
+    .toggleRow input{transform:scale(1.1)}
+    .tip{font-size:12px;color:var(--muted);line-height:1.35}
+    .hint{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(94,234,212,.25);background:rgba(94,234,212,.06);color:#bff7ee}
+    .small{font-size:12px}
+    .clicky{cursor:pointer}
+    .mini{font-size:12px;color:var(--muted);line-height:1.35;margin-top:6px;}
+    .itemsBox{margin-top:10px;border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:10px;background:rgba(255,255,255,.03);}
+    .itemRow{display:grid;grid-template-columns:1fr;gap:8px;border-top:1px dashed rgba(255,255,255,.10);padding-top:10px;margin-top:10px;}
+    .itemRow:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .itemTop{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;}
+    .itemTitle{font-weight:800;font-size:13px;}
+    .itemDesc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.35}
+    .modalOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;}
+    .modal{width:min(980px,100%);background:var(--card);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.45);}
+    .modal h3{margin:0 0 6px;}
+    .modal .grid2{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;}
+    @media(min-width:980px){.modal .grid2{grid-template-columns:1fr 1fr;}}
+    .caseList{max-height:320px;overflow:auto;border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:10px;background:rgba(255,255,255,.03);}
+    .caseRow{display:flex;gap:10px;align-items:center;justify-content:space-between;border-top:1px dashed rgba(255,255,255,.10);padding-top:10px;margin-top:10px;}
+    .caseRow:first-child{border-top:none;padding-top:0;margin-top:0;}
+    .caseMeta{font-size:12px;color:var(--muted);line-height:1.35}
+    .btnMini{padding:8px 10px;border-radius:12px;font-weight:900;}
+    .danger{border:1px solid rgba(244,63,94,.35);color:#fda4af;background:rgba(244,63,94,.10);}
+    .good{border:1px solid rgba(16,185,129,.35);color:#34d399;background:rgba(16,185,129,.10);}
+    .note{border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;margin-top:10px;}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 id="t">Mapa de Cargas — Auditoría del Hogar</h1>
+      <p class="sub" id="d"></p>
+      <div style="margin-top:10px">
+        <span class="pill" id="pMax"></span>
+        <span class="pill" id="pHow">Niveles: 0–3 (Alineado → Crítico)</span>
+        <span class="pill" id="liveGlobal">Global: —</span>
+      </div>
+
+      <div class="hint">
+        <div style="font-weight:900">Cómo usarlo (individual)</div>
+        <div class="tip">
+          Responde como <b>esposo</b> o <b>esposa</b>. Aquí medimos <b>cargas</b> (muertas/vivas/sísmicas) y cómo afectan el pórtico:
+          si sube <b>Fx</b> (sísmica) el sistema <i>deriva</i>; si sube la <b>concentración</b> el sistema <i>se inclina</i>.
+        </div>
+      </div>
+
+      <div id="pdfWarn" class="warn">No se pudo cargar jsPDF/AutoTable. Verifica internet/CDN.</div>
+    </div>
+
+    <div class="grid">
+      <!-- IZQ: DIAGRAMA -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Diagrama del pórtico (cargas + deriva)</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">
+              Flechas: Muertas (morado) · Vivas (amarillo) · Sísmicas (azul). N1/N2/N3 = puntos de tensión. <span class="small">Clic para ir al módulo.</span>
+            </div>
+          </div>
+          <span class="pill" id="liveScorePill">Puntaje: 0</span>
+        </div>
+
+        <div class="svgBox" style="margin-top:10px;">
+          <svg id="designSVG" viewBox="0 0 760 380" width="100%" height="auto" aria-label="Pórtico con cargas y deriva">
+            <!-- suelo -->
+            <rect x="0" y="330" width="760" height="50" fill="rgba(255,255,255,.04)"></rect>
+
+            <!-- ===== PÓRTICO (estilo imagen) ===== -->
+            <!-- base/fundamento -->
+            <rect id="foundation" class="clicky" x="90" y="284" width="200" height="46" rx="14"
+              fill="rgba(16,185,129,.22)" stroke="rgba(16,185,129,.55)" stroke-width="2"></rect>
+            <text x="190" y="312" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.90)">CIMIENTO (CRISTO)</text>
+
+            <!-- Portico group for movement (deriva + inclinación) -->
+            <g id="porticoMove" transform="translate(0,0) rotate(0 210 120)">
+              <!-- columna (varón) -->
+              <rect id="column" class="clicky" x="160" y="110" width="34" height="174" rx="14"
+                fill="rgba(16,185,129,.28)" stroke="rgba(16,185,129,.55)" stroke-width="2"></rect>
+              <text x="177" y="100" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)">COLUMNA (VARÓN)</text>
+
+              <!-- viga (mujer) -->
+              <rect id="beam" class="clicky" x="178" y="110" width="350" height="26" rx="14"
+                fill="rgba(16,185,129,.28)" stroke="rgba(16,185,129,.55)" stroke-width="2"></rect>
+              <text x="350" y="100" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)">VIGA (MUJER)</text>
+
+              <!-- apoyo móvil -->
+              <circle id="rollerBase" class="clicky" cx="540" cy="134" r="16"
+                fill="rgba(16,185,129,.22)" stroke="rgba(16,185,129,.55)" stroke-width="2"></circle>
+              <rect id="rollerPlate" x="510" y="154" width="60" height="10" rx="4" fill="rgba(255,255,255,.10)"></rect>
+              <text x="540" y="180" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.85)">APOYO MÓVIL (ESPÍRITU)</text>
+
+              <!-- nodos -->
+              <circle id="N1" class="clicky" cx="190" cy="284" r="12" fill="#64748b"></circle>
+              <text x="207" y="288" font-size="12" fill="rgba(255,255,255,.85)">1</text>
+              <text x="190" y="272" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">COMUNIÓN</text>
+
+              <circle id="N2" class="clicky" cx="190" cy="123" r="12" fill="#64748b"></circle>
+              <text x="207" y="127" font-size="12" fill="rgba(255,255,255,.85)">2</text>
+              <text x="190" y="148" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">CONGREGACIÓN</text>
+
+              <circle id="N3" class="clicky" cx="540" cy="134" r="12" fill="#64748b"></circle>
+              <text x="557" y="138" font-size="12" fill="rgba(255,255,255,.85)">3</text>
+              <text x="540" y="198" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">INTERSECCIÓN</text>
+
+              <!-- ===== CARGAS VERTICALES (muertas + vivas) ===== -->
+              <g id="deadLoads" class="clicky" opacity="0.85">
+                <line x1="300" y1="48" x2="300" y2="106" stroke="var(--dead)" stroke-width="3"/>
+                <polygon points="300,110 292,98 308,98" fill="var(--dead)"/>
+                <text x="300" y="36" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">MUERTAS</text>
+              </g>
+
+              <g id="liveLoads" class="clicky" opacity="0.85">
+                <line x1="390" y1="48" x2="390" y2="106" stroke="var(--live)" stroke-width="3"/>
+                <polygon points="390,110 382,98 398,98" fill="var(--live)"/>
+                <text x="390" y="36" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">VIVAS</text>
+              </g>
+
+              <!-- ===== CARGA SÍSMICA (horizontal sobre N2) ===== -->
+              <g id="seismicFx" class="clicky" opacity="0.85">
+                <line x1="210" y1="123" x2="270" y2="123" stroke="var(--seis)" stroke-width="4" stroke-linecap="round"/>
+                <polygon points="274,123 262,116 262,130" fill="var(--seis)"/>
+                <text x="240" y="110" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">Fx</text>
+              </g>
+
+              <!-- indicador de momento -->
+              <g id="momentM" class="clicky" opacity="0.0">
+                <path d="M 235 156 A 32 32 0 1 1 236 156" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+                <polygon points="266,156 254,150 254,162" fill="rgba(255,255,255,.55)"/>
+                <text x="235" y="196" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.80)">M↑</text>
+              </g>
+            </g>
+
+            <!-- panel lateral: resumen numérico -->
+            <g id="panel" transform="translate(575,72)">
+              <rect x="0" y="0" width="165" height="250" rx="16" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.20)"/>
+              <text x="82" y="-14" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.78)">RESUMEN</text>
+
+              <text x="16" y="34" font-size="12" fill="rgba(255,255,255,.78)">Muertas</text>
+              <rect x="16" y="44" width="120" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect id="barDead" x="16" y="44" width="0" height="10" rx="5" fill="var(--dead)"/>
+
+              <text x="16" y="80" font-size="12" fill="rgba(255,255,255,.78)">Vivas</text>
+              <rect x="16" y="90" width="120" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect id="barLive" x="16" y="90" width="0" height="10" rx="5" fill="var(--live)"/>
+
+              <text x="16" y="126" font-size="12" fill="rgba(255,255,255,.78)">Sísmicas</text>
+              <rect x="16" y="136" width="120" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect id="barSeis" x="16" y="136" width="0" height="10" rx="5" fill="var(--seis)"/>
+
+              <text x="16" y="176" font-size="12" fill="rgba(255,255,255,.78)">Concentración</text>
+              <rect x="16" y="186" width="120" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+              <rect id="barConc" x="16" y="186" width="0" height="10" rx="5" fill="rgba(255,255,255,.40)"/>
+              <text id="concLabel" x="16" y="216" font-size="12" fill="rgba(255,255,255,.78)">—</text>
+
+              <text id="alertLabel" x="16" y="242" font-size="12" fill="rgba(255,255,255,.80)"> </text>
+            </g>
+          </svg>
+
+          <div class="legend">
+            <div class="k"><span class="dot" style="background:var(--g)"></span>Alineado</div>
+            <div class="k"><span class="dot" style="background:var(--y)"></span>En ajuste</div>
+            <div class="k"><span class="dot" style="background:var(--o)"></span>En riesgo</div>
+            <div class="k"><span class="dot" style="background:var(--r)"></span>Crítico</div>
+
+            <div class="k"><span class="dot" style="background:var(--dead)"></span>Muertas</div>
+            <div class="k"><span class="dot" style="background:var(--live)"></span>Vivas</div>
+            <div class="k"><span class="dot" style="background:var(--seis)"></span>Sísmicas</div>
+          </div>
+
+          <div class="muted small" style="margin-top:10px;">
+            Tip: si sube Fx (sísmica), el pórtico deriva (se desplaza). Si sube la concentración, aparece M↑ (momento) e inclinación.
+          </div>
+        </div>
+
+        <div class="result" id="resBox"></div>
+      </div>
+
+      <!-- DER: FORMULARIO -->
+      <div class="card">
+        <div class="row">
+          <div>
+            <b>Datos de auditoría</b>
+            <div class="muted" style="font-size:13px;margin-top:4px;">No se envía a servidor. Todo queda en tu navegador.</div>
+          </div>
+          <span class="pill">Cabecera</span>
+        </div>
+
+        <div class="fieldgrid" style="margin-top:10px;">
+          <div>
+            <label>Nombre del paciente</label>
+            <input id="patient" placeholder="Ej: Juan Pérez">
+          </div>
+          <div>
+            <label>Nombre del auditor</label>
+            <input id="auditor" placeholder="Ej: Consejero / Pastor">
+          </div>
+          <div>
+            <label>Fecha (editable)</label>
+            <input id="date" type="date">
+          </div>
+          <div>
+            <label>Responde como</label>
+            <select id="role">
+              <option value="esposo">Esposo</option>
+              <option value="esposa">Esposa</option>
+              <option value="individual">Individual</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1;">
+            <label>Observaciones libres</label>
+            <textarea id="notes" placeholder="Contexto, acuerdos, motivo, etc."></textarea>
+          </div>
+        </div>
+
+        <div class="toggleRow">
+          <input id="details" type="checkbox" checked>
+          <div class="muted" style="font-size:13px;">Incluir detalle por módulo en el PDF</div>
+        </div>
+
+        <div class="sec" id="secForm"></div>
+
+        <div class="btns">
+          <button class="primary" id="btnResult">Ver resultado</button>
+
+          <button class="ghost" id="btnSaveCase">Guardar caso</button>
+          <button class="ghost" id="btnCases">Casos</button>
+
+          <button class="ghost" id="btnSermon">Generar enseñanza</button>
+
+          <button class="ghost" id="btnTxt" disabled>Descargar TXT</button>
+          <button class="ghost" id="btnPdf" disabled>Descargar PDF bonito</button>
+          <button class="ghost" id="btnReset">Reiniciar</button>
+          <span class="muted" id="live">Puntaje: 0</span>
+        </div>
+
+        <div class="note small">
+          <div style="font-weight:900">Cómo se calculan las cargas</div>
+          <div class="mini">
+            En Muertas/Vivas/Sísmicas puntúas <b>tipos de carga</b> (0–3). La app calcula: <b>total</b>, <b>nivel</b> y efectos:
+            deriva (Fx), inclinación (M↑) y alerta por concentración.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CASOS -->
+  <div class="modalOverlay" id="casesModal">
+    <div class="modal">
+      <div class="row">
+        <div>
+          <h3>Casos guardados</h3>
+          <div class="muted small">Se guardan en este navegador (LocalStorage). Puedes exportar/importar para respaldar.</div>
+        </div>
+        <button class="ghost btnMini" id="btnCloseCases">Cerrar</button>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <div class="muted small" style="margin-bottom:6px;">Listado</div>
+          <div class="caseList" id="caseList"></div>
+        </div>
+
+        <div>
+          <div class="muted small" style="margin-bottom:6px;">Respaldo</div>
+          <div class="itemsBox">
+            <div class="row">
+              <button class="ghost btnMini good" id="btnExportCases">Exportar (JSON)</button>
+              <label class="ghost btnMini clicky" style="display:inline-flex;align-items:center;gap:8px;">
+                Importar (JSON)
+                <input type="file" id="importFile" accept="application/json" style="display:none">
+              </label>
+            </div>
+            <div class="mini" style="margin-top:10px;">
+              Exporta para guardar tus casos en una carpeta. Importa para restaurar.
+            </div>
+            <div id="casesMsg" class="mini"></div>
+          </div>
+
+          <div class="itemsBox" style="margin-top:12px;">
+            <div class="row">
+              <button class="ghost btnMini danger" id="btnClearCases">Borrar todos</button>
+              <span class="muted small">⚠️ Acción irreversible</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ENSEÑANZA -->
+  <div class="modalOverlay" id="sermonModal">
+    <div class="modal">
+      <div class="row">
+        <div>
+          <h3>Enseñanza / Predica (basada en el libro)</h3>
+          <div class="muted small">Se arma con las porciones bíblicas + mini-enseñanzas + acciones definidas en el JSON y el diagnóstico de este caso.</div>
+        </div>
+        <button class="ghost btnMini" id="btnCloseSermon">Cerrar</button>
+      </div>
+
+      <div class="itemsBox" style="margin-top:10px;">
+        <div class="row">
+          <button class="ghost btnMini good" id="btnCopySermon">Copiar</button>
+          <button class="ghost btnMini" id="btnDownloadSermon">Descargar TXT</button>
+        </div>
+        <pre id="sermonText" class="mono" style="white-space:pre-wrap;margin:10px 0 0;font-size:12px;line-height:1.4;color:var(--text);"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF + AutoTable -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const JSON_PATH = "mapa-cargas.json";
+  const LOGO_PATH = "logo.png"; // opcional
+  const CASES_KEY = "CD_cases_mapa_cargas_v1";
+
+  let DATA=null;
+  let logoDataUrl=null;
+
+  // scores: sectionId -> 0..3 (nivel)
+  const scores = {};
+  // itemScores: sectionId -> { itemId -> 0..3 }
+  const itemScores = {};
+
+  let last=null;
+
+  const secForm = document.getElementById("secForm");
+  const resBox = document.getElementById("resBox");
+  const pdfWarn = document.getElementById("pdfWarn");
+
+  const patientEl = document.getElementById("patient");
+  const auditorEl = document.getElementById("auditor");
+  const dateEl = document.getElementById("date");
+  const notesEl = document.getElementById("notes");
+  const roleEl = document.getElementById("role");
+  const detailsEl = document.getElementById("details");
+
+  const liveEl = document.getElementById("live");
+  const liveGlobal = document.getElementById("liveGlobal");
+  const liveScorePill = document.getElementById("liveScorePill");
+  const btnTxt = document.getElementById("btnTxt");
+  const btnPdf = document.getElementById("btnPdf");
+
+  // SVG elements for summary
+  const barDead = document.getElementById("barDead");
+  const barLive = document.getElementById("barLive");
+  const barSeis = document.getElementById("barSeis");
+  const barConc = document.getElementById("barConc");
+  const concLabel = document.getElementById("concLabel");
+  const alertLabel = document.getElementById("alertLabel");
+  const porticoMove = document.getElementById("porticoMove");
+  const momentM = document.getElementById("momentM");
+
+  function setDefaultDateIfEmpty(){
+    if(dateEl.value) return;
+    const d = new Date();
+    dateEl.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
+  function okPdfLib(){
+    return !!(window.jspdf && window.jspdf.jsPDF) && !!(window.jspdfAutoTable || (window.jspdf && window.jspdf.jsPDF && window.jspdf.jsPDF.API && window.jspdf.jsPDF.API.autoTable));
+  }
+
+  function levelByValue(v){
+    return DATA.levels.find(x=>Number(x.value)===Number(v)) || DATA.levels[0];
+  }
+
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+  function totalScore(){
+    return DATA.sections.reduce((acc,s)=> acc + (scores[s.id] ?? 0), 0);
+  }
+
+  function globalBand(sum){
+    const b = DATA.globalBands.find(x => sum>=x.min && sum<=x.max);
+    return b || DATA.globalBands[0];
+  }
+
+  function paintFill(id, v){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.setAttribute("fill", levelByValue(v).color);
+  }
+
+  function setOpacity(id, val){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.setAttribute("opacity", String(val));
+  }
+
+  function getSection(secId){
+    return (DATA.sections || []).find(s=> s.id === secId);
+  }
+
+  // ====== CÁLCULO POR ITEMS (muertas/vivas/sísmicas) ======
+  function computeItemSection(sec){
+    const m = { sum:0, max:0, count:0, level:0, topItems:[] };
+
+    const items = sec.items || [];
+    const map = itemScores[sec.id] || {};
+    const maxPerItem = 3;
+
+    items.forEach(it=>{
+      const v = Number(map[it.id] ?? 0);
+      m.sum += v;
+      m.count += 1;
+      m.max += maxPerItem;
+      m.topItems.push({ id: it.id, title: it.title, value: v, desc: it.desc || "" });
+    });
+
+    // Ordenar top items (peor primero)
+    m.topItems.sort((a,b)=> b.value - a.value);
+
+    // Normalización a nivel 0..3
+    // Usamos promedio (0..3) y redondeo al entero más cercano, pero nunca menos que el peor si hay valores altos.
+    const avg = m.count ? (m.sum / m.count) : 0;
+    let level = Math.round(avg);
+    // refuerzo: si hay algún item en 3, mínimo 2 (evita ocultar crisis)
+    const worst = m.topItems[0]?.value ?? 0;
+    if(worst === 3 && level < 2) level = 2;
+    if(worst === 2 && level < 1) level = 1;
+
+    m.level = clamp(level, 0, 3);
+    return m;
+  }
+
+  function getComputedLoads(){
+    const deadSec = getSection("muertas");
+    const liveSec = getSection("vivas");
+    const seisSec = getSection("sismicas");
+    const concSec = getSection("concentracion");
+
+    const dead = deadSec?.items ? computeItemSection(deadSec) : {sum:0,max:0,count:0,level:scores["muertas"]??0, topItems:[]};
+    const live = liveSec?.items ? computeItemSection(liveSec) : {sum:0,max:0,count:0,level:scores["vivas"]??0, topItems:[]};
+    const seis = seisSec?.items ? computeItemSection(seisSec) : {sum:0,max:0,count:0,level:scores["sismicas"]??0, topItems:[]};
+
+    const concLevel = concSec ? (scores["concentracion"] ?? 0) : 0;
+
+    const deadRatio = dead.max ? dead.sum / dead.max : (dead.level/3);
+    const liveRatio = live.max ? live.sum / live.max : (live.level/3);
+    const seisRatio = seis.max ? seis.sum / seis.max : (seis.level/3);
+
+    return { dead, live, seis, concLevel, deadRatio, liveRatio, seisRatio };
+  }
+
+  // ====== VISUAL (pórtico con deriva/inclinación + barras resumen) ======
+  function updateSVG(){
+    // Pintar nodos según módulos (si existen mapeos)
+    DATA.sections.forEach(sec=>{
+      const v = scores[sec.id] ?? 0;
+      if(sec.node){
+        const nodeEl = document.getElementById(sec.node);
+        if(nodeEl) nodeEl.setAttribute("fill", levelByValue(v).color);
+      }
+      if(sec.element){
+        // si el id existe, lo pintamos
+        const el = document.getElementById(sec.element);
+        if(el) el.setAttribute("fill", levelByValue(v).color);
+      }
+    });
+
+    // Cálculo de cargas
+    const L = getComputedLoads();
+
+    // flechas: opacidad por nivel
+    setOpacity("deadLoads", 0.30 + (1 - (L.dead.level/3))*0.55);
+    setOpacity("liveLoads", 0.30 + (1 - (L.live.level/3))*0.55);
+    setOpacity("seismicFx", 0.30 + (1 - (L.seis.level/3))*0.55);
+
+    // barras resumen (0..120px)
+    const W = 120;
+    barDead.setAttribute("width", String(Math.round(W * clamp(L.deadRatio,0,1))));
+    barLive.setAttribute("width", String(Math.round(W * clamp(L.liveRatio,0,1))));
+    barSeis.setAttribute("width", String(Math.round(W * clamp(L.seisRatio,0,1))));
+    barConc.setAttribute("width", String(Math.round(W * clamp((L.concLevel/3),0,1))));
+
+    // etiqueta concentración
+    const concText =
+      L.concLevel===0 ? "Concentración: baja" :
+      L.concLevel===1 ? "Concentración: media" :
+      L.concLevel===2 ? "Concentración: alta" : "Concentración: crítica";
+    concLabel.textContent = concText;
+
+    // alerta
+    const alertOn = (L.concLevel>=2) || (L.seis.level>=2);
+    alertLabel.textContent = alertOn ? "ALERTA: tensión alta" : "Estabilidad: controlada";
+
+    // deriva (translate) por sísmica
+    // dx 0..22
+    const dx = Math.round(22 * clamp(L.seisRatio,0,1));
+    // inclinación (rotate) por concentración: 0..-5 grados (ligera)
+    const ang = - (5 * (L.concLevel/3));
+
+    // mostrar M↑ si concentración alta
+    setOpacity("momentM", L.concLevel>=2 ? 0.65 : 0.0);
+
+    // mover el grupo (deriva + inclinación)
+    // pivot aproximado sobre nudo 2 (x~210 y~120)
+    porticoMove.setAttribute("transform", `translate(${dx},0) rotate(${ang} 210 120)`);
+  }
+
+  function updateLive(){
+    // Recalcular secciones que son por items (muertas/vivas/sísmicas) y escribir scores
+    ["muertas","vivas","sismicas"].forEach(id=>{
+      const sec = getSection(id);
+      if(sec?.items){
+        const m = computeItemSection(sec);
+        scores[id] = m.level;
+        const pill = document.getElementById(`pill_${id}`);
+        if(pill) pill.textContent = levelByValue(m.level).label;
+      }
+    });
+
+    const sum = totalScore();
+    liveEl.textContent = `Puntaje: ${sum}`;
+    liveScorePill.textContent = `Puntaje: ${sum}`;
+    const g = globalBand(sum);
+    liveGlobal.textContent = `Global: ${g.label}`;
+    updateSVG();
+  }
+
+  // ====== FORM RENDER ======
+  function renderForm(){
+    secForm.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:10px;">
+      Para <b>Muertas/Vivas/Sísmicas</b> responde por <b>tipos de carga</b> (0–3). En los demás módulos selecciona nivel.
+    </div>`;
+
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = 0;
+      itemScores[sec.id] = itemScores[sec.id] || {};
+
+      const div = document.createElement("div");
+      div.className = "sec";
+      div.id = `sec_${sec.id}`;
+
+      const isItems = Array.isArray(sec.items) && sec.items.length>0;
+
+      div.innerHTML = `
+        <div class="row">
+          <div>
+            <div style="font-weight:900">${sec.title}</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">${sec.diagnosticFocus || ""}</div>
+          </div>
+          <span class="pill" id="pill_${sec.id}">Alineado</span>
+        </div>
+
+        ${isItems ? `
+          <div class="itemsBox" aria-label="${sec.title}">
+            <div class="mini">Marca cada tipo de carga (0–3). La app calcula el nivel del módulo automáticamente.</div>
+            <div id="items_${sec.id}"></div>
+          </div>
+        ` : `
+          <div class="opts" role="radiogroup" aria-label="${sec.title}">
+            ${DATA.levels.map(l=>`
+              <label class="opt">
+                <input type="radio" name="${sec.id}" value="${l.value}" ${l.value===0?"checked":""}>
+                <span>${l.label} (${l.value})</span>
+              </label>
+            `).join("")}
+          </div>
+        `}
+
+        <div class="muted" style="font-size:13px;margin-top:10px;">
+          <b>📖</b> ${sec.verse.quote} <span class="muted">(${sec.verse.reference})</span>
+        </div>
+      `;
+
+      if(isItems){
+        const host = div.querySelector(`#items_${sec.id}`);
+        (sec.items||[]).forEach((it, idx)=>{
+          const row = document.createElement("div");
+          row.className = "itemRow";
+          row.innerHTML = `
+            <div class="itemTop">
+              <div>
+                <div class="itemTitle">${it.title}</div>
+                ${it.desc ? `<div class="itemDesc">${it.desc}</div>` : ``}
+              </div>
+              <span class="pill small">Tipo ${idx+1}</span>
+            </div>
+
+            <div class="opts" role="radiogroup" aria-label="${it.title}">
+              ${DATA.levels.map(l=>`
+                <label class="opt">
+                  <input type="radio" name="${sec.id}__${it.id}" value="${l.value}" ${l.value===0?"checked":""}>
+                  <span>${l.label} (${l.value})</span>
+                </label>
+              `).join("")}
+            </div>
+          `;
+          // wire
+          row.querySelectorAll(`input[name="${sec.id}__${it.id}"]`).forEach(inp=>{
+            inp.addEventListener("change", (e)=>{
+              const v = Number(e.target.value);
+              itemScores[sec.id][it.id] = v;
+              // recalcular nivel del módulo
+              const m = computeItemSection(sec);
+              scores[sec.id] = m.level;
+              const pill = document.getElementById(`pill_${sec.id}`);
+              if(pill) pill.textContent = levelByValue(m.level).label;
+              updateLive();
+            });
+          });
+          host.appendChild(row);
+        });
+      }else{
+        div.querySelectorAll(`input[name="${sec.id}"]`).forEach(inp=>{
+          inp.addEventListener("change", (e)=>{
+            const v = Number(e.target.value);
+            scores[sec.id] = v;
+            const lev = levelByValue(v);
+            const pill = document.getElementById(`pill_${sec.id}`);
+            if(pill) pill.textContent = lev.label;
+            updateLive();
+          });
+        });
+      }
+
+      secForm.appendChild(div);
+    });
+
+    updateLive();
+  }
+
+  // ====== RECOMENDACIONES (reglas) ======
+  function microRecs(loads){
+    const out = [];
+    const deadL = loads.dead.level;
+    const liveL = loads.live.level;
+    const seisL = loads.seis.level;
+    const concL = loads.concLevel;
+
+    // reglas pedagógicas
+    if(deadL>=2 && liveL>=2){
+      out.push("Las cargas verticales (muertas + vivas) están altas: el sistema está cargando en exceso. Se requiere redistribución y orden.");
+    }
+    if(seisL>=2){
+      out.push("Fx (carga sísmica) está alta: hay empujes laterales (crisis/terceros/decisiones). El pórtico deriva si el nudo no se refuerza.");
+    }
+    if(concL>=2){
+      out.push("Concentración alta: el peso se está quedando en uno solo. Esto genera momento (M↑) e inclinación del sistema.");
+    }
+    if(seisL>=2 && concL>=2){
+      out.push("Combinación crítica: empuje lateral + concentración. Requiere intervención pastoral (orden, límites y transferencia al fundamento).");
+    }
+    if(deadL<=1 && liveL<=1 && seisL<=1 && concL<=1){
+      out.push("Cargas controladas: el sistema sostiene peso sin deriva notable. Mantén mantenimiento y acuerdos.");
+    }
+    return out;
+  }
+
+  // ====== PAYLOAD + PLAN 7 DÍAS ======
+  function buildPayload(){
+    const header = {
+      patient: patientEl.value.trim() || "(no especificado)",
+      auditor: auditorEl.value.trim() || "(no especificado)",
+      date: dateEl.value || "(no especificada)",
+      role: roleEl.value,
+      notes: notesEl.value.trim() || ""
+    };
+
+    // computed loads
+    const loads = getComputedLoads();
+    const recs = microRecs(loads);
+
+    const sum = totalScore();
+    const g = globalBand(sum);
+
+    const sections = DATA.sections.map(sec=>{
+      const v = scores[sec.id] ?? 0;
+      const level = levelByValue(v);
+
+      const extra = {};
+      if(sec.items?.length){
+        const m = computeItemSection(sec);
+        extra.itemSum = m.sum;
+        extra.itemMax = m.max;
+        extra.itemCount = m.count;
+        extra.topItems = m.topItems.slice(0,5);
+      }
+
+      return {
+        id: sec.id,
+        title: sec.title,
+        levelValue: v,
+        levelKey: level.key,
+        levelLabel: level.label,
+        color: level.color,
+        verse: sec.verse,
+        focus: sec.diagnosticFocus || "",
+        miniTeaching: sec.miniTeaching || [],
+        actions: sec.actions || [],
+        items: sec.items || [],
+        itemScores: itemScores[sec.id] || {},
+        ...extra
+      };
+    });
+
+    // peor a mejor
+    sections.sort((a,b)=> b.levelValue - a.levelValue);
+
+    const top = sections.slice(0,3);
+
+    const plan7 = [
+      { day:1, title:`Identificar cargas (volver al fundamento)`, items:[
+        "Oración breve: entrega de peso al Señor.",
+        "Lista: 3 cargas muertas, 3 vivas, 3 sísmicas (si aplica).",
+        "Nombrar: ¿quién está sosteniendo qué?"
+      ]},
+      { day:2, title:`Descargar una carga muerta`, items:[
+        ...(top[0]?.actions?.slice(0,2) || []),
+        "Una decisión práctica: eliminar una presión fija innecesaria."
+      ]},
+      { day:3, title:`Ordenar una carga viva`, items:[
+        ...(top[1]?.actions?.slice(0,2) || []),
+        "Un acuerdo de responsabilidades (corto, claro, medible)."
+      ]},
+      { day:4, title:`Reducir empujes (Fx)`, items:[
+        ...(top[2]?.actions?.slice(0,2) || []),
+        "Identificar el empuje principal (terceros/decisión/crisis) y poner un límite."
+      ]},
+      { day:5, title:"Refuerzo del nudo (conversación + pacto)", items:[
+        "Conversación guiada: dato + sentimiento + petición (sin acusación).",
+        "Un acuerdo mínimo por escrito (1–3 líneas).",
+        "Oración por unidad y dirección."
+      ]},
+      { day:6, title:"Transferencia y redistribución", items:[
+        "Revisar concentración: ¿se movió el peso o sigue en uno?",
+        "Transferir 1 carga al fundamento (orar + obedecer un paso).",
+        "Reordenar la semana (horarios, límites, prioridades)."
+      ]},
+      { day:7, title:"Revisión y mantenimiento", items:[
+        "¿Qué cambió en 7 días? ¿Qué permanece?",
+        "Elegir 1 práctica semanal fija para evitar nueva concentración.",
+        "Repetir el Mapa de Cargas para comparar."
+      ]}
+    ];
+
+    return {
+      meta: DATA.meta,
+      header,
+      global: { sum, band: g, max: DATA.sections.length * 3 },
+      loads: {
+        dead: loads.dead,
+        live: loads.live,
+        seis: loads.seis,
+        concLevel: loads.concLevel
+      },
+      recs,
+      sections,
+      includeDetails: detailsEl.checked,
+      plan7
+    };
+  }
+
+  function showResult(){
+    last = buildPayload();
+    const b = last.global.band;
+
+    const badge =
+      b.key==="g_alineado" ? "bG" :
+      b.key==="g_ajuste" ? "bY" :
+      b.key==="g_riesgo" ? "bO" : "bR";
+
+    const recHTML = (last.recs||[]).map(x=>`<li style="margin:6px 0;">${x}</li>`).join("");
+
+    // Top items (cargas)
+    const loadTop = [];
+    ["muertas","vivas","sismicas"].forEach(id=>{
+      const sec = last.sections.find(s=>s.id===id);
+      if(sec?.topItems?.length){
+        sec.topItems.slice(0,2).forEach(it=>{
+          if(it.value>=2){
+            loadTop.push(`${sec.title.replace(/^\d+\)\s*/,'')}: ${it.title} (${it.value})`);
+          }
+        });
+      }
+    });
+
+    resBox.style.display = "block";
+    resBox.innerHTML = `
+      <div class="row">
+        <div>
+          <span class="badge ${badge}">${b.label}</span>
+          <div class="muted" style="margin-top:6px;font-size:13px;">
+            Puntaje global: <b>${last.global.sum}</b> / ${last.global.max}
+          </div>
+          <div class="muted" style="margin-top:4px;font-size:13px;">${b.summary}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;border-left:3px solid rgba(94,234,212,.45);background:rgba(94,234,212,.06);padding:10px 12px;border-radius:12px;">
+        <div style="font-style:italic;">${b.verse.quote}</div>
+        <div class="muted" style="margin-top:6px;">(${b.verse.reference})</div>
+      </div>
+
+      <div class="sec">
+        <div style="font-weight:900;margin-bottom:6px;">Micro-recomendaciones automáticas</div>
+        <ul style="margin:0 0 0 18px;padding:0;color:var(--text);">${recHTML || "<li>(sin recomendaciones)</li>"}</ul>
+        ${loadTop.length ? `<div class="mini" style="margin-top:10px;"><b>Alertas (top cargas):</b><br>${loadTop.map(x=>"• "+x).join("<br>")}</div>` : ``}
+      </div>
+    `;
+
+    btnTxt.disabled = false;
+
+    const ok = okPdfLib();
+    btnPdf.disabled = !ok;
+    pdfWarn.style.display = ok ? "none" : "block";
+  }
+
+  // ====== TXT ======
+  function downloadTXT(){
+    if(!last) return;
+    const L = [];
+    L.push((last.meta.title || "MAPA DE CARGAS").toUpperCase());
+    L.push("");
+    L.push("DATOS");
+    L.push(`Paciente: ${last.header.patient}`);
+    L.push(`Auditor: ${last.header.auditor}`);
+    L.push(`Fecha: ${last.header.date}`);
+    L.push(`Responde como: ${last.header.role}`);
+    L.push("Observaciones:");
+    L.push(last.header.notes || "(sin observaciones)");
+    L.push("");
+
+    L.push("RESULTADO GLOBAL");
+    L.push(`Puntaje: ${last.global.sum}/${last.global.max}`);
+    L.push(`Diagnóstico: ${last.global.band.label}`);
+    L.push(last.global.band.summary);
+    L.push(`${last.global.band.verse.quote} (${last.global.band.verse.reference})`);
+    L.push("");
+
+    L.push("DIAGNÓSTICO DE CARGAS");
+    const dead = last.loads.dead, live = last.loads.live, seis = last.loads.seis;
+    L.push(`Muertas: nivel ${dead.level} (sum ${dead.sum}/${dead.max})`);
+    L.push(`Vivas: nivel ${live.level} (sum ${live.sum}/${live.max})`);
+    L.push(`Sísmicas: nivel ${seis.level} (sum ${seis.sum}/${seis.max})`);
+    L.push(`Concentración: nivel ${last.loads.concLevel}`);
+    L.push("");
+
+    L.push("MICRO-RECOMENDACIONES");
+    (last.recs||[]).forEach(x=> L.push("• "+x));
+    L.push("");
+
+    L.push("ENFOQUE POR MÓDULOS");
+    L.push("--------------------------------------------------");
+    last.sections.slice().reverse().forEach(s=>{
+      L.push(`${s.title} — ${s.levelLabel} (${s.levelValue})`);
+      L.push(`Enfoque: ${s.focus}`);
+      L.push(`Biblia: ${s.verse.quote} (${s.verse.reference})`);
+
+      if(s.items?.length){
+        L.push("Cargas / preguntas (0–3):");
+        s.items.forEach(it=>{
+          const v = Number(s.itemScores?.[it.id] ?? 0);
+          L.push(`• ${it.title}: ${v}`);
+        });
+      }
+
+      if(last.includeDetails){
+        if(s.miniTeaching?.length){
+          L.push("Mini-enseñanza:");
+          s.miniTeaching.forEach(x=> L.push("• "+x));
+        }
+        if(s.actions?.length){
+          L.push("Acciones sugeridas:");
+          s.actions.forEach(x=> L.push("• "+x));
+        }
+      }
+      L.push("");
+    });
+
+    L.push("PLAN SEMANAL 7 DÍAS");
+    L.push("--------------------------------------------------");
+    last.plan7.forEach(d=>{
+      L.push(`Día ${d.day}: ${d.title}`);
+      d.items.forEach(i=> L.push("• "+i));
+      L.push("");
+    });
+
+    const blob = new Blob([L.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "mapa_cargas.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ====== LOGO ======
+  async function loadLogo(){
+    try{
+      const res = await fetch(LOGO_PATH, { cache:"no-store" });
+      if(!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise((resolve)=>{
+        const fr = new FileReader();
+        fr.onload = ()=> resolve(fr.result);
+        fr.onerror = ()=> resolve(null);
+        fr.readAsDataURL(blob);
+      });
+    }catch(e){
+      return null;
+    }
+  }
+
+  function levelColor(label){
+    const s = (label||"").toLowerCase();
+    if(s.includes("aline")) return [16,185,129];
+    if(s.includes("ajus")) return [245,158,11];
+    if(s.includes("ries")) return [249,115,22];
+    return [244,63,94];
+  }
+
+  function safeName(name){
+    return (name||"mapa_cargas")
+      .toLowerCase()
+      .replace(/\s+/g,"_")
+      .replace(/[^a-z0-9_\-]/g,"")
+      .slice(0,60);
+  }
+
+  // ====== PDF (bonito + página extra “Diagnóstico de Cargas”) ======
+  async function downloadPDF(){
+    if(!last) return;
+    if(!okPdfLib()){
+      pdfWarn.style.display="block";
+      return;
+    }
+
+    if(logoDataUrl===null){
+      logoDataUrl = await loadLogo();
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 44;
+
+    const COLORS = { ink:[22,33,58], muted:[90,102,130], white:[255,255,255] };
+
+    function addLogo(x,y,w,h){
+      if(!logoDataUrl) return;
+      try{ doc.addImage(logoDataUrl,"PNG",x,y,w,h); }catch(e){}
+    }
+
+    function header(){
+      addLogo(M, 16, 34, 34);
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(12);
+      doc.setTextColor(...COLORS.ink);
+      doc.text("Mapa de Cargas — Auditoría", W/2, 36, {align:"center"});
+      doc.setDrawColor(230);
+      doc.line(M, 52, W-M, 52);
+      return 74;
+    }
+
+    function footer(){
+      const n = doc.getNumberOfPages();
+      for(let i=1;i<=n;i++){
+        doc.setPage(i);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(9);
+        doc.setTextColor(...COLORS.muted);
+        doc.text("Constructor Digital — Auditoría del Hogar", M, H-18);
+        doc.text(`Página ${i} de ${n}`, W-M, H-18, {align:"right"});
+      }
+    }
+
+    // ===== PORTADA =====
+    doc.setFillColor(22,33,58);
+    doc.rect(0,0,W,96,"F");
+    addLogo(W - M - 56, 18, 56, 56);
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(22);
+    doc.setTextColor(255,255,255);
+    doc.text("MAPA DE CARGAS", M, 50);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(12);
+    doc.setTextColor(210,230,255);
+    doc.text("Diagnóstico de cargas + deriva + plan semanal", M, 72);
+
+    // datos
+    doc.setFillColor(245,247,255);
+    doc.roundedRect(M, 120, W-M*2, 135, 12, 12, "F");
+    doc.setTextColor(...COLORS.ink);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.text("Datos de auditoría", M+14, 145);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.text(`Paciente: ${last.header.patient}`, M+14, 172);
+    doc.text(`Auditor: ${last.header.auditor}`, M+14, 192);
+    doc.text(`Fecha: ${last.header.date}`, M+14, 212);
+    doc.text(`Responde como: ${last.header.role}`, M+14, 232);
+
+    // tarjeta global
+    const band = last.global.band;
+    const c = levelColor(band.label);
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, 275, W-M*2, 190, 12, 12, "F");
+
+    const badgeText = (band.label||"").toUpperCase();
+    doc.setFont("helvetica","bold");
+    let fs = 10;
+    doc.setFontSize(fs);
+    const maxW = 260;
+    while(doc.getTextWidth(badgeText) > maxW && fs > 8){
+      fs -= 1; doc.setFontSize(fs);
+    }
+    const pad = 18;
+    const bw = Math.min(maxW, doc.getTextWidth(badgeText) + pad*2);
+    const bh = 26;
+
+    doc.setFillColor(...c);
+    doc.roundedRect(M+14, 295, bw, bh, 12, 12, "F");
+    doc.setTextColor(255,255,255);
+    doc.text(badgeText, M+14 + bw/2, 313, {align:"center"});
+
+    doc.setTextColor(...COLORS.ink);
+    doc.setFontSize(12);
+    doc.text(`Puntaje global: ${last.global.sum}/${last.global.max}`, M+14, 346);
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    const sumLines = doc.splitTextToSize(band.summary, W-M*2-28);
+    doc.text(sumLines, M+14, 368);
+
+    // verso global
+    doc.setFillColor(240,253,250);
+    doc.roundedRect(M, 410, W-M*2, 58, 10, 10, "F");
+    doc.setFont("times","italic");
+    doc.setFontSize(11);
+    doc.setTextColor(20,60,70);
+    doc.text(doc.splitTextToSize(band.verse.quote, W-M*2-20), M+10, 430);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.setTextColor(70,90,110);
+    doc.text(`(${band.verse.reference})`, M+10, 456);
+
+    // ===== PÁGINA EXTRA: Diagnóstico de Cargas =====
+    doc.addPage();
+    let y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico de Cargas", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const dead = last.loads.dead, live = last.loads.live, seis = last.loads.seis;
+    const conc = last.loads.concLevel;
+
+    const rowsLoads = [
+      ["Muertas", `Nivel ${dead.level}`, `${dead.sum}/${dead.max}`, (dead.topItems||[]).slice(0,3).map(it=>`${it.title} (${it.value})`).join(" • ") || "(sin datos)"],
+      ["Vivas", `Nivel ${live.level}`, `${live.sum}/${live.max}`, (live.topItems||[]).slice(0,3).map(it=>`${it.title} (${it.value})`).join(" • ") || "(sin datos)"],
+      ["Sísmicas (Fx)", `Nivel ${seis.level}`, `${seis.sum}/${seis.max}`, (seis.topItems||[]).slice(0,3).map(it=>`${it.title} (${it.value})`).join(" • ") || "(sin datos)"],
+      ["Concentración (M↑)", `Nivel ${conc}`, "-", conc===0?"Baja":conc===1?"Media":conc===2?"Alta":"Crítica"]
+    ];
+
+    doc.autoTable({
+      startY: y,
+      head: [["Categoría", "Nivel", "Total", "Top cargas (alertas)"]],
+      body: rowsLoads,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      margin: {left:M, right:M},
+      columnStyles:{
+        0:{cellWidth:120},
+        1:{cellWidth:90},
+        2:{cellWidth:70},
+        3:{cellWidth:(W - M*2 - 120 - 90 - 70)}
+      }
+    });
+
+    // micro-recs
+    y = doc.lastAutoTable.finalY + 16;
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(12);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Micro-recomendaciones automáticas", M, y);
+    y += 10;
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(10);
+    doc.setTextColor(...COLORS.ink);
+    const recText = (last.recs||[]).map(x=>"• "+x).join("\n") || "• (sin recomendaciones)";
+    doc.text(doc.splitTextToSize(recText, W-M*2), M, y+14);
+
+    // ===== Tabla módulos =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Diagnóstico por módulos", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const rows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      String(s.levelValue),
+      `${s.verse.quote} (${s.verse.reference})`
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Módulo", "Diagnóstico", "Nivel", "Porción bíblica"]],
+      body: rows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Enfoque por módulos =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Enfoque y acciones por módulos", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const pRows = last.sections.slice().reverse().map(s=>[
+      s.title,
+      s.levelLabel,
+      (s.miniTeaching && s.miniTeaching.length) ? ("• " + s.miniTeaching.join(" • ")) : "(sin guía)",
+      (s.actions && s.actions.length) ? ("• " + s.actions.join(" • ")) : "(sin acciones)"
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Módulo", "Diagnóstico", "Guía (mini-enseñanza)", "Acciones sugeridas"]],
+      body: pRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      didParseCell: function(data){
+        if(data.section==="body" && data.column.index===1){
+          const v = data.cell.raw || "";
+          const cc = levelColor(v);
+          data.cell.styles.fillColor = cc;
+          data.cell.styles.textColor = [255,255,255];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+      columnStyles: {
+        0:{cellWidth:170},
+        1:{cellWidth:90},
+        2:{cellWidth: (W - M*2 - 170 - 90)/2},
+        3:{cellWidth: (W - M*2 - 170 - 90)/2}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Plan 7 días =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Plan semanal automático (7 días)", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 12;
+
+    const planRows = last.plan7.map(d=>[
+      `Día ${d.day}`,
+      d.title,
+      d.items.join(" • ")
+    ]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Día", "Enfoque", "Acciones"]],
+      body: planRows,
+      theme: "grid",
+      styles: {font:"helvetica",fontSize:9.5,cellPadding:6,textColor:[20,30,50],lineColor:[230,234,245],valign:"top"},
+      headStyles: {fillColor: [22,33,58], textColor:[255,255,255], fontStyle:"bold"},
+      columnStyles: {
+        0:{cellWidth:70},
+        1:{cellWidth:210},
+        2:{cellWidth: (W - M*2 - 70 - 210)}
+      },
+      margin: {left:M, right:M}
+    });
+
+    // ===== Observaciones =====
+    doc.addPage();
+    y = header();
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
+    doc.setTextColor(...COLORS.ink);
+    doc.text("Observaciones del auditor", M, y);
+    y += 12;
+    doc.setDrawColor(230);
+    doc.line(M, y, W-M, y);
+    y += 14;
+
+    doc.setFillColor(255,255,255);
+    doc.roundedRect(M, y, W-M*2, 420, 12, 12, "F");
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    doc.setTextColor(...COLORS.ink);
+    const notes = last.header.notes || "(sin observaciones)";
+    doc.text(doc.splitTextToSize(notes, W-M*2-28), M+14, y+26);
+
+    footer();
+
+    const name = safeName(last.header.patient || "mapa_cargas");
+    doc.save(`${name}_mapa_cargas.pdf`);
+  }
+
+  // ====== RESET ======
+  function resetAll(){
+    DATA.sections.forEach(sec=>{
+      scores[sec.id]=0;
+      itemScores[sec.id] = {};
+    });
+
+    // radios de secciones no-items
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      i.checked = (i.value==="0");
+    });
+
+    document.querySelectorAll('[id^="pill_"]').forEach(p=> p.textContent="Alineado");
+    updateLive();
+
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled=true;
+    btnPdf.disabled=true;
+    last=null;
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  // ====== SCROLL + SVG CLICKS ======
+  function scrollToSection(sectionId){
+    const el = document.getElementById(`sec_${sectionId}`);
+    if(!el) return;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+    el.style.boxShadow = "0 0 0 2px rgba(94,234,212,.25)";
+    setTimeout(()=> el.style.boxShadow = "none", 900);
+  }
+
+  function wireSVGClicks(){
+    const map = DATA.svgClickMap || {};
+    Object.keys(map).forEach(svgId=>{
+      const el = document.getElementById(svgId);
+      if(!el) return;
+      el.addEventListener("click", ()=> scrollToSection(map[svgId]));
+      el.setAttribute("title", "Clic para ir al módulo");
+    });
+  }
+
+  // ====== CASOS (LocalStorage) ======
+  function readCases(){
+    try{
+      const raw = localStorage.getItem(CASES_KEY);
+      if(!raw) return [];
+      const arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr : [];
+    }catch(e){ return []; }
+  }
+
+  function writeCases(arr){
+    localStorage.setItem(CASES_KEY, JSON.stringify(arr || []));
+  }
+
+  function makeCaseId(){
+    return "case_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+  }
+
+  function saveCurrentCase(){
+    // asegura last
+    if(!last) last = buildPayload();
+
+    const cases = readCases();
+    const id = makeCaseId();
+
+    const payload = {
+      id,
+      app: "mapa-cargas",
+      createdAt: new Date().toISOString(),
+      header: last.header,
+      scores: {...scores},
+      itemScores: JSON.parse(JSON.stringify(itemScores)),
+      last
+    };
+
+    cases.unshift(payload);
+    writeCases(cases);
+    // feedback rápido
+    alert("Caso guardado ✔");
+  }
+
+  function applyCase(c){
+    if(!c) return;
+    // header
+    patientEl.value = c.header?.patient || "";
+    auditorEl.value = c.header?.auditor || "";
+    dateEl.value = c.header?.date || "";
+    roleEl.value = c.header?.role || "individual";
+    notesEl.value = c.header?.notes || "";
+    detailsEl.checked = (c.last?.includeDetails ?? true);
+
+    // scores
+    DATA.sections.forEach(sec=>{
+      scores[sec.id] = Number(c.scores?.[sec.id] ?? 0);
+      itemScores[sec.id] = c.itemScores?.[sec.id] ? {...c.itemScores[sec.id]} : {};
+      // set pills now; radios set later
+      const pill = document.getElementById(`pill_${sec.id}`);
+      if(pill) pill.textContent = levelByValue(scores[sec.id]).label;
+    });
+
+    // set radios DOM
+    // Primero reset visual
+    document.querySelectorAll('input[type="radio"]').forEach(i=>{
+      const name = i.getAttribute("name") || "";
+      // items
+      if(name.includes("__")){
+        const [secId,itemId] = name.split("__");
+        const v = Number(itemScores?.[secId]?.[itemId] ?? 0);
+        i.checked = (Number(i.value) === v);
+      }else{
+        const secId = name;
+        if(secId){
+          const v = Number(scores?.[secId] ?? 0);
+          i.checked = (Number(i.value) === v);
+        }
+      }
+    });
+
+    last = c.last || null;
+    updateLive();
+    resBox.style.display="none";
+    resBox.innerHTML="";
+    btnTxt.disabled = !last;
+    btnPdf.disabled = !last || !okPdfLib();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  // MODAL CASES
+  const casesModal = document.getElementById("casesModal");
+  const caseListEl = document.getElementById("caseList");
+  const casesMsg = document.getElementById("casesMsg");
+  const importFile = document.getElementById("importFile");
+
+  function openCases(){
+    renderCasesList();
+    casesModal.style.display = "flex";
+  }
+  function closeCases(){
+    casesModal.style.display = "none";
+    casesMsg.textContent = "";
+  }
+
+  function renderCasesList(){
+    const cases = readCases();
+    if(!cases.length){
+      caseListEl.innerHTML = `<div class="muted small">No hay casos guardados todavía.</div>`;
+      return;
+    }
+    caseListEl.innerHTML = "";
+    cases.forEach(c=>{
+      const div = document.createElement("div");
+      div.className = "caseRow";
+      const p = c.header?.patient || "(sin nombre)";
+      const d = c.header?.date || "(sin fecha)";
+      const r = c.header?.role || "(sin rol)";
+      div.innerHTML = `
+        <div>
+          <div style="font-weight:900">${p}</div>
+          <div class="caseMeta">Fecha: ${d} · Rol: ${r} · Guardado: ${new Date(c.createdAt).toLocaleString()}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+          <button class="ghost btnMini good" data-act="load" data-id="${c.id}">Cargar</button>
+          <button class="ghost btnMini danger" data-act="del" data-id="${c.id}">Eliminar</button>
+        </div>
+      `;
+      caseListEl.appendChild(div);
+    });
+
+    caseListEl.querySelectorAll("button[data-act]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.getAttribute("data-id");
+        const act = btn.getAttribute("data-act");
+        const cases = readCases();
+        const idx = cases.findIndex(x=>x.id===id);
+        if(idx<0) return;
+        if(act==="load"){
+          applyCase(cases[idx]);
+          closeCases();
+          alert("Caso cargado ✔");
+        }else if(act==="del"){
+          if(!confirm("¿Eliminar este caso?")) return;
+          cases.splice(idx,1);
+          writeCases(cases);
+          renderCasesList();
+        }
+      });
+    });
+  }
+
+  function exportCases(){
+    const cases = readCases();
+    const blob = new Blob([JSON.stringify(cases,null,2)], {type:"application/json;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "casos_mapa_cargas.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function importCasesFile(file){
+    if(!file) return;
+    const fr = new FileReader();
+    fr.onload = ()=>{
+      try{
+        const arr = JSON.parse(fr.result);
+        if(!Array.isArray(arr)) throw new Error("El archivo no es un arreglo JSON de casos.");
+        // merge
+        const existing = readCases();
+        const map = new Map(existing.map(x=>[x.id,x]));
+        arr.forEach(x=>{
+          if(x && x.id) map.set(x.id, x);
+        });
+        const merged = Array.from(map.values()).sort((a,b)=> (b.createdAt||"").localeCompare(a.createdAt||""));
+        writeCases(merged);
+        casesMsg.textContent = `Importación OK. Total casos: ${merged.length}`;
+        renderCasesList();
+      }catch(e){
+        casesMsg.textContent = "Error importando: " + e.message;
+      }
+    };
+    fr.readAsText(file);
+  }
+
+  function clearCases(){
+    if(!confirm("¿Borrar TODOS los casos guardados?")) return;
+    writeCases([]);
+    renderCasesList();
+  }
+
+  // ====== ENSEÑANZA / PREDICA ======
+  const sermonModal = document.getElementById("sermonModal");
+  const sermonTextEl = document.getElementById("sermonText");
+  let lastSermonText = "";
+
+  function openSermon(){
+    if(!last) last = buildPayload();
+    const txt = buildSermonText(last);
+    lastSermonText = txt;
+    sermonTextEl.textContent = txt;
+    sermonModal.style.display = "flex";
+  }
+  function closeSermon(){
+    sermonModal.style.display = "none";
+  }
+
+  function buildSermonText(payload){
+    const top = payload.sections.slice(0,3); // peor primero
+    const title = `TEMA: CARGAS Y DERIVA — CÓMO RECUPERAR ESTABILIDAD EN EL HOGAR`;
+    const baseTexts = [
+      payload.global.band?.verse ? `${payload.global.band.verse.quote} (${payload.global.band.verse.reference})` : null,
+      ...top.map(s=> `${s.verse.quote} (${s.verse.reference})`)
+    ].filter(Boolean);
+
+    const recs = (payload.recs||[]).map(x=>`- ${x}`).join("\n") || "- (sin recomendaciones)";
+
+    // puntos (solo del JSON)
+    const points = top.map((s, idx)=>{
+      const teach = (s.miniTeaching||[]).map(x=>`   • ${x}`).join("\n") || "   • (sin mini-enseñanza)";
+      const acts  = (s.actions||[]).slice(0,3).map(x=>`   • ${x}`).join("\n") || "   • (sin acciones)";
+      return `PUNTO ${idx+1}: ${s.title}\nENFOQUE: ${s.focus}\nGUÍA (del libro):\n${teach}\nAPLICACIÓN:\n${acts}`;
+    }).join("\n\n");
+
+    const outline =
+`${title}
+
+OBJETIVO:
+- Mostrar que las cargas no destruyen por sí solas: revelan desalineación.
+- Enseñar a identificar cargas muertas, vivas y sísmicas.
+- Guiar a la transferencia del peso al fundamento y a acuerdos prácticos.
+
+TEXTO BASE:
+${baseTexts.map(x=>"• "+x).join("\n")}
+
+DIAGNÓSTICO DEL CASO:
+- Global: ${payload.global.band.label} (${payload.global.sum}/${payload.global.max})
+- Muertas: nivel ${payload.loads.dead.level} (${payload.loads.dead.sum}/${payload.loads.dead.max})
+- Vivas: nivel ${payload.loads.live.level} (${payload.loads.live.sum}/${payload.loads.live.max})
+- Sísmicas (Fx): nivel ${payload.loads.seis.level} (${payload.loads.seis.sum}/${payload.loads.seis.max})
+- Concentración (M↑): nivel ${payload.loads.concLevel}
+
+MICRO-RECOMENDACIONES (reglas):
+${recs}
+
+DESARROLLO (solo con material del libro / JSON):
+${points}
+
+LLAMADO FINAL:
+- Identifica 1 carga que estás sosteniendo solo(a).
+- Transfiérela al fundamento: oración + obediencia a un paso concreto.
+- Haz 1 acuerdo mínimo y medible esta semana (mantenimiento del sistema).
+
+CIERRE:
+- Repite el Mapa de Cargas en 7 días y compara la deriva (Fx) y la inclinación (M↑).
+`;
+    return outline;
+  }
+
+  function copySermon(){
+    if(!lastSermonText) return;
+    navigator.clipboard.writeText(lastSermonText).then(()=> alert("Copiado ✔")).catch(()=> alert("No se pudo copiar."));
+  }
+
+  function downloadSermonTXT(){
+    if(!lastSermonText) return;
+    const blob = new Blob([lastSermonText], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "ensenanza_mapa_cargas.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // ====== INIT ======
+  async function init(){
+    try{
+      const res = await fetch(JSON_PATH, {cache:"no-store"});
+      if(!res.ok) throw new Error("No se pudo cargar el JSON: "+res.status);
+      DATA = await res.json();
+
+      document.getElementById("t").textContent = DATA.meta.title || "Mapa de Cargas";
+      document.getElementById("d").textContent = DATA.meta.description || "";
+      document.getElementById("pMax").textContent = `Total máx: ${DATA.sections.length * 3}`;
+
+      setDefaultDateIfEmpty();
+      renderForm();
+      wireSVGClicks();
+
+      pdfWarn.style.display = okPdfLib() ? "none" : "block";
+    }catch(e){
+      secForm.innerHTML = `<div style="color:#fda4af"><b>Error:</b> ${e.message}</div>
+      <div class="muted" style="margin-top:6px">Asegúrate de que <b>${JSON_PATH}</b> esté en la misma carpeta.</div>`;
+    }
+  }
+
+  // ====== EVENTS ======
+  document.getElementById("btnResult").addEventListener("click", showResult);
+  document.getElementById("btnTxt").addEventListener("click", downloadTXT);
+  document.getElementById("btnPdf").addEventListener("click", downloadPDF);
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+
+  // casos
+  document.getElementById("btnSaveCase").addEventListener("click", saveCurrentCase);
+  document.getElementById("btnCases").addEventListener("click", openCases);
+  document.getElementById("btnCloseCases").addEventListener("click", closeCases);
+  document.getElementById("btnExportCases").addEventListener("click", exportCases);
+  document.getElementById("btnClearCases").addEventListener("click", clearCases);
+  importFile.addEventListener("change", (e)=> importCasesFile(e.target.files?.[0] || null));
+  casesModal.addEventListener("click", (e)=>{ if(e.target===casesModal) closeCases(); });
+
+  // enseñanza
+  document.getElementById("btnSermon").addEventListener("click", openSermon);
+  document.getElementById("btnCloseSermon").addEventListener("click", closeSermon);
+  document.getElementById("btnCopySermon").addEventListener("click", copySermon);
+  document.getElementById("btnDownloadSermon").addEventListener("click", downloadSermonTXT);
+  sermonModal.addEventListener("click", (e)=>{ if(e.target===sermonModal) closeSermon(); });
+
+  init();
+</script>
+</body>
+</html>
