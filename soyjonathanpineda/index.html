@@ -206,10 +206,10 @@
       flex: 1 1 auto;
       min-height: 60vh;
       background: rgba(0,0,0,.18);
-      overflow:auto; /* ✅ permitir scroll del visor */
+      overflow:auto;
     }
 
-    /* ✅ PDF.js viewer */
+    /* PDF.js viewer */
     .pdf-viewer{
       padding: 12px;
       display:flex;
@@ -330,11 +330,13 @@
     </div>
   </div>
 
-  <!-- ✅ PDF.js (CDN) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.js" integrity="sha512-MoEPUcHkbnA1h1mKQq1nM9w0xvOIrTfzVd4bVnQy7bqzQjG8xI0n0k6bQb+U8T7B1f6l8iW+3E2n0kIu3O8z2Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- ✅ PDF.js (estable) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <script>
     let SECTION_MAP = new Map();
+    let lastPdfPath = null;
+    let lastPdfTitle = null;
 
     async function loadData() {
       const res = await fetch('./data.json', { cache: 'no-store' });
@@ -347,15 +349,21 @@
       document.querySelectorAll('.acc-panel').forEach(p => p.classList.remove('open'));
     }
 
+    function resetPdfViewerState() {
+      document.getElementById('pdfViewer').innerHTML = '';
+      const loading = document.getElementById('pdfLoading');
+      loading.textContent = 'Cargando PDF…';
+      loading.style.display = 'block';
+    }
+
     function closePdfModal() {
       const modal = document.getElementById('pdfModal');
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      // limpiar visor
-      document.getElementById('pdfViewer').innerHTML = '';
-      document.getElementById('pdfLoading').textContent = 'Cargando PDF…';
-      document.getElementById('pdfLoading').style.display = 'block';
+      resetPdfViewerState();
+      lastPdfPath = null;
+      lastPdfTitle = null;
     }
 
     function closeTextModal() {
@@ -375,6 +383,12 @@
     }
 
     async function renderPdfAllPages(pdfPath) {
+      // Fallback: si PDF.js no cargó, abrir directo
+      if (!window.pdfjsLib) {
+        window.open(pdfPath, "_blank");
+        return;
+      }
+
       const loadingEl = document.getElementById('pdfLoading');
       const viewerEl = document.getElementById('pdfViewer');
 
@@ -382,17 +396,16 @@
       loadingEl.style.display = 'block';
       loadingEl.textContent = 'Cargando PDF…';
 
-      // configurar worker
-      if (window.pdfjsLib) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.js";
-      }
+      // Worker de la misma versión
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
 
       try {
         const pdf = await pdfjsLib.getDocument({ url: pdfPath }).promise;
         loadingEl.textContent = `Renderizando ${pdf.numPages} página(s)…`;
 
-        // calcular escala basada en ancho disponible
-        const maxWidth = Math.min(920, document.querySelector('#pdfModal .modal-body').clientWidth - 24);
+        const modalBody = document.querySelector('#pdfModal .modal-body');
+        const maxWidth = Math.min(920, Math.max(320, modalBody.clientWidth - 24));
 
         for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
           const page = await pdf.getPage(pageNum);
@@ -418,13 +431,14 @@
         loadingEl.style.display = 'none';
       } catch (err) {
         console.error(err);
-        loadingEl.textContent = 'No pude cargar este PDF. Verifica la ruta o el archivo.';
+        loadingEl.textContent = 'No pude cargar este PDF aquí. Lo abriré en una pestaña nueva.';
         loadingEl.style.display = 'block';
+        window.open(pdfPath, "_blank");
       }
     }
 
     function openPdfModal({ title, pdfPath }) {
-      // si el modal de texto está abierto, lo cerramos
+      // si el modal de texto está abierto, lo cerramos para que no tape
       if (document.getElementById('textModal').classList.contains('open')) {
         closeTextModal();
       }
@@ -437,11 +451,15 @@
       download.href = pdfPath;
       download.setAttribute('download', '');
 
+      resetPdfViewerState();
+
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
 
-      // ✅ renderizar todas las páginas
+      lastPdfPath = pdfPath;
+      lastPdfTitle = title || 'Documento';
+
       renderPdfAllPages(pdfPath);
     }
 
@@ -639,6 +657,14 @@
           closeTextModal();
         }
       });
+
+      // Re-render del PDF si cambia el tamaño (celular rotación)
+      window.addEventListener('resize', () => {
+        if (document.getElementById('pdfModal').classList.contains('open') && lastPdfPath) {
+          renderPdfAllPages(lastPdfPath);
+        }
+      });
+
     })().catch(err => {
       alert('Error cargando la app: ' + err.message);
       console.error(err);
