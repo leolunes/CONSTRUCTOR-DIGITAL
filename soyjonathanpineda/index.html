@@ -75,7 +75,6 @@
     @media (min-width: 760px){
       .featured-img{ height: 190px; }
     }
-
     .featured-title{
       margin: 12px 0 10px;
       font-weight: 800;
@@ -198,7 +197,7 @@
       justify-content:flex-end;
     }
 
-    /* ✅ Z-INDEX: PDF por encima del texto */
+    /* z-index */
     #textModal { z-index: 9000; }
     #pdfModal  { z-index: 9999; }
 
@@ -207,14 +206,35 @@
       flex: 1 1 auto;
       min-height: 60vh;
       background: rgba(0,0,0,.18);
+      overflow:auto; /* ✅ permitir scroll del visor */
     }
-    .pdf-frame{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      background: transparent;
+
+    /* ✅ PDF.js viewer */
+    .pdf-viewer{
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+    }
+    .pdf-page{
+      width: 100%;
+      display:flex;
+      justify-content:center;
+    }
+    .pdf-page canvas{
+      width: 100%;
+      height: auto;
+      max-width: 920px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .pdf-loading{
+      padding: 14px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align:center;
     }
 
     .text-body{
@@ -272,7 +292,7 @@
     </footer>
   </div>
 
-  <!-- PDF Modal -->
+  <!-- PDF Modal (PDF.js) -->
   <div class="modal" id="pdfModal" aria-hidden="true">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
       <div class="modal-top">
@@ -286,7 +306,8 @@
         </div>
       </div>
       <div class="modal-body">
-        <iframe class="pdf-frame" id="pdfFrame" title="PDF"></iframe>
+        <div class="pdf-loading" id="pdfLoading">Cargando PDF…</div>
+        <div class="pdf-viewer" id="pdfViewer"></div>
       </div>
     </div>
   </div>
@@ -309,6 +330,9 @@
     </div>
   </div>
 
+  <!-- ✅ PDF.js (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.js" integrity="sha512-MoEPUcHkbnA1h1mKQq1nM9w0xvOIrTfzVd4bVnQy7bqzQjG8xI0n0k6bQb+U8T7B1f6l8iW+3E2n0kIu3O8z2Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script>
     let SECTION_MAP = new Map();
 
@@ -325,13 +349,13 @@
 
     function closePdfModal() {
       const modal = document.getElementById('pdfModal');
-      const frame = document.getElementById('pdfFrame');
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
-      frame.src = '';
-      if (!document.getElementById('textModal').classList.contains('open')) {
-        document.body.style.overflow = '';
-      }
+      document.body.style.overflow = '';
+      // limpiar visor
+      document.getElementById('pdfViewer').innerHTML = '';
+      document.getElementById('pdfLoading').textContent = 'Cargando PDF…';
+      document.getElementById('pdfLoading').style.display = 'block';
     }
 
     function closeTextModal() {
@@ -350,26 +374,75 @@
       document.getElementById('top').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    async function renderPdfAllPages(pdfPath) {
+      const loadingEl = document.getElementById('pdfLoading');
+      const viewerEl = document.getElementById('pdfViewer');
+
+      viewerEl.innerHTML = '';
+      loadingEl.style.display = 'block';
+      loadingEl.textContent = 'Cargando PDF…';
+
+      // configurar worker
+      if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.js";
+      }
+
+      try {
+        const pdf = await pdfjsLib.getDocument({ url: pdfPath }).promise;
+        loadingEl.textContent = `Renderizando ${pdf.numPages} página(s)…`;
+
+        // calcular escala basada en ancho disponible
+        const maxWidth = Math.min(920, document.querySelector('#pdfModal .modal-body').clientWidth - 24);
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+
+          const viewport1 = page.getViewport({ scale: 1 });
+          const scale = maxWidth / viewport1.width;
+          const viewport = page.getViewport({ scale });
+
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d', { alpha: false });
+
+          canvas.width = Math.floor(viewport.width);
+          canvas.height = Math.floor(viewport.height);
+
+          const pageWrap = document.createElement('div');
+          pageWrap.className = 'pdf-page';
+          pageWrap.appendChild(canvas);
+          viewerEl.appendChild(pageWrap);
+
+          await page.render({ canvasContext: ctx, viewport }).promise;
+        }
+
+        loadingEl.style.display = 'none';
+      } catch (err) {
+        console.error(err);
+        loadingEl.textContent = 'No pude cargar este PDF. Verifica la ruta o el archivo.';
+        loadingEl.style.display = 'block';
+      }
+    }
+
     function openPdfModal({ title, pdfPath }) {
-      // ✅ Clave: si el modal de texto está abierto, lo cerramos para que no tape el PDF
+      // si el modal de texto está abierto, lo cerramos
       if (document.getElementById('textModal').classList.contains('open')) {
         closeTextModal();
       }
 
       const modal = document.getElementById('pdfModal');
-      const frame = document.getElementById('pdfFrame');
       const modalTitle = document.getElementById('pdfModalTitle');
       const download = document.getElementById('pdfDownload');
 
       modalTitle.textContent = title || 'Documento';
-      frame.src = pdfPath;
-
       download.href = pdfPath;
       download.setAttribute('download', '');
 
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+
+      // ✅ renderizar todas las páginas
+      renderPdfAllPages(pdfPath);
     }
 
     function openTextModalBySectionId(sectionId) {
@@ -388,8 +461,6 @@
       if (section.pdf) {
         viewPdfBtn.disabled = false;
         viewPdfBtn.style.opacity = '1';
-
-        // ✅ Clave: cerrar texto y abrir PDF (para que sí se vea)
         viewPdfBtn.onclick = () => openPdfModal({ title: section.title, pdfPath: section.pdf });
 
         downloadPdf.href = section.pdf;
@@ -568,7 +639,6 @@
           closeTextModal();
         }
       });
-
     })().catch(err => {
       alert('Error cargando la app: ' + err.message);
       console.error(err);
