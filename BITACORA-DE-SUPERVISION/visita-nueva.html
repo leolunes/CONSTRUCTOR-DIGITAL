@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Nueva Visita | Bitácora</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" id="backObra" href="obras.html">←</a>
+    <div>
+      <div class="title">Nueva visita</div>
+      <div class="subtitle" id="obraSub"></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <form id="formVisita" class="card form">
+    <div class="cardhead">
+      <h2>Datos de la visita</h2>
+      <p class="muted">
+        Al guardar se genera radicado automático.<br>
+        Evidencias: máximo <b>4 fotos</b>.
+      </p>
+    </div>
+
+    <input type="hidden" name="obraId" id="obraId">
+
+    <div class="grid two">
+      <div>
+        <label>Fecha</label>
+        <input type="date" name="fecha" required>
+      </div>
+      <div>
+        <label>Objetivo</label>
+        <input name="objetivo" required placeholder="Ej: Seguimiento avance / calidad / SST">
+      </div>
+    </div>
+
+    <div class="grid three">
+      <div>
+        <label>Hora inicio</label>
+        <input type="time" name="horaInicio" required>
+      </div>
+      <div>
+        <label>Hora fin</label>
+        <input type="time" name="horaFin" required>
+      </div>
+      <div>
+        <label>Asistentes</label>
+        <input name="asistentes" placeholder="Nombres / entidades">
+      </div>
+    </div>
+
+    <label>Resumen / observaciones</label>
+    <textarea name="resumen" required placeholder="Describe lo observado, avances, novedades…"></textarea>
+
+    <hr class="sep">
+
+    <div class="cardhead row space">
+      <div>
+        <h2>Hallazgos</h2>
+        <p class="muted">Se crean como <b>ABIERTO</b>.</p>
+      </div>
+      <button class="btn" type="button" id="btnAddHallazgo">+ Agregar hallazgo</button>
+    </div>
+
+    <div id="hallazgosWrap" class="stack"></div>
+
+    <hr class="sep">
+
+    <div class="cardhead">
+      <h2>Evidencias (máx 4 fotos)</h2>
+      <p class="muted">
+        Solo fotos (image/*). Si seleccionas más de 4, la app guardará solo las primeras 4.
+      </p>
+    </div>
+
+    <!-- ✅ CLAVE: multiple -->
+    <input
+      type="file"
+      id="evidenciasVisita"
+      accept="image/*"
+      multiple
+    >
+    <div id="previewEvidencias" class="previews"></div>
+
+    <div class="row">
+      <button class="btn primary" type="submit">Guardar visita</button>
+      <a class="btn" id="btnCancelar" href="obras.html">Cancelar</a>
+    </div>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/migrate.js"></script>
+<script src="js/cronograma.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

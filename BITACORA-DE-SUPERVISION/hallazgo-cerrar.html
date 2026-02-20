@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cerrar Hallazgo | Bitácora</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" id="backToObra" href="obras.html">←</a>
+    <div>
+      <div class="title">Cerrar hallazgo</div>
+      <div class="subtitle" id="sub"></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="card" id="hallazgoInfo"></section>
+
+  <form id="formCerrar" class="card form">
+    <div class="cardhead">
+      <h2>Datos de cierre</h2>
+      <p class="muted">Guarda fecha + observación + evidencias (fotos).</p>
+    </div>
+
+    <label>Fecha de cierre</label>
+    <input type="date" name="fechaCierre" required>
+
+    <label>Observación de cierre</label>
+    <textarea name="obsCierre"></textarea>
+
+    <label>Evidencias del cierre (fotos)</label>
+    <input type="file" id="evidenciasCierre" multiple accept="image/*">
+    <div class="muted small">Seleccionadas: <b id="evCountCierre">0</b></div>
+
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary" type="submit">Confirmar cierre</button>
+      <a class="btn" id="btnCancelar" href="obras.html">Cancelar</a>
+    </div>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cronograma.js"></script>
+<script src="js/migrate.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

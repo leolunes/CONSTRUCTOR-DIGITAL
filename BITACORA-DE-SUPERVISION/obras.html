@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Bitácora de Supervisión | Obras</title>
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo">🗂️</div>
+    <div>
+      <div class="title">BITÁCORA DE SUPERVISIÓN DE OBRA</div>
+      <div class="subtitle">Floridablanca (Santander) · Offline (LocalStorage + IndexedDB)</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" href="https://www.colombiacompra.gov.co/secop-ii" target="_blank" rel="noopener">ABRIR SECOP II</a>
+
+    <button class="navbtn" id="btnExport" type="button">Exportar backup</button>
+    <label class="navbtn filelike">
+      Importar backup
+      <input id="fileImport" type="file" accept="application/json" hidden>
+    </label>
+    <button class="navbtn danger" id="btnReset" type="button">Borrar todo</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <div id="diagBanner" class="card" style="display:none;margin-bottom:14px;border-color:rgba(245,158,11,.35)">
+    <div class="cardhead">
+      <h2 style="margin:0;font-size:14px">Diagnóstico</h2>
+      <p class="muted small" id="diagText" style="margin:6px 0 0 0"></p>
+    </div>
+  </div>
+
+  <section class="card">
+    <div class="cardhead">
+      <h2>1. CREAR / EDITAR OBRA</h2>
+      <p class="muted" id="wizardModeHint">Completa 1.1 → 1.2 → 1.3. Luego guarda la obra.</p>
+    </div>
+
+    <div class="stepbar">
+      <button class="stepbtn active" type="button" data-step="1">1.1 CONTRATO DE OBRA</button>
+      <button class="stepbtn" type="button" data-step="2">1.2 CONTRATO DE INTERVENTORÍA</button>
+      <button class="stepbtn" type="button" data-step="3">1.3 CREAR SUPERVISIÓN</button>
+    </div>
+
+    <section class="step" data-step-panel="1">
+      <form id="formStep1" class="form">
+        <div class="grid two">
+          <div>
+            <label>Nombre de la obra</label>
+            <input name="nombre" required />
+          </div>
+          <div>
+            <label>Contrato (obra)</label>
+            <input name="contrato" required />
+          </div>
+        </div>
+
+        <label>Objeto contractual</label>
+        <textarea name="objeto" required></textarea>
+
+        <div class="grid two">
+          <div>
+            <label>Ubicación</label>
+            <input name="ubicacion" required />
+          </div>
+          <div>
+            <label>Contratista</label>
+            <input name="contratista" required />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Estado</label>
+            <select name="estado">
+              <option value="activa" selected>Activa</option>
+              <option value="suspendida">Suspendida</option>
+              <option value="terminada">Terminada</option>
+            </select>
+          </div>
+          <div>
+            <label>Enlace SECOP II del proceso (opcional)</label>
+            <input name="secopUrl" />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Fecha inicio</label>
+            <input name="fechaInicio" type="date" />
+          </div>
+          <div>
+            <label>Fecha fin</label>
+            <input name="fechaFin" type="date" />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Valor del contrato (Obra)</label>
+            <input name="valorContratoObra" inputmode="decimal" />
+          </div>
+          <div>
+            <label>Moneda</label>
+            <input name="monedaContratoObra" value="COP" />
+          </div>
+        </div>
+
+        <hr class="sep">
+
+        <div class="cardhead row space">
+          <div>
+            <h3 class="h3">Documentos contrato de obra</h3>
+            <p class="muted small">Minuta, presupuesto, APU, programa, etc.</p>
+          </div>
+          <label class="btn filelike">
+            Adjuntar archivos
+            <input id="docsObraInput" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" hidden>
+          </label>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table" id="tablaDocsObra">
+            <thead><tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Fecha</th><th>Acción</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div class="muted small" id="docsObraHint">Sin documentos adjuntos (en esta edición).</div>
+        </div>
+      </form>
+    </section>
+
+    <section class="step" data-step-panel="2" style="display:none">
+      <form id="formStep2" class="form">
+        <div class="grid two">
+          <div>
+            <label>Interventoría</label>
+            <input name="interventoria" required />
+          </div>
+          <div>
+            <label>Contrato interventoría (opcional)</label>
+            <input name="contratoInterventoria" />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Valor del contrato (Interventoría)</label>
+            <input name="valorContratoInterventoria" inputmode="decimal" />
+          </div>
+          <div>
+            <label>Moneda</label>
+            <input name="monedaContratoInterventoria" value="COP" />
+          </div>
+        </div>
+
+        <hr class="sep">
+
+        <div class="cardhead row space">
+          <div>
+            <h3 class="h3">Documentos contrato de interventoría</h3>
+            <p class="muted small">Minuta, presupuesto interventoría, etc.</p>
+          </div>
+          <label class="btn filelike">
+            Adjuntar archivos
+            <input id="docsInterInput" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" hidden>
+          </label>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table" id="tablaDocsInter">
+            <thead><tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Fecha</th><th>Acción</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div class="muted small" id="docsInterHint">Sin documentos adjuntos (en esta edición).</div>
+        </div>
+      </form>
+    </section>
+
+    <section class="step" data-step-panel="3" style="display:none">
+      <form id="formStep3" class="form">
+        <div class="grid two">
+          <div>
+            <div class="cardhead"><h3 class="h3">Supervisor</h3></div>
+            <label>Nombre</label><input name="sup_nombre" required>
+            <label>Cargo</label><input name="sup_cargo" required>
+            <label>Profesión</label><input name="sup_profesion" required>
+          </div>
+          <div>
+            <div class="cardhead"><h3 class="h3">Apoyo a la supervisión (CPS)</h3></div>
+            <label>Nombre</label><input name="apo_nombre" required>
+            <label>Profesión</label><input name="apo_profesion" required>
+            <label>Número contrato CPS</label><input name="apo_cps" required>
+            <div class="grid two">
+              <div><label>Fecha inicio</label><input name="apo_inicio" type="date" required></div>
+              <div><label>Fecha terminación</label><input name="apo_fin" type="date" required></div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <hr class="sep">
+
+    <div class="row">
+      <button class="btn primary" id="btnGuardarObra" type="button">GUARDAR / ACTUALIZAR OBRA</button>
+      <button class="btn" id="btnNuevaObra" type="button">ADICIONAR NUEVA OBRA</button>
+    </div>
+
+    <p class="muted small" style="margin-top:10px">
+      Nota: Los documentos se guardan en IndexedDB y se administran en <b>Detalle → Documentos</b>.
+    </p>
+  </section>
+
+  <section class="grid kpis" id="kpis"></section>
+
+  <section class="card">
+    <div class="cardhead">
+      <h2>2. MIS OBRAS</h2>
+      <div class="row space">
+        <div class="row">
+          <button class="pill active" type="button" data-estado="todas">TODAS</button>
+          <button class="pill" type="button" data-estado="activa">ACTIVAS</button>
+          <button class="pill" type="button" data-estado="suspendida">SUSPENDIDAS</button>
+          <button class="pill" type="button" data-estado="terminada">TERMINADAS</button>
+        </div>
+        <input id="searchObra" class="search" placeholder="Buscar por Nombre, Contrato, Ubicación…" />
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th><th>Contrato</th><th>Ubicación</th><th>Estado</th>
+            <th>% Avance</th><th>Barra</th><th>Semáforo</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="listaObras"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="obrasEmpty" style="display:none">No hay obras para mostrar.</div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cronograma.js"></script>
+<script src="js/migrate.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

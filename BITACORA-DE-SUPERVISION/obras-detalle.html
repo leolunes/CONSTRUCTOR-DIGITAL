@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Detalle Obra | Bitácora</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="obras.html">←</a>
+    <div>
+      <div class="title">Detalle de obra</div>
+      <div class="subtitle" id="obraSub"></div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navlink" href="obras.html">Obras</a>
+    <a class="navbtn" id="btnSecop" href="https://www.colombiacompra.gov.co/secop-ii" target="_blank" rel="noopener">SECOP II</a>
+    <a class="navlink" id="btnNuevaVisita" href="#">+ Nueva visita</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- Tabs -->
+  <section class="card">
+    <div class="row" style="gap:10px; flex-wrap:wrap">
+      <a href="#" class="navlink active" data-tab="resumen">Resumen</a>
+      <a href="#" class="navlink" data-tab="cronograma">Cronograma</a>
+      <a href="#" class="navlink" data-tab="visitas">Visitas</a>
+      <a href="#" class="navlink" data-tab="hallazgos">Hallazgos</a>
+      <a href="#" class="navlink" data-tab="documentos">Documentos</a>
+      <a href="#" class="navlink" data-tab="acciones">Acciones</a>
+    </div>
+    <p class="muted small" style="margin:10px 0 0 0">
+      Puedes navegar por pestañas. Los documentos se consultan desde aquí.
+    </p>
+  </section>
+
+  <!-- ============ RESUMEN ============ -->
+  <section data-panel="resumen">
+    <section class="grid two">
+      <section class="card" id="obraCard"></section>
+      <section class="grid kpis" id="obraKpis"></section>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Avance (resumen)</h2>
+        <p class="muted small">Basado en el cronograma.</p>
+      </div>
+      <div class="row" style="justify-content:space-between; align-items:center">
+        <div class="name">Avance total</div>
+        <div class="chips"><span class="chip ok" id="avanceLabel">0%</span></div>
+      </div>
+      <div class="bar" style="margin-top:10px">
+        <div class="bar__fill" id="avanceBar" style="width:0%"></div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ============ CRONOGRAMA ============ -->
+  <section data-panel="cronograma" style="display:none">
+    <section class="card">
+      <div class="cardhead row space">
+        <div>
+          <h2>Cronograma</h2>
+          <p class="muted small">Mini-Gantt + avance porcentual.</p>
+        </div>
+        <button class="btn primary" id="btnAddAct" type="button">+ Agregar actividad</button>
+      </div>
+
+      <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px">
+        <div class="muted small">Peso total: <b id="pesoTotalLabel">0%</b></div>
+        <div class="muted small">Avance: <b id="avanceCronoLabel">0%</b></div>
+      </div>
+
+      <div class="bar" style="margin-top:10px">
+        <div class="bar__fill" id="avanceCronoBar" style="width:0%"></div>
+      </div>
+
+      <hr class="sep">
+
+      <div class="tablewrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Actividad</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+              <th>Peso</th>
+              <th>Estado</th>
+              <th>%</th>
+              <th>Gantt</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="listaCrono"></tbody>
+        </table>
+        <div class="muted" id="cronoEmpty" style="display:none">Sin actividades aún.</div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ============ VISITAS ============ -->
+  <section data-panel="visitas" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Visitas</h2>
+        <p class="muted">Descarga PDF por visita (radicado automático).</p>
+      </div>
+      <div id="listaVisitas" class="list"></div>
+    </section>
+  </section>
+
+  <!-- ============ HALLAZGOS ============ -->
+  <section data-panel="hallazgos" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Hallazgos</h2>
+        <p class="muted">Abiertos y cerrados (con fecha + evidencias).</p>
+      </div>
+
+      <div class="row">
+        <select id="filterHallazgos" class="select">
+          <option value="todos" selected>Todos</option>
+          <option value="abierto">Solo abiertos</option>
+          <option value="cerrado">Solo cerrados</option>
+        </select>
+        <input id="searchHallazgo" class="search" placeholder="Buscar hallazgo…" />
+      </div>
+
+      <div id="listaHallazgos" class="list" style="margin-top:10px"></div>
+    </section>
+  </section>
+
+  <!-- ============ DOCUMENTOS (✅ IDs requeridos) ============ -->
+  <section data-panel="documentos" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Documentos</h2>
+        <p class="muted">Documentos contractuales guardados en IndexedDB (consultables y descargables).</p>
+      </div>
+
+      <h3 class="h3" style="margin:8px 0 6px 0">Contrato de obra civil</h3>
+      <div class="tablewrap">
+        <table class="table" id="tablaDocsObraDetalle">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Tamaño</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <!-- ✅ ID requerido -->
+        <div class="muted small" id="docsObraDetalleEmpty" style="display:none">
+          No hay documentos de obra aún.
+        </div>
+      </div>
+
+      <hr class="sep">
+
+      <h3 class="h3" style="margin:8px 0 6px 0">Contrato de interventoría</h3>
+      <div class="tablewrap">
+        <table class="table" id="tablaDocsInterDetalle">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Tamaño</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <!-- ✅ ID requerido -->
+        <div class="muted small" id="docsInterDetalleEmpty" style="display:none">
+          No hay documentos de interventoría aún.
+        </div>
+      </div>
+
+      <p class="muted small" style="margin-top:10px">
+        Nota: Para adjuntar nuevos documentos, usa el asistente en <b>Obras → Editar</b>. Aquí puedes consultar, descargar y eliminar.
+      </p>
+    </section>
+  </section>
+
+  <!-- ============ ACCIONES ============ -->
+  <section data-panel="acciones" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Acciones</h2>
+        <p class="muted small">Exportar / PDF consolidado / eliminar.</p>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="btnEditarObra" type="button">Editar obra</button>
+        <button class="btn" id="btnExportObra" type="button">Exportar obra (JSON)</button>
+        <button class="btn" id="btnPdfConsolidado" type="button">PDF consolidado</button>
+        <button class="btn" id="btnShareConsolidado" type="button">Compartir PDF</button>
+        <button class="btn danger" id="btnDeleteObra" type="button">Eliminar obra</button>
+      </div>
+
+      <p class="muted small" style="margin-top:10px">
+        Eliminar obra borra visitas/hallazgos/evidencias/documentos (en este dispositivo).
+      </p>
+    </section>
+  </section>
+
+</main>
+
+<!-- jsPDF -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<!-- App scripts -->
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+
+<!-- Si los tienes en tu proyecto, déjalos para no romper nada -->
+<script src="js/cronograma.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
