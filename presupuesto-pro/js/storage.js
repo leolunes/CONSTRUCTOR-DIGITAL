@@ -3,13 +3,39 @@ const STORE_KEY = "presupuesto_pro_v1";
 function nowISO(){ return new Date().toISOString(); }
 function uid(prefix="id"){ return `${prefix}_${Math.random().toString(16).slice(2)}_${Date.now().toString(16)}`; }
 
+function normalizeProject(p){
+  const proj = p || {};
+
+  // ✅ Defaults robustos
+  proj.currency = String(proj.currency || "COP");
+  proj.aiuPct = Number(proj.aiuPct ?? 25);
+  proj.ivaPct = Number(proj.ivaPct ?? 19);
+  proj.ivaBase = String(proj.ivaBase || "sobre_directo_aiu");
+
+  // ✅ NUEVO: Logo institucional (por proyecto)
+  proj.logoDataUrl = String(proj.logoDataUrl || "");
+
+  // ✅ NUEVO: Formato institucional COMPLETO (por proyecto)
+  proj.instPais = String(proj.instPais || "");
+  proj.instDepto = String(proj.instDepto || "");
+  proj.instMunicipio = String(proj.instMunicipio || "");
+  proj.instEntidad = String(proj.instEntidad || "");
+  proj.instProyectoLabel = String(proj.instProyectoLabel || "");
+  proj.instFechaElab = String(proj.instFechaElab || "");
+
+  if(!Array.isArray(proj.items)) proj.items = [];
+  if(!proj.apuOverrides) proj.apuOverrides = {};
+
+  return proj;
+}
+
 function loadStore(){
   const raw = localStorage.getItem(STORE_KEY);
   if(!raw){
     const init = {
       meta:{
         createdAt: nowISO(),
-        version: 4,
+        version: 6, // ✅ subimos versión por nuevos campos (logo + instPais + instFechaElab)
 
         elaborador: {
           nombre: "",
@@ -28,7 +54,7 @@ function loadStore(){
   }
   try{
     const db = JSON.parse(raw);
-    if(!db.meta) db.meta = { createdAt:nowISO(), version:4 };
+    if(!db.meta) db.meta = { createdAt:nowISO(), version:6 };
 
     if(!db.meta.customAPUs) db.meta.customAPUs = {};
     if(!db.meta.customInsumos) db.meta.customInsumos = [];
@@ -43,10 +69,9 @@ function loadStore(){
     }
 
     if(!db.projects) db.projects = [];
-    // ✅ asegurar apuOverrides por proyecto
-    for(const p of db.projects){
-      if(!p.apuOverrides) p.apuOverrides = {}; // { "1.01": { lines:[...], updatedAt } }
-    }
+
+    // ✅ Normalizar proyectos (incluye logo + inst*)
+    db.projects = db.projects.map(p => normalizeProject(p));
 
     localStorage.setItem(STORE_KEY, JSON.stringify(db));
     return db;
@@ -69,14 +94,17 @@ async function importBackupFromFile(file){
   const text = await file.text();
   const data = JSON.parse(text);
   if(!data || !data.projects) throw new Error("Backup inválido.");
-  if(!data.meta) data.meta = { createdAt:nowISO(), version:4 };
+
+  if(!data.meta) data.meta = { createdAt:nowISO(), version:6 };
   if(!data.meta.customAPUs) data.meta.customAPUs = {};
   if(!data.meta.customInsumos) data.meta.customInsumos = [];
   if(!data.meta.elaborador) data.meta.elaborador = { nombre:"", profesion:"", matricula:"", firmaDataUrl:"" };
+
   if(!data.projects) data.projects = [];
-  for(const p of data.projects){
-    if(!p.apuOverrides) p.apuOverrides = {};
-  }
+
+  // ✅ Normalizar proyectos importados (incluye logo + inst*)
+  data.projects = data.projects.map(p => normalizeProject(p));
+
   saveStore(data);
   return true;
 }
@@ -155,7 +183,7 @@ function listCustomAPUs(){
 /* ===== Projects ===== */
 function createProject(payload){
   const db = loadStore();
-  const p = {
+  const p = normalizeProject({
     id: uid("proj"),
     createdAt: nowISO(),
     updatedAt: nowISO(),
@@ -163,10 +191,20 @@ function createProject(payload){
     aiuPct: 25,
     ivaPct: 19,
     ivaBase: "sobre_directo_aiu",
+
+    // ✅ NUEVO: defaults logo + institucional
+    logoDataUrl: "",
+    instPais: "",
+    instDepto: "",
+    instMunicipio: "",
+    instEntidad: "",
+    instProyectoLabel: "",
+    instFechaElab: "",
+
     items: [],
-    apuOverrides: {}, // ✅ override APU por proyecto
+    apuOverrides: {},
     ...payload
-  };
+  });
   db.projects.unshift(p);
   saveStore(db);
   return p;
@@ -176,8 +214,10 @@ function updateProject(id, patch){
   const db = loadStore();
   const idx = db.projects.findIndex(p=>p.id===id);
   if(idx===-1) return null;
-  db.projects[idx] = { ...db.projects[idx], ...patch, updatedAt: nowISO() };
-  if(!db.projects[idx].apuOverrides) db.projects[idx].apuOverrides = {};
+
+  const merged = { ...db.projects[idx], ...patch, updatedAt: nowISO() };
+  db.projects[idx] = normalizeProject(merged);
+
   saveStore(db);
   return db.projects[idx];
 }
@@ -251,7 +291,7 @@ function deleteItem(projectId, itemId){
   return true;
 }
 
-// ✅ NUEVO: actualizar PU de todos los ítems por código dentro del proyecto
+// ✅ actualizar PU de todos los ítems por código dentro del proyecto
 function updateItemsPUByCode(projectId, code, newPU){
   const db = loadStore();
   const pidx = db.projects.findIndex(p=>p.id===projectId);
@@ -273,7 +313,7 @@ function updateItemsPUByCode(projectId, code, newPU){
 }
 
 /* =========================
-   ✅ Override APU por proyecto
+   Override APU por proyecto
    ========================= */
 function getApuOverride(projectId, code){
   const p = getProjectById(projectId);
@@ -315,11 +355,11 @@ function clearApuOverride(projectId, code){
 }
 
 /* =========================
-   ✅ Importar proyecto como NUEVO
+   Importar proyecto como NUEVO
    ========================= */
 function importProjectAsNew(projectObj){
   if(!projectObj) throw new Error("Proyecto inválido");
-  const payload = { ...projectObj };
+  const payload = normalizeProject({ ...projectObj });
 
   const base = createProject({
     name: payload.name || "Proyecto importado",
@@ -328,7 +368,16 @@ function importProjectAsNew(projectObj){
     currency: payload.currency || "COP",
     aiuPct: Number(payload.aiuPct||0),
     ivaPct: Number(payload.ivaPct||0),
-    ivaBase: payload.ivaBase || "sobre_directo_aiu"
+    ivaBase: payload.ivaBase || "sobre_directo_aiu",
+
+    // ✅ importa también institucional + logo
+    logoDataUrl: payload.logoDataUrl || "",
+    instPais: payload.instPais || "",
+    instDepto: payload.instDepto || "",
+    instMunicipio: payload.instMunicipio || "",
+    instEntidad: payload.instEntidad || "",
+    instProyectoLabel: payload.instProyectoLabel || "",
+    instFechaElab: payload.instFechaElab || ""
   });
 
   // reemplazar items con IDs nuevos
@@ -346,7 +395,7 @@ function importProjectAsNew(projectObj){
 
   updateProject(base.id, {
     items: mapped,
-    apuOverrides: {} // overrides NO se importan por defecto (si los quieres, se puede)
+    apuOverrides: {} // overrides NO se importan por defecto
   });
 
   return getProjectById(base.id);
@@ -366,9 +415,7 @@ window.StorageAPI = {
   addItem, updateItem, deleteItem,
   updateItemsPUByCode,
 
-  // ✅ overrides
   getApuOverride, setApuOverride, clearApuOverride,
 
-  // ✅ import proyecto nuevo
   importProjectAsNew
 };

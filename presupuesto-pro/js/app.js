@@ -43,6 +43,105 @@ async function dataUrlToBlob(dataUrl){
   return await r.blob();
 }
 
+/* ========= helpers logo/image ========= */
+async function fileToDataUrl(file){
+  if(!file) return "";
+  const MAX_IMG = 4 * 1024 * 1024; // 4MB
+  if((file.size||0) > MAX_IMG) throw new Error("Imagen demasiado grande. Máx 4MB.");
+  return await blobToDataUrl(file);
+}
+
+/* ========= helper excel ========= */
+function sanitizeFileName(name){
+  return String(name||"archivo")
+    .trim()
+    .replace(/[\\/:*?"<>|]+/g, "_")
+    .replace(/\s+/g, "_")
+    .slice(0, 80) || "archivo";
+}
+
+function exportProjectExcel(project){
+  if(!project) return;
+
+  if(typeof XLSX === "undefined" || !XLSX?.utils){
+    alert("No se encontró XLSX. Verifica que está cargado en el HTML.");
+    return;
+  }
+
+  const totals = Calc.calcTotals(project);
+  const { groups, items } = Calc.groupByChapters(project);
+
+  // ===== Sheet 1: Resumen (A-O-A) =====
+  const resumenAOA = [
+    ["FORMATO INSTITUCIONAL"],
+    ["República / País", project.instPais || ""],
+    ["Departamento", project.instDepto || ""],
+    ["Municipio", project.instMunicipio || ""],
+    ["Entidad contratante", project.instEntidad || (project.entity || "")],
+    ["Proyecto (portada)", project.instProyectoLabel || project.name || ""],
+    ["Ubicación", project.location || ""],
+    ["Fecha elaboración", project.instFechaElab || ""],
+    [""],
+    ["RESUMEN PRESUPUESTO"],
+    ["Moneda", project.currency || "COP"],
+    ["AIU (%)", Number(project.aiuPct||0)],
+    ["IVA (%)", Number(project.ivaPct||0)],
+    ["Regla IVA", project.ivaBase || ""],
+    [""],
+    ["Costo Directo", Number(totals.directo||0)],
+    ["AIU", Number(totals.aiu||0)],
+    ["IVA", Number(totals.iva||0)],
+    ["TOTAL", Number(totals.total||0)],
+    [""],
+    ["Items", (project.items||[]).length],
+    ["Capítulos", (groups||[]).length],
+  ];
+
+  const wsResumen = XLSX.utils.aoa_to_sheet(resumenAOA);
+
+  // ===== Sheet 2: Capítulos =====
+  const capsRows = (groups||[]).map(g=>({
+    Capitulo: String(g.chapterCode||""),
+    Nombre: String(g.chapterName||""),
+    Items: Number(g.itemsCount||0),
+    Subtotal: Number(g.subtotal||0),
+    Moneda: project.currency || "COP"
+  }));
+  const wsCaps = XLSX.utils.json_to_sheet(capsRows.length ? capsRows : [{Capitulo:"",Nombre:"",Items:"",Subtotal:"",Moneda:project.currency||"COP"}]);
+
+  // ===== Sheet 3: Ítems =====
+  const itemsRows = (items||[]).map(it=>{
+    const parcial = Number(it.pu||0) * Number(it.qty||0);
+    const cap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
+    return {
+      Capitulo: String(cap||""),
+      Codigo: String(it.code||""),
+      Descripcion: String(it.desc||""),
+      Unidad: String(it.unit||""),
+      VR_Unitario: Number(it.pu||0),
+      Cantidad: Number(it.qty||0),
+      VR_Parcial: Number(parcial||0),
+      Moneda: project.currency || "COP"
+    };
+  });
+  const wsItems = XLSX.utils.json_to_sheet(itemsRows.length ? itemsRows : [{
+    Capitulo:"",Codigo:"",Descripcion:"",Unidad:"",VR_Unitario:"",Cantidad:"",VR_Parcial:"",Moneda:project.currency||"COP"
+  }]);
+
+  // ===== Workbook =====
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen");
+  XLSX.utils.book_append_sheet(wb, wsCaps, "Capitulos");
+  XLSX.utils.book_append_sheet(wb, wsItems, "Items");
+
+  const out = XLSX.write(wb, { bookType:"xlsx", type:"array" });
+  const blob = new Blob([out], { type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  const url = URL.createObjectURL(blob);
+
+  const filename = `presupuesto_${sanitizeFileName(project.name)}_${Date.now()}.xlsx`;
+  UI.downloadBlobUrl(url, filename);
+}
+
 /* ---------- PROYECTOS ---------- */
 async function renderKpis(){
   const el = UI.qs("#kpis");
@@ -487,7 +586,7 @@ function renderApuResults(projectId, results){
 }
 
 /* =========================================================
-   ✅ NUEVO: VISOR "Consultas de Base APU" (botones que no funcionaban)
+   ✅ VISOR "Consultas de Base APU"
    ========================================================= */
 function bindBaseViewer(projectId){
   const btnVerFormulario = UI.qs("#btnVerFormulario");
@@ -511,7 +610,7 @@ function bindBaseViewer(projectId){
   if(!btnVerFormulario || !btnVerCD || !btnVerSub || !btnVerInsumos) return;
   if(!viewer || !title || !sub || !btnClose || !head || !body || !empty) return;
 
-  let mode = ""; // "formulario" | "cd" | "sub" | "insumos"
+  let mode = "";
 
   function showEmpty(flag){
     empty.style.display = flag ? "" : "none";
@@ -521,11 +620,9 @@ function bindBaseViewer(projectId){
     mode = newMode;
     viewer.style.display = "";
 
-    // por defecto, mostrar búsqueda (en estos listados es útil)
     if(searchRow) searchRow.style.display = "";
     if(inpSearch) inpSearch.value = "";
 
-    // títulos
     if(mode === "formulario"){
       title.textContent = "FORMULARIO DE PRECIOS";
       sub.textContent = "Items (capítulos + ítems) de la base.";
@@ -583,7 +680,7 @@ function bindBaseViewer(projectId){
 
     body.innerHTML = "";
     showEmpty(false);
-    loadRows(""); // carga inicial sin filtro
+    loadRows("");
   }
 
   function closeViewer(){
@@ -648,7 +745,6 @@ function bindBaseViewer(projectId){
       }
 
       if(mode === "sub"){
-        // lista de subproductos (keys)
         const list = await APUBase.listSubproductos(250);
         const qn = (q||"").trim().toLowerCase();
         const filtered = !qn ? list : list.filter(x =>
@@ -708,7 +804,7 @@ function bindBaseViewer(projectId){
   });
 }
 
-/* ---------- FIRMA (modal ya existente) ---------- */
+/* ---------- FIRMA ---------- */
 function bindFirmaModal(){
   const btn = UI.qs("#btnDatosFirma");
   const modal = UI.qs("#firmaModal");
@@ -882,8 +978,6 @@ async function bindProjectDetailPage(){
 
   bindTabsIfPresent();
   bindFirmaModal();
-
-  // ✅ NUEVO: bind de los botones del visor de base APU
   bindBaseViewer(projectId);
 
   renderProjectDetail(project);
@@ -892,7 +986,56 @@ async function bindProjectDetailPage(){
   renderResumenItems(project);
   renderDocs(projectId).catch(()=>{});
 
-  // ====== PDFs (botones existentes) ======
+  /* ===============================
+     ✅ LOGO INSTITUCIONAL (por proyecto)
+     =============================== */
+  const inpLogo = UI.qs("#inpProjectLogo");
+  const btnRmLogo = UI.qs("#btnRemoveProjectLogo");
+  const logoPrev = UI.qs("#projectLogoPreview");
+
+  function refreshLogoPreview(){
+    const fresh = StorageAPI.getProjectById(projectId);
+    if(!fresh) return;
+    if(logoPrev) logoPrev.src = fresh.logoDataUrl || "";
+  }
+  refreshLogoPreview();
+
+  inpLogo?.addEventListener("change", async (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    try{
+      const dataUrl = await fileToDataUrl(f);
+      StorageAPI.updateProject(projectId, { logoDataUrl: dataUrl });
+      refreshLogoPreview();
+      alert("Logo guardado en el proyecto.");
+    }catch(err){
+      alert("No se pudo guardar el logo: " + (err?.message || err));
+    }finally{
+      e.target.value = "";
+    }
+  });
+
+  btnRmLogo?.addEventListener("click", ()=>{
+    if(!confirm("¿Quitar el logo guardado de este proyecto?")) return;
+    StorageAPI.updateProject(projectId, { logoDataUrl: "" });
+    refreshLogoPreview();
+    alert("Logo eliminado.");
+  });
+
+  /* ===============================
+     ✅ EXPORTAR A EXCEL
+     =============================== */
+  UI.qs("#btnExportExcel")?.addEventListener("click", ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      exportProjectExcel(fresh);
+    }catch(err){
+      alert("Error exportando Excel: " + (err?.message || err));
+    }
+  });
+
+  // ====== PDFs ======
   UI.qs("#btnPdfPresupuesto")?.addEventListener("click", async ()=>{
     try{
       const fresh = StorageAPI.getProjectById(projectId);
@@ -913,12 +1056,11 @@ async function bindProjectDetailPage(){
     }
   });
 
-  // ✅ NUEVO: botones “Descargar PDF …”
   UI.qs("#btnDlPdfPresupuesto")?.addEventListener("click", async ()=>{
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      await PDF.exportPresupuestoPDF(fresh); // ya descarga con doc.save()
+      await PDF.exportPresupuestoPDF(fresh);
     }catch(err){
       alert("Error descargando PDF Presupuesto: " + (err?.message || err));
     }
@@ -928,13 +1070,12 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      await PDF.exportPresupuestoConAPUsPDF(fresh); // ya descarga con doc.save()
+      await PDF.exportPresupuestoConAPUsPDF(fresh);
     }catch(err){
       alert("Error descargando PDF Presupuesto + APUs: " + (err?.message || err));
     }
   });
 
-  // ✅ NUEVO: PDF Especificaciones Técnicas Proyecto (generar / descargar)
   UI.qs("#btnPdfEspecificacionesTec")?.addEventListener("click", async ()=>{
     try{
       const fresh = StorageAPI.getProjectById(projectId);
@@ -949,31 +1090,55 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      await PDF.exportEspecificacionesTecnicasPDF(fresh); // ya descarga con doc.save()
+      await PDF.exportEspecificacionesTecnicasPDF(fresh);
     }catch(err){
       alert("Error descargando PDF Especificaciones Técnicas: " + (err?.message || err));
     }
   });
 
+  /* =========================================================
+     ✅ AJUSTES: guarda Formato Institucional COMPLETO (por proyecto)
+     ========================================================= */
   UI.qs("#formAjustes")?.addEventListener("submit", (e)=>{
     e.preventDefault();
     const fd = new FormData(e.target);
+
     const aiuPct = Number(fd.get("aiuPct") || 0);
     const ivaPct = Number(fd.get("ivaPct") || 0);
     const ivaBase = String(fd.get("ivaBase") || "sobre_directo_aiu");
 
-    StorageAPI.updateProject(projectId, { aiuPct, ivaPct, ivaBase });
+    // ✅ institucional completo
+    const instPais = String(fd.get("instPais") || "").trim();
+    const instDepto = String(fd.get("instDepto") || "").trim();
+    const instMunicipio = String(fd.get("instMunicipio") || "").trim();
+    const instEntidad = String(fd.get("instEntidad") || "").trim();
+    const instProyectoLabel = String(fd.get("instProyectoLabel") || "").trim();
+    const instFechaElab = String(fd.get("instFechaElab") || "").trim();
+
+    StorageAPI.updateProject(projectId, {
+      aiuPct, ivaPct, ivaBase,
+      instPais, instDepto, instMunicipio, instEntidad, instProyectoLabel, instFechaElab
+    });
+
     const fresh = StorageAPI.getProjectById(projectId);
     alert("Ajustes guardados.");
     renderProjectDetail(fresh);
     renderResumenItems(fresh);
   });
 
+  // ✅ Precargar valores en el formulario, incluyendo institucional + logo preview
   const form = UI.qs("#formAjustes");
   if(form){
     form.aiuPct.value = String(project.aiuPct||0);
     form.ivaPct.value = String(project.ivaPct||0);
     form.ivaBase.value = project.ivaBase || "sobre_directo_aiu";
+
+    if(form.instPais) form.instPais.value = String(project.instPais || "");
+    if(form.instDepto) form.instDepto.value = String(project.instDepto || "");
+    if(form.instMunicipio) form.instMunicipio.value = String(project.instMunicipio || "");
+    if(form.instEntidad) form.instEntidad.value = String(project.instEntidad || "");
+    if(form.instProyectoLabel) form.instProyectoLabel.value = String(project.instProyectoLabel || "");
+    if(form.instFechaElab) form.instFechaElab.value = String(project.instFechaElab || "");
   }
 
   UI.qs("#docsInput")?.addEventListener("change", async (e)=>{
@@ -1057,7 +1222,6 @@ async function bindProjectDetailPage(){
     }
   });
 
-  // ✅ Borrar todo + pregunta por Base APU
   UI.qs("#btnResetAll")?.addEventListener("click", async ()=>{
     if(!confirm("¿Borrar TODO? (proyectos + documentos)")) return;
 
@@ -1077,7 +1241,7 @@ async function bindProjectDetailPage(){
     window.location.href = "proyectos.html";
   });
 
-  // Base APU búsquedas (tu código ya estaba OK)
+  // Base APU búsquedas
   UI.qs("#btnApuSearch")?.addEventListener("click", async ()=>{
     try{
       const meta = await APUBase.getMeta();
@@ -1102,7 +1266,7 @@ async function bindProjectDetailPage(){
     }
   });
 
-  // Agregar manual (igual)
+  // Agregar manual
   UI.qs("#formAddManual")?.addEventListener("submit", (e)=>{
     e.preventDefault();
     const fd = new FormData(e.target);
@@ -1127,8 +1291,6 @@ async function bindProjectDetailPage(){
     renderResumenItems(fresh);
     alert("Ítem agregado.");
   });
-
-  // (resto de tu código de viewers/crear APU desde insumos queda como lo tenías)
 }
 
 /* ---------- APU PAGE (Override por proyecto) ---------- */
@@ -1230,11 +1392,9 @@ async function bindAPUPage(){
     });
   }
 
-  // Cargar APU: override > custom global > base
   let apu = null;
 
   if(code){
-    // ✅ si hay proyecto, buscar override
     if(projectId){
       const ov = StorageAPI.getApuOverride(projectId, code);
       if(ov && Array.isArray(ov.lines) && ov.lines.length){
@@ -1250,7 +1410,6 @@ async function bindAPUPage(){
       }
     }
 
-    // si no override, mirar custom global
     if(!apu){
       const custom = StorageAPI.getCustomAPU(code);
       if(custom){
@@ -1293,12 +1452,10 @@ async function bindAPUPage(){
     </div>
   `);
 
-  // ✅ preparar editor override SOLO si hay projectId + code
   if(projectId && code){
     btnSaveOverride && (btnSaveOverride.style.display = "");
     btnResetOverride && (btnResetOverride.style.display = "");
 
-    // cargar líneas editables (si override, ya vienen; si base/custom, toma esas)
     localLines = (apu.lines||[]).map(l=>({
       group: l.group || l.tipo || "-",
       desc: l.desc || "",
@@ -1341,7 +1498,6 @@ async function bindAPUPage(){
       const count = StorageAPI.updateItemsPUByCode(projectId, code, newPU);
 
       alert(`Override guardado.\nNuevo PU (Costo directo): ${UI.fmtMoney(newPU,"COP")}\nÍtems actualizados: ${count}`);
-      // refrescar
       apu.directo = newPU;
       subEl && (subEl.textContent = "(Override del proyecto)");
       renderLines();

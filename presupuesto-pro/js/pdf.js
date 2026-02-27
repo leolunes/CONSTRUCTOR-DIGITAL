@@ -230,12 +230,41 @@
     };
   }
 
-  // ========= Encabezado / Pie (sin repetir portada institucional) =========
-  function stampHeaderFooter(doc, { docType, projectName }){
+  // =========================================================
+  // ✅ LOGO (dataUrl) helpers
+  // =========================================================
+  function imageTypeFromDataUrl(dataUrl){
+    const s = String(dataUrl||"");
+    if(s.startsWith("data:image/png")) return "PNG";
+    if(s.startsWith("data:image/jpeg") || s.startsWith("data:image/jpg")) return "JPEG";
+    if(s.startsWith("data:image/webp")) return "WEBP"; // jsPDF puede fallar en algunos builds, lo intentamos
+    return ""; // unknown
+  }
+
+  function tryAddImage(doc, dataUrl, x, y, w, h){
+    const t = imageTypeFromDataUrl(dataUrl);
+    if(!dataUrl || !t) return false;
+    try{
+      doc.addImage(String(dataUrl), t, x, y, w, h);
+      return true;
+    }catch(_){
+      return false;
+    }
+  }
+
+  // ========= Encabezado / Pie (con logo por proyecto) =========
+  function stampHeaderFooter(doc, { docType, projectName, logoDataUrl }){
     const pageCount = doc.getNumberOfPages();
     const PAGE_W = 612, PAGE_H = 792;
     const marginX = 44;
     const now = new Date().toLocaleString();
+
+    // área header
+    const headerTop = 14;
+    const headerLineY = 42;
+
+    const logoW = 64;
+    const logoH = 24;
 
     for(let p=1; p<=pageCount; p++){
       doc.setPage(p);
@@ -248,18 +277,25 @@
 
       // Header line
       doc.setDrawColor(200);
-      doc.line(marginX, 42, PAGE_W - marginX, 42);
+      doc.line(marginX, headerLineY, PAGE_W - marginX, headerLineY);
 
-      // Header text
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(9.5);
-
-      // ✅ Portada (p==1): NO poner docType ni projectName (evita duplicar portada institucional)
+      // ✅ Portada (p==1): NO repetir docType/projectName (evita duplicar portada)
       if(p !== 1){
-        doc.text(safe(docType), marginX, 28);
+        // Logo pequeño en header (si existe)
+        let textStartX = marginX;
+        if(logoDataUrl){
+          const ok = tryAddImage(doc, logoDataUrl, marginX, headerTop, logoW, logoH);
+          if(ok) textStartX = marginX + logoW + 10;
+        }
+
+        // Header text
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(9.5);
+        doc.text(safe(docType), textStartX, 28);
+
         doc.setFont("helvetica","normal");
         doc.setFontSize(9.2);
-        if(projectName) doc.text(safe(projectName), marginX, 38);
+        if(projectName) doc.text(safe(projectName), textStartX, 38);
       }
 
       doc.setFont("helvetica","normal");
@@ -283,16 +319,21 @@
     return `${dt.getDate()} de ${meses[dt.getMonth()]} de ${dt.getFullYear()}`;
   }
 
+  function up(s){ return String(s||"").trim().toUpperCase(); }
+
   function getInstitutionHeader(project){
-    const country = "REPÚBLICA DE COLOMBIA";
+    // ✅ Leer campos institucionales por proyecto (inst*)
+    const country = up(project?.instPais || "REPÚBLICA DE COLOMBIA");
 
-    const deptRaw = (project?.department || project?.depto || project?.departamento || "SANTANDER").toString();
-    const deptUp = deptRaw.toUpperCase();
-    const deptLine = deptUp.includes("DEPARTAMENTO") ? deptUp : ("DEPARTAMENTO DE " + deptUp);
+    const deptRaw = up(project?.instDepto || "");
+    const deptLine = deptRaw
+      ? (deptRaw.includes("DEPARTAMENTO") ? deptRaw : ("DEPARTAMENTO DE " + deptRaw))
+      : "DEPARTAMENTO DE —";
 
-    const muniRaw = (project?.municipality || project?.municipio || project?.entity || "MUNICIPIO").toString();
-    const muniUp = muniRaw.toUpperCase();
-    const muniLine = muniUp.includes("MUNICIPIO") ? muniUp : ("MUNICIPIO DE " + muniUp);
+    const muniRaw = up(project?.instMunicipio || "");
+    const muniLine = muniRaw
+      ? (muniRaw.includes("MUNICIPIO") ? muniRaw : ("MUNICIPIO DE " + muniRaw))
+      : "MUNICIPIO DE —";
 
     return { country, deptLine, muniLine };
   }
@@ -308,14 +349,30 @@
 
     const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
 
-    const entidadContratante = project?.entity ? String(project.entity) : "—";
-    const ubicacion = project?.location ? String(project.location) : "—";
-    const fechaElab = dateLongEsCO(new Date());
-    const projectNameUpper = String(project?.name || "PROYECTO").toUpperCase();
+    // ✅ Campos por proyecto (con fallback)
+    const entidadContratante = String(project?.instEntidad || project?.entity || "—");
+    const ubicacion = String(project?.location || "—");
+
+    const fechaElabRaw = String(project?.instFechaElab || "");
+    const fechaElab = fechaElabRaw ? fechaElabRaw : dateLongEsCO(new Date());
+
+    const projectLabel = String(project?.instProyectoLabel || project?.name || "PROYECTO");
+    const projectNameUpper = up(projectLabel);
 
     const { country, deptLine, muniLine } = getInstitutionHeader(project);
 
-    let y = 110;
+    // ✅ Logo grande en portada (si existe)
+    const logo = String(project?.logoDataUrl || "");
+    if(logo){
+      // centrado arriba
+      const w = 160, h = 60;
+      const x = (L.PAGE_W - w)/2;
+      const yLogo = 44;
+      tryAddImage(doc, logo, x, yLogo, w, h);
+    }
+
+    let y = 130;
+    if(logo) y = 130 + 30; // bajar un poco si hay logo
 
     doc.setFont("helvetica","bold"); doc.setFontSize(12);
     doc.text(country, L.PAGE_W/2, y, { align:"center" }); y += 18;
@@ -323,7 +380,7 @@
     doc.text(muniLine, L.PAGE_W/2, y, { align:"center" }); y += 30;
 
     doc.setFont("helvetica","bold"); doc.setFontSize(14);
-    doc.text(String(docTitle||"").toUpperCase(), L.PAGE_W/2, y, { align:"center" }); y += 22;
+    doc.text(up(docTitle||""), L.PAGE_W/2, y, { align:"center" }); y += 22;
 
     doc.setFont("helvetica","bold"); doc.setFontSize(12);
     doc.text(`PROYECTO: ${projectNameUpper}`, L.PAGE_W/2, y, { align:"center" }); y += 40;
@@ -514,7 +571,7 @@
   }
 
   // =========================================================
-  // PRESUPUESTO PDF (con portada institucional)
+  // PRESUPUESTO PDF (con portada institucional + logo)
   // =========================================================
   async function exportPresupuestoPDF(project){
     const doc = newDoc();
@@ -603,13 +660,17 @@
 
     await appendElaboradorFirma(doc, L);
 
-    stampHeaderFooter(doc, { docType:"PRESUPUESTO DE OBRA", projectName: project.name || "" });
+    stampHeaderFooter(doc, {
+      docType:"PRESUPUESTO DE OBRA",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
     doc.save(buildFilename(project, "DETALLE"));
     return true;
   }
 
   // =========================================================
-  // PRESUPUESTO + APUs (con portada institucional)
+  // PRESUPUESTO + APUs (con portada institucional + logo)
   // =========================================================
   async function exportPresupuestoConAPUsPDF(project){
     const doc = newDoc();
@@ -712,13 +773,17 @@
     L.h1("FIRMAS");
     await appendElaboradorFirma(doc, L);
 
-    stampHeaderFooter(doc, { docType:"PRESUPUESTO DE OBRA + APUs", projectName: project.name || "" });
+    stampHeaderFooter(doc, {
+      docType:"PRESUPUESTO DE OBRA + APUs",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
     doc.save(buildFilename(project, "APUS"));
     return true;
   }
 
   /* =========================================================
-     ESPECIFICACIONES TÉCNICAS (ya con formato institucional)
+     ESPECIFICACIONES TÉCNICAS (ya con portada institucional + logo)
      ========================================================= */
 
   function detectNormatividad(desc){
@@ -741,7 +806,6 @@
     return "OTROS";
   }
 
-  // ✅ Insumo limpio
   function formatInsumoLine(l){
     const desc = safe(l.desc || "");
     return `- ${desc}`;
@@ -987,7 +1051,11 @@
 
     await appendElaboradorFirma(doc, L);
 
-    stampHeaderFooter(doc, { docType:"ESPECIFICACIONES TÉCNICAS", projectName: project.name || "" });
+    stampHeaderFooter(doc, {
+      docType:"ESPECIFICACIONES TÉCNICAS",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
     doc.save(buildFilenameSpecs(project));
     return true;
   }

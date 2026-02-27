@@ -22,13 +22,16 @@
     <button class="navbtn" id="btnPdfPresupuesto" type="button">PDF Presupuesto</button>
     <button class="navbtn" id="btnPdfPresupuestoAPUs" type="button">PDF Presupuesto + APUs</button>
 
-    <!-- ✅ NUEVO: Especificaciones Técnicas -->
+    <!-- ✅ Especificaciones Técnicas -->
     <button class="navbtn" id="btnPdfEspecificacionesTec" type="button">PDF Especificaciones Técnicas Proyecto</button>
     <button class="navbtn" id="btnDlPdfEspecificacionesTec" type="button">Descargar PDF Especificaciones Técnicas</button>
 
-    <!-- ✅ NUEVO: botones de descarga -->
+    <!-- ✅ Botones de descarga -->
     <button class="navbtn" id="btnDlPdfPresupuesto" type="button">Descargar PDF Presupuesto</button>
     <button class="navbtn" id="btnDlPdfPresupuestoAPUs" type="button">Descargar PDF + APUs</button>
+
+    <!-- ✅ NUEVO: Exportar a Excel -->
+    <button class="navbtn" id="btnExportExcel" type="button">Exportar a Excel</button>
 
     <button class="navbtn" id="btnExportProj" type="button">Exportar proyecto (JSON)</button>
     <button class="navbtn danger" id="btnDeleteProj" type="button">Eliminar</button>
@@ -400,7 +403,7 @@
     <section class="card">
       <div class="cardhead">
         <h2>Ajustes del proyecto</h2>
-        <p class="muted small">AIU e IVA configurables por proyecto.</p>
+        <p class="muted small">AIU e IVA configurables por proyecto. Formato institucional y logo (por proyecto).</p>
       </div>
 
       <form class="form" id="formAjustes">
@@ -421,6 +424,77 @@
           <option value="solo_aiu">IVA solo sobre AIU</option>
           <option value="solo_directo">IVA solo sobre Directo</option>
         </select>
+
+        <hr class="sep">
+
+        <!-- ✅ NUEVO: Encabezado institucional para PDFs/Excel (por proyecto) -->
+        <div class="cardhead" style="margin-top:6px">
+          <h2>Formato institucional (por proyecto)</h2>
+          <p class="muted small">
+            Se usa en el encabezado de PDFs y en el Excel.
+          </p>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>República / País</label>
+            <input name="instPais" id="instPais" placeholder="Ej: REPÚBLICA DE COLOMBIA" />
+          </div>
+          <div>
+            <label>Departamento</label>
+            <input name="instDepto" id="instDepto" placeholder="Ej: DEPARTAMENTO DE SANTANDER" />
+          </div>
+        </div>
+
+        <div class="grid two" style="margin-top:10px">
+          <div>
+            <label>Municipio</label>
+            <input name="instMunicipio" id="instMunicipio" placeholder="Ej: MUNICIPIO DE FLORIDABLANCA" />
+          </div>
+          <div>
+            <label>Entidad contratante</label>
+            <input name="instEntidad" id="instEntidad" placeholder="Ej: Municipio de Floridablanca" />
+          </div>
+        </div>
+
+        <div class="grid two" style="margin-top:10px">
+          <div>
+            <label>Nombre para portada (PROYECTO: …)</label>
+            <input name="instProyectoLabel" id="instProyectoLabel" placeholder="Ej: VÍA BUCARICA" />
+          </div>
+          <div>
+            <label>Fecha de elaboración (texto)</label>
+            <input name="instFechaElab" id="instFechaElab" placeholder="Ej: 27 de febrero de 2026" />
+          </div>
+        </div>
+
+        <hr class="sep">
+
+        <!-- ✅ NUEVO: Logo institucional (por proyecto) -->
+        <div class="cardhead">
+          <h2>Logo institucional (por proyecto)</h2>
+          <p class="muted small">Se insertará en el encabezado del PDF y en el Excel.</p>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label class="btn filelike" style="display:inline-flex; justify-content:center">
+              Subir logo
+              <input id="inpProjectLogo" type="file" accept="image/*" hidden>
+            </label>
+            <button class="btn danger" id="btnRemoveProjectLogo" type="button" style="margin-left:8px">Quitar logo</button>
+
+            <div class="muted small" style="margin-top:10px">
+              Recomendado: PNG/JPG horizontal. Se guarda offline dentro del proyecto.
+            </div>
+          </div>
+
+          <div>
+            <div style="border:1px solid var(--border); border-radius:14px; padding:10px; background:#fff; min-height:110px; display:flex; align-items:center; justify-content:center">
+              <img id="projectLogoPreview" alt="Logo" style="max-width:100%; max-height:120px; display:block" />
+            </div>
+          </div>
+        </div>
 
         <div class="row" style="margin-top:12px">
           <button class="btn primary" type="submit">Guardar ajustes</button>
