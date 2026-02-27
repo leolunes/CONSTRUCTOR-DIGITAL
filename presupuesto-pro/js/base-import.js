@@ -99,6 +99,7 @@
     let numStr = cleaned;
 
     if(lastComma > lastDot) numStr = cleaned.replace(/\./g,"").replace(",",".");
+
     else numStr = cleaned.replace(/,/g,"");
 
     const n = Number(numStr);
@@ -719,6 +720,88 @@
     return true;
   }
 
+  /* =========================================================
+     ✅ NUEVO: Funciones para VISOR (Consultas Base APU)
+     (solo lectura, no afectan nada más)
+     ========================================================= */
+
+  // Lista items del formulario (desde cache) con filtro opcional
+  async function listFormularioItems(query="", limit=200){
+    const items = await loadItemsCache();
+    const q = normalizeText(query);
+    const arr = !q
+      ? items
+      : items.filter(it =>
+          normalizeText(it.code).includes(q) ||
+          normalizeText(it.desc).includes(q) ||
+          normalizeText(it.chapterCode).includes(q) ||
+          normalizeText(it.chapterName).includes(q)
+        );
+    return arr.slice(0, limit);
+  }
+
+  // Lista líneas de Costos Directos (recorriendo store) con filtro opcional
+  async function listCostosDirectosAll(query="", limit=250){
+    const q = normalizeText(query);
+    const st = await store(STORE_CD, "readonly");
+    const out = [];
+
+    await new Promise((res, rej)=>{
+      const r = st.openCursor();
+      r.onsuccess = ()=>{
+        const cur = r.result;
+        if(!cur) return res(true);
+
+        const v = cur.value;
+        const hit = !q || (
+          normalizeText(v.itemCode).includes(q) ||
+          normalizeText(v.itemName).includes(q) ||
+          normalizeText(v.group).includes(q) ||
+          normalizeText(v.desc).includes(q) ||
+          normalizeText(v.unit).includes(q)
+        );
+
+        if(hit) out.push(v);
+        if(out.length >= limit) return res(true);
+
+        cur.continue();
+      };
+      r.onerror = ()=>rej(r.error || new Error("No se pudo recorrer Costos_Directos"));
+    });
+
+    return out;
+  }
+
+  // Lista insumos (si no hay query devuelve primeros N)
+  async function listInsumos(query="", limit=250){
+    const q = normalizeText(query);
+    const st = await store(STORE_INSUM, "readonly");
+    const out = [];
+
+    await new Promise((res, rej)=>{
+      const r = st.openCursor();
+      r.onsuccess = ()=>{
+        const cur = r.result;
+        if(!cur) return res(true);
+
+        const v = cur.value;
+        const hit = !q || (
+          normalizeText(v.tipo).includes(q) ||
+          normalizeText(v.desc).includes(q) ||
+          normalizeText(v.unit).includes(q)
+        );
+
+        if(hit) out.push(v);
+        if(out.length >= limit) return res(true);
+
+        cur.continue();
+      };
+      r.onerror = ()=>rej(r.error || new Error("No se pudo recorrer insumos"));
+    });
+
+    return out;
+  }
+
   window.APUBase = {
     installFromFile,
     getMeta,
@@ -732,6 +815,11 @@
 
     // ✅ NUEVOS
     clearAll,
-    deleteBaseDatabase
+    deleteBaseDatabase,
+
+    // ✅ NUEVOS (visor)
+    listFormularioItems,
+    listCostosDirectosAll,
+    listInsumos
   };
 })();

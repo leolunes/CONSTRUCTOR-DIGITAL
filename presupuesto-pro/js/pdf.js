@@ -9,10 +9,24 @@
     return `Presupuesto_${name}${suffix ? "_"+suffix : ""}_${Date.now()}.pdf`;
   }
 
+  function buildFilenameSpecs(project){
+    const name = (project.name||"proyecto").replace(/[^\w\d]+/g,"_").slice(0,40);
+    return `Especificaciones_Tecnicas_${name}_${Date.now()}.pdf`;
+  }
+
   function newDoc(){
     if(!window.jspdf?.jsPDF) throw new Error("jsPDF no está cargado.");
     const { jsPDF } = window.jspdf;
-    return new jsPDF({ unit:"pt", format:"letter" });
+    const doc = new jsPDF({ unit:"pt", format:"letter" });
+
+    // ✅ Asegurar texto negro “normal”
+    try{
+      doc.setTextColor(0);
+      doc.setDrawColor(0);
+      doc.setFillColor(255,255,255);
+    }catch(_){}
+
+    return doc;
   }
 
   function mkLayout(doc){
@@ -23,7 +37,14 @@
 
     function ensure(h){
       if(y + h > PAGE_H - 54){
-        doc.addPage(); y = 54;
+        doc.addPage();
+        // ✅ asegurar colores “normales” en nuevas páginas
+        try{
+          doc.setTextColor(0);
+          doc.setDrawColor(0);
+          doc.setFillColor(255,255,255);
+        }catch(_){}
+        y = 54;
         return true;
       }
       return false;
@@ -74,7 +95,6 @@
     const col = {
       item: margin + 0,
       desc: margin + 62,
-
       parc: margin + contentW,
       qty:  margin + contentW - 70,
       pu:   margin + contentW - 150,
@@ -147,7 +167,6 @@
     const aCol = {
       grp:  margin + 0,
       desc: margin + 150,
-
       parc: margin + contentW,
       pu:   margin + contentW - 110,
       qty:  margin + contentW - 180,
@@ -211,16 +230,21 @@
     };
   }
 
-  // ========= Encabezado / Pie (sin repetir portada) =========
+  // ========= Encabezado / Pie (sin repetir portada institucional) =========
   function stampHeaderFooter(doc, { docType, projectName }){
     const pageCount = doc.getNumberOfPages();
     const PAGE_W = 612, PAGE_H = 792;
     const marginX = 44;
-
     const now = new Date().toLocaleString();
 
     for(let p=1; p<=pageCount; p++){
       doc.setPage(p);
+
+      // ✅ asegurar colores “normales”
+      try{
+        doc.setTextColor(0);
+        doc.setDrawColor(0);
+      }catch(_){}
 
       // Header line
       doc.setDrawColor(200);
@@ -230,8 +254,7 @@
       doc.setFont("helvetica","bold");
       doc.setFontSize(9.5);
 
-      // ✅ Portada (p==1): NO poner docType ni projectName para evitar duplicar el título grande
-      // Solo dejamos la fecha/hora a la derecha.
+      // ✅ Portada (p==1): NO poner docType ni projectName (evita duplicar portada institucional)
       if(p !== 1){
         doc.text(safe(docType), marginX, 28);
         doc.setFont("helvetica","normal");
@@ -253,58 +276,175 @@
     }
   }
 
-  // ✅ BLOQUE FIRMA (inserta imagen si existe)
-  function appendElaboradorFirma(doc, L){
+  // ========= PORTADA INSTITUCIONAL (para TODOS los PDF) =========
+  function dateLongEsCO(d){
+    const dt = (d instanceof Date) ? d : new Date(d || Date.now());
+    const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+    return `${dt.getDate()} de ${meses[dt.getMonth()]} de ${dt.getFullYear()}`;
+  }
+
+  function getInstitutionHeader(project){
+    const country = "REPÚBLICA DE COLOMBIA";
+
+    const deptRaw = (project?.department || project?.depto || project?.departamento || "SANTANDER").toString();
+    const deptUp = deptRaw.toUpperCase();
+    const deptLine = deptUp.includes("DEPARTAMENTO") ? deptUp : ("DEPARTAMENTO DE " + deptUp);
+
+    const muniRaw = (project?.municipality || project?.municipio || project?.entity || "MUNICIPIO").toString();
+    const muniUp = muniRaw.toUpperCase();
+    const muniLine = muniUp.includes("MUNICIPIO") ? muniUp : ("MUNICIPIO DE " + muniUp);
+
+    return { country, deptLine, muniLine };
+  }
+
+  function drawInstitutionalCover(doc, L, project, docTitle){
+    // Limpio: blanco + texto negro
+    try{
+      doc.setFillColor(255,255,255);
+      doc.rect(0,0,L.PAGE_W,L.PAGE_H,"F");
+      doc.setTextColor(0);
+      doc.setDrawColor(0);
+    }catch(_){}
+
+    const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
+
+    const entidadContratante = project?.entity ? String(project.entity) : "—";
+    const ubicacion = project?.location ? String(project.location) : "—";
+    const fechaElab = dateLongEsCO(new Date());
+    const projectNameUpper = String(project?.name || "PROYECTO").toUpperCase();
+
+    const { country, deptLine, muniLine } = getInstitutionHeader(project);
+
+    let y = 110;
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text(country, L.PAGE_W/2, y, { align:"center" }); y += 18;
+    doc.text(deptLine, L.PAGE_W/2, y, { align:"center" }); y += 18;
+    doc.text(muniLine, L.PAGE_W/2, y, { align:"center" }); y += 30;
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(14);
+    doc.text(String(docTitle||"").toUpperCase(), L.PAGE_W/2, y, { align:"center" }); y += 22;
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text(`PROYECTO: ${projectNameUpper}`, L.PAGE_W/2, y, { align:"center" }); y += 40;
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    doc.text(`Entidad Contratante: ${entidadContratante}`, L.margin, y); y += 16;
+    doc.text(`Ubicación: ${ubicacion}`, L.margin, y); y += 16;
+    doc.text(`Fecha de Elaboración: ${fechaElab}`, L.margin, y); y += 16;
+
+    // Opcional: elaboró (si hay)
+    if(elab && (elab.nombre || elab.profesion || elab.matricula)){
+      y += 6;
+      if(elab.nombre){ doc.text(`Elaboró: ${elab.nombre}`, L.margin, y); y += 14; }
+      if(elab.profesion){ doc.text(`Profesión: ${elab.profesion}`, L.margin, y); y += 14; }
+      if(elab.matricula){ doc.text(`Matrícula Profesional: ${elab.matricula}`, L.margin, y); y += 14; }
+    }
+  }
+
+  /* =========================================================
+     ✅ FIRMA: convertir “blanco sobre negro” -> “negro sobre blanco”
+     ========================================================= */
+  function loadImage(dataUrl){
+    return new Promise((res, rej)=>{
+      const img = new Image();
+      img.onload = ()=>res(img);
+      img.onerror = ()=>rej(new Error("No se pudo cargar la imagen de firma."));
+      img.src = dataUrl;
+    });
+  }
+
+  async function firmaToBlackOnWhitePNG(firmaDataUrl){
+    if(!firmaDataUrl || !String(firmaDataUrl).startsWith("data:image")) return "";
+    try{
+      const img = await loadImage(String(firmaDataUrl));
+      const w = Math.max(1, img.naturalWidth || img.width || 1);
+      const h = Math.max(1, img.naturalHeight || img.height || 1);
+
+      const c = document.createElement("canvas");
+      c.width = w;
+      c.height = h;
+
+      const ctx = c.getContext("2d", { willReadFrequently:true });
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0,0,w,h);
+      ctx.drawImage(img, 0, 0, w, h);
+
+      const im = ctx.getImageData(0,0,w,h);
+      const d = im.data;
+
+      const TH = 120;
+      for(let i=0; i<d.length; i+=4){
+        const r = d[i], g = d[i+1], b = d[i+2];
+        const lum = (r*0.2126 + g*0.7152 + b*0.0722);
+
+        if(lum < TH){
+          d[i] = 255; d[i+1] = 255; d[i+2] = 255; d[i+3] = 255;
+        }else{
+          d[i] = 0; d[i+1] = 0; d[i+2] = 0; d[i+3] = 255;
+        }
+      }
+
+      ctx.putImageData(im,0,0);
+      return c.toDataURL("image/png");
+    }catch(_){
+      return "";
+    }
+  }
+
+  // ✅ BLOQUE FIRMA (estilo institucional simple)
+  async function appendElaboradorFirma(doc, L){
     const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
     const nombre = elab?.nombre ? String(elab.nombre) : "";
     const profesion = elab?.profesion ? String(elab.profesion) : "";
     const matricula = elab?.matricula ? String(elab.matricula) : "";
     const firmaDataUrl = elab?.firmaDataUrl ? String(elab.firmaDataUrl) : "";
 
-    L.line();
-    L.ensure(120);
+    L.ensure(220);
 
-    doc.setFont("helvetica","bold"); doc.setFontSize(11);
-    doc.text("Elaboró", L.margin, L.getY());
-    L.setY(L.getY()+16);
-
-    doc.setFont("helvetica","normal"); doc.setFontSize(10);
-    doc.text(`Nombre: ${nombre || "—"}`, L.margin, L.getY()); L.setY(L.getY()+14);
-    doc.text(`Profesión: ${profesion || "—"}`, L.margin, L.getY()); L.setY(L.getY()+14);
-    doc.text(`Matrícula profesional: ${matricula || "—"}`, L.margin, L.getY()); L.setY(L.getY()+14);
-
-    // firma
     const boxX = L.margin;
-    const boxY = L.getY() + 8;
-    const boxW = 240;
-    const boxH = 80;
+    const boxW = 520;
 
-    doc.setDrawColor(160);
-    doc.rect(boxX, boxY, boxW, boxH);
+    // rect de firma
+    const sigX = boxX;
+    const sigY = L.getY() + 10;
+    const sigW = 320;
+    const sigH = 95;
 
-    doc.setFont("helvetica","normal"); doc.setFontSize(9);
-    doc.text("Firma:", boxX, boxY - 6);
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    doc.text("Firma:", sigX, sigY - 6);
 
+    doc.setDrawColor(0);
+    doc.rect(sigX, sigY, sigW, sigH);
+
+    let firmaForPDF = "";
     if(firmaDataUrl && firmaDataUrl.startsWith("data:image")){
-      try{
-        doc.addImage(firmaDataUrl, "JPEG", boxX+6, boxY+6, boxW-12, boxH-12);
-      }catch(_){
-        doc.setFont("helvetica","normal"); doc.setFontSize(9);
-        doc.text("(No se pudo insertar la firma)", boxX+10, boxY+20);
-      }
-    }else{
-      doc.setFont("helvetica","normal"); doc.setFontSize(9);
-      doc.text("(Sin firma guardada)", boxX+10, boxY+20);
+      firmaForPDF = await firmaToBlackOnWhitePNG(firmaDataUrl);
     }
 
-    L.setY(boxY + boxH + 18);
+    if(firmaForPDF){
+      try{
+        doc.setFillColor(255,255,255);
+        doc.rect(sigX+1, sigY+1, sigW-2, sigH-2, "F");
+        doc.addImage(firmaForPDF, "PNG", sigX+8, sigY+8, sigW-16, sigH-16);
+      }catch(_){}
+    }
 
-    doc.setDrawColor(160);
-    doc.line(boxX, L.getY(), boxX+boxW, L.getY());
-    L.setY(L.getY()+12);
-    doc.setFont("helvetica","bold"); doc.setFontSize(10);
-    doc.text(nombre || "____________________________", boxX, L.getY());
-    L.setY(L.getY()+16);
+    // línea de firma + datos
+    const lineY = sigY + sigH + 55;
+
+    doc.setDrawColor(0);
+    doc.line(boxX, lineY, boxX + boxW, lineY);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text(nombre || "____________________________", boxX, lineY + 18);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    let yy = lineY + 34;
+    if(profesion){ doc.text(profesion, boxX, yy); yy += 14; }
+    if(matricula){ doc.text(`M.P. ${matricula}`, boxX, yy); yy += 14; }
+
+    L.setY(Math.max(L.getY(), yy + 10));
   }
 
   // ===== Helper: leer APU (override > custom app > base) =====
@@ -312,7 +452,7 @@
     const code = String(it.code||"").trim();
     if(!code) return null;
 
-    // 1) Override por proyecto (si existe en tu StorageAPI)
+    // 1) Override por proyecto
     try{
       if(window.StorageAPI?.getApuOverride){
         const ov = StorageAPI.getApuOverride(project.id, code);
@@ -337,7 +477,7 @@
       }
     }catch(_){}
 
-    // 2) Custom APU global (creado en la app)
+    // 2) Custom APU global
     try{
       const custom = window.StorageAPI?.getCustomAPU ? StorageAPI.getCustomAPU(code) : null;
       if(custom){
@@ -373,6 +513,9 @@
     };
   }
 
+  // =========================================================
+  // PRESUPUESTO PDF (con portada institucional)
+  // =========================================================
   async function exportPresupuestoPDF(project){
     const doc = newDoc();
     const L = mkLayout(doc);
@@ -380,22 +523,18 @@
     const { groups, items } = Calc.groupByChapters(project);
     const totals = Calc.calcTotals(project);
 
-    // PORTADA
+    // ✅ Portada institucional (página 1)
+    drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA");
+
+    // ✅ Contenido en página 2
+    doc.addPage();
+    L.setY(54);
+
     L.h1("PRESUPUESTO DE OBRA");
     L.h2(project.name || "Proyecto");
     L.p(`Entidad: ${project.entity || "-"}`);
     L.p(`Ubicación: ${project.location || "-"}`);
     L.p(`Fecha generación: ${new Date().toLocaleString()}`);
-
-    // Elaboró en portada (si existe)
-    const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
-    if(elab && (elab.nombre || elab.profesion || elab.matricula)){
-      L.p(" ");
-      L.h2("Elaboró");
-      L.p(`Nombre: ${elab.nombre || "—"}`);
-      L.p(`Profesión: ${elab.profesion || "—"}`);
-      L.p(`Matrícula: ${elab.matricula || "—"}`);
-    }
 
     L.p(" ");
     L.h2("Resumen económico");
@@ -462,15 +601,16 @@
     L.row(`IVA (${project.ivaPct||0}%):`, moneyCOP(totals.iva));
     L.row("TOTAL:", moneyCOP(totals.total));
 
-    appendElaboradorFirma(doc, L);
+    await appendElaboradorFirma(doc, L);
 
-    // Encabezado + paginación (sin repetir en portada)
     stampHeaderFooter(doc, { docType:"PRESUPUESTO DE OBRA", projectName: project.name || "" });
-
     doc.save(buildFilename(project, "DETALLE"));
     return true;
   }
 
+  // =========================================================
+  // PRESUPUESTO + APUs (con portada institucional)
+  // =========================================================
   async function exportPresupuestoConAPUsPDF(project){
     const doc = newDoc();
     const L = mkLayout(doc);
@@ -478,22 +618,18 @@
     const { groups, items } = Calc.groupByChapters(project);
     const totals = Calc.calcTotals(project);
 
-    // PORTADA
+    // ✅ Portada institucional (página 1)
+    drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA + APUs");
+
+    // ✅ Contenido en página 2
+    doc.addPage();
+    L.setY(54);
+
     L.h1("PRESUPUESTO DE OBRA + APUs");
     L.h2(project.name || "Proyecto");
     L.p(`Entidad: ${project.entity || "-"}`);
     L.p(`Ubicación: ${project.location || "-"}`);
     L.p(`Fecha generación: ${new Date().toLocaleString()}`);
-
-    // Elaboró en portada
-    const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
-    if(elab && (elab.nombre || elab.profesion || elab.matricula)){
-      L.p(" ");
-      L.h2("Elaboró");
-      L.p(`Nombre: ${elab.nombre || "—"}`);
-      L.p(`Profesión: ${elab.profesion || "—"}`);
-      L.p(`Matrícula: ${elab.matricula || "—"}`);
-    }
 
     L.p(" ");
     L.h2("Resumen económico");
@@ -546,11 +682,8 @@
         continue;
       }
 
-      // Título y descripción correctos
       L.h1(`APU ${code}`);
       L.h2(apuObj.subtitle || it.desc || "");
-
-      // ✅ NO imprimir "(Override del proyecto)"
       L.p(`Unidad: ${safe(apuObj.unit||it.unit||"-")} · Costo directo: ${moneyCOP(apuObj.directo||0)}`);
 
       L.line();
@@ -577,17 +710,291 @@
     doc.addPage();
     L.setY(54);
     L.h1("FIRMAS");
-    appendElaboradorFirma(doc, L);
+    await appendElaboradorFirma(doc, L);
 
-    // Encabezado + paginación (sin repetir en portada)
     stampHeaderFooter(doc, { docType:"PRESUPUESTO DE OBRA + APUs", projectName: project.name || "" });
-
     doc.save(buildFilename(project, "APUS"));
+    return true;
+  }
+
+  /* =========================================================
+     ESPECIFICACIONES TÉCNICAS (ya con formato institucional)
+     ========================================================= */
+
+  function detectNormatividad(desc){
+    const t = String(desc||"").toLowerCase();
+    const invias = /v(i|í)a|carretera|pavimento|asfalto|subbase|base granular|señalizaci(o|ó)n|cuneta|alcantarilla|drenaje/.test(t);
+    const nsr10  = /concreto|hormig(o|ó)n|acero|refuerzo|estructura|mamposter(i|í)a|cimentaci(o|ó)n|viga|columna|losa/.test(t);
+    const retie  = /el(e|é)ctr|tablero|cable|conductor|puesta a tierra|toma|breaker|interruptor|transformador/.test(t);
+    const retilap= /iluminaci(o|ó)n|luminaria|lux|fotometr|reflector|poste|proyector|lampara|l(a|á)mpara/.test(t);
+    return { invias, nsr10, retie, retilap };
+  }
+
+  function normalizeGroup(g){
+    const up = String(g||"").toUpperCase();
+    if(!up.trim()) return "OTROS";
+    if(up.includes("MATERIAL")) return "MATERIALES";
+    if(up.includes("MANO") && up.includes("OBRA")) return "MANO DE OBRA";
+    if(up.includes("EQUIPO") || up.includes("HERRAM") || up.includes("MAQUIN")) return "EQUIPO / HERRAMIENTA / MAQUINARIA";
+    if(up.includes("TRANSP")) return "TRANSPORTE";
+    if(up.includes("SUBPROD")) return "SUBPRODUCTOS";
+    return "OTROS";
+  }
+
+  // ✅ Insumo limpio
+  function formatInsumoLine(l){
+    const desc = safe(l.desc || "");
+    return `- ${desc}`;
+  }
+
+  function chapterLabel(g){
+    const code = safe(g.chapterCode||"");
+    const name = safe(g.chapterName||"");
+    return name ? `Capítulo ${code} – ${name}` : `Capítulo ${code}`;
+  }
+
+  async function exportEspecificacionesTecnicasPDF(project){
+    const doc = newDoc();
+    const L = mkLayout(doc);
+
+    const { groups, items } = Calc.groupByChapters(project);
+    const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
+
+    const entidadContratante = project?.entity ? String(project.entity) : "—";
+    const ubicacion = project?.location ? String(project.location) : "—";
+
+    // ✅ Portada institucional (página 1)
+    drawInstitutionalCover(doc, L, project, "ESPECIFICACIONES TÉCNICAS DEL PROYECTO");
+
+    // TABLA DE CONTENIDO
+    doc.addPage();
+    L.setY(54);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("TABLA DE CONTENIDO", L.margin, L.getY());
+    L.setY(L.getY()+22);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+
+    const toc = [];
+    toc.push("1. Información General");
+    toc.push("2. Alcance del Documento");
+
+    let sec = 3;
+    for(const g of (groups||[])){
+      toc.push(`${sec}. ${chapterLabel(g)}`);
+      sec++;
+    }
+    toc.push(`${sec}. Firmas`);
+
+    for(const t of toc){
+      L.ensure(16);
+      doc.text(t, L.margin, L.getY());
+      L.setY(L.getY()+16);
+    }
+
+    // 1. INFORMACIÓN GENERAL
+    doc.addPage();
+    L.setY(54);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("1. INFORMACIÓN GENERAL", L.margin, L.getY());
+    L.setY(L.getY()+18);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    L.p(`Entidad: ${entidadContratante}`);
+    L.p(`Ubicación: ${ubicacion}`);
+
+    if(elab){
+      if(elab.nombre) L.p(`Elaboró: ${elab.nombre}`);
+      if(elab.profesion) L.p(`Profesión: ${elab.profesion}`);
+      if(elab.matricula) L.p(`Matrícula Profesional: ${elab.matricula}`);
+    }
+
+    // 2. ALCANCE DEL DOCUMENTO
+    doc.addPage();
+    L.setY(54);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text("2. ALCANCE DEL DOCUMENTO", L.margin, L.getY());
+    L.setY(L.getY()+18);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(11);
+    L.p(
+      "El presente documento consolida las especificaciones técnicas correspondientes a los ítems contemplados " +
+      "dentro del presupuesto oficial del proyecto. Las especificaciones se estructuran con base en el " +
+      "Análisis de Precios Unitarios (APU) y establecen los lineamientos técnicos, constructivos y normativos exigidos."
+    );
+
+    // CAPÍTULOS 3..N
+    const byChap = new Map();
+    for(const it of (items||[])){
+      const chap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
+      if(!byChap.has(chap)) byChap.set(chap, []);
+      byChap.get(chap).push(it);
+    }
+
+    let chapSec = 3;
+
+    for(const g of (groups||[])){
+      const chapCode = safe(g.chapterCode||"");
+      const chapName = safe(g.chapterName||"");
+      const chapKey = chapCode || "";
+
+      doc.addPage();
+      L.setY(54);
+
+      doc.setFont("helvetica","bold"); doc.setFontSize(12);
+      doc.text(
+        `${chapSec}. CAPÍTULO ${chapCode}${chapName ? " – " + chapName.toUpperCase() : ""}`,
+        L.margin,
+        L.getY()
+      );
+      L.setY(L.getY()+18);
+
+      const chapItems = byChap.get(chapKey) || [];
+      let itemSub = 1;
+
+      for(const it of chapItems){
+        const code = safe(it.code||"");
+        const desc = safe(it.desc||"");
+        const unit = safe(it.unit||"-");
+        const qty = Number(it.qty||0);
+        const pu = Number(it.pu||0);
+        const parcial = pu * qty;
+
+        const norms = detectNormatividad(desc);
+
+        doc.setFont("helvetica","bold"); doc.setFontSize(11.5);
+        L.ensure(22);
+        doc.text(`${chapSec}.${itemSub} Ítem ${code} – ${desc}`, L.margin, L.getY());
+        L.setY(L.getY()+16);
+
+        doc.setFont("helvetica","normal"); doc.setFontSize(11);
+        L.p(`Unidad: ${unit} · Cantidad: ${qty||0} · VR Unitario: ${moneyCOP(pu)} · VR Parcial: ${moneyCOP(parcial)}`);
+
+        doc.setFont("helvetica","bold"); doc.setFontSize(11);
+        L.p("1. OBJETO Y ALCANCE");
+        doc.setFont("helvetica","normal"); doc.setFontSize(11);
+        L.p(
+          "Ejecutar el ítem indicado conforme a los planos, especificaciones del proyecto y el presupuesto aprobado. " +
+          "Incluye el suministro de insumos, transporte interno, equipos, herramientas, mano de obra, control de calidad " +
+          "y disposición de residuos según aplique."
+        );
+
+        doc.setFont("helvetica","bold"); doc.setFontSize(11);
+        L.p("2. INSUMOS Y RECURSOS (APU)");
+        doc.setFont("helvetica","normal"); doc.setFontSize(11);
+
+        const apuObj = await getAPUForProjectItem(project, it);
+        const lines = (apuObj && Array.isArray(apuObj.lines)) ? apuObj.lines : [];
+
+        const buckets = {
+          "MATERIALES": [],
+          "MANO DE OBRA": [],
+          "EQUIPO / HERRAMIENTA / MAQUINARIA": [],
+          "TRANSPORTE": [],
+          "SUBPRODUCTOS": [],
+          "OTROS": []
+        };
+
+        for(const ln of (lines||[])){
+          const gg = normalizeGroup(ln.group || ln.tipo || "");
+          (buckets[gg] || buckets["OTROS"]).push(ln);
+        }
+
+        L.p("2.1 Materiales");
+        if(!buckets["MATERIALES"].length) L.p("- No aplica / sin registros.");
+        else buckets["MATERIALES"].forEach(l => L.p(formatInsumoLine(l)));
+
+        L.p("2.2 Mano de obra");
+        if(!buckets["MANO DE OBRA"].length) L.p("- No aplica / sin registros.");
+        else buckets["MANO DE OBRA"].forEach(l => L.p(formatInsumoLine(l)));
+
+        L.p("2.3 Equipo, herramienta y/o maquinaria");
+        if(!buckets["EQUIPO / HERRAMIENTA / MAQUINARIA"].length) L.p("- No aplica / sin registros.");
+        else buckets["EQUIPO / HERRAMIENTA / MAQUINARIA"].forEach(l => L.p(formatInsumoLine(l)));
+
+        L.p("2.4 Transporte");
+        if(!buckets["TRANSPORTE"].length) L.p("- No aplica / sin registros.");
+        else buckets["TRANSPORTE"].forEach(l => L.p(formatInsumoLine(l)));
+
+        if(buckets["SUBPRODUCTOS"].length){
+          L.p("2.5 Subproductos");
+          buckets["SUBPRODUCTOS"].forEach(l => L.p(formatInsumoLine(l)));
+        }
+
+        if(buckets["OTROS"].length){
+          L.p("2.6 Otros");
+          buckets["OTROS"].forEach(l => L.p(formatInsumoLine(l)));
+        }
+
+        doc.setFont("helvetica","bold"); doc.setFontSize(11);
+        L.p("3. PROCEDIMIENTO DE EJECUCIÓN (GENERAL)");
+        doc.setFont("helvetica","normal"); doc.setFontSize(11);
+        L.p(
+          "a) Replanteo y verificación de condiciones del sitio. " +
+          "b) Preparación de áreas y acopio de materiales. " +
+          "c) Ejecución de actividades según planos y especificaciones del proyecto. " +
+          "d) Control de calidad durante la ejecución. " +
+          "e) Limpieza final, retiro de sobrantes y entrega del frente."
+        );
+
+        doc.setFont("helvetica","bold"); doc.setFontSize(11);
+        L.p("4. MEDICIÓN Y FORMA DE PAGO");
+        doc.setFont("helvetica","normal"); doc.setFontSize(11);
+        L.p(
+          `La medición se realizará en ${unit} para el ítem ${code}, conforme a actas de obra y/o reportes de medición aprobados por la interventoría. ` +
+          "El pago se efectuará al precio unitario pactado, incluyendo suministros, equipos, mano de obra, transporte interno, " +
+          "desperdicios normales, pruebas y controles exigidos."
+        );
+
+        doc.setFont("helvetica","bold"); doc.setFontSize(11);
+        L.p("5. NORMATIVIDAD Y REQUISITOS APLICABLES");
+        doc.setFont("helvetica","normal"); doc.setFontSize(11);
+
+        const mark = (v)=> v ? "[X]" : "[ ]";
+        const allFalse = !norms.invias && !norms.nsr10 && !norms.retie && !norms.retilap;
+
+        if(allFalse){
+          L.p("Este ítem deberá cumplir la normatividad que aplique según su naturaleza. Referencias típicas:");
+          L.p(`- [ ] Normatividad INVÍAS (cuando aplique a infraestructura vial).`);
+          L.p(`- [ ] NSR-10 (cuando aplique a componentes estructurales).`);
+          L.p(`- [ ] RETIE (cuando aplique a instalaciones eléctricas).`);
+          L.p(`- [ ] RETILAP (cuando aplique a iluminación).`);
+        }else{
+          L.p("Cumplimiento mínimo esperado (según inferencia por descripción del ítem):");
+          L.p(`- ${mark(norms.invias)} Normatividad INVÍAS (según aplique).`);
+          L.p(`- ${mark(norms.nsr10)} NSR-10 (según aplique).`);
+          L.p(`- ${mark(norms.retie)} RETIE (según aplique).`);
+          L.p(`- ${mark(norms.retilap)} RETILAP (según aplique).`);
+        }
+
+        L.p(" ");
+        itemSub++;
+      }
+
+      chapSec++;
+    }
+
+    // FIRMAS
+    doc.addPage();
+    L.setY(54);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(12);
+    doc.text(`${chapSec}. FIRMAS`, L.margin, L.getY());
+    L.setY(L.getY()+18);
+
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, { docType:"ESPECIFICACIONES TÉCNICAS", projectName: project.name || "" });
+    doc.save(buildFilenameSpecs(project));
     return true;
   }
 
   window.PDF = {
     exportPresupuestoPDF,
-    exportPresupuestoConAPUsPDF
+    exportPresupuestoConAPUsPDF,
+    exportEspecificacionesTecnicasPDF
   };
 })();

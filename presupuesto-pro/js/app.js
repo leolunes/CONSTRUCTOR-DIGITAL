@@ -486,6 +486,228 @@ function renderApuResults(projectId, results){
   });
 }
 
+/* =========================================================
+   ✅ NUEVO: VISOR "Consultas de Base APU" (botones que no funcionaban)
+   ========================================================= */
+function bindBaseViewer(projectId){
+  const btnVerFormulario = UI.qs("#btnVerFormulario");
+  const btnVerCD = UI.qs("#btnVerCD");
+  const btnVerSub = UI.qs("#btnVerSub");
+  const btnVerInsumos = UI.qs("#btnVerInsumos");
+
+  const viewer = UI.qs("#baseViewer");
+  const title = UI.qs("#baseViewerTitle");
+  const sub = UI.qs("#baseViewerSub");
+  const btnClose = UI.qs("#btnCloseViewer");
+
+  const searchRow = UI.qs("#baseViewerSearchRow");
+  const inpSearch = UI.qs("#baseViewerSearch");
+  const btnSearch = UI.qs("#btnBaseViewerSearch");
+
+  const head = UI.qs("#baseViewerHead");
+  const body = UI.qs("#baseViewerBody");
+  const empty = UI.qs("#baseViewerEmpty");
+
+  if(!btnVerFormulario || !btnVerCD || !btnVerSub || !btnVerInsumos) return;
+  if(!viewer || !title || !sub || !btnClose || !head || !body || !empty) return;
+
+  let mode = ""; // "formulario" | "cd" | "sub" | "insumos"
+
+  function showEmpty(flag){
+    empty.style.display = flag ? "" : "none";
+  }
+
+  function openViewer(newMode){
+    mode = newMode;
+    viewer.style.display = "";
+
+    // por defecto, mostrar búsqueda (en estos listados es útil)
+    if(searchRow) searchRow.style.display = "";
+    if(inpSearch) inpSearch.value = "";
+
+    // títulos
+    if(mode === "formulario"){
+      title.textContent = "FORMULARIO DE PRECIOS";
+      sub.textContent = "Items (capítulos + ítems) de la base.";
+      head.innerHTML = `
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th style="text-align:right">PU</th>
+          <th>Capítulo</th>
+        </tr>
+      `;
+    }
+
+    if(mode === "cd"){
+      title.textContent = "Costos_Directos";
+      sub.textContent = "Líneas de descomposición (muestra una muestra filtrable).";
+      head.innerHTML = `
+        <tr>
+          <th>Ítem</th>
+          <th>Grupo</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th style="text-align:right">Cant/Rend</th>
+          <th style="text-align:right">PU</th>
+          <th style="text-align:right">Parcial</th>
+        </tr>
+      `;
+    }
+
+    if(mode === "sub"){
+      title.textContent = "Subproductos";
+      sub.textContent = "Listado de subproductos. Puedes abrir el detalle.";
+      head.innerHTML = `
+        <tr>
+          <th>Nombre</th>
+          <th>Key</th>
+          <th>Acción</th>
+        </tr>
+      `;
+    }
+
+    if(mode === "insumos"){
+      title.textContent = "Insumos";
+      sub.textContent = "Listado de insumos (filtrable por tipo/desc/unidad).";
+      head.innerHTML = `
+        <tr>
+          <th>Tipo</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th style="text-align:right">PU</th>
+        </tr>
+      `;
+    }
+
+    body.innerHTML = "";
+    showEmpty(false);
+    loadRows(""); // carga inicial sin filtro
+  }
+
+  function closeViewer(){
+    viewer.style.display = "none";
+    mode = "";
+  }
+
+  async function requireBase(){
+    let meta = null;
+    try{ meta = await APUBase.getMeta(); }catch(_){}
+    if(!meta){
+      alert("Primero instala la Base APU (XLSX) desde Proyectos.");
+      return false;
+    }
+    return true;
+  }
+
+  async function loadRows(q){
+    const ok = await requireBase();
+    if(!ok) return;
+
+    body.innerHTML = "";
+    showEmpty(false);
+
+    try{
+      if(mode === "formulario"){
+        const rows = await APUBase.listFormularioItems(q || "", 250);
+        if(!rows.length){ showEmpty(true); return; }
+
+        body.innerHTML = rows.map(r=>{
+          const cap = r.isChapter ? `CAP ${r.code}` : (r.chapterCode ? `CAP ${r.chapterCode}` : "");
+          const capName = r.isChapter ? (r.desc || "") : (r.chapterName || "");
+          return `
+            <tr>
+              <td><b>${UI.esc(r.code||"")}</b></td>
+              <td>${UI.esc(r.desc||"")}</td>
+              <td>${UI.esc(r.unit||"")}</td>
+              <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+              <td>${UI.esc((cap ? cap + " — " : "") + (capName||""))}</td>
+            </tr>
+          `;
+        }).join("");
+        return;
+      }
+
+      if(mode === "cd"){
+        const rows = await APUBase.listCostosDirectosAll(q || "", 250);
+        if(!rows.length){ showEmpty(true); return; }
+
+        body.innerHTML = rows.map(r=>`
+          <tr>
+            <td><b>${UI.esc(r.itemCode||"")}</b></td>
+            <td>${UI.esc(r.group||"")}</td>
+            <td>${UI.esc(r.desc||"")}</td>
+            <td>${UI.esc(r.unit||"")}</td>
+            <td style="text-align:right">${UI.esc(String(r.qty||0))}</td>
+            <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+            <td style="text-align:right"><b>${UI.fmtMoney(r.parcial||0,"COP")}</b></td>
+          </tr>
+        `).join("");
+        return;
+      }
+
+      if(mode === "sub"){
+        // lista de subproductos (keys)
+        const list = await APUBase.listSubproductos(250);
+        const qn = (q||"").trim().toLowerCase();
+        const filtered = !qn ? list : list.filter(x =>
+          String(x.subName||"").toLowerCase().includes(qn) ||
+          String(x.subKey||"").toLowerCase().includes(qn)
+        );
+
+        if(!filtered.length){ showEmpty(true); return; }
+
+        body.innerHTML = filtered.map(s=>`
+          <tr>
+            <td><b>${UI.esc(s.subName||"")}</b></td>
+            <td class="muted small">${UI.esc(s.subKey||"")}</td>
+            <td>
+              <a class="btn" href="apu.html?sub=${encodeURIComponent(s.subKey||"")}&projectId=${encodeURIComponent(projectId||"")}">Ver</a>
+            </td>
+          </tr>
+        `).join("");
+        return;
+      }
+
+      if(mode === "insumos"){
+        const rows = await APUBase.listInsumos(q || "", 250);
+        if(!rows.length){ showEmpty(true); return; }
+
+        body.innerHTML = rows.map(r=>`
+          <tr>
+            <td>${UI.esc(r.tipo||"")}</td>
+            <td>${UI.esc(r.desc||"")}</td>
+            <td>${UI.esc(r.unit||"")}</td>
+            <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+          </tr>
+        `).join("");
+        return;
+      }
+    }catch(err){
+      alert("Error consultando base: " + (err?.message || err));
+    }
+  }
+
+  btnClose.addEventListener("click", closeViewer);
+
+  btnVerFormulario.addEventListener("click", ()=> openViewer("formulario"));
+  btnVerCD.addEventListener("click", ()=> openViewer("cd"));
+  btnVerSub.addEventListener("click", ()=> openViewer("sub"));
+  btnVerInsumos.addEventListener("click", ()=> openViewer("insumos"));
+
+  btnSearch?.addEventListener("click", ()=>{
+    loadRows(inpSearch?.value || "");
+  });
+
+  inpSearch?.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter"){
+      e.preventDefault();
+      btnSearch?.click();
+    }
+  });
+}
+
 /* ---------- FIRMA (modal ya existente) ---------- */
 function bindFirmaModal(){
   const btn = UI.qs("#btnDatosFirma");
@@ -661,6 +883,9 @@ async function bindProjectDetailPage(){
   bindTabsIfPresent();
   bindFirmaModal();
 
+  // ✅ NUEVO: bind de los botones del visor de base APU
+  bindBaseViewer(projectId);
+
   renderProjectDetail(project);
   renderChaptersTable(project);
   renderItemsTable(project);
@@ -706,6 +931,27 @@ async function bindProjectDetailPage(){
       await PDF.exportPresupuestoConAPUsPDF(fresh); // ya descarga con doc.save()
     }catch(err){
       alert("Error descargando PDF Presupuesto + APUs: " + (err?.message || err));
+    }
+  });
+
+  // ✅ NUEVO: PDF Especificaciones Técnicas Proyecto (generar / descargar)
+  UI.qs("#btnPdfEspecificacionesTec")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportEspecificacionesTecnicasPDF(fresh);
+    }catch(err){
+      alert("Error generando PDF Especificaciones Técnicas: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnDlPdfEspecificacionesTec")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportEspecificacionesTecnicasPDF(fresh); // ya descarga con doc.save()
+    }catch(err){
+      alert("Error descargando PDF Especificaciones Técnicas: " + (err?.message || err));
     }
   });
 
