@@ -199,7 +199,28 @@
             <label>Nombre</label><input name="apo_nombre" required>
             <label>Profesión</label><input name="apo_profesion" required>
             <label>Número contrato CPS</label><input name="apo_cps" required>
-            <div class="grid two">
+
+            <!-- ✅ NUEVO -->
+            <label>Matrícula profesional</label>
+            <input name="apo_matricula" placeholder="Ej: TP-123456 / COPNIA / etc.">
+
+            <!-- ✅ NUEVO -->
+            <div class="cardhead" style="margin-top:10px">
+              <h3 class="h3">Firma para PDFs (JPG/JPEG)</h3>
+              <p class="muted small" style="margin:6px 0 0 0">
+                Esta firma se usa en los PDFs de visitas y consolidado.
+              </p>
+            </div>
+
+            <label class="btn filelike" style="justify-content:flex-start">
+              Cargar firma (JPG/JPEG)
+              <input id="firmaApoInput" type="file" accept="image/jpeg,image/jpg" hidden>
+            </label>
+            <div class="muted small" style="margin-top:8px">
+              Firma cargada: <b id="firmaApoLabel">Ninguna</b>
+            </div>
+
+            <div class="grid two" style="margin-top:10px">
               <div><label>Fecha inicio</label><input name="apo_inicio" type="date" required></div>
               <div><label>Fecha terminación</label><input name="apo_fin" type="date" required></div>
             </div>

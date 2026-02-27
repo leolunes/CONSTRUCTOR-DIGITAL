@@ -68,8 +68,14 @@ const Wizard = {
   step: 1,
   docsObra: [],  // File[]
   docsInter: [], // File[]
+  firmaApoFile: null, // ✅ NUEVO: File (JPG/JPEG)
   editObraId: null
 };
+
+function setFirmaLabel(text){
+  const el = UI.qs("#firmaApoLabel");
+  if(el) el.textContent = text || "Ninguna";
+}
 
 function setStep(n){
   Wizard.step = n;
@@ -155,9 +161,17 @@ function fillEditMode(obra){
     f3.apo_nombre.value = apo.nombre || "";
     f3.apo_profesion.value = apo.profesion || "";
     f3.apo_cps.value = apo.cps || "";
+    f3.apo_matricula.value = apo.matricula || ""; // ✅ NUEVO
     f3.apo_inicio.value = apo.inicio || "";
     f3.apo_fin.value = apo.fin || "";
+
+    // ✅ firma existente (solo label; el file input no se puede setear)
+    const firmaMeta = apo.firma;
+    setFirmaLabel(firmaMeta?.name ? firmaMeta.name : "Ninguna");
   }
+
+  // Al editar, por defecto no hay nueva firma seleccionada
+  Wizard.firmaApoFile = null;
 }
 
 function resetWizardToCreate(){
@@ -169,6 +183,8 @@ function resetWizardToCreate(){
   UI.qs("#formStep3")?.reset();
   Wizard.docsObra = [];
   Wizard.docsInter = [];
+  Wizard.firmaApoFile = null;
+  setFirmaLabel("Ninguna");
   renderDocsTable(Wizard.docsObra, "#tablaDocsObra", "#docsObraHint");
   renderDocsTable(Wizard.docsInter, "#tablaDocsInter", "#docsInterHint");
   setStep(1);
@@ -233,6 +249,45 @@ function renderObrasTable(){
   }).join("");
 }
 
+async function saveFirmaApoIfAny(obraId){
+  // ✅ Si seleccionó una firma nueva, se guarda en IDB y se vincula a la obra
+  const file = Wizard.firmaApoFile;
+  if(!file || !obraId) return null;
+
+  if(!(file.type||"").includes("jpeg") && !(file.type||"").includes("jpg")){
+    alert("La firma debe ser JPG/JPEG.");
+    return null;
+  }
+
+  // Guardar en IndexedDB
+  const meta = await DB.putFile({
+    ownerType: "obra",
+    ownerId: obraId,
+    kind: "firma_apoyo",
+    name: file.name || "firma.jpg",
+    mime: file.type || "image/jpeg",
+    size: file.size || 0,
+    blob: file
+  });
+
+  // Actualizar obra (supervision.apoyo.firma)
+  const cur = StorageAPI.getObraById(obraId);
+  const supervision = cur?.supervision || {};
+  const supervisor = supervision.supervisor || {};
+  const apoyo = supervision.apoyo || {};
+
+  StorageAPI.updateObra(obraId, {
+    supervision: {
+      supervisor: { ...supervisor },
+      apoyo: { ...apoyo, firma: meta }
+    }
+  });
+
+  setFirmaLabel(meta?.name || "Cargada");
+  Wizard.firmaApoFile = null;
+  return meta;
+}
+
 function bindObrasPage(){
   document.querySelectorAll(".stepbtn").forEach(b=>{
     b.addEventListener("click", ()=> setStep(Number(b.getAttribute("data-step"))));
@@ -250,6 +305,20 @@ function bindObrasPage(){
     const arr = Array.from(e.target.files || []);
     Wizard.docsInter.push(...arr);
     renderDocsTable(Wizard.docsInter, "#tablaDocsInter", "#docsInterHint");
+    e.target.value = "";
+  });
+
+  // ✅ NUEVO: firma auxiliar
+  UI.qs("#firmaApoInput")?.addEventListener("change", (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    if(!(f.type||"").startsWith("image/")){
+      alert("La firma debe ser una imagen JPG/JPEG.");
+      e.target.value = "";
+      return;
+    }
+    Wizard.firmaApoFile = f;
+    setFirmaLabel(f.name || "Seleccionada");
     e.target.value = "";
   });
 
@@ -305,6 +374,8 @@ function bindObrasPage(){
       alert("No se encontró la obra a editar.");
       resetWizardToCreate();
     }
+  } else {
+    setFirmaLabel("Ninguna");
   }
 
   UI.qs("#btnGuardarObra")?.addEventListener("click", async () => {
@@ -319,17 +390,28 @@ function bindObrasPage(){
 
     const MAX_FILE = 25 * 1024 * 1024;
     const MAX_TOTAL = 200 * 1024 * 1024;
-    const allNewFiles = [...Wizard.docsObra, ...Wizard.docsInter];
+    const allNewFiles = [...Wizard.docsObra, ...Wizard.docsInter, ...(Wizard.firmaApoFile ? [Wizard.firmaApoFile] : [])];
+
     const tooBig = allNewFiles.find(f => (f.size||0) > MAX_FILE);
     if(tooBig){ alert(`Archivo demasiado grande (>25MB): ${tooBig.name}`); return; }
+
     const totalBytes = allNewFiles.reduce((a,f)=>a+(f.size||0),0);
     if(totalBytes > MAX_TOTAL){ alert("La suma de adjuntos nuevos supera ~200MB."); return; }
 
     const supervisionPack = {
       supervisor: { nombre: sup.sup_nombre, cargo: sup.sup_cargo, profesion: sup.sup_profesion },
-      apoyo: { nombre: sup.apo_nombre, profesion: sup.apo_profesion, cps: sup.apo_cps, inicio: sup.apo_inicio, fin: sup.apo_fin }
+      apoyo: {
+        nombre: sup.apo_nombre,
+        profesion: sup.apo_profesion,
+        cps: sup.apo_cps,
+        matricula: sup.apo_matricula || "",   // ✅ NUEVO
+        inicio: sup.apo_inicio,
+        fin: sup.apo_fin,
+        // firma: se agrega luego, si hay
+      }
     };
 
+    // ===== CREAR =====
     if(!Wizard.editObraId){
       const obra = StorageAPI.createObra({
         ...obraBase,
@@ -368,6 +450,9 @@ function bindObrasPage(){
         });
       }
 
+      // ✅ NUEVO: guardar firma si la seleccionó
+      await saveFirmaApoIfAny(obra.id);
+
       const all = await DB.listFilesByOwner("obra", obra.id);
       StorageAPI.updateObra(obra.id, {
         documentos: {
@@ -383,6 +468,7 @@ function bindObrasPage(){
       return;
     }
 
+    // ===== ACTUALIZAR =====
     const obraId = Wizard.editObraId;
     const cur = StorageAPI.getObraById(obraId);
     if(!cur){ alert("No se encontró la obra a editar."); return; }
@@ -411,6 +497,7 @@ function bindObrasPage(){
     }
 
     const all = await DB.listFilesByOwner("obra", obraId);
+
     StorageAPI.updateObra(obraId, {
       ...obraBase,
       ...inter,
@@ -426,6 +513,9 @@ function bindObrasPage(){
         interventoria: all.filter(x=>x.kind==="doc_interventoria")
       }
     });
+
+    // ✅ NUEVO: guardar firma si la seleccionó (sobrescribe la anterior)
+    await saveFirmaApoIfAny(obraId);
 
     alert("Obra actualizada.");
     resetWizardToCreate();
@@ -789,7 +879,7 @@ function bindObraDetallePage(){
   renderDocsDetalleFromIDB().catch(()=>{});
 
   /* =========================
-     ACCIONES (✅ arregla botones)
+     ACCIONES
      ========================= */
   UI.qs("#btnEditarObra")?.addEventListener("click", ()=>{
     location.href = `obras.html?editObraId=${encodeURIComponent(obraId)}`;
@@ -946,11 +1036,10 @@ function bindVisitaNuevaPage(){
     hallWrap.querySelector(`[data-hall="${id}"]`)?.remove();
   });
 
-  // ✅ AJUSTE: permitir “acumular” evidencias hasta 4 (si el dispositivo solo deja elegir 1 por vez)
+  // ✅ permitir “acumular” evidencias hasta 4
   evidInput?.addEventListener("change", (e) => {
     const selected = Array.from(e.target.files || []).filter(f => (f.type||"").startsWith("image/"));
 
-    // dedupe simple: name+size+lastModified
     const key = (f) => `${f.name}__${f.size}__${f.lastModified}`;
     const map = new Map(evidFiles.map(f => [key(f), f]));
     for(const f of selected) map.set(key(f), f);
@@ -967,7 +1056,6 @@ function bindVisitaNuevaPage(){
     const refs = evidFiles.map(f => ({ name:f.name, mime:f.type, size:f.size }));
     UI.renderEvidencePreviews(prev, refs);
 
-    // ✅ permite volver a abrir el selector y agregar más
     e.target.value = "";
   });
 

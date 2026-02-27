@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Presupuesto PRO | Proyectos</title>
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0f14"/>
+  <link rel="icon" href="assets/icon-192.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <img src="assets/icon-192.svg" alt="" style="width:26px;height:26px;border-radius:8px">
+    </div>
+    <div>
+      <div class="title">PRESUPUESTO PRO</div>
+      <div class="subtitle">Offline (LocalStorage + IndexedDB) · Base APU XLSX</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="navbtn" id="btnNew" type="button">+ Nuevo proyecto</button>
+
+    <button class="navbtn" id="btnInstallBase" type="button">Instalar Base APU (XLSX)</button>
+    <input id="fileBase" type="file" accept=".xlsx,.xls" hidden>
+
+    <button class="navbtn" id="btnExport" type="button">Exportar backup</button>
+    <label class="navbtn filelike">
+      Importar backup
+      <input id="fileImport" type="file" accept="application/json" hidden>
+    </label>
+
+    <!-- ✅ NUEVO -->
+    <label class="navbtn filelike">
+      Importar proyecto (JSON + adjuntos)
+      <input id="fileImportProject" type="file" accept="application/json" hidden>
+    </label>
+
+    <button class="navbtn danger" id="btnReset" type="button">Borrar todo</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="grid kpis" id="kpis"></section>
+
+  <section class="card">
+    <div class="cardhead">
+      <h2>Mis Proyectos</h2>
+      <div class="row space">
+        <input id="search" class="search" placeholder="Buscar por nombre / entidad / ubicación…" />
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Proyecto</th>
+            <th>Entidad</th>
+            <th>Ubicación</th>
+            <th>Actualizado</th>
+            <th>Total</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="lista"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="empty" style="display:none">No hay proyectos para mostrar.</div>
+  </section>
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script src="js/base-import.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

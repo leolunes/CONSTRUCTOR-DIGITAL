@@ -41,6 +41,84 @@ async function addImagesGrid(doc, filesMeta, startY, margin, contentW){
   return y;
 }
 
+function safeText(s){ return String(s||"").trim(); }
+
+async function addFirmaAuxiliar(doc, obra, y, margin, contentW){
+  const PAGE_H = doc.internal.pageSize.getHeight();
+
+  function ensure(h){
+    if(y + h > PAGE_H - 54){
+      doc.addPage(); y = 54;
+    }
+  }
+
+  const apoyo = obra?.supervision?.apoyo || {};
+  const nombre = safeText(apoyo.nombre) || "-";
+  const profesion = safeText(apoyo.profesion) || "";
+  const matricula = safeText(apoyo.matricula) || "";
+  const firmaMeta = apoyo.firma || null;
+
+  ensure(120);
+  doc.setDrawColor(31,41,55);
+  doc.setLineWidth(0.8);
+  doc.line(margin, y, margin + contentW, y);
+  y += 18;
+
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(11.5);
+  doc.text("FIRMA AUXILIAR DE SUPERVISIÓN", margin, y);
+  y += 16;
+
+  // Bloque firma
+  const boxW = 240;
+  const boxH = 90;
+
+  let imgOk = false;
+  if(firmaMeta?.id){
+    try{
+      const rec = await DB.getFile(firmaMeta.id);
+      if(rec?.blob && (rec.mime||"").startsWith("image/")){
+        const dataUrl = await blobToDataUrl(rec.blob);
+        // Ajuste simple: ocupar caja
+        doc.addImage(dataUrl, "JPEG", margin, y, boxW, boxH, undefined, "FAST");
+        imgOk = true;
+      }
+    }catch(_){}
+  }
+
+  if(!imgOk){
+    // caja vacía
+    doc.rect(margin, y, boxW, boxH);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(9);
+    doc.text("Sin imagen de firma (cargue JPG en Obras → 1.3)", margin + 10, y + 20);
+  }
+
+  y += boxH + 14;
+
+  // Línea nombre
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(10);
+  doc.text(nombre, margin, y);
+  y += 14;
+
+  doc.setFont("helvetica","normal");
+  doc.setFontSize(10);
+  if(profesion) {
+    doc.text(`Profesión: ${profesion}`, margin, y);
+    y += 14;
+  }
+  if(matricula) {
+    doc.text(`Matrícula profesional: ${matricula}`, margin, y);
+    y += 14;
+  } else {
+    doc.text(`Matrícula profesional: -`, margin, y);
+    y += 14;
+  }
+
+  return y;
+}
+
 async function exportVisitaPDF({ obra, visita, hallazgos, returnBlob=false }){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:"pt", format:"letter" });
@@ -122,7 +200,7 @@ async function exportVisitaPDF({ obra, visita, hallazgos, returnBlob=false }){
   if(!evVisita.length) p("Sin evidencias fotográficas.");
   else y = await addImagesGrid(doc, evVisita, y, margin, contentW);
 
-  // ✅ AJUSTE: “Evidencias de cierre” SOLO si hubo hallazgos en esta visita
+  // “Evidencias de cierre” SOLO si hubo hallazgos en esta visita
   if((hallazgos || []).length){
     h2("6. Evidencias de cierre");
     const cerradosConEvid = (hallazgos||[]).filter(h=>h.estado==="cerrado" && (h.evidenciasCierre||[]).length);
@@ -136,6 +214,9 @@ async function exportVisitaPDF({ obra, visita, hallazgos, returnBlob=false }){
       }
     }
   }
+
+  // ✅ NUEVO: FIRMA AUXILIAR
+  y = await addFirmaAuxiliar(doc, obra, y, margin, contentW);
 
   p(`Generado: ${new Date().toLocaleString()}`);
 
@@ -202,6 +283,9 @@ async function exportObraConsolidadoPDF({ obra, visitas, hallazgos, returnBlob=f
       p(`• [${h.tipo}] ${h.severidad} — ${h.estado.toUpperCase()} — ${h.descripcion}`);
     }
   }
+
+  // ✅ NUEVO: FIRMA AUXILIAR
+  y = await addFirmaAuxiliar(doc, obra, y, margin, contentW);
 
   p(`Generado: ${new Date().toLocaleString()}`);
 

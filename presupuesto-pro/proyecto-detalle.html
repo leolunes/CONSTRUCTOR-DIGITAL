@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Proyecto | Presupuesto PRO</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html">←</a>
+    <div>
+      <div class="title" id="projTitle">Proyecto</div>
+      <div class="subtitle" id="projSub"></div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="navbtn" id="btnDatosFirma" type="button">Datos y firma</button>
+
+    <button class="navbtn" id="btnPdfPresupuesto" type="button">PDF Presupuesto</button>
+    <button class="navbtn" id="btnPdfPresupuestoAPUs" type="button">PDF Presupuesto + APUs</button>
+
+    <!-- ✅ NUEVO: botones de descarga -->
+    <button class="navbtn" id="btnDlPdfPresupuesto" type="button">Descargar PDF Presupuesto</button>
+    <button class="navbtn" id="btnDlPdfPresupuestoAPUs" type="button">Descargar PDF + APUs</button>
+
+    <button class="navbtn" id="btnExportProj" type="button">Exportar proyecto (JSON)</button>
+    <button class="navbtn danger" id="btnDeleteProj" type="button">Eliminar</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <div class="row" style="gap:10px; flex-wrap:wrap">
+      <a href="#" class="navlink active" data-tab="resumen">Resumen</a>
+      <a href="#" class="navlink" data-tab="capitulos">Capítulos</a>
+      <a href="#" class="navlink" data-tab="items">Items</a>
+      <a href="#" class="navlink" data-tab="ajustes">Ajustes</a>
+      <a href="#" class="navlink" data-tab="documentos">Documentos</a>
+      <a href="#" class="navlink" data-tab="acciones">Acciones</a>
+    </div>
+    <p class="muted small" style="margin:10px 0 0 0">
+      Capítulos: el valor del capítulo es la suma de los ítems hijos. PDF incluye capítulos + detalle.
+    </p>
+  </section>
+
+  <!-- RESUMEN -->
+  <section data-panel="resumen">
+    <section class="grid two">
+      <section class="card" id="cardInfo"></section>
+      <section class="grid kpis" id="cardTotals"></section>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Totales</h2>
+        <p class="muted small">Costo Directo + AIU + IVA</p>
+      </div>
+      <div id="totalsRows"></div>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Presupuesto desglosado por ítems</h2>
+        <p class="muted small">Agrupado por capítulo. Parcial = VR Unitario × Cantidad.</p>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table" style="min-width:1120px">
+          <thead>
+            <tr>
+              <th>Cap</th>
+              <th>Ítem</th>
+              <th>Descripción</th>
+              <th>Unidad</th>
+              <th style="text-align:right">VR Unitario</th>
+              <th style="text-align:right">Cantidad</th>
+              <th style="text-align:right">VR Parcial</th>
+            </tr>
+          </thead>
+          <tbody id="resumenItemsBody"></tbody>
+        </table>
+      </div>
+      <div class="muted" id="resumenItemsEmpty" style="display:none">Aún no hay ítems en el presupuesto.</div>
+    </section>
+  </section>
+
+  <!-- CAPÍTULOS -->
+  <section data-panel="capitulos" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Capítulos</h2>
+        <p class="muted small">Subtotales por capítulo (suma de ítems).</p>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table" style="min-width:980px">
+          <thead>
+            <tr>
+              <th>Capítulo</th>
+              <th>Nombre</th>
+              <th style="text-align:right">Ítems</th>
+              <th style="text-align:right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="capsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="muted" id="capsEmpty" style="display:none">No hay ítems aún para calcular capítulos.</div>
+    </section>
+  </section>
+
+  <!-- ITEMS -->
+  <section data-panel="items" style="display:none">
+
+    <!-- CONSULTAS BASE APU -->
+    <section class="card">
+      <div class="cardhead">
+        <h2>Consultas de Base APU</h2>
+        <p class="muted small">Abre vistas rápidas para consultar hojas de la base.</p>
+      </div>
+
+      <div class="row" style="flex-wrap:wrap">
+        <button class="btn" id="btnVerFormulario" type="button">Ver FORMULARIO DE PRECIOS</button>
+        <button class="btn" id="btnVerCD" type="button">Ver Costos_Directos</button>
+        <button class="btn" id="btnVerSub" type="button">Ver Subproductos</button>
+        <button class="btn" id="btnVerInsumos" type="button">Ver Insumos</button>
+      </div>
+
+      <hr class="sep">
+
+      <div id="baseViewer" style="display:none">
+        <div class="row space" style="margin-bottom:10px">
+          <div>
+            <div class="name" id="baseViewerTitle">Consulta</div>
+            <div class="muted small" id="baseViewerSub">—</div>
+          </div>
+          <button class="btn danger" id="btnCloseViewer" type="button">Cerrar</button>
+        </div>
+
+        <div class="row" id="baseViewerSearchRow" style="align-items:stretch; display:none">
+          <input id="baseViewerSearch" class="search" placeholder="Buscar…" />
+          <button class="btn primary" id="btnBaseViewerSearch" type="button">Buscar</button>
+        </div>
+
+        <div class="tablewrap" style="margin-top:12px">
+          <table class="table" style="min-width:1120px">
+            <thead id="baseViewerHead"></thead>
+            <tbody id="baseViewerBody"></tbody>
+          </table>
+        </div>
+
+        <div class="muted" id="baseViewerEmpty" style="display:none; margin-top:10px">Sin resultados.</div>
+      </div>
+    </section>
+
+    <!-- AGREGAR DESDE BASE APU -->
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Agregar desde Base APU</h2>
+        <p class="muted small">Busca por código (ej: 1.01) o por texto. Luego “Agregar” pide cantidad.</p>
+      </div>
+
+      <div class="row" style="align-items:stretch">
+        <input id="apuSearch" class="search" placeholder="Buscar en Base APU…" />
+        <button class="btn primary" id="btnApuSearch" type="button">Buscar</button>
+      </div>
+
+      <div class="tablewrap" style="margin-top:12px">
+        <table class="table" style="min-width:1120px">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Unidad</th>
+              <th style="text-align:right">PU</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="apuResultsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="muted" id="apuResultsEmpty" style="display:none">Sin resultados. Verifica que instalaste la base XLSX.</div>
+    </section>
+
+    <!-- CREAR APU NO EXISTENTE DESDE INSUMOS -->
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Crear APU (no existente) desde Insumos</h2>
+        <p class="muted small">Selecciona capítulo (base) para que el APU nuevo quede anclado y con nombre en capítulos y PDFs.</p>
+      </div>
+
+      <form class="form" id="formCreateApuFromInsumos">
+        <div class="grid two">
+          <div>
+            <label>Capítulo (base)</label>
+            <select name="chapterCode" id="selChapterBase" required></select>
+          </div>
+          <div>
+            <label>Nombre del capítulo</label>
+            <input name="chapterName" id="inpChapterName" readonly />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Código nuevo APU</label>
+            <input name="code" required placeholder="Ej: 28.01" />
+          </div>
+          <div>
+            <label>Unidad</label>
+            <input name="unit" required placeholder="Ej: UND, m3, m, kg…" />
+          </div>
+        </div>
+
+        <label>Descripción del APU</label>
+        <input name="desc" required placeholder="Ej: APU NUEVO…" />
+
+        <hr class="sep">
+
+        <div class="cardhead">
+          <h2>Insumos del APU</h2>
+          <p class="muted small">Busca un insumo y agrégalo con cantidad. PU del APU = suma parciales de insumos.</p>
+        </div>
+
+        <div class="row" style="align-items:stretch">
+          <input id="insumoSearch" class="search" placeholder="Buscar insumo (base + creados)…" />
+          <button class="btn primary" id="btnInsumoSearch" type="button">Buscar</button>
+        </div>
+
+        <div class="tablewrap" style="margin-top:12px">
+          <table class="table" style="min-width:1120px">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Unidad</th>
+                <th style="text-align:right">PU</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="insumoResultsBody"></tbody>
+          </table>
+        </div>
+        <div class="muted" id="insumoResultsEmpty" style="display:none">Sin resultados de insumos.</div>
+
+        <hr class="sep">
+
+        <div class="cardhead">
+          <h2>Líneas seleccionadas</h2>
+          <p class="muted small">Aquí se arma el APU (desde insumos).</p>
+        </div>
+
+        <div class="tablewrap">
+          <table class="table" style="min-width:1120px">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Unidad</th>
+                <th style="text-align:right">Cant</th>
+                <th style="text-align:right">PU</th>
+                <th style="text-align:right">Parcial</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="apuBuildLinesBody"></tbody>
+          </table>
+        </div>
+
+        <div class="row space" style="margin-top:12px">
+          <div class="chip" id="apuBuildTotalChip">PU APU: $ 0</div>
+          <button class="btn primary" type="submit">Guardar APU nuevo</button>
+        </div>
+      </form>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Crear insumo nuevo (si no existe)</h2>
+        <p class="muted small">Se guarda en la app y se mezcla con la búsqueda de insumos.</p>
+      </div>
+
+      <form class="form" id="formCreateInsumo">
+        <div class="grid two">
+          <div>
+            <label>Tipo</label>
+            <input name="tipo" required placeholder="Ej: Material, Mano de obra, Equipo, Transporte" />
+          </div>
+          <div>
+            <label>Unidad</label>
+            <input name="unit" required placeholder="Ej: UND, h, kg…" />
+          </div>
+        </div>
+
+        <label>Descripción</label>
+        <input name="desc" required placeholder="Ej: INSUMO NUEVO…" />
+
+        <div class="grid two">
+          <div>
+            <label>PU</label>
+            <input name="pu" required inputmode="decimal" placeholder="Ej: 25000" />
+          </div>
+          <div style="display:flex; align-items:flex-end">
+            <button class="btn primary" type="submit">Guardar insumo</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- AGREGAR MANUAL -->
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Agregar ítem manual</h2>
+        <p class="muted small">Puedes escribir capítulo, código, descripción, unidad, PU y cantidad.</p>
+      </div>
+
+      <form id="formAddManual" class="form">
+        <div class="grid two">
+          <div>
+            <label>Capítulo (número)</label>
+            <input name="chapterCode" placeholder="Ej: 1" />
+          </div>
+          <div>
+            <label>Nombre del capítulo (opcional)</label>
+            <input name="chapterName" placeholder="Ej: PRELIMINARES" />
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label>Código</label>
+            <input name="code" required placeholder="Ej: 1.01" />
+          </div>
+          <div>
+            <label>Unidad</label>
+            <input name="unit" required placeholder="Ej: m3" />
+          </div>
+        </div>
+
+        <label>Descripción</label>
+        <input name="desc" required placeholder="Describe el ítem…" />
+
+        <div class="grid two">
+          <div>
+            <label>Precio unitario (PU)</label>
+            <input name="pu" required inputmode="decimal" placeholder="Ej: 15197" />
+          </div>
+          <div>
+            <label>Cantidad</label>
+            <input name="qty" required inputmode="decimal" placeholder="Ej: 10" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <button class="btn primary" type="submit">Agregar ítem</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- TABLA ITEMS -->
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Items del presupuesto</h2>
+        <p class="muted small">Los parciales son VR Unitario × Cantidad. “Ver APU” abre la descomposición.</p>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table" style="min-width:1120px">
+          <thead>
+            <tr>
+              <th>Cap</th>
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Unidad</th>
+              <th style="text-align:right">VR Unitario</th>
+              <th style="text-align:right">Cantidad</th>
+              <th style="text-align:right">VR Parcial</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="muted" id="itemsEmpty" style="display:none">Aún no has agregado ítems.</div>
+    </section>
+  </section>
+
+  <!-- AJUSTES -->
+  <section data-panel="ajustes" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Ajustes del proyecto</h2>
+        <p class="muted small">AIU e IVA configurables por proyecto.</p>
+      </div>
+
+      <form class="form" id="formAjustes">
+        <div class="grid two">
+          <div>
+            <label>AIU (%)</label>
+            <input name="aiuPct" inputmode="decimal" placeholder="Ej: 25" />
+          </div>
+          <div>
+            <label>IVA (%)</label>
+            <input name="ivaPct" inputmode="decimal" placeholder="Ej: 19" />
+          </div>
+        </div>
+
+        <label>Regla de IVA</label>
+        <select name="ivaBase">
+          <option value="sobre_directo_aiu" selected>IVA sobre (Directo + AIU)</option>
+          <option value="solo_aiu">IVA solo sobre AIU</option>
+          <option value="solo_directo">IVA solo sobre Directo</option>
+        </select>
+
+        <div class="row" style="margin-top:12px">
+          <button class="btn primary" type="submit">Guardar ajustes</button>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <!-- DOCUMENTOS -->
+  <section data-panel="documentos" style="display:none">
+    <section class="card">
+      <div class="cardhead row space">
+        <div>
+          <h2>Documentos del proyecto</h2>
+          <p class="muted small">Pliegos, planos, actas, etc. (offline en IndexedDB).</p>
+        </div>
+        <label class="btn filelike">
+          Adjuntar archivos
+          <input id="docsInput" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" hidden>
+        </label>
+      </div>
+
+      <div class="tablewrap">
+        <table class="table" id="tablaDocs">
+          <thead>
+            <tr>
+              <th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Fecha</th><th>Acción</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="muted small" id="docsEmpty" style="display:none">No hay documentos adjuntos.</div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ACCIONES -->
+  <section data-panel="acciones" style="display:none">
+    <section class="card">
+      <div class="cardhead">
+        <h2>Acciones</h2>
+        <p class="muted small">Exportaciones y utilidades.</p>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="btnExportBackup" type="button">Exportar backup (todo)</button>
+        <label class="btn filelike">
+          Importar backup
+          <input id="fileImport2" type="file" accept="application/json" hidden>
+        </label>
+      </div>
+
+      <hr class="sep">
+
+      <div class="row">
+        <button class="btn danger" id="btnResetAll" type="button">Borrar todo (app)</button>
+      </div>
+    </section>
+  </section>
+
+</main>
+
+<!-- ✅ MODAL FIRMA -->
+<div id="firmaModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:50; padding:18px; overflow:auto">
+  <div class="card" style="max-width:980px; margin:0 auto">
+    <div class="row space" style="margin-bottom:10px">
+      <div>
+        <div class="name">Datos y firma del informe</div>
+        <div class="muted small">Se guarda por app y se inserta en PDFs.</div>
+      </div>
+      <button class="btn danger" id="btnFirmaClose" type="button">Cerrar</button>
+    </div>
+
+    <div class="grid two">
+      <div>
+        <label class="muted small">Nombre</label>
+        <input id="firmaNombre" placeholder="Nombre completo" />
+      </div>
+      <div>
+        <label class="muted small">Profesión</label>
+        <input id="firmaProfesion" placeholder="Ej: Ingeniero Civil" />
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:10px">
+      <div>
+        <label class="muted small">Matrícula profesional</label>
+        <input id="firmaMatricula" placeholder="No. matrícula" />
+      </div>
+      <div></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="grid two">
+      <div>
+        <div class="cardhead">
+          <h2>Dibuja la firma en el recuadro</h2>
+          <p class="muted small">Si estás en móvil, usa el dedo.</p>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; overflow:hidden; background:#0b1220">
+          <canvas id="firmaCanvas" style="width:100%; height:220px; display:block"></canvas>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn" id="firmaClear" type="button">Limpiar</button>
+          <button class="btn" id="firmaDownloadJpg" type="button">Descargar JPG</button>
+        </div>
+
+        <div class="muted small" style="margin-top:8px">Tip: guarda la firma para que se inserte en el PDF.</div>
+      </div>
+
+      <div>
+        <div class="cardhead">
+          <h2>Vista previa (firma guardada)</h2>
+          <p class="muted small">Así quedará en el PDF.</p>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; padding:10px; background:#0b1220; min-height:220px; display:flex; align-items:center; justify-content:center">
+          <img id="firmaPreview" alt="Firma" style="max-width:100%; max-height:200px; display:block" />
+        </div>
+
+        <div class="row space" style="margin-top:10px">
+          <button class="btn danger" id="firmaDelete" type="button">Quitar firma</button>
+          <button class="btn primary" id="firmaSave" type="button">Guardar firma</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/pdf.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/base-import.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
