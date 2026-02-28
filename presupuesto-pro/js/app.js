@@ -3,10 +3,115 @@ function page(){
   return p || "index.html";
 }
 
+/* ==========================================
+   ✅ iOS/PWA: storage persistente + diagnóstico
+   ========================================== */
+let __storageWarned = false;
+let __persistTried = false;
+
+function isIOS(){
+  const ua = navigator.userAgent || "";
+  return /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+// Navegadores embebidos típicos (WhatsApp/IG/FB) => suelen usar storage “volátil”
+function isInAppBrowser(){
+  const ua = (navigator.userAgent || "").toLowerCase();
+  return (
+    ua.includes("fbav") ||
+    ua.includes("fban") ||
+    ua.includes("instagram") ||
+    ua.includes("wv") ||
+    ua.includes("line/") ||
+    ua.includes("micromessenger") ||
+    ua.includes("snapchat") ||
+    ua.includes("telegram") ||
+    ua.includes("whatsapp")  // a veces no aparece, pero lo dejamos
+  );
+}
+
+function localStorageWritable(){
+  try{
+    const k = "__ppro_ls_test__";
+    localStorage.setItem(k, "1");
+    localStorage.removeItem(k);
+    return true;
+  }catch(_){
+    return false;
+  }
+}
+
+async function requestPersistentStorage(){
+  if(__persistTried) return;
+  __persistTried = true;
+
+  // Si localStorage está bloqueado, la app NO podrá guardar proyectos.
+  const lsOK = localStorageWritable();
+  if(!lsOK && !__storageWarned){
+    __storageWarned = true;
+
+    const hint =
+      (isIOS() ? "En iPhone esto suele pasar en Modo Privado o dentro de WhatsApp/Instagram.\n\n" : "") +
+      "Solución:\n" +
+      "1) Abre el link en Safari (no dentro de otra app).\n" +
+      "2) Desactiva Modo Privado.\n" +
+      "3) (Recomendado) Compartir → Añadir a pantalla de inicio.\n";
+
+    alert("⚠️ Tu navegador está bloqueando el almacenamiento (LocalStorage).\n\nNo se podrán guardar proyectos ni la Base APU.\n\n" + hint);
+    return;
+  }
+
+  // Pedir persistencia (aplica a IndexedDB + localStorage en la práctica).
+  try{
+    if(navigator.storage && typeof navigator.storage.persisted === "function" && typeof navigator.storage.persist === "function"){
+      const already = await navigator.storage.persisted();
+      if(!already){
+        const granted = await navigator.storage.persist();
+        // No alertamos siempre; solo log.
+        console.log("[PWA] persist granted:", granted);
+      }else{
+        console.log("[PWA] storage already persisted");
+      }
+    }
+  }catch(err){
+    console.log("[PWA] persist error:", err);
+  }
+
+  // Aviso suave para iOS embebido (sin bloquear)
+  if(isIOS() && isInAppBrowser() && !__storageWarned){
+    __storageWarned = true;
+    alert(
+      "ℹ️ Estás usando un navegador embebido (dentro de otra app).\n\n" +
+      "En iPhone esto puede NO guardar datos o borrarlos.\n\n" +
+      "Abre el link en Safari y (recomendado) agrégalo a Pantalla de inicio."
+    );
+  }
+}
+
 function initPWA(){
+  // 1) intentar persistencia lo antes posible
+  requestPersistentStorage().catch(()=>{});
+
+  // 2) reintentar persistencia tras primera interacción (a veces iOS lo concede mejor)
+  const once = ()=>{
+    requestPersistentStorage().catch(()=>{});
+    window.removeEventListener("click", once, true);
+    window.removeEventListener("touchstart", once, true);
+    window.removeEventListener("keydown", once, true);
+  };
+  window.addEventListener("click", once, true);
+  window.addEventListener("touchstart", once, true);
+  window.addEventListener("keydown", once, true);
+
+  // 3) registrar service worker si existe
   if(!("serviceWorker" in navigator)) return;
+
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("pwa/sw.js").catch(()=>{});
+    // OJO: sw en /pwa/sw.js puede tener scope limitado.
+    // Igual lo registramos como lo tienes.
+    navigator.serviceWorker.register("pwa/sw.js").catch((e)=>{
+      console.log("[PWA] SW register failed:", e);
+    });
   });
 }
 

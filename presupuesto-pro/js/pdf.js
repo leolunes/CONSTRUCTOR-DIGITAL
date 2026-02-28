@@ -4,13 +4,20 @@
   }
   function safe(s){ return String(s||""); }
 
+  function sanitizeName(s){
+    return String(s||"archivo")
+      .replace(/[^\w\d]+/g,"_")
+      .replace(/^_+|_+$/g,"")
+      .slice(0,60) || "archivo";
+  }
+
   function buildFilename(project, suffix=""){
-    const name = (project.name||"proyecto").replace(/[^\w\d]+/g,"_").slice(0,40);
+    const name = sanitizeName(project?.name || "proyecto");
     return `Presupuesto_${name}${suffix ? "_"+suffix : ""}_${Date.now()}.pdf`;
   }
 
   function buildFilenameSpecs(project){
-    const name = (project.name||"proyecto").replace(/[^\w\d]+/g,"_").slice(0,40);
+    const name = sanitizeName(project?.name || "proyecto");
     return `Especificaciones_Tecnicas_${name}_${Date.now()}.pdf`;
   }
 
@@ -237,8 +244,8 @@
     const s = String(dataUrl||"");
     if(s.startsWith("data:image/png")) return "PNG";
     if(s.startsWith("data:image/jpeg") || s.startsWith("data:image/jpg")) return "JPEG";
-    if(s.startsWith("data:image/webp")) return "WEBP"; // jsPDF puede fallar en algunos builds, lo intentamos
-    return ""; // unknown
+    if(s.startsWith("data:image/webp")) return "WEBP";
+    return "";
   }
 
   function tryAddImage(doc, dataUrl, x, y, w, h){
@@ -259,7 +266,6 @@
     const marginX = 44;
     const now = new Date().toLocaleString();
 
-    // área header
     const headerTop = 14;
     const headerLineY = 42;
 
@@ -269,26 +275,21 @@
     for(let p=1; p<=pageCount; p++){
       doc.setPage(p);
 
-      // ✅ asegurar colores “normales”
       try{
         doc.setTextColor(0);
         doc.setDrawColor(0);
       }catch(_){}
 
-      // Header line
       doc.setDrawColor(200);
       doc.line(marginX, headerLineY, PAGE_W - marginX, headerLineY);
 
-      // ✅ Portada (p==1): NO repetir docType/projectName (evita duplicar portada)
       if(p !== 1){
-        // Logo pequeño en header (si existe)
         let textStartX = marginX;
         if(logoDataUrl){
           const ok = tryAddImage(doc, logoDataUrl, marginX, headerTop, logoW, logoH);
           if(ok) textStartX = marginX + logoW + 10;
         }
 
-        // Header text
         doc.setFont("helvetica","bold");
         doc.setFontSize(9.5);
         doc.text(safe(docType), textStartX, 28);
@@ -302,7 +303,6 @@
       doc.setFontSize(9.2);
       doc.text(now, PAGE_W - marginX, 28, { align:"right" });
 
-      // Footer (paginación)
       doc.setDrawColor(200);
       doc.line(marginX, PAGE_H - 44, PAGE_W - marginX, PAGE_H - 44);
 
@@ -312,17 +312,15 @@
     }
   }
 
-  // ========= PORTADA INSTITUCIONAL (para TODOS los PDF) =========
+  // ========= PORTADA INSTITUCIONAL =========
   function dateLongEsCO(d){
     const dt = (d instanceof Date) ? d : new Date(d || Date.now());
     const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
     return `${dt.getDate()} de ${meses[dt.getMonth()]} de ${dt.getFullYear()}`;
   }
-
   function up(s){ return String(s||"").trim().toUpperCase(); }
 
   function getInstitutionHeader(project){
-    // ✅ Leer campos institucionales por proyecto (inst*)
     const country = up(project?.instPais || "REPÚBLICA DE COLOMBIA");
 
     const deptRaw = up(project?.instDepto || "");
@@ -339,7 +337,6 @@
   }
 
   function drawInstitutionalCover(doc, L, project, docTitle){
-    // Limpio: blanco + texto negro
     try{
       doc.setFillColor(255,255,255);
       doc.rect(0,0,L.PAGE_W,L.PAGE_H,"F");
@@ -349,7 +346,6 @@
 
     const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
 
-    // ✅ Campos por proyecto (con fallback)
     const entidadContratante = String(project?.instEntidad || project?.entity || "—");
     const ubicacion = String(project?.location || "—");
 
@@ -361,10 +357,8 @@
 
     const { country, deptLine, muniLine } = getInstitutionHeader(project);
 
-    // ✅ Logo grande en portada (si existe)
     const logo = String(project?.logoDataUrl || "");
     if(logo){
-      // centrado arriba
       const w = 160, h = 60;
       const x = (L.PAGE_W - w)/2;
       const yLogo = 44;
@@ -372,7 +366,7 @@
     }
 
     let y = 130;
-    if(logo) y = 130 + 30; // bajar un poco si hay logo
+    if(logo) y = 160;
 
     doc.setFont("helvetica","bold"); doc.setFontSize(12);
     doc.text(country, L.PAGE_W/2, y, { align:"center" }); y += 18;
@@ -390,7 +384,6 @@
     doc.text(`Ubicación: ${ubicacion}`, L.margin, y); y += 16;
     doc.text(`Fecha de Elaboración: ${fechaElab}`, L.margin, y); y += 16;
 
-    // Opcional: elaboró (si hay)
     if(elab && (elab.nombre || elab.profesion || elab.matricula)){
       y += 6;
       if(elab.nombre){ doc.text(`Elaboró: ${elab.nombre}`, L.margin, y); y += 14; }
@@ -449,7 +442,6 @@
     }
   }
 
-  // ✅ BLOQUE FIRMA (estilo institucional simple)
   async function appendElaboradorFirma(doc, L){
     const elab = window.StorageAPI?.getElaborador ? StorageAPI.getElaborador() : null;
     const nombre = elab?.nombre ? String(elab.nombre) : "";
@@ -462,7 +454,6 @@
     const boxX = L.margin;
     const boxW = 520;
 
-    // rect de firma
     const sigX = boxX;
     const sigY = L.getY() + 10;
     const sigW = 320;
@@ -487,7 +478,6 @@
       }catch(_){}
     }
 
-    // línea de firma + datos
     const lineY = sigY + sigH + 55;
 
     doc.setDrawColor(0);
@@ -570,20 +560,78 @@
     };
   }
 
+  /* =========================================================
+     ✅ NUEVO: guardar / descargar / compartir PDF (iPhone WhatsApp)
+     ========================================================= */
+  function downloadBlob(blob, filename){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename || `archivo_${Date.now()}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  }
+
+  async function shareBlobAsFile(blob, filename){
+    const canShare = !!navigator.share;
+    if(!canShare) return false;
+
+    const file = new File([blob], filename, { type:"application/pdf" });
+
+    // iOS: a veces requiere canShare(files)
+    try{
+      if(navigator.canShare && !navigator.canShare({ files:[file] })){
+        return false;
+      }
+    }catch(_){}
+
+    try{
+      await navigator.share({
+        title: filename,
+        text: "PDF generado desde CONSTRUCTOR-DIGITAL",
+        files: [file]
+      });
+      return true;
+    }catch(err){
+      // Si el usuario cancela, no es error “real”
+      console.log("[PDF] share cancelled/error:", err);
+      return false;
+    }
+  }
+
+  async function finalizePDF(doc, filename, opts){
+    const o = opts || {};
+    const blob = doc.output("blob");
+
+    // share primero (para WhatsApp en iPhone)
+    if(o.share){
+      const ok = await shareBlobAsFile(blob, filename);
+      if(ok) return true;
+      // fallback si no pudo compartir
+      downloadBlob(blob, filename);
+      return true;
+    }
+
+    // descarga normal
+    downloadBlob(blob, filename);
+    return true;
+  }
+
   // =========================================================
   // PRESUPUESTO PDF (con portada institucional + logo)
+  // opts: { share: true } para WhatsApp / Share Sheet
   // =========================================================
-  async function exportPresupuestoPDF(project){
+  async function exportPresupuestoPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
 
     const { groups, items } = Calc.groupByChapters(project);
     const totals = Calc.calcTotals(project);
 
-    // ✅ Portada institucional (página 1)
     drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA");
 
-    // ✅ Contenido en página 2
     doc.addPage();
     L.setY(54);
 
@@ -619,7 +667,6 @@
       }
     }
 
-    // DETALLE PRESUPUESTO
     doc.addPage();
     L.setY(54);
     L.h1("PRESUPUESTO DE OBRA (DETALLE)");
@@ -648,7 +695,6 @@
       }
     }
 
-    // TOTALES + FIRMA
     L.line();
     doc.setFont("helvetica","bold"); doc.setFontSize(11);
     doc.text("Totales", L.margin, L.getY()); L.setY(L.getY()+16);
@@ -665,24 +711,24 @@
       projectName: project.name || "",
       logoDataUrl: project.logoDataUrl || ""
     });
-    doc.save(buildFilename(project, "DETALLE"));
-    return true;
+
+    const filename = buildFilename(project, "DETALLE");
+    return await finalizePDF(doc, filename, opts);
   }
 
   // =========================================================
   // PRESUPUESTO + APUs (con portada institucional + logo)
+  // opts: { share: true }
   // =========================================================
-  async function exportPresupuestoConAPUsPDF(project){
+  async function exportPresupuestoConAPUsPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
 
     const { groups, items } = Calc.groupByChapters(project);
     const totals = Calc.calcTotals(project);
 
-    // ✅ Portada institucional (página 1)
     drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA + APUs");
 
-    // ✅ Contenido en página 2
     doc.addPage();
     L.setY(54);
 
@@ -718,7 +764,6 @@
       }
     }
 
-    // DETALLE PRESUPUESTO
     doc.addPage();
     L.setY(54);
     L.h1("PRESUPUESTO DE OBRA (DETALLE)");
@@ -728,7 +773,6 @@
       L.tableRowPresupuesto(it);
     }
 
-    // APUS
     for(const it of items){
       const code = String(it.code||"").trim();
       if(!code) continue;
@@ -767,7 +811,6 @@
       }
     }
 
-    // FIRMAS
     doc.addPage();
     L.setY(54);
     L.h1("FIRMAS");
@@ -778,14 +821,15 @@
       projectName: project.name || "",
       logoDataUrl: project.logoDataUrl || ""
     });
-    doc.save(buildFilename(project, "APUS"));
-    return true;
+
+    const filename = buildFilename(project, "APUS");
+    return await finalizePDF(doc, filename, opts);
   }
 
   /* =========================================================
-     ESPECIFICACIONES TÉCNICAS (ya con portada institucional + logo)
+     ESPECIFICACIONES TÉCNICAS
+     opts: { share: true }
      ========================================================= */
-
   function detectNormatividad(desc){
     const t = String(desc||"").toLowerCase();
     const invias = /v(i|í)a|carretera|pavimento|asfalto|subbase|base granular|señalizaci(o|ó)n|cuneta|alcantarilla|drenaje/.test(t);
@@ -817,7 +861,7 @@
     return name ? `Capítulo ${code} – ${name}` : `Capítulo ${code}`;
   }
 
-  async function exportEspecificacionesTecnicasPDF(project){
+  async function exportEspecificacionesTecnicasPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
 
@@ -827,10 +871,8 @@
     const entidadContratante = project?.entity ? String(project.entity) : "—";
     const ubicacion = project?.location ? String(project.location) : "—";
 
-    // ✅ Portada institucional (página 1)
     drawInstitutionalCover(doc, L, project, "ESPECIFICACIONES TÉCNICAS DEL PROYECTO");
 
-    // TABLA DE CONTENIDO
     doc.addPage();
     L.setY(54);
 
@@ -857,7 +899,6 @@
       L.setY(L.getY()+16);
     }
 
-    // 1. INFORMACIÓN GENERAL
     doc.addPage();
     L.setY(54);
 
@@ -875,7 +916,6 @@
       if(elab.matricula) L.p(`Matrícula Profesional: ${elab.matricula}`);
     }
 
-    // 2. ALCANCE DEL DOCUMENTO
     doc.addPage();
     L.setY(54);
 
@@ -890,7 +930,6 @@
       "Análisis de Precios Unitarios (APU) y establecen los lineamientos técnicos, constructivos y normativos exigidos."
     );
 
-    // CAPÍTULOS 3..N
     const byChap = new Map();
     for(const it of (items||[])){
       const chap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
@@ -1041,7 +1080,6 @@
       chapSec++;
     }
 
-    // FIRMAS
     doc.addPage();
     L.setY(54);
 
@@ -1056,10 +1094,16 @@
       projectName: project.name || "",
       logoDataUrl: project.logoDataUrl || ""
     });
-    doc.save(buildFilenameSpecs(project));
-    return true;
+
+    const filename = buildFilenameSpecs(project);
+    return await finalizePDF(doc, filename, opts);
   }
 
+  /* =========================================================
+     ✅ API pública
+     - sigue igual para descarga
+     - ahora soporta: PDF.exportPresupuestoPDF(p, {share:true})
+     ========================================================= */
   window.PDF = {
     exportPresupuestoPDF,
     exportPresupuestoConAPUsPDF,
