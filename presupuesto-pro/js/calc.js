@@ -2,20 +2,69 @@ function calcTotals(project){
   const items = project.items || [];
   const directo = items.reduce((s,it)=> s + (Number(it.pu||0) * Number(it.qty||0)), 0);
 
-  const aiuPct = Number(project.aiuPct||0);
-  const ivaPct = Number(project.ivaPct||0);
+  // =========================================================
+  // ✅ NUEVO ESQUEMA (como formato institucional)
+  //   Directo
+  //   + Administración (%)
+  //   + Imprevistos (%)
+  //   + Utilidad (%)
+  //   = Subtotal
+  //   + IVA sobre Utilidad (%)
+  //   = Total
+  //
+  // ✅ COMPATIBILIDAD:
+  // - Si no existen adminPct/imprevPct/utilPct/ivaUtilPct,
+  //   usamos aiuPct como adminPct y ivaPct como ivaUtilPct.
+  // =========================================================
 
-  const aiu = directo * (aiuPct/100);
+  const adminPct = Number(
+    (project.adminPct ?? project.administracionPct ?? project.aiuPct ?? 0)
+  );
+  const imprevPct = Number(
+    (project.imprevPct ?? project.imprevistosPct ?? 0)
+  );
+  const utilPct = Number(
+    (project.utilPct ?? project.utilidadPct ?? 0)
+  );
 
-  let ivaBaseAmount = 0;
-  if(project.ivaBase === "solo_aiu") ivaBaseAmount = aiu;
-  else if(project.ivaBase === "solo_directo") ivaBaseAmount = directo;
-  else ivaBaseAmount = directo + aiu;
+  // IVA sobre utilidad (nuevo)
+  const ivaUtilPct = Number(
+    (project.ivaUtilPct ?? project.ivaSobreUtilidadPct ?? project.ivaPct ?? 0)
+  );
 
-  const iva = ivaBaseAmount * (ivaPct/100);
-  const total = directo + aiu + iva;
+  const admin = directo * (adminPct/100);
+  const imprev = directo * (imprevPct/100);
+  const util = directo * (utilPct/100);
 
-  return { directo, aiu, iva, total };
+  const subtotal = directo + admin + imprev + util;
+
+  // IVA SOLO sobre utilidad
+  const iva = util * (ivaUtilPct/100);
+
+  const total = subtotal + iva;
+
+  // ✅ Mantener "aiu" para compatibilidad:
+  const aiu = admin + imprev + util;
+
+  return {
+    // base
+    directo,
+
+    // nuevo formato
+    adminPct, imprevPct, utilPct, ivaUtilPct,
+    admin, imprev, util,
+    subtotal,
+
+    // ✅ CLAVE DEL ARREGLO:
+    // PDF esperaba ivaUtil y antes calc.js solo devolvía iva
+    iva,
+    ivaUtil: iva,
+
+    total,
+
+    // compatibilidad legacy
+    aiu
+  };
 }
 
 function groupByChapters(project){

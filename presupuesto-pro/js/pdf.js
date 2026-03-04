@@ -1,6 +1,61 @@
 (function(){
-  function moneyCOP(n){
-    return "$ " + Math.round(Number(n||0)).toLocaleString("es-CO");
+  /* =========================================================
+     PDF.JS — ESTÁNDAR ÚNICO (TODOS LOS PDFs)
+     Confirmado por usted:
+     1) Portada institucional
+     2) Contenido inicia limpio (sin repetir gran título)
+     3) Firma siempre en la última página
+     4) Encabezado superior solo desde página 2 en adelante
+
+     ✅ ESTÁNDAR VISUAL DEFINIDO:
+     - SIN sombreados (NO fill en títulos/headers/filas)
+     - SIN contornos / cajas (NO rect en títulos/headers/celdas)
+     - SOLO líneas horizontales finas (separadores)
+     - Textos y filas NUNCA se montan (alto de fila dinámico)
+     - Evitar cortes por ancho: columnas ajustadas + auto-fit numérico
+
+     ✅ FIXES APLICADOS (según imágenes):
+     - PDF "Presupuesto de Obra Desagregado": sale en HORIZONTAL (landscape) para que no se amontone.
+     - PDF "Resumen Presupuesto de Obra Desagregado" (pág 3):
+       * Pie chart ahora se renderiza como IMAGEN (canvas->PNG) para eliminar artefactos/triángulos/patrones.
+       * Leyenda ya NO se corta: se reubica automáticamente (derecha si cabe, si no debajo con wrap).
+
+     ✅ AJUSTES SOLICITADOS (03/2026):
+     1) Eliminar “línea delgada” que se monta sobre el texto:
+        -> se corrigió moviendo la línea inferior de las bandas (drawBand) unos puntos hacia abajo.
+     2) En PDF "Presupuesto de Obra": eliminar el texto inicial
+        "DETALLE DE ÍTEMS" + encabezado duplicado antes del primer capítulo:
+        -> se quitó el drawBand y el primer header; el header queda solo desde el capítulo.
+     ========================================================= */
+
+  // =========================
+  // TEMA VISUAL (GLOBAL)
+  // =========================
+  const PDF_THEME = {
+    safe: {
+      top: 54,
+      bottom: 64 // reserva real para footer
+    },
+    lines: {
+      header: { w: 0.55, c: 120 },
+      row:    { w: 0.35, c: 200 },
+      band:   { w: 0.55, c: 160 }
+    }
+  };
+
+  // =========================
+  // Formateadores / helpers
+  // =========================
+  function moneyCOP(n){  return "$ " + Math.round(Number(n||0)).toLocaleString("es-CO"); }
+  function moneyCOP0(n){ return "$ " + Math.round(Number(n||0)).toLocaleString("es-CO"); }
+
+  function fmt2(n){
+    const v = Number(n||0);
+    return v.toLocaleString("es-CO", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmt0(n){
+    const v = Number(n||0);
+    return Math.round(v).toLocaleString("es-CO");
   }
   function safe(s){ return String(s||""); }
 
@@ -15,18 +70,48 @@
     const name = sanitizeName(project?.name || "proyecto");
     return `Presupuesto_${name}${suffix ? "_"+suffix : ""}_${Date.now()}.pdf`;
   }
-
   function buildFilenameSpecs(project){
     const name = sanitizeName(project?.name || "proyecto");
     return `Especificaciones_Tecnicas_${name}_${Date.now()}.pdf`;
   }
+  function buildFilenameDesagregado(project){
+    const name = sanitizeName(project?.name || "proyecto");
+    return `Presupuesto_Obra_Desagregado_${name}_${Date.now()}.pdf`;
+  }
+  function buildFilenameResumenDesagregado(project){
+    const name = sanitizeName(project?.name || "proyecto");
+    return `Resumen_Presupuesto_Obra_Desagregado_${name}_${Date.now()}.pdf`;
+  }
+  function buildFilenameDistribucionPctDirectos(project){
+    const name = sanitizeName(project?.name || "proyecto");
+    return `Distribucion_Porcentual_Costos_Directos_${name}_${Date.now()}.pdf`;
+  }
+  function buildFilenameRendimientos(project){
+    const name = sanitizeName(project?.name || "proyecto");
+    return `Rendimiento_Equipo_Mano_Obra_Por_Actividad_${name}_${Date.now()}.pdf`;
+  }
+  function buildFilenameResumenMaterialesActividad(project){
+    const name = sanitizeName(project?.name || "proyecto");
+    return `Resumen_Materiales_Por_Actividad_${name}_${Date.now()}.pdf`;
+  }
+  function buildFilenameCantRecursosInsumos(project){
+    const name = sanitizeName(project?.name || "proyecto");
+    return `Cantidad_Recursos_Insumos_Presupuesto_${name}_${Date.now()}.pdf`;
+  }
 
-  function newDoc(){
+  function newDoc(options){
     if(!window.jspdf?.jsPDF) throw new Error("jsPDF no está cargado.");
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit:"pt", format:"letter" });
 
-    // ✅ Asegurar texto negro “normal”
+    const o = options || {};
+    const orientation = o.orientation || "portrait"; // "portrait" | "landscape"
+
+    const doc = new jsPDF({
+      unit: "pt",
+      format: "letter",
+      orientation
+    });
+
     try{
       doc.setTextColor(0);
       doc.setDrawColor(0);
@@ -36,69 +121,117 @@
     return doc;
   }
 
+  function getPageSize(doc){
+    const w = doc.internal?.pageSize?.getWidth ? doc.internal.pageSize.getWidth() : 612;
+    const h = doc.internal?.pageSize?.getHeight ? doc.internal.pageSize.getHeight() : 792;
+    return { w, h };
+  }
+
+  // =========================
+  // Líneas / Auto-fit / Column-fit
+  // =========================
+  function hLine(doc, x1, x2, y, w=0.35, c=200){
+    doc.setDrawColor(c);
+    doc.setLineWidth(w);
+    doc.line(x1, y, x2, y);
+    doc.setLineWidth(0.2);
+    doc.setDrawColor(0);
+  }
+
+  function fitColsToWidth(cols, targetW, minW=18){
+    const total = cols.reduce((s,c)=>s + (Number(c.w)||0), 0);
+    if(total === targetW) return cols;
+
+    if(total < targetW){
+      const out = cols.map(c=>({ ...c }));
+      const idx = out.findIndex(c => String(c.key||c.k||"") === "desc" || String(c.key||c.k||"") === "description");
+      const useIdx = idx >= 0 ? idx : (out.length-1);
+      out[useIdx].w = Math.max(minW, (out[useIdx].w||0) + (targetW-total));
+      return out;
+    }
+
+    const scale = targetW / total;
+    let acc = 0;
+    const out = cols.map((c,i)=>{
+      const w = (i === cols.length-1) ? 0 : Math.max(minW, Math.floor((Number(c.w)||0)*scale));
+      acc += w;
+      return { ...c, w };
+    });
+    out[out.length-1].w = Math.max(minW, Math.floor(targetW - acc));
+    return out;
+  }
+
+  function fitTextRight(doc, text, maxW, baseFs, minFs=6.2){
+    let fs = baseFs;
+    doc.setFontSize(fs);
+    while(fs > minFs && doc.getTextWidth(String(text)) > maxW){
+      fs -= 0.2;
+      doc.setFontSize(fs);
+    }
+    return fs;
+  }
+
+  function splitToLines(doc, text, maxW, maxLines){
+    const lines = doc.splitTextToSize(safe(text), maxW);
+    if(!maxLines) return lines;
+    return lines.slice(0, maxLines);
+  }
+
+  // =========================
+  // Layout base (DINÁMICO a orientación)
+  // =========================
   function mkLayout(doc){
-    const PAGE_W = 612, PAGE_H = 792;
+    const { w: PAGE_W, h: PAGE_H } = getPageSize(doc);
     const margin = 44;
     const contentW = PAGE_W - margin*2;
-    let y = 54;
+    let y = (PDF_THEME?.safe?.top ?? 54);
 
     function ensure(h){
-      if(y + h > PAGE_H - 54){
+      const bottomLimit = PAGE_H - (PDF_THEME?.safe?.bottom ?? 64);
+      if(y + h > bottomLimit){
         doc.addPage();
-        // ✅ asegurar colores “normales” en nuevas páginas
         try{
           doc.setTextColor(0);
           doc.setDrawColor(0);
           doc.setFillColor(255,255,255);
         }catch(_){}
-        y = 54;
+        y = (PDF_THEME?.safe?.top ?? 54);
         return true;
       }
       return false;
     }
 
-    function h1(t){
-      ensure(24);
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(14);
-      doc.text(safe(t), margin, y);
-      y += 18;
-    }
-
-    function h2(t){
-      ensure(20);
-      doc.setFont("helvetica","bold");
-      doc.setFontSize(11.5);
-      doc.text(safe(t), margin, y);
-      y += 16;
-    }
+    function setY(v){ y = v; }
+    function getY(){ return y; }
 
     function p(t){
       doc.setFont("helvetica","normal");
       doc.setFontSize(10);
       const lines = doc.splitTextToSize(safe(t), contentW);
-      ensure(lines.length*13 + 8);
+      const h = lines.length*13 + 8;
+      ensure(h);
       doc.text(lines, margin, y);
       y += lines.length*13 + 6;
     }
 
     function row(label,value){
-      ensure(16);
+      ensure(18);
       doc.setFont("helvetica","bold"); doc.setFontSize(10);
       doc.text(safe(label), margin, y);
       doc.setFont("helvetica","normal");
-      doc.text(safe(value), margin + 170, y);
-      y += 14;
+      doc.text(safe(value), margin + 260, y);
+      y += 16;
     }
 
     function line(){
-      ensure(10);
-      doc.setDrawColor(140);
-      doc.line(margin, y, margin+contentW, y);
+      ensure(12);
+      hLine(doc, margin, margin+contentW, y, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
       y += 12;
     }
 
-    // TABLA PRESUPUESTO
+    // =========================
+    // TABLA PRESUPUESTO (clásica)
+    // =========================
     const col = {
       item: margin + 0,
       desc: margin + 62,
@@ -107,25 +240,26 @@
       pu:   margin + contentW - 150,
       unit: margin + contentW - 230
     };
-
     const DESC_W = (col.unit - col.desc) - 12;
 
     function tableHeaderPresupuesto(){
-      ensure(26);
+      const yTop = y;
+      const h = 18;
+      ensure(h + 8);
+
       doc.setFont("helvetica","bold"); doc.setFontSize(9.2);
+      const baseY = yTop + 12;
 
-      doc.text("ITEM", col.item, y);
-      doc.text("DESCRIPCIÓN", col.desc, y);
+      doc.text("ITEM", col.item, baseY);
+      doc.text("DESCRIPCIÓN", col.desc, baseY);
+      doc.text("UNID", col.unit, baseY);
+      doc.text("VR UNIT", col.pu, baseY, { align:"right" });
+      doc.text("CANT", col.qty, baseY, { align:"right" });
+      doc.text("VR PARCIAL", col.parc, baseY, { align:"right" });
 
-      doc.text("UNID", col.unit, y);
-      doc.text("VR UNIT", col.pu, y, { align:"right" });
-      doc.text("CANT", col.qty, y, { align:"right" });
-      doc.text("VR PARCIAL", col.parc, y, { align:"right" });
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
 
-      y += 8;
-      doc.setDrawColor(170);
-      doc.line(margin, y, margin+contentW, y);
-      y += 12;
+      y = yTop + h + 8;
     }
 
     function tableRowPresupuesto(it){
@@ -134,40 +268,44 @@
       const unit = safe(it.unit);
 
       doc.setFont("helvetica","normal"); doc.setFontSize(9.2);
-
       const descLines = doc.splitTextToSize(safe(it.desc), DESC_W).slice(0,3);
-      const rowH = Math.max(14, descLines.length * 11);
 
+      const lineH = 11;
+      const rowH = Math.max(18, 8 + (descLines.length * lineH));
       const jumped = ensure(rowH + 10);
       if(jumped) tableHeaderPresupuesto();
 
+      const yTop = y;
+      const baseY = yTop + 12;
+
       doc.setFont("helvetica","bold");
-      doc.text(item, col.item, y);
+      doc.text(item, col.item, baseY);
 
       doc.setFont("helvetica","normal");
-      doc.text(descLines, col.desc, y);
+      doc.text(descLines, col.desc, baseY);
 
-      doc.text(unit, col.unit, y);
-      doc.text(moneyCOP(it.pu), col.pu, y, { align:"right" });
-      doc.text(safe(it.qty), col.qty, y, { align:"right" });
+      doc.text(unit, col.unit, baseY);
+      doc.text(moneyCOP(it.pu), col.pu, baseY, { align:"right" });
+      doc.text(safe(it.qty), col.qty, baseY, { align:"right" });
 
       doc.setFont("helvetica","bold");
-      doc.text(moneyCOP(parcial), col.parc, y, { align:"right" });
+      doc.text(moneyCOP(parcial), col.parc, baseY, { align:"right" });
 
-      y += rowH;
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+      y = yTop + rowH + 2;
     }
 
+    // =========================
     // TABLA APU
+    // =========================
     function shortGroup(g){
       const s = safe(g).trim();
       if(!s) return "-";
       const up = s.toUpperCase();
-
       if(up.includes("EQUIPO") && up.includes("HERRAM")) return "EQUIPO/HERR.";
       if(up.includes("MANO") && up.includes("OBRA")) return "MANO OBRA";
       if(up.includes("MATERIAL")) return "MATERIALES";
       if(up.includes("TRANSP")) return "TRANSPORTES";
-
       return s.length > 16 ? (s.slice(0,16) + "…") : s;
     }
 
@@ -179,24 +317,25 @@
       qty:  margin + contentW - 180,
       unit: margin + contentW - 240
     };
-
     const A_DESC_W = (aCol.unit - aCol.desc) - 12;
 
     function tableHeaderAPU(){
-      ensure(26);
+      const yTop = y;
+      const h = 18;
+      ensure(h + 8);
+
       doc.setFont("helvetica","bold"); doc.setFontSize(9.2);
+      const baseY = yTop + 12;
 
-      doc.text("GRUPO", aCol.grp, y);
-      doc.text("DESCRIPCIÓN", aCol.desc, y);
-      doc.text("UNID", aCol.unit, y);
-      doc.text("CANT", aCol.qty, y, { align:"right" });
-      doc.text("VR UNIT", aCol.pu, y, { align:"right" });
-      doc.text("VR PARCIAL", aCol.parc, y, { align:"right" });
+      doc.text("GRUPO", aCol.grp, baseY);
+      doc.text("DESCRIPCIÓN", aCol.desc, baseY);
+      doc.text("UNID", aCol.unit, baseY);
+      doc.text("CANT", aCol.qty, baseY, { align:"right" });
+      doc.text("VR UNIT", aCol.pu, baseY, { align:"right" });
+      doc.text("VR PARCIAL", aCol.parc, baseY, { align:"right" });
 
-      y += 8;
-      doc.setDrawColor(170);
-      doc.line(margin, y, margin+contentW, y);
-      y += 12;
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      y = yTop + h + 8;
     }
 
     function tableRowAPU(lineObj){
@@ -208,38 +347,83 @@
       const parcial = Number(lineObj.parcial||0) || (qty * pu);
 
       doc.setFont("helvetica","normal"); doc.setFontSize(9.2);
-
       const descLines = doc.splitTextToSize(safe(lineObj.desc), A_DESC_W).slice(0,3);
-      const rowH = Math.max(14, descLines.length * 11);
 
+      const lineH = 11;
+      const rowH = Math.max(18, 8 + (descLines.length * lineH));
       const jumped = ensure(rowH + 10);
       if(jumped) tableHeaderAPU();
 
-      doc.text(grp, aCol.grp, y);
-      doc.text(descLines, aCol.desc, y);
+      const yTop = y;
+      const baseY = yTop + 12;
 
-      doc.text(unit, aCol.unit, y);
-      doc.text(String(qty||0), aCol.qty, y, { align:"right" });
-      doc.text(moneyCOP(pu), aCol.pu, y, { align:"right" });
+      doc.setFont("helvetica","normal");
+      doc.text(grp, aCol.grp, baseY);
+      doc.text(descLines, aCol.desc, baseY);
+
+      doc.text(unit, aCol.unit, baseY);
+      doc.text(String(qty||0), aCol.qty, baseY, { align:"right" });
+      doc.text(moneyCOP(pu), aCol.pu, baseY, { align:"right" });
 
       doc.setFont("helvetica","bold");
-      doc.text(moneyCOP(parcial), aCol.parc, y, { align:"right" });
+      doc.text(moneyCOP(parcial), aCol.parc, baseY, { align:"right" });
 
-      y += rowH;
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+      y = yTop + rowH + 2;
     }
 
     return {
       PAGE_W, PAGE_H, margin, contentW,
-      getY:()=>y, setY:(v)=>{y=v;},
-      ensure, h1, h2, p, row, line,
+      getY, setY,
+      ensure, p, row, line,
       tableHeaderPresupuesto, tableRowPresupuesto,
       tableHeaderAPU, tableRowAPU
     };
   }
 
-  // =========================================================
-  // ✅ LOGO (dataUrl) helpers
-  // =========================================================
+  // =========================
+  // Draw: Bandas y celdas (SIN cajas, SIN sombras)
+  // =========================
+  function drawBand(doc, x, y, w, h, text, opts){
+    const o = opts || {};
+    const fs = o.fontSize || 10;
+    const bold = (o.bold !== false);
+
+    doc.setTextColor(0);
+    doc.setFont("helvetica", bold ? "bold" : "normal");
+    doc.setFontSize(fs);
+
+    doc.text(safe(text), x, y + 12);
+
+    // ✅ FIX #1: mover la línea un poco hacia abajo para que NO se monte sobre el texto siguiente
+    // (antes: y + h)
+    hLine(doc, x, x+w, y + h + 4, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+  }
+
+  function drawCellText(doc, x, y, w, h, text, align, opts){
+    const o = opts || {};
+    const fs = o.fontSize || 7.2;
+    const pad = o.pad ?? 2;
+
+    doc.setFont("helvetica", o.bold ? "bold" : "normal");
+    doc.setFontSize(fs);
+
+    const tx = (align === "right") ? (x + w - pad)
+            : (align === "center") ? (x + w/2)
+            : (x + pad);
+
+    if(Array.isArray(text)){
+      const startY = y + pad + fs;
+      doc.text(text, tx, startY, { align: align || "left" });
+    }else{
+      const baseY = y + pad + fs;
+      doc.text(safe(text), tx, baseY, { align: align || "left" });
+    }
+  }
+
+  // =========================
+  // LOGO helpers
+  // =========================
   function imageTypeFromDataUrl(dataUrl){
     const s = String(dataUrl||"");
     if(s.startsWith("data:image/png")) return "PNG";
@@ -259,10 +443,11 @@
     }
   }
 
-  // ========= Encabezado / Pie (con logo por proyecto) =========
+  // =========================
+  // Encabezado / Pie (solo páginas >= 2) — DINÁMICO
+  // =========================
   function stampHeaderFooter(doc, { docType, projectName, logoDataUrl }){
     const pageCount = doc.getNumberOfPages();
-    const PAGE_W = 612, PAGE_H = 792;
     const marginX = 44;
     const now = new Date().toLocaleString();
 
@@ -274,45 +459,54 @@
 
     for(let p=1; p<=pageCount; p++){
       doc.setPage(p);
+      const { w: PAGE_W, h: PAGE_H } = getPageSize(doc);
 
       try{
         doc.setTextColor(0);
         doc.setDrawColor(0);
       }catch(_){}
 
+      // Footer siempre
       doc.setDrawColor(200);
-      doc.line(marginX, headerLineY, PAGE_W - marginX, headerLineY);
-
-      if(p !== 1){
-        let textStartX = marginX;
-        if(logoDataUrl){
-          const ok = tryAddImage(doc, logoDataUrl, marginX, headerTop, logoW, logoH);
-          if(ok) textStartX = marginX + logoW + 10;
-        }
-
-        doc.setFont("helvetica","bold");
-        doc.setFontSize(9.5);
-        doc.text(safe(docType), textStartX, 28);
-
-        doc.setFont("helvetica","normal");
-        doc.setFontSize(9.2);
-        if(projectName) doc.text(safe(projectName), textStartX, 38);
-      }
-
-      doc.setFont("helvetica","normal");
-      doc.setFontSize(9.2);
-      doc.text(now, PAGE_W - marginX, 28, { align:"right" });
-
-      doc.setDrawColor(200);
+      doc.setLineWidth(0.6);
       doc.line(marginX, PAGE_H - 44, PAGE_W - marginX, PAGE_H - 44);
+      doc.setLineWidth(0.2);
 
       doc.setFont("helvetica","normal");
       doc.setFontSize(9);
       doc.text(`Página ${p} de ${pageCount}`, PAGE_W/2, PAGE_H - 28, { align:"center" });
+
+      // Header solo desde página 2
+      if(p === 1) continue;
+
+      doc.setDrawColor(200);
+      doc.setLineWidth(0.6);
+      doc.line(marginX, headerLineY, PAGE_W - marginX, headerLineY);
+      doc.setLineWidth(0.2);
+
+      let textStartX = marginX;
+      if(logoDataUrl){
+        const ok = tryAddImage(doc, logoDataUrl, marginX, headerTop, logoW, logoH);
+        if(ok) textStartX = marginX + logoW + 10;
+      }
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(9.5);
+      doc.text(safe(docType), textStartX, 28);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(9.2);
+      if(projectName) doc.text(safe(projectName), textStartX, 38);
+
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(9.2);
+      doc.text(now, PAGE_W - marginX, 28, { align:"right" });
     }
   }
 
-  // ========= PORTADA INSTITUCIONAL =========
+  // =========================
+  // Portada institucional
+  // =========================
   function dateLongEsCO(d){
     const dt = (d instanceof Date) ? d : new Date(d || Date.now());
     const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
@@ -392,9 +586,9 @@
     }
   }
 
-  /* =========================================================
-     ✅ FIRMA: convertir “blanco sobre negro” -> “negro sobre blanco”
-     ========================================================= */
+  // =========================
+  // FIRMA (negro sobre blanco)
+  // =========================
   function loadImage(dataUrl){
     return new Promise((res, rej)=>{
       const img = new Image();
@@ -412,8 +606,7 @@
       const h = Math.max(1, img.naturalHeight || img.height || 1);
 
       const c = document.createElement("canvas");
-      c.width = w;
-      c.height = h;
+      c.width = w; c.height = h;
 
       const ctx = c.getContext("2d", { willReadFrequently:true });
       ctx.fillStyle = "#ffffff";
@@ -427,7 +620,6 @@
       for(let i=0; i<d.length; i+=4){
         const r = d[i], g = d[i+1], b = d[i+2];
         const lum = (r*0.2126 + g*0.7152 + b*0.0722);
-
         if(lum < TH){
           d[i] = 255; d[i+1] = 255; d[i+2] = 255; d[i+3] = 255;
         }else{
@@ -449,7 +641,8 @@
     const matricula = elab?.matricula ? String(elab.matricula) : "";
     const firmaDataUrl = elab?.firmaDataUrl ? String(elab.firmaDataUrl) : "";
 
-    L.ensure(220);
+    const need = 240;
+    L.ensure(need);
 
     const boxX = L.margin;
     const boxW = 520;
@@ -463,7 +656,9 @@
     doc.text("Firma:", sigX, sigY - 6);
 
     doc.setDrawColor(0);
+    doc.setLineWidth(0.8);
     doc.rect(sigX, sigY, sigW, sigH);
+    doc.setLineWidth(0.2);
 
     let firmaForPDF = "";
     if(firmaDataUrl && firmaDataUrl.startsWith("data:image")){
@@ -481,7 +676,9 @@
     const lineY = sigY + sigH + 55;
 
     doc.setDrawColor(0);
+    doc.setLineWidth(0.8);
     doc.line(boxX, lineY, boxX + boxW, lineY);
+    doc.setLineWidth(0.2);
 
     doc.setFont("helvetica","bold"); doc.setFontSize(11);
     doc.text(nombre || "____________________________", boxX, lineY + 18);
@@ -494,7 +691,50 @@
     L.setY(Math.max(L.getY(), yy + 10));
   }
 
-  // ===== Helper: leer APU (override > custom app > base) =====
+  // =========================
+  // Compat AIU / Admin / etc
+  // =========================
+  function pct(project, key, legacyKey){
+    const v = project?.[key];
+    if(Number.isFinite(Number(v))) return Number(v);
+    const lv = legacyKey ? project?.[legacyKey] : undefined;
+    if(Number.isFinite(Number(lv))) return Number(lv);
+    return 0;
+  }
+
+  function totalsCompat(project){
+    const t = (window.Calc && typeof Calc.calcTotals === "function") ? (Calc.calcTotals(project) || {}) : {};
+    const directo = Number(t.directo||0);
+
+    if(("admin" in t) || ("imprev" in t) || ("util" in t) || ("ivaUtil" in t) || ("subtotal" in t)){
+      return {
+        directo,
+        admin: Number(t.admin||0),
+        imprev: Number(t.imprev||0),
+        util: Number(t.util||0),
+        subtotal: Number(t.subtotal||0),
+        ivaUtil: Number(t.ivaUtil||0),
+        total: Number(t.total||0)
+      };
+    }
+
+    const aiu = Number(t.aiu||0);
+    const iva = Number(t.iva||0);
+    const total = Number(t.total|| (directo + aiu + iva));
+    return {
+      directo,
+      admin: aiu,
+      imprev: 0,
+      util: 0,
+      subtotal: directo + aiu,
+      ivaUtil: iva,
+      total
+    };
+  }
+
+  // =========================
+  // APU helper (override > custom > base)
+  // =========================
   async function getAPUForProjectItem(project, it){
     const code = String(it.code||"").trim();
     if(!code) return null;
@@ -560,9 +800,9 @@
     };
   }
 
-  /* =========================================================
-     ✅ NUEVO: guardar / descargar / compartir PDF (iPhone WhatsApp)
-     ========================================================= */
+  // =========================
+  // Descargar / compartir
+  // =========================
   function downloadBlob(blob, filename){
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -580,7 +820,6 @@
 
     const file = new File([blob], filename, { type:"application/pdf" });
 
-    // iOS: a veces requiere canShare(files)
     try{
       if(navigator.canShare && !navigator.canShare({ files:[file] })){
         return false;
@@ -595,7 +834,6 @@
       });
       return true;
     }catch(err){
-      // Si el usuario cancela, no es error “real”
       console.log("[PDF] share cancelled/error:", err);
       return false;
     }
@@ -605,74 +843,1327 @@
     const o = opts || {};
     const blob = doc.output("blob");
 
-    // share primero (para WhatsApp en iPhone)
     if(o.share){
       const ok = await shareBlobAsFile(blob, filename);
       if(ok) return true;
-      // fallback si no pudo compartir
       downloadBlob(blob, filename);
       return true;
     }
-
-    // descarga normal
     downloadBlob(blob, filename);
     return true;
   }
 
+  // =========================
+  // Helpers de paginación con header (SIN recursión)
+  // =========================
+  function ensureWithHeader(L, needH, headerFn){
+    const jumped = L.ensure(needH);
+    if(jumped && typeof headerFn === "function"){
+      headerFn();
+    }
+    return jumped;
+  }
+
+  // =========================
+  // Clasificación de grupos
+  // =========================
+  function classifyDirectGroup(grpRaw){
+    const upg = String(grpRaw||"").toUpperCase();
+    if(upg.includes("SUBCONTRAT")) return "SUBCONTRATOS";
+    if(upg.includes("MATERIAL")) return "MATERIALES";
+    if(upg.includes("MANO") && upg.includes("OBRA")) return "MANO DE OBRA";
+    if(upg.includes("EQUIPO") || upg.includes("HERRAM") || upg.includes("MAQUIN")) return "EQUIPO Y HERRAM";
+    if(upg.includes("TRANSP")) return "TRANSPORTES";
+    return "OTROS";
+  }
+
+  function getChapterFromItem(it){
+    return it.chapterCode || (String(it.code||"").split(".")[0] || "SIN");
+  }
+  function getChapterNameFromItem(it){
+    return safe(it.chapterName||"");
+  }
+
+  async function calcDesagregadoByItemFromAPU(project, items){
+    const out = [];
+    const totals = {
+      MATERIALES:0,
+      "EQUIPO Y HERRAM":0,
+      "MANO DE OBRA":0,
+      SUBCONTRATOS:0,
+      TRANSPORTES:0,
+      OTROS:0
+    };
+
+    for(const it of (items||[])){
+      const qtyItem = Number(it.qty||0);
+
+      const apuObj = await getAPUForProjectItem(project, it);
+      const lines = (apuObj && Array.isArray(apuObj.lines)) ? apuObj.lines : [];
+
+      const unitBuckets = {
+        MATERIALES:0,
+        "EQUIPO Y HERRAM":0,
+        "MANO DE OBRA":0,
+        SUBCONTRATOS:0,
+        TRANSPORTES:0,
+        OTROS:0
+      };
+
+      for(const ln of lines){
+        const grp = classifyDirectGroup(ln.group || ln.tipo || "");
+        const lqty = Number(ln.qty||0);
+        const lpu  = Number(ln.pu||0);
+        const parcialUnit = Number(ln.parcial||0) || (lqty * lpu);
+        unitBuckets[grp] = (unitBuckets[grp]||0) + parcialUnit;
+      }
+
+      const row = {
+        chapterCode: getChapterFromItem(it),
+        chapterName: getChapterNameFromItem(it),
+        code: safe(it.code||""),
+        desc: safe(it.desc||""),
+        unit: safe(it.unit||""),
+        qtyItem,
+        MATERIALES: unitBuckets.MATERIALES * qtyItem,
+        "EQUIPO Y HERRAM": unitBuckets["EQUIPO Y HERRAM"] * qtyItem,
+        "MANO DE OBRA": unitBuckets["MANO DE OBRA"] * qtyItem,
+        SUBCONTRATOS: unitBuckets.SUBCONTRATOS * qtyItem,
+        TRANSPORTES: unitBuckets.TRANSPORTES * qtyItem,
+        OTROS: unitBuckets.OTROS * qtyItem
+      };
+
+      row.VR_PARCIAL =
+        row.MATERIALES +
+        row["EQUIPO Y HERRAM"] +
+        row["MANO DE OBRA"] +
+        row.SUBCONTRATOS +
+        row.TRANSPORTES +
+        row.OTROS;
+
+      totals.MATERIALES += row.MATERIALES;
+      totals["EQUIPO Y HERRAM"] += row["EQUIPO Y HERRAM"];
+      totals["MANO DE OBRA"] += row["MANO DE OBRA"];
+      totals.SUBCONTRATOS += row.SUBCONTRATOS;
+      totals.TRANSPORTES += row.TRANSPORTES;
+      totals.OTROS += row.OTROS;
+
+      out.push(row);
+    }
+
+    const totalDirecto =
+      totals.MATERIALES +
+      totals["EQUIPO Y HERRAM"] +
+      totals["MANO DE OBRA"] +
+      totals.SUBCONTRATOS +
+      totals.TRANSPORTES +
+      totals.OTROS;
+
+    return { rows: out, totals, totalDirecto };
+  }
+
   // =========================================================
-  // PRESUPUESTO PDF (con portada institucional + logo)
-  // opts: { share: true } para WhatsApp / Share Sheet
+  // PDF 1: PRESUPUESTO DE OBRA DESAGREGADO (LANDSCAPE ✅)
+  // =========================================================
+  async function exportPresupuestoObraDesagregadoPDF(project, opts){
+    // ✅ FIX: en horizontal para que no se amontonen columnas
+    const doc = newDoc({ orientation: "landscape" });
+    const L = mkLayout(doc);
+    const { items } = Calc.groupByChapters(project);
+
+    drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA DESAGREGADO");
+
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text("DATOS GENERALES", L.margin, L.getY());
+    L.setY(L.getY()+14);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    L.p(`Proyecto: ${project.name || "—"}`);
+    L.p(`Entidad: ${project.entity || "—"}`);
+    L.p(`Ubicación: ${project.location || "—"}`);
+    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    L.p(" ");
+
+    const agg = await calcDesagregadoByItemFromAPU(project, items || []);
+    const rows = agg.rows || [];
+    const totalDirecto = Number(agg.totalDirecto||0);
+
+    const margin = L.margin;
+    const contentW = L.contentW;
+
+    // En landscape hay más ancho: dejamos DESCRIPCIÓN más amplia y números cómodos
+    let cols = [
+      { key:"code", label:"ITEM",        w:56,  align:"left"   },
+      { key:"desc", label:"DESCRIPCIÓN", w:260, align:"left"   },
+      { key:"unit", label:"UNID",        w:34,  align:"center" },
+      { key:"qty",  label:"CANT",        w:54,  align:"right"  },
+
+      { key:"mat",  label:"MAT",         w:64,  align:"right"  },
+      { key:"eq",   label:"EQ/H",        w:64,  align:"right"  },
+      { key:"mo",   label:"M.O.",        w:64,  align:"right"  },
+      { key:"sub",  label:"SUBC",        w:64,  align:"right"  },
+      { key:"tra",  label:"TRANS",       w:64,  align:"right"  },
+      { key:"otr",  label:"OTR",         w:58,  align:"right"  },
+
+      { key:"parc", label:"VR PARC",     w:92,  align:"right"  }
+    ];
+    cols = fitColsToWidth(cols, contentW, 26);
+
+    function tableHeader(){
+      const yTop = L.getY();
+      const h = 18;
+      L.ensure(h + 8);
+
+      let x = margin;
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(7.2);
+
+      for(const c of cols){
+        drawCellText(doc, x, yTop, c.w, h, c.label, "center", { bold:true, fontSize:7.2, pad:2 });
+        x += c.w;
+      }
+
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      L.setY(yTop + h + 6);
+    }
+
+    function chapterBand(txt){
+      ensureWithHeader(L, 22, tableHeader);
+      const yTop = L.getY();
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(9.2);
+      doc.text(String(txt||""), margin, yTop + 10);
+      hLine(doc, margin, margin+contentW, yTop + 16, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+      L.setY(yTop + 20);
+    }
+
+    function dataRow(r){
+      doc.setFont("helvetica","normal");
+      doc.setFontSize(7.2);
+
+      const descLines = splitToLines(doc, r.desc, cols[1].w - 6, 2);
+      const lineH = 9.2;
+      const rowH = Math.max(16, 6 + (descLines.length * lineH));
+
+      ensureWithHeader(L, rowH + 10, tableHeader);
+
+      const yTop = L.getY();
+      let x = margin;
+
+      drawCellText(doc, x, yTop, cols[0].w, rowH, r.code, "left", { bold:true, fontSize:7.2 }); x += cols[0].w;
+      drawCellText(doc, x, yTop, cols[1].w, rowH, descLines, "left", { fontSize:7.2 }); x += cols[1].w;
+      drawCellText(doc, x, yTop, cols[2].w, rowH, r.unit, "center", { fontSize:7.2 }); x += cols[2].w;
+      drawCellText(doc, x, yTop, cols[3].w, rowH, fmt0(r.qtyItem), "right", { fontSize:7.2 }); x += cols[3].w;
+
+      function numCell(val, w){
+        const s = moneyCOP0(val);
+        doc.setFont("helvetica","normal");
+        const fs = fitTextRight(doc, s, w-4, 7.2, 6.4);
+        drawCellText(doc, x, yTop, w, rowH, s, "right", { fontSize:fs });
+        x += w;
+      }
+
+      numCell(r.MATERIALES, cols[4].w);
+      numCell(r["EQUIPO Y HERRAM"], cols[5].w);
+      numCell(r["MANO DE OBRA"], cols[6].w);
+      numCell(r.SUBCONTRATOS, cols[7].w);
+      numCell(r.TRANSPORTES, cols[8].w);
+      numCell(r.OTROS, cols[9].w);
+
+      {
+        const s = moneyCOP0(r.VR_PARCIAL);
+        doc.setFont("helvetica","bold");
+        const fs = fitTextRight(doc, s, cols[10].w-4, 7.2, 6.4);
+        drawCellText(doc, x, yTop, cols[10].w, rowH, s, "right", { bold:true, fontSize:fs });
+      }
+
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+      L.setY(yTop + rowH + 2);
+    }
+
+    tableHeader();
+
+    if(!rows.length){
+      L.p("Sin ítems.");
+    }else{
+      let currentChap = null;
+      for(const r of rows){
+        const chap = r.chapterCode || "SIN";
+        if(chap !== currentChap){
+          currentChap = chap;
+          chapterBand(`CAPÍTULO ${chap} — ${safe(r.chapterName||"")}`);
+          tableHeader();
+        }
+        dataRow(r);
+      }
+    }
+
+    ensureWithHeader(L, 50, tableHeader);
+    const yT = L.getY() + 6;
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.4);
+    doc.text("TOTAL COSTOS DIRECTOS", margin, yT + 12);
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.6);
+    doc.text(moneyCOP0(totalDirecto), margin + contentW - 8, yT + 12, { align:"right" });
+    hLine(doc, margin, margin+contentW, yT + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+    L.setY(yT + 26);
+
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, {
+      docType:"PRESUPUESTO DE OBRA DESAGREGADO",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
+
+    const filename = buildFilenameDesagregado(project);
+    return await finalizePDF(doc, filename, opts);
+  }
+
+  // =========================================================
+  // PDF 2: RESUMEN PRESUPUESTO DE OBRA DESAGREGADO
+  // =========================================================
+  function drawFormalBarChart(doc, x, y, w, h, labels, values){
+    const maxV = Math.max(1, ...values.map(v=>Number(v||0)));
+    const n = labels.length;
+    const padL = 26;
+    const padB = 26;
+    const padT = 14;
+    const padR = 10;
+
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.6);
+    doc.rect(x, y, w, h, "S");
+    doc.setLineWidth(0.2);
+
+    const innerX = x + padL;
+    const innerY = y + padT;
+    const innerW = w - padL - padR;
+    const innerH = h - padT - padB;
+
+    doc.setDrawColor(0);
+    doc.line(innerX, innerY + innerH, innerX + innerW, innerY + innerH);
+
+    const gap = 10;
+    const barW = Math.max(10, Math.floor((innerW - gap*(n+1)) / n));
+
+    for(let i=0;i<n;i++){
+      const v = Number(values[i]||0);
+      const bh = (v / maxV) * (innerH - 8);
+      const bx = innerX + gap + i*(barW+gap);
+      const by = innerY + innerH - bh;
+
+      // (gráfica puede tener relleno; estándar aplica a tablas/headers)
+      doc.setFillColor(230,230,230);
+      doc.setDrawColor(80);
+      doc.rect(bx, by, barW, bh, "FD");
+
+      doc.setFont("helvetica","normal"); doc.setFontSize(7.4);
+      const vTxt = (v/1e6).toFixed(2) + "M";
+      doc.text(vTxt, bx + barW/2, by - 3, { align:"center" });
+
+      doc.setFont("helvetica","normal"); doc.setFontSize(7.4);
+      doc.text(labels[i], bx + barW/2, innerY + innerH + 16, { align:"center" });
+    }
+
+    // evita montaje con labels
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(6.8);
+    doc.text("Valores en millones (COP)", x + 8, y + h - 22);
+  }
+
+  // ✅ Pie chart como imagen (sin triángulos / sin patrones / sin cortes)
+  function pieToDataURL(labels, values, sizePx){
+    const total = values.reduce((s,v)=>s+Number(v||0),0) || 1;
+    const c = document.createElement("canvas");
+    const s = Math.max(64, sizePx|0);
+    c.width = s; c.height = s;
+    const ctx = c.getContext("2d");
+
+    ctx.clearRect(0,0,s,s);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0,0,s,s);
+
+    const cx = s/2, cy = s/2;
+    const r = s*0.46;
+
+    const fills = [
+      "#c8c8c8","#dedede","#b4b4b4","#f0f0f0","#a0a0a0","#d2d2d2"
+    ];
+
+    let ang = -Math.PI/2;
+    for(let i=0;i<values.length;i++){
+      const v = Number(values[i]||0);
+      const a2 = ang + (v/total) * (Math.PI*2);
+
+      ctx.beginPath();
+      ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,r,ang,a2,false);
+      ctx.closePath();
+      ctx.fillStyle = fills[i % fills.length];
+      ctx.fill();
+
+      ang = a2;
+    }
+
+    // borde
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = Math.max(1, s*0.006);
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.stroke();
+
+    return c.toDataURL("image/png");
+  }
+
+  function drawPieAndLegend(doc, opts){
+    const {
+      cx, cy, r,
+      labels, values,
+      pageW, marginR
+    } = opts;
+
+    // Pie como imagen
+    const scale = 3; // calidad
+    const img = pieToDataURL(labels, values, Math.round((2*r) * scale));
+    try{
+      doc.addImage(img, "PNG", cx - r, cy - r, 2*r, 2*r);
+    }catch(_){
+      // fallback: si addImage falla, dibuja círculo simple
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.6);
+      doc.circle(cx, cy, r, "S");
+      doc.setLineWidth(0.2);
+    }
+
+    // Leyenda (no cortar): derecha si cabe, si no debajo
+    const total = values.reduce((s,v)=>s+Number(v||0),0) || 1;
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(8.2);
+
+    const legendXRight = cx + r + 18;
+    const rightLimit = (pageW - (marginR || 44));
+    const rightSpace = rightLimit - legendXRight;
+
+    // estimación de texto más largo
+    let maxW = 0;
+    for(let i=0;i<labels.length;i++){
+      const v = Number(values[i]||0);
+      const pctv = (v/total)*100;
+      const line = `${labels[i]}: ${pctv.toFixed(2)}%`;
+      maxW = Math.max(maxW, doc.getTextWidth(line));
+    }
+
+    const canRight = (rightSpace >= Math.min(140, maxW + 6));
+
+    if(canRight){
+      let ly = cy - r;
+      for(let i=0;i<labels.length;i++){
+        const v = Number(values[i]||0);
+        const pctv = (v/total)*100;
+        doc.text(`${labels[i]}: ${pctv.toFixed(2)}%`, legendXRight, ly + 10);
+        ly += 12;
+      }
+    }else{
+      // debajo, con wrap para no salirse
+      const x0 = Math.max(44, cx - r);
+      const y0 = cy + r + 16;
+      const maxWidth = Math.max(140, Math.min(260, rightLimit - x0));
+
+      let yy = y0;
+      for(let i=0;i<labels.length;i++){
+        const v = Number(values[i]||0);
+        const pctv = (v/total)*100;
+        const line = `${labels[i]}: ${pctv.toFixed(2)}%`;
+        const parts = doc.splitTextToSize(line, maxWidth);
+        doc.text(parts, x0, yy);
+        yy += parts.length * 11;
+      }
+    }
+  }
+
+  async function exportResumenPresupuestoObraDesagregadoPDF(project, opts){
+    const doc = newDoc(); // portrait
+    const L = mkLayout(doc);
+    const { items } = Calc.groupByChapters(project);
+
+    drawInstitutionalCover(doc, L, project, "RESUMEN PRESUPUESTO DE OBRA DESAGREGADO");
+
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    const agg = await calcDesagregadoByItemFromAPU(project, items || []);
+    const totals = agg.totals || {};
+    const totalDirecto = Number(agg.totalDirecto||0);
+    const denom = totalDirecto>0 ? totalDirecto : 1;
+
+    const cats = [
+      { k:"MATERIALES", label:"MATERIALES" },
+      { k:"EQUIPO Y HERRAM", label:"EQUIPO Y HERRAM." },
+      { k:"MANO DE OBRA", label:"MANO DE OBRA" },
+      { k:"SUBCONTRATOS", label:"SUBCONTRATOS" },
+      { k:"TRANSPORTES", label:"TRANSPORTES" },
+      { k:"OTROS", label:"OTROS" }
+    ];
+    const values = cats.map(c=>Number(totals[c.k]||0));
+    const labelsShort = ["MAT","EQ/HERR","M.O.","SUB","TRANS","OTR"];
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text("DATOS GENERALES", L.margin, L.getY());
+    L.setY(L.getY()+14);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    L.p(`Proyecto: ${project.name || "—"}`);
+    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    L.p(" ");
+
+    const margin = L.margin;
+    const contentW = L.contentW;
+
+    drawBand(doc, margin, L.getY(), contentW, 18, "TOTALES POR CATEGORÍA (COSTOS DIRECTOS)", { fontSize:9.6, bold:true });
+    L.setY(L.getY()+24);
+
+    const tx = margin;
+    const tw = contentW;
+    const rowH = 18;
+
+    const c1 = 240, c2 = 180, c3 = Math.max(80, tw - c1 - c2);
+
+    // header
+    {
+      const yTop = L.getY();
+      doc.setFont("helvetica","bold"); doc.setFontSize(8.4);
+      drawCellText(doc, tx, yTop, c1, rowH, "CATEGORÍA", "center", { bold:true, fontSize:8.4 });
+      drawCellText(doc, tx + c1, yTop, c2, rowH, "VALOR (COP)", "center", { bold:true, fontSize:8.4 });
+      drawCellText(doc, tx + c1 + c2, yTop, c3, rowH, "%", "center", { bold:true, fontSize:8.4 });
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      L.setY(yTop + rowH + 6);
+    }
+
+    for(let i=0;i<cats.length;i++){
+      const cat = cats[i];
+      const v = Number(totals[cat.k]||0);
+      const pctv = (v/denom)*100;
+
+      ensureWithHeader(L, rowH + 10, ()=>{});
+      const yTop = L.getY();
+
+      drawCellText(doc, tx, yTop, c1, rowH, cat.label, "left", { fontSize:8.4 });
+      drawCellText(doc, tx + c1, yTop, c2, rowH, moneyCOP0(v), "right", { fontSize:8.4 });
+      drawCellText(doc, tx + c1 + c2, yTop, c3, rowH, pctv.toFixed(2) + "%", "right", { fontSize:8.4 });
+
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+      L.setY(yTop + rowH + 2);
+    }
+
+    // total
+    {
+      ensureWithHeader(L, rowH + 12, ()=>{});
+      const yTop = L.getY();
+      doc.setFont("helvetica","bold"); doc.setFontSize(8.6);
+      drawCellText(doc, tx, yTop, c1, rowH, "TOTAL", "left", { bold:true, fontSize:8.6 });
+      drawCellText(doc, tx + c1, yTop, c2, rowH, moneyCOP0(totalDirecto), "right", { bold:true, fontSize:8.6 });
+      drawCellText(doc, tx + c1 + c2, yTop, c3, rowH, "100.00%", "right", { bold:true, fontSize:8.6 });
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+      L.setY(yTop + rowH + 18);
+    }
+
+    // Gráficas (pág 3)
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    drawBand(doc, margin, L.getY(), contentW, 18, "GRÁFICAS — COSTOS DIRECTOS", { fontSize:9.6, bold:true });
+    L.setY(L.getY()+26);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(10);
+    doc.text("Gráfico de barras", margin, L.getY());
+    L.setY(L.getY()+10);
+
+    drawFormalBarChart(doc, margin, L.getY(), 330, 220, labelsShort, values);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(10);
+    doc.text("Gráfico circular", margin + 350, L.getY() - 10);
+
+    const { w: PAGE_W } = getPageSize(doc);
+
+    // ✅ FIX: pie sin artefactos + leyenda sin corte
+    drawPieAndLegend(doc, {
+      cx: margin + 410,
+      cy: L.getY() + 110,
+      r: 70,
+      labels: cats.map(c=>c.label),
+      values,
+      pageW: PAGE_W,
+      marginR: 44
+    });
+
+    L.setY(L.getY()+240);
+
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, {
+      docType:"RESUMEN PRESUPUESTO OBRA DESAGREGADO",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
+
+    const filename = buildFilenameResumenDesagregado(project);
+    return await finalizePDF(doc, filename, opts);
+  }
+
+  // =========================================================
+  // PDF 3: DISTRIBUCIÓN PORCENTUAL DE COSTOS DIRECTOS
+  // =========================================================
+  async function exportDistribucionPorcentualCostosDirectosPDF(project, opts){
+    const doc = newDoc();
+    const L = mkLayout(doc);
+
+    const { items } = Calc.groupByChapters(project);
+    const all = items || [];
+
+    drawInstitutionalCover(doc, L, project, "DISTRIBUCIÓN PORCENTUAL DE COSTOS DIRECTOS");
+
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    const totalDirecto = all.reduce((s,it)=> s + (Number(it.pu||0)*Number(it.qty||0)), 0) || 0;
+    const denom = totalDirecto>0 ? totalDirecto : 1;
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text("DATOS GENERALES", L.margin, L.getY());
+    L.setY(L.getY()+14);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    L.p(`Proyecto: ${project.name || "—"}`);
+    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    L.p(" ");
+
+    const margin = L.margin;
+    const contentW = L.contentW;
+
+    const X = {
+      item: margin + 0,
+      desc: margin + 62,
+      parc: margin + contentW - 90,
+      pct:  margin + contentW
+    };
+    const DESC_W = (X.parc - X.desc) - 10;
+
+    function header(){
+      const yTop = L.getY();
+      const h = 18;
+      L.ensure(h + 8);
+
+      doc.setFont("helvetica","bold"); doc.setFontSize(9.4);
+      const baseY = yTop + 12;
+
+      doc.text("ITEM", X.item, baseY);
+      doc.text("DESCRIPCIÓN", X.desc, baseY);
+      doc.text("VR PARCIAL", X.parc, baseY, { align:"right" });
+      doc.text("%", X.pct, baseY, { align:"right" });
+
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      L.setY(yTop + h + 8);
+    }
+
+    function chapterTitle(code, name){
+      ensureWithHeader(L, 26, header);
+      const yTop = L.getY();
+      doc.setFont("helvetica","bold"); doc.setFontSize(9.2);
+      doc.text(`${safe(code)} — ${safe(name)}`, margin, yTop + 12);
+      hLine(doc, margin, margin+contentW, yTop + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+      L.setY(yTop + 24);
+    }
+
+    function itemRow(it){
+      const parcial = Number(it.pu||0) * Number(it.qty||0);
+      const pctv = (parcial/denom)*100;
+
+      doc.setFont("helvetica","normal"); doc.setFontSize(9.0);
+      const descLines = doc.splitTextToSize(safe(it.desc||""), DESC_W).slice(0,2);
+      const rowH = Math.max(18, 8 + descLines.length*10);
+
+      const jumped = L.ensure(rowH + 10);
+      if(jumped) header();
+
+      const yTop = L.getY();
+      const baseY = yTop + 12;
+
+      doc.setFont("helvetica","bold");
+      doc.text(safe(it.code||""), X.item, baseY);
+
+      doc.setFont("helvetica","normal");
+      doc.text(descLines, X.desc, baseY);
+
+      doc.text(moneyCOP0(parcial), X.parc, baseY, { align:"right" });
+      doc.text(pctv.toFixed(2) + "%", X.pct, baseY, { align:"right" });
+
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+      L.setY(yTop + rowH + 2);
+    }
+
+    header();
+
+    if(!all.length){
+      L.p("Sin ítems.");
+    }else{
+      let currentChap = null;
+      for(const it of all){
+        const chap = getChapterFromItem(it);
+        if(chap !== currentChap){
+          currentChap = chap;
+          chapterTitle(`CAPÍTULO ${chap}`, getChapterNameFromItem(it));
+          header();
+        }
+        itemRow(it);
+      }
+    }
+
+    ensureWithHeader(L, 50, header);
+    const yT = L.getY();
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.4);
+    doc.text("TOTAL COSTOS DIRECTOS", margin, yT + 12);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.6);
+    doc.text(moneyCOP0(totalDirecto), X.parc, yT + 12, { align:"right" });
+    doc.text("100.00%", X.pct, yT + 12, { align:"right" });
+
+    hLine(doc, margin, margin+contentW, yT + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+    L.setY(yT + 26);
+
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, {
+      docType:"DISTRIBUCIÓN PORCENTUAL COSTOS DIRECTOS",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
+
+    const filename = buildFilenameDistribucionPctDirectos(project);
+    return await finalizePDF(doc, filename, opts);
+  }
+
+  // =========================================================
+  // PDF 4: RENDIMIENTO EQUIPO Y MANO DE OBRA POR ACTIVIDAD
+  // =========================================================
+  function isExactEquipoGroup(g){
+    return String(g||"").trim().toUpperCase() === "EQUIPO Y HERRAMIENTAS";
+  }
+  function isExactManoGroup(g){
+    return String(g||"").trim().toUpperCase() === "MANO DE OBRA";
+  }
+
+  async function exportRendimientoEquipoYManoDeObraPorActividadPDF(project, opts){
+    const doc = newDoc();
+    const L = mkLayout(doc);
+
+    const { items } = Calc.groupByChapters(project);
+    const all = items || [];
+
+    drawInstitutionalCover(doc, L, project, "RENDIMIENTO EQUIPO Y MANO DE OBRA POR ACTIVIDAD");
+
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text("DATOS GENERALES", L.margin, L.getY());
+    L.setY(L.getY()+14);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    L.p(`Proyecto: ${project.name || "—"}`);
+    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    L.p(" ");
+
+    const margin = L.margin;
+    const contentW = L.contentW;
+
+    let cols = [
+      { k:"item", label:"ITEM", w:42, align:"left" },
+      { k:"unid", label:"UNID", w:28, align:"center" },
+      { k:"cant", label:"CANT", w:40, align:"right" },
+
+      { k:"eqDesc", label:"EQUIPO", w:158, align:"left" },
+      { k:"eqR", label:"R/D", w:40, align:"right" },
+      { k:"eqD", label:"DÍAS", w:40, align:"right" },
+
+      { k:"moDesc", label:"M.O.", w:158, align:"left" },
+      { k:"moR", label:"R/D", w:40, align:"right" },
+      { k:"moD", label:"DÍAS", w:40, align:"right" }
+    ];
+    cols = fitColsToWidth(cols, contentW, 22);
+
+    function header(){
+      const yTop = L.getY();
+      const h = 18;
+      L.ensure(h + 8);
+
+      let x = margin;
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(7.2);
+
+      for(const c of cols){
+        drawCellText(doc, x, yTop, c.w, h, c.label, "center", { bold:true, fontSize:7.2 });
+        x += c.w;
+      }
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      L.setY(yTop + h + 6);
+    }
+
+    function chapterBand(txt){
+      ensureWithHeader(L, 26, header);
+      const yTop = L.getY();
+      doc.setFont("helvetica","bold"); doc.setFontSize(9.2);
+      doc.text(String(txt||""), margin, yTop + 12);
+      hLine(doc, margin, margin+contentW, yTop + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+      L.setY(yTop + 24);
+    }
+
+    async function itemBlock(it){
+      const qtyItem = Number(it.qty||0);
+      const apuObj = await getAPUForProjectItem(project, it);
+      const lines = (apuObj && Array.isArray(apuObj.lines)) ? apuObj.lines : [];
+
+      const equipos = [];
+      const manos = [];
+
+      for(const ln of lines){
+        const grp = String(ln.group || ln.tipo || "").trim();
+        if(isExactEquipoGroup(grp)) equipos.push(ln);
+        if(isExactManoGroup(grp)) manos.push(ln);
+      }
+
+      const maxRows = Math.max(equipos.length, manos.length, 1);
+
+      for(let i=0;i<maxRows;i++){
+        const eq = equipos[i] || null;
+        const mo = manos[i] || null;
+
+        doc.setFont("helvetica","normal"); doc.setFontSize(7.2);
+
+        const eqLines = splitToLines(doc, eq?.desc||"", cols[3].w - 6, 2);
+        const moLines = splitToLines(doc, mo?.desc||"", cols[6].w - 6, 2);
+
+        const rowH = Math.max(18, 8 + Math.max(eqLines.length, moLines.length) * 9);
+
+        const jumped = L.ensure(rowH + 10);
+        if(jumped) header();
+
+        const yTop = L.getY();
+        let x = margin;
+
+        drawCellText(doc, x, yTop, cols[0].w, rowH, (i===0? safe(it.code||"") : ""), "left", { bold:(i===0), fontSize:7.2 }); x += cols[0].w;
+        drawCellText(doc, x, yTop, cols[1].w, rowH, (i===0? safe(it.unit||"") : ""), "center", { fontSize:7.2 }); x += cols[1].w;
+        drawCellText(doc, x, yTop, cols[2].w, rowH, (i===0? fmt0(qtyItem) : ""), "right", { fontSize:7.2 }); x += cols[2].w;
+
+        const eqR = eq ? Number(eq.qty||0) : 0;
+        const eqD = eq ? Math.round(qtyItem * eqR) : 0;
+
+        drawCellText(doc, x, yTop, cols[3].w, rowH, eq ? eqLines : "-", "left", { fontSize:7.2 }); x += cols[3].w;
+        drawCellText(doc, x, yTop, cols[4].w, rowH, eq ? fmt2(eqR) : "0.00", "right", { fontSize:7.2 }); x += cols[4].w;
+        drawCellText(doc, x, yTop, cols[5].w, rowH, eq ? String(eqD) : "0", "right", { fontSize:7.2 }); x += cols[5].w;
+
+        const moR = mo ? Number(mo.qty||0) : 0;
+        const moD = mo ? Math.round(qtyItem * moR) : 0;
+
+        drawCellText(doc, x, yTop, cols[6].w, rowH, mo ? moLines : "-", "left", { fontSize:7.2 }); x += cols[6].w;
+        drawCellText(doc, x, yTop, cols[7].w, rowH, mo ? fmt2(moR) : "0.00", "right", { fontSize:7.2 }); x += cols[7].w;
+        drawCellText(doc, x, yTop, cols[8].w, rowH, mo ? String(moD) : "0", "right", { fontSize:7.2 });
+
+        hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+        L.setY(yTop + rowH + 2);
+      }
+    }
+
+    header();
+
+    if(!all.length){
+      L.p("Sin ítems.");
+    }else{
+      let currentChap = null;
+      for(const it of all){
+        const chap = getChapterFromItem(it);
+        if(chap !== currentChap){
+          currentChap = chap;
+          chapterBand(`CAPÍTULO ${chap} — ${getChapterNameFromItem(it)}`);
+          header();
+        }
+        await itemBlock(it);
+      }
+    }
+
+    L.setY(L.getY()+10);
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, {
+      docType:"RENDIMIENTO EQUIPO Y MANO DE OBRA",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
+
+    const filename = buildFilenameRendimientos(project);
+    return await finalizePDF(doc, filename, opts);
+  }
+
+  // =========================================================
+  // PDF 5: RESUMEN MATERIALES POR ACTIVIDAD
+  // =========================================================
+  async function exportResumenMaterialesPorActividadPDF(project, opts){
+    const doc = newDoc();
+    const L = mkLayout(doc);
+
+    const { items } = Calc.groupByChapters(project);
+    const all = items || [];
+
+    drawInstitutionalCover(doc, L, project, "RESUMEN MATERIALES POR ACTIVIDAD");
+
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text("DATOS GENERALES", L.margin, L.getY());
+    L.setY(L.getY()+14);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    L.p(`Proyecto: ${project.name || "—"}`);
+    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    L.p(" ");
+
+    const margin = L.margin;
+    const contentW = L.contentW;
+
+    let cols = [
+      { k:"item", label:"ITEM", w:42, align:"left" },
+      { k:"desc", label:"DESC", w:130, align:"left" },
+      { k:"unid", label:"UNID", w:28, align:"center" },
+      { k:"cantItem", label:"CANT", w:40, align:"right" },
+
+      { k:"insDesc", label:"INSUMO", w:150, align:"left" },
+      { k:"insUn", label:"U", w:24, align:"center" },
+      { k:"cantUnit", label:"C/U", w:34, align:"right" },
+      { k:"vrUnit", label:"VR U", w:54, align:"right" },
+      { k:"cantTot", label:"C TOT", w:44, align:"right" },
+      { k:"parc", label:"VR PARC", w:66, align:"right" }
+    ];
+    cols = fitColsToWidth(cols, contentW, 22);
+
+    function header(){
+      const yTop = L.getY();
+      const h = 18;
+      L.ensure(h + 8);
+
+      let x = margin;
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(7.2);
+
+      for(const c of cols){
+        drawCellText(doc, x, yTop, c.w, h, c.label, "center", { bold:true, fontSize:7.2 });
+        x += c.w;
+      }
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      L.setY(yTop + h + 6);
+    }
+
+    function chapterBand(txt){
+      ensureWithHeader(L, 26, header);
+      const yTop = L.getY();
+      doc.setFont("helvetica","bold"); doc.setFontSize(9.2);
+      doc.text(String(txt||""), margin, yTop + 12);
+      hLine(doc, margin, margin+contentW, yTop + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+      L.setY(yTop + 24);
+    }
+
+    async function itemMaterials(it){
+      const qtyItem = Number(it.qty||0);
+      const apuObj = await getAPUForProjectItem(project, it);
+      const lines = (apuObj && Array.isArray(apuObj.lines)) ? apuObj.lines : [];
+
+      const mats = [];
+      for(const ln of lines){
+        const grp = classifyDirectGroup(ln.group || ln.tipo || "");
+        if(grp === "MATERIALES") mats.push(ln);
+      }
+
+      let sub = 0;
+
+      if(!mats.length){
+        const rowH = 18;
+        const jumped = L.ensure(rowH + 10);
+        if(jumped) header();
+
+        const yTop = L.getY();
+        let x = margin;
+
+        drawCellText(doc, x, yTop, cols[0].w, rowH, safe(it.code||""), "left", { bold:true, fontSize:7.2 }); x += cols[0].w;
+        const itDesc = splitToLines(doc, safe(it.desc||""), cols[1].w-6, 1);
+        drawCellText(doc, x, yTop, cols[1].w, rowH, itDesc, "left", { fontSize:7.2 }); x += cols[1].w;
+        drawCellText(doc, x, yTop, cols[2].w, rowH, safe(it.unit||""), "center", { fontSize:7.2 }); x += cols[2].w;
+        drawCellText(doc, x, yTop, cols[3].w, rowH, fmt0(qtyItem), "right", { fontSize:7.2 }); x += cols[3].w;
+
+        drawCellText(doc, x, yTop, cols[4].w, rowH, "-", "left", { fontSize:7.2 }); x += cols[4].w;
+        drawCellText(doc, x, yTop, cols[5].w, rowH, "-", "center", { fontSize:7.2 }); x += cols[5].w;
+        drawCellText(doc, x, yTop, cols[6].w, rowH, "0.00", "right", { fontSize:7.2 }); x += cols[6].w;
+        drawCellText(doc, x, yTop, cols[7].w, rowH, moneyCOP0(0), "right", { fontSize:7.2 }); x += cols[7].w;
+        drawCellText(doc, x, yTop, cols[8].w, rowH, "0.00", "right", { fontSize:7.2 }); x += cols[8].w;
+        drawCellText(doc, x, yTop, cols[9].w, rowH, moneyCOP0(0), "right", { bold:true, fontSize:7.2 });
+
+        hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+        L.setY(yTop + rowH + 2);
+      }else{
+        for(let i=0;i<mats.length;i++){
+          const ln = mats[i];
+          const cantUnit = Number(ln.qty||0);
+          const pu = Number(ln.pu||0);
+          const cantTot = qtyItem * cantUnit;
+          const parcial = cantTot * pu;
+          sub += parcial;
+
+          doc.setFont("helvetica","normal"); doc.setFontSize(7.2);
+          const itDesc = splitToLines(doc, safe(it.desc||""), cols[1].w-6, 1);
+          const insDesc = splitToLines(doc, safe(ln.desc||""), cols[4].w-6, 2);
+
+          const rowH = Math.max(18, 8 + (insDesc.length)*9);
+
+          const jumped = L.ensure(rowH + 10);
+          if(jumped) header();
+
+          const yTop = L.getY();
+          let x = margin;
+
+          drawCellText(doc, x, yTop, cols[0].w, rowH, (i===0? safe(it.code||"") : ""), "left", { bold:(i===0), fontSize:7.2 }); x += cols[0].w;
+          drawCellText(doc, x, yTop, cols[1].w, rowH, (i===0? itDesc : ""), "left", { fontSize:7.2 }); x += cols[1].w;
+          drawCellText(doc, x, yTop, cols[2].w, rowH, (i===0? safe(it.unit||"") : ""), "center", { fontSize:7.2 }); x += cols[2].w;
+          drawCellText(doc, x, yTop, cols[3].w, rowH, (i===0? fmt0(qtyItem) : ""), "right", { fontSize:7.2 }); x += cols[3].w;
+
+          drawCellText(doc, x, yTop, cols[4].w, rowH, insDesc, "left", { fontSize:7.2 }); x += cols[4].w;
+          drawCellText(doc, x, yTop, cols[5].w, rowH, safe(ln.unit||""), "center", { fontSize:7.2 }); x += cols[5].w;
+          drawCellText(doc, x, yTop, cols[6].w, rowH, fmt2(cantUnit), "right", { fontSize:7.2 }); x += cols[6].w;
+
+          {
+            const s = moneyCOP0(pu);
+            const fs = fitTextRight(doc, s, cols[7].w-4, 7.2, 6.2);
+            drawCellText(doc, x, yTop, cols[7].w, rowH, s, "right", { fontSize:fs });
+            x += cols[7].w;
+          }
+          drawCellText(doc, x, yTop, cols[8].w, rowH, fmt2(cantTot), "right", { fontSize:7.2 }); x += cols[8].w;
+
+          {
+            const s = moneyCOP0(parcial);
+            const fs = fitTextRight(doc, s, cols[9].w-4, 7.2, 6.2);
+            drawCellText(doc, x, yTop, cols[9].w, rowH, s, "right", { bold:true, fontSize:fs });
+          }
+
+          hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+          L.setY(yTop + rowH + 2);
+        }
+      }
+
+      ensureWithHeader(L, 28, header);
+      const yS = L.getY();
+      doc.setFont("helvetica","bold"); doc.setFontSize(8.2);
+      doc.text("SubTotal", margin + contentW - 160, yS + 12);
+      doc.text(moneyCOP0(sub), margin + contentW - 8, yS + 12, { align:"right" });
+      hLine(doc, margin, margin+contentW, yS + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+      L.setY(yS + 24);
+
+      return sub;
+    }
+
+    header();
+
+    let grand = 0;
+
+    if(!all.length){
+      L.p("Sin ítems.");
+    }else{
+      let currentChap = null;
+      for(const it of all){
+        const chap = getChapterFromItem(it);
+        if(chap !== currentChap){
+          currentChap = chap;
+          chapterBand(`CAPÍTULO ${chap} — ${getChapterNameFromItem(it)}`);
+          header();
+        }
+        grand += await itemMaterials(it);
+      }
+    }
+
+    ensureWithHeader(L, 40, header);
+    const yT = L.getY();
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.4);
+    doc.text("VALOR TOTAL", margin, yT + 12);
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.6);
+    doc.text(moneyCOP0(grand), margin + contentW - 8, yT + 12, { align:"right" });
+    hLine(doc, margin, margin+contentW, yT + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+    L.setY(yT + 26);
+
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, {
+      docType:"RESUMEN MATERIALES POR ACTIVIDAD",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
+
+    const filename = buildFilenameResumenMaterialesActividad(project);
+    return await finalizePDF(doc, filename, opts);
+  }
+
+  // =========================================================
+  // PDF 6: CANTIDAD DE RECURSOS E INSUMOS DEL PRESUPUESTO
+  // =========================================================
+  async function exportCantidadRecursosEInsumosPresupuestoPDF(project, opts){
+    const doc = newDoc();
+    const L = mkLayout(doc);
+
+    const { items } = Calc.groupByChapters(project);
+    const all = items || [];
+
+    drawInstitutionalCover(doc, L, project, "CANTIDAD DE RECURSOS E INSUMOS DEL PRESUPUESTO");
+
+    doc.addPage();
+    L.setY(PDF_THEME.safe.top);
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(11);
+    doc.text("DATOS GENERALES", L.margin, L.getY());
+    L.setY(L.getY()+14);
+
+    doc.setFont("helvetica","normal"); doc.setFontSize(10);
+    L.p(`Proyecto: ${project.name || "—"}`);
+    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    L.p(" ");
+
+    const totalDirectoPres = all.reduce((s,it)=> s + (Number(it.pu||0)*Number(it.qty||0)), 0) || 0;
+    const denom = totalDirectoPres>0 ? totalDirectoPres : 1;
+
+    const map = new Map();
+
+    for(const it of all){
+      const qtyItem = Number(it.qty||0);
+      const apuObj = await getAPUForProjectItem(project, it);
+      const lines = (apuObj && Array.isArray(apuObj.lines)) ? apuObj.lines : [];
+
+      for(const ln of lines){
+        const desc = safe(ln.desc||"").trim();
+        if(!desc) continue;
+
+        const unit = safe(ln.unit||"").trim();
+        const qtyUnit = Number(ln.qty||0);
+        const pu = Number(ln.pu||0);
+
+        const qtyTotal = qtyUnit * qtyItem;
+        const parcial = qtyTotal * pu;
+
+        const key = desc;
+
+        if(!map.has(key)){
+          map.set(key, {
+            desc,
+            unit,
+            precioComercial: pu,
+            precioUnitario: pu,
+            cantidad: 0,
+            vrParcial: 0
+          });
+        }
+
+        const rec = map.get(key);
+        if(!rec.unit && unit) rec.unit = unit;
+        if(!Number.isFinite(Number(rec.precioUnitario))) rec.precioUnitario = pu;
+
+        rec.cantidad += qtyTotal;
+        rec.vrParcial += parcial;
+      }
+    }
+
+    try{
+      if(window.APUBase && typeof APUBase.getInsumoByDesc === "function"){
+        for(const rec of map.values()){
+          const ins = await APUBase.getInsumoByDesc(rec.desc);
+          if(ins && Number.isFinite(Number(ins.pu || ins.precio || ins.precioComercial))){
+            rec.precioComercial = Number(ins.pu || ins.precio || ins.precioComercial);
+          }
+        }
+      }
+    }catch(_){}
+
+    const rows = Array.from(map.values()).sort((a,b)=> a.desc.localeCompare(b.desc, "es"));
+
+    const margin = L.margin;
+    const contentW = L.contentW;
+
+    let cols = [
+      { k:"desc", label:"DESCRIPCIÓN", w:220, align:"left" },
+      { k:"unit", label:"UNID", w:34, align:"center" },
+      { k:"pcom", label:"P COM", w:62, align:"right" },
+      { k:"puni", label:"P UNI", w:62, align:"right" },
+      { k:"cant", label:"CANT", w:56, align:"right" },
+      { k:"parc", label:"VR PARC", w:66, align:"right" },
+      { k:"pct",  label:"% INC", w:50, align:"right" }
+    ];
+    cols = fitColsToWidth(cols, contentW, 22);
+
+    function header(){
+      const yTop = L.getY();
+      const h = 18;
+      L.ensure(h + 8);
+
+      let x = margin;
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(7.2);
+
+      for(const c of cols){
+        drawCellText(doc, x, yTop, c.w, h, c.label, "center", { bold:true, fontSize:7.2 });
+        x += c.w;
+      }
+      hLine(doc, margin, margin+contentW, yTop + h, PDF_THEME.lines.header.w, PDF_THEME.lines.header.c);
+      L.setY(yTop + h + 6);
+    }
+
+    function row(rec){
+      doc.setFont("helvetica","normal"); doc.setFontSize(7.2);
+      const descLines = splitToLines(doc, rec.desc, cols[0].w - 6, 2);
+      const rowH = Math.max(18, 8 + (descLines.length)*9);
+
+      const jumped = L.ensure(rowH + 10);
+      if(jumped) header();
+
+      const pctv = (Number(rec.vrParcial||0)/denom)*100;
+
+      const yTop = L.getY();
+      let x = margin;
+
+      drawCellText(doc, x, yTop, cols[0].w, rowH, descLines, "left", { fontSize:7.2 }); x += cols[0].w;
+      drawCellText(doc, x, yTop, cols[1].w, rowH, safe(rec.unit||""), "center", { fontSize:7.2 }); x += cols[1].w;
+
+      {
+        const s = moneyCOP0(rec.precioComercial||0);
+        const fs = fitTextRight(doc, s, cols[2].w-4, 7.2, 6.2);
+        drawCellText(doc, x, yTop, cols[2].w, rowH, s, "right", { fontSize:fs }); x += cols[2].w;
+      }
+      {
+        const s = moneyCOP0(rec.precioUnitario||0);
+        const fs = fitTextRight(doc, s, cols[3].w-4, 7.2, 6.2);
+        drawCellText(doc, x, yTop, cols[3].w, rowH, s, "right", { fontSize:fs }); x += cols[3].w;
+      }
+
+      drawCellText(doc, x, yTop, cols[4].w, rowH, fmt2(rec.cantidad||0), "right", { fontSize:7.2 }); x += cols[4].w;
+
+      {
+        const s = moneyCOP0(rec.vrParcial||0);
+        const fs = fitTextRight(doc, s, cols[5].w-4, 7.2, 6.2);
+        drawCellText(doc, x, yTop, cols[5].w, rowH, s, "right", { bold:true, fontSize:fs }); x += cols[5].w;
+      }
+
+      drawCellText(doc, x, yTop, cols[6].w, rowH, pctv.toFixed(2) + "%", "right", { fontSize:7.2 });
+
+      hLine(doc, margin, margin+contentW, yTop + rowH, PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+      L.setY(yTop + rowH + 2);
+    }
+
+    header();
+
+    if(!rows.length){
+      L.p("Sin recursos/insumos para listar.");
+    }else{
+      for(const r of rows){
+        row(r);
+      }
+    }
+
+    const totalVR = rows.reduce((s,r)=>s+Number(r.vrParcial||0),0) || 0;
+
+    ensureWithHeader(L, 40, header);
+    const yT = L.getY();
+
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.4);
+    doc.text("TOTAL", margin, yT + 12);
+    doc.setFont("helvetica","bold"); doc.setFontSize(9.6);
+    doc.text(moneyCOP0(totalVR), margin + contentW - 90, yT + 12, { align:"right" });
+    doc.text("100.00%", margin + contentW - 8, yT + 12, { align:"right" });
+    hLine(doc, margin, margin+contentW, yT + 18, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+    L.setY(yT + 26);
+
+    await appendElaboradorFirma(doc, L);
+
+    stampHeaderFooter(doc, {
+      docType:"CANTIDAD DE RECURSOS E INSUMOS",
+      projectName: project.name || "",
+      logoDataUrl: project.logoDataUrl || ""
+    });
+
+    const filename = buildFilenameCantRecursosInsumos(project);
+    return await finalizePDF(doc, filename, opts);
+  }
+
+  // =========================================================
+  // PRESUPUESTO PDF (AJUSTE #2 aplicado aquí)
   // =========================================================
   async function exportPresupuestoPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
 
     const { groups, items } = Calc.groupByChapters(project);
-    const totals = Calc.calcTotals(project);
+
+    const totals = totalsCompat(project);
+    const adminPct = pct(project, "adminPct", "aiuPct");
+    const imprevPct = pct(project, "imprevPct", null);
+    const utilPct = pct(project, "utilPct", null);
+    const ivaUtilPct = pct(project, "ivaUtilPct", "ivaPct");
 
     drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA");
 
     doc.addPage();
-    L.setY(54);
+    L.setY(PDF_THEME.safe.top);
 
-    L.h1("PRESUPUESTO DE OBRA");
-    L.h2(project.name || "Proyecto");
-    L.p(`Entidad: ${project.entity || "-"}`);
-    L.p(`Ubicación: ${project.location || "-"}`);
-    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "RESUMEN ECONÓMICO", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
 
-    L.p(" ");
-    L.h2("Resumen económico");
-    L.row("Costo directo:", moneyCOP(totals.directo));
-    L.row(`AIU (${project.aiuPct||0}%):`, moneyCOP(totals.aiu));
-    L.row(`IVA (${project.ivaPct||0}%):`, moneyCOP(totals.iva));
-    L.row("TOTAL:", moneyCOP(totals.total));
+    L.row("TOTAL COSTOS DIRECTOS:", moneyCOP(totals.directo));
+    L.row(`ADMINISTRACIÓN (${adminPct||0}%):`, moneyCOP(totals.admin||0));
+    L.row(`IMPREVISTOS (${imprevPct||0}%):`, moneyCOP(totals.imprev||0));
+    L.row(`UTILIDAD (${utilPct||0}%):`, moneyCOP(totals.util||0));
+    L.row("SUBTOTAL:", moneyCOP(totals.subtotal||0));
+    L.row(`IVA sobre Utilidad (${ivaUtilPct||0}%):`, moneyCOP(totals.ivaUtil||0));
+    L.row("VALOR TOTAL:", moneyCOP(totals.total));
 
     L.p(" ");
-    L.h2("Capítulos (subtotales)");
+
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "CAPÍTULOS (SUBTOTALES)", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
+
     if(!groups.length){
       L.p("No hay ítems para calcular capítulos.");
     }else{
       for(const g of groups){
-        L.ensure(18);
+        L.ensure(20);
         doc.setFont("helvetica","bold");
-        doc.setFontSize(10.5);
+        doc.setFontSize(10.2);
         doc.text(`${g.chapterCode}  ${safe(g.chapterName||"")}`, L.margin, L.getY());
 
         doc.setFont("helvetica","normal");
         doc.text(`Ítems: ${g.itemsCount}`, L.margin + 320, L.getY());
         doc.setFont("helvetica","bold");
         doc.text(moneyCOP(g.subtotal), L.margin + 520, L.getY(), { align:"right" });
-        L.setY(L.getY()+14);
+        L.setY(L.getY()+16);
+
+        hLine(doc, L.margin, L.margin + L.contentW, L.getY(), PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+        L.setY(L.getY()+10);
       }
     }
 
     doc.addPage();
-    L.setY(54);
-    L.h1("PRESUPUESTO DE OBRA (DETALLE)");
+    L.setY(PDF_THEME.safe.top);
 
-    L.line();
-    L.tableHeaderPresupuesto();
+    // ✅ FIX #2: Se elimina el bloque inicial "DETALLE DE ÍTEMS" + header duplicado.
+    // Antes:
+    //   drawBand(... "DETALLE DE ÍTEMS");
+    //   L.tableHeaderPresupuesto();
+    // Ahora: el detalle inicia directamente por capítulo (capítulo + header).
 
     if(!items.length){
       L.p("Sin ítems.");
@@ -682,13 +2173,8 @@
         const chap = it.chapterCode || (String(it.code||"").split(".")[0] || "SIN");
         if(chap !== currentChap){
           currentChap = chap;
-
-          L.ensure(28);
-          doc.setFont("helvetica","bold");
-          doc.setFontSize(11);
-          doc.text(`CAPÍTULO ${chap} — ${safe(it.chapterName||"")}`, L.margin, L.getY());
-          L.setY(L.getY()+18);
-
+          drawBand(doc, L.margin, L.getY(), L.contentW, 18, `CAPÍTULO ${chap} — ${safe(it.chapterName||"")}`, { fontSize:9.4, bold:true });
+          L.setY(L.getY()+22);
           L.tableHeaderPresupuesto();
         }
         L.tableRowPresupuesto(it);
@@ -696,13 +2182,16 @@
     }
 
     L.line();
-    doc.setFont("helvetica","bold"); doc.setFontSize(11);
-    doc.text("Totales", L.margin, L.getY()); L.setY(L.getY()+16);
-    doc.setFont("helvetica","normal"); doc.setFontSize(10);
-    L.row("Costo directo:", moneyCOP(totals.directo));
-    L.row(`AIU (${project.aiuPct||0}%):`, moneyCOP(totals.aiu));
-    L.row(`IVA (${project.ivaPct||0}%):`, moneyCOP(totals.iva));
-    L.row("TOTAL:", moneyCOP(totals.total));
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "TOTALES", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
+
+    L.row("TOTAL COSTOS DIRECTOS:", moneyCOP(totals.directo));
+    L.row(`ADMINISTRACIÓN (${adminPct||0}%):`, moneyCOP(totals.admin||0));
+    L.row(`IMPREVISTOS (${imprevPct||0}%):`, moneyCOP(totals.imprev||0));
+    L.row(`UTILIDAD (${utilPct||0}%):`, moneyCOP(totals.util||0));
+    L.row("SUBTOTAL:", moneyCOP(totals.subtotal||0));
+    L.row(`IVA sobre Utilidad (${ivaUtilPct||0}%):`, moneyCOP(totals.ivaUtil||0));
+    L.row("VALOR TOTAL:", moneyCOP(totals.total));
 
     await appendElaboradorFirma(doc, L);
 
@@ -717,57 +2206,66 @@
   }
 
   // =========================================================
-  // PRESUPUESTO + APUs (con portada institucional + logo)
-  // opts: { share: true }
+  // PRESUPUESTO + APUs (sin cambios)
   // =========================================================
   async function exportPresupuestoConAPUsPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
 
     const { groups, items } = Calc.groupByChapters(project);
-    const totals = Calc.calcTotals(project);
+
+    const totals = totalsCompat(project);
+    const adminPct = pct(project, "adminPct", "aiuPct");
+    const imprevPct = pct(project, "imprevPct", null);
+    const utilPct = pct(project, "utilPct", null);
+    const ivaUtilPct = pct(project, "ivaUtilPct", "ivaPct");
 
     drawInstitutionalCover(doc, L, project, "PRESUPUESTO DE OBRA + APUs");
 
     doc.addPage();
-    L.setY(54);
+    L.setY(PDF_THEME.safe.top);
 
-    L.h1("PRESUPUESTO DE OBRA + APUs");
-    L.h2(project.name || "Proyecto");
-    L.p(`Entidad: ${project.entity || "-"}`);
-    L.p(`Ubicación: ${project.location || "-"}`);
-    L.p(`Fecha generación: ${new Date().toLocaleString()}`);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "RESUMEN ECONÓMICO", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
 
-    L.p(" ");
-    L.h2("Resumen económico");
-    L.row("Costo directo:", moneyCOP(totals.directo));
-    L.row(`AIU (${project.aiuPct||0}%):`, moneyCOP(totals.aiu));
-    L.row(`IVA (${project.ivaPct||0}%):`, moneyCOP(totals.iva));
-    L.row("TOTAL:", moneyCOP(totals.total));
+    L.row("TOTAL COSTOS DIRECTOS:", moneyCOP(totals.directo));
+    L.row(`ADMINISTRACIÓN (${adminPct||0}%):`, moneyCOP(totals.admin||0));
+    L.row(`IMPREVISTOS (${imprevPct||0}%):`, moneyCOP(totals.imprev||0));
+    L.row(`UTILIDAD (${utilPct||0}%):`, moneyCOP(totals.util||0));
+    L.row("SUBTOTAL:", moneyCOP(totals.subtotal||0));
+    L.row(`IVA sobre Utilidad (${ivaUtilPct||0}%):`, moneyCOP(totals.ivaUtil||0));
+    L.row("VALOR TOTAL:", moneyCOP(totals.total));
 
     L.p(" ");
-    L.h2("Capítulos (subtotales)");
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "CAPÍTULOS (SUBTOTALES)", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
+
     if(!groups.length){
       L.p("No hay ítems para calcular capítulos.");
     }else{
       for(const g of groups){
-        L.ensure(18);
+        L.ensure(20);
         doc.setFont("helvetica","bold");
-        doc.setFontSize(10.5);
+        doc.setFontSize(10.2);
         doc.text(`${g.chapterCode}  ${safe(g.chapterName||"")}`, L.margin, L.getY());
 
         doc.setFont("helvetica","normal");
         doc.text(`Ítems: ${g.itemsCount}`, L.margin + 320, L.getY());
         doc.setFont("helvetica","bold");
         doc.text(moneyCOP(g.subtotal), L.margin + 520, L.getY(), { align:"right" });
-        L.setY(L.getY()+14);
+        L.setY(L.getY()+16);
+
+        hLine(doc, L.margin, L.margin + L.contentW, L.getY(), PDF_THEME.lines.row.w, PDF_THEME.lines.row.c);
+        L.setY(L.getY()+10);
       }
     }
 
     doc.addPage();
-    L.setY(54);
-    L.h1("PRESUPUESTO DE OBRA (DETALLE)");
-    L.line();
+    L.setY(PDF_THEME.safe.top);
+
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "PRESUPUESTO (DETALLE)", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
+
     L.tableHeaderPresupuesto();
     for(const it of items){
       L.tableRowPresupuesto(it);
@@ -778,20 +2276,26 @@
       if(!code) continue;
 
       doc.addPage();
-      L.setY(54);
+      L.setY(PDF_THEME.safe.top);
 
       const apuObj = await getAPUForProjectItem(project, it);
       if(!apuObj){
-        L.h1(`APU ${code}`);
+        drawBand(doc, L.margin, L.getY(), L.contentW, 18, `APU ${code}`, { fontSize:10, bold:true });
+        L.setY(L.getY()+24);
         L.p("No se encontró descomposición (override, custom o base).");
         continue;
       }
 
-      L.h1(`APU ${code}`);
-      L.h2(apuObj.subtitle || it.desc || "");
+      drawBand(doc, L.margin, L.getY(), L.contentW, 18, `APU ${code}`, { fontSize:10, bold:true });
+      L.setY(L.getY()+24);
+
+      doc.setFont("helvetica","bold"); doc.setFontSize(10.2);
+      doc.text(safe(apuObj.subtitle || it.desc || ""), L.margin, L.getY());
+      L.setY(L.getY()+14);
+
+      doc.setFont("helvetica","normal"); doc.setFontSize(10);
       L.p(`Unidad: ${safe(apuObj.unit||it.unit||"-")} · Costo directo: ${moneyCOP(apuObj.directo||0)}`);
 
-      L.line();
       L.tableHeaderAPU();
 
       const lines = apuObj.lines || [];
@@ -812,8 +2316,10 @@
     }
 
     doc.addPage();
-    L.setY(54);
-    L.h1("FIRMAS");
+    L.setY(PDF_THEME.safe.top);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "FIRMAS", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
+
     await appendElaboradorFirma(doc, L);
 
     stampHeaderFooter(doc, {
@@ -826,10 +2332,9 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  /* =========================================================
-     ESPECIFICACIONES TÉCNICAS
-     opts: { share: true }
-     ========================================================= */
+  // =========================================================
+  // ESPECIFICACIONES TÉCNICAS (sin cambios)
+  // =========================================================
   function detectNormatividad(desc){
     const t = String(desc||"").toLowerCase();
     const invias = /v(i|í)a|carretera|pavimento|asfalto|subbase|base granular|señalizaci(o|ó)n|cuneta|alcantarilla|drenaje/.test(t);
@@ -873,12 +2378,12 @@
 
     drawInstitutionalCover(doc, L, project, "ESPECIFICACIONES TÉCNICAS DEL PROYECTO");
 
+    // TOC
     doc.addPage();
-    L.setY(54);
+    L.setY(PDF_THEME.safe.top);
 
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("TABLA DE CONTENIDO", L.margin, L.getY());
-    L.setY(L.getY()+22);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "TABLA DE CONTENIDO", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
 
     doc.setFont("helvetica","normal"); doc.setFontSize(11);
 
@@ -899,12 +2404,12 @@
       L.setY(L.getY()+16);
     }
 
+    // 1. Información general
     doc.addPage();
-    L.setY(54);
+    L.setY(PDF_THEME.safe.top);
 
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("1. INFORMACIÓN GENERAL", L.margin, L.getY());
-    L.setY(L.getY()+18);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "1. INFORMACIÓN GENERAL", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
 
     doc.setFont("helvetica","normal"); doc.setFontSize(11);
     L.p(`Entidad: ${entidadContratante}`);
@@ -916,12 +2421,12 @@
       if(elab.matricula) L.p(`Matrícula Profesional: ${elab.matricula}`);
     }
 
+    // 2. Alcance
     doc.addPage();
-    L.setY(54);
+    L.setY(PDF_THEME.safe.top);
 
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text("2. ALCANCE DEL DOCUMENTO", L.margin, L.getY());
-    L.setY(L.getY()+18);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, "2. ALCANCE DEL DOCUMENTO", { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
 
     doc.setFont("helvetica","normal"); doc.setFontSize(11);
     L.p(
@@ -943,22 +2448,25 @@
       const chapCode = safe(g.chapterCode||"");
       const chapName = safe(g.chapterName||"");
       const chapKey = chapCode || "";
-
-      doc.addPage();
-      L.setY(54);
-
-      doc.setFont("helvetica","bold"); doc.setFontSize(12);
-      doc.text(
-        `${chapSec}. CAPÍTULO ${chapCode}${chapName ? " – " + chapName.toUpperCase() : ""}`,
-        L.margin,
-        L.getY()
-      );
-      L.setY(L.getY()+18);
-
       const chapItems = byChap.get(chapKey) || [];
+
       let itemSub = 1;
 
       for(const it of chapItems){
+        doc.addPage();
+        L.setY(PDF_THEME.safe.top);
+
+        drawBand(
+          doc,
+          L.margin,
+          L.getY(),
+          L.contentW,
+          18,
+          `${chapSec}. CAPÍTULO ${chapCode}${chapName ? " – " + chapName.toUpperCase() : ""}   |   ${chapSec}.${itemSub} ÍTEM ${safe(it.code||"")}`,
+          { fontSize:9.2, bold:true }
+        );
+        L.setY(L.getY()+24);
+
         const code = safe(it.code||"");
         const desc = safe(it.desc||"");
         const unit = safe(it.unit||"-");
@@ -968,10 +2476,8 @@
 
         const norms = detectNormatividad(desc);
 
-        doc.setFont("helvetica","bold"); doc.setFontSize(11.5);
-        L.ensure(22);
-        doc.text(`${chapSec}.${itemSub} Ítem ${code} – ${desc}`, L.margin, L.getY());
-        L.setY(L.getY()+16);
+        doc.setFont("helvetica","bold"); doc.setFontSize(11);
+        L.p(`Descripción: ${desc}`);
 
         doc.setFont("helvetica","normal"); doc.setFontSize(11);
         L.p(`Unidad: ${unit} · Cantidad: ${qty||0} · VR Unitario: ${moneyCOP(pu)} · VR Parcial: ${moneyCOP(parcial)}`);
@@ -1073,7 +2579,6 @@
           L.p(`- ${mark(norms.retilap)} RETILAP (según aplique).`);
         }
 
-        L.p(" ");
         itemSub++;
       }
 
@@ -1081,11 +2586,10 @@
     }
 
     doc.addPage();
-    L.setY(54);
+    L.setY(PDF_THEME.safe.top);
 
-    doc.setFont("helvetica","bold"); doc.setFontSize(12);
-    doc.text(`${chapSec}. FIRMAS`, L.margin, L.getY());
-    L.setY(L.getY()+18);
+    drawBand(doc, L.margin, L.getY(), L.contentW, 18, `${chapSec}. FIRMAS`, { fontSize:10, bold:true });
+    L.setY(L.getY()+24);
 
     await appendElaboradorFirma(doc, L);
 
@@ -1100,13 +2604,32 @@
   }
 
   /* =========================================================
-     ✅ API pública
-     - sigue igual para descarga
-     - ahora soporta: PDF.exportPresupuestoPDF(p, {share:true})
+     FIX COMPATIBILIDAD: ALIASES para nombres que llama app.js
+     ========================================================= */
+  async function exportRendimientoEquipoManoObraActividadPDF(project, opts){
+    return await exportRendimientoEquipoYManoDeObraPorActividadPDF(project, opts);
+  }
+  async function exportCantidadRecursosInsumosPresupuestoPDF(project, opts){
+    return await exportCantidadRecursosEInsumosPresupuestoPDF(project, opts);
+  }
+
+  /* =========================================================
+     API pública
      ========================================================= */
   window.PDF = {
     exportPresupuestoPDF,
     exportPresupuestoConAPUsPDF,
-    exportEspecificacionesTecnicasPDF
+    exportEspecificacionesTecnicasPDF,
+
+    exportPresupuestoObraDesagregadoPDF,
+    exportResumenPresupuestoObraDesagregadoPDF,
+    exportDistribucionPorcentualCostosDirectosPDF,
+    exportRendimientoEquipoYManoDeObraPorActividadPDF,
+    exportResumenMaterialesPorActividadPDF,
+    exportCantidadRecursosEInsumosPresupuestoPDF,
+
+    // aliases
+    exportRendimientoEquipoManoObraActividadPDF,
+    exportCantidadRecursosInsumosPresupuestoPDF
   };
 })();

@@ -22,6 +22,14 @@
     <button class="navbtn" id="btnPdfPresupuesto" type="button">PDF Presupuesto</button>
     <button class="navbtn" id="btnPdfPresupuestoAPUs" type="button">PDF Presupuesto + APUs</button>
 
+    <!-- ✅ NUEVOS (6 botones) -->
+    <button class="navbtn" id="btnPdfPresupuestoDesagregado" type="button">PDF Presupuesto de Obra Desagregado</button>
+    <button class="navbtn" id="btnPdfResumenPresupuestoDesagregado" type="button">Resumen Presupuesto de Obra Desagregado</button>
+    <button class="navbtn" id="btnPdfDistribucionPctCD" type="button">Distribucion porcentual de Costos-Directos</button>
+    <button class="navbtn" id="btnPdfRendimientoEqMo" type="button">Rendimiento de Equipo y Mano de Obra por Actividad</button>
+    <button class="navbtn" id="btnPdfResumenMaterialesActividad" type="button">Resumen materiales por actividad</button>
+    <button class="navbtn" id="btnPdfCantRecursosInsumos" type="button">Cantidad de Recurso e Insumos del Presupuesto</button>
+
     <!-- ✅ Especificaciones Técnicas -->
     <button class="navbtn" id="btnPdfEspecificacionesTec" type="button">PDF Especificaciones Técnicas Proyecto</button>
     <button class="navbtn" id="btnDlPdfEspecificacionesTec" type="button">Descargar PDF Especificaciones Técnicas</button>
@@ -63,7 +71,7 @@
     <section class="card" style="margin-top:14px">
       <div class="cardhead">
         <h2>Totales</h2>
-        <p class="muted small">Costo Directo + AIU + IVA</p>
+        <p class="muted small">Costo Directo + Administración + Imprevistos + Utilidad + IVA (sobre Utilidad)</p>
       </div>
       <div id="totalsRows"></div>
     </section>
@@ -403,31 +411,47 @@
     <section class="card">
       <div class="cardhead">
         <h2>Ajustes del proyecto</h2>
-        <p class="muted small">AIU e IVA configurables por proyecto. Formato institucional y logo (por proyecto).</p>
+        <p class="muted small">
+          Configura porcentajes: Administración, Imprevistos, Utilidad e IVA sobre Utilidad.
+          Además, formato institucional y logo (por proyecto).
+        </p>
       </div>
 
       <form class="form" id="formAjustes">
+
+        <!-- ✅ NUEVO: A/I/U + IVA sobre utilidad -->
+        <div class="cardhead" style="margin-top:6px">
+          <h2>Porcentajes para el valor total</h2>
+          <p class="muted small">
+            Cálculo: Directo + Administración + Imprevistos + Utilidad + IVA (sobre Utilidad).
+          </p>
+        </div>
+
         <div class="grid two">
           <div>
-            <label>AIU (%)</label>
-            <input name="aiuPct" inputmode="decimal" placeholder="Ej: 25" />
+            <label>Administración (%)</label>
+            <input name="adminPct" inputmode="decimal" placeholder="Ej: 18" />
           </div>
           <div>
-            <label>IVA (%)</label>
-            <input name="ivaPct" inputmode="decimal" placeholder="Ej: 19" />
+            <label>Imprevistos (%)</label>
+            <input name="imprevPct" inputmode="decimal" placeholder="Ej: 2" />
           </div>
         </div>
 
-        <label>Regla de IVA</label>
-        <select name="ivaBase">
-          <option value="sobre_directo_aiu" selected>IVA sobre (Directo + AIU)</option>
-          <option value="solo_aiu">IVA solo sobre AIU</option>
-          <option value="solo_directo">IVA solo sobre Directo</option>
-        </select>
+        <div class="grid two" style="margin-top:10px">
+          <div>
+            <label>Utilidad (%)</label>
+            <input name="utilPct" inputmode="decimal" placeholder="Ej: 5" />
+          </div>
+          <div>
+            <label>IVA sobre Utilidad (%)</label>
+            <input name="ivaUtilPct" inputmode="decimal" placeholder="Ej: 19" />
+          </div>
+        </div>
 
         <hr class="sep">
 
-        <!-- ✅ NUEVO: Encabezado institucional para PDFs/Excel (por proyecto) -->
+        <!-- ✅ Encabezado institucional para PDFs/Excel (por proyecto) -->
         <div class="cardhead" style="margin-top:6px">
           <h2>Formato institucional (por proyecto)</h2>
           <p class="muted small">
@@ -470,7 +494,7 @@
 
         <hr class="sep">
 
-        <!-- ✅ NUEVO: Logo institucional (por proyecto) -->
+        <!-- ✅ Logo institucional (por proyecto) -->
         <div class="cardhead">
           <h2>Logo institucional (por proyecto)</h2>
           <p class="muted small">Se insertará en el encabezado del PDF y en el Excel.</p>

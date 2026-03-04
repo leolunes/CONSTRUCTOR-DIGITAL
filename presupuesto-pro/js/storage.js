@@ -1,3 +1,4 @@
+
 const STORE_KEY = "presupuesto_pro_v1";
 
 function nowISO(){ return new Date().toISOString(); }
@@ -8,14 +9,50 @@ function normalizeProject(p){
 
   // ✅ Defaults robustos
   proj.currency = String(proj.currency || "COP");
-  proj.aiuPct = Number(proj.aiuPct ?? 25);
-  proj.ivaPct = Number(proj.ivaPct ?? 19);
+
+  // =========================================================
+  // ✅ NUEVO ESQUEMA A-I-U + IVA sobre utilidad
+  // =========================================================
+  // Si NO existen los nuevos campos, derivarlos desde aiuPct/ivaPct (legacy)
+  const hasNew =
+    (proj.adminPct != null) ||
+    (proj.imprevPct != null) ||
+    (proj.utilPct != null) ||
+    (proj.ivaUtilPct != null);
+
+  if(!hasNew){
+    // Legacy -> nuevo
+    const legacyAIU = Number(proj.aiuPct ?? 25);
+    const legacyIVA = Number(proj.ivaPct ?? 19);
+
+    proj.adminPct = Number.isFinite(legacyAIU) ? legacyAIU : 25;
+    proj.imprevPct = 0;
+    proj.utilPct = 0;
+    proj.ivaUtilPct = Number.isFinite(legacyIVA) ? legacyIVA : 19;
+  }else{
+    // Asegurar valores numéricos (con defaults típicos)
+    proj.adminPct = Number(proj.adminPct ?? 18);
+    proj.imprevPct = Number(proj.imprevPct ?? 2);
+    proj.utilPct = Number(proj.utilPct ?? 5);
+    proj.ivaUtilPct = Number(proj.ivaUtilPct ?? 19);
+  }
+
+  // ✅ Compatibilidad: mantener aiuPct / ivaPct para pantallas/PDF antiguos
+  const aiuCompat = Number(proj.adminPct||0) + Number(proj.imprevPct||0) + Number(proj.utilPct||0);
+  proj.aiuPct = Number.isFinite(Number(proj.aiuPct)) ? Number(proj.aiuPct) : aiuCompat;
+  // si ya venía aiuPct pero está en blanco/NaN -> recalcular
+  if(!Number.isFinite(proj.aiuPct)) proj.aiuPct = aiuCompat;
+
+  proj.ivaPct = Number.isFinite(Number(proj.ivaPct)) ? Number(proj.ivaPct) : Number(proj.ivaUtilPct||19);
+  if(!Number.isFinite(proj.ivaPct)) proj.ivaPct = Number(proj.ivaUtilPct||19);
+
+  // ✅ Se conserva por compatibilidad (aunque el nuevo cálculo no lo use)
   proj.ivaBase = String(proj.ivaBase || "sobre_directo_aiu");
 
-  // ✅ NUEVO: Logo institucional (por proyecto)
+  // ✅ Logo institucional (por proyecto)
   proj.logoDataUrl = String(proj.logoDataUrl || "");
 
-  // ✅ NUEVO: Formato institucional COMPLETO (por proyecto)
+  // ✅ Formato institucional COMPLETO (por proyecto)
   proj.instPais = String(proj.instPais || "");
   proj.instDepto = String(proj.instDepto || "");
   proj.instMunicipio = String(proj.instMunicipio || "");
@@ -35,7 +72,7 @@ function loadStore(){
     const init = {
       meta:{
         createdAt: nowISO(),
-        version: 6, // ✅ subimos versión por nuevos campos (logo + instPais + instFechaElab)
+        version: 7, // ✅ subimos versión por Admin/Imprev/Util/IVAUtil
 
         elaborador: {
           nombre: "",
@@ -54,7 +91,7 @@ function loadStore(){
   }
   try{
     const db = JSON.parse(raw);
-    if(!db.meta) db.meta = { createdAt:nowISO(), version:6 };
+    if(!db.meta) db.meta = { createdAt:nowISO(), version:7 };
 
     if(!db.meta.customAPUs) db.meta.customAPUs = {};
     if(!db.meta.customInsumos) db.meta.customInsumos = [];
@@ -70,7 +107,7 @@ function loadStore(){
 
     if(!db.projects) db.projects = [];
 
-    // ✅ Normalizar proyectos (incluye logo + inst*)
+    // ✅ Normalizar proyectos (incluye nuevos % + logo + inst*)
     db.projects = db.projects.map(p => normalizeProject(p));
 
     localStorage.setItem(STORE_KEY, JSON.stringify(db));
@@ -95,14 +132,14 @@ async function importBackupFromFile(file){
   const data = JSON.parse(text);
   if(!data || !data.projects) throw new Error("Backup inválido.");
 
-  if(!data.meta) data.meta = { createdAt:nowISO(), version:6 };
+  if(!data.meta) data.meta = { createdAt:nowISO(), version:7 };
   if(!data.meta.customAPUs) data.meta.customAPUs = {};
   if(!data.meta.customInsumos) data.meta.customInsumos = [];
   if(!data.meta.elaborador) data.meta.elaborador = { nombre:"", profesion:"", matricula:"", firmaDataUrl:"" };
 
   if(!data.projects) data.projects = [];
 
-  // ✅ Normalizar proyectos importados (incluye logo + inst*)
+  // ✅ Normalizar proyectos importados (incluye nuevos %)
   data.projects = data.projects.map(p => normalizeProject(p));
 
   saveStore(data);
@@ -183,16 +220,25 @@ function listCustomAPUs(){
 /* ===== Projects ===== */
 function createProject(payload){
   const db = loadStore();
+
   const p = normalizeProject({
     id: uid("proj"),
     createdAt: nowISO(),
     updatedAt: nowISO(),
     currency: "COP",
+
+    // ✅ Defaults nuevos (formato A-I-U)
+    adminPct: 18,
+    imprevPct: 2,
+    utilPct: 5,
+    ivaUtilPct: 19,
+
+    // ✅ Compat (por si alguna UI antigua todavía mira estos)
     aiuPct: 25,
     ivaPct: 19,
     ivaBase: "sobre_directo_aiu",
 
-    // ✅ NUEVO: defaults logo + institucional
+    // ✅ logo + institucional
     logoDataUrl: "",
     instPais: "",
     instDepto: "",
@@ -205,6 +251,7 @@ function createProject(payload){
     apuOverrides: {},
     ...payload
   });
+
   db.projects.unshift(p);
   saveStore(db);
   return p;
@@ -366,11 +413,19 @@ function importProjectAsNew(projectObj){
     entity: payload.entity || "",
     location: payload.location || "",
     currency: payload.currency || "COP",
+
+    // ✅ nuevos %
+    adminPct: Number(payload.adminPct ?? 18),
+    imprevPct: Number(payload.imprevPct ?? 2),
+    utilPct: Number(payload.utilPct ?? 5),
+    ivaUtilPct: Number(payload.ivaUtilPct ?? 19),
+
+    // ✅ compat legacy
     aiuPct: Number(payload.aiuPct||0),
     ivaPct: Number(payload.ivaPct||0),
     ivaBase: payload.ivaBase || "sobre_directo_aiu",
 
-    // ✅ importa también institucional + logo
+    // ✅ institucional + logo
     logoDataUrl: payload.logoDataUrl || "",
     instPais: payload.instPais || "",
     instDepto: payload.instDepto || "",
@@ -419,3 +474,4 @@ window.StorageAPI = {
 
   importProjectAsNew
 };
+

@@ -26,7 +26,7 @@ function isInAppBrowser(){
     ua.includes("micromessenger") ||
     ua.includes("snapchat") ||
     ua.includes("telegram") ||
-    ua.includes("whatsapp")  // a veces no aparece, pero lo dejamos
+    ua.includes("whatsapp")
   );
 }
 
@@ -45,7 +45,6 @@ async function requestPersistentStorage(){
   if(__persistTried) return;
   __persistTried = true;
 
-  // Si localStorage está bloqueado, la app NO podrá guardar proyectos.
   const lsOK = localStorageWritable();
   if(!lsOK && !__storageWarned){
     __storageWarned = true;
@@ -61,13 +60,11 @@ async function requestPersistentStorage(){
     return;
   }
 
-  // Pedir persistencia (aplica a IndexedDB + localStorage en la práctica).
   try{
     if(navigator.storage && typeof navigator.storage.persisted === "function" && typeof navigator.storage.persist === "function"){
       const already = await navigator.storage.persisted();
       if(!already){
         const granted = await navigator.storage.persist();
-        // No alertamos siempre; solo log.
         console.log("[PWA] persist granted:", granted);
       }else{
         console.log("[PWA] storage already persisted");
@@ -77,7 +74,6 @@ async function requestPersistentStorage(){
     console.log("[PWA] persist error:", err);
   }
 
-  // Aviso suave para iOS embebido (sin bloquear)
   if(isIOS() && isInAppBrowser() && !__storageWarned){
     __storageWarned = true;
     alert(
@@ -89,10 +85,8 @@ async function requestPersistentStorage(){
 }
 
 function initPWA(){
-  // 1) intentar persistencia lo antes posible
   requestPersistentStorage().catch(()=>{});
 
-  // 2) reintentar persistencia tras primera interacción (a veces iOS lo concede mejor)
   const once = ()=>{
     requestPersistentStorage().catch(()=>{});
     window.removeEventListener("click", once, true);
@@ -103,12 +97,9 @@ function initPWA(){
   window.addEventListener("touchstart", once, true);
   window.addEventListener("keydown", once, true);
 
-  // 3) registrar service worker si existe
   if(!("serviceWorker" in navigator)) return;
 
   window.addEventListener("load", () => {
-    // OJO: sw en /pwa/sw.js puede tener scope limitado.
-    // Igual lo registramos como lo tienes.
     navigator.serviceWorker.register("pwa/sw.js").catch((e)=>{
       console.log("[PWA] SW register failed:", e);
     });
@@ -165,6 +156,64 @@ function sanitizeFileName(name){
     .slice(0, 80) || "archivo";
 }
 
+/* ==========================================
+   ✅ Helpers: % y totales (compat AIU -> A/I/U)
+   ========================================== */
+function pct(project, key, legacyKey){
+  const v = project?.[key];
+  if(Number.isFinite(Number(v))) return Number(v);
+  const lv = legacyKey ? project?.[legacyKey] : undefined;
+  if(Number.isFinite(Number(lv))) return Number(lv);
+  return 0;
+}
+
+/*
+  ✅ FIX del bug:
+  - En tu Calc.calcTotals nuevo, es común que el IVA venga como { iva: ... } (no ivaUtil)
+  - La app mostraba 0 en “IVA sobre Utilidad” porque buscaba t.ivaUtil
+  - Aquí mapeamos automáticamente iva -> ivaUtil si falta ivaUtil.
+*/
+function totalsCompat(project){
+  const t = (window.Calc && typeof Calc.calcTotals === "function") ? (Calc.calcTotals(project) || {}) : {};
+  const directo = Number(t.directo||0);
+
+  if(("admin" in t) || ("imprev" in t) || ("util" in t) || ("ivaUtil" in t) || ("subtotal" in t) || ("iva" in t)){
+    const admin = Number(t.admin||0);
+    const imprev = Number(t.imprev||0);
+    const util = Number(t.util||0);
+
+    const subtotal =
+      Number.isFinite(Number(t.subtotal))
+        ? Number(t.subtotal||0)
+        : (directo + admin + imprev + util);
+
+    const ivaUtil =
+      ("ivaUtil" in t)
+        ? Number(t.ivaUtil||0)
+        : (("iva" in t) ? Number(t.iva||0) : 0);
+
+    const total =
+      Number.isFinite(Number(t.total))
+        ? Number(t.total||0)
+        : (subtotal + ivaUtil);
+
+    return { directo, admin, imprev, util, subtotal, ivaUtil, total };
+  }
+
+  const aiu = Number(t.aiu||0);
+  const iva = Number(t.iva||0);
+  const total = Number(t.total|| (directo + aiu + iva));
+  return {
+    directo,
+    admin: aiu,
+    imprev: 0,
+    util: 0,
+    subtotal: directo + aiu,
+    ivaUtil: iva,
+    total
+  };
+}
+
 function exportProjectExcel(project){
   if(!project) return;
 
@@ -173,10 +222,14 @@ function exportProjectExcel(project){
     return;
   }
 
-  const totals = Calc.calcTotals(project);
+  const totals = totalsCompat(project);
   const { groups, items } = Calc.groupByChapters(project);
 
-  // ===== Sheet 1: Resumen (A-O-A) =====
+  const adminPct = pct(project, "adminPct", "aiuPct");
+  const imprevPct = pct(project, "imprevPct", null);
+  const utilPct = pct(project, "utilPct", null);
+  const ivaUtilPct = pct(project, "ivaUtilPct", "ivaPct");
+
   const resumenAOA = [
     ["FORMATO INSTITUCIONAL"],
     ["República / País", project.instPais || ""],
@@ -189,14 +242,18 @@ function exportProjectExcel(project){
     [""],
     ["RESUMEN PRESUPUESTO"],
     ["Moneda", project.currency || "COP"],
-    ["AIU (%)", Number(project.aiuPct||0)],
-    ["IVA (%)", Number(project.ivaPct||0)],
-    ["Regla IVA", project.ivaBase || ""],
+    ["Administración (%)", Number(adminPct||0)],
+    ["Imprevistos (%)", Number(imprevPct||0)],
+    ["Utilidad (%)", Number(utilPct||0)],
+    ["IVA sobre Utilidad (%)", Number(ivaUtilPct||0)],
     [""],
-    ["Costo Directo", Number(totals.directo||0)],
-    ["AIU", Number(totals.aiu||0)],
-    ["IVA", Number(totals.iva||0)],
-    ["TOTAL", Number(totals.total||0)],
+    ["TOTAL COSTOS DIRECTOS", Number(totals.directo||0)],
+    ["ADMINISTRACIÓN", Number(totals.admin||0)],
+    ["IMPREVISTOS", Number(totals.imprev||0)],
+    ["UTILIDAD", Number(totals.util||0)],
+    ["SUBTOTAL", Number(totals.subtotal||0)],
+    ["IVA sobre Utilidad", Number(totals.ivaUtil||0)],
+    ["VALOR TOTAL", Number(totals.total||0)],
     [""],
     ["Items", (project.items||[]).length],
     ["Capítulos", (groups||[]).length],
@@ -204,7 +261,6 @@ function exportProjectExcel(project){
 
   const wsResumen = XLSX.utils.aoa_to_sheet(resumenAOA);
 
-  // ===== Sheet 2: Capítulos =====
   const capsRows = (groups||[]).map(g=>({
     Capitulo: String(g.chapterCode||""),
     Nombre: String(g.chapterName||""),
@@ -214,7 +270,6 @@ function exportProjectExcel(project){
   }));
   const wsCaps = XLSX.utils.json_to_sheet(capsRows.length ? capsRows : [{Capitulo:"",Nombre:"",Items:"",Subtotal:"",Moneda:project.currency||"COP"}]);
 
-  // ===== Sheet 3: Ítems =====
   const itemsRows = (items||[]).map(it=>{
     const parcial = Number(it.pu||0) * Number(it.qty||0);
     const cap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
@@ -233,7 +288,6 @@ function exportProjectExcel(project){
     Capitulo:"",Codigo:"",Descripcion:"",Unidad:"",VR_Unitario:"",Cantidad:"",VR_Parcial:"",Moneda:project.currency||"COP"
   }]);
 
-  // ===== Workbook =====
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen");
   XLSX.utils.book_append_sheet(wb, wsCaps, "Capitulos");
@@ -253,7 +307,7 @@ async function renderKpis(){
   if(!el) return;
 
   const ps = StorageAPI.listProjects();
-  const total = ps.reduce((s,p)=> s + (Calc.calcTotals(p).total||0), 0);
+  const total = ps.reduce((s,p)=> s + (totalsCompat(p).total||0), 0);
 
   let baseChip = UI.chip("NO","bad");
   try{
@@ -289,7 +343,7 @@ function renderProjects(){
   if(empty) empty.style.display = "none";
 
   tbody.innerHTML = ps.map(p=>{
-    const t = Calc.calcTotals(p);
+    const t = totalsCompat(p);
     return `
       <tr>
         <td><b>${UI.esc(p.name)}</b></td>
@@ -367,7 +421,6 @@ async function bindProjectsPage(){
     }
   });
 
-  // ✅ Importar proyecto (JSON + adjuntos base64) como proyecto NUEVO
   UI.qs("#fileImportProject")?.addEventListener("change", async (e)=>{
     const f = e.target.files?.[0];
     if(!f) return;
@@ -403,7 +456,6 @@ async function bindProjectsPage(){
     }
   });
 
-  // ✅ Borrar todo + pregunta por Base APU
   UI.qs("#btnReset")?.addEventListener("click", async ()=>{
     if(!confirm("¿Borrar TODO? (proyectos + documentos)")) return;
 
@@ -470,6 +522,11 @@ function renderProjectDetail(project){
   UI.qs("#projTitle") && (UI.qs("#projTitle").textContent = project.name);
   UI.qs("#projSub") && (UI.qs("#projSub").textContent = `${project.entity || "—"} · ${project.location || "—"} · ${project.currency || "COP"}`);
 
+  const adminPct = pct(project, "adminPct", "aiuPct");
+  const imprevPct = pct(project, "imprevPct", null);
+  const utilPct = pct(project, "utilPct", null);
+  const ivaUtilPct = pct(project, "ivaUtilPct", "ivaPct");
+
   const info = UI.qs("#cardInfo");
   if(info){
     info.innerHTML = `
@@ -478,31 +535,41 @@ function renderProjectDetail(project){
         <p class="muted small">Entidad: ${UI.esc(project.entity||"-")} · Ubicación: ${UI.esc(project.location||"-")}</p>
       </div>
       <div class="grid two">
-        <div class="item"><div class="name">AIU</div><div class="muted small">${UI.esc(String(project.aiuPct||0))}%</div></div>
-        <div class="item"><div class="name">IVA</div><div class="muted small">${UI.esc(String(project.ivaPct||0))}% (${UI.esc(project.ivaBase||"")})</div></div>
+        <div class="item"><div class="name">Administración</div><div class="muted small">${UI.esc(String(adminPct||0))}%</div></div>
+        <div class="item"><div class="name">Imprevistos</div><div class="muted small">${UI.esc(String(imprevPct||0))}%</div></div>
+        <div class="item"><div class="name">Utilidad</div><div class="muted small">${UI.esc(String(utilPct||0))}%</div></div>
+        <div class="item"><div class="name">IVA s/Utilidad</div><div class="muted small">${UI.esc(String(ivaUtilPct||0))}%</div></div>
       </div>
     `;
   }
 
-  const totals = Calc.calcTotals(project);
+  const totals = totalsCompat(project);
   const k = UI.qs("#cardTotals");
   if(k){
     k.innerHTML = `
       <div class="card item"><div class="name">Ítems</div><div class="chips">${UI.chip(String((project.items||[]).length),"ok")}</div></div>
-      <div class="card item"><div class="name">Costo Directo</div><div class="chips">${UI.chip(UI.fmtMoney(totals.directo, project.currency||"COP"))}</div></div>
-      <div class="card item"><div class="name">AIU</div><div class="chips">${UI.chip(UI.fmtMoney(totals.aiu, project.currency||"COP"))}</div></div>
-      <div class="card item"><div class="name">TOTAL</div><div class="chips">${UI.chip(UI.fmtMoney(totals.total, project.currency||"COP"),"ok")}</div></div>
+      <div class="card item"><div class="name">Costos directos</div><div class="chips">${UI.chip(UI.fmtMoney(totals.directo, project.currency||"COP"))}</div></div>
+      <div class="card item"><div class="name">SUBTOTAL</div><div class="chips">${UI.chip(UI.fmtMoney(totals.subtotal||0, project.currency||"COP"))}</div></div>
+      <div class="card item"><div class="name">VALOR TOTAL</div><div class="chips">${UI.chip(UI.fmtMoney(totals.total, project.currency||"COP"),"ok")}</div></div>
     `;
   }
 
   const rows = UI.qs("#totalsRows");
   if(rows){
     rows.innerHTML = `
-      <div class="row space"><div class="name">Costo Directo</div><div><b>${UI.fmtMoney(totals.directo, project.currency||"COP")}</b></div></div>
-      <div class="row space"><div class="name">AIU (${UI.esc(String(project.aiuPct||0))}%)</div><div><b>${UI.fmtMoney(totals.aiu, project.currency||"COP")}</b></div></div>
-      <div class="row space"><div class="name">IVA (${UI.esc(String(project.ivaPct||0))}%)</div><div><b>${UI.fmtMoney(totals.iva, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">TOTAL COSTOS DIRECTOS</div><div><b>${UI.fmtMoney(totals.directo, project.currency||"COP")}</b></div></div>
+
+      <div class="row space"><div class="name">ADMINISTRACIÓN (${UI.esc(String(adminPct||0))}%)</div><div><b>${UI.fmtMoney(totals.admin||0, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">IMPREVISTOS (${UI.esc(String(imprevPct||0))}%)</div><div><b>${UI.fmtMoney(totals.imprev||0, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">UTILIDAD (${UI.esc(String(utilPct||0))}%)</div><div><b>${UI.fmtMoney(totals.util||0, project.currency||"COP")}</b></div></div>
+
       <hr class="sep">
-      <div class="row space"><div class="name">TOTAL</div><div><b>${UI.fmtMoney(totals.total, project.currency||"COP")}</b></div></div>
+
+      <div class="row space"><div class="name">SUBTOTAL</div><div><b>${UI.fmtMoney(totals.subtotal||0, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">IVA sobre Utilidad (${UI.esc(String(ivaUtilPct||0))}%)</div><div><b>${UI.fmtMoney(totals.ivaUtil||0, project.currency||"COP")}</b></div></div>
+
+      <hr class="sep">
+      <div class="row space"><div class="name">VALOR TOTAL</div><div><b>${UI.fmtMoney(totals.total, project.currency||"COP")}</b></div></div>
     `;
   }
 }
@@ -1145,7 +1212,8 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      await PDF.exportPresupuestoPDF(fresh);
+      // ✅ Punto 3: en iPhone abre "Compartir" primero
+      await PDF.exportPresupuestoPDF(fresh, { share: isIOS() });
     }catch(err){
       alert("Error generando PDF: " + (err?.message || err));
     }
@@ -1155,7 +1223,8 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      await PDF.exportPresupuestoConAPUsPDF(fresh);
+      // ✅ Punto 3: en iPhone abre "Compartir" primero
+      await PDF.exportPresupuestoConAPUsPDF(fresh, { share: isIOS() });
     }catch(err){
       alert("Error generando PDF + APUs: " + (err?.message || err));
     }
@@ -1185,7 +1254,8 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      await PDF.exportEspecificacionesTecnicasPDF(fresh);
+      // ✅ Punto 3: en iPhone abre "Compartir" primero
+      await PDF.exportEspecificacionesTecnicasPDF(fresh, { share: isIOS() });
     }catch(err){
       alert("Error generando PDF Especificaciones Técnicas: " + (err?.message || err));
     }
@@ -1202,17 +1272,105 @@ async function bindProjectDetailPage(){
   });
 
   /* =========================================================
-     ✅ AJUSTES: guarda Formato Institucional COMPLETO (por proyecto)
+     ✅ NUEVOS 6 BOTONES PDF (según imágenes)
+     - Si aún no existe la función en pdf.js, se avisa (no rompe nada)
+     ========================================================= */
+  UI.qs("#btnPdfPresupuestoDesagregado")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportPresupuestoObraDesagregadoPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Presupuesto de Obra Desagregado).");
+        return;
+      }
+      await PDF.exportPresupuestoObraDesagregadoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando PDF Presupuesto de Obra Desagregado: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfResumenPresupuestoDesagregado")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportResumenPresupuestoObraDesagregadoPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Resumen Presupuesto de Obra Desagregado).");
+        return;
+      }
+      await PDF.exportResumenPresupuestoObraDesagregadoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Resumen Presupuesto de Obra Desagregado: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfDistribucionPctCD")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportDistribucionPorcentualCostosDirectosPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Distribución porcentual de Costos Directos).");
+        return;
+      }
+      await PDF.exportDistribucionPorcentualCostosDirectosPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Distribución porcentual de Costos Directos: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfRendimientoEqMo")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportRendimientoEquipoManoObraActividadPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Rendimiento de Equipo y Mano de Obra).");
+        return;
+      }
+      await PDF.exportRendimientoEquipoManoObraActividadPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Rendimiento de Equipo y Mano de Obra por Actividad: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfResumenMaterialesActividad")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportResumenMaterialesPorActividadPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Resumen materiales por actividad).");
+        return;
+      }
+      await PDF.exportResumenMaterialesPorActividadPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Resumen materiales por actividad: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfCantRecursosInsumos")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportCantidadRecursosInsumosPresupuestoPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Cantidad de Recurso e Insumos del Presupuesto).");
+        return;
+      }
+      await PDF.exportCantidadRecursosInsumosPresupuestoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Cantidad de Recurso e Insumos del Presupuesto: " + (err?.message || err));
+    }
+  });
+
+  /* =========================================================
+     ✅ AJUSTES: guarda A/I/U + IVA s/Utilidad + institucional (por proyecto)
      ========================================================= */
   UI.qs("#formAjustes")?.addEventListener("submit", (e)=>{
     e.preventDefault();
     const fd = new FormData(e.target);
 
-    const aiuPct = Number(fd.get("aiuPct") || 0);
-    const ivaPct = Number(fd.get("ivaPct") || 0);
-    const ivaBase = String(fd.get("ivaBase") || "sobre_directo_aiu");
+    const adminPct = Number(fd.get("adminPct") || 0);
+    const imprevPct = Number(fd.get("imprevPct") || 0);
+    const utilPct = Number(fd.get("utilPct") || 0);
+    const ivaUtilPct = Number(fd.get("ivaUtilPct") || 0);
 
-    // ✅ institucional completo
     const instPais = String(fd.get("instPais") || "").trim();
     const instDepto = String(fd.get("instDepto") || "").trim();
     const instMunicipio = String(fd.get("instMunicipio") || "").trim();
@@ -1221,7 +1379,7 @@ async function bindProjectDetailPage(){
     const instFechaElab = String(fd.get("instFechaElab") || "").trim();
 
     StorageAPI.updateProject(projectId, {
-      aiuPct, ivaPct, ivaBase,
+      adminPct, imprevPct, utilPct, ivaUtilPct,
       instPais, instDepto, instMunicipio, instEntidad, instProyectoLabel, instFechaElab
     });
 
@@ -1231,12 +1389,12 @@ async function bindProjectDetailPage(){
     renderResumenItems(fresh);
   });
 
-  // ✅ Precargar valores en el formulario, incluyendo institucional + logo preview
   const form = UI.qs("#formAjustes");
   if(form){
-    form.aiuPct.value = String(project.aiuPct||0);
-    form.ivaPct.value = String(project.ivaPct||0);
-    form.ivaBase.value = project.ivaBase || "sobre_directo_aiu";
+    if(form.adminPct) form.adminPct.value = String(project.adminPct ?? project.aiuPct ?? 0);
+    if(form.imprevPct) form.imprevPct.value = String(project.imprevPct ?? 0);
+    if(form.utilPct) form.utilPct.value = String(project.utilPct ?? 0);
+    if(form.ivaUtilPct) form.ivaUtilPct.value = String(project.ivaUtilPct ?? project.ivaPct ?? 0);
 
     if(form.instPais) form.instPais.value = String(project.instPais || "");
     if(form.instDepto) form.instDepto.value = String(project.instDepto || "");
@@ -1270,7 +1428,6 @@ async function bindProjectDetailPage(){
     alert("Documentos guardados.");
   });
 
-  // ✅ Exportar proyecto con adjuntos base64
   UI.qs("#btnExportProj")?.addEventListener("click", async ()=>{
     try{
       const p = StorageAPI.getProjectById(projectId);
@@ -1346,7 +1503,6 @@ async function bindProjectDetailPage(){
     window.location.href = "proyectos.html";
   });
 
-  // Base APU búsquedas
   UI.qs("#btnApuSearch")?.addEventListener("click", async ()=>{
     try{
       const meta = await APUBase.getMeta();
@@ -1371,7 +1527,6 @@ async function bindProjectDetailPage(){
     }
   });
 
-  // Agregar manual
   UI.qs("#formAddManual")?.addEventListener("submit", (e)=>{
     e.preventDefault();
     const fd = new FormData(e.target);
