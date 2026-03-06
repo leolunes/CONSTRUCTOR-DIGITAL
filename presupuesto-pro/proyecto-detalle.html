@@ -104,6 +104,8 @@
 
   <!-- CAPÍTULOS -->
   <section data-panel="capitulos" style="display:none">
+
+    <!-- ✅ Subtotales (existente) -->
     <section class="card">
       <div class="cardhead">
         <h2>Capítulos</h2>
@@ -125,6 +127,53 @@
       </div>
 
       <div class="muted" id="capsEmpty" style="display:none">No hay ítems aún para calcular capítulos.</div>
+    </section>
+
+    <!-- ✅ NUEVO: Definición manual de capítulos del proyecto -->
+    <section class="card" style="margin-top:14px">
+      <div class="cardhead">
+        <h2>Capítulos del proyecto (definición manual)</h2>
+        <p class="muted small">
+          Define aquí el listado base de capítulos (código y nombre). Luego podrás asignarlos al agregar APUs/ítems.
+        </p>
+      </div>
+
+      <form class="form" id="formProjectChapter">
+        <div class="grid two">
+          <div>
+            <label>Número de capítulo</label>
+            <input name="chapterCode" id="projChapterCode" placeholder="Ej: 1" />
+          </div>
+          <div>
+            <label>Nombre del capítulo</label>
+            <input name="chapterName" id="projChapterName" placeholder="Ej: PRELIMINARES" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px; gap:10px; flex-wrap:wrap">
+          <button class="btn primary" id="btnAddProjectChapter" type="submit">Agregar capítulo</button>
+          <button class="btn" id="btnClearProjectChapterForm" type="button">Limpiar</button>
+          <input type="hidden" id="projChapterEditId" value="" />
+        </div>
+      </form>
+
+      <hr class="sep">
+
+      <div class="tablewrap">
+        <table class="table" style="min-width:980px">
+          <thead>
+            <tr>
+              <th style="width:120px">Capítulo</th>
+              <th>Nombre</th>
+              <th style="width:260px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="projectChaptersBody"></tbody>
+        </table>
+      </div>
+      <div class="muted small" id="projectChaptersEmpty" style="display:none">
+        Aún no has definido capítulos manuales para este proyecto.
+      </div>
     </section>
   </section>
 
@@ -176,7 +225,10 @@
     <section class="card" style="margin-top:14px">
       <div class="cardhead">
         <h2>Agregar desde Base APU</h2>
-        <p class="muted small">Busca por código (ej: 1.01) o por texto. Luego “Agregar” pide cantidad.</p>
+        <p class="muted small">
+          Busca por código (ej: 1.01) o por texto. Luego “Agregar” pedirá cantidad y capítulo destino.
+          (Esto permitirá usar el mismo APU en varios capítulos.)
+        </p>
       </div>
 
       <div class="row" style="align-items:stretch">
@@ -580,6 +632,71 @@
   </section>
 
 </main>
+
+<!-- ✅ MODAL: Agregar APU desde Base (Cantidad + Capítulo destino) -->
+<div id="addApuModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:60; padding:18px; overflow:auto">
+  <div class="card" style="max-width:980px; margin:0 auto">
+    <div class="row space" style="margin-bottom:10px">
+      <div>
+        <div class="name">Agregar ítem desde Base APU</div>
+        <div class="muted small" id="addApuModalSub">Selecciona cantidad y capítulo destino.</div>
+      </div>
+      <button class="btn danger" id="btnAddApuClose" type="button">Cerrar</button>
+    </div>
+
+    <section class="card" style="background:transparent; border:none; padding:0; box-shadow:none">
+      <div class="grid two">
+        <div>
+          <label class="muted small">APU seleccionado</label>
+          <input id="addApuCode" readonly />
+        </div>
+        <div>
+          <label class="muted small">Unidad</label>
+          <input id="addApuUnit" readonly />
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label class="muted small">Descripción</label>
+        <input id="addApuDesc" readonly />
+      </div>
+
+      <hr class="sep">
+
+      <div class="grid two">
+        <div>
+          <label class="muted small">Cantidad</label>
+          <input id="addApuQty" inputmode="decimal" placeholder="Ej: 10" />
+        </div>
+        <div>
+          <label class="muted small">Capítulo destino</label>
+          <select id="addApuChapterSel"></select>
+          <div class="muted small" style="margin-top:8px">
+            Si no aparecen capítulos, defínelos en la pestaña <b>Capítulos</b>.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:10px">
+        <div>
+          <label class="muted small">Código capítulo</label>
+          <input id="addApuChapterCode" readonly />
+        </div>
+        <div>
+          <label class="muted small">Nombre capítulo</label>
+          <input id="addApuChapterName" readonly />
+        </div>
+      </div>
+
+      <div class="row space" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" id="btnAddApuConfirm" type="button">Agregar al presupuesto</button>
+        <button class="btn" id="btnAddApuConfirmAndKeep" type="button">Agregar y continuar (mismo APU)</button>
+      </div>
+
+      <input type="hidden" id="addApuRawJson" value="" />
+    </section>
+  </div>
+</div>
 
 <!-- ✅ MODAL FIRMA -->
 <div id="firmaModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:50; padding:18px; overflow:auto">

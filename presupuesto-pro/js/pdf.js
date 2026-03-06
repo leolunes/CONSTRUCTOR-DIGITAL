@@ -14,18 +14,15 @@
      - Textos y filas NUNCA se montan (alto de fila dinámico)
      - Evitar cortes por ancho: columnas ajustadas + auto-fit numérico
 
-     ✅ FIXES APLICADOS (según imágenes):
-     - PDF "Presupuesto de Obra Desagregado": sale en HORIZONTAL (landscape) para que no se amontone.
-     - PDF "Resumen Presupuesto de Obra Desagregado" (pág 3):
-       * Pie chart ahora se renderiza como IMAGEN (canvas->PNG) para eliminar artefactos/triángulos/patrones.
-       * Leyenda ya NO se corta: se reubica automáticamente (derecha si cabe, si no debajo con wrap).
-
-     ✅ AJUSTES SOLICITADOS (03/2026):
-     1) Eliminar “línea delgada” que se monta sobre el texto:
-        -> se corrigió moviendo la línea inferior de las bandas (drawBand) unos puntos hacia abajo.
-     2) En PDF "Presupuesto de Obra": eliminar el texto inicial
-        "DETALLE DE ÍTEMS" + encabezado duplicado antes del primer capítulo:
-        -> se quitó el drawBand y el primer header; el header queda solo desde el capítulo.
+     ✅ FIX NUEVO (2026-03):
+     - Cuando el usuario CAMBIA el CÓDIGO visible del ítem, el PDF NO debe
+       asumir que ese código corresponde al código real de la base.
+     - Solución robusta: getAPUForProjectItem ahora:
+         1) intenta apuRefCode (si existe)
+         2) intenta code (tal cual, sin normalizar/padding)
+         3) si falla: busca en la BASE por DESCRIPCIÓN (match fuerte) y usa ese code real
+       Esto evita falsos mapeos tipo 1.9 -> 1.09 y evita “No se encontró descomposición”
+       cuando el usuario renumera el presupuesto.
      ========================================================= */
 
   // =========================
@@ -395,9 +392,7 @@
 
     doc.text(safe(text), x, y + 12);
 
-    // ✅ FIX #1: mover la línea un poco hacia abajo para que NO se monte sobre el texto siguiente
-    // (antes: y + h)
-    hLine(doc, x, x+w, y + h + 4, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
+    hLine(doc, x, x+w, y + h - 2, PDF_THEME.lines.band.w, PDF_THEME.lines.band.c);
   }
 
   function drawCellText(doc, x, y, w, h, text, align, opts){
@@ -655,10 +650,12 @@
     doc.setFont("helvetica","normal"); doc.setFontSize(11);
     doc.text("Firma:", sigX, sigY - 6);
 
-    doc.setDrawColor(0);
-    doc.setLineWidth(0.8);
-    doc.rect(sigX, sigY, sigW, sigH);
-    doc.setLineWidth(0.2);
+    // ✅ AJUSTE 1: quitar el recuadro (rectángulo) que enmarca la firma
+    // (se deja el espacio en blanco y la firma se inserta igual)
+    // doc.setDrawColor(0);
+    // doc.setLineWidth(0.8);
+    // doc.rect(sigX, sigY, sigW, sigH);
+    // doc.setLineWidth(0.2);
 
     let firmaForPDF = "";
     if(firmaDataUrl && firmaDataUrl.startsWith("data:image")){
@@ -732,72 +729,261 @@
     };
   }
 
+  // =========================================================
+  // ✅ NUEVO: BÚSQUEDA ROBUSTA DE APU POR DESCRIPCIÓN (fallback)
+  // =========================================================
+  const __apuDescCache = new Map(); // key: normDesc(desc)+"|"+unit -> code
+
+  function normDesc(s){
+    return String(s||"")
+      .toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"") // sin tildes
+      .replace(/[^\w\s]+/g," ")                       // sin signos raros
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function tokenSet(s){
+    const t = normDesc(s);
+    if(!t) return new Set();
+    const parts = t.split(" ").filter(p=>p.length>=3);
+    return new Set(parts);
+  }
+
+  function jaccard(aSet, bSet){
+    if(!aSet.size && !bSet.size) return 0;
+    let inter = 0;
+    for(const x of aSet){ if(bSet.has(x)) inter++; }
+    const uni = aSet.size + bSet.size - inter;
+    return uni ? (inter/uni) : 0;
+  }
+
+  async function findApuCodeByDesc(desc, unit){
+    const d = normDesc(desc);
+    const u = String(unit||"").trim().toLowerCase();
+    if(!d) return "";
+
+    const cacheKey = d + "|" + u;
+    if(__apuDescCache.has(cacheKey)) return __apuDescCache.get(cacheKey) || "";
+
+    // Necesitamos APUBase.search (ya existe en tu app)
+    if(!window.APUBase || typeof APUBase.search !== "function"){
+      __apuDescCache.set(cacheKey, "");
+      return "";
+    }
+
+    try{
+      // búsqueda amplia
+      const results = await APUBase.search(desc, 35);
+      const list = Array.isArray(results) ? results : [];
+
+      // filtrar capítulos
+      const candidates = list.filter(r => r && !r.isChapter && r.code && r.desc);
+
+      if(!candidates.length){
+        __apuDescCache.set(cacheKey, "");
+        return "";
+      }
+
+      // ✅ AJUSTE 2 (parte A): si hay match exacto por descripción normalizada, devolverlo de inmediato
+      // (evita que descripciones parecidas como campamentos 9m²/18m² terminen cruzándose en score)
+      for(const r of candidates){
+        const rNorm = normDesc(String(r.desc||""));
+        const rUnit = String(r.unit||"").trim().toLowerCase();
+        if(rNorm === d){
+          // si se especificó unidad, preferir exacta; si no, aceptar igual
+          if(!u || (rUnit && rUnit === u)){
+            const exactCode = String(r.code||"").trim();
+            __apuDescCache.set(cacheKey, exactCode);
+            return exactCode;
+          }
+        }
+      }
+
+      const targetTokens = tokenSet(desc);
+
+      let best = null;
+      let bestScore = 0;
+
+      for(const r of candidates){
+        const rDesc = String(r.desc||"");
+        const rUnit = String(r.unit||"").trim().toLowerCase();
+        const rNorm = normDesc(rDesc);
+
+        // score base por similitud de tokens
+        const sTok = jaccard(targetTokens, tokenSet(rDesc));
+
+        // bonus por igualdad casi exacta
+        const sExact = (rNorm === d) ? 0.55 : 0;
+
+        // bonus por unidad igual
+        const sUnit = (u && rUnit && u === rUnit) ? 0.12 : 0;
+
+        // leve bonus si contiene la frase
+        const sContain = (rNorm.includes(d) || d.includes(rNorm)) ? 0.10 : 0;
+
+        const score = sTok + sExact + sUnit + sContain;
+
+        if(score > bestScore){
+          bestScore = score;
+          best = r;
+        }
+      }
+
+      // Umbral: evitar falsos positivos
+      const OK = best && bestScore >= 0.62;
+
+      const foundCode = OK ? String(best.code||"").trim() : "";
+
+      __apuDescCache.set(cacheKey, foundCode);
+      return foundCode;
+    }catch(_){
+      __apuDescCache.set(cacheKey, "");
+      return "";
+    }
+  }
+
   // =========================
-  // APU helper (override > custom > base)
+  // ✅ APU helper (override > custom > base > fallback desc)
   // =========================
   async function getAPUForProjectItem(project, it){
-    const code = String(it.code||"").trim();
-    if(!code) return null;
+    // IMPORTANTÍSIMO: NO normalizar/pad el código (evita 1.9 => 1.09)
+    const c1 = String(it?.apuRefCode || "").trim();
+    const c2 = String(it?.code || "").trim();
 
-    // 1) Override por proyecto
-    try{
-      if(window.StorageAPI?.getApuOverride){
-        const ov = StorageAPI.getApuOverride(project.id, code);
-        if(ov){
-          const lines = Array.isArray(ov.lines) ? ov.lines : [];
-          const directo = lines.reduce((s,l)=>{
+    const candidates = [];
+    for(const c of [c1, c2]){
+      if(c && !candidates.includes(c)) candidates.push(c);
+    }
+
+    // ✅ AJUSTE 2 (parte B): validación de que el APU hallado por "code" realmente corresponde al ítem.
+    // Esto evita casos típicos donde la base o alguna función interna normaliza "1.10" -> "1.1"
+    // y termina trayendo el APU equivocado (puntualmente visto en 1.10, 1.11, 1.12).
+    function looksLikeSameAPU(expectedDesc, expectedUnit, apuSubtitle, apuUnit){
+      const ed = String(expectedDesc||"").trim();
+      if(!ed) return true; // si no hay desc, no bloquear
+      const au = String(apuUnit||"").trim().toLowerCase();
+      const eu = String(expectedUnit||"").trim().toLowerCase();
+      if(eu && au && eu !== au) {
+        // unidad distinta: sospechoso, pero no decisivo por sí solo (dejar que pase a score)
+      }
+
+      const a = tokenSet(ed);
+      const b = tokenSet(String(apuSubtitle||"").trim() || "");
+      const sim = jaccard(a,b);
+
+      // Si las descripciones difieren MUCHO, consideramos que NO es el APU correcto
+      // (umbral conservador para no afectar otros casos)
+      if(sim < 0.30){
+        return false;
+      }
+      return true;
+    }
+
+    async function tryByCode(apuCode){
+      if(!apuCode) return null;
+
+      // 1) Override por proyecto
+      try{
+        if(window.StorageAPI?.getApuOverride){
+          const ov = StorageAPI.getApuOverride(project.id, apuCode);
+          if(ov){
+            const lines = Array.isArray(ov.lines) ? ov.lines : [];
+            const directo = lines.reduce((s,l)=>{
+              const qty = Number(l.qty||0);
+              const pu = Number(l.pu||0);
+              const parcial = Number(l.parcial||0) || (qty*pu);
+              return s + parcial;
+            }, 0);
+
+            // validar contra el ítem (por seguridad)
+            if(!looksLikeSameAPU(it?.desc, it?.unit, ov.desc || it?.desc, ov.unit || it?.unit)){
+              return null;
+            }
+
+            return {
+              _src: "override",
+              _match: "code",
+              code: apuCode,
+              subtitle: String(ov.desc || it.desc || "").trim(),
+              unit: String(ov.unit || it.unit || "").trim(),
+              directo,
+              lines
+            };
+          }
+        }
+      }catch(_){}
+
+      // 2) Custom APU global
+      try{
+        const custom = window.StorageAPI?.getCustomAPU ? StorageAPI.getCustomAPU(apuCode) : null;
+        if(custom){
+          const directo = (custom.lines||[]).reduce((s,l)=>{
             const qty = Number(l.qty||0);
             const pu = Number(l.pu||0);
             const parcial = Number(l.parcial||0) || (qty*pu);
             return s + parcial;
           }, 0);
 
+          // validar contra el ítem (por seguridad)
+          if(!looksLikeSameAPU(it?.desc, it?.unit, custom.desc || it?.desc, custom.unit || it?.unit)){
+            return null;
+          }
+
           return {
-            _src: "override",
-            code,
-            subtitle: String(ov.desc || it.desc || "").trim(),
-            unit: String(ov.unit || it.unit || "").trim(),
+            _src:"custom",
+            _match: "code",
+            code: apuCode,
+            subtitle: String(custom.desc || it.desc || "").trim(),
+            unit: String(custom.unit || it.unit || "").trim(),
             directo,
-            lines
+            lines: custom.lines || []
           };
         }
+      }catch(_){}
+
+      // 3) Base XLSX
+      const base = await (window.APUBase?.getAPU ? APUBase.getAPU(apuCode) : null);
+      if(!base) return null;
+
+      // ✅ Validación extra: si la base devolvió un APU que no se parece al ítem, lo descartamos
+      // para permitir que el fallback por descripción encuentre el correcto.
+      if(!looksLikeSameAPU(it?.desc, it?.unit, base.subtitle || it?.desc, base.unit || it?.unit)){
+        return null;
       }
-    }catch(_){}
 
-    // 2) Custom APU global
-    try{
-      const custom = window.StorageAPI?.getCustomAPU ? StorageAPI.getCustomAPU(code) : null;
-      if(custom){
-        const directo = (custom.lines||[]).reduce((s,l)=>{
-          const qty = Number(l.qty||0);
-          const pu = Number(l.pu||0);
-          const parcial = Number(l.parcial||0) || (qty*pu);
-          return s + parcial;
-        }, 0);
+      return {
+        _src:"base",
+        _match: "code",
+        code: apuCode,
+        subtitle: String(base.subtitle || it.desc || "").trim(),
+        unit: String(base.unit || it.unit || "").trim(),
+        directo: Number(base.directo||0),
+        lines: base.lines || []
+      };
+    }
 
-        return {
-          _src:"custom",
-          code,
-          subtitle: String(custom.desc || it.desc || "").trim(),
-          unit: String(custom.unit || it.unit || "").trim(),
-          directo,
-          lines: custom.lines || []
-        };
+    // Intento por apuRefCode / code
+    for(const c of candidates){
+      const got = await tryByCode(c);
+      if(got) return got;
+    }
+
+    // ✅ Fallback por descripción (la forma más estable cuando el usuario renumera)
+    const desc = String(it?.desc || "").trim();
+    if(desc){
+      const codeByDesc = await findApuCodeByDesc(desc, it?.unit);
+      if(codeByDesc){
+        const got = await tryByCode(codeByDesc);
+        if(got){
+          got._match = "desc";
+          got._descCode = codeByDesc;
+          return got;
+        }
       }
-    }catch(_){}
+    }
 
-    // 3) Base XLSX
-    const base = await (window.APUBase?.getAPU ? APUBase.getAPU(code) : null);
-    if(!base) return null;
-
-    return {
-      _src:"base",
-      code,
-      subtitle: String(base.subtitle || it.desc || "").trim(),
-      unit: String(base.unit || it.unit || "").trim(),
-      directo: Number(base.directo||0),
-      lines: base.lines || []
-    };
+    return null;
   }
 
   // =========================
@@ -966,7 +1152,6 @@
   // PDF 1: PRESUPUESTO DE OBRA DESAGREGADO (LANDSCAPE ✅)
   // =========================================================
   async function exportPresupuestoObraDesagregadoPDF(project, opts){
-    // ✅ FIX: en horizontal para que no se amontonen columnas
     const doc = newDoc({ orientation: "landscape" });
     const L = mkLayout(doc);
     const { items } = Calc.groupByChapters(project);
@@ -994,7 +1179,6 @@
     const margin = L.margin;
     const contentW = L.contentW;
 
-    // En landscape hay más ancho: dejamos DESCRIPCIÓN más amplia y números cómodos
     let cols = [
       { key:"code", label:"ITEM",        w:56,  align:"left"   },
       { key:"desc", label:"DESCRIPCIÓN", w:260, align:"left"   },
@@ -1155,7 +1339,6 @@
       const bx = innerX + gap + i*(barW+gap);
       const by = innerY + innerH - bh;
 
-      // (gráfica puede tener relleno; estándar aplica a tablas/headers)
       doc.setFillColor(230,230,230);
       doc.setDrawColor(80);
       doc.rect(bx, by, barW, bh, "FD");
@@ -1168,13 +1351,11 @@
       doc.text(labels[i], bx + barW/2, innerY + innerH + 16, { align:"center" });
     }
 
-    // evita montaje con labels
     doc.setFont("helvetica","normal");
     doc.setFontSize(6.8);
     doc.text("Valores en millones (COP)", x + 8, y + h - 22);
   }
 
-  // ✅ Pie chart como imagen (sin triángulos / sin patrones / sin cortes)
   function pieToDataURL(labels, values, sizePx){
     const total = values.reduce((s,v)=>s+Number(v||0),0) || 1;
     const c = document.createElement("canvas");
@@ -1208,7 +1389,6 @@
       ang = a2;
     }
 
-    // borde
     ctx.strokeStyle = "#000000";
     ctx.lineWidth = Math.max(1, s*0.006);
     ctx.beginPath();
@@ -1225,20 +1405,17 @@
       pageW, marginR
     } = opts;
 
-    // Pie como imagen
-    const scale = 3; // calidad
+    const scale = 3;
     const img = pieToDataURL(labels, values, Math.round((2*r) * scale));
     try{
       doc.addImage(img, "PNG", cx - r, cy - r, 2*r, 2*r);
     }catch(_){
-      // fallback: si addImage falla, dibuja círculo simple
       doc.setDrawColor(0);
       doc.setLineWidth(0.6);
       doc.circle(cx, cy, r, "S");
       doc.setLineWidth(0.2);
     }
 
-    // Leyenda (no cortar): derecha si cabe, si no debajo
     const total = values.reduce((s,v)=>s+Number(v||0),0) || 1;
 
     doc.setFont("helvetica","normal");
@@ -1248,7 +1425,6 @@
     const rightLimit = (pageW - (marginR || 44));
     const rightSpace = rightLimit - legendXRight;
 
-    // estimación de texto más largo
     let maxW = 0;
     for(let i=0;i<labels.length;i++){
       const v = Number(values[i]||0);
@@ -1268,7 +1444,6 @@
         ly += 12;
       }
     }else{
-      // debajo, con wrap para no salirse
       const x0 = Math.max(44, cx - r);
       const y0 = cy + r + 16;
       const maxWidth = Math.max(140, Math.min(260, rightLimit - x0));
@@ -1286,7 +1461,7 @@
   }
 
   async function exportResumenPresupuestoObraDesagregadoPDF(project, opts){
-    const doc = newDoc(); // portrait
+    const doc = newDoc();
     const L = mkLayout(doc);
     const { items } = Calc.groupByChapters(project);
 
@@ -1332,7 +1507,6 @@
 
     const c1 = 240, c2 = 180, c3 = Math.max(80, tw - c1 - c2);
 
-    // header
     {
       const yTop = L.getY();
       doc.setFont("helvetica","bold"); doc.setFontSize(8.4);
@@ -1359,7 +1533,6 @@
       L.setY(yTop + rowH + 2);
     }
 
-    // total
     {
       ensureWithHeader(L, rowH + 12, ()=>{});
       const yTop = L.getY();
@@ -1371,7 +1544,6 @@
       L.setY(yTop + rowH + 18);
     }
 
-    // Gráficas (pág 3)
     doc.addPage();
     L.setY(PDF_THEME.safe.top);
 
@@ -1389,7 +1561,6 @@
 
     const { w: PAGE_W } = getPageSize(doc);
 
-    // ✅ FIX: pie sin artefactos + leyenda sin corte
     drawPieAndLegend(doc, {
       cx: margin + 410,
       cy: L.getY() + 110,
@@ -2101,7 +2272,7 @@
   }
 
   // =========================================================
-  // PRESUPUESTO PDF (AJUSTE #2 aplicado aquí)
+  // PRESUPUESTO PDF
   // =========================================================
   async function exportPresupuestoPDF(project, opts){
     const doc = newDoc();
@@ -2159,12 +2330,6 @@
     doc.addPage();
     L.setY(PDF_THEME.safe.top);
 
-    // ✅ FIX #2: Se elimina el bloque inicial "DETALLE DE ÍTEMS" + header duplicado.
-    // Antes:
-    //   drawBand(... "DETALLE DE ÍTEMS");
-    //   L.tableHeaderPresupuesto();
-    // Ahora: el detalle inicia directamente por capítulo (capítulo + header).
-
     if(!items.length){
       L.p("Sin ítems.");
     }else{
@@ -2206,7 +2371,7 @@
   }
 
   // =========================================================
-  // PRESUPUESTO + APUs (sin cambios)
+  // PRESUPUESTO + APUs (✅ robusto: code/ref/desc)
   // =========================================================
   async function exportPresupuestoConAPUsPDF(project, opts){
     const doc = newDoc();
@@ -2272,21 +2437,32 @@
     }
 
     for(const it of items){
-      const code = String(it.code||"").trim();
-      if(!code) continue;
+      const codeVisible = String(it.code||"").trim();
 
       doc.addPage();
       L.setY(PDF_THEME.safe.top);
 
       const apuObj = await getAPUForProjectItem(project, it);
+
+      // título informativo: si encontró por descripción, lo mostramos
+      let title = `APU ${codeVisible || "-"}`;
+      if(apuObj && apuObj._match === "desc"){
+        title = `APU ${codeVisible || "-"} (Base por descripción: ${apuObj.code})`;
+      }else{
+        const apuRef = String(it.apuRefCode||"").trim();
+        if(apuRef && codeVisible && apuRef !== codeVisible){
+          title = `APU ${codeVisible} (Ref: ${apuRef})`;
+        }
+      }
+
       if(!apuObj){
-        drawBand(doc, L.margin, L.getY(), L.contentW, 18, `APU ${code}`, { fontSize:10, bold:true });
+        drawBand(doc, L.margin, L.getY(), L.contentW, 18, title, { fontSize:10, bold:true });
         L.setY(L.getY()+24);
         L.p("No se encontró descomposición (override, custom o base).");
         continue;
       }
 
-      drawBand(doc, L.margin, L.getY(), L.contentW, 18, `APU ${code}`, { fontSize:10, bold:true });
+      drawBand(doc, L.margin, L.getY(), L.contentW, 18, title, { fontSize:10, bold:true });
       L.setY(L.getY()+24);
 
       doc.setFont("helvetica","bold"); doc.setFontSize(10.2);
@@ -2333,7 +2509,7 @@
   }
 
   // =========================================================
-  // ESPECIFICACIONES TÉCNICAS (sin cambios)
+  // ESPECIFICACIONES TÉCNICAS (usa getAPUForProjectItem robusto)
   // =========================================================
   function detectNormatividad(desc){
     const t = String(desc||"").toLowerCase();

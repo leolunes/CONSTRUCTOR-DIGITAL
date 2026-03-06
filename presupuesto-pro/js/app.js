@@ -214,6 +214,105 @@ function totalsCompat(project){
   };
 }
 
+/* ==========================================
+   ✅ NUEVO: Capítulos manuales por proyecto
+   - Se guardan en project.chapters = [{id, chapterCode, chapterName}]
+   - Para dropdowns, se mezcla con capítulos inferidos por ítems
+   ========================================== */
+function ensureProjectChapters(project){
+  const p = project || {};
+  if(!Array.isArray(p.chapters)) p.chapters = [];
+  // normalizar
+  p.chapters = p.chapters
+    .map(c=>({
+      id: String(c?.id || ""),
+      chapterCode: String(c?.chapterCode || "").trim(),
+      chapterName: String(c?.chapterName || "").trim()
+    }))
+    .filter(c=>c.chapterCode);
+  return p.chapters;
+}
+
+function getInferredChaptersFromItems(project){
+  // usa Calc.groupByChapters para respetar chapterName existente
+  try{
+    const { groups } = Calc.groupByChapters(project);
+    return (groups||[])
+      .map(g=>({
+        chapterCode: String(g.chapterCode||"").trim(),
+        chapterName: String(g.chapterName||"").trim()
+      }))
+      .filter(x=>x.chapterCode);
+  }catch(_){
+    // fallback simple
+    const map = new Map();
+    for(const it of (project?.items||[])){
+      const code = String(it.chapterCode || "").trim();
+      if(!code) continue;
+      if(!map.has(code)){
+        map.set(code, { chapterCode: code, chapterName: String(it.chapterName||"").trim() });
+      }
+    }
+    return Array.from(map.values());
+  }
+}
+
+function getAllChaptersForProject(project){
+  const manual = ensureProjectChapters(project).map(c=>({
+    chapterCode: c.chapterCode,
+    chapterName: c.chapterName
+  }));
+
+  const inferred = getInferredChaptersFromItems(project);
+
+  // merge por chapterCode (manual tiene prioridad en nombre)
+  const map = new Map();
+  for(const x of inferred){
+    map.set(String(x.chapterCode), { chapterCode: String(x.chapterCode), chapterName: String(x.chapterName||"") });
+  }
+  for(const x of manual){
+    map.set(String(x.chapterCode), { chapterCode: String(x.chapterCode), chapterName: String(x.chapterName||"") });
+  }
+
+  const arr = Array.from(map.values());
+  arr.sort((a,b)=>{
+    const na = Number(a.chapterCode), nb = Number(b.chapterCode);
+    if(Number.isFinite(na) && Number.isFinite(nb)) return na-nb;
+    return String(a.chapterCode).localeCompare(String(b.chapterCode));
+  });
+  return arr;
+}
+
+function lookupChapterName(project, chapterCode){
+  const code = String(chapterCode||"").trim();
+  if(!code) return "";
+  const all = getAllChaptersForProject(project);
+  const found = all.find(x=>String(x.chapterCode)===code);
+  return found ? String(found.chapterName||"") : "";
+}
+
+function makeId(prefix="id"){
+  return `${prefix}_${Math.random().toString(16).slice(2)}_${Date.now().toString(16)}`;
+}
+
+/* ==========================================
+   ✅ Helper: actualizar PU por APU real (apuRefCode)
+   ========================================== */
+function updateItemsPUByApuCompat(projectId, apuCode, newPU){
+  // Preferido: por apuRefCode
+  if(window.StorageAPI && typeof StorageAPI.updateItemsPUByApuRefCode === "function"){
+    return StorageAPI.updateItemsPUByApuRefCode(projectId, apuCode, newPU);
+  }
+  // Fallback legacy: por code visible
+  if(window.StorageAPI && typeof StorageAPI.updateItemsPUByCode === "function"){
+    return StorageAPI.updateItemsPUByCode(projectId, apuCode, newPU);
+  }
+  return 0;
+}
+
+/* ==========================================
+   ✅ Export Excel (sin cambios de lógica)
+   ========================================== */
 function exportProjectExcel(project){
   if(!project) return;
 
@@ -597,6 +696,319 @@ function renderChaptersTable(project){
   `).join("");
 }
 
+/* =========================
+   ✅ NUEVO: render + bind capítulos manuales
+   ========================= */
+function renderProjectChaptersUI(project){
+  const tbody = UI.qs("#projectChaptersBody");
+  const empty = UI.qs("#projectChaptersEmpty");
+  if(!tbody) return;
+
+  ensureProjectChapters(project);
+
+  if(!project.chapters.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = project.chapters
+    .slice()
+    .sort((a,b)=>{
+      const na = Number(a.chapterCode), nb = Number(b.chapterCode);
+      if(Number.isFinite(na) && Number.isFinite(nb)) return na-nb;
+      return String(a.chapterCode).localeCompare(String(b.chapterCode));
+    })
+    .map(c=>`
+      <tr>
+        <td><b>${UI.esc(c.chapterCode||"")}</b></td>
+        <td>${UI.esc(c.chapterName||"")}</td>
+        <td class="row" style="gap:8px">
+          <button class="btn" type="button" data-editchap="${UI.esc(c.id)}">Editar</button>
+          <button class="btn danger" type="button" data-delchap="${UI.esc(c.id)}">Eliminar</button>
+        </td>
+      </tr>
+    `).join("");
+
+  tbody.querySelectorAll("[data-delchap]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-delchap");
+      const fresh = StorageAPI.getProjectById(project.id);
+      if(!fresh) return;
+
+      ensureProjectChapters(fresh);
+
+      const c = fresh.chapters.find(x=>x.id===id);
+      if(!c) return;
+
+      if(!confirm(`¿Eliminar el capítulo ${c.chapterCode} - ${c.chapterName}?`)) return;
+
+      const next = fresh.chapters.filter(x=>x.id!==id);
+      StorageAPI.updateProject(fresh.id, { chapters: next });
+
+      const updated = StorageAPI.getProjectById(fresh.id);
+      renderProjectChaptersUI(updated);
+      refreshAddApuModalChapterOptions(updated);
+      renderChaptersTable(updated);
+      renderResumenItems(updated);
+      renderItemsTable(updated);
+    });
+  });
+
+  tbody.querySelectorAll("[data-editchap]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-editchap");
+      const fresh = StorageAPI.getProjectById(project.id);
+      if(!fresh) return;
+
+      ensureProjectChapters(fresh);
+      const c = fresh.chapters.find(x=>x.id===id);
+      if(!c) return;
+
+      const inpCode = UI.qs("#projChapterCode");
+      const inpName = UI.qs("#projChapterName");
+      const hid = UI.qs("#projChapterEditId");
+
+      if(inpCode) inpCode.value = c.chapterCode || "";
+      if(inpName) inpName.value = c.chapterName || "";
+      if(hid) hid.value = c.id || "";
+    });
+  });
+}
+
+/* ============================================================
+   ✅ FIX: “Agregar capítulo” funcionando por submit + click
+   ============================================================ */
+function bindProjectChaptersUI(projectId){
+  const form = UI.qs("#formProjectChapter");
+  const inpCode = UI.qs("#projChapterCode");
+  const inpName = UI.qs("#projChapterName");
+  const hid = UI.qs("#projChapterEditId");
+  const btnClear = UI.qs("#btnClearProjectChapterForm");
+  const btnAdd = UI.qs("#btnAddProjectChapter"); // ✅ botón submit
+
+  if(!form || !inpCode || !inpName) return;
+
+  function clearForm(){
+    inpCode.value = "";
+    inpName.value = "";
+    if(hid) hid.value = "";
+  }
+  btnClear?.addEventListener("click", clearForm);
+
+  function saveChapter(){
+    const fresh = StorageAPI.getProjectById(projectId);
+    if(!fresh) return;
+
+    ensureProjectChapters(fresh);
+
+    const chapterCode = String(inpCode.value||"").trim();
+    const chapterName = String(inpName.value||"").trim();
+
+    if(!chapterCode){
+      alert("Escribe el número del capítulo.");
+      return;
+    }
+    if(!/^\d+$/.test(chapterCode)){
+      alert("El número de capítulo debe ser numérico (ej: 1, 2, 10).");
+      return;
+    }
+    if(!chapterName){
+      alert("Escribe el nombre del capítulo.");
+      return;
+    }
+
+    const editId = String(hid?.value||"").trim();
+
+    // no duplicar chapterCode en manual
+    const dup = fresh.chapters.find(x=>x.chapterCode===chapterCode && x.id!==editId);
+    if(dup){
+      alert(`Ya existe el capítulo ${chapterCode}. Edita el existente.`);
+      return;
+    }
+
+    let next = fresh.chapters.slice();
+    if(editId){
+      next = next.map(x => x.id===editId ? ({...x, chapterCode, chapterName}) : x);
+    }else{
+      next.push({ id: makeId("chap"), chapterCode, chapterName });
+    }
+
+    // ✅ Guardar
+    StorageAPI.updateProject(projectId, { chapters: next });
+
+    const updated = StorageAPI.getProjectById(projectId);
+    clearForm();
+    renderProjectChaptersUI(updated);
+    refreshAddApuModalChapterOptions(updated);
+    renderChaptersTable(updated);
+    renderResumenItems(updated);
+  }
+
+  // ✅ submit del form
+  form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    saveChapter();
+  });
+
+  // ✅ FIX extra: click directo del botón (hay entornos donde no dispara submit)
+  btnAdd?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    saveChapter();
+  });
+
+  // ✅ Enter dentro de inputs también guarda
+  [inpCode, inpName].forEach(inp=>{
+    inp.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter"){
+        e.preventDefault();
+        saveChapter();
+      }
+    });
+  });
+}
+
+/* =========================
+   ✅ NUEVO: Modal agregar APU con capítulo
+   ========================= */
+let __addApuModalState = {
+  projectId: "",
+  apu: null
+};
+
+function openAddApuModal(project, apu){
+  const modal = UI.qs("#addApuModal");
+  if(!modal) {
+    const qtyOld = Number(prompt("Cantidad del ítem:", "1") || "0");
+    if(!qtyOld) return;
+
+    // ✅ apuRefCode: código real del APU (base/custom/override)
+    StorageAPI.addItem(project.id, {
+      chapterCode: apu.chapterCode || "",
+      chapterName: apu.chapterName || "",
+      code: apu.code,           // código visible
+      apuRefCode: apu.code,     // código real APU
+      desc: apu.desc,
+      unit: apu.unit,
+      pu: Number(apu.pu||0),
+      qty: qtyOld
+    });
+
+    const fresh = StorageAPI.getProjectById(project.id);
+    renderProjectDetail(fresh);
+    renderChaptersTable(fresh);
+    renderItemsTable(fresh);
+    renderResumenItems(fresh);
+    alert("Ítem agregado al presupuesto.");
+    return;
+  }
+
+  __addApuModalState.projectId = project.id;
+  __addApuModalState.apu = apu;
+
+  UI.qs("#addApuCode") && (UI.qs("#addApuCode").value = String(apu.code||""));
+  UI.qs("#addApuUnit") && (UI.qs("#addApuUnit").value = String(apu.unit||""));
+  UI.qs("#addApuDesc") && (UI.qs("#addApuDesc").value = String(apu.desc||""));
+  UI.qs("#addApuQty") && (UI.qs("#addApuQty").value = "1");
+  UI.qs("#addApuRawJson") && (UI.qs("#addApuRawJson").value = JSON.stringify(apu||{}));
+
+  refreshAddApuModalChapterOptions(project);
+
+  modal.style.display = "";
+}
+
+function closeAddApuModal(){
+  const modal = UI.qs("#addApuModal");
+  if(modal) modal.style.display = "none";
+}
+
+function refreshAddApuModalChapterOptions(project){
+  const sel = UI.qs("#addApuChapterSel");
+  const inpCode = UI.qs("#addApuChapterCode");
+  const inpName = UI.qs("#addApuChapterName");
+  if(!sel) return;
+
+  const chapters = getAllChaptersForProject(project);
+
+  sel.innerHTML = chapters.length
+    ? chapters.map(c=>{
+        const label = `${c.chapterCode} — ${c.chapterName||""}`.trim();
+        return `<option value="${UI.esc(c.chapterCode)}" data-name="${UI.esc(c.chapterName||"")}">${UI.esc(label)}</option>`;
+      }).join("")
+    : `<option value="">(Sin capítulos definidos)</option>`;
+
+  const pick = ()=>{
+    const code = String(sel.value||"").trim();
+    let name = "";
+    if(code){
+      name = lookupChapterName(project, code);
+    }
+    if(inpCode) inpCode.value = code;
+    if(inpName) inpName.value = name;
+  };
+
+  sel.onchange = pick;
+  pick();
+}
+
+function confirmAddApuToProject({ keepOpen=false }){
+  const projectId = __addApuModalState.projectId;
+  const apu = __addApuModalState.apu;
+  if(!projectId || !apu) return;
+
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return;
+
+  const qty = Number(String(UI.qs("#addApuQty")?.value || "0").replaceAll(",",""));
+  if(!(qty > 0)){
+    alert("La cantidad debe ser mayor a 0.");
+    return;
+  }
+
+  const chapterCode = String(UI.qs("#addApuChapterCode")?.value || "").trim();
+  let chapterName = String(UI.qs("#addApuChapterName")?.value || "").trim();
+
+  if(!chapterCode){
+    alert("Debes seleccionar un capítulo destino.");
+    return;
+  }
+  if(!chapterName){
+    chapterName = lookupChapterName(fresh, chapterCode) || "";
+  }
+
+  // ✅ apuRefCode se fija al código real del APU
+  StorageAPI.addItem(projectId, {
+    chapterCode,
+    chapterName,
+    code: apu.code,         // visible
+    apuRefCode: apu.code,   // real APU
+    desc: apu.desc,
+    unit: apu.unit,
+    pu: Number(apu.pu||0),
+    qty
+  });
+
+  const updated = StorageAPI.getProjectById(projectId);
+  renderProjectDetail(updated);
+  renderChaptersTable(updated);
+  renderItemsTable(updated);
+  renderResumenItems(updated);
+
+  if(keepOpen){
+    UI.qs("#addApuQty") && (UI.qs("#addApuQty").value = "1");
+    refreshAddApuModalChapterOptions(updated);
+    alert("Ítem agregado. Puedes escoger otro capítulo y volver a agregar.");
+    return;
+  }
+
+  closeAddApuModal();
+  alert("Ítem agregado al presupuesto.");
+}
+
+/* =========================
+   Render de ítems + edición
+   ========================= */
 function renderItemsTable(project){
   const tbody = UI.qs("#itemsBody");
   const empty = UI.qs("#itemsEmpty");
@@ -613,6 +1025,10 @@ function renderItemsTable(project){
   tbody.innerHTML = items.map(it=>{
     const parcial = Number(it.pu||0) * Number(it.qty||0);
     const cap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
+
+    // ✅ APU real para abrir visor
+    const apuCode = String(it.apuRefCode || it.code || "").trim();
+
     return `
       <tr>
         <td><b>${UI.esc(cap||"-")}</b></td>
@@ -623,7 +1039,7 @@ function renderItemsTable(project){
         <td style="text-align:right">${UI.esc(String(it.qty||0))}</td>
         <td style="text-align:right"><b>${UI.fmtMoney(parcial, project.currency||"COP")}</b></td>
         <td class="row" style="gap:8px">
-          <a class="btn" href="apu.html?code=${encodeURIComponent(it.code||"")}&projectId=${encodeURIComponent(project.id)}">Ver APU</a>
+          <a class="btn" href="apu.html?code=${encodeURIComponent(apuCode)}&projectId=${encodeURIComponent(project.id)}">Ver APU</a>
           <button class="btn" type="button" data-edit="${it.id}">Editar</button>
           <button class="btn danger" type="button" data-del="${it.id}">Eliminar</button>
         </td>
@@ -648,16 +1064,35 @@ function renderItemsTable(project){
     btn.addEventListener("click", ()=>{
       const id = btn.getAttribute("data-edit");
       const fresh = StorageAPI.getProjectById(project.id);
+      if(!fresh) return;
+
       const it = (fresh.items||[]).find(x=>x.id===id);
       if(!it) return;
 
-      const code = prompt("Código:", it.code||"") ?? it.code;
+      const curChapterCode = String(it.chapterCode || (String(it.code||"").split(".")[0]||"")).trim();
+      const curChapterName = String(it.chapterName||"").trim() || lookupChapterName(fresh, curChapterCode);
+
+      const chapterCode = String(prompt("Capítulo (número):", curChapterCode) ?? curChapterCode).trim();
+      let chapterName = String(prompt("Nombre del capítulo:", curChapterName) ?? curChapterName).trim();
+
+      // ✅ Visible code puede cambiar sin afectar APU real
+      const code = prompt("Código (visible):", it.code||"") ?? it.code;
+
+      // ✅ Nuevo: APU ref code (real)
+      const curApuRef = String(it.apuRefCode || it.code || "").trim();
+      let apuRefCode = String(prompt("Código APU (Ref - real):", curApuRef) ?? curApuRef).trim();
+      if(!apuRefCode) apuRefCode = String(code||"").trim();
+
       const desc = prompt("Descripción:", it.desc||"") ?? it.desc;
       const unit = prompt("Unidad:", it.unit||"") ?? it.unit;
       const pu = Number(prompt("VR Unitario:", String(it.pu||0)) ?? it.pu);
       const qty = Number(prompt("Cantidad:", String(it.qty||0)) ?? it.qty);
 
-      StorageAPI.updateItem(fresh.id, id, { code, desc, unit, pu, qty });
+      if(chapterCode && !chapterName){
+        chapterName = lookupChapterName(fresh, chapterCode) || "";
+      }
+
+      StorageAPI.updateItem(fresh.id, id, { chapterCode, chapterName, code, apuRefCode, desc, unit, pu, qty });
       const updated = StorageAPI.getProjectById(fresh.id);
       renderProjectDetail(updated);
       renderChaptersTable(updated);
@@ -734,25 +1169,10 @@ function renderApuResults(projectId, results){
         return;
       }
 
-      const qty = Number(prompt("Cantidad del ítem:", "1") || "0");
-      if(!qty) return;
+      const project = StorageAPI.getProjectById(projectId);
+      if(!project) return;
 
-      StorageAPI.addItem(projectId, {
-        chapterCode: sel.chapterCode || "",
-        chapterName: sel.chapterName || "",
-        code: sel.code,
-        desc: sel.desc,
-        unit: sel.unit,
-        pu: Number(sel.pu||0),
-        qty
-      });
-
-      const fresh = StorageAPI.getProjectById(projectId);
-      renderProjectDetail(fresh);
-      renderChaptersTable(fresh);
-      renderItemsTable(fresh);
-      renderResumenItems(fresh);
-      alert("Ítem agregado al presupuesto.");
+      openAddApuModal(project, sel);
     });
   });
 }
@@ -1148,9 +1568,18 @@ async function bindProjectDetailPage(){
     return;
   }
 
+  ensureProjectChapters(project);
+
   bindTabsIfPresent();
   bindFirmaModal();
   bindBaseViewer(projectId);
+
+  bindProjectChaptersUI(projectId);
+  renderProjectChaptersUI(project);
+
+  UI.qs("#btnAddApuClose")?.addEventListener("click", closeAddApuModal);
+  UI.qs("#btnAddApuConfirm")?.addEventListener("click", ()=> confirmAddApuToProject({ keepOpen:false }));
+  UI.qs("#btnAddApuConfirmAndKeep")?.addEventListener("click", ()=> confirmAddApuToProject({ keepOpen:true }));
 
   renderProjectDetail(project);
   renderChaptersTable(project);
@@ -1212,7 +1641,6 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      // ✅ Punto 3: en iPhone abre "Compartir" primero
       await PDF.exportPresupuestoPDF(fresh, { share: isIOS() });
     }catch(err){
       alert("Error generando PDF: " + (err?.message || err));
@@ -1223,7 +1651,6 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      // ✅ Punto 3: en iPhone abre "Compartir" primero
       await PDF.exportPresupuestoConAPUsPDF(fresh, { share: isIOS() });
     }catch(err){
       alert("Error generando PDF + APUs: " + (err?.message || err));
@@ -1254,7 +1681,6 @@ async function bindProjectDetailPage(){
     try{
       const fresh = StorageAPI.getProjectById(projectId);
       if(!fresh) return;
-      // ✅ Punto 3: en iPhone abre "Compartir" primero
       await PDF.exportEspecificacionesTecnicasPDF(fresh, { share: isIOS() });
     }catch(err){
       alert("Error generando PDF Especificaciones Técnicas: " + (err?.message || err));
@@ -1272,8 +1698,7 @@ async function bindProjectDetailPage(){
   });
 
   /* =========================================================
-     ✅ NUEVOS 6 BOTONES PDF (según imágenes)
-     - Si aún no existe la función en pdf.js, se avisa (no rompe nada)
+     ✅ NUEVOS 6 BOTONES PDF
      ========================================================= */
   UI.qs("#btnPdfPresupuestoDesagregado")?.addEventListener("click", async ()=>{
     try{
@@ -1443,7 +1868,7 @@ async function bindProjectDetailPage(){
           name: full.name || m.name || "archivo",
           mime: full.mime || m.mime || "application/octet-stream",
           size: Number(full.size || m.size || 0),
-          createdAt: full.createdAt || m.createdAt || nowISO(),
+          createdAt: full.createdAt || m.createdAt || new Date().toISOString(),
           dataUrl
         });
       }
@@ -1530,8 +1955,13 @@ async function bindProjectDetailPage(){
   UI.qs("#formAddManual")?.addEventListener("submit", (e)=>{
     e.preventDefault();
     const fd = new FormData(e.target);
-    const chapterCode = String(fd.get("chapterCode") || "").trim();
-    const chapterName = String(fd.get("chapterName") || "").trim();
+
+    const fresh = StorageAPI.getProjectById(projectId);
+    if(!fresh) return;
+
+    let chapterCode = String(fd.get("chapterCode") || "").trim();
+    let chapterName = String(fd.get("chapterName") || "").trim();
+
     const code = String(fd.get("code") || "").trim();
     const unit = String(fd.get("unit") || "").trim();
     const desc = String(fd.get("desc") || "").trim();
@@ -1541,21 +1971,31 @@ async function bindProjectDetailPage(){
     if(!code || !unit || !desc) { alert("Completa código, unidad y descripción."); return; }
     if(!(pu > 0) || !(qty > 0)) { alert("PU y Cantidad deben ser > 0."); return; }
 
-    StorageAPI.addItem(projectId, { chapterCode, chapterName, code, unit, desc, pu, qty });
+    if(!chapterCode){
+      const def = code.includes(".") ? code.split(".")[0] : "";
+      if(/^\d+$/.test(def)) chapterCode = def;
+    }
+
+    if(chapterCode && !chapterName){
+      chapterName = lookupChapterName(fresh, chapterCode) || "";
+    }
+
+    // ✅ Manual: apuRefCode por defecto igual al code (no rompe nada)
+    StorageAPI.addItem(projectId, { chapterCode, chapterName, code, apuRefCode: code, unit, desc, pu, qty });
 
     e.target.reset();
-    const fresh = StorageAPI.getProjectById(projectId);
-    renderProjectDetail(fresh);
-    renderChaptersTable(fresh);
-    renderItemsTable(fresh);
-    renderResumenItems(fresh);
+    const updated = StorageAPI.getProjectById(projectId);
+    renderProjectDetail(updated);
+    renderChaptersTable(updated);
+    renderItemsTable(updated);
+    renderResumenItems(updated);
     alert("Ítem agregado.");
   });
 }
 
 /* ---------- APU PAGE (Override por proyecto) ---------- */
 async function bindAPUPage(){
-  const code = UI.getParam("code");
+  const codeParam = UI.getParam("code");
   const sub = UI.getParam("sub");
   const projectId = UI.getParam("projectId");
 
@@ -1654,14 +2094,32 @@ async function bindAPUPage(){
 
   let apu = null;
 
-  if(code){
+  // ✅ apuCode real que se usa para override/custom/base
+  let apuCode = String(codeParam||"").trim();
+  let displayCode = apuCode;
+
+  // ✅ Compat: si entran con code visible legacy, intentamos mapear a apuRefCode desde el proyecto
+  if(projectId && apuCode){
+    const proj = StorageAPI.getProjectById(projectId);
+    const hit = (proj?.items||[]).find(x => String(x.code||"").trim() === apuCode);
+    if(hit && hit.apuRefCode){
+      const real = String(hit.apuRefCode||"").trim();
+      if(real && real !== apuCode){
+        displayCode = apuCode;
+        apuCode = real;
+      }
+    }
+  }
+
+  if(apuCode){
     if(projectId){
-      const ov = StorageAPI.getApuOverride(projectId, code);
+      const ov = StorageAPI.getApuOverride(projectId, apuCode);
       if(ov && Array.isArray(ov.lines) && ov.lines.length){
+        const title = (displayCode && displayCode !== apuCode) ? `APU ${displayCode} (Ref: ${apuCode})` : `APU ${apuCode}`;
         apu = {
-          title: `APU ${code}`,
+          title,
           subtitle: "(Override del proyecto)",
-          header: `${code} — Override del proyecto`,
+          header: `${apuCode} — Override del proyecto`,
           metaLine: `Fuente: Override del proyecto · Actualizado: ${(ov.updatedAt||"").slice(0,19).replace("T"," ")}`,
           unit: "",
           directo: computeDirecto(ov.lines),
@@ -1671,11 +2129,12 @@ async function bindAPUPage(){
     }
 
     if(!apu){
-      const custom = StorageAPI.getCustomAPU(code);
+      const custom = StorageAPI.getCustomAPU(apuCode);
       if(custom){
         const directo = (custom.lines||[]).reduce((s,l)=> s + Number(l.parcial||0), 0);
+        const title = (displayCode && displayCode !== apuCode) ? `APU ${displayCode} (Ref: ${apuCode})` : `APU ${custom.code}`;
         apu = {
-          title: `APU ${custom.code}`,
+          title,
           subtitle: custom.desc || "",
           header: `${custom.code} — ${custom.desc||""}`,
           metaLine: `APU creado en la app · Capítulo ${custom.chapterCode||"-"} ${custom.chapterName||""}`,
@@ -1684,7 +2143,10 @@ async function bindAPUPage(){
           lines: (custom.lines||[]).map(l=>({ group:l.tipo||l.group||"-", desc:l.desc, unit:l.unit, qty:l.qty, pu:l.pu, parcial:l.parcial, subRef:"" }))
         };
       }else{
-        apu = await APUBase.getAPU(code);
+        apu = await APUBase.getAPU(apuCode);
+        if(apu && displayCode && displayCode !== apuCode){
+          apu.title = `APU ${displayCode} (Ref: ${apuCode})`;
+        }
       }
     }
   }else if(sub){
@@ -1712,7 +2174,7 @@ async function bindAPUPage(){
     </div>
   `);
 
-  if(projectId && code){
+  if(projectId && apuCode){
     btnSaveOverride && (btnSaveOverride.style.display = "");
     btnResetOverride && (btnResetOverride.style.display = "");
 
@@ -1752,10 +2214,13 @@ async function bindAPUPage(){
         parcial: Number(l.parcial||0) || (Number(l.qty||0)*Number(l.pu||0))
       }));
 
-      StorageAPI.setApuOverride(projectId, code, cleaned);
+      // ✅ Override por APU real
+      StorageAPI.setApuOverride(projectId, apuCode, cleaned);
 
       const newPU = computeDirecto(cleaned);
-      const count = StorageAPI.updateItemsPUByCode(projectId, code, newPU);
+
+      // ✅ Actualiza items por apuRefCode si existe; fallback legacy por code
+      const count = updateItemsPUByApuCompat(projectId, apuCode, newPU);
 
       alert(`Override guardado.\nNuevo PU (Costo directo): ${UI.fmtMoney(newPU,"COP")}\nÍtems actualizados: ${count}`);
       apu.directo = newPU;
@@ -1765,7 +2230,7 @@ async function bindAPUPage(){
 
     btnResetOverride?.addEventListener("click", async ()=>{
       if(!confirm("¿Quitar override del proyecto?\n(NO borra la Base APU).")) return;
-      StorageAPI.clearApuOverride(projectId, code);
+      StorageAPI.clearApuOverride(projectId, apuCode);
       alert("Override eliminado. Vuelve a abrir el APU para ver el original (base/custom).");
       location.reload();
     });

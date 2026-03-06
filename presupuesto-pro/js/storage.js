@@ -1,9 +1,132 @@
-
 const STORE_KEY = "presupuesto_pro_v1";
 
 function nowISO(){ return new Date().toISOString(); }
 function uid(prefix="id"){ return `${prefix}_${Math.random().toString(16).slice(2)}_${Date.now().toString(16)}`; }
 
+function safeStr(v){ return String(v ?? "").trim(); }
+
+/* =========================
+   Chapters helpers (✅ alineado a app.js)
+   project.chapters = [{ id, chapterCode, chapterName }]
+   ========================= */
+function normalizeChapterCode(code){
+  // Permite "3", "3.00", "03.00", "3.1", "10.00", etc.
+  // Solo limpiamos espacios.
+  return safeStr(code);
+}
+
+function normalizeChapterName(name){
+  return safeStr(name);
+}
+
+function normalizeChapters(raw){
+  const arr = Array.isArray(raw) ? raw : [];
+  const out = [];
+
+  for(const c of arr){
+    // ✅ soportar tanto esquema nuevo como viejo
+    const code = normalizeChapterCode(c?.chapterCode ?? c?.code);
+    const name = normalizeChapterName(c?.chapterName ?? c?.name);
+    if(!code) continue;
+
+    out.push({
+      id: safeStr(c?.id) || uid("chap"),
+      chapterCode: code,
+      chapterName: name
+    });
+  }
+
+  // Unicidad por chapterCode (primero gana)
+  const seen = new Set();
+  const uniq = [];
+  for(const c of out){
+    if(seen.has(c.chapterCode)) continue;
+    seen.add(c.chapterCode);
+    uniq.push(c);
+  }
+
+  // Orden por "número" si aplica, si no lexicográfico
+  uniq.sort((a,b)=>{
+    const na = parseFloat(String(a.chapterCode).replace(",", "."));
+    const nb = parseFloat(String(b.chapterCode).replace(",", "."));
+    const fa = Number.isFinite(na);
+    const fb = Number.isFinite(nb);
+    if(fa && fb && na !== nb) return na - nb;
+    return String(a.chapterCode).localeCompare(String(b.chapterCode), "es");
+  });
+
+  return uniq;
+}
+
+function findChapterByCode(project, code){
+  const cc = normalizeChapterCode(code);
+  if(!cc) return null;
+  const chs = Array.isArray(project?.chapters) ? project.chapters : [];
+  return chs.find(c => String(c.chapterCode) === cc) || null;
+}
+
+function deriveChapterCandidatesFromItemCode(itemCode){
+  const code = safeStr(itemCode);
+  if(!code) return [];
+
+  // "3.01" => baseSeg "3"
+  const seg = code.split(".")[0];
+  const baseSeg = safeStr(seg);
+
+  // Candidatos comunes: "3" y "3.00"
+  const cand = [];
+  if(baseSeg && /^\d+$/.test(baseSeg)){
+    cand.push(baseSeg);
+    cand.push(`${baseSeg}.00`);
+  }
+  return cand;
+}
+
+function resolveChapterCodeForItem(project, itemCode, explicitChapterCode){
+  const exp = normalizeChapterCode(explicitChapterCode);
+  if(exp) return exp;
+
+  const cand = deriveChapterCandidatesFromItemCode(itemCode);
+  if(!cand.length) return "";
+
+  // Si el proyecto ya tiene capítulos definidos, intentamos calzar con ellos
+  const chs = Array.isArray(project?.chapters) ? project.chapters : [];
+  if(chs.length){
+    const set = new Set(chs.map(c => String(c.chapterCode)));
+    for(const c of cand){
+      if(set.has(c)) return c;
+    }
+  }
+
+  // Fallback: el primero (normalmente "3")
+  return cand[0] || "";
+}
+
+function resolveChapterNameForItem(project, chapterCode, fallbackName){
+  const cc = normalizeChapterCode(chapterCode);
+  const fb = safeStr(fallbackName);
+  const ch = cc ? findChapterByCode(project, cc) : null;
+  if(ch && ch.chapterName) return String(ch.chapterName);
+  return fb;
+}
+
+/* =========================
+   ✅ NUEVO: APU Ref helpers
+   - item.code: código visible (puede renumerarse)
+   - item.apuRefCode: código real del APU/base (para descomposición/PDF)
+   ========================= */
+function normalizeApuRefCode(v){
+  return safeStr(v);
+}
+function getItemApuLookupCode(it){
+  // Lo que debe usarse para buscar descomposición/override: apuRefCode si existe, si no code
+  const ref = normalizeApuRefCode(it?.apuRefCode);
+  return ref || safeStr(it?.code);
+}
+
+/* =========================
+   Proyecto
+   ========================= */
 function normalizeProject(p){
   const proj = p || {};
 
@@ -13,7 +136,6 @@ function normalizeProject(p){
   // =========================================================
   // ✅ NUEVO ESQUEMA A-I-U + IVA sobre utilidad
   // =========================================================
-  // Si NO existen los nuevos campos, derivarlos desde aiuPct/ivaPct (legacy)
   const hasNew =
     (proj.adminPct != null) ||
     (proj.imprevPct != null) ||
@@ -40,13 +162,11 @@ function normalizeProject(p){
   // ✅ Compatibilidad: mantener aiuPct / ivaPct para pantallas/PDF antiguos
   const aiuCompat = Number(proj.adminPct||0) + Number(proj.imprevPct||0) + Number(proj.utilPct||0);
   proj.aiuPct = Number.isFinite(Number(proj.aiuPct)) ? Number(proj.aiuPct) : aiuCompat;
-  // si ya venía aiuPct pero está en blanco/NaN -> recalcular
   if(!Number.isFinite(proj.aiuPct)) proj.aiuPct = aiuCompat;
 
   proj.ivaPct = Number.isFinite(Number(proj.ivaPct)) ? Number(proj.ivaPct) : Number(proj.ivaUtilPct||19);
   if(!Number.isFinite(proj.ivaPct)) proj.ivaPct = Number(proj.ivaUtilPct||19);
 
-  // ✅ Se conserva por compatibilidad (aunque el nuevo cálculo no lo use)
   proj.ivaBase = String(proj.ivaBase || "sobre_directo_aiu");
 
   // ✅ Logo institucional (por proyecto)
@@ -60,8 +180,35 @@ function normalizeProject(p){
   proj.instProyectoLabel = String(proj.instProyectoLabel || "");
   proj.instFechaElab = String(proj.instFechaElab || "");
 
+  // ✅ capítulos definidos por el usuario (por proyecto)
+  proj.chapters = normalizeChapters(proj.chapters);
+
   if(!Array.isArray(proj.items)) proj.items = [];
   if(!proj.apuOverrides) proj.apuOverrides = {};
+
+  // ✅ Normalización suave de items:
+  // - completa chapterName desde chapters
+  // - ✅ NUEVO: garantiza apuRefCode para NO romper PDFs al renumerar item.code
+  try{
+    const chs = Array.isArray(proj.chapters) ? proj.chapters : [];
+    if(Array.isArray(proj.items)){
+      for(const it of proj.items){
+        // ✅ migración / default: si no existe apuRefCode, lo seteamos al code actual
+        // (Así proyectos viejos quedan enlazados al APU original que tenían antes de renumerar)
+        if(!normalizeApuRefCode(it?.apuRefCode)){
+          it.apuRefCode = safeStr(it?.code || "");
+        }else{
+          it.apuRefCode = normalizeApuRefCode(it.apuRefCode);
+        }
+
+        const cc = normalizeChapterCode(it?.chapterCode);
+        if(cc && (!safeStr(it?.chapterName))){
+          const found = chs.find(c => String(c.chapterCode) === cc);
+          if(found && found.chapterName) it.chapterName = String(found.chapterName);
+        }
+      }
+    }
+  }catch(_){}
 
   return proj;
 }
@@ -72,7 +219,7 @@ function loadStore(){
     const init = {
       meta:{
         createdAt: nowISO(),
-        version: 7, // ✅ subimos versión por Admin/Imprev/Util/IVAUtil
+        version: 9, // ✅ subimos versión por apuRefCode en items
 
         elaborador: {
           nombre: "",
@@ -91,7 +238,8 @@ function loadStore(){
   }
   try{
     const db = JSON.parse(raw);
-    if(!db.meta) db.meta = { createdAt:nowISO(), version:7 };
+    if(!db.meta) db.meta = { createdAt:nowISO(), version:9 };
+    if(!Number.isFinite(Number(db.meta.version))) db.meta.version = 9;
 
     if(!db.meta.customAPUs) db.meta.customAPUs = {};
     if(!db.meta.customInsumos) db.meta.customInsumos = [];
@@ -107,9 +255,10 @@ function loadStore(){
 
     if(!db.projects) db.projects = [];
 
-    // ✅ Normalizar proyectos (incluye nuevos % + logo + inst*)
+    // ✅ Normalizar proyectos (incluye chapters + nuevos % + logo + inst* + apuRefCode)
     db.projects = db.projects.map(p => normalizeProject(p));
 
+    if(db.meta.version < 9) db.meta.version = 9;
     localStorage.setItem(STORE_KEY, JSON.stringify(db));
     return db;
   }catch{
@@ -132,15 +281,17 @@ async function importBackupFromFile(file){
   const data = JSON.parse(text);
   if(!data || !data.projects) throw new Error("Backup inválido.");
 
-  if(!data.meta) data.meta = { createdAt:nowISO(), version:7 };
+  if(!data.meta) data.meta = { createdAt:nowISO(), version:9 };
   if(!data.meta.customAPUs) data.meta.customAPUs = {};
   if(!data.meta.customInsumos) data.meta.customInsumos = [];
   if(!data.meta.elaborador) data.meta.elaborador = { nombre:"", profesion:"", matricula:"", firmaDataUrl:"" };
 
   if(!data.projects) data.projects = [];
 
-  // ✅ Normalizar proyectos importados (incluye nuevos %)
+  // ✅ Normalizar proyectos importados (incluye chapters + apuRefCode)
   data.projects = data.projects.map(p => normalizeProject(p));
+
+  data.meta.version = 9;
 
   saveStore(data);
   return true;
@@ -233,7 +384,7 @@ function createProject(payload){
     utilPct: 5,
     ivaUtilPct: 19,
 
-    // ✅ Compat (por si alguna UI antigua todavía mira estos)
+    // ✅ Compat
     aiuPct: 25,
     ivaPct: 19,
     ivaBase: "sobre_directo_aiu",
@@ -246,6 +397,9 @@ function createProject(payload){
     instEntidad: "",
     instProyectoLabel: "",
     instFechaElab: "",
+
+    // ✅ capítulos del proyecto (schema app.js)
+    chapters: [],
 
     items: [],
     apuOverrides: {},
@@ -278,25 +432,118 @@ function deleteProject(id){
   saveStore(db);
 }
 
+/* =========================
+   Chapters (por proyecto)
+   ========================= */
+function listProjectChapters(projectId){
+  const p = getProjectById(projectId);
+  return (p && Array.isArray(p.chapters)) ? p.chapters : [];
+}
+
+// ✅ API compatible con app.js: app.js usa updateProject({chapters:[...]})
+// Igual dejamos helpers por si los usas en otras pantallas.
+function upsertProjectChapter(projectId, chap){
+  const db = loadStore();
+  const pidx = db.projects.findIndex(p=>p.id===projectId);
+  if(pidx===-1) return null;
+
+  const chapterCode = normalizeChapterCode(chap?.chapterCode ?? chap?.code);
+  const chapterName = normalizeChapterName(chap?.chapterName ?? chap?.name);
+  if(!chapterCode) throw new Error("Capítulo: falta chapterCode");
+
+  const p = db.projects[pidx];
+  if(!Array.isArray(p.chapters)) p.chapters = [];
+
+  const id = safeStr(chap?.id);
+  let idx = id ? p.chapters.findIndex(c => String(c.id) === id) : -1;
+
+  // Si no existe por id, buscar por chapterCode
+  if(idx === -1){
+    idx = p.chapters.findIndex(c => String(c.chapterCode) === chapterCode);
+  }
+
+  const rec = {
+    id: (idx >= 0 ? p.chapters[idx].id : (id || uid("chap"))),
+    chapterCode,
+    chapterName
+  };
+
+  if(idx >= 0) p.chapters[idx] = rec;
+  else p.chapters.push(rec);
+
+  p.chapters = normalizeChapters(p.chapters);
+
+  // ✅ Propagar chapterName a ítems que tengan el mismo chapterCode y estén vacíos
+  try{
+    for(const it of (p.items||[])){
+      if(String(it.chapterCode||"") === chapterCode && !safeStr(it.chapterName)){
+        it.chapterName = chapterName;
+      }
+    }
+  }catch(_){}
+
+  p.updatedAt = nowISO();
+  db.projects[pidx] = normalizeProject(p);
+  saveStore(db);
+  return rec;
+}
+
+function deleteProjectChapter(projectId, chapIdOrCode){
+  const db = loadStore();
+  const pidx = db.projects.findIndex(p=>p.id===projectId);
+  if(pidx===-1) return false;
+
+  const key = safeStr(chapIdOrCode);
+  if(!key) return false;
+
+  const p = db.projects[pidx];
+  if(!Array.isArray(p.chapters)) p.chapters = [];
+
+  const before = p.chapters.length;
+  p.chapters = p.chapters.filter(c => String(c.id) !== key && String(c.chapterCode) !== key);
+
+  const changed = p.chapters.length !== before;
+  if(changed){
+    p.updatedAt = nowISO();
+    db.projects[pidx] = normalizeProject(p);
+    saveStore(db);
+  }
+  return changed;
+}
+
 /* ===== Items ===== */
 function addItem(projectId, item){
   const db = loadStore();
   const idx = db.projects.findIndex(p=>p.id===projectId);
   if(idx===-1) return null;
 
-  const code = String(item.code || "").trim();
-  const defaultChap = code.includes(".") ? code.split(".")[0] : (code || "");
+  const proj = db.projects[idx];
+
+  const code = safeStr(item?.code);
+  const chapCode = resolveChapterCodeForItem(proj, code, item?.chapterCode);
+  const chapName = resolveChapterNameForItem(proj, chapCode, item?.chapterName);
+
+  // ✅ NUEVO: apuRefCode (para no perder descomposición al renumerar code)
+  const apuRefCode =
+    normalizeApuRefCode(item?.apuRefCode) ||
+    safeStr(item?.code || ""); // cuando viene desde base, normalmente es el mismo código
 
   const it = {
     id: uid("it"),
-    chapterCode: item.chapterCode || (defaultChap && /^\d+$/.test(defaultChap) ? defaultChap : ""),
-    chapterName: item.chapterName || "",
+    chapterCode: chapCode,
+    chapterName: chapName,
+    apuRefCode, // ✅ nuevo
     code: "",
     desc: "",
     unit: "",
     pu: 0,
     qty: 0,
-    ...item
+    ...item,
+    // Asegurar que la resolución gane si venían vacíos
+    chapterCode: chapCode || safeStr(item?.chapterCode || ""),
+    chapterName: chapName || safeStr(item?.chapterName || ""),
+    // ✅ asegurar apuRefCode al final (si patch lo borró)
+    apuRefCode: apuRefCode || normalizeApuRefCode(item?.apuRefCode) || safeStr(item?.code || "")
   };
 
   db.projects[idx].items.push(it);
@@ -310,20 +557,59 @@ function updateItem(projectId, itemId, patch){
   const pidx = db.projects.findIndex(p=>p.id===projectId);
   if(pidx===-1) return null;
 
-  const iidx = (db.projects[pidx].items||[]).findIndex(i=>i.id===itemId);
+  const proj = db.projects[pidx];
+
+  const iidx = (proj.items||[]).findIndex(i=>i.id===itemId);
   if(iidx===-1) return null;
 
-  const cur = db.projects[pidx].items[iidx];
+  const cur = proj.items[iidx];
   const next = { ...cur, ...patch };
 
-  if(patch.code && !patch.chapterCode){
-    const code = String(patch.code).trim();
-    const ch = code.includes(".") ? code.split(".")[0] : "";
-    if(/^\d+$/.test(ch)) next.chapterCode = ch;
+  // ✅ NUEVO: preservar referencia APU cuando el usuario renumera "code"
+  // Regla:
+  // - Si el usuario cambia patch.code
+  // - y NO está enviando patch.apuRefCode explícito
+  // - y el ítem no tenía apuRefCode válido
+  // => guardamos como apuRefCode el código anterior (cur.code)
+  const incomingCode = safeStr(patch?.code);
+  const codeChanged = incomingCode && incomingCode !== safeStr(cur?.code);
+  const patchHasApuRef = patch && Object.prototype.hasOwnProperty.call(patch, "apuRefCode");
+  if(codeChanged && !patchHasApuRef){
+    if(!normalizeApuRefCode(cur?.apuRefCode)){
+      next.apuRefCode = safeStr(cur?.code || "");
+    }else{
+      // ya tenía ref => se mantiene
+      next.apuRefCode = normalizeApuRefCode(cur.apuRefCode);
+    }
   }
 
-  db.projects[pidx].items[iidx] = next;
-  db.projects[pidx].updatedAt = nowISO();
+  // Si llega apuRefCode explícito (por API futura), normalizarlo
+  if(patchHasApuRef){
+    next.apuRefCode = normalizeApuRefCode(patch.apuRefCode);
+  }
+
+  // Garantía final: si sigue vacío, amarrarlo a code actual
+  if(!normalizeApuRefCode(next.apuRefCode)){
+    next.apuRefCode = safeStr(next.code || "");
+  }
+
+  // Si cambia el code y NO mandan chapterCode, intentar derivarlo (considerando chapters del proyecto)
+  if(patch.code && patch.chapterCode == null){
+    const resolved = resolveChapterCodeForItem(proj, String(patch.code), "");
+    if(resolved) next.chapterCode = resolved;
+  }
+
+  // Si mandan chapterCode o quedó resuelto, completar chapterName si viene vacío
+  if((patch.chapterCode != null) || next.chapterCode){
+    if(!safeStr(next.chapterName)){
+      next.chapterName = resolveChapterNameForItem(proj, next.chapterCode, next.chapterName);
+    }
+  }
+
+  proj.items[iidx] = next;
+  proj.updatedAt = nowISO();
+  db.projects[pidx] = normalizeProject(proj);
+
   saveStore(db);
   return next;
 }
@@ -339,6 +625,7 @@ function deleteItem(projectId, itemId){
 }
 
 // ✅ actualizar PU de todos los ítems por código dentro del proyecto
+// ✅ FIX: ahora compara contra (apuRefCode || code), para que el override aplique aunque renumeres code.
 function updateItemsPUByCode(projectId, code, newPU){
   const db = loadStore();
   const pidx = db.projects.findIndex(p=>p.id===projectId);
@@ -347,7 +634,8 @@ function updateItemsPUByCode(projectId, code, newPU){
   const c = String(code||"").trim();
   let count = 0;
   for(const it of (db.projects[pidx].items||[])){
-    if(String(it.code||"").trim() === c){
+    const lookup = getItemApuLookupCode(it);
+    if(String(lookup||"").trim() === c){
       it.pu = Number(newPU||0);
       count++;
     }
@@ -432,15 +720,19 @@ function importProjectAsNew(projectObj){
     instMunicipio: payload.instMunicipio || "",
     instEntidad: payload.instEntidad || "",
     instProyectoLabel: payload.instProyectoLabel || "",
-    instFechaElab: payload.instFechaElab || ""
+    instFechaElab: payload.instFechaElab || "",
+
+    // ✅ chapters del proyecto (ya normalizados al schema correcto)
+    chapters: Array.isArray(payload.chapters) ? payload.chapters : []
   });
 
   // reemplazar items con IDs nuevos
   const items = Array.isArray(payload.items) ? payload.items : [];
   const mapped = items.map(it => ({
     id: uid("it"),
-    chapterCode: it.chapterCode || "",
-    chapterName: it.chapterName || "",
+    chapterCode: safeStr(it.chapterCode || ""),
+    chapterName: safeStr(it.chapterName || ""),
+    apuRefCode: normalizeApuRefCode(it.apuRefCode) || safeStr(it.code || ""), // ✅ nuevo
     code: it.code || "",
     desc: it.desc || "",
     unit: it.unit || "",
@@ -467,6 +759,9 @@ window.StorageAPI = {
 
   createProject, updateProject, listProjects, getProjectById, deleteProject,
 
+  // ✅ Chapters
+  listProjectChapters, upsertProjectChapter, deleteProjectChapter,
+
   addItem, updateItem, deleteItem,
   updateItemsPUByCode,
 
@@ -474,4 +769,3 @@ window.StorageAPI = {
 
   importProjectAsNew
 };
-
