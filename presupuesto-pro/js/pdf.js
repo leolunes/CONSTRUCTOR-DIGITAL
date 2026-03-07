@@ -54,6 +54,10 @@
     const v = Number(n||0);
     return Math.round(v).toLocaleString("es-CO");
   }
+  function fmtQty(n){
+    const v = Number(n||0);
+    return v.toLocaleString("es-CO", { minimumFractionDigits: 0, maximumFractionDigits: 6 });
+  }
   function safe(s){ return String(s||""); }
 
   function sanitizeName(s){
@@ -101,7 +105,7 @@
     const { jsPDF } = window.jspdf;
 
     const o = options || {};
-    const orientation = o.orientation || "portrait"; // "portrait" | "landscape"
+    const orientation = o.orientation || "portrait";
 
     const doc = new jsPDF({
       unit: "pt",
@@ -174,6 +178,12 @@
     return lines.slice(0, maxLines);
   }
 
+  function isAccesoriosPercentLine(ln){
+    const d = String(ln?.desc || "").toLowerCase();
+    const u = String(ln?.unit || "").trim().toLowerCase();
+    return d.includes("accesorios") && (d.includes("%") || u === "%");
+  }
+
   // =========================
   // Layout base (DINÁMICO a orientación)
   // =========================
@@ -226,9 +236,6 @@
       y += 12;
     }
 
-    // =========================
-    // TABLA PRESUPUESTO (clásica)
-    // =========================
     const col = {
       item: margin + 0,
       desc: margin + 62,
@@ -292,9 +299,6 @@
       y = yTop + rowH + 2;
     }
 
-    // =========================
-    // TABLA APU
-    // =========================
     function shortGroup(g){
       const s = safe(g).trim();
       if(!s) return "-";
@@ -378,9 +382,6 @@
     };
   }
 
-  // =========================
-  // Draw: Bandas y celdas (SIN cajas, SIN sombras)
-  // =========================
   function drawBand(doc, x, y, w, h, text, opts){
     const o = opts || {};
     const fs = o.fontSize || 10;
@@ -416,9 +417,6 @@
     }
   }
 
-  // =========================
-  // LOGO helpers
-  // =========================
   function imageTypeFromDataUrl(dataUrl){
     const s = String(dataUrl||"");
     if(s.startsWith("data:image/png")) return "PNG";
@@ -438,9 +436,6 @@
     }
   }
 
-  // =========================
-  // Encabezado / Pie (solo páginas >= 2) — DINÁMICO
-  // =========================
   function stampHeaderFooter(doc, { docType, projectName, logoDataUrl }){
     const pageCount = doc.getNumberOfPages();
     const marginX = 44;
@@ -461,7 +456,6 @@
         doc.setDrawColor(0);
       }catch(_){}
 
-      // Footer siempre
       doc.setDrawColor(200);
       doc.setLineWidth(0.6);
       doc.line(marginX, PAGE_H - 44, PAGE_W - marginX, PAGE_H - 44);
@@ -471,7 +465,6 @@
       doc.setFontSize(9);
       doc.text(`Página ${p} de ${pageCount}`, PAGE_W/2, PAGE_H - 28, { align:"center" });
 
-      // Header solo desde página 2
       if(p === 1) continue;
 
       doc.setDrawColor(200);
@@ -499,9 +492,6 @@
     }
   }
 
-  // =========================
-  // Portada institucional
-  // =========================
   function dateLongEsCO(d){
     const dt = (d instanceof Date) ? d : new Date(d || Date.now());
     const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
@@ -581,9 +571,6 @@
     }
   }
 
-  // =========================
-  // FIRMA (negro sobre blanco)
-  // =========================
   function loadImage(dataUrl){
     return new Promise((res, rej)=>{
       const img = new Image();
@@ -650,13 +637,6 @@
     doc.setFont("helvetica","normal"); doc.setFontSize(11);
     doc.text("Firma:", sigX, sigY - 6);
 
-    // ✅ AJUSTE 1: quitar el recuadro (rectángulo) que enmarca la firma
-    // (se deja el espacio en blanco y la firma se inserta igual)
-    // doc.setDrawColor(0);
-    // doc.setLineWidth(0.8);
-    // doc.rect(sigX, sigY, sigW, sigH);
-    // doc.setLineWidth(0.2);
-
     let firmaForPDF = "";
     if(firmaDataUrl && firmaDataUrl.startsWith("data:image")){
       firmaForPDF = await firmaToBlackOnWhitePNG(firmaDataUrl);
@@ -688,9 +668,6 @@
     L.setY(Math.max(L.getY(), yy + 10));
   }
 
-  // =========================
-  // Compat AIU / Admin / etc
-  // =========================
   function pct(project, key, legacyKey){
     const v = project?.[key];
     if(Number.isFinite(Number(v))) return Number(v);
@@ -729,16 +706,13 @@
     };
   }
 
-  // =========================================================
-  // ✅ NUEVO: BÚSQUEDA ROBUSTA DE APU POR DESCRIPCIÓN (fallback)
-  // =========================================================
-  const __apuDescCache = new Map(); // key: normDesc(desc)+"|"+unit -> code
+  const __apuDescCache = new Map();
 
   function normDesc(s){
     return String(s||"")
       .toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g,"") // sin tildes
-      .replace(/[^\w\s]+/g," ")                       // sin signos raros
+      .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+      .replace(/[^\w\s]+/g," ")
       .replace(/\s+/g," ")
       .trim();
   }
@@ -766,18 +740,14 @@
     const cacheKey = d + "|" + u;
     if(__apuDescCache.has(cacheKey)) return __apuDescCache.get(cacheKey) || "";
 
-    // Necesitamos APUBase.search (ya existe en tu app)
     if(!window.APUBase || typeof APUBase.search !== "function"){
       __apuDescCache.set(cacheKey, "");
       return "";
     }
 
     try{
-      // búsqueda amplia
       const results = await APUBase.search(desc, 35);
       const list = Array.isArray(results) ? results : [];
-
-      // filtrar capítulos
       const candidates = list.filter(r => r && !r.isChapter && r.code && r.desc);
 
       if(!candidates.length){
@@ -785,13 +755,10 @@
         return "";
       }
 
-      // ✅ AJUSTE 2 (parte A): si hay match exacto por descripción normalizada, devolverlo de inmediato
-      // (evita que descripciones parecidas como campamentos 9m²/18m² terminen cruzándose en score)
       for(const r of candidates){
         const rNorm = normDesc(String(r.desc||""));
         const rUnit = String(r.unit||"").trim().toLowerCase();
         if(rNorm === d){
-          // si se especificó unidad, preferir exacta; si no, aceptar igual
           if(!u || (rUnit && rUnit === u)){
             const exactCode = String(r.code||"").trim();
             __apuDescCache.set(cacheKey, exactCode);
@@ -810,16 +777,9 @@
         const rUnit = String(r.unit||"").trim().toLowerCase();
         const rNorm = normDesc(rDesc);
 
-        // score base por similitud de tokens
         const sTok = jaccard(targetTokens, tokenSet(rDesc));
-
-        // bonus por igualdad casi exacta
         const sExact = (rNorm === d) ? 0.55 : 0;
-
-        // bonus por unidad igual
         const sUnit = (u && rUnit && u === rUnit) ? 0.12 : 0;
-
-        // leve bonus si contiene la frase
         const sContain = (rNorm.includes(d) || d.includes(rNorm)) ? 0.10 : 0;
 
         const score = sTok + sExact + sUnit + sContain;
@@ -830,9 +790,7 @@
         }
       }
 
-      // Umbral: evitar falsos positivos
       const OK = best && bestScore >= 0.62;
-
       const foundCode = OK ? String(best.code||"").trim() : "";
 
       __apuDescCache.set(cacheKey, foundCode);
@@ -843,11 +801,7 @@
     }
   }
 
-  // =========================
-  // ✅ APU helper (override > custom > base > fallback desc)
-  // =========================
   async function getAPUForProjectItem(project, it){
-    // IMPORTANTÍSIMO: NO normalizar/pad el código (evita 1.9 => 1.09)
     const c1 = String(it?.apuRefCode || "").trim();
     const c2 = String(it?.code || "").trim();
 
@@ -856,24 +810,17 @@
       if(c && !candidates.includes(c)) candidates.push(c);
     }
 
-    // ✅ AJUSTE 2 (parte B): validación de que el APU hallado por "code" realmente corresponde al ítem.
-    // Esto evita casos típicos donde la base o alguna función interna normaliza "1.10" -> "1.1"
-    // y termina trayendo el APU equivocado (puntualmente visto en 1.10, 1.11, 1.12).
     function looksLikeSameAPU(expectedDesc, expectedUnit, apuSubtitle, apuUnit){
       const ed = String(expectedDesc||"").trim();
-      if(!ed) return true; // si no hay desc, no bloquear
+      if(!ed) return true;
       const au = String(apuUnit||"").trim().toLowerCase();
       const eu = String(expectedUnit||"").trim().toLowerCase();
-      if(eu && au && eu !== au) {
-        // unidad distinta: sospechoso, pero no decisivo por sí solo (dejar que pase a score)
-      }
+      if(eu && au && eu !== au) {}
 
       const a = tokenSet(ed);
       const b = tokenSet(String(apuSubtitle||"").trim() || "");
       const sim = jaccard(a,b);
 
-      // Si las descripciones difieren MUCHO, consideramos que NO es el APU correcto
-      // (umbral conservador para no afectar otros casos)
       if(sim < 0.30){
         return false;
       }
@@ -883,7 +830,6 @@
     async function tryByCode(apuCode){
       if(!apuCode) return null;
 
-      // 1) Override por proyecto
       try{
         if(window.StorageAPI?.getApuOverride){
           const ov = StorageAPI.getApuOverride(project.id, apuCode);
@@ -896,7 +842,6 @@
               return s + parcial;
             }, 0);
 
-            // validar contra el ítem (por seguridad)
             if(!looksLikeSameAPU(it?.desc, it?.unit, ov.desc || it?.desc, ov.unit || it?.unit)){
               return null;
             }
@@ -914,7 +859,6 @@
         }
       }catch(_){}
 
-      // 2) Custom APU global
       try{
         const custom = window.StorageAPI?.getCustomAPU ? StorageAPI.getCustomAPU(apuCode) : null;
         if(custom){
@@ -925,7 +869,6 @@
             return s + parcial;
           }, 0);
 
-          // validar contra el ítem (por seguridad)
           if(!looksLikeSameAPU(it?.desc, it?.unit, custom.desc || it?.desc, custom.unit || it?.unit)){
             return null;
           }
@@ -942,12 +885,9 @@
         }
       }catch(_){}
 
-      // 3) Base XLSX
       const base = await (window.APUBase?.getAPU ? APUBase.getAPU(apuCode) : null);
       if(!base) return null;
 
-      // ✅ Validación extra: si la base devolvió un APU que no se parece al ítem, lo descartamos
-      // para permitir que el fallback por descripción encuentre el correcto.
       if(!looksLikeSameAPU(it?.desc, it?.unit, base.subtitle || it?.desc, base.unit || it?.unit)){
         return null;
       }
@@ -963,13 +903,11 @@
       };
     }
 
-    // Intento por apuRefCode / code
     for(const c of candidates){
       const got = await tryByCode(c);
       if(got) return got;
     }
 
-    // ✅ Fallback por descripción (la forma más estable cuando el usuario renumera)
     const desc = String(it?.desc || "").trim();
     if(desc){
       const codeByDesc = await findApuCodeByDesc(desc, it?.unit);
@@ -986,9 +924,6 @@
     return null;
   }
 
-  // =========================
-  // Descargar / compartir
-  // =========================
   function downloadBlob(blob, filename){
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -1039,9 +974,6 @@
     return true;
   }
 
-  // =========================
-  // Helpers de paginación con header (SIN recursión)
-  // =========================
   function ensureWithHeader(L, needH, headerFn){
     const jumped = L.ensure(needH);
     if(jumped && typeof headerFn === "function"){
@@ -1050,9 +982,6 @@
     return jumped;
   }
 
-  // =========================
-  // Clasificación de grupos
-  // =========================
   function classifyDirectGroup(grpRaw){
     const upg = String(grpRaw||"").toUpperCase();
     if(upg.includes("SUBCONTRAT")) return "SUBCONTRATOS";
@@ -1148,9 +1077,6 @@
     return { rows: out, totals, totalDirecto };
   }
 
-  // =========================================================
-  // PDF 1: PRESUPUESTO DE OBRA DESAGREGADO (LANDSCAPE ✅)
-  // =========================================================
   async function exportPresupuestoObraDesagregadoPDF(project, opts){
     const doc = newDoc({ orientation: "landscape" });
     const L = mkLayout(doc);
@@ -1184,14 +1110,12 @@
       { key:"desc", label:"DESCRIPCIÓN", w:260, align:"left"   },
       { key:"unit", label:"UNID",        w:34,  align:"center" },
       { key:"qty",  label:"CANT",        w:54,  align:"right"  },
-
       { key:"mat",  label:"MAT",         w:64,  align:"right"  },
       { key:"eq",   label:"EQ/H",        w:64,  align:"right"  },
       { key:"mo",   label:"M.O.",        w:64,  align:"right"  },
       { key:"sub",  label:"SUBC",        w:64,  align:"right"  },
       { key:"tra",  label:"TRANS",       w:64,  align:"right"  },
       { key:"otr",  label:"OTR",         w:58,  align:"right"  },
-
       { key:"parc", label:"VR PARC",     w:92,  align:"right"  }
     ];
     cols = fitColsToWidth(cols, contentW, 26);
@@ -1240,7 +1164,7 @@
       drawCellText(doc, x, yTop, cols[0].w, rowH, r.code, "left", { bold:true, fontSize:7.2 }); x += cols[0].w;
       drawCellText(doc, x, yTop, cols[1].w, rowH, descLines, "left", { fontSize:7.2 }); x += cols[1].w;
       drawCellText(doc, x, yTop, cols[2].w, rowH, r.unit, "center", { fontSize:7.2 }); x += cols[2].w;
-      drawCellText(doc, x, yTop, cols[3].w, rowH, fmt0(r.qtyItem), "right", { fontSize:7.2 }); x += cols[3].w;
+      drawCellText(doc, x, yTop, cols[3].w, rowH, fmtQty(r.qtyItem), "right", { fontSize:7.2 }); x += cols[3].w;
 
       function numCell(val, w){
         const s = moneyCOP0(val);
@@ -1306,9 +1230,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // PDF 2: RESUMEN PRESUPUESTO DE OBRA DESAGREGADO
-  // =========================================================
   function drawFormalBarChart(doc, x, y, w, h, labels, values){
     const maxV = Math.max(1, ...values.map(v=>Number(v||0)));
     const n = labels.length;
@@ -1624,9 +1545,9 @@
     const DESC_W = (X.parc - X.desc) - 10;
 
     function header(){
-      const yTop = L.getY();
       const h = 18;
       L.ensure(h + 8);
+      const yTop = L.getY();
 
       doc.setFont("helvetica","bold"); doc.setFontSize(9.4);
       const baseY = yTop + 12;
@@ -1718,9 +1639,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // PDF 4: RENDIMIENTO EQUIPO Y MANO DE OBRA POR ACTIVIDAD
-  // =========================================================
   function isExactEquipoGroup(g){
     return String(g||"").trim().toUpperCase() === "EQUIPO Y HERRAMIENTAS";
   }
@@ -1756,11 +1674,9 @@
       { k:"item", label:"ITEM", w:42, align:"left" },
       { k:"unid", label:"UNID", w:28, align:"center" },
       { k:"cant", label:"CANT", w:40, align:"right" },
-
       { k:"eqDesc", label:"EQUIPO", w:158, align:"left" },
       { k:"eqR", label:"R/D", w:40, align:"right" },
       { k:"eqD", label:"DÍAS", w:40, align:"right" },
-
       { k:"moDesc", label:"M.O.", w:158, align:"left" },
       { k:"moR", label:"R/D", w:40, align:"right" },
       { k:"moD", label:"DÍAS", w:40, align:"right" }
@@ -1879,9 +1795,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // PDF 5: RESUMEN MATERIALES POR ACTIVIDAD
-  // =========================================================
   async function exportResumenMaterialesPorActividadPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
@@ -1911,7 +1824,6 @@
       { k:"desc", label:"DESC", w:130, align:"left" },
       { k:"unid", label:"UNID", w:28, align:"center" },
       { k:"cantItem", label:"CANT", w:40, align:"right" },
-
       { k:"insDesc", label:"INSUMO", w:150, align:"left" },
       { k:"insUn", label:"U", w:24, align:"center" },
       { k:"cantUnit", label:"C/U", w:34, align:"right" },
@@ -1989,7 +1901,10 @@
           const cantUnit = Number(ln.qty||0);
           const pu = Number(ln.pu||0);
           const cantTot = qtyItem * cantUnit;
-          const parcial = cantTot * pu;
+
+          const parcialBruto = cantTot * pu;
+          const parcial = isAccesoriosPercentLine(ln) ? (parcialBruto / 100) : parcialBruto;
+
           sub += parcial;
 
           doc.setFont("helvetica","normal"); doc.setFontSize(7.2);
@@ -2084,9 +1999,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // PDF 6: CANTIDAD DE RECURSOS E INSUMOS DEL PRESUPUESTO
-  // =========================================================
   async function exportCantidadRecursosEInsumosPresupuestoPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
@@ -2271,9 +2183,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // PRESUPUESTO PDF
-  // =========================================================
   async function exportPresupuestoPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
@@ -2370,9 +2279,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // PRESUPUESTO + APUs (✅ robusto: code/ref/desc)
-  // =========================================================
   async function exportPresupuestoConAPUsPDF(project, opts){
     const doc = newDoc();
     const L = mkLayout(doc);
@@ -2444,7 +2350,6 @@
 
       const apuObj = await getAPUForProjectItem(project, it);
 
-      // título informativo: si encontró por descripción, lo mostramos
       let title = `APU ${codeVisible || "-"}`;
       if(apuObj && apuObj._match === "desc"){
         title = `APU ${codeVisible || "-"} (Base por descripción: ${apuObj.code})`;
@@ -2508,9 +2413,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  // =========================================================
-  // ESPECIFICACIONES TÉCNICAS (usa getAPUForProjectItem robusto)
-  // =========================================================
   function detectNormatividad(desc){
     const t = String(desc||"").toLowerCase();
     const invias = /v(i|í)a|carretera|pavimento|asfalto|subbase|base granular|señalizaci(o|ó)n|cuneta|alcantarilla|drenaje/.test(t);
@@ -2554,7 +2456,6 @@
 
     drawInstitutionalCover(doc, L, project, "ESPECIFICACIONES TÉCNICAS DEL PROYECTO");
 
-    // TOC
     doc.addPage();
     L.setY(PDF_THEME.safe.top);
 
@@ -2580,7 +2481,6 @@
       L.setY(L.getY()+16);
     }
 
-    // 1. Información general
     doc.addPage();
     L.setY(PDF_THEME.safe.top);
 
@@ -2597,7 +2497,6 @@
       if(elab.matricula) L.p(`Matrícula Profesional: ${elab.matricula}`);
     }
 
-    // 2. Alcance
     doc.addPage();
     L.setY(PDF_THEME.safe.top);
 
@@ -2779,9 +2678,6 @@
     return await finalizePDF(doc, filename, opts);
   }
 
-  /* =========================================================
-     FIX COMPATIBILIDAD: ALIASES para nombres que llama app.js
-     ========================================================= */
   async function exportRendimientoEquipoManoObraActividadPDF(project, opts){
     return await exportRendimientoEquipoYManoDeObraPorActividadPDF(project, opts);
   }
@@ -2789,9 +2685,6 @@
     return await exportCantidadRecursosEInsumosPresupuestoPDF(project, opts);
   }
 
-  /* =========================================================
-     API pública
-     ========================================================= */
   window.PDF = {
     exportPresupuestoPDF,
     exportPresupuestoConAPUsPDF,
@@ -2804,7 +2697,6 @@
     exportResumenMaterialesPorActividadPDF,
     exportCantidadRecursosEInsumosPresupuestoPDF,
 
-    // aliases
     exportRendimientoEquipoManoObraActividadPDF,
     exportCantidadRecursosInsumosPresupuestoPDF
   };

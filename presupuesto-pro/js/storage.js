@@ -1,9 +1,62 @@
 const STORE_KEY = "presupuesto_pro_v1";
+const STORE_BACKUP_KEY = "presupuesto_pro_v1_backup";
 
 function nowISO(){ return new Date().toISOString(); }
 function uid(prefix="id"){ return `${prefix}_${Math.random().toString(16).slice(2)}_${Date.now().toString(16)}`; }
 
 function safeStr(v){ return String(v ?? "").trim(); }
+
+/* =========================
+   ✅ AJUSTES DE PERSISTENCIA MÓVIL
+   - Escritura duplicada (principal + backup)
+   - Recuperación automática si el principal falla
+   - Solicitud de almacenamiento persistente cuando el navegador lo soporte
+   ========================= */
+function storageAvailable(){
+  try{
+    const t = "__pp_test__";
+    localStorage.setItem(t, "1");
+    localStorage.removeItem(t);
+    return true;
+  }catch(_){
+    return false;
+  }
+}
+
+function safeLocalGet(key){
+  try{
+    return localStorage.getItem(key);
+  }catch(_){
+    return null;
+  }
+}
+
+function safeLocalSet(key, value){
+  try{
+    localStorage.setItem(key, value);
+    return true;
+  }catch(err){
+    console.warn("[StorageAPI] No se pudo guardar en localStorage:", key, err);
+    return false;
+  }
+}
+
+function safeLocalRemove(key){
+  try{
+    localStorage.removeItem(key);
+    return true;
+  }catch(_){
+    return false;
+  }
+}
+
+function requestPersistentStorage(){
+  try{
+    if(navigator.storage && typeof navigator.storage.persist === "function"){
+      navigator.storage.persist().catch(()=>{});
+    }
+  }catch(_){}
+}
 
 /* =========================
    Chapters helpers (✅ alineado a app.js)
@@ -213,33 +266,54 @@ function normalizeProject(p){
   return proj;
 }
 
-function loadStore(){
-  const raw = localStorage.getItem(STORE_KEY);
-  if(!raw){
-    const init = {
-      meta:{
-        createdAt: nowISO(),
-        version: 9, // ✅ subimos versión por apuRefCode en items
+function buildInitialStore(){
+  return {
+    meta:{
+      createdAt: nowISO(),
+      version: 9,
+      lastSavedAt: nowISO(),
 
-        elaborador: {
-          nombre: "",
-          profesion: "",
-          matricula: "",
-          firmaDataUrl: ""
-        },
-
-        customAPUs: {},
-        customInsumos: []
+      elaborador: {
+        nombre: "",
+        profesion: "",
+        matricula: "",
+        firmaDataUrl: ""
       },
-      projects:[]
-    };
-    localStorage.setItem(STORE_KEY, JSON.stringify(init));
+
+      customAPUs: {},
+      customInsumos: []
+    },
+    projects:[]
+  };
+}
+
+function loadStore(){
+  requestPersistentStorage();
+
+  if(!storageAvailable()){
+    // Fallback seguro en caso extremo
+    return buildInitialStore();
+  }
+
+  const rawMain = safeLocalGet(STORE_KEY);
+  const rawBackup = safeLocalGet(STORE_BACKUP_KEY);
+
+  if(!rawMain && !rawBackup){
+    const init = buildInitialStore();
+    const txt = JSON.stringify(init);
+    safeLocalSet(STORE_KEY, txt);
+    safeLocalSet(STORE_BACKUP_KEY, txt);
     return init;
   }
+
+  let raw = rawMain || rawBackup;
+
   try{
     const db = JSON.parse(raw);
-    if(!db.meta) db.meta = { createdAt:nowISO(), version:9 };
+
+    if(!db.meta) db.meta = { createdAt:nowISO(), version:9, lastSavedAt: nowISO() };
     if(!Number.isFinite(Number(db.meta.version))) db.meta.version = 9;
+    if(!db.meta.lastSavedAt) db.meta.lastSavedAt = nowISO();
 
     if(!db.meta.customAPUs) db.meta.customAPUs = {};
     if(!db.meta.customInsumos) db.meta.customInsumos = [];
@@ -259,15 +333,49 @@ function loadStore(){
     db.projects = db.projects.map(p => normalizeProject(p));
 
     if(db.meta.version < 9) db.meta.version = 9;
-    localStorage.setItem(STORE_KEY, JSON.stringify(db));
+
+    // ✅ Reescribe ambas copias ya normalizadas
+    saveStore(db);
     return db;
-  }catch{
-    localStorage.removeItem(STORE_KEY);
-    return loadStore();
+  }catch(_){
+    // ✅ Si falla el principal, intentar recuperar desde backup
+    if(rawMain && rawBackup && rawMain !== rawBackup){
+      try{
+        const recovered = JSON.parse(rawBackup);
+        if(!recovered.meta) recovered.meta = { createdAt:nowISO(), version:9, lastSavedAt: nowISO() };
+        if(!recovered.projects) recovered.projects = [];
+        recovered.projects = recovered.projects.map(p => normalizeProject(p));
+        recovered.meta.version = 9;
+        recovered.meta.lastSavedAt = nowISO();
+        saveStore(recovered);
+        return recovered;
+      }catch(__){}
+    }
+
+    safeLocalRemove(STORE_KEY);
+    safeLocalRemove(STORE_BACKUP_KEY);
+
+    const init = buildInitialStore();
+    saveStore(init);
+    return init;
   }
 }
 
-function saveStore(db){ localStorage.setItem(STORE_KEY, JSON.stringify(db)); }
+function saveStore(db){
+  const out = db || buildInitialStore();
+
+  if(!out.meta) out.meta = {};
+  out.meta.version = 9;
+  out.meta.lastSavedAt = nowISO();
+
+  const txt = JSON.stringify(out);
+
+  // ✅ Guardado duplicado para mayor estabilidad en móvil
+  safeLocalSet(STORE_KEY, txt);
+  safeLocalSet(STORE_BACKUP_KEY, txt);
+
+  return true;
+}
 
 function exportBackup(){
   const db = loadStore();
@@ -281,7 +389,7 @@ async function importBackupFromFile(file){
   const data = JSON.parse(text);
   if(!data || !data.projects) throw new Error("Backup inválido.");
 
-  if(!data.meta) data.meta = { createdAt:nowISO(), version:9 };
+  if(!data.meta) data.meta = { createdAt:nowISO(), version:9, lastSavedAt: nowISO() };
   if(!data.meta.customAPUs) data.meta.customAPUs = {};
   if(!data.meta.customInsumos) data.meta.customInsumos = [];
   if(!data.meta.elaborador) data.meta.elaborador = { nombre:"", profesion:"", matricula:"", firmaDataUrl:"" };
@@ -292,12 +400,16 @@ async function importBackupFromFile(file){
   data.projects = data.projects.map(p => normalizeProject(p));
 
   data.meta.version = 9;
+  data.meta.lastSavedAt = nowISO();
 
   saveStore(data);
   return true;
 }
 
-function resetAll(){ localStorage.removeItem(STORE_KEY); }
+function resetAll(){
+  safeLocalRemove(STORE_KEY);
+  safeLocalRemove(STORE_BACKUP_KEY);
+}
 
 /* =========================
    ELABORADOR + FIRMA
@@ -747,6 +859,10 @@ function importProjectAsNew(projectObj){
 
   return getProjectById(base.id);
 }
+
+try{
+  requestPersistentStorage();
+}catch(_){}
 
 window.StorageAPI = {
   loadStore, saveStore,
