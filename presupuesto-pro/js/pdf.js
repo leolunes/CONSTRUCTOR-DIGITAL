@@ -23,6 +23,13 @@
          3) si falla: busca en la BASE por DESCRIPCIÓN (match fuerte) y usa ese code real
        Esto evita falsos mapeos tipo 1.9 -> 1.09 y evita “No se encontró descomposición”
        cuando el usuario renumera el presupuesto.
+
+     ✅ AJUSTE NUEVO (2026-03 móvil):
+     - Antes de exportar/compartir PDF se fuerza guardado del estado
+     - Cuando la app pasa a segundo plano (share sheet / WhatsApp / visor PDF),
+       se vuelve a forzar guardado
+     - En móvil, la descarga intenta abrir el PDF en pestaña aparte para evitar
+       que la PWA actual se desmonte
      ========================================================= */
 
   // =========================
@@ -126,6 +133,75 @@
     const w = doc.internal?.pageSize?.getWidth ? doc.internal.pageSize.getWidth() : 612;
     const h = doc.internal?.pageSize?.getHeight ? doc.internal.pageSize.getHeight() : 792;
     return { w, h };
+  }
+
+  // =========================
+  // Persistencia móvil / guards
+  // =========================
+  let __pdfPersistHooksInstalled = false;
+
+  function sleep(ms){
+    return new Promise(res => setTimeout(res, ms));
+  }
+
+  function forcePersistAppState(){
+    try{
+      if(window.StorageAPI?.loadStore && window.StorageAPI?.saveStore){
+        const db = StorageAPI.loadStore();
+        StorageAPI.saveStore(db);
+      }
+    }catch(err){
+      console.warn("[PDF] No se pudo forzar persistencia StorageAPI:", err);
+    }
+
+    try{
+      if(navigator.storage && typeof navigator.storage.persist === "function"){
+        navigator.storage.persist().catch(()=>{});
+      }
+    }catch(_){}
+
+    try{
+      sessionStorage.setItem("presupuesto_pro_last_pdf_ts", String(Date.now()));
+      sessionStorage.setItem("presupuesto_pro_last_url", String(location.href || ""));
+    }catch(_){}
+  }
+
+  function installPersistHooksOnce(){
+    if(__pdfPersistHooksInstalled) return;
+    __pdfPersistHooksInstalled = true;
+
+    const persistNow = ()=>{
+      try{ forcePersistAppState(); }catch(_){}
+    };
+
+    try{
+      document.addEventListener("visibilitychange", ()=>{
+        if(document.visibilityState === "hidden"){
+          persistNow();
+        }
+      }, { passive:true });
+    }catch(_){}
+
+    try{
+      window.addEventListener("pagehide", persistNow, { passive:true });
+    }catch(_){}
+
+    try{
+      window.addEventListener("beforeunload", persistNow, { passive:true });
+    }catch(_){}
+
+    try{
+      window.addEventListener("blur", persistNow, { passive:true });
+    }catch(_){}
+  }
+
+  function isMobileLike(){
+    try{
+      const ua = navigator.userAgent || "";
+      return /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+    }catch(_){
+      return false;
+    }
   }
 
   // =========================
@@ -924,15 +1000,36 @@
     return null;
   }
 
+  function openBlobInNewTab(blob){
+    try{
+      const url = URL.createObjectURL(blob);
+      const win = window.open(url, "_blank", "noopener,noreferrer");
+      setTimeout(()=>URL.revokeObjectURL(url), 60000);
+      return !!win;
+    }catch(_){
+      return false;
+    }
+  }
+
   function downloadBlob(blob, filename){
+    const mobile = isMobileLike();
+
+    if(mobile){
+      const opened = openBlobInNewTab(blob);
+      if(opened) return true;
+    }
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = filename || `archivo_${Date.now()}.pdf`;
+    a.rel = "noopener";
+    a.target = "_blank";
     document.body.appendChild(a);
     a.click();
     a.remove();
     setTimeout(()=>URL.revokeObjectURL(url), 1500);
+    return true;
   }
 
   async function shareBlobAsFile(blob, filename){
@@ -948,29 +1045,53 @@
     }catch(_){}
 
     try{
+      forcePersistAppState();
+      await sleep(80);
+
       await navigator.share({
         title: filename,
         text: "PDF generado desde CONSTRUCTOR-DIGITAL",
         files: [file]
       });
+
+      forcePersistAppState();
       return true;
     }catch(err){
       console.log("[PDF] share cancelled/error:", err);
+      forcePersistAppState();
       return false;
     }
   }
 
   async function finalizePDF(doc, filename, opts){
+    installPersistHooksOnce();
+    forcePersistAppState();
+
     const o = opts || {};
     const blob = doc.output("blob");
 
+    try{
+      sessionStorage.setItem("presupuesto_pro_last_pdf_name", String(filename || ""));
+      sessionStorage.setItem("presupuesto_pro_last_pdf_ts", String(Date.now()));
+    }catch(_){}
+
+    await sleep(60);
+    forcePersistAppState();
+
     if(o.share){
       const ok = await shareBlobAsFile(blob, filename);
+      forcePersistAppState();
       if(ok) return true;
+
       downloadBlob(blob, filename);
+      await sleep(60);
+      forcePersistAppState();
       return true;
     }
+
     downloadBlob(blob, filename);
+    await sleep(60);
+    forcePersistAppState();
     return true;
   }
 
@@ -2684,6 +2805,8 @@
   async function exportCantidadRecursosInsumosPresupuestoPDF(project, opts){
     return await exportCantidadRecursosEInsumosPresupuestoPDF(project, opts);
   }
+
+  installPersistHooksOnce();
 
   window.PDF = {
     exportPresupuestoPDF,
