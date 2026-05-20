@@ -1,0 +1,1402 @@
+@font-face{
+    font-family:'Poppins';
+    src:url('../assets/fonts/Poppins-Regular.ttf');
+}
+
+@font-face{
+    font-family:'Poppins-Bold';
+    src:url('../assets/fonts/Poppins-Bold.ttf');
+}
+
+/* =====================================
+   RESET
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =====================================
+   BODY
+===================================== */
+
+body{
+
+    font-family:'Poppins', Arial, sans-serif;
+
+    background:#f5f5f7;
+
+    color:#222;
+
+    overflow-x:hidden;
+
+}
+
+/* =====================================
+   HEADER PRINCIPAL
+===================================== */
+
+.header{
+
+    background:
+    linear-gradient(
+        180deg,
+        #2c0663 0%,
+        #5b3cc4 100%
+    );
+
+    padding:35px 20px 45px;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo-app{
+
+    width:720px;
+
+    max-width:92%;
+
+    display:block;
+
+    margin:auto;
+
+}
+
+/* =====================================
+   OCULTAR H1 SOLO HOME
+===================================== */
+
+.header h1{
+
+    display:none;
+
+}
+
+/* =====================================
+   SUBTITLE
+===================================== */
+
+.subtitle{
+
+    font-size:16px;
+
+    max-width:850px;
+
+    margin:auto;
+
+    color:white;
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.navbar{
+
+    background:#4b22b5;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:55px;
+
+    padding:18px 20px 12px;
+
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+
+    border-bottom:1px solid rgba(255,255,255,0.1);
+
+}
+
+/* =====================================
+   LINKS NAVBAR
+===================================== */
+
+.navbar a{
+
+    color:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:16px;
+
+    transition:0.3s;
+
+    padding-bottom:12px;
+
+}
+
+/* =====================================
+   LINK ACTIVO
+===================================== */
+
+.navbar a:first-child{
+
+    color:white;
+
+    border-bottom:3px solid white;
+
+}
+
+/* =====================================
+   HOVER
+===================================== */
+
+.navbar a:hover{
+
+    color:white;
+
+    opacity:0.85;
+
+}
+
+/* =====================================
+   ICONOS NAVBAR
+===================================== */
+
+.navbar img{
+
+    width:24px;
+
+    height:24px;
+
+    object-fit:contain;
+
+}
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.container{
+
+    max-width:1450px;
+
+    margin:auto;
+
+    padding:50px 30px;
+
+}
+
+/* =====================================
+   GRID CATEGORÍAS
+===================================== */
+
+#categorias-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:35px;
+
+}
+
+/* =====================================
+   OTROS GRIDS
+===================================== */
+
+#declaraciones-container,
+#favoritos-container,
+#audios-container,
+#audios-categoria-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:30px;
+
+}
+
+/* =====================================
+   BOTÓN VOLVER
+===================================== */
+
+.btn-volver{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:30px;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 22px;
+
+    border-radius:14px;
+
+    font-family:'Poppins-Bold';
+
+    transition:0.3s;
+
+}
+
+.btn-volver:hover{
+
+    background:#452d96;
+
+}
+
+.btn-volver img{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+/* =====================================
+   HEADER PÁGINAS INTERNAS
+===================================== */
+
+.header-small h1{
+
+    display:block !important;
+
+    color:#ffffff !important;
+
+    font-family:'Poppins-Bold';
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+}
+
+.header-small .subtitle{
+
+    color:white !important;
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:768px){
+
+    .logo-app{
+
+        width:95%;
+
+    }
+
+    .navbar{
+
+        gap:25px;
+
+        flex-wrap:wrap;
+
+    }
+
+    .navbar a{
+
+        font-size:14px;
+
+    }
+
+    #categorias-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+/* =====================================
+   ICONOS NAVBAR EN BLANCO
+===================================== */
+
+.navbar img{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+    opacity:1;
+}
+
+.navbar a{
+    color:white !important;
+    font-family:'Poppins-Bold';
+}
+
+.navbar a:hover{
+    opacity:0.85;
+}
+/* =====================================
+   CONFIGURACIÓN REAL
+   Victoriosos en Cristo
+   Pegar al final de css/styles.css
+===================================== */
+
+.configuracion-page {
+    min-height: 100vh;
+    padding: 22px 18px 95px;
+    background:
+        radial-gradient(circle at top left, rgba(122, 70, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, #f7f2ff 100%);
+}
+
+.config-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(79, 32, 143, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.page-title-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.page-title-box h1 {
+    margin: 0;
+    font-size: 1.55rem;
+    color: #3f206e;
+    font-weight: 800;
+}
+
+.page-title-box p {
+    margin: 3px 0 0;
+    font-size: 0.9rem;
+    color: #7a6a91;
+}
+
+.config-card {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 24px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 14px 34px rgba(79, 32, 143, 0.11);
+    border: 1px solid rgba(122, 70, 255, 0.08);
+}
+
+.config-card.principal {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+    color: #ffffff;
+}
+
+.config-card-title {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.config-card-title h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.config-card-title p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.config-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+}
+
+.config-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+}
+
+.config-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 16px;
+    background: rgba(122, 70, 255, 0.11);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.config-card.principal .config-icon {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.config-info h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #43206f;
+    font-weight: 800;
+}
+
+.config-info p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #776487;
+}
+
+.config-extra {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(122, 70, 255, 0.13);
+}
+
+.config-label {
+    display: block;
+    font-size: 0.88rem;
+    color: #4c2875;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.input-config {
+    width: 100%;
+    max-width: 220px;
+    padding: 13px 14px;
+    border: 1px solid rgba(122, 70, 255, 0.2);
+    border-radius: 16px;
+    outline: none;
+    font-size: 1rem;
+    color: #3f206e;
+    background: #ffffff;
+}
+
+.input-config:focus {
+    border-color: #7a46ff;
+    box-shadow: 0 0 0 4px rgba(122, 70, 255, 0.11);
+}
+
+.config-note {
+    margin: 12px 0 0;
+    font-size: 0.84rem;
+    color: #8a789b;
+    line-height: 1.45;
+}
+
+.oculto-config {
+    display: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 58px;
+    height: 32px;
+    min-width: 58px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #d9cbed;
+    transition: 0.25s;
+    border-radius: 999px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #ffffff;
+    transition: 0.25s;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.switch input:checked + .slider {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.config-status {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    margin: 8px 0 14px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(73, 184, 120, 0.12);
+    color: #217246;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.config-status.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.config-status.error {
+    background: rgba(210, 60, 60, 0.12);
+    color: #a82424;
+}
+
+.config-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.btn-primary-config,
+.btn-secondary-config {
+    border: none;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.22s ease;
+}
+
+.btn-primary-config {
+    flex: 1;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+    box-shadow: 0 12px 24px rgba(107, 53, 216, 0.25);
+}
+
+.btn-secondary-config {
+    color: #5d348c;
+    background: #ffffff;
+    border: 1px solid rgba(122, 70, 255, 0.16);
+}
+
+.btn-primary-config:active,
+.btn-secondary-config:active {
+    transform: scale(0.98);
+}
+
+/* =====================================
+   MODO OSCURO GENERAL
+===================================== */
+
+body.modo-oscuro {
+    background: #160d25;
+    color: #f4edff;
+}
+
+body.modo-oscuro .configuracion-page {
+    background:
+        radial-gradient(circle at top left, rgba(155, 108, 255, 0.24), transparent 35%),
+        linear-gradient(180deg, #160d25 0%, #211235 100%);
+}
+
+body.modo-oscuro .btn-icon,
+body.modo-oscuro .config-card,
+body.modo-oscuro .btn-secondary-config,
+body.modo-oscuro .bottom-nav {
+    background: rgba(35, 20, 55, 0.96);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.modo-oscuro .page-title-box h1,
+body.modo-oscuro .config-info h3,
+body.modo-oscuro .config-label {
+    color: #ffffff;
+}
+
+body.modo-oscuro .page-title-box p,
+body.modo-oscuro .config-info p,
+body.modo-oscuro .config-note {
+    color: #cbb8df;
+}
+
+body.modo-oscuro .input-config {
+    background: #211235;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+body.modo-oscuro .config-card.principal {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+}
+
+body.modo-oscuro .btn-secondary-config {
+    color: #ffffff;
+}
+
+body.modo-oscuro .bottom-nav a,
+body.modo-oscuro .nav-item span {
+    color: #e9ddff;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 480px) {
+
+    .configuracion-page {
+        padding: 18px 14px 95px;
+    }
+
+    .page-title-box h1 {
+        font-size: 1.35rem;
+    }
+
+    .config-row {
+        align-items: flex-start;
+    }
+
+    .config-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary-config,
+    .btn-secondary-config {
+        width: 100%;
+    }
+}
+
+
+/* =====================================
+   PDF PALABRAS - MODAL Y BOTONES
+===================================== */
+
+.btn-descargar-pdf{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 10px 22px
+    rgba(106,61,232,0.25);
+
+}
+
+.btn-descargar-pdf:hover{
+
+    transform:translateY(-2px);
+
+    opacity:0.96;
+
+}
+
+.btn-descargar-pdf:active{
+
+    transform:scale(0.98);
+
+}
+
+/* =====================================
+   MODAL OVERLAY
+===================================== */
+
+.modal-pdf-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(15,10,30,0.72);
+
+    backdrop-filter:blur(5px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    z-index:9999;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:0.3s;
+
+}
+
+.modal-pdf-overlay.activo{
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+
+}
+
+/* =====================================
+   CARD MODAL
+===================================== */
+
+.modal-pdf-card{
+
+    width:100%;
+
+    max-width:560px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:28px;
+
+    position:relative;
+
+    animation:modalEntradaPdf 0.35s ease;
+
+    box-shadow:
+    0 25px 55px
+    rgba(0,0,0,0.22);
+
+}
+
+@keyframes modalEntradaPdf{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(25px)
+        scale(0.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+/* =====================================
+   BOTÓN CERRAR
+===================================== */
+
+.modal-pdf-cerrar{
+
+    position:absolute;
+
+    top:16px;
+
+    right:16px;
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f3edff;
+
+    color:#5c33d1;
+
+    font-size:26px;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+}
+
+.modal-pdf-cerrar:hover{
+
+    background:#e8dcff;
+
+    transform:rotate(90deg);
+
+}
+
+/* =====================================
+   HEADER MODAL
+===================================== */
+
+.modal-pdf-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:28px;
+
+}
+
+.modal-pdf-logo{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:contain;
+
+}
+
+.modal-pdf-header h2{
+
+    color:#4b22b5;
+
+    font-size:28px;
+
+    margin-bottom:6px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.modal-pdf-header p{
+
+    color:#6f6593;
+
+    line-height:1.5;
+
+    font-size:14px;
+
+}
+
+/* =====================================
+   FORMULARIO
+===================================== */
+
+.modal-pdf-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.modal-pdf-form label{
+
+    color:#452d96;
+
+    font-family:'Poppins-Bold';
+
+    font-size:14px;
+
+}
+
+.modal-pdf-form input,
+.modal-pdf-form textarea{
+
+    width:100%;
+
+    border:
+    1px solid
+    rgba(91,60,196,0.16);
+
+    background:#faf8ff;
+
+    border-radius:18px;
+
+    padding:16px 18px;
+
+    font-family:'Poppins';
+
+    font-size:15px;
+
+    resize:none;
+
+    outline:none;
+
+    transition:0.25s;
+
+}
+
+.modal-pdf-form input:focus,
+.modal-pdf-form textarea:focus{
+
+    border-color:#6a3de8;
+
+    background:white;
+
+    box-shadow:
+    0 0 0 4px
+    rgba(106,61,232,0.12);
+
+}
+
+/* =====================================
+   ACCIONES MODAL
+===================================== */
+
+.modal-pdf-actions{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-top:10px;
+
+}
+
+.btn-pdf-principal,
+.btn-pdf-secundario{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:0.3s;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.btn-pdf-principal{
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    box-shadow:
+    0 10px 22px
+    rgba(106,61,232,0.25);
+
+}
+
+.btn-pdf-principal:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.btn-pdf-secundario{
+
+    background:#f4efff;
+
+    color:#4b22b5;
+
+}
+
+.btn-pdf-secundario:hover{
+
+    background:#ece3ff;
+
+}
+
+/* =====================================
+   MODO OSCURO MODAL PDF
+===================================== */
+
+body.modo-oscuro .modal-pdf-card{
+
+    background:#24163d;
+
+}
+
+body.modo-oscuro .modal-pdf-header h2{
+
+    color:white;
+
+}
+
+body.modo-oscuro .modal-pdf-header p{
+
+    color:#c9bae8;
+
+}
+
+body.modo-oscuro .modal-pdf-form label{
+
+    color:#ffffff;
+
+}
+
+body.modo-oscuro .modal-pdf-form input,
+body.modo-oscuro .modal-pdf-form textarea{
+
+    background:#1a102d;
+
+    color:white;
+
+    border-color:
+    rgba(255,255,255,0.08);
+
+}
+
+body.modo-oscuro .btn-pdf-secundario{
+
+    background:#1a102d;
+
+    color:white;
+
+}
+
+body.modo-oscuro .modal-pdf-cerrar{
+
+    background:#1a102d;
+
+    color:white;
+
+}
+
+/* =====================================
+   RESPONSIVE MODAL PDF
+===================================== */
+
+@media(max-width:768px){
+
+    .modal-pdf-card{
+
+        padding:22px;
+
+        border-radius:24px;
+
+    }
+
+    .modal-pdf-header{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .modal-pdf-actions{
+
+        flex-direction:column;
+
+    }
+
+    .modal-pdf-header h2{
+
+        font-size:24px;
+
+    }
+
+}
+/* =====================================
+   NECESITO ORACIÓN
+===================================== */
+
+.oracion-hero{
+    background:linear-gradient(135deg,#ffffff 0%,#f4ecff 100%);
+    border-radius:28px;
+    padding:34px 26px;
+    text-align:center;
+    margin-bottom:34px;
+    border:1px solid rgba(91,60,196,0.10);
+    box-shadow:0 14px 34px rgba(91,60,196,0.10);
+}
+
+.oracion-hero-icon{
+    width:78px;
+    height:78px;
+    border-radius:50%;
+    background:#ede1ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    margin:0 auto 18px;
+}
+
+.oracion-hero h2{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:34px;
+    margin-bottom:12px;
+}
+
+.oracion-hero p{
+    max-width:720px;
+    margin:auto;
+    color:#6a617d;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.oracion-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:24px;
+    margin-bottom:34px;
+}
+
+.oracion-tema-card{
+    background:#ffffff;
+    border:none;
+    border-radius:24px;
+    padding:28px 22px;
+    cursor:pointer;
+    text-align:left;
+    box-shadow:0 8px 24px rgba(91,60,196,0.08);
+    border:1px solid rgba(91,60,196,0.08);
+    transition:0.3s;
+    font-family:'Poppins';
+}
+
+.oracion-tema-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 34px rgba(91,60,196,0.15);
+}
+
+.oracion-tema-icon{
+    width:62px;
+    height:62px;
+    border-radius:20px;
+    background:#f4ecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    margin-bottom:18px;
+}
+
+.oracion-tema-card h3{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:24px;
+    margin-bottom:10px;
+}
+
+.oracion-tema-card p{
+    color:#6a617d;
+    font-size:15px;
+    line-height:1.6;
+}
+
+.oracion-respuesta{
+    margin-top:20px;
+    animation:fadeIn 0.35s ease;
+}
+
+.oracion-respuesta-card{
+    background:#ffffff;
+    border-radius:30px;
+    padding:32px;
+    box-shadow:0 18px 44px rgba(91,60,196,0.14);
+    border:1px solid rgba(91,60,196,0.10);
+    position:relative;
+    overflow:hidden;
+}
+
+.oracion-respuesta-card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:7px;
+    background:linear-gradient(180deg,#5b3cc4,#9b6cff);
+}
+
+.oracion-respuesta-header{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-bottom:26px;
+}
+
+.oracion-respuesta-icon{
+    width:76px;
+    height:76px;
+    min-width:76px;
+    border-radius:24px;
+    background:#f4ecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+}
+
+.oracion-badge{
+    display:inline-flex;
+    background:#f0e7ff;
+    color:#5b3cc4;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-family:'Poppins-Bold';
+    margin-bottom:8px;
+}
+
+.oracion-respuesta-header h2{
+    color:#4b22b5;
+    font-size:32px;
+    font-family:'Poppins-Bold';
+    margin-bottom:4px;
+}
+
+.oracion-respuesta-header p{
+    color:#6a617d;
+    font-size:16px;
+}
+
+.oracion-bloque{
+    background:#faf7ff;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:18px;
+    border:1px solid rgba(91,60,196,0.08);
+}
+
+.oracion-bloque h3{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.oracion-bloque p{
+    color:#5f6472;
+    font-size:17px;
+    line-height:1.8;
+}
+
+.oracion-bloque strong{
+    display:block;
+    margin-top:10px;
+    color:#222;
+    font-family:'Poppins-Bold';
+}
+
+.oracion-bloque.declaracion{
+    background:linear-gradient(135deg,#f7f1ff,#ffffff);
+}
+
+.oracion-acciones{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:14px;
+}
+
+.oracion-acciones .audio-btn,
+.oracion-acciones .btn-descargar-pdf,
+.oracion-acciones .btn-favorito{
+    margin-top:0;
+}
+
+@media(max-width:768px){
+    .oracion-hero{padding:28px 20px;}
+    .oracion-hero h2{font-size:28px;}
+    .oracion-respuesta-card{padding:26px 22px;}
+    .oracion-respuesta-header{flex-direction:column;text-align:center;}
+    .oracion-respuesta-header h2{font-size:27px;}
+    .oracion-bloque p{font-size:16px;}
+}

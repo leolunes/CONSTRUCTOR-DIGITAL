@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informes</title>
+
+  <link rel="manifest" href="./pwa/manifest.webmanifest" />
+  <link rel="stylesheet" href="./css/styles.css" />
+
+  <!-- Librerías PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="container">
+      <h1>INFORMES Y SALIDAS PDF</h1>
+      <p>Generación de informes básicos, técnicos y finales de adjudicación</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Navegación</h2>
+      <div class="actions wrap">
+        <a href="./index.html" class="btn secondary">Inicio</a>
+        <a href="./ofertas.html" class="btn secondary">Ofertas</a>
+        <a href="./oab.html" class="btn secondary">OAB</a>
+        <a href="./economica.html" class="btn secondary">Evaluación económica</a>
+        <a href="./informes.html" class="btn primary">Informes</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Resumen del proceso</h2>
+      <div id="resumenProceso" class="summary-box"></div>
+    </section>
+
+    <section class="card">
+      <h2>Resumen TRM y método económico</h2>
+      <div id="resultadoTRM" class="summary-box"></div>
+      <div id="resultadoEconomico" class="summary-box"></div>
+    </section>
+
+    <section class="card">
+      <h2>Informe básico</h2>
+      <div class="field">
+        <label for="textoInformeBasico">Texto</label>
+        <textarea id="textoInformeBasico" rows="12"></textarea>
+      </div>
+
+      <div class="actions">
+        <button id="btnPDFBasico" class="btn primary">PDF básico</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Informe técnico de evaluación</h2>
+      <div class="field">
+        <label for="textoInformeTecnico">Texto</label>
+        <textarea id="textoInformeTecnico" rows="18"></textarea>
+      </div>
+
+      <div class="actions wrap">
+        <button id="btnPDFTecnico" class="btn primary">PDF técnico</button>
+        <button id="btnPDFOfertas" class="btn secondary">PDF detalle de ofertas</button>
+        <button id="btnPDFEconomico" class="btn secondary">PDF resultados económicos</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Informe final de adjudicación</h2>
+      <div class="field">
+        <label for="textoInformeFinal">Texto</label>
+        <textarea id="textoInformeFinal" rows="18"></textarea>
+      </div>
+
+      <div class="actions">
+        <button id="btnPDFFinal" class="btn primary">PDF adjudicación</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <small>Constructor Digital · Módulo de informes</small>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

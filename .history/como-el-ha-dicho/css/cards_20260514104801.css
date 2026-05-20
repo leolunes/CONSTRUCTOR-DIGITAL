@@ -1,0 +1,233 @@
+/* =====================================
+   TARJETAS GENERALES
+===================================== */
+
+.categoria-card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+
+    transition:0.3s;
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+/* =====================================
+   HOVER TARJETAS
+===================================== */
+
+.categoria-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.12);
+
+}
+
+/* =====================================
+   HEADER DECLARACIÓN
+===================================== */
+
+.declaracion-header{
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+/* =====================================
+   TÍTULOS
+===================================== */
+
+.categoria-card h2{
+
+    color:#5b3cc4;
+
+    font-size:22px;
+
+    line-height:1.4;
+
+    margin-bottom:10px;
+
+}
+
+/* =====================================
+   CONTENIDO DECLARACIÓN
+===================================== */
+
+.declaracion-contenido{
+
+    margin-top:10px;
+
+    animation:fadeIn 0.3s ease;
+
+}
+
+/* =====================================
+   TEXTO GENERAL
+===================================== */
+
+.categoria-card p{
+
+    color:#555;
+
+    font-size:15px;
+
+    line-height:1.8;
+
+}
+
+/* =====================================
+   TEXTOS IMPORTANTES
+===================================== */
+
+.categoria-card strong{
+
+    color:#222;
+
+    font-family:'Poppins-Bold';
+
+}
+
+/* =====================================
+   OCULTAR CONTENIDO
+===================================== */
+
+.oculto{
+
+    display:none;
+
+}
+
+/* =====================================
+   BOTÓN AUDIO
+===================================== */
+
+.audio-btn{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    width:100%;
+
+    font-size:15px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.audio-btn:hover{
+
+    background:#452d96;
+
+}
+
+/* =====================================
+   BOTÓN ELIMINAR
+===================================== */
+
+.btn-eliminar{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#d9534f;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.btn-eliminar:hover{
+
+    background:#b52b27;
+
+}
+
+/* =====================================
+   BOTÓN FAVORITO
+===================================== */
+
+.btn-favorito{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.btn-favorito:hover{
+
+    background:#452d96;
+
+}
+
+/* =====================================
+   ANIMACIÓN
+===================================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

@@ -1,0 +1,3400 @@
+function page(){
+  const p = location.pathname.split("/").pop().toLowerCase();
+  return p || "index.html";
+}
+
+/* ==========================================
+   ✅ iOS/PWA: storage persistente + diagnóstico
+   ========================================== */
+let __storageWarned = false;
+let __persistTried = false;
+
+function isIOS(){
+  const ua = navigator.userAgent || "";
+  return /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+// Navegadores embebidos típicos (WhatsApp/IG/FB) => suelen usar storage “volátil”
+function isInAppBrowser(){
+  const ua = (navigator.userAgent || "").toLowerCase();
+  return (
+    ua.includes("fbav") ||
+    ua.includes("fban") ||
+    ua.includes("instagram") ||
+    ua.includes("wv") ||
+    ua.includes("line/") ||
+    ua.includes("micromessenger") ||
+    ua.includes("snapchat") ||
+    ua.includes("telegram") ||
+    ua.includes("whatsapp")
+  );
+}
+
+function localStorageWritable(){
+  try{
+    const k = "__ppro_ls_test__";
+    localStorage.setItem(k, "1");
+    localStorage.removeItem(k);
+    return true;
+  }catch(_){
+    return false;
+  }
+}
+
+async function requestPersistentStorage(){
+  if(__persistTried) return;
+  __persistTried = true;
+
+  const lsOK = localStorageWritable();
+  if(!lsOK && !__storageWarned){
+    __storageWarned = true;
+
+    const hint =
+      (isIOS() ? "En iPhone esto suele pasar en Modo Privado o dentro de WhatsApp/Instagram.\n\n" : "") +
+      "Solución:\n" +
+      "1) Abre el link en Safari (no dentro de otra app).\n" +
+      "2) Desactiva Modo Privado.\n" +
+      "3) (Recomendado) Compartir → Añadir a pantalla de inicio.\n";
+
+    alert("⚠️ Tu navegador está bloqueando el almacenamiento (LocalStorage).\n\nNo se podrán guardar proyectos ni la Base APU.\n\n" + hint);
+    return;
+  }
+
+  try{
+    if(navigator.storage && typeof navigator.storage.persisted === "function" && typeof navigator.storage.persist === "function"){
+      const already = await navigator.storage.persisted();
+      if(!already){
+        const granted = await navigator.storage.persist();
+        console.log("[PWA] persist granted:", granted);
+      }else{
+        console.log("[PWA] storage already persisted");
+      }
+    }
+  }catch(err){
+    console.log("[PWA] persist error:", err);
+  }
+
+  if(isIOS() && isInAppBrowser() && !__storageWarned){
+    __storageWarned = true;
+    alert(
+      "ℹ️ Estás usando un navegador embebido (dentro de otra app).\n\n" +
+      "En iPhone esto puede NO guardar datos o borrarlos.\n\n" +
+      "Abre el link en Safari y (recomendado) agrégalo a Pantalla de inicio."
+    );
+  }
+}
+
+function initPWA(){
+  requestPersistentStorage().catch(()=>{});
+
+  const once = ()=>{
+    requestPersistentStorage().catch(()=>{});
+    window.removeEventListener("click", once, true);
+    window.removeEventListener("touchstart", once, true);
+    window.removeEventListener("keydown", once, true);
+  };
+  window.addEventListener("click", once, true);
+  window.addEventListener("touchstart", once, true);
+  window.addEventListener("keydown", once, true);
+
+  if(!("serviceWorker" in navigator)) return;
+
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("pwa/sw.js").catch((e)=>{
+      console.log("[PWA] SW register failed:", e);
+    });
+  });
+}
+
+function bindTabsIfPresent(){
+  const tabs = Array.from(document.querySelectorAll("[data-tab]"));
+  const panels = Array.from(document.querySelectorAll("[data-panel]"));
+  if(!tabs.length || !panels.length) return;
+
+  function activate(key){
+    tabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-tab")===key));
+    panels.forEach(p => p.style.display = (p.getAttribute("data-panel")===key) ? "" : "none");
+  }
+
+  tabs.forEach(t => t.addEventListener("click", (e)=>{
+    e.preventDefault();
+    activate(t.getAttribute("data-tab"));
+  }));
+
+  const tab = UI.getParam("tab");
+  activate(tab || tabs[0].getAttribute("data-tab"));
+}
+
+/* ========= helpers base64 docs ========= */
+function blobToDataUrl(blob){
+  return new Promise((res, rej)=>{
+    const fr = new FileReader();
+    fr.onload = ()=>res(String(fr.result||""));
+    fr.onerror = ()=>rej(fr.error || new Error("No se pudo leer archivo"));
+    fr.readAsDataURL(blob);
+  });
+}
+async function dataUrlToBlob(dataUrl){
+  const r = await fetch(dataUrl);
+  return await r.blob();
+}
+
+/* ========= helpers logo/image ========= */
+async function fileToDataUrl(file){
+  if(!file) return "";
+  const MAX_IMG = 4 * 1024 * 1024; // 4MB
+  if((file.size||0) > MAX_IMG) throw new Error("Imagen demasiado grande. Máx 4MB.");
+  return await blobToDataUrl(file);
+}
+
+/* ========= helper excel ========= */
+function sanitizeFileName(name){
+  return String(name||"archivo")
+    .trim()
+    .replace(/[\\/:*?"<>|]+/g, "_")
+    .replace(/\s+/g, "_")
+    .slice(0, 80) || "archivo";
+}
+
+/* ==========================================
+   ✅ Helpers: % y totales (compat AIU -> A/I/U)
+   ========================================== */
+function pct(project, key, legacyKey){
+  const v = project?.[key];
+  if(Number.isFinite(Number(v))) return Number(v);
+  const lv = legacyKey ? project?.[legacyKey] : undefined;
+  if(Number.isFinite(Number(lv))) return Number(lv);
+  return 0;
+}
+
+/*
+  ✅ FIX del bug:
+  - En tu Calc.calcTotals nuevo, es común que el IVA venga como { iva: ... } (no ivaUtil)
+  - La app mostraba 0 en “IVA sobre Utilidad” porque buscaba t.ivaUtil
+  - Aquí mapeamos automáticamente iva -> ivaUtil si falta ivaUtil.
+*/
+function totalsCompat(project){
+  const t = (window.Calc && typeof Calc.calcTotals === "function") ? (Calc.calcTotals(project) || {}) : {};
+  const directo = Number(t.directo||0);
+
+  if(("admin" in t) || ("imprev" in t) || ("util" in t) || ("ivaUtil" in t) || ("subtotal" in t) || ("iva" in t)){
+    const admin = Number(t.admin||0);
+    const imprev = Number(t.imprev||0);
+    const util = Number(t.util||0);
+
+    const subtotal =
+      Number.isFinite(Number(t.subtotal))
+        ? Number(t.subtotal||0)
+        : (directo + admin + imprev + util);
+
+    const ivaUtil =
+      ("ivaUtil" in t)
+        ? Number(t.ivaUtil||0)
+        : (("iva" in t) ? Number(t.iva||0) : 0);
+
+    const total =
+      Number.isFinite(Number(t.total))
+        ? Number(t.total||0)
+        : (subtotal + ivaUtil);
+
+    return { directo, admin, imprev, util, subtotal, ivaUtil, total };
+  }
+
+  const aiu = Number(t.aiu||0);
+  const iva = Number(t.iva||0);
+  const total = Number(t.total|| (directo + aiu + iva));
+  return {
+    directo,
+    admin: aiu,
+    imprev: 0,
+    util: 0,
+    subtotal: directo + aiu,
+    ivaUtil: iva,
+    total
+  };
+}
+
+/* ==========================================
+   ✅ NUEVO: Capítulos manuales por proyecto
+   - Se guardan en project.chapters = [{id, chapterCode, chapterName}]
+   - Para dropdowns, se mezcla con capítulos inferidos por ítems
+   ========================================== */
+function ensureProjectChapters(project){
+  const p = project || {};
+  if(!Array.isArray(p.chapters)) p.chapters = [];
+  // normalizar
+  p.chapters = p.chapters
+    .map(c=>({
+      id: String(c?.id || ""),
+      chapterCode: String(c?.chapterCode || "").trim(),
+      chapterName: String(c?.chapterName || "").trim()
+    }))
+    .filter(c=>c.chapterCode);
+  return p.chapters;
+}
+
+function getInferredChaptersFromItems(project){
+  // usa Calc.groupByChapters para respetar chapterName existente
+  try{
+    const { groups } = Calc.groupByChapters(project);
+    return (groups||[])
+      .map(g=>({
+        chapterCode: String(g.chapterCode||"").trim(),
+        chapterName: String(g.chapterName||"").trim()
+      }))
+      .filter(x=>x.chapterCode);
+  }catch(_){
+    // fallback simple
+    const map = new Map();
+    for(const it of (project?.items||[])){
+      const code = String(it.chapterCode || "").trim();
+      if(!code) continue;
+      if(!map.has(code)){
+        map.set(code, { chapterCode: code, chapterName: String(it.chapterName||"").trim() });
+      }
+    }
+    return Array.from(map.values());
+  }
+}
+
+function getAllChaptersForProject(project){
+  const manual = ensureProjectChapters(project).map(c=>({
+    chapterCode: c.chapterCode,
+    chapterName: c.chapterName
+  }));
+
+  const inferred = getInferredChaptersFromItems(project);
+
+  // merge por chapterCode (manual tiene prioridad en nombre)
+  const map = new Map();
+  for(const x of inferred){
+    map.set(String(x.chapterCode), { chapterCode: String(x.chapterCode), chapterName: String(x.chapterName||"") });
+  }
+  for(const x of manual){
+    map.set(String(x.chapterCode), { chapterCode: String(x.chapterCode), chapterName: String(x.chapterName||"") });
+  }
+
+  const arr = Array.from(map.values());
+  arr.sort((a,b)=>{
+    const na = Number(a.chapterCode), nb = Number(b.chapterCode);
+    if(Number.isFinite(na) && Number.isFinite(nb)) return na-nb;
+    return String(a.chapterCode).localeCompare(String(b.chapterCode));
+  });
+  return arr;
+}
+
+function lookupChapterName(project, chapterCode){
+  const code = String(chapterCode||"").trim();
+  if(!code) return "";
+  const all = getAllChaptersForProject(project);
+  const found = all.find(x=>String(x.chapterCode)===code);
+  return found ? String(found.chapterName||"") : "";
+}
+
+function makeId(prefix="id"){
+  return `${prefix}_${Math.random().toString(16).slice(2)}_${Date.now().toString(16)}`;
+}
+
+function getProjectSubApuOverrides(project){
+  const raw = project?.subApuOverrides;
+  if(raw && typeof raw === "object" && !Array.isArray(raw)) return raw;
+  return {};
+}
+
+function getSubApuOverride(projectId, subKey){
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return null;
+  const key = String(subKey || "").trim();
+  if(!key) return null;
+  const map = getProjectSubApuOverrides(project);
+  const hit = map[key];
+  return (hit && Array.isArray(hit.lines)) ? hit : null;
+}
+
+function setSubApuOverride(projectId, subKey, lines, meta){
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return null;
+  const key = String(subKey || "").trim();
+  if(!key) return null;
+
+  const map = { ...getProjectSubApuOverrides(project) };
+  map[key] = {
+    subKey: key,
+    updatedAt: new Date().toISOString(),
+    meta: meta || {},
+    lines: (Array.isArray(lines) ? lines : []).map(l => ({
+      group: String(l.group || l.tipo || "-"),
+      desc: String(l.desc || ""),
+      unit: String(l.unit || ""),
+      qty: Number(l.qty || 0),
+      pu: Number(l.pu || 0),
+      parcial: Number(l.parcial || 0) || (Number(l.qty || 0) * Number(l.pu || 0)),
+      subRef: String(l.subRef || "").trim()
+    }))
+  };
+
+  StorageAPI.updateProject(projectId, { subApuOverrides: map });
+  return map[key];
+}
+
+function clearSubApuOverride(projectId, subKey){
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return;
+  const key = String(subKey || "").trim();
+  if(!key) return;
+
+  const map = { ...getProjectSubApuOverrides(project) };
+  delete map[key];
+  StorageAPI.updateProject(projectId, { subApuOverrides: map });
+}
+
+
+/* ==========================================
+   ✅ Helper: actualizar PU por APU real (apuRefCode)
+   ========================================== */
+function updateItemsPUByApuCompat(projectId, apuCode, newPU){
+  // Preferido: por apuRefCode
+  if(window.StorageAPI && typeof StorageAPI.updateItemsPUByApuRefCode === "function"){
+    return StorageAPI.updateItemsPUByApuRefCode(projectId, apuCode, newPU);
+  }
+  // Fallback legacy: por code visible
+  if(window.StorageAPI && typeof StorageAPI.updateItemsPUByCode === "function"){
+    return StorageAPI.updateItemsPUByCode(projectId, apuCode, newPU);
+  }
+  return 0;
+}
+
+/* ==========================================
+   ✅ Helpers robustos para resolver APU
+   - Evita fallos cuando el código visible cambia
+   - Prioriza override/custom por code y por apuRefCode
+   ========================================== */
+function normalizeLookupCode(v){
+  return String(v || "").trim();
+}
+
+function normalizeTextForMatch(v){
+  return String(v || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getItemByAnyLookup(project, code){
+  const key = normalizeLookupCode(code);
+  if(!project || !key) return null;
+  return (project.items || []).find(it => {
+    const visible = normalizeLookupCode(it?.code);
+    const ref = normalizeLookupCode(it?.apuRefCode);
+    return visible === key || ref === key;
+  }) || null;
+}
+
+function getProjectOverrideByAnyLookup(projectId, codeA, codeB){
+  const tries = [normalizeLookupCode(codeA), normalizeLookupCode(codeB)].filter(Boolean);
+  if(!projectId || !tries.length || !window.StorageAPI || typeof StorageAPI.getApuOverride !== "function") return null;
+
+  for(const key of tries){
+    const ov = StorageAPI.getApuOverride(projectId, key);
+    if(ov && Array.isArray(ov.lines) && ov.lines.length){
+      return { key, ov };
+    }
+  }
+  return null;
+}
+
+function getCustomAPUByAnyLookup(codeA, codeB){
+  const tries = [normalizeLookupCode(codeA), normalizeLookupCode(codeB)].filter(Boolean);
+  if(!tries.length || !window.StorageAPI) return null;
+
+  if(typeof StorageAPI.getCustomAPU === "function"){
+    for(const key of tries){
+      const apu = StorageAPI.getCustomAPU(key);
+      if(apu) return { key, apu };
+    }
+  }
+
+  if(typeof StorageAPI.listCustomAPUs === "function"){
+    const all = StorageAPI.listCustomAPUs() || [];
+    for(const key of tries){
+      const apu = all.find(x => normalizeLookupCode(x?.code) === key);
+      if(apu) return { key, apu };
+    }
+  }
+
+  return null;
+}
+
+async function getBaseAPUByAnyLookup(codeA, codeB){
+  const tries = [normalizeLookupCode(codeA), normalizeLookupCode(codeB)].filter(Boolean);
+  if(!tries.length || !window.APUBase || typeof APUBase.getAPU !== "function") return null;
+
+  for(const key of tries){
+    try{
+      const apu = await APUBase.getAPU(key);
+      if(apu) return { key, apu };
+    }catch(_){}
+  }
+  return null;
+}
+
+async function tryResolveAPUFromProjectItem(projectId, requestedCode){
+  const project = projectId ? StorageAPI.getProjectById(projectId) : null;
+  const requested = normalizeLookupCode(requestedCode);
+
+  let item = getItemByAnyLookup(project, requested);
+  if(!item && project && requested){
+    item = (project.items || []).find(it => normalizeTextForMatch(it?.desc) === normalizeTextForMatch(requested));
+  }
+
+  const visibleCode = normalizeLookupCode(item?.code || requested);
+  const refCode = normalizeLookupCode(item?.apuRefCode || requested);
+
+  const overrideHit = getProjectOverrideByAnyLookup(projectId, visibleCode, refCode);
+  if(overrideHit){
+    return {
+      source: "override",
+      resolvedCode: overrideHit.key,
+      visibleCode,
+      refCode,
+      item,
+      data: overrideHit.ov
+    };
+  }
+
+  const customHit = getCustomAPUByAnyLookup(visibleCode, refCode);
+  if(customHit){
+    return {
+      source: "custom",
+      resolvedCode: customHit.key,
+      visibleCode,
+      refCode,
+      item,
+      data: customHit.apu
+    };
+  }
+
+  const baseHit = await getBaseAPUByAnyLookup(refCode, visibleCode);
+  if(baseHit){
+    return {
+      source: "base",
+      resolvedCode: baseHit.key,
+      visibleCode,
+      refCode,
+      item,
+      data: baseHit.apu
+    };
+  }
+
+  return {
+    source: "",
+    resolvedCode: refCode || visibleCode || requested,
+    visibleCode,
+    refCode,
+    item,
+    data: null
+  };
+}
+
+/* ==========================================
+   ✅ Export Excel (sin cambios de lógica)
+   ========================================== */
+function exportProjectExcel(project){
+  if(!project) return;
+
+  if(typeof XLSX === "undefined" || !XLSX?.utils){
+    alert("No se encontró XLSX. Verifica que está cargado en el HTML.");
+    return;
+  }
+
+  const totals = totalsCompat(project);
+  const { groups, items } = Calc.groupByChapters(project);
+
+  const adminPct = pct(project, "adminPct", "aiuPct");
+  const imprevPct = pct(project, "imprevPct", null);
+  const utilPct = pct(project, "utilPct", null);
+  const ivaUtilPct = pct(project, "ivaUtilPct", "ivaPct");
+
+  const resumenAOA = [
+    ["FORMATO INSTITUCIONAL"],
+    ["República / País", project.instPais || ""],
+    ["Departamento", project.instDepto || ""],
+    ["Municipio", project.instMunicipio || ""],
+    ["Entidad contratante", project.instEntidad || (project.entity || "")],
+    ["Proyecto (portada)", project.instProyectoLabel || project.name || ""],
+    ["Ubicación", project.location || ""],
+    ["Fecha elaboración", project.instFechaElab || ""],
+    [""],
+    ["RESUMEN PRESUPUESTO"],
+    ["Moneda", project.currency || "COP"],
+    ["Administración (%)", Number(adminPct||0)],
+    ["Imprevistos (%)", Number(imprevPct||0)],
+    ["Utilidad (%)", Number(utilPct||0)],
+    ["IVA sobre Utilidad (%)", Number(ivaUtilPct||0)],
+    [""],
+    ["TOTAL COSTOS DIRECTOS", Number(totals.directo||0)],
+    ["ADMINISTRACIÓN", Number(totals.admin||0)],
+    ["IMPREVISTOS", Number(totals.imprev||0)],
+    ["UTILIDAD", Number(totals.util||0)],
+    ["SUBTOTAL", Number(totals.subtotal||0)],
+    ["IVA sobre Utilidad", Number(totals.ivaUtil||0)],
+    ["VALOR TOTAL", Number(totals.total||0)],
+    [""],
+    ["Items", (project.items||[]).length],
+    ["Capítulos", (groups||[]).length],
+  ];
+
+  const wsResumen = XLSX.utils.aoa_to_sheet(resumenAOA);
+
+  const capsRows = (groups||[]).map(g=>({
+    Capitulo: String(g.chapterCode||""),
+    Nombre: String(g.chapterName||""),
+    Items: Number(g.itemsCount||0),
+    Subtotal: Number(g.subtotal||0),
+    Moneda: project.currency || "COP"
+  }));
+  const wsCaps = XLSX.utils.json_to_sheet(capsRows.length ? capsRows : [{Capitulo:"",Nombre:"",Items:"",Subtotal:"",Moneda:project.currency||"COP"}]);
+
+  const itemsRows = (items||[]).map(it=>{
+    const parcial = Number(it.pu||0) * Number(it.qty||0);
+    const cap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
+    return {
+      Capitulo: String(cap||""),
+      Codigo: String(it.code||""),
+      Descripcion: String(it.desc||""),
+      Unidad: String(it.unit||""),
+      VR_Unitario: Number(it.pu||0),
+      Cantidad: Number(it.qty||0),
+      VR_Parcial: Number(parcial||0),
+      Moneda: project.currency || "COP"
+    };
+  });
+  const wsItems = XLSX.utils.json_to_sheet(itemsRows.length ? itemsRows : [{
+    Capitulo:"",Codigo:"",Descripcion:"",Unidad:"",VR_Unitario:"",Cantidad:"",VR_Parcial:"",Moneda:project.currency||"COP"
+  }]);
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen");
+  XLSX.utils.book_append_sheet(wb, wsCaps, "Capitulos");
+  XLSX.utils.book_append_sheet(wb, wsItems, "Items");
+
+  const out = XLSX.write(wb, { bookType:"xlsx", type:"array" });
+  const blob = new Blob([out], { type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  const url = URL.createObjectURL(blob);
+
+  const filename = `presupuesto_${sanitizeFileName(project.name)}_${Date.now()}.xlsx`;
+  UI.downloadBlobUrl(url, filename);
+}
+
+/* ---------- PROYECTOS ---------- */
+async function renderKpis(){
+  const el = UI.qs("#kpis");
+  if(!el) return;
+
+  const ps = StorageAPI.listProjects();
+  const total = ps.reduce((s,p)=> s + (totalsCompat(p).total||0), 0);
+
+  let baseChip = UI.chip("NO","bad");
+  try{
+    const meta = await APUBase.getMeta();
+    if(meta) baseChip = UI.chip(`OK (${meta.counts?.items||0})`,"ok");
+  }catch(_){}
+
+  el.innerHTML = `
+    <div class="card item"><div class="topline"><div class="name">Proyectos</div><div class="chips">${UI.chip(String(ps.length),"ok")}</div></div><div class="muted small">En este dispositivo.</div></div>
+    <div class="card item"><div class="topline"><div class="name">Total presupuestado</div><div class="chips">${UI.chip(UI.fmtMoney(total,"COP"))}</div></div><div class="muted small">Suma de totales.</div></div>
+    <div class="card item"><div class="topline"><div class="name">Base APU</div><div class="chips">${baseChip}</div></div><div class="muted small">Importada desde XLSX.</div></div>
+    <div class="card item"><div class="topline"><div class="name">Modo</div><div class="chips">${UI.chip("OFFLINE","ok")}</div></div><div class="muted small">LocalStorage + IndexedDB.</div></div>
+  `;
+}
+
+function renderProjects(){
+  const tbody = UI.qs("#lista");
+  const empty = UI.qs("#empty");
+  if(!tbody) return;
+
+  const term = (UI.qs("#search")?.value || "").toLowerCase().trim();
+  let ps = StorageAPI.listProjects();
+
+  if(term){
+    ps = ps.filter(p => `${p.name} ${p.entity} ${p.location}`.toLowerCase().includes(term));
+  }
+
+  if(!ps.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = ps.map(p=>{
+    const t = totalsCompat(p);
+    return `
+      <tr>
+        <td><b>${UI.esc(p.name)}</b></td>
+        <td>${UI.esc(p.entity||"-")}</td>
+        <td>${UI.esc(p.location||"-")}</td>
+        <td>${p.updatedAt ? UI.esc(new Date(p.updatedAt).toLocaleString()) : "-"}</td>
+        <td><b>${UI.fmtMoney(t.total, p.currency||"COP")}</b></td>
+        <td class="row" style="gap:8px">
+          <a class="btn primary" href="proyecto-detalle.html?projectId=${encodeURIComponent(p.id)}">Abrir</a>
+          <button class="btn danger" type="button" data-del="${p.id}">Eliminar</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  tbody.querySelectorAll("[data-del]").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      const id = btn.getAttribute("data-del");
+      if(!confirm("¿Eliminar proyecto y sus documentos?")) return;
+      await DB.deleteFilesByOwner("project", id).catch(()=>{});
+      StorageAPI.deleteProject(id);
+      renderKpis();
+      renderProjects();
+    });
+  });
+}
+
+async function bindProjectsPage(){
+  UI.qs("#btnNew")?.addEventListener("click", ()=>{
+    const name = prompt("Nombre del proyecto:","") || "";
+    if(!name.trim()) return;
+
+    const entity = prompt("Entidad (opcional):","") || "";
+    const ubicacion = prompt("Ubicación (opcional):","") || "";
+
+    const p = StorageAPI.createProject({ name, entity, location: ubicacion });
+    window.location.href = `proyecto-detalle.html?projectId=${encodeURIComponent(p.id)}`;
+  });
+
+  UI.qs("#search")?.addEventListener("input", renderProjects);
+
+  UI.qs("#btnInstallBase")?.addEventListener("click", ()=> UI.qs("#fileBase")?.click());
+
+  UI.qs("#fileBase")?.addEventListener("change", async (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    try{
+      alert("Importando base... (puede tardar un poco)");
+      const meta = await APUBase.installFromFile(f);
+      alert(`Base instalada OK.\nItems: ${meta.counts?.items || 0}\nCD lines: ${meta.counts?.cdLines||0}\nInsumos: ${meta.counts?.insumos||0}\nSubproductos: ${meta.counts?.subLines||0}`);
+      await renderKpis();
+    }catch(err){
+      alert("Error instalando base: " + (err?.message || err));
+    }finally{
+      e.target.value = "";
+    }
+  });
+
+  UI.qs("#btnExport")?.addEventListener("click", ()=>{
+    const { url, filename } = StorageAPI.exportBackup();
+    UI.downloadBlobUrl(url, filename);
+  });
+
+  UI.qs("#fileImport")?.addEventListener("change", async (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    try{
+      await StorageAPI.importBackupFromFile(f);
+      alert("Backup importado. Se recargará.");
+      window.location.reload();
+    }catch(err){
+      alert("Error importando backup: " + err.message);
+    }finally{
+      e.target.value = "";
+    }
+  });
+
+  UI.qs("#fileImportProject")?.addEventListener("change", async (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    try{
+      const text = await f.text();
+      const payload = JSON.parse(text);
+      if(!payload || !payload.project) throw new Error("Archivo inválido. Falta 'project'.");
+
+      const newProj = StorageAPI.importProjectAsNew(payload.project);
+
+      const docs = Array.isArray(payload.docs) ? payload.docs : [];
+      for(const d of docs){
+        if(!d?.dataUrl) continue;
+        const blob = await dataUrlToBlob(d.dataUrl);
+        await DB.putFile({
+          ownerType:"project",
+          ownerId: newProj.id,
+          kind:"doc_project",
+          name: d.name || "archivo",
+          mime: d.mime || blob.type || "application/octet-stream",
+          size: Number(d.size || blob.size || 0),
+          blob
+        });
+      }
+
+      alert(`Proyecto importado OK.\nProyecto: ${newProj.name}\nAdjuntos: ${docs.length}`);
+      await renderKpis();
+      renderProjects();
+    }catch(err){
+      alert("Error importando proyecto: " + (err?.message || err));
+    }finally{
+      e.target.value = "";
+    }
+  });
+
+  UI.qs("#btnReset")?.addEventListener("click", async ()=>{
+    if(!confirm("¿Borrar TODO? (proyectos + documentos)")) return;
+
+    const alsoBase = confirm("¿También deseas borrar la Base APU (IndexedDB)?\n\nOJO: tendrás que instalar el XLSX de nuevo.");
+    const ps = StorageAPI.listProjects();
+    for(const p of ps){
+      await DB.deleteFilesByOwner("project", p.id).catch(()=>{});
+    }
+    StorageAPI.resetAll();
+
+    if(alsoBase){
+      try{
+        await APUBase.deleteBaseDatabase();
+      }catch(_){}
+    }
+
+    alert("Listo. Se recargará.");
+    window.location.reload();
+  });
+
+  await renderKpis();
+  renderProjects();
+}
+
+/* ---------- DETALLE PROYECTO ---------- */
+async function renderDocs(projectId){
+  const tbody = UI.qs("#tablaDocs tbody");
+  const empty = UI.qs("#docsEmpty");
+  if(!tbody) return;
+
+  const all = await DB.listFilesByOwner("project", projectId);
+  const docs = all.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
+
+  tbody.innerHTML = docs.map(d=>`
+    <tr>
+      <td>${UI.esc(d.name||"")}</td>
+      <td>${UI.esc(d.mime||"")}</td>
+      <td>${UI.esc(UI.fmtBytes(d.size||0))}</td>
+      <td>${UI.esc((d.createdAt||"").slice(0,10))}</td>
+      <td class="row" style="gap:8px">
+        <button class="btn" type="button" data-dl="${d.id}">Descargar</button>
+        <button class="btn danger" type="button" data-del="${d.id}">Eliminar</button>
+      </td>
+    </tr>
+  `).join("");
+
+  if(empty) empty.style.display = docs.length ? "none" : "";
+
+  document.querySelectorAll("[data-dl]").forEach(btn=>{
+    btn.addEventListener("click", ()=> UI.downloadFileFromIDB(btn.getAttribute("data-dl")));
+  });
+
+  document.querySelectorAll("[data-del]").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      const id = btn.getAttribute("data-del");
+      if(!confirm("¿Eliminar este documento?")) return;
+      await DB.deleteFile(id).catch(()=>{});
+      await renderDocs(projectId);
+    });
+  });
+}
+function renderProjectDetail(project){
+  UI.qs("#projTitle") && (UI.qs("#projTitle").textContent = project.name);
+  UI.qs("#projSub") && (UI.qs("#projSub").textContent = `${project.entity || "—"} · ${project.location || "—"} · ${project.currency || "COP"}`);
+
+  const adminPct = pct(project, "adminPct", "aiuPct");
+  const imprevPct = pct(project, "imprevPct", null);
+  const utilPct = pct(project, "utilPct", null);
+  const ivaUtilPct = pct(project, "ivaUtilPct", "ivaPct");
+
+  const info = UI.qs("#cardInfo");
+  if(info){
+    info.innerHTML = `
+      <div class="cardhead">
+        <h2>${UI.esc(project.name)}</h2>
+        <p class="muted small">Entidad: ${UI.esc(project.entity||"-")} · Ubicación: ${UI.esc(project.location||"-")}</p>
+      </div>
+      <div class="grid two">
+        <div class="item"><div class="name">Administración</div><div class="muted small">${UI.esc(String(adminPct||0))}%</div></div>
+        <div class="item"><div class="name">Imprevistos</div><div class="muted small">${UI.esc(String(imprevPct||0))}%</div></div>
+        <div class="item"><div class="name">Utilidad</div><div class="muted small">${UI.esc(String(utilPct||0))}%</div></div>
+        <div class="item"><div class="name">IVA s/Utilidad</div><div class="muted small">${UI.esc(String(ivaUtilPct||0))}%</div></div>
+      </div>
+    `;
+  }
+
+  const totals = totalsCompat(project);
+  const k = UI.qs("#cardTotals");
+  if(k){
+    k.innerHTML = `
+      <div class="card item"><div class="name">Ítems</div><div class="chips">${UI.chip(String((project.items||[]).length),"ok")}</div></div>
+      <div class="card item"><div class="name">Costos directos</div><div class="chips">${UI.chip(UI.fmtMoney(totals.directo, project.currency||"COP"))}</div></div>
+      <div class="card item"><div class="name">SUBTOTAL</div><div class="chips">${UI.chip(UI.fmtMoney(totals.subtotal||0, project.currency||"COP"))}</div></div>
+      <div class="card item"><div class="name">VALOR TOTAL</div><div class="chips">${UI.chip(UI.fmtMoney(totals.total, project.currency||"COP"),"ok")}</div></div>
+    `;
+  }
+
+  const rows = UI.qs("#totalsRows");
+  if(rows){
+    rows.innerHTML = `
+      <div class="row space"><div class="name">TOTAL COSTOS DIRECTOS</div><div><b>${UI.fmtMoney(totals.directo, project.currency||"COP")}</b></div></div>
+
+      <div class="row space"><div class="name">ADMINISTRACIÓN (${UI.esc(String(adminPct||0))}%)</div><div><b>${UI.fmtMoney(totals.admin||0, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">IMPREVISTOS (${UI.esc(String(imprevPct||0))}%)</div><div><b>${UI.fmtMoney(totals.imprev||0, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">UTILIDAD (${UI.esc(String(utilPct||0))}%)</div><div><b>${UI.fmtMoney(totals.util||0, project.currency||"COP")}</b></div></div>
+
+      <hr class="sep">
+
+      <div class="row space"><div class="name">SUBTOTAL</div><div><b>${UI.fmtMoney(totals.subtotal||0, project.currency||"COP")}</b></div></div>
+      <div class="row space"><div class="name">IVA sobre Utilidad (${UI.esc(String(ivaUtilPct||0))}%)</div><div><b>${UI.fmtMoney(totals.ivaUtil||0, project.currency||"COP")}</b></div></div>
+
+      <hr class="sep">
+      <div class="row space"><div class="name">VALOR TOTAL</div><div><b>${UI.fmtMoney(totals.total, project.currency||"COP")}</b></div></div>
+    `;
+  }
+}
+
+function renderChaptersTable(project){
+  const tbody = UI.qs("#capsBody");
+  const empty = UI.qs("#capsEmpty");
+  if(!tbody) return;
+
+  const { groups } = Calc.groupByChapters(project);
+  if(!groups.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = groups.map(g=>`
+    <tr>
+      <td><b>${UI.esc(g.chapterCode)}</b></td>
+      <td>${UI.esc(g.chapterName||"")}</td>
+      <td style="text-align:right">${UI.esc(String(g.itemsCount))}</td>
+      <td style="text-align:right"><b>${UI.fmtMoney(g.subtotal, project.currency||"COP")}</b></td>
+    </tr>
+  `).join("");
+}
+
+/* =========================
+   ✅ NUEVO: render + bind capítulos manuales
+   ========================= */
+function renderProjectChaptersUI(project){
+  const tbody = UI.qs("#projectChaptersBody");
+  const empty = UI.qs("#projectChaptersEmpty");
+  if(!tbody) return;
+
+  ensureProjectChapters(project);
+
+  if(!project.chapters.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = project.chapters
+    .slice()
+    .sort((a,b)=>{
+      const na = Number(a.chapterCode), nb = Number(b.chapterCode);
+      if(Number.isFinite(na) && Number.isFinite(nb)) return na-nb;
+      return String(a.chapterCode).localeCompare(String(b.chapterCode));
+    })
+    .map(c=>`
+      <tr>
+        <td><b>${UI.esc(c.chapterCode||"")}</b></td>
+        <td>${UI.esc(c.chapterName||"")}</td>
+        <td class="row" style="gap:8px">
+          <button class="btn" type="button" data-editchap="${UI.esc(c.id)}">Editar</button>
+          <button class="btn danger" type="button" data-delchap="${UI.esc(c.id)}">Eliminar</button>
+        </td>
+      </tr>
+    `).join("");
+
+  tbody.querySelectorAll("[data-delchap]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-delchap");
+      const fresh = StorageAPI.getProjectById(project.id);
+      if(!fresh) return;
+
+      ensureProjectChapters(fresh);
+
+      const c = fresh.chapters.find(x=>x.id===id);
+      if(!c) return;
+
+      if(!confirm(`¿Eliminar el capítulo ${c.chapterCode} - ${c.chapterName}?`)) return;
+
+      const next = fresh.chapters.filter(x=>x.id!==id);
+      StorageAPI.updateProject(fresh.id, { chapters: next });
+
+      const updated = StorageAPI.getProjectById(fresh.id);
+      renderProjectChaptersUI(updated);
+      refreshAddApuModalChapterOptions(updated);
+      renderChaptersTable(updated);
+      renderResumenItems(updated);
+      renderItemsTable(updated);
+    });
+  });
+
+  tbody.querySelectorAll("[data-editchap]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-editchap");
+      const fresh = StorageAPI.getProjectById(project.id);
+      if(!fresh) return;
+
+      ensureProjectChapters(fresh);
+      const c = fresh.chapters.find(x=>x.id===id);
+      if(!c) return;
+
+      const inpCode = UI.qs("#projChapterCode");
+      const inpName = UI.qs("#projChapterName");
+      const hid = UI.qs("#projChapterEditId");
+
+      if(inpCode) inpCode.value = c.chapterCode || "";
+      if(inpName) inpName.value = c.chapterName || "";
+      if(hid) hid.value = c.id || "";
+    });
+  });
+}
+
+/* ============================================================
+   ✅ FIX: “Agregar capítulo” funcionando por submit + click
+   ============================================================ */
+function bindProjectChaptersUI(projectId){
+  const form = UI.qs("#formProjectChapter");
+  const inpCode = UI.qs("#projChapterCode");
+  const inpName = UI.qs("#projChapterName");
+  const hid = UI.qs("#projChapterEditId");
+  const btnClear = UI.qs("#btnClearProjectChapterForm");
+  const btnAdd = UI.qs("#btnAddProjectChapter");
+
+  if(!form || !inpCode || !inpName) return;
+
+  function clearForm(){
+    inpCode.value = "";
+    inpName.value = "";
+    if(hid) hid.value = "";
+  }
+  btnClear?.addEventListener("click", clearForm);
+
+  function saveChapter(){
+    const fresh = StorageAPI.getProjectById(projectId);
+    if(!fresh) return;
+
+    ensureProjectChapters(fresh);
+
+    const chapterCode = String(inpCode.value||"").trim();
+    const chapterName = String(inpName.value||"").trim();
+
+    if(!chapterCode){
+      alert("Escribe el número del capítulo.");
+      return;
+    }
+    if(!/^\d+$/.test(chapterCode)){
+      alert("El número de capítulo debe ser numérico (ej: 1, 2, 10).");
+      return;
+    }
+    if(!chapterName){
+      alert("Escribe el nombre del capítulo.");
+      return;
+    }
+
+    const editId = String(hid?.value||"").trim();
+
+    const dup = fresh.chapters.find(x=>x.chapterCode===chapterCode && x.id!==editId);
+    if(dup){
+      alert(`Ya existe el capítulo ${chapterCode}. Edita el existente.`);
+      return;
+    }
+
+    let next = fresh.chapters.slice();
+    if(editId){
+      next = next.map(x => x.id===editId ? ({...x, chapterCode, chapterName}) : x);
+    }else{
+      next.push({ id: makeId("chap"), chapterCode, chapterName });
+    }
+
+    StorageAPI.updateProject(projectId, { chapters: next });
+
+    const updated = StorageAPI.getProjectById(projectId);
+    clearForm();
+    renderProjectChaptersUI(updated);
+    refreshAddApuModalChapterOptions(updated);
+    renderChaptersTable(updated);
+    renderResumenItems(updated);
+  }
+
+  form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    saveChapter();
+  });
+
+  btnAdd?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    saveChapter();
+  });
+
+  [inpCode, inpName].forEach(inp=>{
+    inp.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter"){
+        e.preventDefault();
+        saveChapter();
+      }
+    });
+  });
+}
+
+/* =========================
+   ✅ NUEVO: Modal agregar APU con capítulo
+   ========================= */
+let __addApuModalState = {
+  projectId: "",
+  apu: null
+};
+
+function openAddApuModal(project, apu){
+  const modal = UI.qs("#addApuModal");
+  if(!modal) {
+    const qtyOld = Number(prompt("Cantidad del ítem:", "1") || "0");
+    if(!qtyOld) return;
+
+    StorageAPI.addItem(project.id, {
+      chapterCode: apu.chapterCode || "",
+      chapterName: apu.chapterName || "",
+      code: apu.code,
+      apuRefCode: apu.code,
+      desc: apu.desc,
+      unit: apu.unit,
+      pu: Number(apu.pu||0),
+      qty: qtyOld
+    });
+
+    const fresh = StorageAPI.getProjectById(project.id);
+    renderProjectDetail(fresh);
+    renderChaptersTable(fresh);
+    renderItemsTable(fresh);
+    renderResumenItems(fresh);
+    alert("Ítem agregado al presupuesto.");
+    return;
+  }
+
+  __addApuModalState.projectId = project.id;
+  __addApuModalState.apu = apu;
+
+  UI.qs("#addApuCode") && (UI.qs("#addApuCode").value = String(apu.code||""));
+  UI.qs("#addApuUnit") && (UI.qs("#addApuUnit").value = String(apu.unit||""));
+  UI.qs("#addApuDesc") && (UI.qs("#addApuDesc").value = String(apu.desc||""));
+  UI.qs("#addApuQty") && (UI.qs("#addApuQty").value = "1");
+  UI.qs("#addApuRawJson") && (UI.qs("#addApuRawJson").value = JSON.stringify(apu||{}));
+
+  refreshAddApuModalChapterOptions(project);
+
+  modal.style.display = "";
+}
+
+
+/* =========================
+   ✅ NUEVO: Indirectos por tabla (UI jerárquica)
+   - Soporta modo manual / tabla
+   - Subtítulos y sub-subtítulos por numeración (1, 1.2, 1.2.1...)
+   - Líneas de detalle bajo cada subtítulo
+   - Guarda en project.indirectMode + project.indirectTable
+   ========================= */
+function safeNumInput(v){
+  const n = Number(String(v ?? "").replaceAll(",","").trim());
+  return Number.isFinite(n) ? n : 0;
+}
+
+function normalizeIndirectModeValue(v){
+  return String(v || "manual").trim().toLowerCase() === "table" ? "table" : "manual";
+}
+
+function normalizeIndirectGroupValue(v){
+  const s = String(v || "OTRO").trim().toUpperCase();
+  if(["ADMIN","IMPREV","UTIL","OTRO"].includes(s)) return s;
+  return "OTRO";
+}
+
+function normalizeIndirectItemCode(v){
+  return String(v || "").trim().replace(/\s+/g, "");
+}
+
+function indirectItemLevel(item){
+  const code = normalizeIndirectItemCode(item);
+  if(!code) return 0;
+  return code.split(".").filter(Boolean).length - 1;
+}
+
+function indirectSegments(item){
+  return normalizeIndirectItemCode(item)
+    .split(".")
+    .filter(Boolean)
+    .map(x => /^\d+$/.test(x) ? Number(x) : x);
+}
+
+function compareIndirectItemCodes(a, b){
+  const aa = indirectSegments(a);
+  const bb = indirectSegments(b);
+  const len = Math.max(aa.length, bb.length);
+  for(let i=0;i<len;i++){
+    const av = aa[i];
+    const bv = bb[i];
+    if(av === undefined) return -1;
+    if(bv === undefined) return 1;
+    const an = typeof av === "number";
+    const bn = typeof bv === "number";
+    if(an && bn && av !== bv) return av - bv;
+    const as = String(av);
+    const bs = String(bv);
+    if(as !== bs) return as.localeCompare(bs, "es", { numeric:true, sensitivity:"base" });
+  }
+  return 0;
+}
+
+function normalizeIndirectUiRow(row){
+  const r = row || {};
+  const rowType = String(r.rowType || "").trim().toLowerCase() === "header" ? "header" : "detail";
+
+  let sourceType = String(r.sourceType || "manual").trim().toLowerCase();
+  if(!["manual","insumo","subproducto","percent_cd"].includes(sourceType)){
+    sourceType = "manual";
+  }
+
+  let calcType = String(r.calcType || "").trim().toLowerCase() === "percent_direct" ? "percent_direct" : "fixed";
+  if(sourceType === "percent_cd"){
+    calcType = "percent_direct";
+  }
+
+  const out = {
+    id: String(r.id || makeId("ind")).trim(),
+    rowType,
+    item: normalizeIndirectItemCode(r.item),
+    group: normalizeIndirectGroupValue(r.group || (rowType === "header" ? "OTRO" : "ADMIN")),
+    desc: String(r.desc || "").trim(),
+    unit: String(r.unit || "").trim(),
+    qty: safeNumInput(r.qty),
+    unitValue: safeNumInput(r.unitValue),
+    percent: safeNumInput(r.percent),
+    calcType,
+    partial: safeNumInput(r.partial),
+    sourceType,
+    sourceRef: String(r.sourceRef || "").trim(),
+    sourceLabel: String(r.sourceLabel || "").trim()
+  };
+
+  if(out.rowType === "header"){
+    out.sourceType = "manual";
+    out.sourceRef = "";
+    out.sourceLabel = "";
+    out.unit = "";
+    out.qty = 0;
+    out.unitValue = 0;
+    out.percent = 0;
+    out.calcType = "fixed";
+    return out;
+  }
+
+  if(out.sourceType === "percent_cd"){
+    out.unit = "%CD";
+    out.qty = 1;
+    out.calcType = "percent_direct";
+  }
+
+  return out;
+}
+
+function ensureProjectIndirectConfig(project){
+  const p = project || {};
+  p.indirectMode = normalizeIndirectModeValue(p.indirectMode || "manual");
+  p.indirectTable = Array.isArray(p.indirectTable) ? p.indirectTable.map(normalizeIndirectUiRow) : [];
+  p.indirectTable.sort((a,b)=>{
+    const c = compareIndirectItemCodes(a.item, b.item);
+    if(c !== 0) return c;
+    if(a.rowType !== b.rowType) return a.rowType === "header" ? -1 : 1;
+    return String(a.desc||"").localeCompare(String(b.desc||""), "es", { sensitivity:"base" });
+  });
+  return p;
+}
+
+function getIndirectRows(project){
+  return ensureProjectIndirectConfig(project).indirectTable.slice();
+}
+
+function saveIndirectRows(projectId, rows){
+  const cleaned = (Array.isArray(rows) ? rows : []).map(normalizeIndirectUiRow);
+  cleaned.sort((a,b)=>{
+    const c = compareIndirectItemCodes(a.item, b.item);
+    if(c !== 0) return c;
+    if(a.rowType !== b.rowType) return a.rowType === "header" ? -1 : 1;
+    return String(a.desc||"").localeCompare(String(b.desc||""), "es", { sensitivity:"base" });
+  });
+  StorageAPI.updateProject(projectId, { indirectTable: cleaned });
+  return cleaned;
+}
+
+function makeIndirectRow(rowType="detail", group="ADMIN", item=""){
+  if(String(rowType).toLowerCase() === "header"){
+    return normalizeIndirectUiRow({
+      id: makeId("ind"),
+      rowType: "header",
+      item,
+      group,
+      desc: "",
+      unit: "",
+      qty: 0,
+      unitValue: 0,
+      percent: 0,
+      calcType: "fixed"
+    });
+  }
+  return normalizeIndirectUiRow({
+    id: makeId("ind"),
+    rowType: "detail",
+    item,
+    group,
+    desc: "",
+    unit: "MES",
+    qty: 1,
+    unitValue: 0,
+    percent: 0,
+    calcType: "fixed"
+  });
+}
+
+function calcIndirectRowPartial(row, directo){
+  const r = normalizeIndirectUiRow(row);
+  if(r.rowType === "header") return 0;
+  if(r.calcType === "percent_direct"){
+    return Number(directo || 0) * (Number(r.percent || 0) / 100);
+  }
+  return Number(r.qty || 0) * Number(r.unitValue || 0);
+}
+
+function summarizeIndirectUi(project){
+  const fresh = ensureProjectIndirectConfig(project);
+  const totals = totalsCompat(fresh);
+  const indirectTotal =
+    Number(totals.admin || 0) +
+    Number(totals.imprev || 0) +
+    Number(totals.util || 0) +
+    Number(totals.indirectOthers || 0);
+
+  const directo = Number(totals.directo || 0);
+  const totalPct = directo > 0 ? (indirectTotal / directo) * 100 : 0;
+
+  return {
+    totals,
+    indirectTotal,
+    totalPct,
+    adminPct: Number(totals.adminPct || 0),
+    imprevPct: Number(totals.imprevPct || 0),
+    utilPct: Number(totals.utilPct || 0),
+    othersPct: Number(totals.indirectOthersPct || 0)
+  };
+}
+
+function ensureIndirectTableMount(form){
+  if(!form) return null;
+
+  let host = UI.qs("#indirectTableMount");
+  if(host) return host;
+
+  host = document.createElement("div");
+  host.id = "indirectTableMount";
+  host.className = "card";
+  host.style.marginTop = "14px";
+
+  host.innerHTML = `
+    <div class="cardhead">
+      <h2>Cuadro de costos indirectos</h2>
+      <p class="muted small">Modo jerárquico con subtítulos, sub-subtítulos y líneas por numeración. Cada línea puede ser manual, desde insumo, desde subproducto o por %CD.</p>
+    </div>
+
+    <div class="grid two" style="margin-bottom:12px">
+      <label>
+        <div class="muted small">Modo de cálculo de indirectos</div>
+        <select id="indirectModeSel" class="input">
+          <option value="manual">Manual</option>
+          <option value="table">Por tabla de indirectos</option>
+        </select>
+      </label>
+      <div id="indirectModeHint" class="card item">
+        <div class="name">Observación</div>
+        <div class="muted small">Crea subtítulos tipo 1, 1.2, 1.2.1. En las líneas puedes escoger origen manual, insumo, subproducto o %CD del proyecto.</div>
+      </div>
+    </div>
+
+    <div id="indirectTableWrap" style="display:none">
+      <div class="row" style="gap:8px; flex-wrap:wrap; margin-bottom:10px">
+        <button type="button" class="btn primary" id="btnIndirectAddLine">Agregar línea</button>
+        <button type="button" class="btn" id="btnIndirectAddHeader">Agregar subtítulo</button>
+      </div>
+
+      <div style="overflow:auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="min-width:100px">ÍTEM</th>
+              <th style="min-width:120px">GRUPO</th>
+              <th style="min-width:320px">DESCRIPCIÓN</th>
+              <th style="min-width:100px">UNIDAD</th>
+              <th style="min-width:110px">CANTIDAD</th>
+              <th style="min-width:150px">VR UNITARIO</th>
+              <th style="min-width:120px">% DIRECTO</th>
+              <th style="min-width:150px">ORIGEN</th>
+              <th style="min-width:150px">VR PARCIAL</th>
+              <th style="min-width:150px">ACCIÓN</th>
+            </tr>
+          </thead>
+          <tbody id="indirectTableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="indirectTableEmpty" class="muted small" style="display:none; margin-top:10px">
+        Aún no hay líneas. Usa “Agregar subtítulo” y “Agregar línea”.
+      </div>
+
+      <div id="indirectSummary" class="card item" style="margin-top:12px"></div>
+    </div>
+  `;
+
+  form.appendChild(host);
+  return host;
+}
+
+function setIndirectManualInputsDisabled(form, disabled){
+  if(!form) return;
+  ["adminPct","imprevPct","utilPct"].forEach(name=>{
+    const inp = form[name];
+    if(inp) inp.disabled = !!disabled;
+  });
+}
+
+function readIndirectRowsFromDom(){
+  const tbody = UI.qs("#indirectTableBody");
+  if(!tbody) return [];
+
+  return Array.from(tbody.querySelectorAll("tr[data-indirect-id]")).map(tr=>{
+    const rowType = String(tr.getAttribute("data-row-type") || "detail").toLowerCase();
+    const getVal = (field)=> tr.querySelector(`[data-field="${field}"]`)?.value || "";
+    if(rowType === "header"){
+      return normalizeIndirectUiRow({
+        id: tr.getAttribute("data-indirect-id") || makeId("ind"),
+        rowType,
+        item: tr.getAttribute("data-item-code") || "",
+        group: tr.getAttribute("data-group-code") || "OTRO",
+        desc: tr.getAttribute("data-desc-text") || ""
+      });
+    }
+    return normalizeIndirectUiRow({
+      id: tr.getAttribute("data-indirect-id") || makeId("ind"),
+      rowType,
+      item: getVal("item"),
+      group: getVal("group"),
+      desc: getVal("desc"),
+      unit: getVal("unit"),
+      qty: getVal("qty"),
+      unitValue: getVal("unitValue"),
+      percent: getVal("percent"),
+      calcType: getVal("calcType"),
+      sourceType: getVal("sourceType"),
+      sourceRef: tr.getAttribute("data-source-ref") || "",
+      sourceLabel: tr.getAttribute("data-source-label") || ""
+    });
+  });
+}
+
+function refreshProjectComputedViews(projectId){
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return;
+  renderProjectDetail(fresh);
+  renderChaptersTable(fresh);
+  renderItemsTable(fresh);
+  renderResumenItems(fresh);
+}
+
+function persistIndirectRowsFromDom(projectId){
+  const rows = readIndirectRowsFromDom();
+  saveIndirectRows(projectId, rows);
+  refreshProjectComputedViews(projectId);
+  renderIndirectRows(projectId);
+}
+
+function renderIndirectRows(projectId){
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return;
+
+  ensureProjectIndirectConfig(project);
+
+  const tbody = UI.qs("#indirectTableBody");
+  const empty = UI.qs("#indirectTableEmpty");
+  const wrap = UI.qs("#indirectTableWrap");
+  const sel = UI.qs("#indirectModeSel");
+  const form = UI.qs("#formAjustes");
+
+  if(!tbody || !wrap || !sel || !form) return;
+
+  const mode = normalizeIndirectModeValue(project.indirectMode || "manual");
+  sel.value = mode;
+  wrap.style.display = mode === "table" ? "" : "none";
+  setIndirectManualInputsDisabled(form, mode === "table");
+
+  const rows = getIndirectRows(project);
+  const directo = Number(totalsCompat(project).directo || 0);
+
+  if(!rows.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = mode === "table" ? "" : "none";
+    renderIndirectSummary(projectId);
+    return;
+  }
+
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = rows.map(row=>{
+    const r = normalizeIndirectUiRow(row);
+    const partial = calcIndirectRowPartial(r, directo);
+    const level = indirectItemLevel(r.item);
+    const indent = Math.max(0, level * 18);
+    const sourceLabel = r.sourceLabel || (
+      r.sourceType === "manual" ? "Manual" :
+      r.sourceType === "insumo" ? "Insumo" :
+      r.sourceType === "subproducto" ? "Subproducto" :
+      "%CD"
+    );
+
+    if(r.rowType === "header"){
+      return `
+        <tr
+          data-indirect-id="${UI.esc(r.id)}"
+          data-row-type="header"
+          data-item-code="${UI.esc(r.item)}"
+          data-group-code="${UI.esc(r.group)}"
+          data-desc-text="${UI.esc(r.desc)}"
+          class="indirect-header-row"
+        >
+          <td><div class="chip"><b>${UI.esc(r.item || "—")}</b></div></td>
+          <td><div class="chip">${UI.esc(r.group || "OTRO")}</div></td>
+          <td colspan="5">
+            <div style="margin-left:${indent}px; font-weight:700; letter-spacing:.2px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:rgba(255,255,255,.04)">
+              ${UI.esc(r.desc || "SUBTÍTULO")}
+            </div>
+            <div class="muted small" style="margin-top:6px; margin-left:${indent}px">Subtítulo (no calcula)</div>
+          </td>
+          <td><div class="chip">Jerarquía</div></td>
+          <td data-role="partial" style="text-align:right"><b>${UI.fmtMoney(0, project.currency||"COP")}</b></td>
+          <td>
+            <div class="row" style="gap:8px; flex-wrap:wrap">
+              <button type="button" class="btn" data-indirect-edit="${UI.esc(r.id)}">Editar</button>
+              <button type="button" class="btn danger" data-indirect-del="${UI.esc(r.id)}">Quitar</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+
+    const isPercentCd = r.sourceType === "percent_cd";
+    const unitVal = isPercentCd ? String(directo || 0) : String(r.unitValue || 0);
+    const sourceControl = `
+      <select class="input" data-field="sourceType">
+        <option value="manual" ${r.sourceType==="manual"?"selected":""}>Manual</option>
+        <option value="insumo" ${r.sourceType==="insumo"?"selected":""}>Insumo</option>
+        <option value="subproducto" ${r.sourceType==="subproducto"?"selected":""}>Subproducto</option>
+        <option value="percent_cd" ${r.sourceType==="percent_cd"?"selected":""}>%CD</option>
+      </select>
+      <div class="muted small" style="margin-top:6px">${UI.esc(sourceLabel)}</div>
+    `;
+
+    const actionButtons = `
+      <div class="row" style="gap:8px; flex-wrap:wrap">
+        ${(r.sourceType === "insumo" || r.sourceType === "subproducto") ? `<button type="button" class="btn" data-indirect-pick="${UI.esc(r.id)}">Base</button>` : ""}
+        <button type="button" class="btn primary" data-indirect-save="${UI.esc(r.id)}">Guardar</button>
+        <button type="button" class="btn danger" data-indirect-del="${UI.esc(r.id)}">Quitar</button>
+      </div>
+    `;
+
+    return `
+      <tr
+        data-indirect-id="${UI.esc(r.id)}"
+        data-row-type="detail"
+        data-source-ref="${UI.esc(r.sourceRef || "")}"
+        data-source-label="${UI.esc(r.sourceLabel || "")}"
+      >
+        <td><input class="input" data-field="item" value="${UI.esc(r.item)}" placeholder="1.2.1.1"></td>
+        <td>
+          <select class="input" data-field="group">
+            <option value="ADMIN" ${r.group==="ADMIN"?"selected":""}>ADMIN</option>
+            <option value="IMPREV" ${r.group==="IMPREV"?"selected":""}>IMPREV</option>
+            <option value="UTIL" ${r.group==="UTIL"?"selected":""}>UTIL</option>
+            <option value="OTRO" ${r.group==="OTRO"?"selected":""}>OTRO</option>
+          </select>
+        </td>
+        <td>
+          <div style="margin-left:${indent}px">
+            <input class="input" data-field="desc" value="${UI.esc(r.desc)}" placeholder="Descripción" >
+          </div>
+        </td>
+        <td><input class="input" data-field="unit" value="${UI.esc(isPercentCd ? "%CD" : r.unit)}" placeholder="MES" ></td>
+        <td><input class="input" data-field="qty" type="number" step="any" value="${UI.esc(String(isPercentCd ? 1 : (r.qty||0)))}" ${isPercentCd ? "readonly" : ""}></td>
+        <td><input class="input" data-field="unitValue" type="number" step="any" value="${UI.esc(unitVal)}" ></td>
+        <td>
+          <div class="row" style="gap:6px; flex-wrap:wrap">
+            <select class="input" data-field="calcType" style="min-width:120px" ${isPercentCd ? "disabled" : ""}>
+              <option value="fixed" ${r.calcType==="fixed"?"selected":""}>Cantidad</option>
+              <option value="percent_direct" ${r.calcType==="percent_direct"?"selected":""}>% directo</option>
+            </select>
+            <input class="input" data-field="percent" type="number" step="any" value="${UI.esc(String(r.percent||0))}" style="min-width:90px">
+          </div>
+        </td>
+        <td>${sourceControl}</td>
+        <td data-role="partial" style="text-align:right"><b>${UI.fmtMoney(partial, project.currency||"COP")}</b></td>
+        <td>${actionButtons}</td>
+      </tr>
+    `;
+  }).join("");
+
+  renderIndirectSummary(projectId);
+}
+
+function renderSingleIndirectRowPreview(tr, projectId){
+  if(!tr) return;
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return;
+  const rowType = String(tr.getAttribute("data-row-type") || "detail").toLowerCase();
+  if(rowType !== "detail") return;
+
+  const directo = Number(totalsCompat(project).directo || 0);
+  const sourceType = tr.querySelector('[data-field="sourceType"]')?.value || "manual";
+  const row = normalizeIndirectUiRow({
+    id: tr.getAttribute("data-indirect-id") || makeId("ind"),
+    rowType,
+    item: tr.querySelector('[data-field="item"]')?.value || "",
+    group: tr.querySelector('[data-field="group"]')?.value || "OTRO",
+    desc: tr.querySelector('[data-field="desc"]')?.value || "",
+    unit: tr.querySelector('[data-field="unit"]')?.value || "",
+    qty: tr.querySelector('[data-field="qty"]')?.value || 0,
+    unitValue: sourceType === "percent_cd" ? directo : (tr.querySelector('[data-field="unitValue"]')?.value || 0),
+    percent: tr.querySelector('[data-field="percent"]')?.value || 0,
+    calcType: tr.querySelector('[data-field="calcType"]')?.value || "fixed",
+    sourceType,
+    sourceRef: tr.getAttribute("data-source-ref") || "",
+    sourceLabel: tr.getAttribute("data-source-label") || ""
+  });
+
+  if(sourceType === "percent_cd"){
+    const unitInp = tr.querySelector('[data-field="unit"]');
+    const qtyInp = tr.querySelector('[data-field="qty"]');
+    const uvInp = tr.querySelector('[data-field="unitValue"]');
+    const calcSel = tr.querySelector('[data-field="calcType"]');
+    if(unitInp) unitInp.value = "%CD";
+    if(qtyInp) qtyInp.value = "1";
+    if(uvInp) uvInp.value = String(directo || 0);
+    if(calcSel) calcSel.value = "percent_direct";
+  }
+
+  const partial = calcIndirectRowPartial(row, directo);
+  const partialTd = tr.querySelector('[data-role="partial"]');
+  if(partialTd){
+    partialTd.innerHTML = `<b>${UI.fmtMoney(partial, project.currency||"COP")}</b>`;
+  }
+}
+
+function promptIndirectGroup(defaultValue="ADMIN"){
+  const raw = prompt("Grupo (ADMIN / IMPREV / UTIL / OTRO):", defaultValue) ?? defaultValue;
+  return normalizeIndirectGroupValue(raw);
+}
+
+function updateIndirectRowById(projectId, rowId, updater){
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return null;
+  const rows = getIndirectRows(fresh);
+  const idx = rows.findIndex(x => String(x.id) === String(rowId));
+  if(idx < 0) return null;
+  const next = normalizeIndirectUiRow(typeof updater === "function" ? updater(rows[idx]) : rows[idx]);
+  rows[idx] = next;
+  saveIndirectRows(projectId, rows);
+  return next;
+}
+
+async function pickIndirectResourceFromBase(projectId, rowId, sourceType){
+  if(!window.APUBase || typeof APUBase.getMeta !== "function"){
+    alert("La base APU no está disponible.");
+    return;
+  }
+
+  let meta = null;
+  try{ meta = await APUBase.getMeta(); }catch(_){}
+  if(!meta){
+    alert("Primero instala la Base APU (XLSX) desde Proyectos.");
+    return;
+  }
+
+  const type = String(sourceType || "").trim().toLowerCase();
+  if(type !== "insumo" && type !== "subproducto"){
+    alert("Escoge primero origen: Insumo o Subproducto.");
+    return;
+  }
+
+  const term = String(prompt(`Buscar ${type === "insumo" ? "insumo" : "subproducto"} en base:`, "") || "").trim();
+  if(!term) return;
+
+  if(type === "insumo"){
+    let rows = [];
+    try{
+      rows = await APUBase.listInsumos(term);
+    }catch(err){
+      alert("Error consultando insumos: " + (err?.message || err));
+      return;
+    }
+    rows = (rows || []).slice(0, 12);
+    if(!rows.length){
+      alert("No se encontraron insumos para esa búsqueda.");
+      return;
+    }
+
+    const menu = rows.map((r, i)=>`${i+1}) ${r.tipo || "-"} | ${r.desc || ""} | ${r.unit || ""} | ${UI.fmtMoney(r.pu || 0, "COP")}`).join("\n");
+    const pick = Number(prompt(`Selecciona el insumo:\n\n${menu}`, "1") || "0");
+    if(!(pick >= 1 && pick <= rows.length)) return;
+
+    const sel = rows[pick - 1];
+    updateIndirectRowById(projectId, rowId, (cur)=>({
+      ...cur,
+      sourceType: "insumo",
+      sourceRef: String(sel.code || sel.id || sel.desc || "").trim(),
+      sourceLabel: `Insumo: ${String(sel.desc || "").trim()}`,
+      desc: String(sel.desc || cur.desc || "").trim(),
+      unit: String(sel.unit || cur.unit || "").trim(),
+      unitValue: Number(sel.pu || 0),
+      qty: Number(cur.qty || 1) || 1,
+      calcType: "fixed"
+    }));
+    renderIndirectRows(projectId);
+    return;
+  }
+
+  let list = [];
+  try{
+    list = await APUBase.listSubproductos();
+  }catch(err){
+    alert("Error consultando subproductos: " + (err?.message || err));
+    return;
+  }
+  const q = term.toLowerCase();
+  list = (list || []).filter(x =>
+    String(x.subName || "").toLowerCase().includes(q) ||
+    String(x.subKey || "").toLowerCase().includes(q)
+  ).slice(0, 12);
+
+  if(!list.length){
+    alert("No se encontraron subproductos para esa búsqueda.");
+    return;
+  }
+
+  const menu = list.map((r, i)=>`${i+1}) ${r.subName || ""} | ${r.subKey || ""}`).join("\n");
+  const pick = Number(prompt(`Selecciona el subproducto:\n\n${menu}`, "1") || "0");
+  if(!(pick >= 1 && pick <= list.length)) return;
+
+  const sel = list[pick - 1];
+  let subApu = null;
+  try{
+    subApu = await APUBase.getSubAPU(sel.subKey);
+  }catch(err){
+    alert("Error leyendo subproducto: " + (err?.message || err));
+    return;
+  }
+  const directCost = Number(subApu?.directo || 0);
+
+  updateIndirectRowById(projectId, rowId, (cur)=>({
+    ...cur,
+    sourceType: "subproducto",
+    sourceRef: String(sel.subKey || "").trim(),
+    sourceLabel: `Subproducto: ${String(sel.subName || sel.subKey || "").trim()}`,
+    desc: String(sel.subName || cur.desc || "").trim(),
+    unit: String(subApu?.unit || cur.unit || "GLB").trim(),
+    unitValue: directCost,
+    qty: Number(cur.qty || 1) || 1,
+    calcType: "fixed"
+  }));
+  renderIndirectRows(projectId);
+}
+
+function applyIndirectSourceTypeToRow(projectId, rowId, sourceType){
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return;
+
+  const directo = Number(totalsCompat(project).directo || 0);
+
+  updateIndirectRowById(projectId, rowId, (cur)=>{
+    const row = normalizeIndirectUiRow({ ...cur, sourceType });
+    if(row.sourceType === "manual"){
+      row.sourceRef = "";
+      row.sourceLabel = "";
+      if(row.unit === "%CD") row.unit = "";
+      if(row.calcType !== "percent_direct") row.calcType = "fixed";
+      return row;
+    }
+    if(row.sourceType === "percent_cd"){
+      row.sourceRef = "__CD__";
+      row.sourceLabel = "Costo Directo del proyecto";
+      row.unit = "%CD";
+      row.qty = 1;
+      row.unitValue = directo;
+      row.calcType = "percent_direct";
+      return row;
+    }
+    row.sourceRef = "";
+    row.sourceLabel = "";
+    row.calcType = "fixed";
+    return row;
+  });
+
+  renderIndirectRows(projectId);
+}
+
+function promptCreateIndirectHeader(projectId){
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return;
+
+  const item = normalizeIndirectItemCode(prompt("Numeración del subtítulo:\nEj: 1.2 o 1.2.1", "") || "");
+  if(!item) return;
+
+  const group = promptIndirectGroup("ADMIN");
+  const desc = String(prompt("Texto del subtítulo:", "") || "").trim();
+  if(!desc) return;
+
+  const rows = getIndirectRows(fresh);
+  if(rows.some(x => normalizeIndirectItemCode(x.item) === item && x.rowType === "header")){
+    alert(`Ya existe un subtítulo con la numeración ${item}.`);
+    return;
+  }
+
+  const row = makeIndirectRow("header", group, item);
+  row.desc = desc;
+  rows.push(row);
+  saveIndirectRows(projectId, rows);
+  renderIndirectRows(projectId);
+}
+
+function promptCreateIndirectDetail(projectId){
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return;
+
+  const item = normalizeIndirectItemCode(prompt("Numeración de la línea:\nEj: 1.2.1.1", "") || "");
+  if(!item) return;
+
+  const group = promptIndirectGroup("ADMIN");
+  const desc = String(prompt("Descripción de la línea:", "") || "").trim();
+  const sourceType = String(prompt("Origen de la línea:\nmanual / insumo / subproducto / percent_cd", "manual") || "manual").trim().toLowerCase();
+
+  const rows = getIndirectRows(fresh);
+  const row = makeIndirectRow("detail", group, item);
+  if(desc) row.desc = desc;
+  row.sourceType = ["manual","insumo","subproducto","percent_cd"].includes(sourceType) ? sourceType : "manual";
+
+  if(row.sourceType === "percent_cd"){
+    const directo = Number(totalsCompat(fresh).directo || 0);
+    row.unit = "%CD";
+    row.qty = 1;
+    row.unitValue = directo;
+    row.calcType = "percent_direct";
+    row.sourceRef = "__CD__";
+    row.sourceLabel = "Costo Directo del proyecto";
+  }
+
+  rows.push(row);
+  saveIndirectRows(projectId, rows);
+  renderIndirectRows(projectId);
+}
+
+function editIndirectHeaderRow(projectId, rowId){
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return;
+  const rows = getIndirectRows(fresh);
+  const idx = rows.findIndex(x => String(x.id) === String(rowId));
+  if(idx < 0) return;
+
+  const cur = normalizeIndirectUiRow(rows[idx]);
+  const item = normalizeIndirectItemCode(prompt("Ítem / numeración del subtítulo:", cur.item || "") ?? cur.item);
+  if(!item) return;
+  const group = promptIndirectGroup(cur.group || "OTRO");
+  const desc = String(prompt("Texto del subtítulo:", cur.desc || "") ?? cur.desc).trim();
+  if(!desc) return;
+
+  rows[idx] = normalizeIndirectUiRow({
+    ...cur,
+    rowType: "header",
+    item,
+    group,
+    desc
+  });
+
+  saveIndirectRows(projectId, rows);
+  renderIndirectRows(projectId);
+}
+
+function renderIndirectSummary(projectId){
+  const box = UI.qs("#indirectSummary");
+  if(!box) return;
+
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return;
+
+  ensureProjectIndirectConfig(project);
+
+  const s = summarizeIndirectUi(project);
+  const totals = s.totals;
+  const moneda = project.currency || "COP";
+
+  box.innerHTML = `
+    <div class="grid two">
+      <div>
+        <div class="row space"><div class="name">Total costos indirectos</div><div><b>${UI.fmtMoney(s.indirectTotal||0, moneda)}</b></div></div>
+        <div class="row space"><div class="name">Porcentaje total costos directos</div><div><b>${Number(s.totalPct||0).toFixed(2)}%</b></div></div>
+      </div>
+      <div>
+        <div class="row space"><div class="name">Administración</div><div><b>${Number(s.adminPct||0).toFixed(2)}%</b></div></div>
+        <div class="row space"><div class="name">Imprevistos</div><div><b>${Number(s.imprevPct||0).toFixed(2)}%</b></div></div>
+        <div class="row space"><div class="name">Utilidad</div><div><b>${Number(s.utilPct||0).toFixed(2)}%</b></div></div>
+        <div class="row space"><div class="name">Otros</div><div><b>${Number(s.othersPct||0).toFixed(2)}%</b></div></div>
+      </div>
+    </div>
+    <hr class="sep">
+    <div class="row space"><div class="name">Subtotal</div><div><b>${UI.fmtMoney(totals.subtotal||0, moneda)}</b></div></div>
+    <div class="row space"><div class="name">IVA sobre utilidad</div><div><b>${UI.fmtMoney(totals.ivaUtil||0, moneda)}</b></div></div>
+    <div class="row space"><div class="name">Valor total</div><div><b>${UI.fmtMoney(totals.total||0, moneda)}</b></div></div>
+  `;
+}
+
+function bindIndirectTableUI(projectId){
+  const form = UI.qs("#formAjustes");
+  if(!form) return;
+
+  const host = ensureIndirectTableMount(form);
+  if(!host) return;
+
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project) return;
+
+  ensureProjectIndirectConfig(project);
+
+  const sel = UI.qs("#indirectModeSel");
+  const tbody = UI.qs("#indirectTableBody");
+  const btnLine = UI.qs("#btnIndirectAddLine");
+  const btnHeader = UI.qs("#btnIndirectAddHeader");
+
+  if(!sel || !tbody || !btnLine || !btnHeader) return;
+
+  sel.onchange = ()=>{
+    StorageAPI.updateProject(projectId, { indirectMode: normalizeIndirectModeValue(sel.value) });
+    refreshProjectComputedViews(projectId);
+    renderIndirectRows(projectId);
+  };
+
+  btnLine.onclick = ()=>{
+    promptCreateIndirectDetail(projectId);
+  };
+
+  btnHeader.onclick = ()=>{
+    promptCreateIndirectHeader(projectId);
+  };
+
+  tbody.oninput = (e)=>{
+    const target = e.target;
+    if(!(target instanceof HTMLElement)) return;
+    if(!target.matches("[data-field]")) return;
+    const tr = target.closest("tr[data-indirect-id]");
+    renderSingleIndirectRowPreview(tr, projectId);
+  };
+
+  tbody.onchange = async (e)=>{
+    const target = e.target;
+    if(!(target instanceof HTMLElement)) return;
+    if(!target.matches("[data-field]")) return;
+
+    const tr = target.closest("tr[data-indirect-id]");
+    if(!tr) return;
+
+    const rowId = tr.getAttribute("data-indirect-id");
+    if(!rowId) return;
+
+    const field = target.getAttribute("data-field") || "";
+    if(field === "sourceType"){
+      applyIndirectSourceTypeToRow(projectId, rowId, target.value);
+      return;
+    }
+
+    persistIndirectRowsFromDom(projectId);
+  };
+
+  tbody.onclick = async (e)=>{
+    const editBtn = e.target?.closest?.("[data-indirect-edit]");
+    if(editBtn){
+      const rowId = editBtn.getAttribute("data-indirect-edit");
+      if(rowId) editIndirectHeaderRow(projectId, rowId);
+      return;
+    }
+
+    const pickBtn = e.target?.closest?.("[data-indirect-pick]");
+    if(pickBtn){
+      const rowId = pickBtn.getAttribute("data-indirect-pick");
+      if(!rowId) return;
+      const tr = pickBtn.closest("tr[data-indirect-id]");
+      const sourceType = tr?.querySelector?.('[data-field="sourceType"]')?.value || "manual";
+      await pickIndirectResourceFromBase(projectId, rowId, sourceType);
+      return;
+    }
+
+    const saveBtn = e.target?.closest?.("[data-indirect-save]");
+    if(saveBtn){
+      persistIndirectRowsFromDom(projectId);
+      alert("Línea guardada.");
+      return;
+    }
+
+    const btn = e.target?.closest?.("[data-indirect-del]");
+    if(!btn) return;
+
+    const id = btn.getAttribute("data-indirect-del");
+    if(!id) return;
+    if(!confirm("¿Eliminar esta línea de indirectos?")) return;
+
+    const fresh = StorageAPI.getProjectById(projectId);
+    const rows = getIndirectRows(fresh).filter(x => String(x.id) !== String(id));
+    saveIndirectRows(projectId, rows);
+    refreshProjectComputedViews(projectId);
+    renderIndirectRows(projectId);
+  };
+
+  renderIndirectRows(projectId);
+}
+
+function closeAddApuModal(){
+  const modal = UI.qs("#addApuModal");
+  if(modal) modal.style.display = "none";
+}
+
+function refreshAddApuModalChapterOptions(project){
+  const sel = UI.qs("#addApuChapterSel");
+  const inpCode = UI.qs("#addApuChapterCode");
+  const inpName = UI.qs("#addApuChapterName");
+  if(!sel) return;
+
+  const chapters = getAllChaptersForProject(project);
+
+  sel.innerHTML = chapters.length
+    ? chapters.map(c=>{
+        const label = `${c.chapterCode} — ${c.chapterName||""}`.trim();
+        return `<option value="${UI.esc(c.chapterCode)}" data-name="${UI.esc(c.chapterName||"")}">${UI.esc(label)}</option>`;
+      }).join("")
+    : `<option value="">(Sin capítulos definidos)</option>`;
+
+  const pick = ()=>{
+    const code = String(sel.value||"").trim();
+    let name = "";
+    if(code){
+      name = lookupChapterName(project, code);
+    }
+    if(inpCode) inpCode.value = code;
+    if(inpName) inpName.value = name;
+  };
+
+  sel.onchange = pick;
+  pick();
+}
+
+function confirmAddApuToProject({ keepOpen=false }){
+  const projectId = __addApuModalState.projectId;
+  const apu = __addApuModalState.apu;
+  if(!projectId || !apu) return;
+
+  const fresh = StorageAPI.getProjectById(projectId);
+  if(!fresh) return;
+
+  const qty = Number(String(UI.qs("#addApuQty")?.value || "0").replaceAll(",",""));
+  if(!(qty > 0)){
+    alert("La cantidad debe ser mayor a 0.");
+    return;
+  }
+
+  const chapterCode = String(UI.qs("#addApuChapterCode")?.value || "").trim();
+  let chapterName = String(UI.qs("#addApuChapterName")?.value || "").trim();
+
+  if(!chapterCode){
+    alert("Debes seleccionar un capítulo destino.");
+    return;
+  }
+  if(!chapterName){
+    chapterName = lookupChapterName(fresh, chapterCode) || "";
+  }
+
+  StorageAPI.addItem(projectId, {
+    chapterCode,
+    chapterName,
+    code: apu.code,
+    apuRefCode: apu.code,
+    desc: apu.desc,
+    unit: apu.unit,
+    pu: Number(apu.pu||0),
+    qty
+  });
+
+  const updated = StorageAPI.getProjectById(projectId);
+  renderProjectDetail(updated);
+  renderChaptersTable(updated);
+  renderItemsTable(updated);
+  renderResumenItems(updated);
+
+  if(keepOpen){
+    UI.qs("#addApuQty") && (UI.qs("#addApuQty").value = "1");
+    refreshAddApuModalChapterOptions(updated);
+    alert("Ítem agregado. Puedes escoger otro capítulo y volver a agregar.");
+    return;
+  }
+
+  closeAddApuModal();
+  alert("Ítem agregado al presupuesto.");
+}
+
+/* =========================
+   Render de ítems + edición
+   ========================= */
+function renderItemsTable(project){
+  const tbody = UI.qs("#itemsBody");
+  const empty = UI.qs("#itemsEmpty");
+  if(!tbody) return;
+
+  const items = project.items || [];
+  if(!items.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = items.map(it=>{
+    const parcial = Number(it.pu||0) * Number(it.qty||0);
+    const cap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
+    const apuCode = String(it.apuRefCode || it.code || "").trim();
+
+    return `
+      <tr>
+        <td><b>${UI.esc(cap||"-")}</b></td>
+        <td>${UI.esc(it.code||"")}</td>
+        <td>${UI.esc(it.desc||"")}</td>
+        <td>${UI.esc(it.unit||"")}</td>
+        <td style="text-align:right"><b>${UI.fmtMoney(it.pu, project.currency||"COP")}</b></td>
+        <td style="text-align:right">${UI.esc(String(it.qty||0))}</td>
+        <td style="text-align:right"><b>${UI.fmtMoney(parcial, project.currency||"COP")}</b></td>
+        <td class="row" style="gap:8px">
+          <a class="btn" href="apu.html?code=${encodeURIComponent(apuCode)}&projectId=${encodeURIComponent(project.id)}">Ver APU</a>
+          <button class="btn" type="button" data-edit="${it.id}">Editar</button>
+          <button class="btn danger" type="button" data-del="${it.id}">Eliminar</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  tbody.querySelectorAll("[data-del]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-del");
+      if(!confirm("¿Eliminar ítem?")) return;
+      StorageAPI.deleteItem(project.id, id);
+      const fresh = StorageAPI.getProjectById(project.id);
+      renderProjectDetail(fresh);
+      renderChaptersTable(fresh);
+      renderItemsTable(fresh);
+      renderResumenItems(fresh);
+    });
+  });
+
+  tbody.querySelectorAll("[data-edit]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.getAttribute("data-edit");
+      const fresh = StorageAPI.getProjectById(project.id);
+      if(!fresh) return;
+
+      const it = (fresh.items||[]).find(x=>x.id===id);
+      if(!it) return;
+
+      const curChapterCode = String(it.chapterCode || (String(it.code||"").split(".")[0]||"")).trim();
+      const curChapterName = String(it.chapterName||"").trim() || lookupChapterName(fresh, curChapterCode);
+
+      const chapterCode = String(prompt("Capítulo (número):", curChapterCode) ?? curChapterCode).trim();
+      let chapterName = String(prompt("Nombre del capítulo:", curChapterName) ?? curChapterName).trim();
+const code = prompt("Código (visible):", it.code||"") ?? it.code;
+const curApuRef = String(it.apuRefCode || it.code || "").trim();
+      let apuRefCode = String(prompt("Código APU (Ref - real):", curApuRef) ?? curApuRef).trim();
+      if(!apuRefCode) apuRefCode = String(code||"").trim();
+
+      const desc = prompt("Descripción:", it.desc||"") ?? it.desc;
+      const unit = prompt("Unidad:", it.unit||"") ?? it.unit;
+      const pu = Number(prompt("VR Unitario:", String(it.pu||0)) ?? it.pu);
+      const qty = Number(prompt("Cantidad:", String(it.qty||0)) ?? it.qty);
+
+      if(chapterCode && !chapterName){
+        chapterName = lookupChapterName(fresh, chapterCode) || "";
+      }
+
+      StorageAPI.updateItem(fresh.id, id, { chapterCode, chapterName, code, apuRefCode, desc, unit, pu, qty });
+      const updated = StorageAPI.getProjectById(fresh.id);
+      renderProjectDetail(updated);
+      renderChaptersTable(updated);
+      renderItemsTable(updated);
+      renderResumenItems(updated);
+    });
+  });
+}
+
+function renderResumenItems(project){
+  const tbody = UI.qs("#resumenItemsBody");
+  const empty = UI.qs("#resumenItemsEmpty");
+  if(!tbody) return;
+
+  const items = project.items || [];
+  if(!items.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  const { items: items2 } = Calc.groupByChapters(project);
+
+  tbody.innerHTML = items2.map(it=>{
+    const parcial = Number(it.pu||0) * Number(it.qty||0);
+    const cap = it.chapterCode || (String(it.code||"").split(".")[0] || "");
+    return `
+      <tr>
+        <td><b>${UI.esc(cap||"-")}</b></td>
+        <td><b>${UI.esc(it.code||"")}</b></td>
+        <td>${UI.esc(it.desc||"")}</td>
+        <td>${UI.esc(it.unit||"")}</td>
+        <td style="text-align:right"><b>${UI.fmtMoney(it.pu, project.currency||"COP")}</b></td>
+        <td style="text-align:right">${UI.esc(String(it.qty||0))}</td>
+        <td style="text-align:right"><b>${UI.fmtMoney(parcial, project.currency||"COP")}</b></td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderApuResults(projectId, results){
+  const tbody = UI.qs("#apuResultsBody");
+  const empty = UI.qs("#apuResultsEmpty");
+  if(!tbody) return;
+
+  if(!results || !results.length){
+    tbody.innerHTML = "";
+    if(empty) empty.style.display = "";
+    return;
+  }
+  if(empty) empty.style.display = "none";
+
+  tbody.innerHTML = results.map(r=>`
+    <tr>
+      <td><b>${UI.esc(r.code||"")}</b></td>
+      <td>${UI.esc(r.desc||"")}</td>
+      <td>${UI.esc(r.unit||"")}</td>
+      <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+      <td>
+        <button class="btn primary" type="button" data-addapu="${UI.esc(r.code||"")}">Agregar</button>
+      </td>
+    </tr>
+  `).join("");
+
+  tbody.querySelectorAll("[data-addapu]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const code = btn.getAttribute("data-addapu");
+      const sel = results.find(x=>String(x.code||"")===String(code||""));
+      if(!sel) return;
+
+      if(sel.isChapter){
+        alert("Ese código es un CAPÍTULO. Escoge un ítem (ej: 1.01).");
+        return;
+      }
+
+      const project = StorageAPI.getProjectById(projectId);
+      if(!project) return;
+
+      openAddApuModal(project, sel);
+    });
+  });
+}
+/* =========================================================
+   ✅ VISOR "Consultas de Base APU"
+   - ahora muestra TODO, también con buscador
+   ========================================================= */
+function bindBaseViewer(projectId){
+  const btnVerFormulario = UI.qs("#btnVerFormulario");
+  const btnVerCD = UI.qs("#btnVerCD");
+  const btnVerSub = UI.qs("#btnVerSub");
+  const btnVerInsumos = UI.qs("#btnVerInsumos");
+
+  const viewer = UI.qs("#baseViewer");
+  const title = UI.qs("#baseViewerTitle");
+  const sub = UI.qs("#baseViewerSub");
+  const btnClose = UI.qs("#btnCloseViewer");
+
+  const searchRow = UI.qs("#baseViewerSearchRow");
+  const inpSearch = UI.qs("#baseViewerSearch");
+  const btnSearch = UI.qs("#btnBaseViewerSearch");
+
+  const head = UI.qs("#baseViewerHead");
+  const body = UI.qs("#baseViewerBody");
+  const empty = UI.qs("#baseViewerEmpty");
+
+  if(!btnVerFormulario || !btnVerCD || !btnVerSub || !btnVerInsumos) return;
+  if(!viewer || !title || !sub || !btnClose || !head || !body || !empty) return;
+
+  let mode = "";
+
+  function showEmpty(flag){
+    empty.style.display = flag ? "" : "none";
+  }
+
+  function openViewer(newMode){
+    mode = newMode;
+    viewer.style.display = "";
+
+    if(searchRow) searchRow.style.display = "";
+    if(inpSearch) inpSearch.value = "";
+
+    if(mode === "formulario"){
+      title.textContent = "FORMULARIO DE PRECIOS";
+      sub.textContent = "Items (capítulos + ítems) de la base.";
+      head.innerHTML = `
+        <tr>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th style="text-align:right">PU</th>
+          <th>Capítulo</th>
+        </tr>
+      `;
+    }
+
+    if(mode === "cd"){
+      title.textContent = "Costos_Directos";
+      sub.textContent = "Líneas de descomposición completas de la base.";
+      head.innerHTML = `
+        <tr>
+          <th>Ítem</th>
+          <th>Grupo</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th style="text-align:right">Cant/Rend</th>
+          <th style="text-align:right">PU</th>
+          <th style="text-align:right">Parcial</th>
+        </tr>
+      `;
+    }
+
+    if(mode === "sub"){
+      title.textContent = "Subproductos";
+      sub.textContent = "Listado completo de subproductos. Puedes abrir el detalle.";
+      head.innerHTML = `
+        <tr>
+          <th>Nombre</th>
+          <th>Key</th>
+          <th>Acción</th>
+        </tr>
+      `;
+    }
+
+    if(mode === "insumos"){
+      title.textContent = "Insumos";
+      sub.textContent = "Listado completo de insumos (filtrable por tipo/desc/unidad).";
+      head.innerHTML = `
+        <tr>
+          <th>Tipo</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th style="text-align:right">PU</th>
+        </tr>
+      `;
+    }
+
+    body.innerHTML = "";
+    showEmpty(false);
+    loadRows("");
+  }
+
+  function closeViewer(){
+    viewer.style.display = "none";
+    mode = "";
+  }
+
+  async function requireBase(){
+    let meta = null;
+    try{ meta = await APUBase.getMeta(); }catch(_){}
+    if(!meta){
+      alert("Primero instala la Base APU (XLSX) desde Proyectos.");
+      return false;
+    }
+    return true;
+  }
+
+  async function loadRows(q){
+    const ok = await requireBase();
+    if(!ok) return;
+
+    body.innerHTML = "";
+    showEmpty(false);
+
+    try{
+      if(mode === "formulario"){
+        const rows = await APUBase.listFormularioItems(q || "");
+        if(!rows.length){ showEmpty(true); return; }
+
+        body.innerHTML = rows.map(r=>{
+          const cap = r.isChapter ? `CAP ${r.code}` : (r.chapterCode ? `CAP ${r.chapterCode}` : "");
+          const capName = r.isChapter ? (r.desc || "") : (r.chapterName || "");
+          return `
+            <tr>
+              <td><b>${UI.esc(r.code||"")}</b></td>
+              <td>${UI.esc(r.desc||"")}</td>
+              <td>${UI.esc(r.unit||"")}</td>
+              <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+              <td>${UI.esc((cap ? cap + " — " : "") + (capName||""))}</td>
+            </tr>
+          `;
+        }).join("");
+        return;
+      }
+
+      if(mode === "cd"){
+        const rows = await APUBase.listCostosDirectosAll(q || "");
+        if(!rows.length){ showEmpty(true); return; }
+
+        body.innerHTML = rows.map(r=>`
+          <tr>
+            <td><b>${UI.esc(r.itemCode||"")}</b></td>
+            <td>${UI.esc(r.group||"")}</td>
+            <td>${UI.esc(r.desc||"")}</td>
+            <td>${UI.esc(r.unit||"")}</td>
+            <td style="text-align:right">${UI.esc(String(r.qty||0))}</td>
+            <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+            <td style="text-align:right"><b>${UI.fmtMoney(r.parcial||0,"COP")}</b></td>
+          </tr>
+        `).join("");
+        return;
+      }
+
+      if(mode === "sub"){
+        const list = await APUBase.listSubproductos();
+        const qn = (q||"").trim().toLowerCase();
+        const filtered = !qn ? list : list.filter(x =>
+          String(x.subName||"").toLowerCase().includes(qn) ||
+          String(x.subKey||"").toLowerCase().includes(qn)
+        );
+
+        if(!filtered.length){ showEmpty(true); return; }
+
+        body.innerHTML = filtered.map(s=>`
+          <tr>
+            <td><b>${UI.esc(s.subName||"")}</b></td>
+            <td class="muted small">${UI.esc(s.subKey||"")}</td>
+            <td>
+              <a class="btn" href="apu.html?sub=${encodeURIComponent(s.subKey||"")}&projectId=${encodeURIComponent(projectId||"")}">Ver</a>
+            </td>
+          </tr>
+        `).join("");
+        return;
+      }
+
+      if(mode === "insumos"){
+        const rows = await APUBase.listInsumos(q || "");
+        if(!rows.length){ showEmpty(true); return; }
+
+        body.innerHTML = rows.map(r=>`
+          <tr>
+            <td>${UI.esc(r.tipo||"")}</td>
+            <td>${UI.esc(r.desc||"")}</td>
+            <td>${UI.esc(r.unit||"")}</td>
+            <td style="text-align:right"><b>${UI.fmtMoney(r.pu||0,"COP")}</b></td>
+          </tr>
+        `).join("");
+        return;
+      }
+    }catch(err){
+      alert("Error consultando base: " + (err?.message || err));
+    }
+  }
+
+  btnClose.addEventListener("click", closeViewer);
+
+  btnVerFormulario.addEventListener("click", ()=> openViewer("formulario"));
+  btnVerCD.addEventListener("click", ()=> openViewer("cd"));
+  btnVerSub.addEventListener("click", ()=> openViewer("sub"));
+  btnVerInsumos.addEventListener("click", ()=> openViewer("insumos"));
+
+  btnSearch?.addEventListener("click", ()=>{
+    loadRows(inpSearch?.value || "");
+  });
+
+  inpSearch?.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter"){
+      e.preventDefault();
+      btnSearch?.click();
+    }
+  });
+}
+
+/* ---------- FIRMA ---------- */
+function bindFirmaModal(){
+  const btn = UI.qs("#btnDatosFirma");
+  const modal = UI.qs("#firmaModal");
+  if(!btn || !modal) return;
+
+  const btnClose = UI.qs("#btnFirmaClose");
+  const inpNombre = UI.qs("#firmaNombre");
+  const inpProf = UI.qs("#firmaProfesion");
+  const inpMat = UI.qs("#firmaMatricula");
+  const canvas = UI.qs("#firmaCanvas");
+  const btnClear = UI.qs("#firmaClear");
+  const btnSave = UI.qs("#firmaSave");
+  const btnDel = UI.qs("#firmaDelete");
+  const btnJpg = UI.qs("#firmaDownloadJpg");
+  const prev = UI.qs("#firmaPreview");
+
+  if(!canvas) return;
+
+  function open(){
+    modal.style.display = "";
+    const e = StorageAPI.getElaborador();
+    if(inpNombre) inpNombre.value = e.nombre || "";
+    if(inpProf) inpProf.value = e.profesion || "";
+    if(inpMat) inpMat.value = e.matricula || "";
+    if(prev) prev.src = e.firmaDataUrl || "";
+    redrawFromSaved();
+  }
+  function close(){
+    modal.style.display = "none";
+  }
+
+  btn.addEventListener("click", open);
+  btnClose && btnClose.addEventListener("click", close);
+
+  const ctx = canvas.getContext("2d");
+  function fitCanvas(){
+    const w = canvas.clientWidth || 520;
+    const h = canvas.clientHeight || 220;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.lineWidth = 2.6;
+    ctx.strokeStyle = "#ffffff";
+    ctx.fillStyle = "#0b1220";
+    ctx.fillRect(0,0,w,h);
+  }
+
+  let drawing = false;
+  let last = null;
+
+  function getPos(ev){
+    const r = canvas.getBoundingClientRect();
+    const x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+    const y = (ev.touches ? ev.touches[0].clientY : ev.clientY) - r.top;
+    return { x, y };
+  }
+
+  function start(ev){
+    ev.preventDefault();
+    drawing = true;
+    last = getPos(ev);
+  }
+  function move(ev){
+    if(!drawing) return;
+    ev.preventDefault();
+    const p = getPos(ev);
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    last = p;
+  }
+  function end(){
+    drawing = false;
+    last = null;
+  }
+
+  function clear(){
+    fitCanvas();
+    if(prev) prev.src = StorageAPI.getElaborador().firmaDataUrl || "";
+  }
+
+  function toJpegDataUrl(){
+    const tmp = document.createElement("canvas");
+    tmp.width = canvas.width;
+    tmp.height = canvas.height;
+    const tctx = tmp.getContext("2d");
+    tctx.fillStyle = "#0b1220";
+    tctx.fillRect(0,0,tmp.width,tmp.height);
+    tctx.drawImage(canvas,0,0);
+    return tmp.toDataURL("image/jpeg", 0.92);
+  }
+
+  function redrawFromSaved(){
+    fitCanvas();
+    const e = StorageAPI.getElaborador();
+    if(e.firmaDataUrl){
+      const img = new Image();
+      img.onload = ()=>{
+        const w = canvas.clientWidth || 520;
+        const h = canvas.clientHeight || 220;
+        ctx.fillStyle = "#0b1220";
+        ctx.fillRect(0,0,w,h);
+        ctx.drawImage(img, 0, 0, w, h);
+      };
+      img.src = e.firmaDataUrl;
+    }
+  }
+
+  window.addEventListener("resize", ()=>{
+    if(modal.style.display !== "none") redrawFromSaved();
+  });
+
+  canvas.addEventListener("mousedown", start);
+  canvas.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", end);
+
+  canvas.addEventListener("touchstart", start, {passive:false});
+  canvas.addEventListener("touchmove", move, {passive:false});
+  canvas.addEventListener("touchend", end);
+
+  btnClear && btnClear.addEventListener("click", ()=> clear());
+
+  btnSave && btnSave.addEventListener("click", ()=>{
+    const nombre = inpNombre ? inpNombre.value.trim() : "";
+    const profesion = inpProf ? inpProf.value.trim() : "";
+    const matricula = inpMat ? inpMat.value.trim() : "";
+
+    const firmaDataUrl = toJpegDataUrl();
+    const saved = StorageAPI.setElaborador({ nombre, profesion, matricula, firmaDataUrl });
+    if(prev) prev.src = saved.firmaDataUrl || "";
+    alert("Firma guardada. Ya aparecerá en el PDF.");
+  });
+
+  btnDel && btnDel.addEventListener("click", ()=>{
+    if(!confirm("¿Quitar la firma guardada?")) return;
+    StorageAPI.clearFirma();
+    if(prev) prev.src = "";
+    clear();
+    alert("Firma eliminada.");
+  });
+
+  btnJpg && btnJpg.addEventListener("click", ()=>{
+    const jpg = toJpegDataUrl();
+    const a = document.createElement("a");
+    a.href = jpg;
+    a.download = `firma_${Date.now()}.jpg`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  fitCanvas();
+  clear();
+}
+
+/* ---------- DETALLE (bind) ---------- */
+async function bindProjectDetailPage(){
+  const projectId = UI.getParam("projectId");
+  const project = StorageAPI.getProjectById(projectId);
+  if(!project){
+    alert("Proyecto no encontrado.");
+    window.location.href="proyectos.html";
+    return;
+  }
+
+  ensureProjectChapters(project);
+
+  bindTabsIfPresent();
+  bindFirmaModal();
+  bindBaseViewer(projectId);
+
+  bindProjectChaptersUI(projectId);
+  renderProjectChaptersUI(project);
+
+  UI.qs("#btnAddApuClose")?.addEventListener("click", closeAddApuModal);
+  UI.qs("#btnAddApuConfirm")?.addEventListener("click", ()=> confirmAddApuToProject({ keepOpen:false }));
+  UI.qs("#btnAddApuConfirmAndKeep")?.addEventListener("click", ()=> confirmAddApuToProject({ keepOpen:true }));
+
+  renderProjectDetail(project);
+  renderChaptersTable(project);
+  renderItemsTable(project);
+  renderResumenItems(project);
+  renderDocs(projectId).catch(()=>{});
+
+  const inpLogo = UI.qs("#inpProjectLogo");
+  const btnRmLogo = UI.qs("#btnRemoveProjectLogo");
+  const logoPrev = UI.qs("#projectLogoPreview");
+
+  function refreshLogoPreview(){
+    const fresh = StorageAPI.getProjectById(projectId);
+    if(!fresh) return;
+    if(logoPrev) logoPrev.src = fresh.logoDataUrl || "";
+  }
+  refreshLogoPreview();
+
+  inpLogo?.addEventListener("change", async (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    try{
+      const dataUrl = await fileToDataUrl(f);
+      StorageAPI.updateProject(projectId, { logoDataUrl: dataUrl });
+      refreshLogoPreview();
+      alert("Logo guardado en el proyecto.");
+    }catch(err){
+      alert("No se pudo guardar el logo: " + (err?.message || err));
+    }finally{
+      e.target.value = "";
+    }
+  });
+
+  btnRmLogo?.addEventListener("click", ()=>{
+    if(!confirm("¿Quitar el logo guardado de este proyecto?")) return;
+    StorageAPI.updateProject(projectId, { logoDataUrl: "" });
+    refreshLogoPreview();
+    alert("Logo eliminado.");
+  });
+
+  UI.qs("#btnExportExcel")?.addEventListener("click", ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      exportProjectExcel(fresh);
+    }catch(err){
+      alert("Error exportando Excel: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfPresupuesto")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportPresupuestoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando PDF: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfPresupuestoAPUs")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportPresupuestoConAPUsPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando PDF + APUs: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnDlPdfPresupuesto")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportPresupuestoPDF(fresh);
+    }catch(err){
+      alert("Error descargando PDF Presupuesto: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnDlPdfPresupuestoAPUs")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportPresupuestoConAPUsPDF(fresh);
+    }catch(err){
+      alert("Error descargando PDF Presupuesto + APUs: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfEspecificacionesTec")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportEspecificacionesTecnicasPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando PDF Especificaciones Técnicas: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnDlPdfEspecificacionesTec")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      await PDF.exportEspecificacionesTecnicasPDF(fresh);
+    }catch(err){
+      alert("Error descargando PDF Especificaciones Técnicas: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfPresupuestoDesagregado")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportPresupuestoObraDesagregadoPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Presupuesto de Obra Desagregado).");
+        return;
+      }
+      await PDF.exportPresupuestoObraDesagregadoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando PDF Presupuesto de Obra Desagregado: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfResumenPresupuestoDesagregado")?.addEventListener("click", async ()=>{
+    try{
+       const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportResumenPresupuestoObraDesagregadoPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Resumen Presupuesto de Obra Desagregado).");
+        return;
+      }
+      await PDF.exportResumenPresupuestoObraDesagregadoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Resumen Presupuesto de Obra Desagregado: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfDistribucionPctCD")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportDistribucionPorcentualCostosDirectosPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Distribución porcentual de Costos Directos).");
+        return;
+      }
+      await PDF.exportDistribucionPorcentualCostosDirectosPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Distribución porcentual de Costos Directos: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfRendimientoEqMo")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportRendimientoEquipoManoObraActividadPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Rendimiento de Equipo y Mano de Obra).");
+        return;
+      }
+      await PDF.exportRendimientoEquipoManoObraActividadPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Rendimiento de Equipo y Mano de Obra por Actividad: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfResumenMaterialesActividad")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportResumenMaterialesPorActividadPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Resumen materiales por actividad).");
+        return;
+      }
+      await PDF.exportResumenMaterialesPorActividadPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Resumen materiales por actividad: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnPdfCantRecursosInsumos")?.addEventListener("click", async ()=>{
+    try{
+      const fresh = StorageAPI.getProjectById(projectId);
+      if(!fresh) return;
+      if(!window.PDF || typeof PDF.exportCantidadRecursosInsumosPresupuestoPDF !== "function"){
+        alert("Este PDF aún no está implementado. Falta actualizar pdf.js (Cantidad de Recurso e Insumos del Presupuesto).");
+        return;
+      }
+      await PDF.exportCantidadRecursosInsumosPresupuestoPDF(fresh, { share: isIOS() });
+    }catch(err){
+      alert("Error generando Cantidad de Recurso e Insumos del Presupuesto: " + (err?.message || err));
+    }
+  });
+  UI.qs("#formAjustes")?.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+
+    const adminPct = Number(fd.get("adminPct") || 0);
+    const imprevPct = Number(fd.get("imprevPct") || 0);
+    const utilPct = Number(fd.get("utilPct") || 0);
+    const ivaUtilPct = Number(fd.get("ivaUtilPct") || 0);
+
+    const instPais = String(fd.get("instPais") || "").trim();
+    const instDepto = String(fd.get("instDepto") || "").trim();
+    const instMunicipio = String(fd.get("instMunicipio") || "").trim();
+    const instEntidad = String(fd.get("instEntidad") || "").trim();
+    const instProyectoLabel = String(fd.get("instProyectoLabel") || "").trim();
+    const instFechaElab = String(fd.get("instFechaElab") || "").trim();
+
+    const indirectMode = normalizeIndirectModeValue(UI.qs("#indirectModeSel")?.value || project.indirectMode || "manual");
+    const indirectTable = readIndirectRowsFromDom();
+
+    StorageAPI.updateProject(projectId, {
+      adminPct, imprevPct, utilPct, ivaUtilPct,
+      instPais, instDepto, instMunicipio, instEntidad, instProyectoLabel, instFechaElab,
+      indirectMode,
+      indirectTable
+    });
+
+    const fresh = StorageAPI.getProjectById(projectId);
+    alert("Ajustes guardados.");
+    renderProjectDetail(fresh);
+    renderResumenItems(fresh);
+    renderIndirectRows(projectId);
+  });
+
+  const form = UI.qs("#formAjustes");
+  if(form){
+    const cfg = ensureProjectIndirectConfig(project);
+
+    if(form.adminPct) form.adminPct.value = String(project.adminPct ?? project.aiuPct ?? 0);
+    if(form.imprevPct) form.imprevPct.value = String(project.imprevPct ?? 0);
+    if(form.utilPct) form.utilPct.value = String(project.utilPct ?? 0);
+    if(form.ivaUtilPct) form.ivaUtilPct.value = String(project.ivaUtilPct ?? project.ivaPct ?? 0);
+
+    if(form.instPais) form.instPais.value = String(project.instPais || "");
+    if(form.instDepto) form.instDepto.value = String(project.instDepto || "");
+    if(form.instMunicipio) form.instMunicipio.value = String(project.instMunicipio || "");
+    if(form.instEntidad) form.instEntidad.value = String(project.instEntidad || "");
+    if(form.instProyectoLabel) form.instProyectoLabel.value = String(project.instProyectoLabel || "");
+    if(form.instFechaElab) form.instFechaElab.value = String(project.instFechaElab || "");
+
+    if(cfg.indirectMode === "table"){
+      setIndirectManualInputsDisabled(form, true);
+    }
+  }
+
+  bindIndirectTableUI(projectId);
+
+  UI.qs("#docsInput")?.addEventListener("change", async (e)=>{
+    const files = Array.from(e.target.files || []);
+    if(!files.length) return;
+
+    const MAX_FILE = 25 * 1024 * 1024;
+    const tooBig = files.find(f => (f.size||0) > MAX_FILE);
+    if(tooBig){ alert(`Archivo demasiado grande (>25MB): ${tooBig.name}`); e.target.value=""; return; }
+
+    for(const f of files){
+      await DB.putFile({
+        ownerType:"project",
+        ownerId: projectId,
+        kind:"doc_project",
+        name: f.name,
+        mime: f.type || "application/octet-stream",
+        size: f.size || 0,
+        blob: f
+      });
+    }
+    e.target.value = "";
+    await renderDocs(projectId);
+    alert("Documentos guardados.");
+  });
+
+  UI.qs("#btnExportProj")?.addEventListener("click", async ()=>{
+    try{
+      const p = StorageAPI.getProjectById(projectId);
+      if(!p) return;
+
+      const metaDocs = await DB.listFilesByOwner("project", projectId);
+      const docs = [];
+      for(const m of metaDocs){
+        const full = await DB.getFile(m.id);
+        if(!full || !full.blob) continue;
+        const dataUrl = await blobToDataUrl(full.blob);
+        docs.push({
+          name: full.name || m.name || "archivo",
+          mime: full.mime || m.mime || "application/octet-stream",
+          size: Number(full.size || m.size || 0),
+          createdAt: full.createdAt || m.createdAt || new Date().toISOString(),
+          dataUrl
+        });
+      }
+
+      const payload = { meta: StorageAPI.loadStore().meta, project: p, docs };
+      const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      UI.downloadBlobUrl(url, `proyecto_${(p.name||"").replace(/\s+/g,"_")}_${Date.now()}.json`);
+    }catch(err){
+      alert("Error exportando proyecto: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#btnDeleteProj")?.addEventListener("click", async ()=>{
+    if(!confirm("¿Eliminar proyecto y sus documentos?")) return;
+    await DB.deleteFilesByOwner("project", projectId).catch(()=>{});
+    StorageAPI.deleteProject(projectId);
+    alert("Proyecto eliminado.");
+    window.location.href = "proyectos.html";
+  });
+
+  UI.qs("#btnExportBackup")?.addEventListener("click", ()=>{
+    const { url, filename } = StorageAPI.exportBackup();
+    UI.downloadBlobUrl(url, filename);
+  });
+
+  UI.qs("#fileImport2")?.addEventListener("change", async (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    try{
+      await StorageAPI.importBackupFromFile(f);
+      alert("Backup importado. Se recargará.");
+      window.location.reload();
+    }catch(err){
+      alert("Error importando backup: " + err.message);
+    }finally{
+      e.target.value = "";
+    }
+  });
+
+  UI.qs("#btnResetAll")?.addEventListener("click", async ()=>{
+    if(!confirm("¿Borrar TODO? (proyectos + documentos)")) return;
+
+    const alsoBase = confirm("¿También deseas borrar la Base APU (IndexedDB)?\n\nOJO: tendrás que instalar el XLSX de nuevo.");
+
+    const ps = StorageAPI.listProjects();
+    for(const p of ps){
+      await DB.deleteFilesByOwner("project", p.id).catch(()=>{});
+    }
+    StorageAPI.resetAll();
+
+    if(alsoBase){
+      try{ await APUBase.deleteBaseDatabase(); }catch(_){}
+    }
+
+    alert("Listo. Se recargará.");
+    window.location.href = "proyectos.html";
+  });
+
+  UI.qs("#btnApuSearch")?.addEventListener("click", async ()=>{
+    try{
+      const meta = await APUBase.getMeta();
+      if(!meta){
+        alert("Primero instala la Base APU (XLSX) desde Proyectos.");
+        return;
+      }
+      const q = (UI.qs("#apuSearch")?.value || "").trim();
+      if(!q) return;
+
+      const results = await APUBase.search(q, 30);
+      renderApuResults(projectId, results);
+    }catch(err){
+      alert("Error buscando en base: " + (err?.message || err));
+    }
+  });
+
+  UI.qs("#apuSearch")?.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter"){
+      e.preventDefault();
+      UI.qs("#btnApuSearch")?.click();
+    }
+  });
+
+  UI.qs("#formAddManual")?.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const fd = new FormData(e.target);
+
+    const fresh = StorageAPI.getProjectById(projectId);
+    if(!fresh) return;
+
+    let chapterCode = String(fd.get("chapterCode") || "").trim();
+    let chapterName = String(fd.get("chapterName") || "").trim();
+
+    const code = String(fd.get("code") || "").trim();
+    const unit = String(fd.get("unit") || "").trim();
+    const desc = String(fd.get("desc") || "").trim();
+    const pu = Number(String(fd.get("pu") || "0").replaceAll(",",""));
+    const qty = Number(String(fd.get("qty") || "0").replaceAll(",",""));
+
+    if(!code || !unit || !desc) { alert("Completa código, unidad y descripción."); return; }
+    if(!(pu > 0) || !(qty > 0)) { alert("PU y Cantidad deben ser > 0."); return; }
+
+    if(!chapterCode){
+      const def = code.includes(".") ? code.split(".")[0] : "";
+      if(/^\d+$/.test(def)) chapterCode = def;
+    }
+
+    if(chapterCode && !chapterName){
+      chapterName = lookupChapterName(fresh, chapterCode) || "";
+    }
+
+    StorageAPI.addItem(projectId, { chapterCode, chapterName, code, apuRefCode: code, unit, desc, pu, qty });
+
+    e.target.reset();
+    const updated = StorageAPI.getProjectById(projectId);
+    renderProjectDetail(updated);
+    renderChaptersTable(updated);
+    renderItemsTable(updated);
+    renderResumenItems(updated);
+    alert("Ítem agregado.");
+  });
+}
+
+/* ---------- APU PAGE (Override por proyecto) ---------- */
+async function bindAPUPage(){
+  const codeParam = UI.getParam("code");
+  const sub = UI.getParam("sub");
+  const projectId = UI.getParam("projectId");
+
+  const btnGo = UI.qs("#btnGoProject");
+  if(btnGo){
+    btnGo.href = projectId
+      ? `proyecto-detalle.html?projectId=${encodeURIComponent(projectId)}&tab=items`
+      : "proyectos.html";
+  }
+
+  const titleEl = UI.qs("#apuTitle");
+  const subEl = UI.qs("#apuSub");
+  const infoEl = UI.qs("#apuInfo");
+  const bodyEl = UI.qs("#apuBody");
+  const emptyEl = UI.qs("#apuEmpty");
+
+  const editor = UI.qs("#apuEditor");
+  const btnAddLine = UI.qs("#btnAddLine");
+  const btnSaveOverride = UI.qs("#btnSaveOverride");
+  const btnResetOverride = UI.qs("#btnResetOverride");
+
+  let editMode = false;
+  let localLines = [];
+
+  function computeDirecto(lines){
+    return (lines||[]).reduce((s,l)=>{
+      const qty = Number(l.qty||0);
+      const pu = Number(l.pu||0);
+      const parcial = Number(l.parcial||0) || (qty*pu);
+      return s + parcial;
+    },0);
+  }
+
+  function renderLines(){
+    if(!bodyEl) return;
+    if(!localLines.length){
+      bodyEl.innerHTML = "";
+      emptyEl && (emptyEl.style.display = "");
+      return;
+    }
+    emptyEl && (emptyEl.style.display = "none");
+
+    bodyEl.innerHTML = localLines.map((l, idx)=>{
+      const qty = Number(l.qty||0);
+      const pu = Number(l.pu||0);
+      const parcial = Number(l.parcial||0) || (qty*pu);
+
+      const action = editMode
+        ? `<div class="row" style="gap:8px">
+             <button class="btn" type="button" data-editline="${idx}">Editar</button>
+             <button class="btn danger" type="button" data-rmline="${idx}">Quitar</button>
+           </div>`
+        : (l.subRef
+          ? `<a class="btn" href="apu.html?sub=${encodeURIComponent(l.subRef)}${projectId?`&projectId=${encodeURIComponent(projectId)}`:""}">Ver subproducto</a>`
+          : `<span class="muted small">—</span>`);
+
+      return `
+        <tr>
+          <td>${UI.esc(l.group||l.tipo||"-")}</td>
+          <td>${UI.esc(l.desc||"")}</td>
+          <td>${UI.esc(l.unit||"")}</td>
+          <td style="text-align:right">${UI.esc(String(qty||0))}</td>
+          <td style="text-align:right"><b>${UI.fmtMoney(pu,"COP")}</b></td>
+          <td style="text-align:right"><b>${UI.fmtMoney(parcial,"COP")}</b></td>
+          <td>${action}</td>
+        </tr>
+      `;
+    }).join("");
+
+    bodyEl.querySelectorAll("[data-rmline]").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        const i = Number(b.getAttribute("data-rmline"));
+        localLines.splice(i,1);
+        renderLines();
+      });
+    });
+
+    bodyEl.querySelectorAll("[data-editline]").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        const i = Number(b.getAttribute("data-editline"));
+        const cur = localLines[i];
+        if(!cur) return;
+
+        const group = prompt("Grupo:", cur.group||cur.tipo||"") ?? (cur.group||cur.tipo||"");
+        const desc = prompt("Descripción:", cur.desc||"") ?? (cur.desc||"");
+        const unit = prompt("Unidad:", cur.unit||"") ?? (cur.unit||"");
+        const qty = Number(prompt("Cant/Rend:", String(cur.qty||0)) ?? cur.qty);
+        const pu = Number(prompt("PU:", String(cur.pu||0)) ?? cur.pu);
+        const parcial = qty * pu;
+
+        localLines[i] = { ...cur, group, desc, unit, qty, pu, parcial };
+        renderLines();
+      });
+    });
+  }
+
+  let apu = null;
+
+  let apuCode = String(codeParam||"").trim();
+  let displayCode = apuCode;
+
+  if(projectId && apuCode){
+    const proj = StorageAPI.getProjectById(projectId);
+    const hit = (proj?.items||[]).find(x => String(x.code||"").trim() === apuCode);
+    if(hit && hit.apuRefCode){
+      const real = String(hit.apuRefCode||"").trim();
+      if(real && real !== apuCode){
+        displayCode = apuCode;
+        apuCode = real;
+      }
+    }
+  }
+
+  if(apuCode){
+    if(projectId){
+      const ov = StorageAPI.getApuOverride(projectId, apuCode);
+      if(ov && Array.isArray(ov.lines) && ov.lines.length){
+        const title = (displayCode && displayCode !== apuCode) ? `APU ${displayCode} (Ref: ${apuCode})` : `APU ${apuCode}`;
+        apu = {
+          title,
+          subtitle: "(Override del proyecto)",
+          header: `${apuCode} — Override del proyecto`,
+          metaLine: `Fuente: Override del proyecto · Actualizado: ${(ov.updatedAt||"").slice(0,19).replace("T"," ")}`,
+          unit: "",
+          directo: computeDirecto(ov.lines),
+          lines: ov.lines.map(x=>({ ...x, subRef:"" }))
+        };
+      }
+    }
+
+    if(!apu){
+      const custom = StorageAPI.getCustomAPU(apuCode);
+      if(custom){
+        const directo = (custom.lines||[]).reduce((s,l)=> s + Number(l.parcial||0), 0);
+        const title = (displayCode && displayCode !== apuCode) ? `APU ${displayCode} (Ref: ${apuCode})` : `APU ${custom.code}`;
+        apu = {
+          title,
+          subtitle: custom.desc || "",
+          header: `${custom.code} — ${custom.desc||""}`,
+          metaLine: `APU creado en la app · Capítulo ${custom.chapterCode||"-"} ${custom.chapterName||""}`,
+          unit: custom.unit || "",
+          directo,
+          lines: (custom.lines||[]).map(l=>({ group:l.tipo||l.group||"-", desc:l.desc, unit:l.unit, qty:l.qty, pu:l.pu, parcial:l.parcial, subRef:"" }))
+        };
+      }else{
+        apu = await APUBase.getAPU(apuCode);
+        if(apu && displayCode && displayCode !== apuCode){
+          apu.title = `APU ${displayCode} (Ref: ${apuCode})`;
+        }
+      }
+    }
+  }else if(sub){
+    const subKey = String(sub || "").trim();
+    let subApu = null;
+
+    if(projectId){
+      const ovSub = getSubApuOverride(projectId, subKey);
+      if(ovSub && Array.isArray(ovSub.lines)){
+        subApu = {
+          title: "SUBPRODUCTO",
+          subtitle: subKey,
+          header: subKey,
+          metaLine: `Fuente: Override del proyecto · Actualizado: ${(ovSub.updatedAt||"").slice(0,19).replace("T"," ")}`,
+          unit: ovSub?.meta?.unit || "",
+          directo: computeDirecto(ovSub.lines),
+          lines: ovSub.lines.map(x=>({ ...x }))
+        };
+      }
+    }
+
+    if(!subApu){
+      subApu = await APUBase.getSubAPU(subKey);
+    }
+
+    apu = subApu;
+  }
+
+  if(!apu){
+    titleEl && (titleEl.textContent = "APU");
+    subEl && (subEl.textContent = "No se encontró el APU solicitado. ¿Instalaste la base XLSX?");
+    infoEl && (infoEl.innerHTML = `<div class="muted">Instala la base y verifica el código.</div>`);
+    return;
+  }
+
+  titleEl && (titleEl.textContent = apu.title || "APU");
+  subEl && (subEl.textContent = apu.subtitle || "");
+
+  infoEl && (infoEl.innerHTML = `
+    <div class="cardhead">
+      <h2>${UI.esc(apu.header || "")}</h2>
+      <p class="muted small">${UI.esc(apu.metaLine||"")}</p>
+    </div>
+    <div class="grid two">
+      <div class="item"><div class="name">Unidad</div><div class="muted small">${UI.esc(apu.unit||"-")}</div></div>
+      <div class="item"><div class="name">Costo directo</div><div class="muted small"><b>${UI.fmtMoney(apu.directo||0,"COP")}</b></div></div>
+    </div>
+  `);
+
+  if(sub && !apuCode){
+    const subKey = String(sub || "").trim();
+
+    localLines = (apu.lines||[]).map(l=>({
+      group: l.group || l.tipo || "-",
+      desc: l.desc || "",
+      unit: l.unit || "",
+      qty: Number(l.qty||0),
+      pu: Number(l.pu||0),
+      parcial: Number(l.parcial||0) || (Number(l.qty||0)*Number(l.pu||0)),
+      subRef: l.subRef || ""
+    }));
+
+    if(projectId){
+      editMode = true;
+
+      editor && (editor.style.display = "");
+      btnSaveOverride && (btnSaveOverride.style.display = "");
+      btnResetOverride && (btnResetOverride.style.display = "");
+
+      btnAddLine?.addEventListener("click", ()=>{
+        const group = prompt("Grupo:", "MATERIALES") || "";
+        const desc = prompt("Descripción:", "") || "";
+        const unit = prompt("Unidad:", "UND") || "";
+        const qty = Number(prompt("Cant/Rend:", "1") || "0");
+        const pu = Number(prompt("PU:", "0") || "0");
+        const subRefLine = String(prompt("SubRef (opcional):", "") || "").trim();
+        if(!desc.trim()) return;
+        if(!(qty>0) || !(pu>=0)) return;
+        localLines.push({ group, desc, unit, qty, pu, parcial: qty*pu, subRef: subRefLine });
+        renderLines();
+      });
+
+      btnSaveOverride?.addEventListener("click", ()=>{
+        if(!confirm("¿Guardar override del subproducto para este proyecto?\nEsto NO modifica la base general.")) return;
+
+        const cleaned = localLines.map(l=>({
+          group: String(l.group||"-"),
+          desc: String(l.desc||""),
+          unit: String(l.unit||""),
+          qty: Number(l.qty||0),
+          pu: Number(l.pu||0),
+          parcial: Number(l.parcial||0) || (Number(l.qty||0)*Number(l.pu||0)),
+          subRef: String(l.subRef||"").trim()
+        }));
+
+        const saved = setSubApuOverride(projectId, subKey, cleaned, {
+          unit: String(apu.unit || "")
+        });
+
+        apu.directo = computeDirecto(cleaned);
+        apu.metaLine = `Fuente: Override del proyecto · Actualizado: ${(saved?.updatedAt||"").slice(0,19).replace("T"," ")}`;
+        subEl && (subEl.textContent = `${subKey} (Override del proyecto)`);
+        infoEl && (infoEl.innerHTML = `
+          <div class="cardhead">
+            <h2>${UI.esc(apu.header || subKey)}</h2>
+            <p class="muted small">${UI.esc(apu.metaLine||"")}</p>
+          </div>
+          <div class="grid two">
+            <div class="item"><div class="name">Unidad</div><div class="muted small">${UI.esc(apu.unit||"-")}</div></div>
+            <div class="item"><div class="name">Costo directo</div><div class="muted small"><b>${UI.fmtMoney(apu.directo||0,"COP")}</b></div></div>
+          </div>
+        `);
+
+        alert(`Override del subproducto guardado en el proyecto.\nCosto directo: ${UI.fmtMoney(apu.directo||0,"COP")}`);
+        renderLines();
+      });
+
+      btnResetOverride?.addEventListener("click", ()=>{
+        if(!confirm("¿Quitar override del subproducto para este proyecto?\nLa base general no se modifica.")) return;
+        clearSubApuOverride(projectId, subKey);
+        alert("Override eliminado. Se recargará el subproducto base.");
+        location.reload();
+      });
+    }else{
+      editMode = false;
+      editor && (editor.style.display = "none");
+      btnSaveOverride && (btnSaveOverride.style.display = "none");
+      btnResetOverride && (btnResetOverride.style.display = "none");
+    }
+
+    renderLines();
+    return;
+  }
+
+  if(projectId && apuCode){
+    btnSaveOverride && (btnSaveOverride.style.display = "");
+    btnResetOverride && (btnResetOverride.style.display = "");
+
+    localLines = (apu.lines||[]).map(l=>({
+      group: l.group || l.tipo || "-",
+      desc: l.desc || "",
+      unit: l.unit || "",
+      qty: Number(l.qty||0),
+      pu: Number(l.pu||0),
+      parcial: Number(l.parcial||0) || (Number(l.qty||0)*Number(l.pu||0))
+    }));
+
+    editor && (editor.style.display = "");
+    editMode = true;
+
+    btnAddLine?.addEventListener("click", ()=>{
+      const group = prompt("Grupo:", "MATERIALES") || "";
+      const desc = prompt("Descripción:", "") || "";
+      const unit = prompt("Unidad:", "UND") || "";
+      const qty = Number(prompt("Cant/Rend:", "1") || "0");
+      const pu = Number(prompt("PU:", "0") || "0");
+      if(!desc.trim()) return;
+      if(!(qty>0) || !(pu>=0)) return;
+      localLines.push({ group, desc, unit, qty, pu, parcial: qty*pu });
+      renderLines();
+    });
+
+    btnSaveOverride?.addEventListener("click", ()=>{
+      if(!confirm("¿Guardar override del APU para este proyecto?\nEsto actualizará el PU del ítem en el presupuesto.")) return;
+
+      const cleaned = localLines.map(l=>({
+        group: String(l.group||"-"),
+        desc: String(l.desc||""),
+        unit: String(l.unit||""),
+        qty: Number(l.qty||0),
+        pu: Number(l.pu||0),
+        parcial: Number(l.parcial||0) || (Number(l.qty||0)*Number(l.pu||0))
+      }));
+
+      StorageAPI.setApuOverride(projectId, apuCode, cleaned);
+
+      const newPU = computeDirecto(cleaned);
+      const count = updateItemsPUByApuCompat(projectId, apuCode, newPU);
+
+      alert(`Override guardado.\nNuevo PU (Costo directo): ${UI.fmtMoney(newPU,"COP")}\nÍtems actualizados: ${count}`);
+      apu.directo = newPU;
+      subEl && (subEl.textContent = "(Override del proyecto)");
+      renderLines();
+    });
+
+    btnResetOverride?.addEventListener("click", async ()=>{
+      if(!confirm("¿Quitar override del proyecto?\n(NO borra la Base APU).")) return;
+      StorageAPI.clearApuOverride(projectId, apuCode);
+      alert("Override eliminado. Vuelve a abrir el APU para ver el original (base/custom).");
+      location.reload();
+    });
+  }
+
+  renderLines();
+}
+
+/* ---------- BOOT ---------- */
+(function boot(){
+  initPWA();
+  const p = page();
+  if(p==="proyectos.html") bindProjectsPage();
+  if(p==="proyecto-detalle.html") bindProjectDetailPage();
+  if(p==="apu.html") bindAPUPage();
+})();

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "libro-1",
+    "titulo": "Coherencia Espiritual",
+    "autor": "Leonard Moon",
+    "descripcion": "Cuando lo que crees, dices y vives deja de estar dividido. Un audiolibro espiritual sobre alineación, verdad, transformación y coherencia delante de Dios.",
+    "portada": "assets/libros/libro-1/portada.png",
+    "capitulos": [
+
+      {
+        "id": "prologo",
+        "tipo": "Prólogo",
+        "titulo": "El punto de quiebre",
+        "subtitulo": "Cuando la verdad deja de ser un discurso y se vuelve una evidencia",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-1/prologo.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/prologo.mp3"
+      },
+
+      {
+        "id": "capitulo-1",
+        "tipo": "Capítulo",
+        "titulo": "El problema no es lo que sabes",
+        "subtitulo": "El exceso de verdad sin aplicación",
+        "versiculo": "Santiago 1:22",
+        "pdf": "assets/libros/libro-1/capitulo-1.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-1.mp3"
+      },
+
+      {
+        "id": "capitulo-2",
+        "tipo": "Capítulo",
+        "titulo": "La vida dividida",
+        "subtitulo": "Cuando dices una cosa y vives otra",
+        "versiculo": "Mateo 15:8",
+        "pdf": "assets/libros/libro-1/capitulo-2.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-2.mp3"
+      },
+
+      {
+        "id": "capitulo-3",
+        "tipo": "Capítulo",
+        "titulo": "Ve y llama a tu marido",
+        "subtitulo": "La confrontación que revela la verdad",
+        "versiculo": "Juan 4:16–18",
+        "pdf": "assets/libros/libro-1/capitulo-3.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-3.mp3"
+      },
+
+      {
+        "id": "capitulo-4",
+        "tipo": "Capítulo",
+        "titulo": "El costo de la coherencia",
+        "subtitulo": "Lo que debes soltar para alinearte",
+        "versiculo": "Lucas 9:23",
+        "pdf": "assets/libros/libro-1/capitulo-4.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-4.mp3"
+      },
+
+      {
+        "id": "capitulo-5",
+        "tipo": "Capítulo",
+        "titulo": "La mente alineada",
+        "subtitulo": "Pensar como vives o vivir como piensas",
+        "versiculo": "Romanos 12:2",
+        "pdf": "assets/libros/libro-1/capitulo-5.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-5.mp3"
+      },
+
+      {
+        "id": "capitulo-6",
+        "tipo": "Capítulo",
+        "titulo": "La autoridad de lo coherente",
+        "subtitulo": "El peso espiritual que no se fabrica",
+        "versiculo": "Mateo 7:29",
+        "pdf": "assets/libros/libro-1/capitulo-6.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-6.mp3"
+      },
+
+      {
+        "id": "capitulo-7",
+        "tipo": "Capítulo",
+        "titulo": "La casa como espejo",
+        "subtitulo": "Donde se revela la verdad sin filtros",
+        "versiculo": "1 Timoteo 3:5",
+        "pdf": "assets/libros/libro-1/capitulo-7.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-7.mp3"
+      },
+
+      {
+        "id": "capitulo-8",
+        "tipo": "Capítulo",
+        "titulo": "El fin de la doble vida",
+        "subtitulo": "Cuando todo se unifica",
+        "versiculo": "Salmos 86:11",
+        "pdf": "assets/libros/libro-1/capitulo-8.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-8.mp3"
+      },
+
+      {
+        "id": "capitulo-9",
+        "tipo": "Capítulo",
+        "titulo": "La coherencia que transforma",
+        "subtitulo": "El impacto que no se fuerza",
+        "versiculo": "Mateo 5:16",
+        "pdf": "assets/libros/libro-1/capitulo-9.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-9.mp3"
+      },
+
+      {
+        "id": "capitulo-10",
+        "tipo": "Capítulo",
+        "titulo": "Volver a ser uno",
+        "subtitulo": "El diseño restaurado",
+        "versiculo": "Efesios 4:1",
+        "pdf": "assets/libros/libro-1/capitulo-10.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-10.mp3"
+      },
+
+      {
+        "id": "conclusion",
+        "tipo": "Conclusión",
+        "titulo": "Cuando todo se alinea",
+        "subtitulo": "El fin del esfuerzo dividido",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-1/conclusion.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/conclusion.mp3"
+      }
+
+    ]
+  }
+]

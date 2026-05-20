@@ -1,0 +1,400 @@
+/* ===============================
+   ESTILOS GENERALES
+   =============================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===============================
+   HEADER & FOOTER
+   =============================== */
+
+.app-header {
+  background: #1e3a8a;
+  color: #fff;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.app-header h1 {
+  margin-bottom: 5px;
+}
+
+.app-footer {
+  background: #111;
+  color: #ccc;
+  padding: 15px 0;
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* ===============================
+   CARDS
+   =============================== */
+
+.card {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  margin-bottom: 15px;
+}
+
+/* ===============================
+   GRID
+   =============================== */
+
+.grid-1 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+.full { grid-column: span 2; }
+.align-end { display: flex; align-items: flex-end; }
+
+/* ===============================
+   FORMULARIOS
+   =============================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input, textarea, select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* NUEVO: bloques de modos de ingreso */
+#bloqueManual,
+#bloqueGenerarLineas,
+#bloqueImportarExcel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 10px;
+}
+
+#modoIngresoOfertas {
+  background: #fff;
+}
+
+/* NUEVO: mejorar campo file */
+input[type="file"] {
+  background: #fff;
+  padding: 8px;
+}
+
+/* NUEVO: mejorar campos dentro de tablas */
+.table-wrap input,
+.table-wrap select,
+.table-wrap textarea {
+  width: 100%;
+  min-width: 120px;
+  padding: 6px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 14px;
+}
+
+.table-wrap input:focus,
+.table-wrap select:focus,
+.table-wrap textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* NUEVO: ancho de columnas importantes */
+.col-proponente {
+  min-width: 280px;
+}
+
+.col-proponente input {
+  min-width: 260px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.col-oferta {
+  min-width: 190px;
+}
+
+.col-oferta input {
+  min-width: 170px;
+  text-align: right;
+  font-weight: bold;
+}
+
+/* ===============================
+   BOTONES
+   =============================== */
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn.primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn.secondary {
+  background: #6b7280;
+  color: #fff;
+}
+
+.btn.danger {
+  background: #dc2626;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* NUEVO: botón pequeño para acciones dentro de tabla */
+.table-wrap .btn-eliminar-oferta {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.table-wrap .btn-eliminar-oferta:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   TABLAS
+   =============================== */
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1300px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: normal;
+  word-break: break-word;
+}
+
+th {
+  background: #1e3a8a;
+  color: #fff;
+  position: sticky;
+  top: 0;
+}
+
+/* NUEVO: mejorar lectura de filas */
+tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+tbody tr:hover {
+  background: #eef2ff;
+}
+
+/* ===============================
+   RESÚMENES Y TEXTOS
+   =============================== */
+
+.summary-box {
+  background: #eef2ff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.text-box {
+  background: #f9fafb;
+  padding: 10px;
+  border-left: 4px solid #2563eb;
+  margin-top: 10px;
+  white-space: pre-line;
+}
+
+/* ===============================
+   BADGES
+   =============================== */
+
+.badge {
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge-green { background: #16a34a; color: #fff; }
+.badge-red { background: #dc2626; color: #fff; }
+.badge-yellow { background: #f59e0b; color: #fff; }
+.badge-gray { background: #6b7280; color: #fff; }
+
+/* ===============================
+   ACCIONES
+   =============================== */
+
+.actions {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions.wrap {
+  flex-wrap: wrap;
+}
+
+
+/* ===============================
+   MEJORA LEGIBILIDAD ENCABEZADOS
+   =============================== */
+
+th {
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-height: 1.25;
+  font-size: 13px;
+  padding: 10px 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Anchos específicos para mejor lectura */
+th:nth-child(1)  { min-width: 260px; }
+th:nth-child(2)  { min-width: 180px; }
+th:nth-child(3)  { min-width: 150px; }
+th:nth-child(4)  { min-width: 150px; }
+th:nth-child(5)  { min-width: 120px; }
+th:nth-child(6)  { min-width: 150px; }
+th:nth-child(7)  { min-width: 160px; }
+th:nth-child(8)  { min-width: 140px; }
+th:nth-child(9)  { min-width: 120px; }
+th:nth-child(10) { min-width: 140px; }
+th:nth-child(11) { min-width: 180px; }
+th:nth-child(12) { min-width: 100px; }
+
+/* Columna desviación */
+.col-desviacion {
+  min-width: 130px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+/* ===============================
+   TABLERO VISUAL DE OFERTAS
+   =============================== */
+
+/* 🔴 RECHAZADA FINAL */
+.fila-rechazada {
+  background: #fee2e2 !important;
+}
+
+.fila-rechazada:hover {
+  background: #fecaca !important;
+}
+
+/* 🟡 ALERTA / REQUIERE SUSTENTACIÓN */
+.fila-alerta {
+  background: #fef9c3 !important;
+}
+
+.fila-alerta:hover {
+  background: #fde68a !important;
+}
+
+/* 🟢 ACEPTADA */
+.fila-aceptada {
+  background: #dcfce7 !important;
+}
+
+.fila-aceptada:hover {
+  background: #bbf7d0 !important;
+}
+
+/* 🟡 RECHAZADA INICIAL */
+.fila-rechazada-inicial {
+  background: #fef9c3 !important;
+}
+
+.fila-rechazada-inicial:hover {
+  background: #fde68a !important;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media (max-width: 900px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    grid-column: span 1;
+  }
+
+  .align-end {
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  #bloqueManual,
+  #bloqueGenerarLineas,
+  #bloqueImportarExcel {
+    padding: 10px;
+  }
+}

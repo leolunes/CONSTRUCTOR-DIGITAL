@@ -1,0 +1,271 @@
+/* =====================================
+   TARJETAS PREMIUM
+===================================== */
+
+.categoria-card{
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:28px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,0.06);
+
+    transition:0.3s;
+
+    overflow:hidden;
+
+    position:relative;
+
+    border:1px solid #f0f0f0;
+
+}
+
+/* =====================================
+   HOVER
+===================================== */
+
+.categoria-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,0.10);
+
+}
+
+/* =====================================
+   HEADER TARJETA
+===================================== */
+
+.declaracion-header{
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+/* =====================================
+   ICONO CATEGORÍA
+===================================== */
+
+.card-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    background:#f4ecff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:18px;
+
+}
+
+.card-icon img{
+
+    width:36px;
+
+    height:36px;
+
+    object-fit:contain;
+
+}
+
+/* =====================================
+   TÍTULOS
+===================================== */
+
+.categoria-card h2{
+
+    color:#5b3cc4;
+
+    font-size:32px;
+
+    line-height:1.3;
+
+    margin-bottom:14px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+/* =====================================
+   TEXTO
+===================================== */
+
+.categoria-card p{
+
+    color:#5f6472;
+
+    font-size:18px;
+
+    line-height:1.9;
+
+}
+
+/* =====================================
+   TEXTOS IMPORTANTES
+===================================== */
+
+.categoria-card strong{
+
+    color:#222;
+
+    font-family:'Poppins-Bold';
+
+}
+
+/* =====================================
+   CONTENIDO DECLARACIÓN
+===================================== */
+
+.declaracion-contenido{
+
+    margin-top:15px;
+
+    animation:fadeIn 0.3s ease;
+
+}
+
+/* =====================================
+   OCULTAR
+===================================== */
+
+.oculto{
+
+    display:none;
+
+}
+
+/* =====================================
+   BOTÓN AUDIO
+===================================== */
+
+.audio-btn{
+
+    margin-top:18px;
+
+    border:none;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    padding:14px 20px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    width:100%;
+
+    font-size:15px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.audio-btn:hover{
+
+    background:#452d96;
+
+}
+
+/* =====================================
+   BOTÓN ELIMINAR
+===================================== */
+
+.btn-eliminar{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#d9534f;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.btn-eliminar:hover{
+
+    background:#b52b27;
+
+}
+
+/* =====================================
+   BOTÓN FAVORITO
+===================================== */
+
+.btn-favorito{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.btn-favorito:hover{
+
+    background:#452d96;
+
+}
+
+/* =====================================
+   ANIMACIÓN
+===================================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Evaluación de Ofertas",
+  "short_name": "Ofertas",
+  "description": "Aplicación para evaluación de ofertas artificialmente bajas y ponderación económica según Colombia Compra Eficiente.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f6f9",
+  "theme_color": "#1e3a8a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "../assets/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "../assets/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Gobierno del Hombre Interior</title>
+
+  <!-- IMPORTANTE PARA RUTAS -->
+  <base href="./">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="theme-color" content="#0f172a">
+</head>
+
+<body>
+
+  <!-- ============================= -->
+  <!-- PANTALLA DE INICIO -->
+  <!-- ============================= -->
+  <section id="inicio" class="screen active">
+    <div class="container center">
+      <h1>EL GOBIERNO DEL HOMBRE INTERIOR</h1>
+      <p class="sub">Del alma que sostiene al espíritu que entrega</p>
+
+      <p class="frase">
+        “El hombre no colapsa por lo que vive,
+        sino por dónde lo sostiene.”
+      </p>
+
+      <button onclick="irAEvaluacion()">Iniciar Evaluación</button>
+      <button class="secondary" onclick="irALectura()">Resumen del Libro</button>
+      <button class="secondary" onclick="resetearAppCompleta()">🔄 Reiniciar aplicación</button>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- EVALUACIÓN -->
+  <!-- ============================= -->
+  <section id="evaluacion" class="screen">
+    <div class="container">
+
+      <h2>Evaluación del Hombre Interior</h2>
+
+      <!-- DATOS DEL PACIENTE -->
+      <input type="text" id="nombreUsuario" placeholder="Nombre del paciente">
+      <input type="date" id="fechaEvaluacion">
+      <input type="text" id="mentorUsuario" placeholder="Nombre del mentor">
+
+      <div id="preguntasContainer"></div>
+
+      <button onclick="calcularResultado()">Calcular Resultado</button>
+      <button class="secondary" onclick="volverInicio()">Volver</button>
+      <button class="secondary" onclick="resetearAppCompleta()">🔄 Reiniciar aplicación</button>
+
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- RESULTADO -->
+  <!-- ============================= -->
+  <section id="resultado" class="screen">
+    <div class="container">
+
+      <h2>Resultado</h2>
+
+      <!-- RESUMEN / DICTAMEN -->
+      <div id="resultadoTexto"></div>
+
+      <!-- PÓRTICO VISUAL -->
+      <div id="porticoContainer">
+        <svg id="porticoSvg" width="320" height="220" viewBox="0 0 320 220" aria-label="Pórtico del hombre interior">
+
+          <!-- VIGA (ALMA) -->
+          <rect id="viga" x="60" y="70" width="200" height="12" fill="#94a3b8"></rect>
+
+          <!-- COLUMNA (ESPÍRITU) -->
+          <rect id="columna" x="150" y="82" width="20" height="90" fill="#64748b"></rect>
+
+          <!-- BASE (CRISTO) -->
+          <rect id="baseCristo" x="110" y="170" width="100" height="12" fill="#334155"></rect>
+
+          <!-- CARGA PRINCIPAL ACTUAL -->
+          <circle id="carga" cx="160" cy="50" r="10" fill="#f59e0b"></circle>
+
+          <!-- FLECHAS FUTURAS DEL SISTEMA -->
+          <line id="flechaPasado" x1="70" y1="20" x2="70" y2="58" stroke="#3b82f6" stroke-width="0" stroke-linecap="round"></line>
+          <line id="flechaPresente" x1="160" y1="20" x2="160" y2="58" stroke="#22c55e" stroke-width="0" stroke-linecap="round"></line>
+          <line id="flechaFuturo" x1="250" y1="20" x2="250" y2="58" stroke="#ef4444" stroke-width="0" stroke-linecap="round"></line>
+
+          <!-- FLECHA DE UBICACIÓN ACTUAL -->
+          <line id="flechaActual" x1="160" y1="8" x2="160" y2="60" stroke="#f59e0b" stroke-width="0" stroke-linecap="round"></line>
+
+          <!-- TEXTOS DE PORCENTAJE -->
+          <text id="labelPasado" x="70" y="16" text-anchor="middle" font-size="10" fill="#3b82f6"></text>
+          <text id="labelPresente" x="160" y="16" text-anchor="middle" font-size="10" fill="#22c55e"></text>
+          <text id="labelFuturo" x="250" y="16" text-anchor="middle" font-size="10" fill="#ef4444"></text>
+        </svg>
+      </div>
+
+      <!-- DETALLE / RUTA SUGERIDA / DEVOCIONAL -->
+      <div id="detalleResultado"></div>
+
+      <!-- ZONA PARA MÉTRICAS VISUALES FUTURAS -->
+      <div id="metricasResultado" class="hidden"></div>
+
+      <button onclick="descargarPDF()">📄 Descargar PDF</button>
+      <button onclick="volverInicio()">Finalizar</button>
+      <button class="secondary" onclick="resetearAppCompleta()">🔄 Reiniciar aplicación</button>
+
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- RESUMEN DEL LIBRO -->
+  <!-- ============================= -->
+  <section id="lectura" class="screen">
+    <div class="container">
+
+      <h2>Resumen del Libro</h2>
+
+      <!-- PORTADA DEL LIBRO -->
+      <div id="bloquePortadaLibro">
+        <img
+          id="portadaLibro"
+          src="assets/portada-libro.png"
+          alt="Portada del libro El Gobierno del Hombre Interior"
+        >
+      </div>
+
+      <!-- TEXTO EXPLICATIVO -->
+      <div id="introResumenLibro" class="bloque-info">
+        <strong>Resumen editorial</strong>
+        <p>
+          Esta sección presenta una síntesis del prólogo y de cada capítulo del libro
+          <em>El Gobierno del Hombre Interior</em>.
+          No corresponde al libro completo, sino a un resumen guiado de su contenido central.
+        </p>
+      </div>
+
+      <div id="listaCapitulos"></div>
+
+      <div id="contenidoCapitulo"></div>
+
+      <!-- SOLICITUD DEL LIBRO -->
+      <div id="solicitudLibro" class="bloque-info">
+        <strong>¿Quieres el libro completo?</strong>
+        <p>
+          Si deseas recibir el libro completo, déjanos tu correo electrónico y
+          te lo compartiremos de manera directa.
+        </p>
+
+        <input type="email" id="emailLibro" placeholder="Tu correo electrónico">
+
+        <button
+          class="secondary"
+          onclick="if(window.solicitarLibro){solicitarLibro();}else{alert('Pronto podrás dejar tu correo para solicitar el libro completo.');}"
+        >
+          ✉️ Solicitar libro completo
+        </button>
+      </div>
+
+      <button class="secondary" onclick="volverInicio()">Volver</button>
+      <button class="secondary" onclick="resetearAppCompleta()">🔄 Reiniciar aplicación</button>
+
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- SCRIPT -->
+  <!-- ============================= -->
+  <script src="app.js"></script>
+
+</body>
+</html>

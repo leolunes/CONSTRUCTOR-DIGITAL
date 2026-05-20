@@ -1,0 +1,532 @@
+/* =====================================
+   TARJETAS PREMIUM
+===================================== */
+
+.categoria-card{
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:28px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,0.06);
+
+    transition:0.3s;
+
+    overflow:hidden;
+
+    position:relative;
+
+    border:1px solid #f0f0f0;
+
+}
+
+/* =====================================
+   HOVER
+===================================== */
+
+.categoria-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,0.10);
+
+}
+
+/* =====================================
+   HEADER TARJETA
+===================================== */
+
+.declaracion-header{
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:16px;
+
+}
+
+/* =====================================
+   ICONO CATEGORÍA
+===================================== */
+
+.card-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    background:#f4ecff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:18px;
+
+    flex-shrink:0;
+
+}
+
+.card-icon.small-icon{
+
+    width:58px;
+
+    height:58px;
+
+    margin-bottom:0;
+
+}
+
+.card-icon img{
+
+    width:36px;
+
+    height:36px;
+
+    object-fit:contain;
+
+}
+
+.card-icon.small-icon img{
+
+    width:30px;
+
+    height:30px;
+
+}
+
+/* =====================================
+   ICONO ABRIR / CERRAR
+===================================== */
+
+.toggle-icon{
+
+    width:34px;
+
+    height:34px;
+
+    min-width:34px;
+
+    border-radius:50%;
+
+    background:#f4ecff;
+
+    color:#5b3cc4;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+/* =====================================
+   TÍTULOS
+===================================== */
+
+.categoria-card h2{
+
+    color:#5b3cc4;
+
+    font-size:32px;
+
+    line-height:1.3;
+
+    margin-bottom:14px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.declaracion-header h2{
+
+    flex:1;
+
+    margin-bottom:0;
+
+}
+
+/* =====================================
+   TEXTO
+===================================== */
+
+.categoria-card p{
+
+    color:#5f6472;
+
+    font-size:18px;
+
+    line-height:1.9;
+
+}
+
+/* =====================================
+   TEXTOS IMPORTANTES
+===================================== */
+
+.categoria-card strong{
+
+    color:#222;
+
+    font-family:'Poppins-Bold';
+
+}
+
+/* =====================================
+   CONTENIDO DECLARACIÓN
+===================================== */
+
+.declaracion-contenido{
+
+    margin-top:20px;
+
+    animation:fadeIn 0.3s ease;
+
+}
+
+/* =====================================
+   OCULTAR
+===================================== */
+
+.oculto{
+
+    display:none;
+
+}
+
+/* =====================================
+   BOTÓN AUDIO
+===================================== */
+
+.audio-btn{
+
+    margin-top:18px;
+
+    border:none;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    padding:14px 20px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    width:100%;
+
+    font-size:15px;
+
+    font-family:'Poppins-Bold';
+
+    box-shadow:0 8px 18px rgba(91,60,196,0.18);
+
+}
+
+.audio-btn:hover{
+
+    background:#452d96;
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+   BOTÓN DESCARGAR PDF
+===================================== */
+
+.btn-descargar-pdf{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    padding:15px 20px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    font-size:15px;
+
+    font-family:'Poppins-Bold';
+
+    box-shadow:
+    0 10px 22px
+    rgba(106,61,232,0.22);
+
+}
+
+.btn-descargar-pdf:hover{
+
+    transform:translateY(-2px);
+
+    opacity:0.96;
+
+}
+
+.btn-descargar-pdf:active{
+
+    transform:scale(0.98);
+
+}
+
+/* =====================================
+   BOTÓN ELIMINAR
+===================================== */
+
+.btn-eliminar{
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#d9534f;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    width:100%;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.btn-eliminar:hover{
+
+    background:#b52b27;
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+   BOTÓN FAVORITO
+===================================== */
+
+.btn-favorito{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    background:#ffffff;
+
+    color:#5b3cc4;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    border:1px solid rgba(91,60,196,0.18);
+
+    box-shadow:0 6px 16px rgba(91,60,196,0.08);
+
+}
+
+.btn-favorito:hover{
+
+    background:#f4ecff;
+
+    transform:translateY(-2px);
+
+}
+
+/* =====================================
+   ACCIONES DE TARJETA
+===================================== */
+
+.declaracion-contenido button{
+
+    display:block;
+
+}
+
+/* =====================================
+   MODO OSCURO TARJETAS
+===================================== */
+
+body.modo-oscuro .categoria-card{
+
+    background:#24163d;
+
+    border-color:rgba(255,255,255,0.08);
+
+    box-shadow:0 8px 28px rgba(0,0,0,0.22);
+
+}
+
+body.modo-oscuro .categoria-card h2{
+
+    color:#ffffff;
+
+}
+
+body.modo-oscuro .categoria-card p{
+
+    color:#d7c9ef;
+
+}
+
+body.modo-oscuro .categoria-card strong{
+
+    color:#ffffff;
+
+}
+
+body.modo-oscuro .card-icon,
+body.modo-oscuro .toggle-icon{
+
+    background:#1a102d;
+
+    color:#ffffff;
+
+}
+
+body.modo-oscuro .btn-favorito{
+
+    background:#1a102d;
+
+    color:#ffffff;
+
+    border-color:rgba(255,255,255,0.10);
+
+}
+
+/* =====================================
+   RESPONSIVE TARJETAS
+===================================== */
+
+@media(max-width:768px){
+
+    .categoria-card{
+
+        padding:22px;
+
+        border-radius:22px;
+
+    }
+
+    .declaracion-header{
+
+        gap:12px;
+
+        align-items:flex-start;
+
+    }
+
+    .card-icon.small-icon{
+
+        width:50px;
+
+        height:50px;
+
+    }
+
+    .card-icon.small-icon img{
+
+        width:26px;
+
+        height:26px;
+
+    }
+
+    .categoria-card h2{
+
+        font-size:25px;
+
+    }
+
+    .categoria-card p{
+
+        font-size:16px;
+
+        line-height:1.75;
+
+    }
+
+    .audio-btn,
+    .btn-descargar-pdf,
+    .btn-favorito,
+    .btn-eliminar{
+
+        font-size:14px;
+
+        padding:14px 16px;
+
+    }
+
+}
+
+/* =====================================
+   ANIMACIÓN
+===================================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

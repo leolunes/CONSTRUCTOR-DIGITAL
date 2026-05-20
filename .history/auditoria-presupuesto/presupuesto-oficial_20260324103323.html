@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Presupuesto Oficial | Auditoría Presupuesto</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html">←</a>
+    <div>
+      <div class="title" id="officialTitle">Presupuesto Oficial</div>
+      <div class="subtitle" id="officialSub">Cargando proyecto…</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnGoProject" href="proyecto-detalle.html">Ir al proyecto</a>
+    <a class="navbtn" id="btnGoBase" href="presupuesto-base.html">Ir a presupuesto base</a>
+
+    <button class="navbtn" id="btnImportOfficial" type="button">Importar Excel Oficial</button>
+    <input id="fileOfficialImport" type="file" accept=".xlsx,.xls" hidden>
+
+    <button class="navbtn" id="btnExportOfficialExcel" type="button">Exportar Excel Oficial</button>
+    <button class="navbtn" id="btnPdfOfficial" type="button">PDF Oficial</button>
+    <button class="navbtn danger" id="btnClearOfficial" type="button">Limpiar oficial</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <div class="row" style="gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center">
+      <div>
+        <div class="name">Proyecto</div>
+        <div class="muted small" id="officialProjectInfo">—</div>
+      </div>
+      <div class="row" style="gap:8px; flex-wrap:wrap">
+        <button class="btn" id="btnRefreshOfficial" type="button">Actualizar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid kpis" id="officialKpis" style="margin-top:14px"></section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Importación del Presupuesto Oficial</h2>
+      <p class="muted small">
+        Cargue el presupuesto oficial desde Excel. La importación se guarda separada del Presupuesto Base.
+      </p>
+    </div>
+
+    <div class="row" style="gap:10px; flex-wrap:wrap">
+      <button class="btn primary" id="btnImportOfficial2" type="button">Seleccionar archivo Excel</button>
+      <label class="muted small" style="display:flex; align-items:center">
+        Formatos aceptados: .xlsx / .xls
+      </label>
+    </div>
+
+    <div class="muted small" id="officialImportInfo" style="margin-top:10px">
+      Aún no se ha realizado una importación en esta sesión.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Agregar ítem manual al Presupuesto Oficial</h2>
+      <p class="muted small">Puede crear o complementar manualmente el Presupuesto Oficial sin afectar el Base.</p>
+    </div>
+
+    <form id="formAddOfficialManual" class="form">
+      <div class="grid two">
+        <div>
+          <label>Capítulo (número)</label>
+          <input name="chapterCode" placeholder="Ej: 1" />
+        </div>
+        <div>
+          <label>Nombre del capítulo</label>
+          <input name="chapterName" placeholder="Ej: PRELIMINARES" />
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Código</label>
+          <input name="code" required placeholder="Ej: 1.01" />
+        </div>
+        <div>
+          <label>Unidad</label>
+          <input name="unit" required placeholder="Ej: m3" />
+        </div>
+      </div>
+
+      <label>Descripción</label>
+      <input name="desc" required placeholder="Describe el ítem oficial…" />
+
+      <div class="grid two">
+        <div>
+          <label>Precio unitario (PU)</label>
+          <input name="pu" required inputmode="decimal" placeholder="Ej: 150000" />
+        </div>
+        <div>
+          <label>Cantidad</label>
+          <input name="qty" required inputmode="decimal" placeholder="Ej: 10" />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn primary" type="submit">Agregar ítem oficial</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Capítulos del Presupuesto Oficial</h2>
+      <p class="muted small">Subtotales e ítems agrupados por capítulo del presupuesto oficial.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:980px">
+        <thead>
+          <tr>
+            <th>Capítulo</th>
+            <th>Nombre</th>
+            <th style="text-align:right">Ítems</th>
+            <th style="text-align:right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="officialChaptersBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="officialChaptersEmpty" style="display:none">No hay capítulos en el Presupuesto Oficial.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Ítems del Presupuesto Oficial</h2>
+      <p class="muted small">Detalle completo del presupuesto oficial.</p>
+      <div class="row" style="margin-top:8px; gap:8px; flex-wrap:wrap">
+        <input id="officialItemsSearch" class="search" placeholder="Buscar por código o descripción…" />
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1250px">
+        <thead>
+          <tr>
+            <th>Cap</th>
+            <th>Código</th>
+            <th>APU Ref</th>
+            <th>Descripción</th>
+            <th>Unidad</th>
+            <th style="text-align:right">PU</th>
+            <th style="text-align:right">Cantidad</th>
+            <th style="text-align:right">Parcial</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="officialItemsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="officialItemsEmpty" style="display:none">No hay ítems en el Presupuesto Oficial.</div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/official-import.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/excel-export.js"></script>
+
+<script>
+(function(){
+  function qs(sel){ return document.querySelector(sel); }
+  function safe(v){ return String(v == null ? "" : v).trim(); }
+  function num(v){ return Number(v || 0); }
+
+  function esc(s){
+    if(window.UI && typeof UI.esc === "function") return UI.esc(s);
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function chip(label, kind){
+    if(window.UI && typeof UI.chip === "function") return UI.chip(label, kind || "");
+    var cls = kind ? ("chip " + kind) : "chip";
+    return '<span class="' + cls + '">' + esc(label) + '</span>';
+  }
+
+  function fmtMoney(v, currency){
+    if(window.UI && typeof UI.fmtMoney === "function"){
+      return UI.fmtMoney(v, currency || "COP");
+    }
+    var n = Math.round(Number(v || 0));
+    return "$ " + n.toLocaleString("es-CO");
+  }
+
+  function getParam(name){
+    if(window.UI && typeof UI.getParam === "function") return UI.getParam(name);
+    var u = new URL(location.href);
+    return u.searchParams.get(name);
+  }
+
+  function getProject(projectId){
+    if(!window.StorageAPI || typeof StorageAPI.getProjectById !== "function") return null;
+    return StorageAPI.getProjectById(projectId);
+  }
+
+  function getOfficialItems(project){
+    return Array.isArray(project && project.oficialItems) ? project.oficialItems : [];
+  }
+
+  function getOfficialChapters(project){
+    return Array.isArray(project && project.oficialChapters) ? project.oficialChapters : [];
+  }
+
+  function buildOfficialView(project){
+    return {
+      id: project && project.id,
+      name: project && project.name,
+      entity: project && project.entity,
+      location: project && project.location,
+      currency: project && project.currency,
+      adminPct: project && project.adminPct,
+      aiuPct: project && project.aiuPct,
+      imprevPct: project && project.imprevPct,
+      utilPct: project && project.utilPct,
+      ivaUtilPct: project && project.ivaUtilPct,
+      ivaPct: project && project.ivaPct,
+      logoDataUrl: project && project.logoDataUrl,
+      instPais: project && project.instPais,
+      instDepto: project && project.instDepto,
+      instMunicipio: project && project.instMunicipio,
+      instEntidad: project && project.instEntidad,
+      instProyectoLabel: project && project.instProyectoLabel,
+      instFechaElab: project && project.instFechaElab,
+      items: getOfficialItems(project),
+      chapters: getOfficialChapters(project),
+      apuOverrides: project && project.oficialApuOverrides ? project.oficialApuOverrides : {},
+      __budgetMode: "oficial"
+    };
+  }
+
+  function totalsCompat(project){
+    var t = (window.Calc && typeof Calc.calcTotals === "function") ? (Calc.calcTotals(project) || {}) : {};
+    return {
+      directo: num(t.directo),
+      admin: num(t.admin),
+      imprev: num(t.imprev),
+      util: num(t.util),
+      subtotal: num(t.subtotal),
+      ivaUtil: num(t.ivaUtil != null ? t.ivaUtil : t.iva),
+      total: num(t.total)
+    };
+  }
+
+  function groupByChaptersCompat(project){
+    if(window.Calc && typeof Calc.groupByChapters === "function"){
+      return Calc.groupByChapters(project) || { groups:[], items:[] };
+    }
+    return { groups:[], items:getOfficialItems(project) };
+  }
+
+  function renderHeader(project){
+    var title = qs("#officialTitle");
+    var sub = qs("#officialSub");
+    var info = qs("#officialProjectInfo");
+    var btnGoProject = qs("#btnGoProject");
+    var btnGoBase = qs("#btnGoBase");
+
+    if(title) title.textContent = "Presupuesto Oficial";
+    if(sub) sub.textContent = (project.name || "Proyecto") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+    if(info) info.textContent = (project.name || "—") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+
+    if(btnGoProject) btnGoProject.href = "proyecto-detalle.html?projectId=" + encodeURIComponent(project.id);
+    if(btnGoBase) btnGoBase.href = "presupuesto-base.html?projectId=" + encodeURIComponent(project.id);
+  }
+
+  function renderKpis(project){
+    var el = qs("#officialKpis");
+    if(!el) return;
+
+    var view = buildOfficialView(project);
+    var totals = totalsCompat(view);
+    var grouped = groupByChaptersCompat(view);
+    var groups = grouped.groups || [];
+    var items = grouped.items || [];
+
+    el.innerHTML = ''
+      + '<div class="card item"><div class="topline"><div class="name">Items Oficial</div><div class="chips">' + chip(String(items.length), "warn") + '</div></div><div class="muted small">Ítems del presupuesto oficial.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Capítulos Oficial</div><div class="chips">' + chip(String(groups.length)) + '</div></div><div class="muted small">Capítulos calculados.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Costos Directos</div><div class="chips">' + chip(fmtMoney(totals.directo, project.currency || "COP")) + '</div></div><div class="muted small">Suma directa del presupuesto oficial.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Valor Total</div><div class="chips">' + chip(fmtMoney(totals.total, project.currency || "COP"), "warn") + '</div></div><div class="muted small">Total del presupuesto oficial.</div></div>';
+  }
+
+  function renderChapters(project){
+    var tbody = qs("#officialChaptersBody");
+    var empty = qs("#officialChaptersEmpty");
+    if(!tbody) return;
+
+    var view = buildOfficialView(project);
+    var grouped = groupByChaptersCompat(view);
+    var groups = grouped.groups || [];
+
+    if(!groups.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = groups.map(function(g){
+      return ''
+        + '<tr>'
+        + '  <td><b>' + esc(g.chapterCode || "") + '</b></td>'
+        + '  <td>' + esc(g.chapterName || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(g.itemsCount))) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(g.subtotal, project.currency || "COP")) + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function filterOfficialItems(items){
+    var q = safe(qs("#officialItemsSearch") && qs("#officialItemsSearch").value).toLowerCase();
+    if(!q) return items;
+
+    return items.filter(function(it){
+      var bag = [
+        safe(it.code),
+        safe(it.apuRefCode),
+        safe(it.desc),
+        safe(it.unit),
+        safe(it.chapterCode),
+        safe(it.chapterName)
+      ].join(" ").toLowerCase();
+
+      return bag.indexOf(q) >= 0;
+    });
+  }
+
+  function renderItems(project){
+    var tbody = qs("#officialItemsBody");
+    var empty = qs("#officialItemsEmpty");
+    if(!tbody) return;
+
+    var items = filterOfficialItems(getOfficialItems(project));
+
+    if(!items.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = items.map(function(it){
+      var parcial = num(it.pu) * num(it.qty);
+      var apuCode = safe(it.apuRefCode || it.code);
+
+      return ''
+        + '<tr>'
+        + '  <td><b>' + esc(it.chapterCode || "") + '</b></td>'
+        + '  <td><b>' + esc(it.code || "") + '</b></td>'
+        + '  <td>' + esc(apuCode) + '</td>'
+        + '  <td>' + esc(it.desc || "") + '</td>'
+        + '  <td>' + esc(it.unit || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(it.pu, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(it.qty))) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(parcial, project.currency || "COP")) + '</b></td>'
+        + '  <td class="row" style="gap:8px">'
+        + '    <a class="btn" href="apu.html?code=' + encodeURIComponent(apuCode) + '&projectId=' + encodeURIComponent(project.id) + '&mode=oficial">Ver APU</a>'
+        + '    <button class="btn danger" type="button" data-delofficial="' + esc(it.id) + '">Eliminar</button>'
+        + '  </td>'
+        + '</tr>';
+    }).join("");
+
+    var buttons = tbody.querySelectorAll("[data-delofficial]");
+    buttons.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-delofficial");
+        if(!confirm("¿Eliminar este ítem del Presupuesto Oficial?")) return;
+
+        if(window.StorageAPI && typeof StorageAPI.deleteOfficialItem === "function"){
+          StorageAPI.deleteOfficialItem(project.id, id);
+        }
+
+        var updated = getProject(project.id);
+        renderAll(updated);
+      });
+    });
+  }
+
+  function renderAll(project){
+    renderHeader(project);
+    renderKpis(project);
+    renderChapters(project);
+    renderItems(project);
+  }
+
+  function setImportInfo(msg){
+    var el = qs("#officialImportInfo");
+    if(el) el.textContent = msg || "";
+  }
+
+  async function doOfficialImport(projectId, file){
+    try{
+      if(!window.OfficialImport || typeof OfficialImport.importOfficialBudgetFromFile !== "function"){
+        alert("OfficialImport no está disponible.");
+        return;
+      }
+
+      setImportInfo("Importando archivo oficial…");
+      var result = await OfficialImport.importOfficialBudgetFromFile(projectId, file);
+
+      var updated = getProject(projectId);
+      renderAll(updated);
+
+      setImportInfo(
+        "Importación completada. Hoja: " + safe(result.sheetName) +
+        " · Ítems: " + String(num(result.counts && result.counts.items)) +
+        " · Capítulos: " + String(num(result.counts && result.counts.chapters))
+      );
+
+      alert(
+        "Presupuesto Oficial importado correctamente.\n\n" +
+        "Hoja: " + safe(result.sheetName) + "\n" +
+        "Ítems: " + String(num(result.counts && result.counts.items)) + "\n" +
+        "Capítulos: " + String(num(result.counts && result.counts.chapters))
+      );
+    }catch(err){
+      setImportInfo("Error en importación.");
+      alert("Error importando presupuesto oficial: " + (err && err.message ? err.message : err));
+    }
+  }
+
+  function bindManualForm(projectId){
+    var form = qs("#formAddOfficialManual");
+    if(!form) return;
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      var fd = new FormData(form);
+
+      var chapterCode = safe(fd.get("chapterCode"));
+      var chapterName = safe(fd.get("chapterName"));
+      var code = safe(fd.get("code"));
+      var unit = safe(fd.get("unit"));
+      var desc = safe(fd.get("desc"));
+      var pu = num(fd.get("pu"));
+      var qty = num(fd.get("qty"));
+
+      if(!code || !unit || !desc){
+        alert("Complete código, unidad y descripción.");
+        return;
+      }
+
+      if(!(pu > 0) || !(qty > 0)){
+        alert("PU y cantidad deben ser mayores a 0.");
+        return;
+      }
+
+      if(window.StorageAPI && typeof StorageAPI.addOfficialItem === "function"){
+        StorageAPI.addOfficialItem(projectId, {
+          chapterCode: chapterCode,
+          chapterName: chapterName,
+          code: code,
+          apuRefCode: code,
+          desc: desc,
+          unit: unit,
+          pu: pu,
+          qty: qty
+        });
+      }
+
+      form.reset();
+
+      var updated = getProject(projectId);
+      renderAll(updated);
+      alert("Ítem agregado al Presupuesto Oficial.");
+    });
+  }
+
+  function bind(project){
+    var btnImport = qs("#btnImportOfficial");
+    var btnImport2 = qs("#btnImportOfficial2");
+    var fileInput = qs("#fileOfficialImport");
+    var btnRefresh = qs("#btnRefreshOfficial");
+    var btnExcel = qs("#btnExportOfficialExcel");
+    var btnPdf = qs("#btnPdfOfficial");
+    var btnClear = qs("#btnClearOfficial");
+    var inpItemsSearch = qs("#officialItemsSearch");
+
+    function triggerImport(){
+      if(fileInput) fileInput.click();
+    }
+
+    if(btnImport){
+      btnImport.addEventListener("click", triggerImport);
+    }
+
+    if(btnImport2){
+      btnImport2.addEventListener("click", triggerImport);
+    }
+
+    if(fileInput){
+      fileInput.addEventListener("change", async function(e){
+        var file = e.target.files && e.target.files[0];
+        if(!file) return;
+        await doOfficialImport(project.id, file);
+        e.target.value = "";
+      });
+    }
+
+    if(btnRefresh){
+      btnRefresh.addEventListener("click", function(){
+        var fresh = getProject(project.id);
+        renderAll(fresh);
+      });
+    }
+
+    if(btnExcel){
+      btnExcel.addEventListener("click", function(){
+        try{
+          if(window.ExcelExport && typeof ExcelExport.exportBudgetWorkbook === "function"){
+            ExcelExport.exportBudgetWorkbook(project, "oficial");
+          }else{
+            alert("ExcelExport no está disponible.");
+          }
+        }catch(err){
+          alert("Error exportando Excel Oficial: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(btnPdf){
+      btnPdf.addEventListener("click", async function(){
+        try{
+          if(window.PDF && typeof PDF.exportPresupuestoPDF === "function"){
+            await PDF.exportPresupuestoPDF(project, { mode:"oficial" });
+          }else{
+            alert("PDF no está disponible.");
+          }
+        }catch(err){
+          alert("Error generando PDF Oficial: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(btnClear){
+      btnClear.addEventListener("click", function(){
+        if(!confirm("¿Desea borrar completamente el Presupuesto Oficial del proyecto?")) return;
+
+        try{
+          if(window.OfficialImport && typeof OfficialImport.clearOfficialBudget === "function"){
+            OfficialImport.clearOfficialBudget(project.id);
+          }else if(window.StorageAPI && typeof StorageAPI.updateProject === "function"){
+            StorageAPI.updateProject(project.id, {
+              oficialItems: [],
+              oficialChapters: [],
+              oficialApuOverrides: {}
+            });
+          }
+
+          var updated = getProject(project.id);
+          renderAll(updated);
+          setImportInfo("Presupuesto Oficial limpiado.");
+          alert("Presupuesto Oficial eliminado.");
+        }catch(err){
+          alert("Error limpiando presupuesto oficial: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(inpItemsSearch){
+      inpItemsSearch.addEventListener("input", function(){
+        var fresh = getProject(project.id);
+        renderItems(fresh);
+      });
+    }
+
+    bindManualForm(project.id);
+  }
+
+  (function boot(){
+    var projectId = getParam("projectId");
+    if(!projectId){
+      alert("Falta projectId.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    var project = getProject(projectId);
+    if(!project){
+      alert("Proyecto no encontrado.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    renderAll(project);
+    bind(project);
+  })();
+})();
+</script>
+</body>
+</html>

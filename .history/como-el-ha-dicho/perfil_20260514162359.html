@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil - Victoriosos en Cristo</title>
+
+    <!-- FAVICON -->
+
+    <link rel="icon"
+    href="./assets/icons/favicon.png">
+
+    <!-- PWA -->
+
+    <link rel="manifest"
+    href="./pwa/manifest.json">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+    href="./css/styles.css">
+
+    <link rel="stylesheet"
+    href="./css/cards.css">
+
+    <link rel="stylesheet"
+    href="./css/animations.css">
+
+    <link rel="stylesheet"
+    href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header header-small">
+
+        <h1>Mi Perfil</h1>
+
+        <p class="subtitle">
+
+            Configuración y progreso espiritual
+
+        </p>
+
+    </header>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <!-- INICIO -->
+
+        <a href="index.html">
+
+            <img
+            src="./assets/icons/home.png"
+            alt="Inicio">
+
+            <span>Inicio</span>
+
+        </a>
+
+        <!-- FAVORITOS -->
+
+        <a href="favoritos.html">
+
+            <img
+            src="./assets/icons/favorite.png"
+            alt="Favoritos">
+
+            <span>Favoritos</span>
+
+        </a>
+
+        <!-- AUDIOS -->
+
+        <a href="audios.html">
+
+            <img
+            src="./assets/icons/play.png"
+            alt="Audios">
+
+            <span>Audios</span>
+
+        </a>
+
+        <!-- PERFIL -->
+
+        <a href="perfil.html">
+
+            <img
+            src="./assets/icons/profile.png"
+            alt="Perfil">
+
+            <span>Perfil</span>
+
+        </a>
+
+    </nav>
+
+    <!-- CONTENIDO -->
+
+    <main class="container">
+
+        <!-- PERFIL -->
+
+        <section class="categoria-card">
+
+            <h2>Bienvenido</h2>
+
+            <p>
+
+                Aquí podrás administrar tu
+                experiencia espiritual dentro
+                de la aplicación.
+
+            </p>
+
+            <br>
+
+            <!-- ESTADÍSTICAS -->
+
+            <h3>
+
+                ❤️ Declaraciones favoritas:
+
+                <span id="total-favoritos">
+                    0
+                </span>
+
+            </h3>
+
+            <br>
+
+            <!-- MENSAJE -->
+
+            <p id="mensaje-progreso">
+
+                Cargando progreso espiritual...
+
+            </p>
+
+            <br>
+
+            <!-- OPCIONES FUNCIONALES -->
+
+            <div class="perfil-opciones">
+
+                <p>
+                    ❤️
+                    <a href="favoritos.html" class="perfil-link">
+                        Declaraciones favoritas
+                    </a>
+                </p>
+
+                <p>
+                    ▶
+                    <a href="audios.html" class="perfil-link">
+                        Audios escuchados
+                    </a>
+                </p>
+
+                <p>
+                    📖
+                    <a href="planes.html" class="perfil-link">
+                        Planes devocionales
+                    </a>
+                </p>
+
+                <p>
+                    ⚙
+                    <a href="configuracion.html" class="perfil-link">
+                        Configuración futura
+                    </a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JS -->
+
+    <script src="./js/perfil.js"></script>
+
+</body>
+
+</html>

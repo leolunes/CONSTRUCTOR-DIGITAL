@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Audiolibros | Victoriosos en Cristo</title>
+
+    <!-- FAVICON -->
+
+    <link rel="icon"
+    href="./assets/icons/favicon.png">
+
+    <!-- PWA -->
+
+    <link rel="manifest"
+    href="./pwa/manifest.json">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+    href="./css/styles.css">
+
+    <link rel="stylesheet"
+    href="./css/cards.css">
+
+    <link rel="stylesheet"
+    href="./css/animations.css">
+
+    <link rel="stylesheet"
+    href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header header-small">
+
+        <h1>
+            Audiolibros
+        </h1>
+
+        <p class="subtitle">
+
+            Biblioteca espiritual de libros, enseñanzas y capítulos en audio y PDF
+
+        </p>
+
+    </header>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="index.html">
+
+            <img
+            src="./assets/icons/home.png"
+            alt="Inicio">
+
+            <span>Inicio</span>
+
+        </a>
+
+        <a href="favoritos.html">
+
+            <img
+            src="./assets/icons/favorite.png"
+            alt="Favoritos">
+
+            <span>Favoritos</span>
+
+        </a>
+
+        <a href="audios.html">
+
+            <img
+            src="./assets/icons/play.png"
+            alt="Audios">
+
+            <span>Audios</span>
+
+        </a>
+
+        <a href="audioslibros.html"
+        class="active activo">
+
+            <img
+            src="./assets/icons/book.png"
+            alt="Audiolibros">
+
+            <span>Audiolibros</span>
+
+        </a>
+
+        <a href="perfil.html">
+
+            <img
+            src="./assets/icons/profile.png"
+            alt="Perfil">
+
+            <span>Perfil</span>
+
+        </a>
+
+    </nav>
+
+    <!-- CONTENIDO -->
+
+    <main class="container">
+
+        <a href="index.html"
+        class="btn-volver">
+
+            <img
+            src="./assets/icons/back.png"
+            alt="Volver">
+
+            Volver al inicio
+
+        </a>
+
+        <!-- HERO BIBLIOTECA -->
+
+        <section class="audiolibros-hero">
+
+            <div class="audiolibros-hero-icon">
+                📚
+            </div>
+
+            <div class="audiolibros-hero-info">
+
+                <span>
+                    Biblioteca espiritual
+                </span>
+
+                <h2>
+                    Escoge un audiolibro
+                </h2>
+
+                <p>
+                    Selecciona la portada del libro que deseas abrir. Luego podrás leer sus capítulos en PDF o escucharlos en audio.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- LISTA DE PORTADAS -->
+
+        <section id="listaAudiolibros"
+        class="biblioteca-audiolibros">
+
+            <!-- Portadas dinámicas desde data/audiolibros.json -->
+
+        </section>
+
+        <!-- DETALLE DEL LIBRO -->
+
+        <section id="detalleAudiolibro"
+        class="book-detail hidden">
+
+            <button
+            type="button"
+            class="btn-secondary"
+            onclick="cerrarDetalleAudiolibro()">
+                ← Volver a la biblioteca
+            </button>
+
+            <br>
+            <br>
+
+            <h2 id="tituloLibro"></h2>
+
+            <p id="descripcionLibro"></p>
+
+            <div id="capitulosLibro"
+            class="chapter-list">
+
+                <!-- Capítulos dinámicos -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="./js/audiolibros.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auditoría Forense de Obra</title>
+  <meta name="description" content="Aplicación para análisis técnico-contable y detección de alertas en contratos de obra." />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="manifest" href="pwa/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">AFO</div>
+        <div class="brand-text">
+          <h1>Auditoría Forense de Obra</h1>
+          <p>Control técnico, contable y tributario</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-link active" href="index.html">Inicio</a>
+        <a class="nav-link" href="contratos.html">Contratos</a>
+        <a class="nav-link" href="contrato-detalle.html">Detalle del contrato</a>
+        <a class="nav-link" href="facturacion.html">Facturación</a>
+        <a class="nav-link" href="alertas.html">Alertas</a>
+        <a class="nav-link" href="informes.html">Informes</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-badge" id="appStatusBadge">Sistema listo</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2>Panel principal</h2>
+          <p class="subtitle">
+            Herramienta para revisar la coherencia entre la composición técnica de una obra
+            y la facturación registrada por el contratista.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="btnInstalarApp" class="btn btn-outline" type="button">Instalar app</button>
+          <button id="btnNuevoContrato" class="btn btn-primary" type="button">Nuevo contrato</button>
+        </div>
+      </header>
+
+      <section class="hero-card">
+        <div class="hero-content">
+          <span class="eyebrow">APP INDEPENDIENTE</span>
+          <h3>Auditoría técnico-fiscal de contratos de obra</h3>
+          <p>
+            Esta aplicación le permitirá al contador público, revisor fiscal, auditor o interventor
+            identificar desviaciones entre la estructura técnica esperada del contrato y la facturación
+            realmente soportada, con enfoque en materiales, mano de obra, equipos, transportes e IVA.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="contratos.html">Ir a contratos</a>
+            <a class="btn btn-secondary" href="informes.html">Ver informes</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Contratos registrados</h4>
+          </div>
+          <div class="stat-value" id="statContratos">0</div>
+          <p class="card-note">Cantidad de contratos almacenados en la aplicación.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Facturas cargadas</h4>
+          </div>
+          <div class="stat-value" id="statFacturas">0</div>
+          <p class="card-note">Total de soportes contables asociados a contratos.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Alertas activas</h4>
+          </div>
+          <div class="stat-value" id="statAlertas">0</div>
+          <p class="card-note">Indicadores de riesgo detectados por el sistema.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>IVA observado</h4>
+          </div>
+          <div class="stat-value" id="statIVA">$ 0</div>
+          <p class="card-note">Valor acumulado de IVA registrado en los soportes cargados.</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Flujo funcional de la app</h4>
+          </div>
+
+          <div class="flow-list">
+            <div class="flow-step">
+              <span class="flow-number">1</span>
+              <div>
+                <strong>Registrar contrato</strong>
+                <p>Datos generales del contrato, entidad, valor, plazo, objeto y ubicación.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">2</span>
+              <div>
+                <strong>Cargar presupuesto y APUs</strong>
+                <p>Base técnica para estimar la composición real del costo del contrato.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">3</span>
+              <div>
+                <strong>Cargar facturación</strong>
+                <p>Facturas, proveedores, conceptos, bases gravables e IVA facturado.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">4</span>
+              <div>
+                <strong>Cruce técnico-contable</strong>
+                <p>Comparación entre costos esperados y soportes realmente contabilizados.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">5</span>
+              <div>
+                <strong>Alertas e informes</strong>
+                <p>Detección de desviaciones, riesgos y generación de reportes para auditoría.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Componentes del análisis</h4>
+          </div>
+
+          <div class="pill-grid">
+            <span class="pill">Materiales</span>
+            <span class="pill">Mano de obra</span>
+            <span class="pill">Equipos</span>
+            <span class="pill">Transportes</span>
+            <span class="pill">Herramienta menor</span>
+            <span class="pill">Subcontratos</span>
+            <span class="pill">IVA</span>
+            <span class="pill">Facturación</span>
+            <span class="pill">Proveedores</span>
+            <span class="pill">Desviaciones</span>
+            <span class="pill">Alertas</span>
+            <span class="pill">Informe técnico</span>
+          </div>
+
+          <div class="info-box">
+            <strong>Objetivo del sistema:</strong>
+            <p>
+              Convertir la realidad técnica del contrato en una referencia verificable para el
+              contador público y el revisor fiscal, permitiéndoles detectar inconsistencias
+              contables, tributarias y documentales antes de emitir certificaciones o dictámenes.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Resumen del sistema</h4>
+          </div>
+
+          <table class="summary-table">
+            <tbody>
+              <tr>
+                <th>Nombre de la app</th>
+                <td>Auditoría Forense de Obra</td>
+              </tr>
+              <tr>
+                <th>Enfoque</th>
+                <td>Auditoría técnico-contable de contratos de obra</td>
+              </tr>
+              <tr>
+                <th>Usuarios objetivo</th>
+                <td>Contadores, revisores fiscales, auditores, interventores</td>
+              </tr>
+              <tr>
+                <th>Modo de uso</th>
+                <td>PWA / Web local / Trabajo con almacenamiento local</td>
+              </tr>
+              <tr>
+                <th>Estado</th>
+                <td id="systemStateText">Estructura base inicializada</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Accesos rápidos</h4>
+          </div>
+
+          <div class="quick-links">
+            <a class="quick-link" href="contratos.html">
+              <strong>Contratos</strong>
+              <span>Crear y administrar contratos</span>
+            </a>
+
+            <a class="quick-link" href="facturacion.html">
+              <strong>Facturación</strong>
+              <span>Cargar soportes contables</span>
+            </a>
+
+            <a class="quick-link" href="alertas.html">
+              <strong>Alertas</strong>
+              <span>Consultar riesgos detectados</span>
+            </a>
+
+            <a class="quick-link" href="informes.html">
+              <strong>Informes</strong>
+              <span>Emitir reportes técnicos</span>
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/contratos.js"></script>
+  <script src="js/tecnico.js"></script>
+  <script src="js/facturacion.js"></script>
+  <script src="js/tributario.js"></script>
+  <script src="js/cruces.js"></script>
+  <script src="js/alertas.js"></script>
+  <script src="js/reportes.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

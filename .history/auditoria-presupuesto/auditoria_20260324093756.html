@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Auditoría | Auditoría Presupuesto</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html">←</a>
+    <div>
+      <div class="title" id="auditTitle">Auditoría</div>
+      <div class="subtitle" id="auditSub">Cargando proyecto…</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnGoProject" href="proyecto-detalle.html">Ir al proyecto</a>
+    <a class="navbtn" id="btnGoCompare" href="comparativo.html">Ir al comparativo</a>
+    <button class="navbtn" id="btnExportAuditExcel" type="button">Exportar auditoría a Excel</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <div class="row" style="gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center">
+      <div>
+        <div class="name">Proyecto auditado</div>
+        <div class="muted small" id="auditProjectInfo">—</div>
+      </div>
+      <div class="row" style="gap:8px; align-items:center">
+        <label for="auditBudgetMode" class="muted small" style="font-weight:700">Vista activa</label>
+        <select id="auditBudgetMode" style="min-width:220px">
+          <option value="base">Presupuesto Base</option>
+          <option value="oficial">Presupuesto Oficial</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid kpis" id="auditKpis" style="margin-top:14px"></section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Resumen ejecutivo de auditoría</h2>
+      <p class="muted small">Evaluación preliminar del riesgo derivado del comparativo entre presupuesto base y oficial.</p>
+    </div>
+    <div id="auditSummary"></div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Comparativo global</h2>
+      <p class="muted small">Comparación de totales entre Presupuesto Base y Presupuesto Oficial.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:980px">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th style="text-align:right">Base</th>
+            <th style="text-align:right">Oficial</th>
+            <th style="text-align:right">Diferencia</th>
+            <th style="text-align:right">Diferencia %</th>
+          </tr>
+        </thead>
+        <tbody id="auditTotalsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="auditTotalsEmpty" style="display:none">No hay información suficiente para comparar totales.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Hallazgos de auditoría</h2>
+      <p class="muted small">Hallazgos preliminares generados automáticamente con base en diferencias de ítems, capítulos y totales.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1350px">
+        <thead>
+          <tr>
+            <th>Severidad</th>
+            <th>Tipo</th>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Capítulo</th>
+            <th>Detalle</th>
+            <th>Recomendación</th>
+          </tr>
+        </thead>
+        <tbody id="auditFindingsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="auditEmpty" style="display:none">No se detectaron hallazgos de auditoría.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Principales diferencias económicas</h2>
+      <p class="muted small">Ítems con mayor impacto económico en la diferencia entre presupuesto base y oficial.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1250px">
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Unidad</th>
+            <th style="text-align:right">Parcial Base</th>
+            <th style="text-align:right">Parcial Oficial</th>
+            <th style="text-align:right">Diferencia</th>
+            <th style="text-align:right">Diferencia %</th>
+          </tr>
+        </thead>
+        <tbody id="auditTopDiffsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="auditTopDiffsEmpty" style="display:none">No hay diferencias relevantes para mostrar.</div>
+  </section>
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/compare.js"></script>
+<script src="js/audit.js"></script>
+<script src="js/excel-export.js"></script>
+
+<script>
+(function(){
+  function qs(sel){ return document.querySelector(sel); }
+  function safe(v){ return String(v == null ? "" : v).trim(); }
+  function num(v){ return Number(v || 0); }
+
+  function fmtMoney(v, currency){
+    if(window.UI && typeof UI.fmtMoney === "function"){
+      return UI.fmtMoney(v, currency || "COP");
+    }
+    var n = Math.round(Number(v || 0));
+    return "$ " + n.toLocaleString("es-CO");
+  }
+
+  function esc(s){
+    if(window.UI && typeof UI.esc === "function") return UI.esc(s);
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function chip(label, kind){
+    if(window.UI && typeof UI.chip === "function") return UI.chip(label, kind || "");
+    var cls = kind ? ("chip " + kind) : "chip";
+    return '<span class="' + cls + '">' + esc(label) + '</span>';
+  }
+
+  function getParam(name){
+    if(window.UI && typeof UI.getParam === "function") return UI.getParam(name);
+    var u = new URL(location.href);
+    return u.searchParams.get(name);
+  }
+
+  function severityKind(level){
+    var s = String(level || "").toLowerCase();
+    if(s === "critica") return "bad";
+    if(s === "alta") return "warn";
+    if(s === "media") return "";
+    return "ok";
+  }
+
+  function statusLabel(status){
+    var s = String(status || "").toLowerCase();
+    if(s === "solo_base") return "Solo Base";
+    if(s === "solo_oficial") return "Solo Oficial";
+    if(s === "diferente") return "Diferente";
+    return "Coincide";
+  }
+
+  function renderHeader(project){
+    var title = qs("#auditTitle");
+    var sub = qs("#auditSub");
+    var info = qs("#auditProjectInfo");
+    var btnGoProject = qs("#btnGoProject");
+    var btnGoCompare = qs("#btnGoCompare");
+
+    if(title) title.textContent = "Auditoría";
+    if(sub) sub.textContent = (project.name || "Proyecto") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+    if(info) info.textContent = (project.name || "—") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+
+    if(btnGoProject) btnGoProject.href = "proyecto-detalle.html?projectId=" + encodeURIComponent(project.id);
+    if(btnGoCompare) btnGoCompare.href = "comparativo.html?projectId=" + encodeURIComponent(project.id);
+  }
+
+  function renderKpis(project, compareData, auditData){
+    var el = qs("#auditKpis");
+    if(!el) return;
+
+    var totals = compareData && compareData.totals ? compareData.totals : {};
+    var summary = auditData && auditData.summary ? auditData.summary : {};
+    var findings = summary.findings || {};
+    var risk = summary.risk || {};
+
+    el.innerHTML = ''
+      + '<div class="card item"><div class="topline"><div class="name">Total Base</div><div class="chips">' + chip(fmtMoney(totals.base && totals.base.total, project.currency || "COP"), "ok") + '</div></div><div class="muted small">Presupuesto técnico de referencia.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Total Oficial</div><div class="chips">' + chip(fmtMoney(totals.official && totals.official.total, project.currency || "COP"), "warn") + '</div></div><div class="muted small">Presupuesto sujeto a auditoría.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Diferencia Total</div><div class="chips">' + chip(fmtMoney(totals.diff && totals.diff.total, project.currency || "COP")) + '</div></div><div class="muted small">Variación económica global.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Riesgo</div><div class="chips">' + chip((risk.level || "Riesgo bajo") + " · " + num(risk.score), severityKind(risk.severity)) + '</div></div><div class="muted small">Hallazgos detectados: ' + num(findings.total) + '.</div></div>';
+  }
+
+  function renderSummary(project, auditData){
+    var el = qs("#auditSummary");
+    if(!el) return;
+
+    var summary = auditData && auditData.summary ? auditData.summary : {};
+    var risk = summary.risk || {};
+    var totals = summary.totals || {};
+    var findings = summary.findings || {};
+    var bySeverity = findings.bySeverity || {};
+
+    el.innerHTML = ''
+      + '<div class="grid two">'
+      + '  <div class="item">'
+      + '    <div class="name">Nivel de riesgo</div>'
+      + '    <div class="muted small"><b>' + esc(risk.level || "Riesgo bajo") + '</b></div>'
+      + '  </div>'
+      + '  <div class="item">'
+      + '    <div class="name">Puntaje de auditoría</div>'
+      + '    <div class="muted small"><b>' + esc(String(num(risk.score))) + '</b></div>'
+      + '  </div>'
+      + '  <div class="item">'
+      + '    <div class="name">Total Base</div>'
+      + '    <div class="muted small"><b>' + esc(fmtMoney(totals.base, project.currency || "COP")) + '</b></div>'
+      + '  </div>'
+      + '  <div class="item">'
+      + '    <div class="name">Total Oficial</div>'
+      + '    <div class="muted small"><b>' + esc(fmtMoney(totals.official, project.currency || "COP")) + '</b></div>'
+      + '  </div>'
+      + '  <div class="item">'
+      + '    <div class="name">Diferencia</div>'
+      + '    <div class="muted small"><b>' + esc(fmtMoney(totals.diff, project.currency || "COP")) + '</b></div>'
+      + '  </div>'
+      + '  <div class="item">'
+      + '    <div class="name">Diferencia %</div>'
+      + '    <div class="muted small"><b>' + esc(num(totals.pct).toFixed(2) + "%") + '</b></div>'
+      + '  </div>'
+      + '</div>'
+
+      + '<hr class="sep">'
+
+      + '<div class="grid two">'
+      + '  <div class="item"><div class="name">Hallazgos críticos</div><div class="muted small"><b>' + esc(String(num(bySeverity.critica))) + '</b></div></div>'
+      + '  <div class="item"><div class="name">Hallazgos altos</div><div class="muted small"><b>' + esc(String(num(bySeverity.alta))) + '</b></div></div>'
+      + '  <div class="item"><div class="name">Hallazgos medios</div><div class="muted small"><b>' + esc(String(num(bySeverity.media))) + '</b></div></div>'
+      + '  <div class="item"><div class="name">Hallazgos bajos</div><div class="muted small"><b>' + esc(String(num(bySeverity.baja))) + '</b></div></div>'
+      + '</div>'
+
+      + '<hr class="sep">'
+
+      + '<div class="muted small">' + esc(summary.executiveComment || "Sin comentario ejecutivo.") + '</div>';
+  }
+
+  function renderTotals(project, compareData){
+    var tbody = qs("#auditTotalsBody");
+    var empty = qs("#auditTotalsEmpty");
+    if(!tbody) return;
+
+    var totals = compareData && compareData.totals ? compareData.totals : null;
+    if(!totals){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    var rows = [
+      {
+        label: "Total costos directos",
+        base: totals.base && totals.base.directo,
+        official: totals.official && totals.official.directo,
+        diff: totals.diff && totals.diff.directo,
+        pct: totals.pct && totals.pct.directo
+      },
+      {
+        label: "Administración",
+        base: totals.base && totals.base.admin,
+        official: totals.official && totals.official.admin,
+        diff: totals.diff && totals.diff.admin,
+        pct: totals.pct && totals.pct.admin
+      },
+      {
+        label: "Imprevistos",
+        base: totals.base && totals.base.imprev,
+        official: totals.official && totals.official.imprev,
+        diff: totals.diff && totals.diff.imprev,
+        pct: totals.pct && totals.pct.imprev
+      },
+      {
+        label: "Utilidad",
+        base: totals.base && totals.base.util,
+        official: totals.official && totals.official.util,
+        diff: totals.diff && totals.diff.util,
+        pct: totals.pct && totals.pct.util
+      },
+      {
+        label: "Subtotal",
+        base: totals.base && totals.base.subtotal,
+        official: totals.official && totals.official.subtotal,
+        diff: totals.diff && totals.diff.subtotal,
+        pct: totals.pct && totals.pct.subtotal
+      },
+      {
+        label: "IVA sobre utilidad",
+        base: totals.base && totals.base.ivaUtil,
+        official: totals.official && totals.official.ivaUtil,
+        diff: totals.diff && totals.diff.ivaUtil,
+        pct: totals.pct && totals.pct.ivaUtil
+      },
+      {
+        label: "Valor total",
+        base: totals.base && totals.base.total,
+        official: totals.official && totals.official.total,
+        diff: totals.diff && totals.diff.total,
+        pct: totals.pct && totals.pct.total
+      }
+    ];
+
+    tbody.innerHTML = rows.map(function(r){
+      return ''
+        + '<tr>'
+        + '  <td><b>' + esc(r.label) + '</b></td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.base, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.official, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.diff, project.currency || "COP")) + '</b></td>'
+        + '  <td style="text-align:right"><b>' + esc(num(r.pct).toFixed(2) + "%") + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function renderFindings(auditData){
+    var tbody = qs("#auditFindingsBody");
+    var empty = qs("#auditEmpty");
+    if(!tbody) return;
+
+    var findings = auditData && Array.isArray(auditData.findings) ? auditData.findings : [];
+
+    if(!findings.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = findings.map(function(f){
+      var cap = safe(f.chapterCode);
+      if(safe(f.chapterName)){
+        cap += (cap ? " — " : "") + safe(f.chapterName);
+      }
+
+      return ''
+        + '<tr>'
+        + '  <td>' + chip(safe(f.severity || "baja").toUpperCase(), severityKind(f.severity)) + '</td>'
+        + '  <td><b>' + esc(f.type || "") + '</b></td>'
+        + '  <td>' + esc(f.code || "-") + '</td>'
+        + '  <td>' + esc(f.desc || "-") + '</td>'
+        + '  <td>' + esc(cap || "-") + '</td>'
+        + '  <td>' + esc(f.detail || "") + '</td>'
+        + '  <td>' + esc(f.recommendation || "") + '</td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function renderTopDifferences(project, compareData){
+    var tbody = qs("#auditTopDiffsBody");
+    var empty = qs("#auditTopDiffsEmpty");
+    if(!tbody) return;
+
+    var rows = (window.Compare && typeof Compare.getTopDifferences === "function")
+      ? Compare.getTopDifferences(project, 15)
+      : [];
+
+    if(!rows.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = rows.map(function(r){
+      return ''
+        + '<tr>'
+        + '  <td>' + esc(statusLabel(r.status)) + '</td>'
+        + '  <td><b>' + esc(r.code || "") + '</b></td>'
+        + '  <td>' + esc(r.desc || "") + '</td>'
+        + '  <td>' + esc(r.unit || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.parcialBase, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.parcialOfficial, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.parcialDiff, project.currency || "COP")) + '</b></td>'
+        + '  <td style="text-align:right"><b>' + esc(num(r.parcialPctDiff).toFixed(2) + "%") + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function renderAll(project){
+    var compareData = (window.Compare && typeof Compare.compareProject === "function")
+      ? Compare.compareProject(project)
+      : { items:[], chapters:[], totals:null, summary:null };
+
+    var auditData = (window.Audit && typeof Audit.runAudit === "function")
+      ? Audit.runAudit(compareData)
+      : { findings:[], summary:{} };
+
+    renderHeader(project);
+    renderKpis(project, compareData, auditData);
+    renderSummary(project, auditData);
+    renderTotals(project, compareData);
+    renderFindings(auditData);
+    renderTopDifferences(project, compareData);
+  }
+
+  function bind(project){
+    var btnExport = qs("#btnExportAuditExcel");
+    var sel = qs("#auditBudgetMode");
+
+    if(btnExport){
+      btnExport.addEventListener("click", function(){
+        try{
+          if(window.ExcelExport && typeof ExcelExport.exportAuditWorkbook === "function"){
+            ExcelExport.exportAuditWorkbook(project);
+          }else{
+            alert("ExcelExport no está disponible.");
+          }
+        }catch(err){
+          alert("Error exportando auditoría: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(sel){
+      sel.addEventListener("change", function(){
+        renderAll(project);
+      });
+    }
+  }
+
+  (function boot(){
+    var projectId = getParam("projectId");
+    if(!projectId){
+      alert("Falta projectId.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    if(!window.StorageAPI || typeof StorageAPI.getProjectById !== "function"){
+      alert("StorageAPI no está disponible.");
+      return;
+    }
+
+    var project = StorageAPI.getProjectById(projectId);
+    if(!project){
+      alert("Proyecto no encontrado.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    renderAll(project);
+    bind(project);
+  })();
+})();
+</script>
+</body>
+</html>

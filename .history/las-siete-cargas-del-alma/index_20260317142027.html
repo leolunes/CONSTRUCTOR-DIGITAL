@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Las Siete Cargas del Alma — Diagnóstico espiritual estructural</title>
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Herramienta diagnóstica pastoral seria para evaluar las siete cargas estructurales del alma." />
+
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./assets/img/icon-192.png" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <div id="appShell" class="app-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-logo">7</div>
+        <div class="brand-text">
+          <h1 id="appTitle">Las Siete Cargas del Alma</h1>
+          <p id="appSubtitle">Diagnóstico espiritual estructural</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="btnExplainDiagram" class="btn btn-secondary" type="button">Explícame este diagrama</button>
+        <button id="btnReset" class="btn btn-danger" type="button">Reiniciar</button>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <section class="hero-card card">
+        <div class="hero-copy">
+          <p class="eyebrow">Herramienta diagnóstica pastoral</p>
+          <h2>Identifica qué cargas están reteniéndose en el alma y cuánto descanso real hay en el Cimiento.</h2>
+          <p class="muted">
+            Esta aplicación no es solo devocional. Evalúa de forma estructural la relación entre
+            <strong>alma (viga)</strong>, <strong>espíritu (columna)</strong> y <strong>Cristo (cimiento)</strong>.
+          </p>
+
+          <div class="hero-pills">
+            <span class="pill">7 cargas del alma</span>
+            <span class="pill">Pórtico espiritual</span>
+            <span class="pill">Diagnóstico serio</span>
+            <span class="pill">Plan de 7 días</span>
+          </div>
+
+          <div class="hero-actions">
+            <button id="btnStart" class="btn btn-primary" type="button">Comenzar evaluación</button>
+            <button id="btnViewResults" class="btn btn-secondary" type="button">Ver resultado</button>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="hero-quote">
+            <p>“La vida siempre tendrá cargas, pero el alma nunca fue diseñada para sostenerlas sola.”</p>
+          </div>
+          <div class="hero-meta">
+            <span id="metaAuthor">Leonard Moon</span>
+            <span id="metaVersion">v1.0.0</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="card progress-card">
+          <div class="card-head">
+            <h3>Progreso de evaluación</h3>
+            <span id="progressText" class="mini-badge">0 / 56</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+          <p id="progressHint" class="muted">Responde todas las preguntas para obtener un diagnóstico completo.</p>
+        </div>
+
+        <div class="card global-status-card">
+          <div class="card-head">
+            <h3>Estado global</h3>
+            <span id="globalBandPill" class="pill neutral">Sin evaluar</span>
+          </div>
+          <div class="global-numbers">
+            <div>
+              <small>Puntaje global</small>
+              <strong id="globalScoreValue">0</strong>
+            </div>
+            <div>
+              <small>Carga dominante</small>
+              <strong id="dominantLoadLabel">—</strong>
+            </div>
+            <div>
+              <small>Transferencia</small>
+              <strong id="transferLevelLabel">—</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card quick-actions-card">
+          <div class="card-head">
+            <h3>Exportaciones</h3>
+          </div>
+          <div class="quick-buttons">
+            <button id="btnExportTxt" class="btn btn-secondary" type="button">Descargar TXT</button>
+            <button id="btnExportPdf" class="btn btn-secondary" type="button">Descargar PDF bonito</button>
+            <button id="btnExportPng" class="btn btn-secondary" type="button">Descargar Imagen PNG</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="left-column">
+          <section id="evaluationPanel" class="card evaluation-panel">
+            <div class="card-head sticky-head">
+              <div>
+                <h3>Evaluación diagnóstica</h3>
+                <p id="sectionIntroTop" class="muted">Selecciona una sección y responde cada pregunta con honestidad pastoral.</p>
+              </div>
+              <div class="section-nav-inline">
+                <button id="btnPrevSection" class="btn btn-ghost" type="button">Anterior</button>
+                <button id="btnNextSection" class="btn btn-ghost" type="button">Siguiente</button>
+              </div>
+            </div>
+
+            <div id="sectionTabs" class="section-tabs"></div>
+
+            <div id="questionSection" class="question-section">
+              <div class="section-header-box">
+                <div>
+                  <h4 id="sectionTitle">Sección</h4>
+                  <p id="sectionVerse" class="section-verse">Verso</p>
+                </div>
+                <div id="sectionScorePill" class="pill neutral">Sin responder</div>
+              </div>
+
+              <p id="sectionIntro" class="section-intro"></p>
+
+              <div id="questionsWrap" class="questions-wrap"></div>
+            </div>
+          </section>
+
+          <section id="resultsPanel" class="card results-panel">
+            <div class="card-head">
+              <h3>Resultado diagnóstico</h3>
+              <span id="resultBandPill" class="pill neutral">Sin evaluar</span>
+            </div>
+
+            <div class="result-summary-grid">
+              <div class="result-box">
+                <small>Puntaje global</small>
+                <strong id="resultGlobalScore">0</strong>
+              </div>
+              <div class="result-box">
+                <small>Carga dominante</small>
+                <strong id="resultDominant">—</strong>
+              </div>
+              <div class="result-box">
+                <small>Carga secundaria</small>
+                <strong id="resultSecondary">—</strong>
+              </div>
+              <div class="result-box">
+                <small>Descanso en el Cimiento</small>
+                <strong id="resultRest">—</strong>
+              </div>
+            </div>
+
+            <div class="diagnostic-block">
+              <h4>Diagnóstico principal</h4>
+              <p id="mainDiagnosticText" class="diagnostic-text">
+                Completa la evaluación para ver el diagnóstico pastoral estructural.
+              </p>
+            </div>
+
+            <div class="diagnostic-block">
+              <h4>Observación estructural</h4>
+              <p id="structuralObservationText" class="diagnostic-text">
+                La lectura del pórtico mostrará si la viga del alma está reteniendo peso, si la columna espiritual está transmitiendo adecuadamente y cuál es el nivel de descanso en el Cimiento.
+              </p>
+            </div>
+          </section>
+
+          <section class="card table-panel">
+            <div class="card-head">
+              <h3>Tabla de cargas</h3>
+            </div>
+
+            <div class="table-wrap">
+              <table class="diagnostic-table">
+                <thead>
+                  <tr>
+                    <th>Carga</th>
+                    <th>Puntaje</th>
+                    <th>Nivel</th>
+                    <th>Verso</th>
+                    <th>Observación</th>
+                  </tr>
+                </thead>
+                <tbody id="loadsTableBody">
+                  <tr>
+                    <td colspan="5" class="table-empty">Aún no hay diagnóstico disponible.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="card route-panel">
+            <div class="card-head">
+              <h3>Ruta pastoral sugerida</h3>
+            </div>
+
+            <div id="routeActions" class="route-actions">
+              <div class="route-empty">Completa la evaluación para generar acciones pastorales sugeridas.</div>
+            </div>
+          </section>
+
+          <section class="card planner-panel">
+            <div class="card-head">
+              <h3>Plan de transferencia de cargas — 7 días</h3>
+            </div>
+
+            <div id="plannerWrap" class="planner-wrap">
+              <div class="planner-empty">El plan se activará después del diagnóstico.</div>
+            </div>
+          </section>
+        </div>
+
+        <div class="right-column">
+          <section class="card portico-panel">
+            <div class="card-head">
+              <h3>Pórtico espiritual estructural</h3>
+              <span id="compareBadge" class="mini-badge">Sin comparación previa</span>
+            </div>
+
+            <div class="portico-toolbar">
+              <button id="btnSaveMeasurement" class="btn btn-ghost" type="button">Guardar medición actual</button>
+              <button id="btnToggleCompare" class="btn btn-ghost" type="button">Comparar antes / después</button>
+            </div>
+
+            <div id="porticoContainer" class="portico-container">
+              <svg id="porticoSvg" viewBox="0 0 860 420" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-label="Pórtico espiritual">
+                <defs>
+                  <filter id="softGlow">
+                    <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+                    <feMerge>
+                      <feMergeNode in="blur"></feMergeNode>
+                      <feMergeNode in="SourceGraphic"></feMergeNode>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <!-- Fondo -->
+                <rect x="0" y="0" width="860" height="420" rx="20" class="svg-bg"></rect>
+
+                <!-- Cargas -->
+                <g id="loadsGroup">
+                  <rect id="load_miedo" class="load-block load-neutral" x="90" y="64" width="86" height="44" rx="12"></rect>
+                  <text x="133" y="92" class="load-text">Miedo</text>
+
+                  <rect id="load_culpa" class="load-block load-neutral" x="188" y="64" width="86" height="44" rx="12"></rect>
+                  <text x="231" y="92" class="load-text">Culpa</text>
+
+                  <rect id="load_ansiedad" class="load-block load-neutral" x="286" y="64" width="100" height="44" rx="12"></rect>
+                  <text x="336" y="92" class="load-text">Ansiedad</text>
+
+                  <rect id="load_responsabilidad" class="load-block load-neutral" x="398" y="64" width="148" height="44" rx="12"></rect>
+                  <text x="472" y="92" class="load-text">Responsabilidad</text>
+
+                  <rect id="load_rechazo" class="load-block load-neutral" x="558" y="64" width="104" height="44" rx="12"></rect>
+                  <text x="610" y="92" class="load-text">Rechazo</text>
+
+                  <rect id="load_escasez" class="load-block load-neutral" x="674" y="64" width="96" height="44" rx="12"></rect>
+                  <text x="722" y="92" class="load-text">Escasez</text>
+                </g>
+
+                <!-- Halo nodos -->
+                <circle id="halo_comunion" cx="245" cy="258" r="28" class="node-halo hidden"></circle>
+                <circle id="halo_interseccion" cx="430" cy="150" r="28" class="node-halo hidden"></circle>
+                <circle id="halo_congregacion" cx="615" cy="258" r="28" class="node-halo hidden"></circle>
+
+                <!-- Estructura actual -->
+                <g id="porticoCurrent">
+                  <!-- Cimiento -->
+                  <line id="cimientoLine" x1="120" y1="330" x2="740" y2="330" class="struct-line cimiento-line" stroke-width="22" stroke-linecap="round"></line>
+                  <text x="430" y="364" class="struct-label">CIMIENTO</text>
+                  <text x="430" y="388" class="struct-sub-label">CRISTO</text>
+
+                  <!-- Columna -->
+                  <line id="columnaLine" x1="430" y1="308" x2="430" y2="170" class="struct-line columna-line" stroke-width="22" stroke-linecap="round"></line>
+                  <text x="470" y="246" class="struct-label vertical-label">COLUMNA</text>
+                  <text x="470" y="270" class="struct-sub-label vertical-label">ESPÍRITU</text>
+
+                  <!-- Viga -->
+                  <line id="vigaLine" x1="200" y1="150" x2="660" y2="150" class="struct-line viga-line" stroke-width="22" stroke-linecap="round"></line>
+                  <text x="430" y="128" class="struct-label">VIGA</text>
+                  <text x="430" y="104" class="struct-sub-label">ALMA</text>
+
+                  <!-- Nudos -->
+                  <circle id="node_comunion" cx="245" cy="258" r="10" class="node-circle"></circle>
+                  <circle id="node_interseccion" cx="430" cy="150" r="10" class="node-circle"></circle>
+                  <circle id="node_congregacion" cx="615" cy="258" r="10" class="node-circle"></circle>
+
+                  <!-- Apoyos visuales -->
+                  <line x1="245" y1="258" x2="245" y2="330" class="support-line" stroke-width="10" stroke-linecap="round"></line>
+                  <line x1="615" y1="258" x2="615" y2="330" class="support-line" stroke-width="10" stroke-linecap="round"></line>
+
+                  <!-- Cargas estructurales -->
+                  <line x1="330" y1="28" x2="330" y2="92" class="load-arrow live-arrow"></line>
+                  <polygon points="330,104 322,88 338,88" class="live-arrow-head"></polygon>
+                  <text x="330" y="20" class="arrow-label">Carga Viva</text>
+
+                  <line x1="530" y1="28" x2="530" y2="92" class="load-arrow dead-arrow"></line>
+                  <polygon points="530,104 522,88 538,88" class="dead-arrow-head"></polygon>
+                  <text x="530" y="20" class="arrow-label">Carga Muerta</text>
+
+                  <line x1="736" y1="186" x2="676" y2="186" class="load-arrow seismic-arrow"></line>
+                  <polygon points="664,186 680,178 680,194" class="seismic-arrow-head"></polygon>
+                  <text x="735" y="170" class="arrow-label">Carga Sísmica</text>
+                </g>
+
+                <!-- Comparación previa -->
+                <g id="porticoPrevious" class="hidden">
+                  <line id="prevCimientoLine" x1="120" y1="330" x2="740" y2="330" class="struct-line previous-line" stroke-width="10" stroke-linecap="round"></line>
+                  <line id="prevColumnaLine" x1="430" y1="308" x2="430" y2="170" class="struct-line previous-line" stroke-width="10" stroke-linecap="round"></line>
+                  <line id="prevVigaLine" x1="200" y1="150" x2="660" y2="150" class="struct-line previous-line" stroke-width="10" stroke-linecap="round"></line>
+                </g>
+              </svg>
+
+              <div id="porticoTooltip" class="portico-tooltip hidden"></div>
+            </div>
+
+            <div class="portico-legend">
+              <span><i class="legend-dot ok"></i>Alineado</span>
+              <span><i class="legend-dot warn"></i>Ajuste</span>
+              <span><i class="legend-dot risk"></i>Riesgo</span>
+              <span><i class="legend-dot critical"></i>Crítico</span>
+            </div>
+
+            <div class="axis-grid">
+              <div class="axis-card">
+                <small>Alma / Viga</small>
+                <strong id="axisAlmaValue">0%</strong>
+                <p id="axisAlmaNote" class="muted">Sin lectura</p>
+              </div>
+              <div class="axis-card">
+                <small>Espíritu / Columna</small>
+                <strong id="axisEspirituValue">0%</strong>
+                <p id="axisEspirituNote" class="muted">Sin lectura</p>
+              </div>
+              <div class="axis-card">
+                <small>Cimiento / Cristo</small>
+                <strong id="axisCimientoValue">0%</strong>
+                <p id="axisCimientoNote" class="muted">Sin lectura</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card compare-panel">
+            <div class="card-head">
+              <h3>Comparación antes / después</h3>
+            </div>
+            <div id="compareWrap" class="compare-wrap">
+              <div class="compare-empty">Aún no existe una medición previa guardada.</div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal contextual -->
+  <div id="contextModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-overlay" data-close-modal="true"></div>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="modalTitle">Panel contextual</h3>
+        <button id="btnCloseModal" class="btn-close" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-body">
+        <p id="modalVerse" class="modal-verse"></p>
+        <p id="modalTeaching" class="modal-teaching"></p>
+        <div id="modalActions" class="modal-actions-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel guiado -->
+  <div id="guidedPanel" class="guided-panel hidden">
+    <div class="guided-card">
+      <div class="guided-head">
+        <h3>Lectura guiada del diagrama</h3>
+        <button id="btnCloseGuided" class="btn-close" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div class="guided-body">
+        <p id="guidedText">Paso 1</p>
+        <div class="guided-controls">
+          <button id="btnPrevGuided" class="btn btn-ghost" type="button">Anterior</button>
+          <button id="btnNextGuided" class="btn btn-primary" type="button">Siguiente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plantillas -->
+  <template id="questionTemplate">
+    <article class="question-card">
+      <div class="question-text-wrap">
+        <span class="question-index"></span>
+        <p class="question-text"></p>
+      </div>
+      <div class="scale-options">
+        <label class="scale-item"><input type="radio" value="0" /><span>0</span></label>
+        <label class="scale-item"><input type="radio" value="1" /><span>1</span></label>
+        <label class="scale-item"><input type="radio" value="2" /><span>2</span></label>
+        <label class="scale-item"><input type="radio" value="3" /><span>3</span></label>
+        <label class="scale-item"><input type="radio" value="4" /><span>4</span></label>
+        <label class="scale-item"><input type="radio" value="5" /><span>5</span></label>
+      </div>
+    </article>
+  </template>
+
+  <template id="plannerDayTemplate">
+    <article class="planner-day">
+      <div class="planner-day-head">
+        <span class="planner-day-badge"></span>
+        <h4 class="planner-day-title"></h4>
+      </div>
+      <p class="planner-day-verse"></p>
+      <p class="planner-day-teaching"></p>
+      <p class="planner-day-action"></p>
+      <p class="planner-day-prayer"></p>
+    </article>
+  </template>
+
+  <template id="routeItemTemplate">
+    <article class="route-item">
+      <h4 class="route-title"></h4>
+      <p class="route-text"></p>
+    </article>
+  </template>
+
+  <script src="./assets/js/utils.js"></script>
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/state.js"></script>
+  <script src="./assets/js/score.js"></script>
+  <script src="./assets/js/diagnostics.js"></script>
+  <script src="./assets/js/planner.js"></script>
+  <script src="./assets/js/compare.js"></script>
+  <script src="./assets/js/portico.js"></script>
+  <script src="./assets/js/guided.js"></script>
+  <script src="./assets/js/render.js"></script>
+  <script src="./assets/js/export-txt.js"></script>
+  <script src="./assets/js/export-png.js"></script>
+  <script src="./assets/js/export-pdf.js"></script>
+  <script src="./assets/js/ui.js"></script>
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audiolibros | Victoriosos en Cristo</title>
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/cards.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <script src="https://kit.fontawesome.com/a2e0e6ad65.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <header class="app-header">
+    <img src="assets/img/logo.png" alt="Victoriosos en Cristo" class="app-logo" />
+  </header>
+
+  <nav class="bottom-nav">
+    <a href="index.html">
+      <i class="fas fa-home"></i>
+      <span>Inicio</span>
+    </a>
+
+    <a href="favoritos.html">
+      <i class="fas fa-heart"></i>
+      <span>Favoritos</span>
+    </a>
+
+    <a href="audios.html">
+      <i class="fas fa-play-circle"></i>
+      <span>Audios</span>
+    </a>
+
+    <a href="audiolibros.html" class="active">
+      <i class="fas fa-book-open"></i>
+      <span>Audiolibros</span>
+    </a>
+
+    <a href="perfil.html">
+      <i class="fas fa-user"></i>
+      <span>Perfil</span>
+    </a>
+  </nav>
+
+  <main class="main-container">
+
+    <section class="hero-card">
+      <div>
+        <span class="badge">Biblioteca espiritual</span>
+        <h1>Audiolibros</h1>
+        <p>Escucha enseñanzas, prólogos y capítulos completos desde tus libros PDF.</p>
+      </div>
+    </section>
+
+    <section id="listaAudiolibros" class="cards-grid"></section>
+
+    <section id="detalleAudiolibro" class="book-detail hidden">
+      <button class="btn-secondary" onclick="cerrarDetalleAudiolibro()">
+        ← Volver
+      </button>
+
+      <h2 id="tituloLibro"></h2>
+      <p id="descripcionLibro"></p>
+
+      <div id="capitulosLibro" class="chapter-list"></div>
+    </section>
+
+  </main>
+
+  <script src="js/audiolibros.js"></script>
+</body>
+</html>

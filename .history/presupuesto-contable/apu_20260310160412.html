@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>APU | Presupuesto PRO</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="javascript:history.back()">←</a>
+    <div>
+      <div class="title" id="apuTitle">APU</div>
+      <div class="subtitle" id="apuSub">Cargando…</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a class="navbtn" id="btnGoProject" href="proyectos.html">Ir a proyectos</a>
+    <button class="navbtn" id="btnSaveOverride" type="button" style="display:none">Guardar APU (Proyecto)</button>
+    <button class="navbtn danger" id="btnResetOverride" type="button" style="display:none">Quitar override</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="card" id="apuInfo"></section>
+
+  <!-- ✅ editor -->
+  <section class="card" id="apuEditor" style="margin-top:14px; display:none">
+    <div class="cardhead">
+      <h2>Editar APU (solo para este proyecto)</h2>
+      <p class="muted small">Los cambios NO afectan la Base APU. Actualiza el PU del ítem.</p>
+    </div>
+    <div class="row">
+      <button class="btn" id="btnAddLine" type="button">+ Agregar línea</button>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Descomposición</h2>
+      <p class="muted small">Costos_Directos / Subproductos / Override del proyecto</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:980px">
+        <thead>
+          <tr>
+            <th>Grupo</th>
+            <th>Descripción</th>
+            <th>Unidad</th>
+            <th style="text-align:right">Cant/Rend</th>
+            <th style="text-align:right">PU</th>
+            <th style="text-align:right">Parcial</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="apuBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="apuEmpty" style="display:none">No se encontraron líneas para este APU.</div>
+  </section>
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/base-import.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

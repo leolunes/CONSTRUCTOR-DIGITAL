@@ -1,0 +1,158 @@
+[
+  {
+    "id": "libro-1",
+    "titulo": "La Autoridad Indiferente",
+    "autor": "Leonard Moon",
+    "descripcion": "Cuando la justicia dejó de escuchar. Un audiolibro que confronta la indiferencia del poder y revela el verdadero propósito de la justicia desde una perspectiva espiritual, humana y profundamente reflexiva.",
+    "portada": "assets/libros/libro-1/portada.png",
+    "capitulos": [
+      {
+        "id": "prologo",
+        "tipo": "Prólogo",
+        "titulo": "El día que nadie quiso mirar",
+        "pdf": "assets/libros/libro-1/prologo.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/prologo.mp3"
+      },
+      {
+        "id": "capitulo-1",
+        "tipo": "Capítulo",
+        "titulo": "La autoridad nació para representar a Dios",
+        "pdf": "assets/libros/libro-1/capitulo-1.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-1.mp3"
+      },
+      {
+        "id": "capitulo-2",
+        "tipo": "Capítulo",
+        "titulo": "El oído es la primera responsabilidad de un juez",
+        "pdf": "assets/libros/libro-1/capitulo-2.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-2.mp3"
+      },
+      {
+        "id": "capitulo-3",
+        "tipo": "Capítulo",
+        "titulo": "Cuando el poder pierde sensibilidad",
+        "pdf": "assets/libros/libro-1/capitulo-3.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-3.mp3"
+      },
+      {
+        "id": "capitulo-4",
+        "tipo": "Capítulo",
+        "titulo": "El temor al hombre",
+        "pdf": "assets/libros/libro-1/capitulo-4.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-4.mp3"
+      },
+      {
+        "id": "capitulo-5",
+        "tipo": "Capítulo",
+        "titulo": "El juez que ya no quiere profundizar",
+        "pdf": "assets/libros/libro-1/capitulo-5.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-5.mp3"
+      },
+      {
+        "id": "capitulo-6",
+        "tipo": "Capítulo",
+        "titulo": "La condena antes de la revisión",
+        "pdf": "assets/libros/libro-1/capitulo-6.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-6.mp3"
+      },
+      {
+        "id": "capitulo-7",
+        "tipo": "Capítulo",
+        "titulo": "Lavarse las manos",
+        "pdf": "assets/libros/libro-1/capitulo-7.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-7.mp3"
+      },
+      {
+        "id": "capitulo-8",
+        "tipo": "Capítulo",
+        "titulo": "La tragedia de no ser oído",
+        "pdf": "assets/libros/libro-1/capitulo-8.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-8.mp3"
+      },
+      {
+        "id": "capitulo-9",
+        "tipo": "Capítulo",
+        "titulo": "La viuda",
+        "pdf": "assets/libros/libro-1/capitulo-9.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-9.mp3"
+      },
+      {
+        "id": "capitulo-10",
+        "tipo": "Capítulo",
+        "titulo": "El alma dentro del proceso",
+        "pdf": "assets/libros/libro-1/capitulo-10.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-10.mp3"
+      },
+      {
+        "id": "capitulo-11",
+        "tipo": "Capítulo",
+        "titulo": "La condena social",
+        "pdf": "assets/libros/libro-1/capitulo-11.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-11.mp3"
+      },
+      {
+        "id": "capitulo-12",
+        "tipo": "Capítulo",
+        "titulo": "Cuando comienzas a dudar de la justicia",
+        "pdf": "assets/libros/libro-1/capitulo-12.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-12.mp3"
+      },
+      {
+        "id": "capitulo-13",
+        "tipo": "Capítulo",
+        "titulo": "El cielo sí escucha",
+        "pdf": "assets/libros/libro-1/capitulo-13.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-13.mp3"
+      },
+      {
+        "id": "capitulo-14",
+        "tipo": "Capítulo",
+        "titulo": "Los pastores sin corazón",
+        "pdf": "assets/libros/libro-1/capitulo-14.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-14.mp3"
+      },
+      {
+        "id": "capitulo-15",
+        "tipo": "Capítulo",
+        "titulo": "El juicio sobre la indiferencia",
+        "pdf": "assets/libros/libro-1/capitulo-15.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-15.mp3"
+      },
+      {
+        "id": "capitulo-16",
+        "tipo": "Capítulo",
+        "titulo": "Dios no es un juez indiferente",
+        "pdf": "assets/libros/libro-1/capitulo-16.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-16.mp3"
+      },
+      {
+        "id": "capitulo-17",
+        "tipo": "Capítulo",
+        "titulo": "No desmayar",
+        "pdf": "assets/libros/libro-1/capitulo-17.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-17.mp3"
+      },
+      {
+        "id": "capitulo-18",
+        "tipo": "Capítulo",
+        "titulo": "La fe en medio de la injusticia",
+        "pdf": "assets/libros/libro-1/capitulo-18.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-18.mp3"
+      },
+      {
+        "id": "capitulo-19",
+        "tipo": "Capítulo",
+        "titulo": "Cuando el Hijo del Hombre venga",
+        "pdf": "assets/libros/libro-1/capitulo-19.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-19.mp3"
+      },
+      {
+        "id": "conclusion",
+        "tipo": "Conclusión",
+        "titulo": "El silencio de la tierra y la voz de Dios",
+        "pdf": "assets/libros/libro-1/conclusion.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/conclusion.mp3"
+      }
+    ]
+  }
+]

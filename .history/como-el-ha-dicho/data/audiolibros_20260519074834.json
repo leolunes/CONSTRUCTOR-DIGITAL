@@ -1,0 +1,172 @@
+[
+  {
+    "id": "libro-1",
+    "titulo": "La Autoridad Indiferente",
+    "autor": "Leonard Moon",
+    "descripcion": "Descripción breve del audiolibro. Cambia este texto por la descripción real del libro.",
+    "portada": "assets/libros/libro-1/portada.png",
+    "capitulos": [
+
+      {
+        "id": "prologo",
+        "tipo": "Prólogo",
+        "titulo": "Prólogo",
+        "pdf": "assets/libros/libro-1/prologo.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/prologo.mp3"
+      },
+
+      {
+        "id": "capitulo-1",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 1",
+        "pdf": "assets/libros/libro-1/capitulo-1.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-1.mp3"
+      },
+
+      {
+        "id": "capitulo-2",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 2",
+        "pdf": "assets/libros/libro-1/capitulo-2.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-2.mp3"
+      },
+
+      {
+        "id": "capitulo-3",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 3",
+        "pdf": "assets/libros/libro-1/capitulo-3.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-3.mp3"
+      },
+
+      {
+        "id": "capitulo-4",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 4",
+        "pdf": "assets/libros/libro-1/capitulo-4.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-4.mp3"
+      },
+
+      {
+        "id": "capitulo-5",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 5",
+        "pdf": "assets/libros/libro-1/capitulo-5.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-5.mp3"
+      },
+
+      {
+        "id": "capitulo-6",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 6",
+        "pdf": "assets/libros/libro-1/capitulo-6.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-6.mp3"
+      },
+
+      {
+        "id": "capitulo-7",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 7",
+        "pdf": "assets/libros/libro-1/capitulo-7.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-7.mp3"
+      },
+
+      {
+        "id": "capitulo-8",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 8",
+        "pdf": "assets/libros/libro-1/capitulo-8.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-8.mp3"
+      },
+
+      {
+        "id": "capitulo-9",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 9",
+        "pdf": "assets/libros/libro-1/capitulo-9.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-9.mp3"
+      },
+
+      {
+        "id": "capitulo-10",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 10",
+        "pdf": "assets/libros/libro-1/capitulo-10.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-10.mp3"
+      },
+
+      {
+        "id": "capitulo-11",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 11",
+        "pdf": "assets/libros/libro-1/capitulo-11.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-11.mp3"
+      },
+
+      {
+        "id": "capitulo-12",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 12",
+        "pdf": "assets/libros/libro-1/capitulo-12.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-12.mp3"
+      },
+
+      {
+        "id": "capitulo-13",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 13",
+        "pdf": "assets/libros/libro-1/capitulo-13.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-13.mp3"
+      },
+
+      {
+        "id": "capitulo-14",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 14",
+        "pdf": "assets/libros/libro-1/capitulo-14.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-14.mp3"
+      },
+
+      {
+        "id": "capitulo-15",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 15",
+        "pdf": "assets/libros/libro-1/capitulo-15.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-15.mp3"
+      },
+
+      {
+        "id": "capitulo-16",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 16",
+        "pdf": "assets/libros/libro-1/capitulo-16.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-16.mp3"
+      },
+
+      {
+        "id": "capitulo-17",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 17",
+        "pdf": "assets/libros/libro-1/capitulo-17.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-17.mp3"
+      },
+
+      {
+        "id": "capitulo-18",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 18",
+        "pdf": "assets/libros/libro-1/capitulo-18.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-18.mp3"
+      },
+
+      {
+        "id": "capitulo-19",
+        "tipo": "Capítulo",
+        "titulo": "Capítulo 19",
+        "pdf": "assets/libros/libro-1/capitulo-19.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-19.mp3"
+      }
+
+    ]
+  }
+]

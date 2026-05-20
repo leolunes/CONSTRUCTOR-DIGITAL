@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "tema": "Ansiedad",
+    "icono": "😔",
+    "descripcion": "Recibe paz cuando tu mente se siente cargada.",
+    "palabra": {
+      "titulo": "Dios guarda tu mente",
+      "versiculo": "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias.",
+      "referencia": "Filipenses 4:6"
+    },
+    "oracion": "Señor, hoy entrego delante de Ti toda ansiedad, todo pensamiento acelerado y toda carga que ha intentado robarme la paz. Guarda mi mente, ordena mi corazón y enséñame a descansar en Tu presencia.",
+    "declaracion": "Cristo guarda mi mente y mi corazón. No vivo gobernado por la ansiedad, sino sostenido por la paz de Dios.",
+    "audio": "./assets/audio/oracion/ansiedad.mp3"
+  },
+  {
+    "id": 2,
+    "tema": "Tristeza",
+    "icono": "💔",
+    "descripcion": "Permite que Dios abrace tu corazón herido.",
+    "palabra": {
+      "titulo": "Dios está cerca del quebrantado",
+      "versiculo": "Cercano está Jehová a los quebrantados de corazón; y salva a los contritos de espíritu.",
+      "referencia": "Salmo 34:18"
+    },
+    "oracion": "Señor, me acerco a Ti con mi corazón tal como está. Sana mi tristeza, acompaña mi proceso y recuérdame que no estoy solo. Que Tu amor vuelva a levantar mi interior.",
+    "declaracion": "Dios está cerca de mí. Mi tristeza no define mi destino; Su amor restaura mi corazón.",
+    "audio": "./assets/audio/oracion/tristeza.mp3"
+  },
+  {
+    "id": 3,
+    "tema": "Miedo",
+    "icono": "😟",
+    "descripcion": "Fortalece tu fe cuando el temor intenta detenerte.",
+    "palabra": {
+      "titulo": "Dios no me dio espíritu de temor",
+      "versiculo": "Porque no nos ha dado Dios espíritu de cobardía, sino de poder, de amor y de dominio propio.",
+      "referencia": "2 Timoteo 1:7"
+    },
+    "oracion": "Señor, renuncio al temor que quiere controlar mis decisiones. Recibo Tu poder, Tu amor y Tu dominio propio. Afirma mi corazón y hazme caminar con confianza en Ti.",
+    "declaracion": "No soy gobernado por el miedo. Dios me dio poder, amor y dominio propio.",
+    "audio": "./assets/audio/oracion/miedo.mp3"
+  },
+  {
+    "id": 4,
+    "tema": "Hogar",
+    "icono": "🏠",
+    "descripcion": "Ora por paz, unidad y restauración familiar.",
+    "palabra": {
+      "titulo": "Dios guarda mi casa",
+      "versiculo": "Si Jehová no edificare la casa, en vano trabajan los que la edifican.",
+      "referencia": "Salmo 127:1"
+    },
+    "oracion": "Señor, pongo mi hogar en Tus manos. Edifica nuestra casa con amor, perdón, orden y paz. Sana lo que esté herido y fortalece cada relación bajo Tu gobierno.",
+    "declaracion": "Mi hogar pertenece a Dios. Él edifica, guarda y restaura nuestra casa.",
+    "audio": "./assets/audio/oracion/hogar.mp3"
+  },
+  {
+    "id": 5,
+    "tema": "Finanzas",
+    "icono": "💰",
+    "descripcion": "Declara provisión, sabiduría y orden.",
+    "palabra": {
+      "titulo": "Dios es mi proveedor",
+      "versiculo": "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria en Cristo Jesús.",
+      "referencia": "Filipenses 4:19"
+    },
+    "oracion": "Señor, entrego mis finanzas delante de Ti. Dame sabiduría, orden, diligencia y contentamiento. Abre puertas correctas y enséñame a administrar con fidelidad lo que pones en mis manos.",
+    "declaracion": "Dios es mi proveedor. Camino en sabiduría, orden y confianza en Su provisión.",
+    "audio": "./assets/audio/oracion/finanzas.mp3"
+  },
+  {
+    "id": 6,
+    "tema": "Salud",
+    "icono": "🩺",
+    "descripcion": "Recibe fortaleza espiritual en medio del proceso.",
+    "palabra": {
+      "titulo": "Dios fortalece mi vida",
+      "versiculo": "Él da esfuerzo al cansado, y multiplica las fuerzas al que no tiene ningunas.",
+      "referencia": "Isaías 40:29"
+    },
+    "oracion": "Señor, presento mi salud delante de Ti. Fortalece mi cuerpo, mi mente y mi espíritu. Dame paz en el proceso, dirección correcta y esperanza firme en Tu amor.",
+    "declaracion": "Dios renueva mis fuerzas. Mi vida está en Sus manos y Su paz sostiene mi proceso.",
+    "audio": "./assets/audio/oracion/salud.mp3"
+  }
+]

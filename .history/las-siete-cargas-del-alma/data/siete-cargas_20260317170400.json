@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "appName": "Las Siete Cargas del Alma",
+    "subtitle": "Diagnóstico espiritual estructural",
+    "author": "Leonard Moon",
+    "version": "1.0.0"
+  },
+  "scale": {
+    "min": 0,
+    "max": 5,
+    "labels": ["Nunca", "Casi nunca", "A veces", "Frecuente", "Casi siempre", "Siempre"]
+  },
+  "rubrics": {
+    "globalBands": [
+      { "min": 0, "max": 20, "label": "Alineado" },
+      { "min": 21, "max": 40, "label": "Ajuste" },
+      { "min": 41, "max": 70, "label": "Riesgo" },
+      { "min": 71, "max": 100, "label": "Crítico" }
+    ]
+  },
+  "porticoModel": {
+    "axes": {
+      "alma": "viga",
+      "espiritu": "columna",
+      "cimiento": "cristo"
+    }
+  },
+  "sections": [
+    {
+      "id": "miedo",
+      "title": "Miedo",
+      "axis": "alma",
+      "verse": "Mateo 6:34",
+      "verseText": "Así que, no os afanéis por el día de mañana, porque el día de mañana traerá su afán. Basta a cada día su propio mal.",
+      "intro": "El miedo aparece cuando el alma intenta sostener el futuro.",
+      "questions": [
+        { "id": "m1", "text": "Pienso frecuentemente en cosas malas que podrían pasar." },
+        { "id": "m2", "text": "Me cuesta dejar de anticipar escenarios negativos." },
+        { "id": "m3", "text": "Siento temor constante por el futuro." },
+        { "id": "m4", "text": "Me cuesta vivir en el presente." },
+        { "id": "m5", "text": "Me preocupo por cosas que aún no han ocurrido." },
+        { "id": "m6", "text": "Siento inseguridad frente a lo que viene." },
+        { "id": "m7", "text": "Evito decisiones por miedo a equivocarme." },
+        { "id": "m8", "text": "Me cuesta confiar en que Dios tiene el control." }
+      ]
+    },
+    {
+      "id": "culpa",
+      "title": "Culpa",
+      "axis": "alma",
+      "verse": "Romanos 8:1",
+      "verseText": "Ahora, pues, ninguna condenación hay para los que están en Cristo Jesús, los que no andan conforme a la carne, sino conforme al Espíritu.",
+      "intro": "La culpa es el peso del pasado retenido en el alma.",
+      "questions": [
+        { "id": "c1", "text": "Pienso constantemente en errores del pasado." },
+        { "id": "c2", "text": "Me cuesta perdonarme a mí mismo." },
+        { "id": "c3", "text": "Siento que no soy digno por lo que hice." },
+        { "id": "c4", "text": "Recuerdo situaciones pasadas con dolor." },
+        { "id": "c5", "text": "Siento que cargo cosas que ya pasaron." },
+        { "id": "c6", "text": "Me cuesta soltar errores antiguos." },
+        { "id": "c7", "text": "Siento peso emocional al recordar el pasado." },
+        { "id": "c8", "text": "No logro experimentar libertad interior." }
+      ]
+    },
+    {
+      "id": "ansiedad",
+      "title": "Ansiedad",
+      "axis": "alma",
+      "verse": "Filipenses 4:6",
+      "verseText": "Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias.",
+      "intro": "La ansiedad es el intento del alma de controlar todo.",
+      "questions": [
+        { "id": "a1", "text": "Siento preocupación constante sin razón clara." },
+        { "id": "a2", "text": "Mi mente no descansa fácilmente." },
+        { "id": "a3", "text": "Me cuesta desconectarme de los problemas." },
+        { "id": "a4", "text": "Siento presión interna frecuente." },
+        { "id": "a5", "text": "Pienso demasiado en todo." },
+        { "id": "a6", "text": "Me cuesta confiar en el proceso." },
+        { "id": "a7", "text": "Siento que debo controlar todo." },
+        { "id": "a8", "text": "Me cuesta soltar situaciones." }
+      ]
+    },
+    {
+      "id": "responsabilidad",
+      "title": "Responsabilidad excesiva",
+      "axis": "alma",
+      "verse": "Mateo 11:28",
+      "verseText": "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+      "intro": "La responsabilidad excesiva es cargar lo que no te corresponde.",
+      "questions": [
+        { "id": "r1", "text": "Siento que todo depende de mí." },
+        { "id": "r2", "text": "Me cuesta delegar responsabilidades." },
+        { "id": "r3", "text": "Siento que debo sostener a otros." },
+        { "id": "r4", "text": "Me cuesta decir no." },
+        { "id": "r5", "text": "Asumo cargas que no son mías." },
+        { "id": "r6", "text": "Siento presión por cumplir con todo." },
+        { "id": "r7", "text": "Me agoto tratando de sostener todo." },
+        { "id": "r8", "text": "Siento que si suelto, todo falla." }
+      ]
+    },
+    {
+      "id": "rechazo",
+      "title": "Rechazo",
+      "axis": "alma",
+      "verse": "Efesios 1:6",
+      "verseText": "Para alabanza de la gloria de su gracia, con la cual nos hizo aceptos en el Amado.",
+      "intro": "El rechazo es una herida en la identidad.",
+      "questions": [
+        { "id": "re1", "text": "Me afecta lo que otros piensan de mí." },
+        { "id": "re2", "text": "Siento necesidad de aprobación constante." },
+        { "id": "re3", "text": "Me cuesta sentirme aceptado." },
+        { "id": "re4", "text": "Evito mostrarme tal como soy." },
+        { "id": "re5", "text": "Siento inseguridad en relaciones." },
+        { "id": "re6", "text": "Me duele el rechazo del pasado." },
+        { "id": "re7", "text": "Me comparo con otros constantemente." },
+        { "id": "re8", "text": "Dudo de mi valor personal." }
+      ]
+    },
+    {
+      "id": "escasez",
+      "title": "Temor a la escasez",
+      "axis": "alma",
+      "verse": "Filipenses 4:19",
+      "verseText": "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria en Cristo Jesús.",
+      "intro": "El temor a la escasez es la carga de la provisión.",
+      "questions": [
+        { "id": "e1", "text": "Siento miedo a que no alcance el dinero." },
+        { "id": "e2", "text": "Me preocupa el futuro económico." },
+        { "id": "e3", "text": "Siento inseguridad financiera constante." },
+        { "id": "e4", "text": "Me cuesta confiar en la provisión de Dios." },
+        { "id": "e5", "text": "Pienso mucho en falta de recursos." },
+        { "id": "e6", "text": "Siento ansiedad por el dinero." },
+        { "id": "e7", "text": "Me cuesta vivir en provisión." },
+        { "id": "e8", "text": "Siento presión económica interna." }
+      ]
+    },
+    {
+      "id": "soledad",
+      "title": "Soledad",
+      "axis": "alma",
+      "verse": "Salmo 68:6",
+      "verseText": "Dios hace habitar en familia a los desamparados; saca a los cautivos a prosperidad; mas los rebeldes habitan en tierra seca.",
+      "intro": "La soledad es la carga del corazón no acompañado.",
+      "questions": [
+        { "id": "s1", "text": "Me siento solo aunque esté acompañado." },
+        { "id": "s2", "text": "Siento vacío emocional." },
+        { "id": "s3", "text": "Me cuesta conectar con otros." },
+        { "id": "s4", "text": "Siento distancia emocional." },
+        { "id": "s5", "text": "Me cuesta abrir mi corazón." },
+        { "id": "s6", "text": "Siento que nadie me entiende." },
+        { "id": "s7", "text": "Me aíslo emocionalmente." },
+        { "id": "s8", "text": "Siento desconexión interior." }
+      ]
+    }
+  ]
+}

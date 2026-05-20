@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auditoría Forense de Obra</title>
+  <meta name="description" content="Aplicación para análisis técnico-contable y detección de alertas en contratos de obra." />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="manifest" href="pwa/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">AFO</div>
+        <div class="brand-text">
+          <h1>Auditoría Forense de Obra</h1>
+          <p>Control técnico, contable y tributario</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-link active" href="index.html">Inicio</a>
+        <a class="nav-link" href="contratos.html">Contratos</a>
+        <a class="nav-link" href="base-datos.html">Base de datos</a>
+        <a class="nav-link" href="presupuesto.html">Presupuesto</a>
+        <a class="nav-link" href="contrato-detalle.html">Detalle del contrato</a>
+        <a class="nav-link" href="facturacion.html">Facturación</a>
+        <a class="nav-link" href="alertas.html">Alertas</a>
+        <a class="nav-link" href="informes.html">Informes</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-badge" id="appStatusBadge">Sistema listo</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2>Panel principal</h2>
+          <p class="subtitle">
+            Herramienta para revisar la coherencia entre la base técnica importada, el presupuesto
+            de obra construido y la facturación registrada por el contratista.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="btnInstalarApp" class="btn btn-outline" type="button">Instalar app</button>
+          <a class="btn btn-primary" href="contratos.html">Nuevo contrato</a>
+        </div>
+      </header>
+
+      <section class="hero-card">
+        <div class="hero-content">
+          <span class="eyebrow">APP DE AUDITORÍA TÉCNICO-FISCAL</span>
+          <h3>Base importada + presupuesto auditado + facturación real</h3>
+          <p>
+            Esta aplicación permite importar una base Excel tipo presupuesto-pro, construir el
+            presupuesto específico del contrato, calcular la composición técnica esperada y
+            compararla con la facturación real registrada para identificar desviaciones,
+            inconsistencias tributarias y alertas de riesgo.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="base-datos.html">Importar base Excel</a>
+            <a class="btn btn-secondary" href="presupuesto.html">Construir presupuesto</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Contratos registrados</h4>
+          </div>
+          <div class="stat-value" id="statContratos">0</div>
+          <p class="card-note">Cantidad de contratos almacenados en la aplicación.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Ítems base importados</h4>
+          </div>
+          <div class="stat-value" id="statBaseItems">0</div>
+          <p class="card-note">Total de registros cargados desde la base Excel.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Ítems en presupuesto</h4>
+          </div>
+          <div class="stat-value" id="statPresupuestoItems">0</div>
+          <p class="card-note">Ítems construidos en los presupuestos de obra auditados.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Facturas cargadas</h4>
+          </div>
+          <div class="stat-value" id="statFacturas">0</div>
+          <p class="card-note">Total de soportes contables asociados a contratos.</p>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Alertas activas</h4>
+          </div>
+          <div class="stat-value" id="statAlertas">0</div>
+          <p class="card-note">Indicadores de riesgo detectados por el sistema.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>IVA observado</h4>
+          </div>
+          <div class="stat-value" id="statIVA">$ 0</div>
+          <p class="card-note">Valor acumulado de IVA registrado en los soportes cargados.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Valor presupuesto</h4>
+          </div>
+          <div class="stat-value" id="statValorPresupuesto">$ 0</div>
+          <p class="card-note">Valor acumulado de los presupuestos construidos.</p>
+        </article>
+
+        <article class="card stat-card">
+          <div class="card-header">
+            <h4>Estado del sistema</h4>
+          </div>
+          <div class="stat-value" id="statEstadoSistema">OK</div>
+          <p class="card-note">Estado general de carga de la aplicación.</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Flujo correcto de la auditoría</h4>
+          </div>
+
+          <div class="flow-list">
+            <div class="flow-step">
+              <span class="flow-number">1</span>
+              <div>
+                <strong>Registrar contrato</strong>
+                <p>Crear el contrato que será objeto de auditoría técnica, contable y tributaria.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">2</span>
+              <div>
+                <strong>Importar base Excel</strong>
+                <p>Cargar la base de datos tipo presupuesto-pro con ítems, APUs y estructura de costo.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">3</span>
+              <div>
+                <strong>Construir presupuesto</strong>
+                <p>Armar el presupuesto específico del contrato usando la base importada.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">4</span>
+              <div>
+                <strong>Calcular composición técnica</strong>
+                <p>Obtener cuánto debería corresponder a materiales, mano de obra, equipos y transportes.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">5</span>
+              <div>
+                <strong>Cargar facturación</strong>
+                <p>Registrar facturas, IVA y soportes reales asociados al contrato.</p>
+              </div>
+            </div>
+
+            <div class="flow-step">
+              <span class="flow-number">6</span>
+              <div>
+                <strong>Analizar, alertar e informar</strong>
+                <p>Ejecutar cruces, detectar riesgos y emitir informes técnicos de auditoría.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Componentes auditables del sistema</h4>
+          </div>
+
+          <div class="pill-grid">
+            <span class="pill">Base Excel</span>
+            <span class="pill">Presupuesto auditado</span>
+            <span class="pill">Materiales</span>
+            <span class="pill">Mano de obra</span>
+            <span class="pill">Equipos</span>
+            <span class="pill">Transportes</span>
+            <span class="pill">Facturación</span>
+            <span class="pill">IVA</span>
+            <span class="pill">Desviaciones</span>
+            <span class="pill">Alertas</span>
+            <span class="pill">Riesgo global</span>
+            <span class="pill">Informe técnico</span>
+          </div>
+
+          <div class="info-box">
+            <strong>Objetivo del sistema:</strong>
+            <p>
+              Traducir la realidad técnica del contrato en una referencia verificable para el
+              contador público, auditor o revisor fiscal, permitiendo detectar si la facturación
+              registrada guarda o no coherencia con la composición técnica real de la obra.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Resumen del sistema</h4>
+          </div>
+
+          <table class="summary-table">
+            <tbody>
+              <tr>
+                <th>Nombre de la app</th>
+                <td>Auditoría Forense de Obra</td>
+              </tr>
+              <tr>
+                <th>Enfoque</th>
+                <td>Auditoría técnico-contable de contratos de obra</td>
+              </tr>
+              <tr>
+                <th>Base técnica</th>
+                <td>Excel importado tipo presupuesto-pro</td>
+              </tr>
+              <tr>
+                <th>Unidad de análisis</th>
+                <td>Presupuesto específico del contrato auditado</td>
+              </tr>
+              <tr>
+                <th>Usuarios objetivo</th>
+                <td>Contadores, revisores fiscales, auditores, interventores</td>
+              </tr>
+              <tr>
+                <th>Modo de uso</th>
+                <td>PWA / Web local / Almacenamiento local</td>
+              </tr>
+              <tr>
+                <th>Estado</th>
+                <td id="systemStateText">Arquitectura base cargada correctamente</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Accesos rápidos</h4>
+          </div>
+
+          <div class="quick-links">
+            <a class="quick-link" href="contratos.html">
+              <strong>Contratos</strong>
+              <span>Crear y administrar contratos auditables</span>
+            </a>
+
+            <a class="quick-link" href="base-datos.html">
+              <strong>Base de datos</strong>
+              <span>Importar Excel tipo presupuesto-pro</span>
+            </a>
+
+            <a class="quick-link" href="presupuesto.html">
+              <strong>Presupuesto</strong>
+              <span>Construir el presupuesto real del contrato</span>
+            </a>
+
+            <a class="quick-link" href="facturacion.html">
+              <strong>Facturación</strong>
+              <span>Cargar soportes e IVA del contratista</span>
+            </a>
+
+            <a class="quick-link" href="alertas.html">
+              <strong>Alertas</strong>
+              <span>Consultar riesgos detectados automáticamente</span>
+            </a>
+
+            <a class="quick-link" href="informes.html">
+              <strong>Informes</strong>
+              <span>Emitir reportes técnicos de auditoría</span>
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+  <script src="js/storage.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/contratos.js"></script>
+  <script src="js/base-import.js"></script>
+  <script src="js/presupuesto.js"></script>
+  <script src="js/tecnico.js"></script>
+  <script src="js/facturacion.js"></script>
+  <script src="js/tributario.js"></script>
+  <script src="js/cruces.js"></script>
+  <script src="js/alertas.js"></script>
+  <script src="js/reportes.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    (function () {
+      function money(value) {
+        const n = Number(value || 0);
+        return "$ " + n.toLocaleString("es-CO", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        });
+      }
+
+      function updateExtendedDashboard() {
+        const contratos = window.AFOContratos ? window.AFOContratos.getAll() : [];
+        const baseItems = window.AFOBaseImport ? window.AFOBaseImport.getAll() : [];
+        const presupuestoItems = window.AFOPresupuesto ? window.AFOPresupuesto.getAll() : [];
+        const facturas = window.AFOFacturacion ? window.AFOFacturacion.getAll() : [];
+        const alertas = window.AFOAlertas ? window.AFOAlertas.getAll() : [];
+
+        let totalIVA = 0;
+        let valorPresupuesto = 0;
+
+        facturas.forEach(f => {
+          totalIVA += Number(f.iva || 0);
+        });
+
+        presupuestoItems.forEach(i => {
+          valorPresupuesto += Number(i.valorParcial || 0);
+        });
+
+        const setText = (id, value) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = value;
+        };
+
+        setText("statContratos", contratos.length);
+        setText("statBaseItems", baseItems.length);
+        setText("statPresupuestoItems", presupuestoItems.length);
+        setText("statFacturas", facturas.length);
+        setText("statAlertas", alertas.length);
+        setText("statIVA", money(totalIVA));
+        setText("statValorPresupuesto", money(valorPresupuesto));
+        setText("statEstadoSistema", "OK");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        updateExtendedDashboard();
+      });
+    })();
+  </script>
+</body>
+</html>

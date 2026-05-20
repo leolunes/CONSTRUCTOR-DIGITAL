@@ -1,0 +1,241 @@
+[
+  {
+    "id": 1,
+    "categoria_id": 1,
+    "nombre": "Soy amado"
+  },
+  {
+    "id": 2,
+    "categoria_id": 1,
+    "nombre": "Soy perdonado"
+  },
+  {
+    "id": 3,
+    "categoria_id": 1,
+    "nombre": "Soy hijo de Dios"
+  },
+
+  {
+    "id": 4,
+    "categoria_id": 2,
+    "nombre": "Confiar en Dios"
+  },
+  {
+    "id": 5,
+    "categoria_id": 2,
+    "nombre": "Caminar por fe"
+  },
+  {
+    "id": 6,
+    "categoria_id": 2,
+    "nombre": "Esperar en Dios"
+  },
+
+  {
+    "id": 7,
+    "categoria_id": 3,
+    "nombre": "Pedir con fe"
+  },
+  {
+    "id": 8,
+    "categoria_id": 3,
+    "nombre": "Recibir"
+  },
+  {
+    "id": 9,
+    "categoria_id": 3,
+    "nombre": "Persistir en oración"
+  },
+
+  {
+    "id": 10,
+    "categoria_id": 4,
+    "nombre": "Ansiedad"
+  },
+  {
+    "id": 11,
+    "categoria_id": 4,
+    "nombre": "Descanso"
+  },
+  {
+    "id": 12,
+    "categoria_id": 4,
+    "nombre": "Paz interior"
+  },
+
+  {
+    "id": 13,
+    "categoria_id": 5,
+    "nombre": "Sanidad física"
+  },
+  {
+    "id": 14,
+    "categoria_id": 5,
+    "nombre": "Restauración emocional"
+  },
+  {
+    "id": 15,
+    "categoria_id": 5,
+    "nombre": "Fortaleza"
+  },
+
+  {
+    "id": 16,
+    "categoria_id": 6,
+    "nombre": "Amor matrimonial"
+  },
+  {
+    "id": 17,
+    "categoria_id": 6,
+    "nombre": "Perdón"
+  },
+  {
+    "id": 18,
+    "categoria_id": 6,
+    "nombre": "Unidad familiar"
+  },
+
+  {
+    "id": 19,
+    "categoria_id": 7,
+    "nombre": "Provisión"
+  },
+  {
+    "id": 20,
+    "categoria_id": 7,
+    "nombre": "Trabajo"
+  },
+  {
+    "id": 21,
+    "categoria_id": 7,
+    "nombre": "Bendición financiera"
+  },
+
+  {
+    "id": 22,
+    "categoria_id": 8,
+    "nombre": "Sabiduría"
+  },
+  {
+    "id": 23,
+    "categoria_id": 8,
+    "nombre": "Dirección"
+  },
+  {
+    "id": 24,
+    "categoria_id": 8,
+    "nombre": "Propósito"
+  },
+
+  {
+    "id": 25,
+    "categoria_id": 9,
+    "nombre": "Protección espiritual"
+  },
+  {
+    "id": 26,
+    "categoria_id": 9,
+    "nombre": "Victoria"
+  },
+  {
+    "id": 27,
+    "categoria_id": 9,
+    "nombre": "Fortaleza espiritual"
+  },
+
+  {
+    "id": 28,
+    "categoria_id": 10,
+    "nombre": "Gratitud"
+  },
+  {
+    "id": 29,
+    "categoria_id": 10,
+    "nombre": "Gozo"
+  },
+  {
+    "id": 30,
+    "categoria_id": 10,
+    "nombre": "Adoración"
+  },
+
+  {
+    "id": 31,
+    "categoria_id": 11,
+    "nombre": "Sanidad emocional"
+  },
+  {
+    "id": 32,
+    "categoria_id": 11,
+    "nombre": "Libertad interior"
+  },
+  {
+    "id": 33,
+    "categoria_id": 11,
+    "nombre": "Rechazo"
+  },
+
+  {
+    "id": 34,
+    "categoria_id": 12,
+    "nombre": "Oración diaria"
+  },
+  {
+    "id": 35,
+    "categoria_id": 12,
+    "nombre": "Lectura bíblica"
+  },
+  {
+    "id": 36,
+    "categoria_id": 12,
+    "nombre": "Crecimiento espiritual"
+  },
+
+  {
+    "id": 37,
+    "categoria_id": 13,
+    "nombre": "Decisiones"
+  },
+  {
+    "id": 38,
+    "categoria_id": 13,
+    "nombre": "Prudencia"
+  },
+  {
+    "id": 39,
+    "categoria_id": 13,
+    "nombre": "Paciencia"
+  },
+
+  {
+    "id": 40,
+    "categoria_id": 14,
+    "nombre": "Propósito juvenil"
+  },
+  {
+    "id": 41,
+    "categoria_id": 14,
+    "nombre": "Identidad joven"
+  },
+  {
+    "id": 42,
+    "categoria_id": 14,
+    "nombre": "Futuro"
+  },
+
+  {
+    "id": 43,
+    "categoria_id": 15,
+    "nombre": "Protección divina"
+  },
+  {
+    "id": 44,
+    "categoria_id": 15,
+    "nombre": "Seguridad"
+  },
+  {
+    "id": 45,
+    "categoria_id": 15,
+    "nombre": "Cobertura espiritual"
+  }
+]

@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "titulo": "7 días de paz",
+    "descripcion": "Devocional para vencer la ansiedad y descansar en Dios.",
+    "duracion": 7,
+    "categoria_id": 4
+  },
+
+  {
+    "id": 2,
+    "titulo": "21 días de fe",
+    "descripcion": "Fortalece tu fe y confianza diariamente.",
+    "duracion": 21,
+    "categoria_id": 2
+  },
+
+  {
+    "id": 3,
+    "titulo": "Restaurando mi corazón",
+    "descripcion": "Sanidad emocional y libertad interior.",
+    "duracion": 14,
+    "categoria_id": 11
+  },
+
+  {
+    "id": 4,
+    "titulo": "Oración poderosa",
+    "descripcion": "Aprende a orar con fe y perseverancia.",
+    "duracion": 10,
+    "categoria_id": 3
+  },
+
+  {
+    "id": 5,
+    "titulo": "Propósito para mi vida",
+    "descripcion": "Descubre el propósito de Dios para ti.",
+    "duracion": 14,
+    "categoria_id": 8
+  },
+
+  {
+    "id": 6,
+    "titulo": "Protección diaria",
+    "descripcion": "Camina confiado bajo la protección de Dios.",
+    "duracion": 7,
+    "categoria_id": 15
+  }
+]

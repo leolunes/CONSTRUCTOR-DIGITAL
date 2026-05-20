@@ -1,0 +1,279 @@
+function safeNum(v){
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function safeStr(v){
+  return String(v ?? "").trim();
+}
+
+/* ==========================================
+   INDIRECTOS POR TABLA
+   - Soporta:
+     1) manual  -> adminPct / imprevPct / utilPct / ivaUtilPct
+     2) table   -> project.indirectTable
+   - Cada fila puede ser:
+     - fixed           => qty * unitValue
+     - percent_direct  => directo * percent / 100
+   - group esperado:
+     - ADMIN
+     - IMPREV
+     - UTIL
+     - OTRO / cualquier otro
+   ========================================== */
+
+function normalizeIndirectGroup(v){
+  const s = safeStr(v).toUpperCase();
+  if(!s) return "OTRO";
+
+  if(
+    s === "ADMIN" ||
+    s === "ADMINISTRACION" ||
+    s === "ADMINISTRACIÓN"
+  ) return "ADMIN";
+
+  if(
+    s === "IMPREV" ||
+    s === "IMPREVISTO" ||
+    s === "IMPREVISTOS"
+  ) return "IMPREV";
+
+  if(
+    s === "UTIL" ||
+    s === "UTILIDAD" ||
+    s === "UTILIDADES"
+  ) return "UTIL";
+
+  return "OTRO";
+}
+
+function normalizeIndirectCalcType(v){
+  const s = safeStr(v).toLowerCase();
+  if(
+    s === "percent_direct" ||
+    s === "percent-direct" ||
+    s === "porcentaje_directo" ||
+    s === "porcentaje-directo" ||
+    s === "%directo" ||
+    s === "%_directo"
+  ) return "percent_direct";
+
+  return "fixed";
+}
+
+function normalizeIndirectRow(row){
+  const r = row || {};
+  return {
+    id: safeStr(r.id),
+    group: normalizeIndirectGroup(r.group),
+    desc: safeStr(r.desc),
+    calcType: normalizeIndirectCalcType(r.calcType),
+    unit: safeStr(r.unit),
+    qty: safeNum(r.qty),
+    unitValue: safeNum(r.unitValue),
+    percent: safeNum(r.percent),
+    partial: safeNum(r.partial)
+  };
+}
+
+function listIndirectRows(project){
+  const arr = Array.isArray(project?.indirectTable) ? project.indirectTable : [];
+  return arr.map(normalizeIndirectRow);
+}
+
+function calcIndirectTable(project, directo){
+  const rows = listIndirectRows(project);
+
+  let admin = 0;
+  let imprev = 0;
+  let util = 0;
+  let otros = 0;
+
+  const computedRows = rows.map(r=>{
+    let partial = 0;
+
+    if(r.calcType === "percent_direct"){
+      partial = safeNum(directo) * (safeNum(r.percent) / 100);
+    }else{
+      partial = safeNum(r.qty) * safeNum(r.unitValue);
+    }
+
+    const out = {
+      ...r,
+      partial
+    };
+
+    const g = normalizeIndirectGroup(r.group);
+    if(g === "ADMIN") admin += partial;
+    else if(g === "IMPREV") imprev += partial;
+    else if(g === "UTIL") util += partial;
+    else otros += partial;
+
+    return out;
+  });
+
+  const adminPct = directo > 0 ? (admin / directo) * 100 : 0;
+  const imprevPct = directo > 0 ? (imprev / directo) * 100 : 0;
+  const utilPct = directo > 0 ? (util / directo) * 100 : 0;
+  const otrosPct = directo > 0 ? (otros / directo) * 100 : 0;
+
+  return {
+    rows: computedRows,
+    admin,
+    imprev,
+    util,
+    otros,
+    adminPct,
+    imprevPct,
+    utilPct,
+    otrosPct
+  };
+}
+
+function calcTotalsManual(project, directo){
+  const adminPct = safeNum(
+    project?.adminPct ?? project?.administracionPct ?? project?.aiuPct ?? 0
+  );
+  const imprevPct = safeNum(
+    project?.imprevPct ?? project?.imprevistosPct ?? 0
+  );
+   const utilPct = safeNum(
+    project?.utilPct ?? project?.utilidadPct ?? 0
+  );
+  const ivaUtilPct = safeNum(
+    project?.ivaUtilPct ?? project?.ivaSobreUtilidadPct ?? project?.ivaPct ?? 0
+  );
+
+  const admin = directo * (adminPct / 100);
+  const imprev = directo * (imprevPct / 100);
+  const util = directo * (utilPct / 100);
+
+  const subtotal = directo + admin + imprev + util;
+  const iva = util * (ivaUtilPct / 100);
+  const total = subtotal + iva;
+  const aiu = admin + imprev + util;
+
+  return {
+    mode: "manual",
+    directo,
+    adminPct, imprevPct, utilPct, ivaUtilPct,
+    admin, imprev, util,
+    subtotal,
+    iva,
+    ivaUtil: iva,
+    total,
+    aiu,
+    indirectRows: [],
+    indirectOthers: 0,
+    indirectOthersPct: 0
+  };
+}
+
+function calcTotalsFromTable(project, directo){
+  const indirect = calcIndirectTable(project, directo);
+
+  const ivaUtilPct = safeNum(
+    project?.ivaUtilPct ?? project?.ivaSobreUtilidadPct ?? project?.ivaPct ?? 0
+  );
+
+  const admin = safeNum(indirect.admin);
+  const imprev = safeNum(indirect.imprev);
+  const util = safeNum(indirect.util);
+  const otros = safeNum(indirect.otros);
+
+  const subtotal = directo + admin + imprev + util + otros;
+  const iva = util * (ivaUtilPct / 100);
+  const total = subtotal + iva;
+  const aiu = admin + imprev + util;
+
+  return {
+    mode: "table",
+    directo,
+
+    adminPct: safeNum(indirect.adminPct),
+    imprevPct: safeNum(indirect.imprevPct),
+    utilPct: safeNum(indirect.utilPct),
+    ivaUtilPct,
+
+    admin,
+    imprev,
+    util,
+    subtotal,
+
+    iva,
+    ivaUtil: iva,
+
+    total,
+    aiu,
+
+    indirectRows: indirect.rows,
+    indirectOthers: otros,
+    indirectOthersPct: safeNum(indirect.otrosPct)
+  };
+}
+
+function calcTotals(project){
+  const items = project.items || [];
+  const directo = items.reduce((s,it)=> s + (safeNum(it.pu) * safeNum(it.qty)), 0);
+
+  const indirectMode = safeStr(project?.indirectMode || "manual").toLowerCase();
+
+  if(indirectMode === "table"){
+    return calcTotalsFromTable(project, directo);
+  }
+
+  return calcTotalsManual(project, directo);
+}
+
+function groupByChapters(project){
+  const items = (project.items || []).map(it => ({
+    ...it,
+    parcial: safeNum(it.pu) * safeNum(it.qty)
+  }));
+
+  function chapterOf(it){
+    const c = safeStr(it.chapterCode);
+    if(c) return c;
+    const code = safeStr(it.code);
+    const ch = code.includes(".") ? code.split(".")[0] : "";
+    return /^\d+$/.test(ch) ? ch : "SIN";
+  }
+
+  const map = new Map();
+  for(const it of items){
+    const ch = chapterOf(it);
+    if(!map.has(ch)){
+      map.set(ch, {
+        chapterCode: ch,
+        chapterName: it.chapterName || "",
+        itemsCount: 0,
+        subtotal: 0,
+        items: []
+      });
+    }
+    const g = map.get(ch);
+    g.itemsCount += 1;
+    g.subtotal += it.parcial;
+    g.items.push(it);
+
+    if(!g.chapterName && it.chapterName) g.chapterName = it.chapterName;
+  }
+
+  const groups = Array.from(map.values()).sort((a,b)=>{
+    const an = Number(a.chapterCode), bn = Number(b.chapterCode);
+    const aNum = Number.isFinite(an) && a.chapterCode !== "SIN";
+    const bNum = Number.isFinite(bn) && b.chapterCode !== "SIN";
+    if(aNum && bNum) return an - bn;
+    if(a.chapterCode === "SIN") return 1;
+    if(b.chapterCode === "SIN") return -1;
+    return String(a.chapterCode).localeCompare(String(b.chapterCode));
+  });
+
+  return { groups, items };
+}
+
+window.Calc = {
+  calcTotals,
+  groupByChapters,
+  calcIndirectTable
+};

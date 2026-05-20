@@ -1,0 +1,149 @@
+/* =====================================
+   FUENTES POPPINS
+===================================== */
+
+@font-face{
+    font-family:'Poppins';
+    src:url('../assets/fonts/Poppins-Regular.ttf');
+}
+
+@font-face{
+    font-family:'Poppins-Bold';
+    src:url('../assets/fonts/Poppins-Bold.ttf');
+}
+
+/* =====================================
+   RESET
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =====================================
+   BODY
+===================================== */
+
+body{
+    font-family:'Poppins', Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    color:#222;
+    line-height:1.6;
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.header{
+    background:#5b3cc4;
+    color:white;
+    padding:40px 20px;
+    text-align:center;
+}
+
+.header h1{
+    font-family:'Poppins-Bold';
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    font-size:16px;
+    opacity:0.9;
+}
+
+/* =====================================
+   NAVBAR CON ICONOS
+===================================== */
+
+.navbar{
+    background:#ffffff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:28px;
+    padding:12px 15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.navbar a{
+    color:#5b3cc4;
+    text-decoration:none;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+}
+
+.navbar a:hover{
+    transform:translateY(-2px);
+}
+
+.navbar img{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+}
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+/* =====================================
+   GRID CATEGORÍAS
+===================================== */
+
+#categorias-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
+
+/* =====================================
+   GRID DECLARACIONES
+===================================== */
+
+#declaraciones-container,
+#favoritos-container,
+#audios-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+/* =====================================
+   BOTÓN VOLVER
+===================================== */
+
+.btn-volver{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:25px;
+    background:#5b3cc4;
+    color:white;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:10px;
+    font-family:'Poppins-Bold';
+}
+
+.btn-volver:hover{
+    background:#452d96;
+}
+
+.btn-volver img{
+    width:18px;
+    height:18px;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Como Él Ha Dicho</title>
+
+    <!-- PWA -->
+
+    <link rel="manifest" href="./pwa/manifest.json">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <link rel="stylesheet" href="./css/cards.css">
+
+    <link rel="stylesheet" href="./css/animations.css">
+
+    <link rel="stylesheet" href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <h1>
+            Como Él Ha Dicho
+        </h1>
+
+        <p class="subtitle">
+            Declara la Palabra de Dios sobre tu vida
+        </p>
+
+    </header>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="index.html">
+            Inicio
+        </a>
+
+        <a href="favoritos.html">
+            Favoritos
+        </a>
+
+        <a href="audios.html">
+            Audios
+        </a>
+
+        <a href="perfil.html">
+            Perfil
+        </a>
+
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="container">
+
+        <section id="categorias-container">
+
+            <!-- Categorías dinámicas -->
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="./js/app.js"></script>
+
+    <!-- SERVICE WORKER -->
+
+    <script>
+
+        if('serviceWorker' in navigator){
+
+            navigator.serviceWorker.register('./pwa/service-worker.js')
+
+            .then(() => {
+
+                console.log('Service Worker registrado');
+
+            })
+
+            .catch(error => {
+
+                console.log('Error Service Worker:', error);
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración | Victoriosos en Cristo</title>
+
+    <link rel="icon" href="assets/icons/favicon.png">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <!-- =====================================
+         CONTENEDOR PRINCIPAL
+    ====================================== -->
+    <main class="app-page configuracion-page">
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+        <header class="page-header config-header">
+
+            <button class="btn-icon" id="btnVolver" aria-label="Volver">
+                <img src="assets/icons/back.png" alt="Volver">
+            </button>
+
+            <div class="page-title-box">
+                <img src="assets/icons/logo.png" alt="Victoriosos en Cristo" class="page-logo">
+                <div>
+                    <h1>Configuración</h1>
+                    <p>Ajusta tu experiencia espiritual diaria</p>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- =====================================
+             TARJETA PRINCIPAL
+        ====================================== -->
+        <section class="config-card principal">
+
+            <div class="config-card-title">
+                <span class="config-icon">⚙️</span>
+                <div>
+                    <h2>Configuración de la app</h2>
+                    <p>Estos ajustes se guardan automáticamente en este dispositivo.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             RECORDATORIO DIARIO
+        ====================================== -->
+        <section class="config-card">
+
+            <div class="config-row">
+
+                <div class="config-info">
+                    <span class="config-icon">🔔</span>
+                    <div>
+                        <h3>Recordatorio diario</h3>
+                        <p>Elige la hora en la que deseas ser recordado para tu devocional.</p>
+                    </div>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox" id="recordatorioActivo">
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+            <div class="config-extra" id="bloqueHoraRecordatorio">
+
+                <label for="horaRecordatorio" class="config-label">
+                    Hora preferida
+                </label>
+
+                <input type="time" id="horaRecordatorio" class="input-config">
+
+                <p class="config-note" id="textoRecordatorio">
+                    Tu recordatorio quedará guardado en la app.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             MODO OSCURO
+        ====================================== -->
+        <section class="config-card">
+
+            <div class="config-row">
+
+                <div class="config-info">
+                    <span class="config-icon">🌙</span>
+                    <div>
+                        <h3>Modo oscuro</h3>
+                        <p>Cambia la apariencia visual para lectura nocturna.</p>
+                    </div>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox" id="modoOscuro">
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             SONIDO AUTOMÁTICO
+        ====================================== -->
+        <section class="config-card">
+
+            <div class="config-row">
+
+                <div class="config-info">
+                    <span class="config-icon">🔊</span>
+                    <div>
+                        <h3>Sonido automático</h3>
+                        <p>Permite que los audios espirituales puedan iniciar automáticamente cuando corresponda.</p>
+                    </div>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox" id="sonidoAutomatico">
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+            <p class="config-note">
+                Algunos navegadores pueden pedir interacción antes de reproducir audio automáticamente.
+            </p>
+
+        </section>
+
+        <!-- =====================================
+             NUEVA OPCIÓN AUDIOLIBROS
+        ====================================== -->
+        <section class="config-card">
+
+            <div class="config-row">
+
+                <div class="config-info">
+                    <span class="config-icon">📚</span>
+                    <div>
+                        <h3>Audiolibros espirituales</h3>
+                        <p>Accede a enseñanzas, prólogos y capítulos completos en formato audio y PDF.</p>
+                    </div>
+                </div>
+
+                <a href="audiolibros.html"
+                class="btn-primary-config"
+                style="text-decoration:none;text-align:center;max-width:170px;">
+                    Entrar
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- =====================================
+             ESTADO GUARDADO
+        ====================================== -->
+        <section class="config-status" id="estadoConfig">
+            Configuración guardada correctamente.
+        </section>
+
+        <!-- =====================================
+             ACCIONES
+        ====================================== -->
+        <section class="config-actions">
+
+            <button class="btn-primary-config" id="btnGuardarConfig">
+                Guardar configuración
+            </button>
+
+            <button class="btn-secondary-config" id="btnRestablecerConfig">
+                Restablecer
+            </button>
+
+        </section>
+
+    </main>
+
+    <!-- =====================================
+         NAVBAR INFERIOR
+    ====================================== -->
+    <nav class="bottom-nav">
+
+        <a href="index.html" class="nav-item">
+            <img src="assets/icons/home.png" alt="Inicio">
+            <span>Inicio</span>
+        </a>
+
+        <a href="favoritos.html" class="nav-item">
+            <img src="assets/icons/favorite.png" alt="Favoritos">
+            <span>Favoritos</span>
+        </a>
+
+        <a href="audios.html" class="nav-item">
+            <img src="assets/icons/play.png" alt="Audios">
+            <span>Audios</span>
+        </a>
+
+        <!-- NUEVO BOTÓN AUDIOLIBROS -->
+
+        <a href="audiolibros.html" class="nav-item">
+            <img src="assets/icons/book.png" alt="Audiolibros">
+            <span>Audiolibros</span>
+        </a>
+
+        <a href="perfil.html" class="nav-item">
+            <img src="assets/icons/profile.png" alt="Perfil">
+            <span>Perfil</span>
+        </a>
+
+    </nav>
+
+    <script src="js/configuracion.js"></script>
+
+</body>
+</html>

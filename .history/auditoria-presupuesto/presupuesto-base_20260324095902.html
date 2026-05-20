@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Presupuesto Base | Auditoría Presupuesto</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html">←</a>
+    <div>
+      <div class="title" id="baseTitle">Presupuesto Base</div>
+      <div class="subtitle" id="baseSub">Cargando proyecto…</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnGoProject" href="proyecto-detalle.html">Ir al proyecto</a>
+    <a class="navbtn" id="btnGoOfficial" href="presupuesto-oficial.html">Ir a presupuesto oficial</a>
+    <button class="navbtn" id="btnExportBaseExcel" type="button">Exportar Excel Base</button>
+    <button class="navbtn" id="btnPdfBase" type="button">PDF Base</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <div class="row" style="gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center">
+      <div>
+        <div class="name">Proyecto</div>
+        <div class="muted small" id="baseProjectInfo">—</div>
+      </div>
+      <div class="row" style="gap:8px; flex-wrap:wrap">
+        <button class="btn" id="btnRefreshBase" type="button">Actualizar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid kpis" id="baseKpis" style="margin-top:14px"></section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Agregar desde Base APU</h2>
+      <p class="muted small">Busca por código o descripción y agrega el APU al Presupuesto Base del proyecto.</p>
+    </div>
+
+    <div class="row" style="align-items:stretch">
+      <input id="baseApuSearch" class="search" placeholder="Buscar en Base APU…" />
+      <button class="btn primary" id="btnBaseApuSearch" type="button">Buscar</button>
+    </div>
+
+    <div class="tablewrap" style="margin-top:12px">
+      <table class="table" style="min-width:1120px">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Unidad</th>
+            <th style="text-align:right">PU</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="baseApuResultsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="baseApuResultsEmpty" style="display:none">Sin resultados. Verifique que la Base APU esté instalada.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Agregar ítem manual al Presupuesto Base</h2>
+      <p class="muted small">Puede crear un ítem manual sin afectar el Presupuesto Oficial.</p>
+    </div>
+
+    <form id="formAddBaseManual" class="form">
+      <div class="grid two">
+        <div>
+          <label>Capítulo (número)</label>
+          <input name="chapterCode" placeholder="Ej: 1" />
+        </div>
+        <div>
+          <label>Nombre del capítulo</label>
+          <input name="chapterName" placeholder="Ej: PRELIMINARES" />
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Código</label>
+          <input name="code" required placeholder="Ej: 1.01" />
+        </div>
+        <div>
+          <label>Unidad</label>
+          <input name="unit" required placeholder="Ej: m3" />
+        </div>
+      </div>
+
+      <label>Descripción</label>
+      <input name="desc" required placeholder="Describe el ítem…" />
+
+      <div class="grid two">
+        <div>
+          <label>Precio unitario (PU)</label>
+          <input name="pu" required inputmode="decimal" placeholder="Ej: 150000" />
+        </div>
+        <div>
+          <label>Cantidad</label>
+          <input name="qty" required inputmode="decimal" placeholder="Ej: 10" />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn primary" type="submit">Agregar ítem base</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Capítulos del Presupuesto Base</h2>
+      <p class="muted small">Subtotales e ítems agrupados por capítulo.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:980px">
+        <thead>
+          <tr>
+            <th>Capítulo</th>
+            <th>Nombre</th>
+            <th style="text-align:right">Ítems</th>
+            <th style="text-align:right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="baseChaptersBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="baseChaptersEmpty" style="display:none">No hay capítulos en el Presupuesto Base.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Ítems del Presupuesto Base</h2>
+      <p class="muted small">Detalle completo del presupuesto base.</p>
+      <div class="row" style="margin-top:8px; gap:8px; flex-wrap:wrap">
+        <input id="baseItemsSearch" class="search" placeholder="Buscar por código o descripción…" />
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1250px">
+        <thead>
+          <tr>
+            <th>Cap</th>
+            <th>Código</th>
+            <th>APU Ref</th>
+            <th>Descripción</th>
+            <th>Unidad</th>
+            <th style="text-align:right">PU</th>
+            <th style="text-align:right">Cantidad</th>
+            <th style="text-align:right">Parcial</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="baseItemsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="baseItemsEmpty" style="display:none">No hay ítems en el Presupuesto Base.</div>
+  </section>
+</main>
+
+<div id="baseAddApuModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:60; padding:18px; overflow:auto">
+  <div class="card" style="max-width:980px; margin:0 auto">
+    <div class="row space" style="margin-bottom:10px">
+      <div>
+        <div class="name">Agregar ítem al Presupuesto Base</div>
+        <div class="muted small">Seleccione cantidad y capítulo destino.</div>
+      </div>
+      <button class="btn danger" id="btnBaseAddApuClose" type="button">Cerrar</button>
+    </div>
+
+    <section class="card" style="background:transparent; border:none; padding:0; box-shadow:none">
+      <div class="grid two">
+        <div>
+          <label class="muted small">APU seleccionado</label>
+          <input id="baseAddApuCode" readonly />
+        </div>
+        <div>
+          <label class="muted small">Unidad</label>
+          <input id="baseAddApuUnit" readonly />
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label class="muted small">Descripción</label>
+        <input id="baseAddApuDesc" readonly />
+      </div>
+
+      <hr class="sep">
+
+      <div class="grid two">
+        <div>
+          <label class="muted small">Cantidad</label>
+          <input id="baseAddApuQty" inputmode="decimal" placeholder="Ej: 10" />
+        </div>
+        <div>
+          <label class="muted small">Capítulo destino</label>
+          <select id="baseAddApuChapterSel"></select>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:10px">
+        <div>
+          <label class="muted small">Código capítulo</label>
+          <input id="baseAddApuChapterCode" readonly />
+        </div>
+        <div>
+          <label class="muted small">Nombre capítulo</label>
+          <input id="baseAddApuChapterName" readonly />
+        </div>
+      </div>
+
+      <div class="row space" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" id="btnBaseAddApuConfirm" type="button">Agregar al Presupuesto Base</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/base-import.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/excel-export.js"></script>
+
+<script>
+(function(){
+  var modalState = {
+    projectId: "",
+    apu: null
+  };
+
+  function qs(sel){ return document.querySelector(sel); }
+  function safe(v){ return String(v == null ? "" : v).trim(); }
+  function num(v){ return Number(v || 0); }
+
+  function esc(s){
+    if(window.UI && typeof UI.esc === "function") return UI.esc(s);
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function chip(label, kind){
+    if(window.UI && typeof UI.chip === "function") return UI.chip(label, kind || "");
+    var cls = kind ? ("chip " + kind) : "chip";
+    return '<span class="' + cls + '">' + esc(label) + '</span>';
+  }
+
+  function fmtMoney(v, currency){
+    if(window.UI && typeof UI.fmtMoney === "function"){
+      return UI.fmtMoney(v, currency || "COP");
+    }
+    var n = Math.round(Number(v || 0));
+    return "$ " + n.toLocaleString("es-CO");
+  }
+
+  function getParam(name){
+    if(window.UI && typeof UI.getParam === "function") return UI.getParam(name);
+    var u = new URL(location.href);
+    return u.searchParams.get(name);
+  }
+
+  function getProject(projectId){
+    if(!window.StorageAPI || typeof StorageAPI.getProjectById !== "function") return null;
+    return StorageAPI.getProjectById(projectId);
+  }
+
+  function getBaseItems(project){
+    return Array.isArray(project && project.items) ? project.items : [];
+  }
+
+  function getBaseChapters(project){
+    return Array.isArray(project && project.chapters) ? project.chapters : [];
+  }
+
+  function totalsCompat(project){
+    var t = (window.Calc && typeof Calc.calcTotals === "function") ? (Calc.calcTotals(project) || {}) : {};
+    return {
+      directo: num(t.directo),
+      admin: num(t.admin),
+      imprev: num(t.imprev),
+      util: num(t.util),
+      subtotal: num(t.subtotal),
+      ivaUtil: num(t.ivaUtil != null ? t.ivaUtil : t.iva),
+      total: num(t.total)
+    };
+  }
+
+  function groupByChaptersCompat(project){
+    if(window.Calc && typeof Calc.groupByChapters === "function"){
+      return Calc.groupByChapters(project) || { groups:[], items:[] };
+    }
+    return { groups:[], items:getBaseItems(project) };
+  }
+
+  function renderHeader(project){
+    var title = qs("#baseTitle");
+    var sub = qs("#baseSub");
+    var info = qs("#baseProjectInfo");
+    var btnGoProject = qs("#btnGoProject");
+    var btnGoOfficial = qs("#btnGoOfficial");
+
+    if(title) title.textContent = "Presupuesto Base";
+    if(sub) sub.textContent = (project.name || "Proyecto") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+    if(info) info.textContent = (project.name || "—") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+
+    if(btnGoProject) btnGoProject.href = "proyecto-detalle.html?projectId=" + encodeURIComponent(project.id);
+    if(btnGoOfficial) btnGoOfficial.href = "presupuesto-oficial.html?projectId=" + encodeURIComponent(project.id);
+  }
+
+  function renderKpis(project){
+    var el = qs("#baseKpis");
+    if(!el) return;
+
+    var totals = totalsCompat(project);
+    var grouped = groupByChaptersCompat(project);
+    var groups = grouped.groups || [];
+    var items = grouped.items || [];
+
+    el.innerHTML = ''
+      + '<div class="card item"><div class="topline"><div class="name">Items Base</div><div class="chips">' + chip(String(items.length), "ok") + '</div></div><div class="muted small">Ítems del presupuesto base.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Capítulos Base</div><div class="chips">' + chip(String(groups.length)) + '</div></div><div class="muted small">Capítulos calculados.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Costos Directos</div><div class="chips">' + chip(fmtMoney(totals.directo, project.currency || "COP")) + '</div></div><div class="muted small">Suma directa del presupuesto base.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Valor Total</div><div class="chips">' + chip(fmtMoney(totals.total, project.currency || "COP"), "ok") + '</div></div><div class="muted small">Total del presupuesto base.</div></div>';
+  }
+
+  function renderChapters(project){
+    var tbody = qs("#baseChaptersBody");
+    var empty = qs("#baseChaptersEmpty");
+    if(!tbody) return;
+
+    var grouped = groupByChaptersCompat(project);
+    var groups = grouped.groups || [];
+
+    if(!groups.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = groups.map(function(g){
+      return ''
+        + '<tr>'
+        + '  <td><b>' + esc(g.chapterCode || "") + '</b></td>'
+        + '  <td>' + esc(g.chapterName || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(g.itemsCount))) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(g.subtotal, project.currency || "COP")) + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function filterBaseItems(items){
+    var q = safe(qs("#baseItemsSearch") && qs("#baseItemsSearch").value).toLowerCase();
+    if(!q) return items;
+
+    return items.filter(function(it){
+      var bag = [
+        safe(it.code),
+        safe(it.apuRefCode),
+        safe(it.desc),
+        safe(it.unit),
+        safe(it.chapterCode),
+        safe(it.chapterName)
+      ].join(" ").toLowerCase();
+
+      return bag.indexOf(q) >= 0;
+    });
+  }
+
+  function renderItems(project){
+    var tbody = qs("#baseItemsBody");
+    var empty = qs("#baseItemsEmpty");
+    if(!tbody) return;
+
+    var items = filterBaseItems(getBaseItems(project));
+
+    if(!items.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = items.map(function(it){
+      var parcial = num(it.pu) * num(it.qty);
+      var apuCode = safe(it.apuRefCode || it.code);
+
+      return ''
+        + '<tr>'
+        + '  <td><b>' + esc(it.chapterCode || "") + '</b></td>'
+        + '  <td><b>' + esc(it.code || "") + '</b></td>'
+        + '  <td>' + esc(apuCode) + '</td>'
+        + '  <td>' + esc(it.desc || "") + '</td>'
+        + '  <td>' + esc(it.unit || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(it.pu, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(it.qty))) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(parcial, project.currency || "COP")) + '</b></td>'
+        + '  <td class="row" style="gap:8px">'
+        + '    <a class="btn" href="apu.html?code=' + encodeURIComponent(apuCode) + '&projectId=' + encodeURIComponent(project.id) + '&mode=base">Ver APU</a>'
+        + '    <button class="btn danger" type="button" data-delbase="' + esc(it.id) + '">Eliminar</button>'
+        + '  </td>'
+        + '</tr>';
+    }).join("");
+
+    var buttons = tbody.querySelectorAll("[data-delbase]");
+    buttons.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var id = btn.getAttribute("data-delbase");
+        if(!confirm("¿Eliminar este ítem del Presupuesto Base?")) return;
+
+        if(window.StorageAPI && typeof StorageAPI.deleteItem === "function"){
+          StorageAPI.deleteItem(project.id, id);
+        }
+
+        var updated = getProject(project.id);
+        renderAll(updated);
+      });
+    });
+  }
+
+  function renderAll(project){
+    renderHeader(project);
+    renderKpis(project);
+    renderChapters(project);
+    renderItems(project);
+  }
+
+  async function searchBaseApu(projectId){
+    var q = safe(qs("#baseApuSearch") && qs("#baseApuSearch").value);
+    var tbody = qs("#baseApuResultsBody");
+    var empty = qs("#baseApuResultsEmpty");
+    if(!tbody) return;
+
+    if(!q){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    try{
+      var meta = null;
+      if(window.APUBase && typeof APUBase.getMeta === "function"){
+        meta = await APUBase.getMeta();
+      }
+
+      if(!meta){
+        alert("Primero debe instalar la Base APU (XLSX) desde la pantalla de proyectos.");
+        return;
+      }
+
+      var results = [];
+      if(window.APUBase && typeof APUBase.search === "function"){
+        results = await APUBase.search(q, 30);
+      }
+
+      results = Array.isArray(results) ? results.filter(function(r){ return !r.isChapter; }) : [];
+
+      if(!results.length){
+        tbody.innerHTML = "";
+        if(empty) empty.style.display = "";
+        return;
+      }
+
+      if(empty) empty.style.display = "none";
+
+      tbody.innerHTML = results.map(function(r){
+        return ''
+          + '<tr>'
+          + '  <td><b>' + esc(r.code || "") + '</b></td>'
+          + '  <td>' + esc(r.desc || "") + '</td>'
+          + '  <td>' + esc(r.unit || "") + '</td>'
+          + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.pu, "COP")) + '</b></td>'
+          + '  <td><button class="btn primary" type="button" data-addbaseapu="' + esc(r.code || "") + '">Agregar</button></td>'
+          + '</tr>';
+      }).join("");
+
+      var buttons = tbody.querySelectorAll("[data-addbaseapu]");
+      buttons.forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var code = btn.getAttribute("data-addbaseapu");
+          var apu = null;
+          var i;
+
+          for(i=0; i<results.length; i++){
+            if(String(results[i].code || "") === String(code || "")){
+              apu = results[i];
+              break;
+            }
+          }
+
+          if(!apu) return;
+          openAddApuModal(projectId, apu);
+        });
+      });
+    }catch(err){
+      alert("Error buscando en Base APU: " + (err && err.message ? err.message : err));
+    }
+  }
+
+  function buildChapterOptions(project){
+    var chapters = getBaseChapters(project);
+    return chapters.map(function(ch){
+      return {
+        code: safe(ch.chapterCode),
+        name: safe(ch.chapterName)
+      };
+    });
+  }
+
+  function openAddApuModal(projectId, apu){
+    var project = getProject(projectId);
+    if(!project) return;
+
+    modalState.projectId = projectId;
+    modalState.apu = apu || null;
+
+    var modal = qs("#baseAddApuModal");
+    var sel = qs("#baseAddApuChapterSel");
+    var inpCode = qs("#baseAddApuCode");
+    var inpUnit = qs("#baseAddApuUnit");
+    var inpDesc = qs("#baseAddApuDesc");
+    var inpQty = qs("#baseAddApuQty");
+    var inpChapCode = qs("#baseAddApuChapterCode");
+    var inpChapName = qs("#baseAddApuChapterName");
+
+    if(inpCode) inpCode.value = safe(apu && apu.code);
+    if(inpUnit) inpUnit.value = safe(apu && apu.unit);
+    if(inpDesc) inpDesc.value = safe(apu && apu.desc);
+    if(inpQty) inpQty.value = "1";
+
+    if(sel){
+      var options = buildChapterOptions(project);
+      if(!options.length){
+        options = [{ code:"", name:"(Sin capítulos definidos)" }];
+      }
+
+      sel.innerHTML = options.map(function(op){
+        var label = op.code ? (op.code + " — " + op.name) : op.name;
+        return '<option value="' + esc(op.code) + '" data-name="' + esc(op.name) + '">' + esc(label) + '</option>';
+      }).join("");
+
+      function syncChapterInputs(){
+        var opt = sel.options[sel.selectedIndex];
+        var code = opt ? safe(opt.value) : "";
+        var name = opt ? safe(opt.getAttribute("data-name")) : "";
+        if(inpChapCode) inpChapCode.value = code;
+        if(inpChapName) inpChapName.value = name;
+      }
+
+      sel.onchange = syncChapterInputs;
+      syncChapterInputs();
+    }
+
+    if(modal) modal.style.display = "";
+  }
+
+  function closeAddApuModal(){
+    var modal = qs("#baseAddApuModal");
+    if(modal) modal.style.display = "none";
+  }
+
+  function confirmAddApuToBase(){
+    var projectId = modalState.projectId;
+    var apu = modalState.apu;
+    if(!projectId || !apu) return;
+
+    var qty = num(qs("#baseAddApuQty") && qs("#baseAddApuQty").value);
+    var chapterCode = safe(qs("#baseAddApuChapterCode") && qs("#baseAddApuChapterCode").value);
+    var chapterName = safe(qs("#baseAddApuChapterName") && qs("#baseAddApuChapterName").value);
+
+    if(!(qty > 0)){
+      alert("La cantidad debe ser mayor a 0.");
+      return;
+    }
+
+    if(window.StorageAPI && typeof StorageAPI.addItem === "function"){
+      StorageAPI.addItem(projectId, {
+        chapterCode: chapterCode,
+        chapterName: chapterName,
+        code: safe(apu.code),
+        apuRefCode: safe(apu.code),
+        desc: safe(apu.desc),
+        unit: safe(apu.unit),
+        pu: num(apu.pu),
+        qty: qty
+      });
+    }
+
+    closeAddApuModal();
+
+    var updated = getProject(projectId);
+    renderAll(updated);
+    alert("Ítem agregado al Presupuesto Base.");
+  }
+
+  function bindManualForm(projectId){
+    var form = qs("#formAddBaseManual");
+    if(!form) return;
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      var fd = new FormData(form);
+
+      var chapterCode = safe(fd.get("chapterCode"));
+      var chapterName = safe(fd.get("chapterName"));
+      var code = safe(fd.get("code"));
+      var unit = safe(fd.get("unit"));
+      var desc = safe(fd.get("desc"));
+      var pu = num(fd.get("pu"));
+      var qty = num(fd.get("qty"));
+
+      if(!code || !unit || !desc){
+        alert("Complete código, unidad y descripción.");
+        return;
+      }
+
+      if(!(pu > 0) || !(qty > 0)){
+        alert("PU y cantidad deben ser mayores a 0.");
+        return;
+      }
+
+      if(window.StorageAPI && typeof StorageAPI.addItem === "function"){
+        StorageAPI.addItem(projectId, {
+          chapterCode: chapterCode,
+          chapterName: chapterName,
+          code: code,
+          apuRefCode: code,
+          desc: desc,
+          unit: unit,
+          pu: pu,
+          qty: qty
+        });
+      }
+
+      form.reset();
+
+      var updated = getProject(projectId);
+      renderAll(updated);
+      alert("Ítem agregado al Presupuesto Base.");
+    });
+  }
+
+  function bind(project){
+    var btnSearch = qs("#btnBaseApuSearch");
+    var inpSearch = qs("#baseApuSearch");
+    var inpItemsSearch = qs("#baseItemsSearch");
+    var btnRefresh = qs("#btnRefreshBase");
+    var btnExcel = qs("#btnExportBaseExcel");
+    var btnPdf = qs("#btnPdfBase");
+    var btnCloseModal = qs("#btnBaseAddApuClose");
+    var btnConfirmModal = qs("#btnBaseAddApuConfirm");
+
+    if(btnSearch){
+      btnSearch.addEventListener("click", function(){
+        searchBaseApu(project.id);
+      });
+    }
+
+    if(inpSearch){
+      inpSearch.addEventListener("keydown", function(e){
+        if(e.key === "Enter"){
+          e.preventDefault();
+          searchBaseApu(project.id);
+        }
+      });
+    }
+
+    if(inpItemsSearch){
+      inpItemsSearch.addEventListener("input", function(){
+        var fresh = getProject(project.id);
+        renderItems(fresh);
+      });
+    }
+
+    if(btnRefresh){
+      btnRefresh.addEventListener("click", function(){
+        var fresh = getProject(project.id);
+        renderAll(fresh);
+      });
+    }
+
+    if(btnExcel){
+      btnExcel.addEventListener("click", function(){
+        try{
+          if(window.ExcelExport && typeof ExcelExport.exportBudgetWorkbook === "function"){
+            ExcelExport.exportBudgetWorkbook(project, "base");
+          }else{
+            alert("ExcelExport no está disponible.");
+          }
+        }catch(err){
+          alert("Error exportando Excel Base: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(btnPdf){
+      btnPdf.addEventListener("click", async function(){
+        try{
+          if(window.PDF && typeof PDF.exportPresupuestoPDF === "function"){
+            await PDF.exportPresupuestoPDF(project, { mode:"base" });
+          }else{
+            alert("PDF no está disponible.");
+          }
+        }catch(err){
+          alert("Error generando PDF Base: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(btnCloseModal){
+      btnCloseModal.addEventListener("click", closeAddApuModal);
+    }
+
+    if(btnConfirmModal){
+      btnConfirmModal.addEventListener("click", confirmAddApuToBase);
+    }
+
+    bindManualForm(project.id);
+  }
+
+  (function boot(){
+    var projectId = getParam("projectId");
+    if(!projectId){
+      alert("Falta projectId.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    var project = getProject(projectId);
+    if(!project){
+      alert("Proyecto no encontrado.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    renderAll(project);
+    bind(project);
+  })();
+})();
+</script>
+</body>
+</html>

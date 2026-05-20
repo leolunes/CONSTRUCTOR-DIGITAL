@@ -1,0 +1,225 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-1: #08111f;
+  --bg-2: #0f172a;
+  --bg-3: #162033;
+  --panel: rgba(15, 23, 42, 0.78);
+  --panel-strong: rgba(15, 23, 42, 0.92);
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --gold: #d4af37;
+  --gold-soft: #f4d77a;
+  --accent: #38bdf8;
+  --danger: #f59e0b;
+
+  /* NUEVOS COLORES PORTICO */
+  --past: #3b82f6;
+  --present: #22c55e;
+  --future: #ef4444;
+
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  --radius-xl: 24px;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --max-width: 980px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Georgia", "Times New Roman", serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top, rgba(212, 175, 55, 0.08), transparent 20%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 52%, var(--bg-3) 100%);
+  line-height: 1.65;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px, 54px 54px;
+  background-position: 0 0, 14px 14px;
+  opacity: 0.18;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 34px 18px 48px;
+}
+
+.screen.active {
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  padding: 28px 22px;
+}
+
+.center {
+  min-height: calc(100vh - 82px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: #ffffff;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--gold-soft);
+  margin-bottom: 18px;
+}
+
+h3 {
+  font-size: 1.15rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 14px;
+}
+
+.sub {
+  font-size: 1.08rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.frase {
+  max-width: 720px;
+  margin: 0 auto 30px;
+  font-size: 1.08rem;
+  padding: 16px;
+  border-left: 4px solid var(--gold);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+button {
+  width: 100%;
+  max-width: 360px;
+  margin: 10px auto 0;
+  padding: 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  color: #0f172a;
+  background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+}
+
+button.secondary {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+}
+
+/* ============================= */
+/* RESULTADO MEJORADO */
+/* ============================= */
+
+.resultado-titulo {
+  font-size: 1.5rem;
+  color: var(--gold-soft);
+  margin-bottom: 10px;
+}
+
+.bloque-info {
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 5px solid var(--gold);
+  padding: 14px;
+  margin: 16px 0;
+}
+
+/* 🔥 NUEVO: DISTRIBUCION VISUAL */
+.distribucion {
+  margin-top: 10px;
+}
+
+.barra {
+  height: 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+}
+
+.barra-a span { background: var(--past); }
+.barra-b span { background: var(--present); }
+.barra-c span { background: var(--future); }
+
+/* ============================= */
+/* PORTICO */
+/* ============================= */
+
+#porticoContainer {
+  margin: 22px 0;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.03);
+}
+
+#porticoSvg {
+  max-width: 100%;
+}
+
+/* ============================= */
+/* CAPITULOS */
+/* ============================= */
+
+.capitulo-btn {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  button {
+    max-width: none;
+  }
+}

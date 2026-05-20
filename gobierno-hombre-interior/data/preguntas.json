@@ -1,0 +1,112 @@
+[
+  {
+    "id": "a1",
+    "eje": "A",
+    "titulo": "Pórtico del pasado",
+    "texto": "Pienso con frecuencia en situaciones del pasado que todavía me pesan."
+  },
+  {
+    "id": "a2",
+    "eje": "A",
+    "titulo": "Pórtico del pasado",
+    "texto": "Siento que hay recuerdos que todavía gobiernan cómo me siento hoy."
+  },
+  {
+    "id": "a3",
+    "eje": "A",
+    "titulo": "Pórtico del pasado",
+    "texto": "Me cuesta soltar experiencias antiguas aunque hayan pasado años."
+  },
+  {
+    "id": "a4",
+    "eje": "A",
+    "titulo": "Pórtico del pasado",
+    "texto": "Hay heridas del pasado que siguen afectando mis decisiones presentes."
+  },
+  {
+    "id": "a5",
+    "eje": "A",
+    "titulo": "Pórtico del pasado",
+    "texto": "Vuelvo mentalmente a conversaciones, errores o pérdidas que ya ocurrieron."
+  },
+  {
+    "id": "a6",
+    "eje": "A",
+    "titulo": "Pórtico del pasado",
+    "texto": "Siento que una parte de mi alma sigue detenida en algo que ya pasó."
+  },
+
+  {
+    "id": "b1",
+    "eje": "B",
+    "titulo": "Pórtico del presente",
+    "texto": "Puedo entregar a Dios lo que siento sin quedarme cargándolo."
+  },
+  {
+    "id": "b2",
+    "eje": "B",
+    "titulo": "Pórtico del presente",
+    "texto": "Normalmente vivo un día a la vez, sin quedarme atrapado entre pasado y futuro."
+  },
+  {
+    "id": "b3",
+    "eje": "B",
+    "titulo": "Pórtico del presente",
+    "texto": "Percibo paz interior aun en medio de situaciones difíciles."
+  },
+  {
+    "id": "b4",
+    "eje": "B",
+    "titulo": "Pórtico del presente",
+    "texto": "Antes de reaccionar, busco dirección espiritual para entender lo que estoy viviendo."
+  },
+  {
+    "id": "b5",
+    "eje": "B",
+    "titulo": "Pórtico del presente",
+    "texto": "Siento que mi espíritu gobierna mejor mis decisiones que mis emociones."
+  },
+  {
+    "id": "b6",
+    "eje": "B",
+    "titulo": "Pórtico del presente",
+    "texto": "Puedo descansar aunque no tenga todas las respuestas resueltas."
+  },
+
+  {
+    "id": "c1",
+    "eje": "C",
+    "titulo": "Pórtico del futuro",
+    "texto": "Con frecuencia me preocupo por cosas que todavía no han ocurrido."
+  },
+  {
+    "id": "c2",
+    "eje": "C",
+    "titulo": "Pórtico del futuro",
+    "texto": "Mi mente suele adelantarse a escenarios negativos del mañana."
+  },
+  {
+    "id": "c3",
+    "eje": "C",
+    "titulo": "Pórtico del futuro",
+    "texto": "Me cuesta descansar porque siento que debo controlar lo que viene."
+  },
+  {
+    "id": "c4",
+    "eje": "C",
+    "titulo": "Pórtico del futuro",
+    "texto": "Siento presión interna por resolver desde hoy problemas que todavía no existen."
+  },
+  {
+    "id": "c5",
+    "eje": "C",
+    "titulo": "Pórtico del futuro",
+    "texto": "La incertidumbre me produce angustia y necesidad de tener todo bajo control."
+  },
+  {
+    "id": "c6",
+    "eje": "C",
+    "titulo": "Pórtico del futuro",
+    "texto": "Mi alma se tensa pensando en lo que podría salir mal más adelante."
+  }
+]

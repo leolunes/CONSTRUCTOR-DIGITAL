@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Categoría - Victoriosos en Cristo</title>
+
+    <link rel="icon"
+    href="./assets/icons/favicon.png">
+
+    <link rel="manifest"
+    href="./pwa/manifest.json">
+
+    <link rel="stylesheet"
+    href="./css/styles.css">
+
+    <link rel="stylesheet"
+    href="./css/cards.css">
+
+    <link rel="stylesheet"
+    href="./css/animations.css">
+
+    <link rel="stylesheet"
+    href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <header class="header header-small">
+
+        <h1 id="titulo-categoria">
+
+            Categoría
+
+        </h1>
+
+        <p class="subtitle">
+
+            Declaraciones bíblicas para fortalecer tu fe
+
+        </p>
+
+    </header>
+
+    <nav class="navbar">
+
+        <a href="index.html">
+
+            <img src="./assets/icons/home.png" alt="Inicio">
+
+            <span>Inicio</span>
+
+        </a>
+
+        <a href="favoritos.html">
+
+            <img src="./assets/icons/favorite.png" alt="Favoritos">
+
+            <span>Favoritos</span>
+
+        </a>
+
+        <a href="audios.html">
+
+            <img src="./assets/icons/play.png" alt="Audios">
+
+            <span>Audios</span>
+
+        </a>
+
+        <a href="perfil.html">
+
+            <img src="./assets/icons/profile.png" alt="Perfil">
+
+            <span>Perfil</span>
+
+        </a>
+
+    </nav>
+
+    <main class="container">
+
+        <a href="index.html"
+        class="btn-volver">
+
+            <img src="./assets/icons/back.png" alt="Volver">
+
+            Volver al inicio
+
+        </a>
+
+        <section id="declaraciones-container">
+
+            <!-- Declaraciones dinámicas -->
+
+        </section>
+
+    </main>
+
+    <!-- ======================================================
+         MODAL PARA DESCARGAR PALABRA EN PDF
+         Este modal es usado por js/app.js y categorias.js
+    ======================================================= -->
+    <div class="modal-pdf-overlay"
+    id="modalPdfPalabra"
+    aria-hidden="true">
+
+        <div class="modal-pdf-card">
+
+            <button
+            type="button"
+            class="modal-pdf-cerrar"
+            id="cerrarModalPdf"
+            aria-label="Cerrar">
+                ×
+            </button>
+
+            <div class="modal-pdf-header">
+
+                <img
+                src="./assets/icons/logo.png"
+                alt="Victoriosos en Cristo"
+                class="modal-pdf-logo">
+
+                <div>
+
+                    <h2>Enviar palabra en PDF</h2>
+
+                    <p>
+                        Personaliza esta palabra para bendecir a alguien.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <form id="formPdfPalabra"
+            class="modal-pdf-form">
+
+                <label for="pdfNombrePersona">
+                    Nombre de la persona
+                </label>
+
+                <input
+                type="text"
+                id="pdfNombrePersona"
+                name="pdfNombrePersona"
+                placeholder="Ejemplo: Ana, Carlos, mi amiga..."
+                autocomplete="off"
+                required>
+
+                <label for="pdfDedicatoria">
+                    Dedicatoria
+                </label>
+
+                <textarea
+                id="pdfDedicatoria"
+                name="pdfDedicatoria"
+                rows="5"
+                placeholder="Escribe aquí unas palabras personales de ánimo, fe y cariño..."
+                required></textarea>
+
+                <input
+                type="hidden"
+                id="pdfTituloPalabra">
+
+                <input
+                type="hidden"
+                id="pdfTextoPalabra">
+
+                <input
+                type="hidden"
+                id="pdfVersiculoPalabra">
+
+                <input
+                type="hidden"
+                id="pdfDeclaracionPalabra">
+
+                <div class="modal-pdf-actions">
+
+                    <button
+                    type="button"
+                    class="btn-pdf-secundario"
+                    id="cancelarPdfPalabra">
+                        Cancelar
+                    </button>
+
+                    <button
+                    type="submit"
+                    class="btn-pdf-principal">
+                        Descargar PDF
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="./js/storage.js"></script>
+
+    <script src="./js/audio.js"></script>
+
+    <!-- Librería para generar PDF desde el navegador -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Funciones globales de PDF -->
+    <script src="./js/app.js"></script>
+
+    <!-- Categorías -->
+    <script src="./js/categorias.js"></script>
+
+</body>
+
+</html>

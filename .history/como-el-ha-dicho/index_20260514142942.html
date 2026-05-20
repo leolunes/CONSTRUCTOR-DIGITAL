@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Victoriosos en Cristo</title>
+
+    <link rel="icon"
+    href="./assets/icons/favicon.png">
+
+    <link rel="manifest"
+    href="./pwa/manifest.json">
+
+    <link rel="stylesheet"
+    href="./css/styles.css">
+
+    <link rel="stylesheet"
+    href="./css/cards.css">
+
+    <link rel="stylesheet"
+    href="./css/animations.css">
+
+    <link rel="stylesheet"
+    href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <img
+        src="./assets/icons/logo.png"
+        alt="Victoriosos en Cristo"
+        class="logo-app">
+
+    </header>
+
+    <nav class="navbar">
+
+        <a href="index.html">
+
+            <img
+            src="./assets/icons/home.png"
+            alt="Inicio">
+
+            <span>Inicio</span>
+
+        </a>
+
+        <a href="favoritos.html">
+
+            <img
+            src="./assets/icons/favorite.png"
+            alt="Favoritos">
+
+            <span>Favoritos</span>
+
+        </a>
+
+        <a href="audios.html">
+
+            <img
+            src="./assets/icons/play.png"
+            alt="Audios">
+
+            <span>Audios</span>
+
+        </a>
+
+        <a href="perfil.html">
+
+            <img
+            src="./assets/icons/profile.png"
+            alt="Perfil">
+
+            <span>Perfil</span>
+
+        </a>
+
+    </nav>
+
+    <main class="container">
+
+        <section id="categorias-container">
+
+            <!-- Categorías dinámicas -->
+
+        </section>
+
+    </main>
+
+    <script src="./js/app.js"></script>
+
+    <script>
+
+        if('serviceWorker' in navigator){
+
+            navigator.serviceWorker.register(
+                './pwa/service-worker.js'
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

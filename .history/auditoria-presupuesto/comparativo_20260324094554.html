@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Comparativo | Auditoría Presupuesto</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html">←</a>
+    <div>
+      <div class="title" id="cmpTitle">Comparativo</div>
+      <div class="subtitle" id="cmpSub">Cargando proyecto…</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnGoProject" href="proyecto-detalle.html">Ir al proyecto</a>
+    <a class="navbtn" id="btnGoAudit" href="auditoria.html">Ir a auditoría</a>
+    <button class="navbtn" id="btnExportCompareExcel" type="button">Exportar comparativo a Excel</button>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <div class="row" style="gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center">
+      <div>
+        <div class="name">Proyecto comparado</div>
+        <div class="muted small" id="cmpProjectInfo">—</div>
+      </div>
+      <div class="row" style="gap:8px; align-items:center">
+        <label for="cmpFilter" class="muted small" style="font-weight:700">Mostrar</label>
+        <select id="cmpFilter" style="min-width:240px">
+          <option value="todos">Todos</option>
+          <option value="diferentes">Solo diferencias</option>
+          <option value="solo_base">Solo Base</option>
+          <option value="solo_oficial">Solo Oficial</option>
+          <option value="ok">Solo coincidencias</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid kpis" id="cmpKpis" style="margin-top:14px"></section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Comparativo global</h2>
+      <p class="muted small">Comparación general entre Presupuesto Base y Presupuesto Oficial.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:980px">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th style="text-align:right">Base</th>
+            <th style="text-align:right">Oficial</th>
+            <th style="text-align:right">Diferencia</th>
+            <th style="text-align:right">Diferencia %</th>
+          </tr>
+        </thead>
+        <tbody id="cmpTotalsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="cmpTotalsEmpty" style="display:none">No hay datos suficientes para comparar totales.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Comparativo por capítulos</h2>
+      <p class="muted small">Variación de subtotales e ítems entre base y oficial por capítulo.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1120px">
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th>Capítulo</th>
+            <th>Nombre</th>
+            <th style="text-align:right">Items Base</th>
+            <th style="text-align:right">Items Oficial</th>
+            <th style="text-align:right">Subtotal Base</th>
+            <th style="text-align:right">Subtotal Oficial</th>
+            <th style="text-align:right">Diferencia</th>
+            <th style="text-align:right">Diferencia %</th>
+          </tr>
+        </thead>
+        <tbody id="cmpChaptersBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="cmpChaptersEmpty" style="display:none">No hay capítulos para mostrar.</div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Comparativo por ítems</h2>
+      <p class="muted small">Comparación detallada de precios unitarios, cantidades y valores parciales.</p>
+      <div class="row" style="margin-top:8px; gap:8px; flex-wrap:wrap">
+        <input id="cmpSearch" class="search" placeholder="Buscar por código o descripción…" />
+      </div>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1450px">
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th>Código</th>
+            <th>APU Ref</th>
+            <th>Descripción</th>
+            <th>Unidad</th>
+            <th style="text-align:right">PU Base</th>
+            <th style="text-align:right">PU Oficial</th>
+            <th style="text-align:right">Dif. PU</th>
+            <th style="text-align:right">Cant Base</th>
+            <th style="text-align:right">Cant Oficial</th>
+            <th style="text-align:right">Dif. Cant</th>
+            <th style="text-align:right">Parcial Base</th>
+            <th style="text-align:right">Parcial Oficial</th>
+            <th style="text-align:right">Dif. Parcial</th>
+            <th style="text-align:right">Dif. %</th>
+          </tr>
+        </thead>
+        <tbody id="cmpItemsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="muted" id="cmpItemsEmpty" style="display:none">No hay ítems para mostrar.</div>
+  </section>
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/compare.js"></script>
+<script src="js/excel-export.js"></script>
+
+<script>
+(function(){
+  function qs(sel){ return document.querySelector(sel); }
+  function safe(v){ return String(v == null ? "" : v).trim(); }
+  function num(v){ return Number(v || 0); }
+
+  function fmtMoney(v, currency){
+    if(window.UI && typeof UI.fmtMoney === "function"){
+      return UI.fmtMoney(v, currency || "COP");
+    }
+    var n = Math.round(Number(v || 0));
+    return "$ " + n.toLocaleString("es-CO");
+  }
+
+  function esc(s){
+    if(window.UI && typeof UI.esc === "function") return UI.esc(s);
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function chip(label, kind){
+    if(window.UI && typeof UI.chip === "function") return UI.chip(label, kind || "");
+    var cls = kind ? ("chip " + kind) : "chip";
+    return '<span class="' + cls + '">' + esc(label) + '</span>';
+  }
+
+  function getParam(name){
+    if(window.UI && typeof UI.getParam === "function") return UI.getParam(name);
+    var u = new URL(location.href);
+    return u.searchParams.get(name);
+  }
+
+  function statusLabel(status){
+    var s = String(status || "").toLowerCase();
+    if(s === "solo_base") return "Solo Base";
+    if(s === "solo_oficial") return "Solo Oficial";
+    if(s === "diferente") return "Diferente";
+    return "Coincide";
+  }
+
+  function statusKind(status){
+    var s = String(status || "").toLowerCase();
+    if(s === "solo_oficial") return "bad";
+    if(s === "solo_base") return "warn";
+    if(s === "diferente") return "";
+    return "ok";
+  }
+
+  function renderHeader(project){
+    var title = qs("#cmpTitle");
+    var sub = qs("#cmpSub");
+    var info = qs("#cmpProjectInfo");
+    var btnGoProject = qs("#btnGoProject");
+    var btnGoAudit = qs("#btnGoAudit");
+
+    if(title) title.textContent = "Comparativo";
+    if(sub) sub.textContent = (project.name || "Proyecto") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+    if(info) info.textContent = (project.name || "—") + " · " + (project.entity || "—") + " · " + (project.location || "—");
+
+    if(btnGoProject) btnGoProject.href = "proyecto-detalle.html?projectId=" + encodeURIComponent(project.id);
+    if(btnGoAudit) btnGoAudit.href = "auditoria.html?projectId=" + encodeURIComponent(project.id);
+  }
+
+  function renderKpis(project, data){
+    var el = qs("#cmpKpis");
+    if(!el) return;
+
+    var summary = data && data.summary ? data.summary : {};
+    var counts = summary.counts || {};
+    var totals = data && data.totals ? data.totals : {};
+
+    el.innerHTML = ''
+      + '<div class="card item"><div class="topline"><div class="name">Items Base</div><div class="chips">' + chip(String(num(counts.itemsBase)), "ok") + '</div></div><div class="muted small">Presupuesto técnico de referencia.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Items Oficial</div><div class="chips">' + chip(String(num(counts.itemsOfficial)), "warn") + '</div></div><div class="muted small">Presupuesto sometido a comparación.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Items con diferencia</div><div class="chips">' + chip(String(num(counts.itemsChanged))) + '</div></div><div class="muted small">Con variación en PU, cantidad o parcial.</div></div>'
+      + '<div class="card item"><div class="topline"><div class="name">Diferencia total</div><div class="chips">' + chip(fmtMoney(totals.diff && totals.diff.total, project.currency || "COP")) + '</div></div><div class="muted small">Variación global entre base y oficial.</div></div>';
+  }
+
+  function renderTotals(project, data){
+    var tbody = qs("#cmpTotalsBody");
+    var empty = qs("#cmpTotalsEmpty");
+    if(!tbody) return;
+
+    var totals = data && data.totals ? data.totals : null;
+    if(!totals){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    var rows = [
+      {
+        label: "Total costos directos",
+        base: totals.base && totals.base.directo,
+        official: totals.official && totals.official.directo,
+        diff: totals.diff && totals.diff.directo,
+        pct: totals.pct && totals.pct.directo
+      },
+      {
+        label: "Administración",
+        base: totals.base && totals.base.admin,
+        official: totals.official && totals.official.admin,
+        diff: totals.diff && totals.diff.admin,
+        pct: totals.pct && totals.pct.admin
+      },
+      {
+        label: "Imprevistos",
+        base: totals.base && totals.base.imprev,
+        official: totals.official && totals.official.imprev,
+        diff: totals.diff && totals.diff.imprev,
+        pct: totals.pct && totals.pct.imprev
+      },
+      {
+        label: "Utilidad",
+        base: totals.base && totals.base.util,
+        official: totals.official && totals.official.util,
+        diff: totals.diff && totals.diff.util,
+        pct: totals.pct && totals.pct.util
+      },
+      {
+        label: "Subtotal",
+        base: totals.base && totals.base.subtotal,
+        official: totals.official && totals.official.subtotal,
+        diff: totals.diff && totals.diff.subtotal,
+        pct: totals.pct && totals.pct.subtotal
+      },
+      {
+        label: "IVA sobre utilidad",
+        base: totals.base && totals.base.ivaUtil,
+        official: totals.official && totals.official.ivaUtil,
+        diff: totals.diff && totals.diff.ivaUtil,
+        pct: totals.pct && totals.pct.ivaUtil
+      },
+      {
+        label: "Valor total",
+        base: totals.base && totals.base.total,
+        official: totals.official && totals.official.total,
+        diff: totals.diff && totals.diff.total,
+        pct: totals.pct && totals.pct.total
+      }
+    ];
+
+    tbody.innerHTML = rows.map(function(r){
+      return ''
+        + '<tr>'
+        + '  <td><b>' + esc(r.label) + '</b></td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.base, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.official, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.diff, project.currency || "COP")) + '</b></td>'
+        + '  <td style="text-align:right"><b>' + esc(num(r.pct).toFixed(2) + "%") + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function renderChapters(project, data){
+    var tbody = qs("#cmpChaptersBody");
+    var empty = qs("#cmpChaptersEmpty");
+    if(!tbody) return;
+
+    var rows = data && Array.isArray(data.chapters) ? data.chapters : [];
+
+    if(!rows.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = rows.map(function(r){
+      return ''
+        + '<tr>'
+        + '  <td>' + chip(statusLabel(r.status), statusKind(r.status)) + '</td>'
+        + '  <td><b>' + esc(r.chapterCode || "") + '</b></td>'
+        + '  <td>' + esc(r.chapterName || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(r.itemsCountBase))) + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(r.itemsCountOfficial))) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.subtotalBase, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.subtotalOfficial, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.subtotalDiff, project.currency || "COP")) + '</b></td>'
+        + '  <td style="text-align:right"><b>' + esc(num(r.subtotalPctDiff).toFixed(2) + "%") + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function applyItemFilter(rows){
+    var filter = safe(qs("#cmpFilter") && qs("#cmpFilter").value).toLowerCase();
+    var search = safe(qs("#cmpSearch") && qs("#cmpSearch").value).toLowerCase();
+
+    return rows.filter(function(r){
+      var okStatus = true;
+
+      if(filter === "diferentes") okStatus = String(r.status) === "diferente";
+      else if(filter === "solo_base") okStatus = String(r.status) === "solo_base";
+      else if(filter === "solo_oficial") okStatus = String(r.status) === "solo_oficial";
+      else if(filter === "ok") okStatus = String(r.status) === "ok";
+
+      if(!okStatus) return false;
+
+      if(!search) return true;
+
+      var bag = [
+        safe(r.code),
+        safe(r.apuRefCode),
+        safe(r.desc),
+        safe(r.unit)
+      ].join(" ").toLowerCase();
+
+      return bag.indexOf(search) >= 0;
+    });
+  }
+
+  function renderItems(project, data){
+    var tbody = qs("#cmpItemsBody");
+    var empty = qs("#cmpItemsEmpty");
+    if(!tbody) return;
+
+    var rows = data && Array.isArray(data.items) ? data.items : [];
+    rows = applyItemFilter(rows);
+
+    if(!rows.length){
+      tbody.innerHTML = "";
+      if(empty) empty.style.display = "";
+      return;
+    }
+
+    if(empty) empty.style.display = "none";
+
+    tbody.innerHTML = rows.map(function(r){
+      return ''
+        + '<tr>'
+        + '  <td>' + chip(statusLabel(r.status), statusKind(r.status)) + '</td>'
+        + '  <td><b>' + esc(r.code || "") + '</b></td>'
+        + '  <td>' + esc(r.apuRefCode || "") + '</td>'
+        + '  <td>' + esc(r.desc || "") + '</td>'
+        + '  <td>' + esc(r.unit || "") + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.puBase, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.puOfficial, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.puDiff, project.currency || "COP")) + '</b></td>'
+        + '  <td style="text-align:right">' + esc(String(num(r.qtyBase))) + '</td>'
+        + '  <td style="text-align:right">' + esc(String(num(r.qtyOfficial))) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(String(num(r.qtyDiff))) + '</b></td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.parcialBase, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right">' + esc(fmtMoney(r.parcialOfficial, project.currency || "COP")) + '</td>'
+        + '  <td style="text-align:right"><b>' + esc(fmtMoney(r.parcialDiff, project.currency || "COP")) + '</b></td>'
+        + '  <td style="text-align:right"><b>' + esc(num(r.parcialPctDiff).toFixed(2) + "%") + '</b></td>'
+        + '</tr>';
+    }).join("");
+  }
+
+  function renderAll(project, data){
+    renderHeader(project);
+    renderKpis(project, data);
+    renderTotals(project, data);
+    renderChapters(project, data);
+    renderItems(project, data);
+  }
+
+  function bind(project, data){
+    var btnExport = qs("#btnExportCompareExcel");
+    var sel = qs("#cmpFilter");
+    var inp = qs("#cmpSearch");
+
+    if(btnExport){
+      btnExport.addEventListener("click", function(){
+        try{
+          if(window.ExcelExport && typeof ExcelExport.exportCompareWorkbook === "function"){
+            ExcelExport.exportCompareWorkbook(project);
+          }else{
+            alert("ExcelExport no está disponible.");
+          }
+        }catch(err){
+          alert("Error exportando comparativo: " + (err && err.message ? err.message : err));
+        }
+      });
+    }
+
+    if(sel){
+      sel.addEventListener("change", function(){
+        renderItems(project, data);
+      });
+    }
+
+    if(inp){
+      inp.addEventListener("input", function(){
+        renderItems(project, data);
+      });
+    }
+  }
+
+  (function boot(){
+    var projectId = getParam("projectId");
+    if(!projectId){
+      alert("Falta projectId.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    if(!window.StorageAPI || typeof StorageAPI.getProjectById !== "function"){
+      alert("StorageAPI no está disponible.");
+      return;
+    }
+
+    if(!window.Compare || typeof Compare.compareProject !== "function"){
+      alert("Compare no está disponible.");
+      return;
+    }
+
+    var project = StorageAPI.getProjectById(projectId);
+    if(!project){
+      alert("Proyecto no encontrado.");
+      location.href = "proyectos.html";
+      return;
+    }
+
+    var data = Compare.compareProject(project);
+
+    renderAll(project, data);
+    bind(project, data);
+  })();
+})();
+</script>
+</body>
+</html>

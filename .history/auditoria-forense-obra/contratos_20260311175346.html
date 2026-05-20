@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contratos | Auditoría Forense de Obra</title>
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="manifest" href="pwa/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">AFO</div>
+        <div class="brand-text">
+          <h1>Auditoría Forense de Obra</h1>
+          <p>Control técnico, contable y tributario</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link active" href="contratos.html">Contratos</a>
+        <a class="nav-link" href="contrato-detalle.html">Detalle del contrato</a>
+        <a class="nav-link" href="facturacion.html">Facturación</a>
+        <a class="nav-link" href="alertas.html">Alertas</a>
+        <a class="nav-link" href="informes.html">Informes</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-badge">Módulo de contratos</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2>Gestión de contratos</h2>
+          <p class="subtitle">
+            Registre y administre los contratos que serán objeto de análisis técnico, contable y tributario.
+          </p>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-outline" href="index.html">Volver al inicio</a>
+        </div>
+      </header>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Registrar nuevo contrato</h4>
+          </div>
+
+          <form id="formContrato" class="app-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="numeroContrato">Número de contrato</label>
+                <input id="numeroContrato" name="numeroContrato" type="text" placeholder="Ej: CTO-2026-001" />
+              </div>
+
+              <div class="form-group">
+                <label for="nombre">Nombre / referencia</label>
+                <input id="nombre" name="nombre" type="text" placeholder="Ej: Mejoramiento vial urbano" />
+              </div>
+
+              <div class="form-group form-group-full">
+                <label for="objeto">Objeto del contrato</label>
+                <textarea id="objeto" name="objeto" rows="3" placeholder="Descripción general del objeto contractual"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="entidad">Entidad contratante</label>
+                <input id="entidad" name="entidad" type="text" placeholder="Ej: Municipio de Floridablanca" />
+              </div>
+
+              <div class="form-group">
+                <label for="contratista">Contratista</label>
+                <input id="contratista" name="contratista" type="text" placeholder="Nombre del contratista" />
+              </div>
+
+              <div class="form-group">
+                <label for="ubicacion">Ubicación</label>
+                <input id="ubicacion" name="ubicacion" type="text" placeholder="Ej: Santander" />
+              </div>
+
+              <div class="form-group">
+                <label for="valorContrato">Valor del contrato</label>
+                <input id="valorContrato" name="valorContrato" type="number" min="0" step="1" placeholder="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="plazoMeses">Plazo (meses)</label>
+                <input id="plazoMeses" name="plazoMeses" type="number" min="0" step="1" placeholder="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado">
+                  <option value="Activo">Activo</option>
+                  <option value="Suspendido">Suspendido</option>
+                  <option value="Terminado">Terminado</option>
+                  <option value="Liquidado">Liquidado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Guardar contrato</button>
+              <button type="reset" class="btn btn-secondary">Limpiar formulario</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Resumen de contratos</h4>
+          </div>
+
+          <div id="resumenContratos" class="dashboard-grid dashboard-grid-inline"></div>
+
+          <div class="info-box mt-16">
+            <strong>Uso recomendado:</strong>
+            <p>
+              Registre primero el contrato, luego cargue su estructura técnica en el detalle
+              y finalmente incorpore la facturación para realizar los cruces de auditoría.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="card mt-20">
+        <div class="card-header">
+          <h4>Listado de contratos</h4>
+        </div>
+
+        <div id="tablaContratos"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/contratos.js"></script>
+  <script src="js/tecnico.js"></script>
+  <script src="js/facturacion.js"></script>
+  <script src="js/tributario.js"></script>
+  <script src="js/cruces.js"></script>
+  <script src="js/alertas.js"></script>
+  <script src="js/reportes.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.AFOContratos && typeof window.AFOContratos.initPage === "function") {
+        window.AFOContratos.initPage();
+      }
+    });
+  </script>
+</body>
+</html>

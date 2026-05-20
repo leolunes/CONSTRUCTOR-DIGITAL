@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ofertas Artificialmente Bajas (OAB)</title>
+
+  <link rel="manifest" href="./pwa/manifest.webmanifest" />
+  <link rel="stylesheet" href="./css/styles.css" />
+
+  <!-- Librerías PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="container">
+      <h1>OFERTAS ARTIFICIALMENTE BAJAS (OAB)</h1>
+      <p>Identificación, análisis y decisiones sobre posibles precios artificialmente bajos</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Navegación</h2>
+      <div class="actions wrap">
+        <a href="./index.html" class="btn secondary">Inicio</a>
+        <a href="./ofertas.html" class="btn secondary">Ofertas</a>
+        <a href="./oab.html" class="btn primary">OAB</a>
+        <a href="./economica.html" class="btn secondary">Evaluación económica</a>
+        <a href="./informes.html" class="btn secondary">Informes</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Datos del proceso</h2>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="procesoNombre">Nombre o número del proceso</label>
+          <input type="text" id="procesoNombre" />
+        </div>
+
+        <div class="field">
+          <label for="procesoEntidad">Entidad</label>
+          <input type="text" id="procesoEntidad" />
+        </div>
+
+        <div class="field full">
+          <label for="procesoObjeto">Objeto</label>
+          <textarea id="procesoObjeto" rows="3"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="procesoPresupuesto">Presupuesto oficial</label>
+          <input type="number" id="procesoPresupuesto" />
+        </div>
+
+        <div class="field">
+          <label for="procesoFecha">Fecha de evaluación</label>
+          <input type="date" id="procesoFecha" />
+        </div>
+
+        <div class="field full">
+          <label for="procesoObservaciones">Observaciones</label>
+          <textarea id="procesoObservaciones" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btnGuardarManual" class="btn secondary">Guardar</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Resumen del proceso</h2>
+      <div id="resumenProceso" class="summary-box"></div>
+    </section>
+
+    <section class="card">
+      <h2>Evaluación OAB</h2>
+
+      <div class="actions">
+        <button id="btnEvaluarOAB" class="btn primary">Evaluar OAB</button>
+        <button id="btnAplicarDecisiones" class="btn secondary">Aplicar decisiones sugeridas</button>
+      </div>
+
+      <div id="resultadoOAB" class="summary-box"></div>
+      <div id="lecturaOAB" class="text-box"></div>
+    </section>
+
+    <section class="card">
+      <h2>Gestión de decisiones del comité</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Proponente</th>
+              <th>Oferta</th>
+              <th>Clasificación</th>
+              <th>Requiere sustentación</th>
+              <th>Estado</th>
+              <th>Respondió</th>
+              <th>Sustento válido</th>
+              <th>Observación</th>
+            </tr>
+          </thead>
+          <tbody id="tablaOfertasBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Informe OAB</h2>
+      <div class="field">
+        <label for="textoInformeTecnico">Texto técnico</label>
+        <textarea id="textoInformeTecnico" rows="14"></textarea>
+      </div>
+
+      <div class="actions">
+        <button id="btnPDFTecnico" class="btn primary">PDF técnico</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <small>Constructor Digital · Módulo OAB</small>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluación de Ofertas</title>
+
+  <link rel="manifest" href="./pwa/manifest.webmanifest" />
+  <link rel="stylesheet" href="./css/styles.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Librerías PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="container">
+      <h1>APP EVALUACIÓN DE OFERTAS</h1>
+      <p>Ofertas artificialmente bajas + evaluación económica + informes PDF</p>
+    </div>
+  </header>
+
+  
+  <div class="container" style="margin-top:10px;">
+    <div class="actions" style="justify-content:center;">
+      <button id="modoEvaluador" class="btn primary">Modo Evaluador</button>
+      <button id="modoOferente" class="btn secondary">Modo Oferente</button>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <section class="card evaluador">
+      <h2>Gestión de proyectos</h2>
+
+      <div class="field" style="margin-bottom:10px;">
+        <label>Buscar proyecto</label>
+        <input type="text" id="inputBuscarProyecto" placeholder="Buscar por nombre..." />
+      </div>
+
+      <div class="actions wrap">
+        <button id="btnNuevoProyecto" class="btn primary">Nuevo proyecto</button>
+        <button id="btnGuardarProyecto" class="btn secondary">Guardar proyecto</button>
+        <button id="btnDuplicarProyecto" class="btn secondary">Duplicar</button>
+        <button id="btnEliminarProyecto" class="btn danger">Eliminar</button>
+
+        <select id="selectProyectos"></select>
+        <button id="btnCargarProyecto" class="btn secondary">Cargar</button>
+      </div>
+    </section>
+
+    <section class="card evaluador">
+      <div class="actions wrap" style="justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h2 style="margin: 0;">Dashboard del proceso</h2>
+        <button id="toggleDashboard" class="btn secondary">Ocultar dashboard</button>
+      </div>
+
+      <div id="contenidoDashboard">
+        <div class="grid-3 dashboard-grid">
+          <div class="summary-box">
+            <strong>Total ofertas recibidas</strong>
+            <div id="dashTotal">0</div>
+          </div>
+          <div class="summary-box">
+            <strong>En alerta inicial (OAB)</strong>
+            <div id="dashAlerta">0</div>
+          </div>
+          <div class="summary-box">
+            <strong>Rechazadas inicial</strong>
+            <div id="dashRechazadas">0</div>
+          </div>
+          <div class="summary-box">
+            <strong>Hábiles después de sustento</strong>
+            <div id="dashHabilitadasFinal">0</div>
+          </div>
+          <div class="summary-box">
+            <strong>Eliminadas en revisión final</strong>
+            <div id="dashEliminadasFinal">0</div>
+          </div>
+          <div class="summary-box">
+            <strong>En evaluación económica</strong>
+            <div id="dashEvaluacionEconomica">0</div>
+          </div>
+        </div>
+
+        <div class="summary-box" style="margin-top: 15px; text-align: center;">
+          <strong>Gráfico resumen del proceso</strong>
+          <div style="max-width: 420px; margin: 15px auto 0 auto;">
+            <canvas id="graficoDashboard" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Información básica del proceso</h2>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="procesoNombre">Nombre o número del proceso</label>
+          <input type="text" id="procesoNombre" placeholder="Ej. LP-001-2026" />
+        </div>
+
+        <div class="field">
+          <label for="procesoEntidad">Entidad</label>
+          <input type="text" id="procesoEntidad" placeholder="Nombre de la entidad" />
+        </div>
+
+        <div class="field full">
+          <label for="procesoObjeto">Objeto</label>
+          <textarea id="procesoObjeto" rows="3" placeholder="Objeto contractual"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="procesoPresupuesto">Presupuesto oficial</label>
+          <input type="number" id="procesoPresupuesto" placeholder="0" />
+        </div>
+
+        <div class="field">
+          <label for="procesoTRM">TRM aplicable</label>
+          <input type="number" step="0.01" id="procesoTRM" placeholder="0.00" />
+        </div>
+
+        <div class="field">
+          <label for="procesoPuntajeMaximo">Puntaje máximo por valor de oferta</label>
+          <input type="number" step="0.01" id="procesoPuntajeMaximo" placeholder="100" />
+        </div>
+
+        <div class="field">
+          <label for="procesoNumeroPropuestas">No. propuestas habilitadas</label>
+          <input type="number" id="procesoNumeroPropuestas" placeholder="Ej: 29" />
+        </div>
+
+        <div class="field">
+          <label for="procesoFecha">Fecha de evaluación</label>
+          <input type="date" id="procesoFecha" />
+        </div>
+
+
+        <div class="field full">
+          <label for="procesoUrlSecop">Enlace SECOP II</label>
+          <input type="text" id="procesoUrlSecop" placeholder="Pegue aquí el enlace del proceso en SECOP II" />
+        </div>
+
+        <div class="actions" style="margin-bottom:10px;">
+          <button id="btnAbrirSecop" class="btn secondary">Abrir SECOP II</button>
+          <button id="btnDocumentosAnexos" class="btn secondary">Documentos anexos</button>
+        </div>
+
+        <div id="bloqueDocumentos" style="display:none;">
+          <div class="actions" style="margin-bottom:10px;">
+            <input type="text" id="inputDocumentoAnexo" placeholder="Agregar enlace o nombre de documento" />
+            <button id="btnAgregarDocumento" class="btn primary">Agregar</button>
+          </div>
+          <ul id="listaDocumentosAnexos"></ul>
+        </div>
+
+        <div class="field full">
+          <label for="procesoObservaciones">Observaciones generales</label>
+          <textarea id="procesoObservaciones" rows="3" placeholder="Observaciones del proceso"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Factores adicionales de evaluación</h2>
+
+      <div class="grid-3">
+        <div class="field">
+          <label for="procesoPuntajeCalidad">Puntaje máximo factor de calidad</label>
+          <input type="number" step="0.01" id="procesoPuntajeCalidad" placeholder="Ej: 30" />
+        </div>
+
+        <div class="field">
+          <label for="procesoPuntajeIndustria">Puntaje máximo apoyo a la industria nacional</label>
+          <input type="number" step="0.01" id="procesoPuntajeIndustria" placeholder="Ej: 20" />
+        </div>
+
+        <div class="field">
+          <label for="procesoPuntajeDiscapacidad">Puntaje máximo vinculación de personas con discapacidad</label>
+          <input type="number" step="0.01" id="procesoPuntajeDiscapacidad" placeholder="Ej: 1" />
+        </div>
+
+        <div class="field">
+          <label for="procesoPuntajeMujer">Puntaje máximo emprendimientos y empresas de mujeres</label>
+          <input type="number" step="0.01" id="procesoPuntajeMujer" placeholder="Ej: 0.25" />
+        </div>
+
+        <div class="field">
+          <label for="procesoPuntajeMipyme">Puntaje máximo Mipyme</label>
+          <input type="number" step="0.01" id="procesoPuntajeMipyme" placeholder="Ej: 0.25" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Resumen del proceso</h2>
+      <div id="resumenProceso" class="summary-box"></div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Registro de ofertas</h2>
+
+      <div class="field" style="margin-bottom:10px;">
+        <label for="modoIngresoOfertas">Modo de ingreso de oferentes</label>
+        <select id="modoIngresoOfertas">
+          <option value="manual">1. Manualmente</option>
+          <option value="lineas">2. Generar líneas según número de propuestas habilitadas</option>
+          <option value="excel">3. Importando base de datos</option>
+        </select>
+      </div>
+
+      <div id="bloqueImportarExcel" style="display:none;">
+        <div class="actions" style="margin-bottom:10px;">
+          <input type="file" id="inputExcel" accept=".xlsx,.xls" />
+          <button id="btnImportarExcel" class="btn primary">Importar Excel</button>
+        </div>
+      </div>
+
+      <div id="bloqueManual">
+        <div class="grid-3">
+          <div class="field">
+            <label for="empresaOferta">Proponente</label>
+            <input type="text" id="empresaOferta" placeholder="Nombre del proponente" />
+          </div>
+
+          <div class="field">
+            <label for="valorOferta">Valor de la oferta</label>
+            <input type="number" id="valorOferta" placeholder="0" />
+          </div>
+
+          <div class="field align-end">
+            <button id="btnAgregarOferta" class="btn primary">Agregar oferta</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="bloqueGenerarLineas" style="display:none;">
+        <div class="actions" style="margin-top:10px;">
+          <button id="btnGenerarLineas" class="btn secondary">Generar líneas automáticamente</button>
+        </div>
+      </div>
+
+      <div class="actions" style="margin-top:10px;">
+        <button id="btnLimpiarListadoOfertas" class="btn danger">Limpiar listado de ofertas</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>PROPONENTE</th>
+              <th>VALOR OFERTA</th>
+              <th>% DESVIACIÓN<br>CON EL PTO OFICIAL</th>
+              <th>CLASIFICACIÓN<br>INICIAL</th>
+              <th>ALERTA<br>ABSOLUTA</th>
+              <th>BAJO MÍNIMO<br>RELATIVO</th>
+              <th>REQUIERE<br>SUSTENTACIÓN</th>
+              <th>ESTADO<br>FINAL</th>
+              <th>RESPONDIÓ</th>
+              <th>SUSTENTO<br>VÁLIDO</th>
+              <th>PUNTAJE<br>FACTOR DE<br>CALIDAD</th>
+              <th>PUNTAJE<br>APOYO<br>INDUSTRIA<br>NACIONAL</th>
+              <th>PUNTAJE<br>VINCULACIÓN<br>PERSONAS CON<br>DISCAPACIDAD</th>
+              <th>PUNTAJE<br>EMPRENDIMIENTOS<br>Y EMPRESAS DE<br>MUJERES</th>
+              <th>PUNTAJE<br>MIPYME</th>
+              <th>PUNTAJE<br>VALOR OFERTA</th>
+              <th>PUNTAJE<br>TOTAL</th>
+              <th>OBSERVACIÓN</th>
+              <th>ACCIÓN</th>
+            </tr>
+          </thead>
+          <tbody id="tablaOfertasBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Ofertas artificialmente bajas</h2>
+
+      <div class="actions">
+        <button id="btnEvaluarOAB" class="btn primary">Evaluar OAB</button>
+        <button id="btnAplicarDecisiones" class="btn secondary">Aplicar decisiones sugeridas</button>
+      </div>
+
+      <div id="resultadoOAB" class="summary-box"></div>
+      <div id="lecturaOAB" class="text-box"></div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Evaluación económica</h2>
+
+      <div class="actions">
+        <button id="btnEvaluarEconomica" class="btn primary">Evaluar económicamente</button>
+        <button id="btnRecalcularTodo" class="btn secondary">Recalcular todo</button>
+        <button id="btnSimulacionFormulas" class="btn secondary">Simulación fórmulas</button>
+      </div>
+
+      <div id="resultadoTRM" class="summary-box"></div>
+      <div id="resultadoEconomico" class="summary-box"></div>
+      <div id="baseEconomicaBox" class="summary-box">
+        <strong>Base económica utilizada:</strong>
+        <div>Método: <span id="baseMetodo">-</span></div>
+        <div>Valor base: <span id="baseValor">-</span></div>
+      </div>
+
+      <div id="lecturaEconomica" class="text-box"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>RANKING</th>
+              <th>PROPONENTE</th>
+              <th>VALOR OFERTA</th>
+              <th>PUNTAJE<br>VALOR OFERTA</th>
+              <th>PUNTAJE<br>FACTOR DE<br>CALIDAD</th>
+              <th>PUNTAJE<br>APOYO<br>INDUSTRIA<br>NACIONAL</th>
+              <th>PUNTAJE<br>VINCULACIÓN<br>PERSONAS CON<br>DISCAPACIDAD</th>
+              <th>PUNTAJE<br>EMPRENDIMIENTOS<br>Y EMPRESAS DE<br>MUJERES</th>
+              <th>PUNTAJE<br>MIPYME</th>
+              <th>PUNTAJE<br>TOTAL</th>
+            </tr>
+          </thead>
+          <tbody id="tablaEconomicaBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    
+    <section class="card evaluador">
+      <h2>Análisis estratégico" class="card oferente</h2>
+
+      <div class="actions">
+        <select id="selectMiProponente"></select>
+        <button id="btnAnalisisEstrategico" class="btn primary">Analizar</button>
+      </div>
+
+      <div id="resultadoEstrategico" class="summary-box"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>PROPONENTE</th>
+              <th>PUNTAJE TOTAL</th>
+              <th>DIFERENCIA CONTIGO</th>
+              <th>POSICIÓN ACTUAL</th>
+            </tr>
+          </thead>
+          <tbody id="tablaEstrategicoBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <section class="card" id="bloqueSimulacion" style="display:none;">
+      <h2>Simulación de fórmulas" class="card oferente</h2>
+
+      <div class="actions">
+        <select id="selectSimulacionMetodo"></select>
+        <button id="btnEjecutarSimulacion" class="btn primary">Simular</button>
+      </div>
+
+      <div id="resumenSimulacion" class="summary-box"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>RANKING</th>
+              <th>PROPONENTE</th>
+              <th>VALOR OFERTA</th>
+              <th>PUNTAJE<br>VALOR OFERTA</th>
+              <th>PUNTAJE<br>FACTOR DE<br>CALIDAD</th>
+              <th>PUNTAJE<br>APOYO<br>INDUSTRIA<br>NACIONAL</th>
+              <th>PUNTAJE<br>VINCULACIÓN<br>PERSONAS CON<br>DISCAPACIDAD</th>
+              <th>PUNTAJE<br>EMPRENDIMIENTOS<br>Y EMPRESAS DE<br>MUJERES</th>
+              <th>PUNTAJE<br>MIPYME</th>
+              <th>PUNTAJE<br>TOTAL</th>
+            </tr>
+          </thead>
+          <tbody id="tablaSimulacionBody"></tbody>
+        </table>
+      </div>
+
+      <div class="actions" style="margin-top:10px;">
+        <button id="btnPDFSimulacion" class="btn secondary">PDF simulación</button>
+      </div>
+    </section>
+
+    <section class="card evaluador">
+      <h2>Informes</h2>
+
+      <div class="actions wrap">
+        <button id="btnPDFBasico" class="btn primary">PDF básico</button>
+        <button id="btnPDFTecnico" class="btn primary">PDF técnico</button>
+        <button id="btnPDFFinal" class="btn primary">PDF adjudicación</button>
+        <button id="btnPDFEconomico" class="btn secondary">PDF económico</button>
+        <button id="btnPDFOfertas" class="btn secondary">PDF ofertas</button>
+        <button id="btnGuardarManual" class="btn secondary">Guardar</button>
+        <button id="btnLimpiarStorage" class="btn danger">Restablecer</button>
+      </div>
+
+      <div class="grid-1">
+        <div class="field">
+          <label for="textoInformeBasico">Informe básico</label>
+          <textarea id="textoInformeBasico" rows="10"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="textoInformeTecnico">Informe técnico</label>
+          <textarea id="textoInformeTecnico" rows="14"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="textoInformeFinal">Informe final de adjudicación</label>
+          <textarea id="textoInformeFinal" rows="14"></textarea>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <small>Constructor Digital · Evaluación de ofertas</small>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btnToggleDashboard = document.getElementById("toggleDashboard");
+      const contenidoDashboard = document.getElementById("contenidoDashboard");
+
+      if (btnToggleDashboard && contenidoDashboard) {
+        btnToggleDashboard.addEventListener("click", () => {
+          const oculto = contenidoDashboard.style.display === "none";
+          contenidoDashboard.style.display = oculto ? "block" : "none";
+          btnToggleDashboard.textContent = oculto ? "Ocultar dashboard" : "Mostrar dashboard";
+        });
+      }
+    });
+  </script>
+
+  <script type="module" src="./js/app.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btnEval = document.getElementById("modoEvaluador");
+  const btnOfer = document.getElementById("modoOferente");
+
+  function setModo(tipo){
+    document.querySelectorAll(".card").forEach(sec=>{
+      if(tipo==="evaluador"){
+        sec.style.display = sec.classList.contains("oferente") ? "none":"block";
+      }else{
+        sec.style.display = sec.classList.contains("evaluador") ? "none":"block";
+      }
+    });
+  }
+
+  btnEval?.addEventListener("click",()=>setModo("evaluador"));
+  btnOfer?.addEventListener("click",()=>setModo("oferente"));
+});
+</script>
+
+</body>
+</html>

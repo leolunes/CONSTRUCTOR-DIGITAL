@@ -1,0 +1,726 @@
+@font-face{
+    font-family:'Poppins';
+    src:url('../assets/fonts/Poppins-Regular.ttf');
+}
+
+@font-face{
+    font-family:'Poppins-Bold';
+    src:url('../assets/fonts/Poppins-Bold.ttf');
+}
+
+/* =====================================
+   RESET
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =====================================
+   BODY
+===================================== */
+
+body{
+
+    font-family:'Poppins', Arial, sans-serif;
+
+    background:#f5f5f7;
+
+    color:#222;
+
+    overflow-x:hidden;
+
+}
+
+/* =====================================
+   HEADER PRINCIPAL
+===================================== */
+
+.header{
+
+    background:
+    linear-gradient(
+        180deg,
+        #2c0663 0%,
+        #5b3cc4 100%
+    );
+
+    padding:35px 20px 45px;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo-app{
+
+    width:720px;
+
+    max-width:92%;
+
+    display:block;
+
+    margin:auto;
+
+}
+
+/* =====================================
+   OCULTAR H1 SOLO HOME
+===================================== */
+
+.header h1{
+
+    display:none;
+
+}
+
+/* =====================================
+   SUBTITLE
+===================================== */
+
+.subtitle{
+
+    font-size:16px;
+
+    max-width:850px;
+
+    margin:auto;
+
+    color:white;
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.navbar{
+
+    background:#4b22b5;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:55px;
+
+    padding:18px 20px 12px;
+
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+
+    border-bottom:1px solid rgba(255,255,255,0.1);
+
+}
+
+/* =====================================
+   LINKS NAVBAR
+===================================== */
+
+.navbar a{
+
+    color:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:16px;
+
+    transition:0.3s;
+
+    padding-bottom:12px;
+
+}
+
+/* =====================================
+   LINK ACTIVO
+===================================== */
+
+.navbar a:first-child{
+
+    color:white;
+
+    border-bottom:3px solid white;
+
+}
+
+/* =====================================
+   HOVER
+===================================== */
+
+.navbar a:hover{
+
+    color:white;
+
+    opacity:0.85;
+
+}
+
+/* =====================================
+   ICONOS NAVBAR
+===================================== */
+
+.navbar img{
+
+    width:24px;
+
+    height:24px;
+
+    object-fit:contain;
+
+}
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.container{
+
+    max-width:1450px;
+
+    margin:auto;
+
+    padding:50px 30px;
+
+}
+
+/* =====================================
+   GRID CATEGORÍAS
+===================================== */
+
+#categorias-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:35px;
+
+}
+
+/* =====================================
+   OTROS GRIDS
+===================================== */
+
+#declaraciones-container,
+#favoritos-container,
+#audios-container,
+#audios-categoria-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:30px;
+
+}
+
+/* =====================================
+   BOTÓN VOLVER
+===================================== */
+
+.btn-volver{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:30px;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 22px;
+
+    border-radius:14px;
+
+    font-family:'Poppins-Bold';
+
+    transition:0.3s;
+
+}
+
+.btn-volver:hover{
+
+    background:#452d96;
+
+}
+
+.btn-volver img{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+/* =====================================
+   HEADER PÁGINAS INTERNAS
+===================================== */
+
+.header-small h1{
+
+    display:block !important;
+
+    color:#ffffff !important;
+
+    font-family:'Poppins-Bold';
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+}
+
+.header-small .subtitle{
+
+    color:white !important;
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:768px){
+
+    .logo-app{
+
+        width:95%;
+
+    }
+
+    .navbar{
+
+        gap:25px;
+
+        flex-wrap:wrap;
+
+    }
+
+    .navbar a{
+
+        font-size:14px;
+
+    }
+
+    #categorias-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+/* =====================================
+   ICONOS NAVBAR EN BLANCO
+===================================== */
+
+.navbar img{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+    opacity:1;
+}
+
+.navbar a{
+    color:white !important;
+    font-family:'Poppins-Bold';
+}
+
+.navbar a:hover{
+    opacity:0.85;
+}
+/* =====================================
+   CONFIGURACIÓN REAL
+   Victoriosos en Cristo
+   Pegar al final de css/styles.css
+===================================== */
+
+.configuracion-page {
+    min-height: 100vh;
+    padding: 22px 18px 95px;
+    background:
+        radial-gradient(circle at top left, rgba(122, 70, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, #f7f2ff 100%);
+}
+
+.config-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(79, 32, 143, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.page-title-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.page-title-box h1 {
+    margin: 0;
+    font-size: 1.55rem;
+    color: #3f206e;
+    font-weight: 800;
+}
+
+.page-title-box p {
+    margin: 3px 0 0;
+    font-size: 0.9rem;
+    color: #7a6a91;
+}
+
+.config-card {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 24px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 14px 34px rgba(79, 32, 143, 0.11);
+    border: 1px solid rgba(122, 70, 255, 0.08);
+}
+
+.config-card.principal {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+    color: #ffffff;
+}
+
+.config-card-title {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.config-card-title h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.config-card-title p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.config-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+}
+
+.config-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+}
+
+.config-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 16px;
+    background: rgba(122, 70, 255, 0.11);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.config-card.principal .config-icon {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.config-info h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #43206f;
+    font-weight: 800;
+}
+
+.config-info p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #776487;
+}
+
+.config-extra {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(122, 70, 255, 0.13);
+}
+
+.config-label {
+    display: block;
+    font-size: 0.88rem;
+    color: #4c2875;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.input-config {
+    width: 100%;
+    max-width: 220px;
+    padding: 13px 14px;
+    border: 1px solid rgba(122, 70, 255, 0.2);
+    border-radius: 16px;
+    outline: none;
+    font-size: 1rem;
+    color: #3f206e;
+    background: #ffffff;
+}
+
+.input-config:focus {
+    border-color: #7a46ff;
+    box-shadow: 0 0 0 4px rgba(122, 70, 255, 0.11);
+}
+
+.config-note {
+    margin: 12px 0 0;
+    font-size: 0.84rem;
+    color: #8a789b;
+    line-height: 1.45;
+}
+
+.oculto-config {
+    display: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 58px;
+    height: 32px;
+    min-width: 58px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #d9cbed;
+    transition: 0.25s;
+    border-radius: 999px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #ffffff;
+    transition: 0.25s;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.switch input:checked + .slider {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.config-status {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    margin: 8px 0 14px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(73, 184, 120, 0.12);
+    color: #217246;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.config-status.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.config-status.error {
+    background: rgba(210, 60, 60, 0.12);
+    color: #a82424;
+}
+
+.config-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.btn-primary-config,
+.btn-secondary-config {
+    border: none;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.22s ease;
+}
+
+.btn-primary-config {
+    flex: 1;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+    box-shadow: 0 12px 24px rgba(107, 53, 216, 0.25);
+}
+
+.btn-secondary-config {
+    color: #5d348c;
+    background: #ffffff;
+    border: 1px solid rgba(122, 70, 255, 0.16);
+}
+
+.btn-primary-config:active,
+.btn-secondary-config:active {
+    transform: scale(0.98);
+}
+
+/* =====================================
+   MODO OSCURO GENERAL
+===================================== */
+
+body.modo-oscuro {
+    background: #160d25;
+    color: #f4edff;
+}
+
+body.modo-oscuro .configuracion-page {
+    background:
+        radial-gradient(circle at top left, rgba(155, 108, 255, 0.24), transparent 35%),
+        linear-gradient(180deg, #160d25 0%, #211235 100%);
+}
+
+body.modo-oscuro .btn-icon,
+body.modo-oscuro .config-card,
+body.modo-oscuro .btn-secondary-config,
+body.modo-oscuro .bottom-nav {
+    background: rgba(35, 20, 55, 0.96);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.modo-oscuro .page-title-box h1,
+body.modo-oscuro .config-info h3,
+body.modo-oscuro .config-label {
+    color: #ffffff;
+}
+
+body.modo-oscuro .page-title-box p,
+body.modo-oscuro .config-info p,
+body.modo-oscuro .config-note {
+    color: #cbb8df;
+}
+
+body.modo-oscuro .input-config {
+    background: #211235;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+body.modo-oscuro .config-card.principal {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+}
+
+body.modo-oscuro .btn-secondary-config {
+    color: #ffffff;
+}
+
+body.modo-oscuro .bottom-nav a,
+body.modo-oscuro .nav-item span {
+    color: #e9ddff;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 480px) {
+
+    .configuracion-page {
+        padding: 18px 14px 95px;
+    }
+
+    .page-title-box h1 {
+        font-size: 1.35rem;
+    }
+
+    .config-row {
+        align-items: flex-start;
+    }
+
+    .config-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary-config,
+    .btn-secondary-config {
+        width: 100%;
+    }
+}

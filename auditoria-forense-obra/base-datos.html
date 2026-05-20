@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base de Datos | Auditoría Forense de Obra</title>
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="manifest" href="pwa/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">AFO</div>
+        <div class="brand-text">
+          <h1>Auditoría Forense de Obra</h1>
+          <p>Control técnico, contable y tributario</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link" href="contratos.html">Contratos</a>
+        <a class="nav-link active" href="base-datos.html">Base de datos</a>
+        <a class="nav-link" href="presupuesto.html">Presupuesto</a>
+        <a class="nav-link" href="contrato-detalle.html">Detalle del contrato</a>
+        <a class="nav-link" href="facturacion.html">Facturación</a>
+        <a class="nav-link" href="alertas.html">Alertas</a>
+        <a class="nav-link" href="informes.html">Informes</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-badge" id="estadoBaseDatos">Sin base importada</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2>Base de datos técnica</h2>
+          <p class="subtitle">
+            Importe la base de datos Excel tipo presupuesto-pro para construir el presupuesto
+            de obra que será objeto de auditoría técnico-contable.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="btn btn-outline" href="presupuesto.html">Ir a presupuesto</a>
+        </div>
+      </header>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Importar base Excel</h4>
+          </div>
+
+          <form id="formImportacionBase" class="app-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="selectorContratoBase">Contrato asociado</label>
+                <select id="selectorContratoBase" name="selectorContratoBase"></select>
+              </div>
+
+              <div class="form-group">
+                <label for="archivoExcelBase">Archivo Excel</label>
+                <input id="archivoExcelBase" name="archivoExcelBase" type="file" accept=".xlsx,.xls" />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button id="btnImportarBase" type="submit" class="btn btn-primary">Importar base</button>
+              <button id="btnLimpiarBase" type="button" class="btn btn-secondary">Limpiar base</button>
+            </div>
+          </form>
+
+          <div class="info-box mt-16">
+            <strong>Importante:</strong>
+            <p>
+              La base importada debe tener una lógica equivalente a la utilizada en presupuesto-pro,
+              permitiendo identificar ítems, APUs y su composición técnica para luego construir el
+              presupuesto de obra a auditar.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Resumen de base importada</h4>
+          </div>
+
+          <div id="resumenBaseDatos" class="dashboard-grid dashboard-grid-inline"></div>
+
+          <div class="info-box mt-16">
+            <strong>Flujo correcto:</strong>
+            <p>
+              Primero importe la base Excel, luego vaya al módulo Presupuesto y construya el
+              presupuesto específico del contrato. A partir de allí la app podrá calcular la
+              composición técnica esperada y ejecutar la auditoría.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="card mt-20">
+        <div class="card-header">
+          <h4>Ítems importados de la base</h4>
+        </div>
+
+        <div id="tablaBaseDatos"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+  <script src="js/storage.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/contratos.js"></script>
+  <script src="js/base-import.js"></script>
+  <script src="js/presupuesto.js"></script>
+  <script src="js/tecnico.js"></script>
+  <script src="js/facturacion.js"></script>
+  <script src="js/tributario.js"></script>
+  <script src="js/cruces.js"></script>
+  <script src="js/alertas.js"></script>
+  <script src="js/reportes.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    (function () {
+      function llenarSelectorContratos() {
+        const select = document.getElementById("selectorContratoBase");
+        if (!select || !window.AFOContratos) return;
+
+        const contratos = window.AFOContratos.getAll() || [];
+
+        if (!contratos.length) {
+          select.innerHTML = '<option value="">No hay contratos registrados</option>';
+          return;
+        }
+
+        select.innerHTML = contratos.map(c =>
+          `<option value="${c.id}">${c.numeroContrato} - ${c.nombre}</option>`
+        ).join("");
+      }
+
+      function actualizarVistaBase() {
+        if (!window.AFOBaseImport) return;
+
+        window.AFOBaseImport.renderSummary("resumenBaseDatos");
+        window.AFOBaseImport.renderTable("tablaBaseDatos");
+
+        const badge = document.getElementById("estadoBaseDatos");
+        if (badge) {
+          const total = window.AFOBaseImport.getAll().length;
+          badge.textContent = total ? "Base importada: " + total + " ítems" : "Sin base importada";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        llenarSelectorContratos();
+        actualizarVistaBase();
+
+        if (window.AFOBaseImport && typeof window.AFOBaseImport.bindForm === "function") {
+          window.AFOBaseImport.bindForm("formImportacionBase");
+        }
+
+        const btnLimpiar = document.getElementById("btnLimpiarBase");
+        if (btnLimpiar) {
+          btnLimpiar.addEventListener("click", function () {
+            if (!window.AFOUI.confirmAction("¿Desea eliminar la base de datos importada?")) return;
+
+            window.AFOBaseImport.clearAll();
+            actualizarVistaBase();
+
+            if (window.AFOUI && window.AFOUI.showMessage) {
+              window.AFOUI.showMessage("Base de datos eliminada correctamente.", "success");
+            }
+          });
+        }
+
+        const form = document.getElementById("formImportacionBase");
+        if (form) {
+          form.addEventListener("submit", function () {
+            setTimeout(function () {
+              actualizarVistaBase();
+            }, 300);
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

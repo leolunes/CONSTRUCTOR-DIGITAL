@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle del contrato | Auditoría Forense de Obra</title>
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="manifest" href="pwa/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">AFO</div>
+        <div class="brand-text">
+          <h1>Auditoría Forense de Obra</h1>
+          <p>Control técnico, contable y tributario</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link" href="contratos.html">Contratos</a>
+        <a class="nav-link active" href="contrato-detalle.html">Detalle del contrato</a>
+        <a class="nav-link" href="facturacion.html">Facturación</a>
+        <a class="nav-link" href="alertas.html">Alertas</a>
+        <a class="nav-link" href="informes.html">Informes</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-badge">Módulo técnico del contrato</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2>Detalle técnico del contrato</h2>
+          <p class="subtitle">
+            Registre la estructura técnica del contrato mediante ítems, componentes y valores esperados
+            para construir la base de comparación frente a la facturación.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="btn btn-outline" href="contratos.html">Ver contratos</a>
+        </div>
+      </header>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Seleccionar contrato</h4>
+          </div>
+
+          <div class="form-group">
+            <label for="selectorContratoDetalle">Contrato</label>
+            <select id="selectorContratoDetalle"></select>
+          </div>
+
+          <div class="info-box mt-16">
+            <strong>Propósito de este módulo:</strong>
+            <p>
+              Aquí se carga la composición técnica que servirá como referencia para calcular cuánto
+              del valor del contrato debería corresponder a materiales, mano de obra, equipos,
+              transportes y otros costos.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Datos generales del contrato</h4>
+          </div>
+
+          <table class="summary-table">
+            <tbody>
+              <tr>
+                <th>Número</th>
+                <td id="detalleNumeroContrato">-</td>
+              </tr>
+              <tr>
+                <th>Nombre</th>
+                <td id="detalleNombreContrato">-</td>
+              </tr>
+              <tr>
+                <th>Entidad</th>
+                <td id="detalleEntidadContrato">-</td>
+              </tr>
+              <tr>
+                <th>Contratista</th>
+                <td id="detalleContratistaContrato">-</td>
+              </tr>
+              <tr>
+                <th>Ubicación</th>
+                <td id="detalleUbicacionContrato">-</td>
+              </tr>
+              <tr>
+                <th>Valor</th>
+                <td id="detalleValorContrato">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Registrar ítem técnico</h4>
+          </div>
+
+          <form id="formTecnico" class="app-form">
+            <div class="form-grid">
+              <div class="form-group form-group-full">
+                <label for="contratoId">Contrato</label>
+                <input id="contratoId" name="contratoId" type="text" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="codigo">Código</label>
+                <input id="codigo" name="codigo" type="text" placeholder="Ej: 01.01" />
+              </div>
+
+              <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <select id="tipo" name="tipo">
+                  <option value="material">Material</option>
+                  <option value="mano_obra">Mano de obra</option>
+                  <option value="equipo">Equipo</option>
+                  <option value="transporte">Transporte</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+
+              <div class="form-group form-group-full">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="3" placeholder="Descripción del componente técnico"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="unidad">Unidad</label>
+                <input id="unidad" name="unidad" type="text" placeholder="Ej: m3, und, kg, hr" />
+              </div>
+
+              <div class="form-group">
+                <label for="cantidad">Cantidad</label>
+                <input id="cantidad" name="cantidad" type="number" min="0" step="any" placeholder="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="valor">Valor</label>
+                <input id="valor" name="valor" type="number" min="0" step="1" placeholder="0" />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Agregar ítem técnico</button>
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Composición técnica esperada</h4>
+          </div>
+
+          <div id="resumenTecnico" class="dashboard-grid dashboard-grid-inline"></div>
+
+          <div class="info-box mt-16">
+            <strong>Lectura técnica:</strong>
+            <p>
+              Estos valores representan la distribución esperada del costo del contrato según los
+              componentes cargados. Luego serán comparados con la facturación real del contratista.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="card mt-20">
+        <div class="card-header">
+          <h4>Tabla de componentes técnicos</h4>
+        </div>
+
+        <div id="tablaTecnica"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/contratos.js"></script>
+  <script src="js/tecnico.js"></script>
+  <script src="js/facturacion.js"></script>
+  <script src="js/tributario.js"></script>
+  <script src="js/cruces.js"></script>
+  <script src="js/alertas.js"></script>
+  <script src="js/reportes.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    (function () {
+      function llenarSelectorContratos() {
+        const select = document.getElementById("selectorContratoDetalle");
+        if (!select || !window.AFOContratos) return;
+
+        const contratos = window.AFOContratos.getAll() || [];
+
+        if (!contratos.length) {
+          select.innerHTML = '<option value="">No hay contratos registrados</option>';
+          actualizarDetalle(null);
+          return;
+        }
+
+        select.innerHTML = contratos.map(c =>
+          `<option value="${c.id}">${c.numeroContrato} - ${c.nombre}</option>`
+        ).join("");
+
+        const contratoId = select.value;
+        actualizarDetalle(contratoId);
+      }
+
+      function actualizarDetalle(contratoId) {
+        const contrato = contratoId && window.AFOContratos
+          ? window.AFOContratos.getById(contratoId)
+          : null;
+
+        document.getElementById("detalleNumeroContrato").textContent = contrato?.numeroContrato || "-";
+        document.getElementById("detalleNombreContrato").textContent = contrato?.nombre || "-";
+        document.getElementById("detalleEntidadContrato").textContent = contrato?.entidad || "-";
+        document.getElementById("detalleContratistaContrato").textContent = contrato?.contratista || "-";
+        document.getElementById("detalleUbicacionContrato").textContent = contrato?.ubicacion || "-";
+        document.getElementById("detalleValorContrato").textContent = contrato
+          ? window.AFOUI.formatMoney(contrato.valorContrato || 0)
+          : "-";
+
+        const inputContratoId = document.getElementById("contratoId");
+        if (inputContratoId) {
+          inputContratoId.value = contrato?.id || "";
+        }
+
+        if (window.AFOTecnico && contratoId) {
+          window.AFOTecnico.renderTable("tablaTecnica", contratoId);
+          window.AFOTecnico.renderComposition("resumenTecnico", contratoId);
+        } else {
+          document.getElementById("tablaTecnica").innerHTML = "";
+          document.getElementById("resumenTecnico").innerHTML = "";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        llenarSelectorContratos();
+
+        const select = document.getElementById("selectorContratoDetalle");
+        if (select) {
+          select.addEventListener("change", function () {
+            actualizarDetalle(this.value);
+          });
+        }
+
+        if (window.AFOTecnico && typeof window.AFOTecnico.bindForm === "function") {
+          window.AFOTecnico.bindForm("formTecnico");
+        }
+
+        const form = document.getElementById("formTecnico");
+        if (form) {
+          form.addEventListener("submit", function () {
+            setTimeout(function () {
+              const contratoId = document.getElementById("contratoId").value;
+              actualizarDetalle(contratoId);
+            }, 100);
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

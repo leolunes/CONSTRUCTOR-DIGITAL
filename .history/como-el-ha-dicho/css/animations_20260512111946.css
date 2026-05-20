@@ -1,0 +1,75 @@
+/* =====================================
+   ANIMACIÓN FADE IN
+===================================== */
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =====================================
+   ANIMACIÓN SCALE
+===================================== */
+
+@keyframes scaleIn{
+
+    from{
+        opacity:0;
+        transform:scale(0.95);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+/* =====================================
+   TARJETAS ANIMADAS
+===================================== */
+
+.categoria-card{
+    animation:fadeIn 0.5s ease;
+}
+
+/* =====================================
+   HOVER SUAVE
+===================================== */
+
+.categoria-card:hover{
+    transition:all 0.3s ease;
+}
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.btn-volver,
+.btn-eliminar,
+.btn-favorito{
+
+    transition:all 0.3s ease;
+
+}
+
+/* =====================================
+   EFECTO BOTONES
+===================================== */
+
+.btn-volver:hover,
+.btn-eliminar:hover,
+.btn-favorito:hover{
+
+    transform:scale(1.03);
+
+}

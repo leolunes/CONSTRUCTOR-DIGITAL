@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "nombre": "Identidad en Cristo",
+    "descripcion": "Descubre quién eres en Dios y afirma tu identidad espiritual.",
+    "audio_carpeta": "identidad"
+  },
+  {
+    "id": 2,
+    "nombre": "Fe y Confianza",
+    "descripcion": "Fortalece tu confianza en Dios en medio de cualquier situación.",
+    "audio_carpeta": "fe"
+  },
+  {
+    "id": 3,
+    "nombre": "Oración y Peticiones",
+    "descripcion": "Aprende a orar con fe y expectativa bíblica.",
+    "audio_carpeta": "oracion"
+  },
+  {
+    "id": 4,
+    "nombre": "Paz y Descanso",
+    "descripcion": "Recibe paz interior y descanso emocional en Dios.",
+    "audio_carpeta": "paz"
+  },
+  {
+    "id": 5,
+    "nombre": "Sanidad y Restauración",
+    "descripcion": "Declara sanidad física, emocional y espiritual.",
+    "audio_carpeta": "sanidad"
+  },
+  {
+    "id": 6,
+    "nombre": "Matrimonio y Relaciones",
+    "descripcion": "Fortalece relaciones saludables y restauradas.",
+    "audio_carpeta": "matrimonio"
+  },
+  {
+    "id": 7,
+    "nombre": "Provisión y Finanzas",
+    "descripcion": "Confía en la provisión y fidelidad de Dios.",
+    "audio_carpeta": "finanzas"
+  },
+  {
+    "id": 8,
+    "nombre": "Propósito y Dirección",
+    "descripcion": "Busca la dirección y el propósito de Dios para tu vida.",
+    "audio_carpeta": "proposito"
+  },
+  {
+    "id": 9,
+    "nombre": "Victoria Espiritual",
+    "descripcion": "Camina en autoridad, protección y victoria espiritual.",
+    "audio_carpeta": "victoria"
+  },
+  {
+    "id": 10,
+    "nombre": "Gratitud y Gozo",
+    "descripcion": "Cultiva una vida llena de alegría y agradecimiento.",
+    "audio_carpeta": "gratitud"
+  },
+  {
+    "id": 11,
+    "nombre": "Libertad Emocional",
+    "descripcion": "Recibe sanidad emocional y libertad interior.",
+    "audio_carpeta": "libertad"
+  },
+  {
+    "id": 12,
+    "nombre": "Disciplina Espiritual",
+    "descripcion": "Crece diariamente en tu relación con Dios.",
+    "audio_carpeta": "disciplina"
+  },
+  {
+    "id": 13,
+    "nombre": "Sabiduría para la Vida",
+    "descripcion": "Aplica principios bíblicos a tus decisiones diarias.",
+    "audio_carpeta": "sabiduria"
+  },
+  {
+    "id": 14,
+    "nombre": "Jóvenes y Propósito",
+    "descripcion": "Ayuda a jóvenes a descubrir su propósito en Dios.",
+    "audio_carpeta": "jovenes"
+  },
+  {
+    "id": 15,
+    "nombre": "Protección y Seguridad",
+    "descripcion": "Encuentra seguridad bajo el cuidado y protección de Dios.",
+    "audio_carpeta": "proteccion"
+  }
+]

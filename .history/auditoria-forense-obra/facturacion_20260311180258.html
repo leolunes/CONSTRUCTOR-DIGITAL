@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facturación | Auditoría Forense de Obra</title>
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="manifest" href="pwa/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">AFO</div>
+        <div class="brand-text">
+          <h1>Auditoría Forense de Obra</h1>
+          <p>Control técnico, contable y tributario</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link" href="contratos.html">Contratos</a>
+        <a class="nav-link" href="contrato-detalle.html">Detalle del contrato</a>
+        <a class="nav-link active" href="facturacion.html">Facturación</a>
+        <a class="nav-link" href="alertas.html">Alertas</a>
+        <a class="nav-link" href="informes.html">Informes</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-badge">Módulo de facturación</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h2>Facturación del contrato</h2>
+          <p class="subtitle">
+            Registre los soportes contables asociados al contrato para clasificar materiales,
+            mano de obra, equipos, transportes, base gravable e IVA.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="btn btn-outline" href="contrato-detalle.html">Ver detalle técnico</a>
+        </div>
+      </header>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Seleccionar contrato</h4>
+          </div>
+
+          <div class="form-group">
+            <label for="selectorContratoFacturacion">Contrato</label>
+            <select id="selectorContratoFacturacion"></select>
+          </div>
+
+          <div class="info-box mt-16">
+            <strong>Objetivo:</strong>
+            <p>
+              La facturación registrada en este módulo será comparada con la composición técnica
+              esperada del contrato para identificar desviaciones, riesgos fiscales y posibles
+              incoherencias contables.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Resumen del contrato seleccionado</h4>
+          </div>
+
+          <table class="summary-table">
+            <tbody>
+              <tr>
+                <th>Número</th>
+                <td id="factNumeroContrato">-</td>
+              </tr>
+              <tr>
+                <th>Nombre</th>
+                <td id="factNombreContrato">-</td>
+              </tr>
+              <tr>
+                <th>Entidad</th>
+                <td id="factEntidadContrato">-</td>
+              </tr>
+              <tr>
+                <th>Contratista</th>
+                <td id="factContratistaContrato">-</td>
+              </tr>
+              <tr>
+                <th>Valor</th>
+                <td id="factValorContrato">-</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card">
+          <div class="card-header">
+            <h4>Registrar factura</h4>
+          </div>
+
+          <form id="formFactura" class="app-form">
+            <div class="form-grid">
+              <div class="form-group form-group-full">
+                <label for="contratoId">Contrato</label>
+                <input id="contratoId" name="contratoId" type="text" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="numeroFactura">Número de factura</label>
+                <input id="numeroFactura" name="numeroFactura" type="text" placeholder="Ej: FV-001" />
+              </div>
+
+              <div class="form-group">
+                <label for="fechaFactura">Fecha de factura</label>
+                <input id="fechaFactura" name="fechaFactura" type="date" />
+              </div>
+
+              <div class="form-group">
+                <label for="proveedor">Proveedor</label>
+                <input id="proveedor" name="proveedor" type="text" placeholder="Nombre del proveedor" />
+              </div>
+
+              <div class="form-group">
+                <label for="tipoGasto">Tipo de gasto</label>
+                <select id="tipoGasto" name="tipoGasto">
+                  <option value="material">Material</option>
+                  <option value="mano_obra">Mano de obra</option>
+                  <option value="equipo">Equipo</option>
+                  <option value="transporte">Transporte</option>
+                  <option value="otros">Otros</option>
+                </select>
+              </div>
+
+              <div class="form-group form-group-full">
+                <label for="concepto">Concepto</label>
+                <textarea id="concepto" name="concepto" rows="3" placeholder="Descripción del soporte o concepto facturado"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="baseGravable">Base gravable</label>
+                <input id="baseGravable" name="baseGravable" type="number" min="0" step="1" placeholder="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="iva">IVA</label>
+                <input id="iva" name="iva" type="number" min="0" step="1" placeholder="0" />
+              </div>
+
+              <div class="form-group">
+                <label for="valorTotal">Valor total</label>
+                <input id="valorTotal" name="valorTotal" type="number" min="0" step="1" placeholder="0" />
+              </div>
+
+              <div class="form-group form-group-full">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" name="observaciones" rows="3" placeholder="Observaciones adicionales del soporte"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Guardar factura</button>
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h4>Resumen de facturación</h4>
+          </div>
+
+          <div id="resumenFacturas" class="dashboard-grid dashboard-grid-inline"></div>
+
+          <div class="info-box mt-16">
+            <strong>Lectura de control:</strong>
+            <p>
+              Este resumen consolida los soportes cargados. Más adelante será cruzado con el
+              análisis técnico del contrato para determinar si existen rubros sobrerrepresentados,
+              subrepresentados o tributariamente inconsistentes.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="card mt-20">
+        <div class="card-header">
+          <h4>Tabla de facturación registrada</h4>
+        </div>
+
+        <div id="tablaFacturas"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/contratos.js"></script>
+  <script src="js/tecnico.js"></script>
+  <script src="js/facturacion.js"></script>
+  <script src="js/tributario.js"></script>
+  <script src="js/cruces.js"></script>
+  <script src="js/alertas.js"></script>
+  <script src="js/reportes.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    (function () {
+      function llenarSelectorContratos() {
+        const select = document.getElementById("selectorContratoFacturacion");
+        if (!select || !window.AFOContratos) return;
+
+        const contratos = window.AFOContratos.getAll() || [];
+
+        if (!contratos.length) {
+          select.innerHTML = '<option value="">No hay contratos registrados</option>';
+          actualizarVista(null);
+          return;
+        }
+
+        select.innerHTML = contratos.map(c =>
+          `<option value="${c.id}">${c.numeroContrato} - ${c.nombre}</option>`
+        ).join("");
+
+        actualizarVista(select.value);
+      }
+
+      function actualizarVista(contratoId) {
+        const contrato = contratoId && window.AFOContratos
+          ? window.AFOContratos.getById(contratoId)
+          : null;
+
+        document.getElementById("factNumeroContrato").textContent = contrato?.numeroContrato || "-";
+        document.getElementById("factNombreContrato").textContent = contrato?.nombre || "-";
+        document.getElementById("factEntidadContrato").textContent = contrato?.entidad || "-";
+        document.getElementById("factContratistaContrato").textContent = contrato?.contratista || "-";
+        document.getElementById("factValorContrato").textContent = contrato
+          ? window.AFOUI.formatMoney(contrato.valorContrato || 0)
+          : "-";
+
+        const inputContratoId = document.getElementById("contratoId");
+        if (inputContratoId) {
+          inputContratoId.value = contrato?.id || "";
+        }
+
+        if (window.AFOFacturacion && contratoId) {
+          window.AFOFacturacion.renderTable("tablaFacturas", contratoId);
+          window.AFOFacturacion.renderCards("resumenFacturas", contratoId);
+        } else {
+          document.getElementById("tablaFacturas").innerHTML = "";
+          document.getElementById("resumenFacturas").innerHTML = "";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        llenarSelectorContratos();
+
+        const select = document.getElementById("selectorContratoFacturacion");
+        if (select) {
+          select.addEventListener("change", function () {
+            actualizarVista(this.value);
+          });
+        }
+
+        if (window.AFOFacturacion && typeof window.AFOFacturacion.bindForm === "function") {
+          window.AFOFacturacion.bindForm("formFactura");
+        }
+
+        const form = document.getElementById("formFactura");
+        if (form) {
+          form.addEventListener("submit", function () {
+            setTimeout(function () {
+              const contratoId = document.getElementById("contratoId").value;
+              actualizarVista(contratoId);
+            }, 100);
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+/* =====================================
+   TABLETS
+===================================== */
+
+@media(max-width:992px){
+
+    .container{
+        padding:15px;
+    }
+
+    #categorias-container{
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    }
+
+    #declaraciones-container{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* =====================================
+   MÓVILES
+===================================== */
+
+@media(max-width:768px){
+
+    .header{
+        padding:30px 15px;
+    }
+
+    .header h1{
+        font-size:28px;
+    }
+
+    .subtitle{
+        font-size:14px;
+    }
+
+    .categoria-card{
+        padding:20px;
+    }
+
+    .categoria-card h2{
+        font-size:22px;
+    }
+
+    .categoria-card p{
+        font-size:14px;
+    }
+
+    .btn-volver{
+        width:100%;
+        text-align:center;
+    }
+
+}
+
+/* =====================================
+   MÓVILES PEQUEÑOS
+===================================== */
+
+@media(max-width:480px){
+
+    .header h1{
+        font-size:24px;
+    }
+
+    .subtitle{
+        font-size:13px;
+    }
+
+    .categoria-card{
+        padding:18px;
+    }
+
+    .categoria-card h2{
+        font-size:20px;
+    }
+
+    .categoria-card p{
+        font-size:13px;
+    }
+
+}

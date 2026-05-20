@@ -1,0 +1,84 @@
+/* =====================================
+   TARJETAS GENERALES
+===================================== */
+
+.categoria-card{
+    background:#ffffff;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    transition:0.3s;
+    cursor:pointer;
+    overflow:hidden;
+    position:relative;
+}
+
+.categoria-card:hover{
+    transform:translateY(-5px);
+}
+
+/* =====================================
+   TÍTULOS
+===================================== */
+
+.categoria-card h2{
+    color:#5b3cc4;
+    font-size:24px;
+    margin-bottom:15px;
+}
+
+/* =====================================
+   PÁRRAFOS
+===================================== */
+
+.categoria-card p{
+    color:#555;
+    font-size:15px;
+    line-height:1.7;
+}
+
+/* =====================================
+   TEXTOS IMPORTANTES
+===================================== */
+
+.categoria-card strong{
+    color:#222;
+}
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.btn-eliminar{
+    margin-top:15px;
+    border:none;
+    background:#d9534f;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-eliminar:hover{
+    background:#b52b27;
+}
+
+/* =====================================
+   BOTÓN FAVORITO FUTURO
+===================================== */
+
+.btn-favorito{
+    margin-top:15px;
+    border:none;
+    background:#5b3cc4;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-favorito:hover{
+    background:#452d96;
+}
