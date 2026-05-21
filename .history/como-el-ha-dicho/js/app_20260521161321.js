@@ -1008,6 +1008,9 @@ async function generarPdfPalabra(modo = 'descargar'){
     const morado =
     [97, 59, 204];
 
+    const lila =
+    [198, 165, 245];
+
     const gris =
     [43, 38, 70];
 
@@ -1015,9 +1018,9 @@ async function generarPdfPalabra(modo = 'descargar'){
     [20, 16, 45];
 
     // =====================================
-    // PLANTILLA PREMIUM
-    // Guarda la imagen como:
-    // assets/pdf/pdf-template-victoriosos.png
+    // FONDO / PLANTILLA
+    // La plantilla controla recuadros, sombras,
+    // líneas, íconos y decoración.
     // =====================================
 
     const plantilla =
@@ -1068,38 +1071,42 @@ async function generarPdfPalabra(modo = 'descargar'){
         pdf.addImage(
             logoApp,
             'PNG',
-            43,
-            10,
-            130,
+            44,
+            11,
+            128,
             31
         );
 
     }
 
     // =====================================
-    // DESTINATARIO
+    // TÍTULO DESTINATARIO
     // =====================================
+
+    const textoDestino =
+    `Preparado especialmente para ${nombrePersona}`;
 
     escribirTextoCentradoEnCajaPdf(
         pdf,
         {
-            texto:`Preparado especialmente para ${nombrePersona}`,
+            texto:textoDestino,
             xCentro:anchoPagina / 2,
-            yInicio:55,
+            yInicio:51,
             ancho:190,
-            alto:14,
+            alto:17,
             fuente:'times',
             estilo:'bold',
             tamanoInicial:21,
             tamanoMinimo:11,
             color:oscuro,
             maxLineas:2,
-            espacioLinea:1.04
+            espacioLinea:1.05
         }
     );
 
     // =====================================
     // DEDICATORIA
+    // Caja superior con 4 líneas elegantes.
     // =====================================
 
     escribirTextoCentradoEnCajaPdf(
@@ -1107,16 +1114,16 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:dedicatoria,
             xCentro:anchoPagina / 2,
-            yInicio:77,
-            ancho:142,
-            alto:32,
+            yInicio:76,
+            ancho:145,
+            alto:31,
             fuente:'times',
             estilo:'italic',
-            tamanoInicial:13,
-            tamanoMinimo:6.2,
+            tamanoInicial:12.2,
+            tamanoMinimo:6.6,
             color:gris,
             maxLineas:4,
-            espacioLinea:1.02
+            espacioLinea:1.05
         }
     );
 
@@ -1129,9 +1136,7 @@ async function generarPdfPalabra(modo = 'descargar'){
         'bold'
     );
 
-    pdf.setFontSize(
-        16
-    );
+    pdf.setFontSize(15.5);
 
     pdf.setTextColor(
         oscuro[0],
@@ -1142,11 +1147,12 @@ async function generarPdfPalabra(modo = 'descargar'){
     pdf.text(
         'Como Él ha dicho:',
         76,
-        142
+        139
     );
 
     const textoPalabra =
     palabraSeleccionadaPdf.texto ||
+    palabraSeleccionadaPdf.versiculo ||
     '';
 
     escribirTextoIzquierdaEnCajaPdf(
@@ -1154,16 +1160,16 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:textoPalabra,
             x:76,
-            yInicio:151,
+            yInicio:145,
             ancho:112,
-            alto:35,
+            alto:33,
             fuente:'times',
             estilo:'italic',
-            tamanoInicial:13,
-            tamanoMinimo:6,
+            tamanoInicial:12.8,
+            tamanoMinimo:6.4,
             color:gris,
             maxLineas:5,
-            espacioLinea:1.08
+            espacioLinea:1.10
         }
     );
 
@@ -1178,7 +1184,7 @@ async function generarPdfPalabra(modo = 'descargar'){
             {
                 texto:palabraSeleccionadaPdf.versiculo,
                 xCentro:anchoPagina / 2,
-                yInicio:183,
+                yInicio:189,
                 ancho:70,
                 alto:12,
                 fuente:'times',
@@ -1202,9 +1208,7 @@ async function generarPdfPalabra(modo = 'descargar'){
         'bold'
     );
 
-    pdf.setFontSize(
-        15
-    );
+    pdf.setFontSize(14.8);
 
     pdf.setTextColor(
         oscuro[0],
@@ -1215,7 +1219,7 @@ async function generarPdfPalabra(modo = 'descargar'){
     pdf.text(
         'Podemos decir confiadamente:',
         76,
-        219
+        222
     );
 
     const declaracion =
@@ -1227,16 +1231,16 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:`“${declaracion}”`,
             x:76,
-            yInicio:228,
+            yInicio:229,
             ancho:112,
-            alto:31,
+            alto:28,
             fuente:'times',
             estilo:'italic',
-            tamanoInicial:12.7,
-            tamanoMinimo:6,
+            tamanoInicial:12.4,
+            tamanoMinimo:6.2,
             color:gris,
             maxLineas:4,
-            espacioLinea:1.06
+            espacioLinea:1.10
         }
     );
 
@@ -1249,12 +1253,12 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:'Oramos que esta palabra fortalezca tu vida.',
             xCentro:anchoPagina / 2,
-            yInicio:258,
+            yInicio:262,
             ancho:180,
             alto:8,
             fuente:'times',
             estilo:'normal',
-            tamanoInicial:12.5,
+            tamanoInicial:12.8,
             tamanoMinimo:9,
             color:oscuro,
             maxLineas:1,
@@ -1267,12 +1271,12 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:'Victoriosos en Cristo',
             xCentro:anchoPagina / 2,
-            yInicio:270,
+            yInicio:273,
             ancho:120,
             alto:7,
             fuente:'times',
             estilo:'normal',
-            tamanoInicial:13,
+            tamanoInicial:13.5,
             tamanoMinimo:9,
             color:morado,
             maxLineas:1,

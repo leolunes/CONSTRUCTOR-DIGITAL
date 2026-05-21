@@ -13,262 +13,6 @@ const categoriaId = parametros.get('id');
 let categoriaActual = null;
 
 // =====================================
-// UTILIDADES AUDIO DESCARGAR / COMPARTIR
-// Integradas en este archivo para que
-// Descargar Audio y Compartir Audio
-// funcionen directamente desde la tarjeta.
-// =====================================
-
-function limpiarNombreArchivoAudio(nombre){
-
-    return String(nombre || 'audio')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[\\/:*?"<>|]/g, '')
-    .replace(/\s+/g, '_')
-    .replace(/_+/g, '_')
-    .trim();
-
-}
-
-function obtenerExtensionAudio(rutaAudio){
-
-    const ruta =
-    String(rutaAudio || '')
-    .split('?')[0]
-    .split('#')[0];
-
-    const partes =
-    ruta.split('.');
-
-    const extension =
-    partes.length > 1
-    ? partes.pop().toLowerCase()
-    : 'mp3';
-
-    if(
-        extension === 'mp3' ||
-        extension === 'wav' ||
-        extension === 'm4a' ||
-        extension === 'aac' ||
-        extension === 'ogg'
-    ){
-
-        return extension;
-
-    }
-
-    return 'mp3';
-
-}
-
-function obtenerMimeAudio(extension){
-
-    const tipos = {
-
-        mp3:'audio/mpeg',
-        wav:'audio/wav',
-        m4a:'audio/mp4',
-        aac:'audio/aac',
-        ogg:'audio/ogg'
-
-    };
-
-    return tipos[extension] || 'audio/mpeg';
-
-}
-
-async function crearArchivoAudioDesdeRuta(rutaAudio, titulo){
-
-    if(!rutaAudio){
-
-        alert(
-            'Este audio aún no tiene ruta disponible.'
-        );
-
-        return null;
-
-    }
-
-    try{
-
-        const respuesta =
-        await fetch(
-            rutaAudio,
-            {
-                cache:'no-store'
-            }
-        );
-
-        if(!respuesta.ok){
-
-            throw new Error(
-                'Audio no encontrado: ' + rutaAudio
-            );
-
-        }
-
-        const blob =
-        await respuesta.blob();
-
-        const extension =
-        obtenerExtensionAudio(
-            rutaAudio
-        );
-
-        const nombreArchivo =
-        limpiarNombreArchivoAudio(
-            `Audio_${titulo || 'declaracion'}.${extension}`
-        );
-
-        return new File(
-            [blob],
-            nombreArchivo,
-            {
-                type:
-                obtenerMimeAudio(extension)
-            }
-        );
-
-    }catch(error){
-
-        console.error(
-            'Error preparando audio:',
-            error
-        );
-
-        alert(
-            'No se pudo preparar el audio. Verifica que el archivo exista en la carpeta correcta y que los cambios ya estén subidos a GitHub.'
-        );
-
-        return null;
-
-    }
-
-}
-
-async function descargarAudioDesdeRuta(rutaAudio, titulo){
-
-    const archivoAudio =
-    await crearArchivoAudioDesdeRuta(
-        rutaAudio,
-        titulo
-    );
-
-    if(!archivoAudio){
-
-        return;
-
-    }
-
-    const urlTemporal =
-    URL.createObjectURL(
-        archivoAudio
-    );
-
-    const enlace =
-    document.createElement('a');
-
-    enlace.href =
-    urlTemporal;
-
-    enlace.download =
-    archivoAudio.name;
-
-    document.body.appendChild(
-        enlace
-    );
-
-    enlace.click();
-
-    enlace.remove();
-
-    setTimeout(() => {
-
-        URL.revokeObjectURL(
-            urlTemporal
-        );
-
-    }, 1500);
-
-}
-
-async function compartirAudioDesdeRuta(rutaAudio, titulo){
-
-    const archivoAudio =
-    await crearArchivoAudioDesdeRuta(
-        rutaAudio,
-        titulo
-    );
-
-    if(!archivoAudio){
-
-        return;
-
-    }
-
-    try{
-
-        if(
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({
-                files:[archivoAudio]
-            })
-        ){
-
-            await navigator.share({
-
-                files:
-                [archivoAudio]
-
-            });
-
-            return;
-
-        }
-
-        await descargarAudioDesdeRuta(
-            rutaAudio,
-            titulo
-        );
-
-        alert(
-            'El audio fue descargado correctamente. Ahora abre WhatsApp y adjúntalo desde Descargas como archivo.'
-        );
-
-    }catch(error){
-
-        console.error(
-            'Error compartiendo audio:',
-            error
-        );
-
-        await descargarAudioDesdeRuta(
-            rutaAudio,
-            titulo
-        );
-
-        alert(
-            'No se pudo compartir automáticamente. El audio fue descargado para enviarlo manualmente desde WhatsApp.'
-        );
-
-    }
-
-}
-
-// =====================================
-// DISPONIBLE GLOBALMENTE
-// =====================================
-
-window.descargarAudioDesdeRuta =
-descargarAudioDesdeRuta;
-
-window.compartirAudioDesdeRuta =
-compartirAudioDesdeRuta;
-
-
-// =====================================
 // CARGAR DECLARACIONES
 // =====================================
 
@@ -709,19 +453,7 @@ function mostrarDeclaraciones(declaraciones){
 
         btnAudio.addEventListener(
             'click',
-            async event => {
-
-                event.stopPropagation();
-
-                if(!window.audioApp){
-
-                    alert(
-                        'El reproductor de audio no está disponible.'
-                    );
-
-                    return;
-
-                }
+            async () => {
 
                 const existe =
                 await audioApp.existeAudio(
@@ -755,10 +487,43 @@ function mostrarDeclaraciones(declaraciones){
 
                 event.stopPropagation();
 
-                await descargarAudioDesdeRuta(
-                    rutaAudio,
-                    item.titulo
+                const existe =
+                await audioApp.existeAudio(
+                    rutaAudio
                 );
+
+                if(!existe){
+
+                    alert(
+                        'Este audio aún no existe.'
+                    );
+
+                    return;
+
+                }
+
+                if(
+                    typeof descargarAudioDeclaracion
+                    !== 'function'
+                ){
+
+                    alert(
+                        'La función descargar audio no está disponible.'
+                    );
+
+                    return;
+
+                }
+
+                descargarAudioDeclaracion({
+
+                    titulo:
+                    item.titulo,
+
+                    audio_url:
+                    rutaAudio
+
+                });
 
             }
         );
@@ -773,10 +538,43 @@ function mostrarDeclaraciones(declaraciones){
 
                 event.stopPropagation();
 
-                await compartirAudioDesdeRuta(
-                    rutaAudio,
-                    item.titulo
+                const existe =
+                await audioApp.existeAudio(
+                    rutaAudio
                 );
+
+                if(!existe){
+
+                    alert(
+                        'Este audio aún no existe.'
+                    );
+
+                    return;
+
+                }
+
+                if(
+                    typeof compartirAudioDeclaracion
+                    !== 'function'
+                ){
+
+                    alert(
+                        'La función compartir audio no está disponible.'
+                    );
+
+                    return;
+
+                }
+
+                compartirAudioDeclaracion({
+
+                    titulo:
+                    item.titulo,
+
+                    audio_url:
+                    rutaAudio
+
+                });
 
             }
         );

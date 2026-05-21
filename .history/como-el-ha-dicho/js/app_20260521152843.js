@@ -187,7 +187,7 @@ function prepararModalPdf(){
             'btn-pdf-whatsapp';
 
             btnWhatsapp.innerHTML =
-            '💌 Descargar y compartir por WhatsApp';
+            '📥 Descargar PDF para enviar por WhatsApp';
 
             btnWhatsapp.addEventListener(
                 'click',
@@ -579,7 +579,13 @@ function construirMensajeWhatsApp(){
 }
 
 // =====================================
-// COMPARTIR POR WHATSAPP
+// DESCARGAR PDF PARA ENVIAR POR WHATSAPP
+// Método seguro:
+// 1. Descarga el PDF real en el celular.
+// 2. NO comparte texto.
+// 3. NO comparte enlaces.
+// 4. NO genera blob visible en WhatsApp.
+// 5. El usuario envía manualmente el PDF desde Descargas.
 // =====================================
 
 async function compartirWhatsAppPalabra(){
@@ -616,30 +622,17 @@ async function compartirWhatsAppPalabra(){
 
     }
 
-    // Primero descarga el PDF para que la persona pueda adjuntarlo si desea.
     await generarPdfPalabra(
         'descargar'
     );
 
-    const mensaje =
-    construirMensajeWhatsApp();
-
-    const urlWhatsapp =
-    'https://wa.me/?text=' +
-    encodeURIComponent(
-        mensaje
+    alert(
+        'PDF descargado correctamente. Ahora abre WhatsApp, entra al chat de la persona y adjunta este PDF desde Descargas como documento.'
     );
 
-    setTimeout(() => {
-
-        window.open(
-            urlWhatsapp,
-            '_blank'
-        );
-
-    }, 600);
-
 }
+
+
 
 
 // =====================================
@@ -722,7 +715,7 @@ function escribirTextoCentradoEnCajaPdf(pdf, opciones){
     opciones.color || [0, 0, 0];
 
     const espacioLinea =
-    opciones.espacioLinea || 1.15;
+    opciones.espacioLinea || 1.22;
 
     const maxLineas =
     opciones.maxLineas || 4;
@@ -750,11 +743,17 @@ function escribirTextoCentradoEnCajaPdf(pdf, opciones){
             ancho
         );
 
+        const lineasUsadas =
+        lineas.slice(
+            0,
+            maxLineas
+        );
+
         const altoLinea =
         tamano * 0.3528 * espacioLinea;
 
         const altoTexto =
-        lineas.length * altoLinea;
+        lineasUsadas.length * altoLinea;
 
         if(
             lineas.length <= maxLineas &&
@@ -765,7 +764,7 @@ function escribirTextoCentradoEnCajaPdf(pdf, opciones){
 
         }
 
-        tamano -= 0.4;
+        tamano -= 0.5;
 
     }
 
@@ -801,7 +800,7 @@ function escribirTextoCentradoEnCajaPdf(pdf, opciones){
     lineas.length * altoLinea;
 
     const yTexto =
-    yInicio + ((alto - altoTexto) / 2) + (tamano * 0.28);
+    yInicio + ((alto - altoTexto) / 2) + (tamano * 0.3528);
 
     pdf.text(
         lineas,
@@ -814,133 +813,6 @@ function escribirTextoCentradoEnCajaPdf(pdf, opciones){
     );
 
 }
-
-function escribirTextoIzquierdaEnCajaPdf(pdf, opciones){
-
-    const texto =
-    normalizarTextoPdf(
-        opciones.texto
-    );
-
-    const x =
-    opciones.x;
-
-    const yInicio =
-    opciones.yInicio;
-
-    const ancho =
-    opciones.ancho;
-
-    const alto =
-    opciones.alto;
-
-    const fuente =
-    opciones.fuente || 'times';
-
-    const estilo =
-    opciones.estilo || 'normal';
-
-    const tamanoInicial =
-    opciones.tamanoInicial || 12;
-
-    const tamanoMinimo =
-    opciones.tamanoMinimo || 8;
-
-    const color =
-    opciones.color || [0, 0, 0];
-
-    const espacioLinea =
-    opciones.espacioLinea || 1.12;
-
-    const maxLineas =
-    opciones.maxLineas || 5;
-
-    let tamano =
-    tamanoInicial;
-
-    let lineas = [];
-
-    while(tamano >= tamanoMinimo){
-
-        pdf.setFont(
-            fuente,
-            estilo
-        );
-
-        pdf.setFontSize(
-            tamano
-        );
-
-        lineas =
-        dividirTextoManualPdf(
-            pdf,
-            texto,
-            ancho
-        );
-
-        const altoLinea =
-        tamano * 0.3528 * espacioLinea;
-
-        const altoTexto =
-        lineas.length * altoLinea;
-
-        if(
-            lineas.length <= maxLineas &&
-            altoTexto <= alto
-        ){
-
-            break;
-
-        }
-
-        tamano -= 0.4;
-
-    }
-
-    pdf.setFont(
-        fuente,
-        estilo
-    );
-
-    pdf.setFontSize(
-        tamano
-    );
-
-    pdf.setTextColor(
-        color[0],
-        color[1],
-        color[2]
-    );
-
-    lineas =
-    dividirTextoManualPdf(
-        pdf,
-        texto,
-        ancho
-    ).slice(
-        0,
-        maxLineas
-    );
-
-    const altoLinea =
-    tamano * 0.3528 * espacioLinea;
-
-    const yTexto =
-    yInicio + (tamano * 0.35);
-
-    pdf.text(
-        lineas,
-        x,
-        yTexto,
-        {
-            align:'left',
-            maxWidth:ancho,
-            lineHeightFactor:espacioLinea
-        }
-    );
-
-}
-
 
 // =====================================
 // GENERAR PDF
@@ -1009,15 +881,13 @@ async function generarPdfPalabra(modo = 'descargar'){
     [97, 59, 204];
 
     const gris =
-    [43, 38, 70];
+    [76, 70, 104];
 
     const oscuro =
-    [20, 16, 45];
+    [24, 18, 55];
 
     // =====================================
-    // PLANTILLA PREMIUM
-    // Guarda la imagen como:
-    // assets/pdf/pdf-template-victoriosos.png
+    // PLANTILLA VISUAL FIJA
     // =====================================
 
     const plantilla =
@@ -1039,7 +909,7 @@ async function generarPdfPalabra(modo = 'descargar'){
     }else{
 
         pdf.setFillColor(
-            250,
+            249,
             246,
             255
         );
@@ -1055,7 +925,7 @@ async function generarPdfPalabra(modo = 'descargar'){
     }
 
     // =====================================
-    // LOGO SUPERIOR
+    // LOGO REAL
     // =====================================
 
     const logoApp =
@@ -1068,10 +938,10 @@ async function generarPdfPalabra(modo = 'descargar'){
         pdf.addImage(
             logoApp,
             'PNG',
-            43,
-            10,
-            130,
-            31
+            25,
+            16,
+            166,
+            40
         );
 
     }
@@ -1080,26 +950,31 @@ async function generarPdfPalabra(modo = 'descargar'){
     // DESTINATARIO
     // =====================================
 
+    const textoDestino =
+    `Preparado especialmente para ${nombrePersona}`;
+
     escribirTextoCentradoEnCajaPdf(
         pdf,
         {
-            texto:`Preparado especialmente para ${nombrePersona}`,
+            texto:textoDestino,
             xCentro:anchoPagina / 2,
-            yInicio:55,
-            ancho:190,
-            alto:14,
+            yInicio:72,
+            ancho:178,
+            alto:18,
             fuente:'times',
             estilo:'bold',
-            tamanoInicial:21,
-            tamanoMinimo:11,
+            tamanoInicial:22,
+            tamanoMinimo:13,
             color:oscuro,
             maxLineas:2,
-            espacioLinea:1.04
+            espacioLinea:1.15
         }
     );
 
     // =====================================
     // DEDICATORIA
+    // Texto centrado dentro del recuadro.
+    // No usa comillas externas para evitar cortes.
     // =====================================
 
     escribirTextoCentradoEnCajaPdf(
@@ -1107,16 +982,42 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:dedicatoria,
             xCentro:anchoPagina / 2,
-            yInicio:77,
-            ancho:142,
-            alto:32,
+            yInicio:92,
+            ancho:150,
+            alto:30,
             fuente:'times',
             estilo:'italic',
-            tamanoInicial:13,
-            tamanoMinimo:6.2,
+            tamanoInicial:12.2,
+            tamanoMinimo:6.8,
             color:gris,
             maxLineas:4,
             espacioLinea:1.02
+        }
+    );
+
+    // =====================================
+    // TÍTULO
+    // =====================================
+
+    const titulo =
+    palabraSeleccionadaPdf.titulo ||
+    'Palabra de bendición';
+
+    escribirTextoCentradoEnCajaPdf(
+        pdf,
+        {
+            texto:titulo,
+            xCentro:anchoPagina / 2,
+            yInicio:132,
+            ancho:140,
+            alto:22,
+            fuente:'times',
+            estilo:'bold',
+            tamanoInicial:24,
+            tamanoMinimo:13,
+            color:morado,
+            maxLineas:2,
+            espacioLinea:1.12
         }
     );
 
@@ -1129,9 +1030,7 @@ async function generarPdfPalabra(modo = 'descargar'){
         'bold'
     );
 
-    pdf.setFontSize(
-        16
-    );
+    pdf.setFontSize(13.2);
 
     pdf.setTextColor(
         oscuro[0],
@@ -1141,34 +1040,35 @@ async function generarPdfPalabra(modo = 'descargar'){
 
     pdf.text(
         'Como Él ha dicho:',
-        76,
-        142
+        78,
+        169
     );
 
     const textoPalabra =
     palabraSeleccionadaPdf.texto ||
+    palabraSeleccionadaPdf.versiculo ||
     '';
 
-    escribirTextoIzquierdaEnCajaPdf(
+    escribirTextoCentradoEnCajaPdf(
         pdf,
         {
             texto:textoPalabra,
-            x:76,
-            yInicio:151,
-            ancho:112,
-            alto:35,
+            xCentro:137,
+            yInicio:172,
+            ancho:116,
+            alto:20,
             fuente:'times',
-            estilo:'italic',
-            tamanoInicial:13,
-            tamanoMinimo:6,
+            estilo:'normal',
+            tamanoInicial:12.4,
+            tamanoMinimo:6.8,
             color:gris,
-            maxLineas:5,
-            espacioLinea:1.08
+            maxLineas:4,
+            espacioLinea:1.02
         }
     );
 
     // =====================================
-    // REFERENCIA BÍBLICA
+    // VERSÍCULO
     // =====================================
 
     if(palabraSeleccionadaPdf.versiculo){
@@ -1178,12 +1078,12 @@ async function generarPdfPalabra(modo = 'descargar'){
             {
                 texto:palabraSeleccionadaPdf.versiculo,
                 xCentro:anchoPagina / 2,
-                yInicio:183,
-                ancho:70,
-                alto:12,
-                fuente:'times',
-                estilo:'normal',
-                tamanoInicial:14,
+                yInicio:191,
+                ancho:82,
+                alto:11,
+                fuente:'helvetica',
+                estilo:'bold',
+                tamanoInicial:12,
                 tamanoMinimo:8,
                 color:morado,
                 maxLineas:1,
@@ -1202,9 +1102,7 @@ async function generarPdfPalabra(modo = 'descargar'){
         'bold'
     );
 
-    pdf.setFontSize(
-        15
-    );
+    pdf.setFontSize(13.2);
 
     pdf.setTextColor(
         oscuro[0],
@@ -1214,29 +1112,29 @@ async function generarPdfPalabra(modo = 'descargar'){
 
     pdf.text(
         'Podemos decir confiadamente:',
-        76,
-        219
+        78,
+        210
     );
 
     const declaracion =
     palabraSeleccionadaPdf.declaracion ||
     'Dios está conmigo, me ama y fortalece mi vida.';
 
-    escribirTextoIzquierdaEnCajaPdf(
+    escribirTextoCentradoEnCajaPdf(
         pdf,
         {
-            texto:`“${declaracion}”`,
-            x:76,
-            yInicio:228,
-            ancho:112,
-            alto:31,
+            texto:declaracion,
+            xCentro:137,
+            yInicio:214,
+            ancho:116,
+            alto:23,
             fuente:'times',
-            estilo:'italic',
-            tamanoInicial:12.7,
-            tamanoMinimo:6,
+            estilo:'normal',
+            tamanoInicial:12.2,
+            tamanoMinimo:6.8,
             color:gris,
             maxLineas:4,
-            espacioLinea:1.06
+            espacioLinea:1.02
         }
     );
 
@@ -1249,16 +1147,16 @@ async function generarPdfPalabra(modo = 'descargar'){
         {
             texto:'Oramos que esta palabra fortalezca tu vida.',
             xCentro:anchoPagina / 2,
-            yInicio:258,
-            ancho:180,
-            alto:8,
+            yInicio:249,
+            ancho:170,
+            alto:13,
             fuente:'times',
-            estilo:'normal',
-            tamanoInicial:12.5,
-            tamanoMinimo:9,
+            estilo:'bold',
+            tamanoInicial:16,
+            tamanoMinimo:11,
             color:oscuro,
-            maxLineas:1,
-            espacioLinea:1
+            maxLineas:2,
+            espacioLinea:1.05
         }
     );
 
@@ -1269,12 +1167,12 @@ async function generarPdfPalabra(modo = 'descargar'){
             xCentro:anchoPagina / 2,
             yInicio:270,
             ancho:120,
-            alto:7,
+            alto:10,
             fuente:'times',
             estilo:'normal',
-            tamanoInicial:13,
-            tamanoMinimo:9,
-            color:morado,
+            tamanoInicial:14,
+            tamanoMinimo:10,
+            color:oscuro,
             maxLineas:1,
             espacioLinea:1
         }
