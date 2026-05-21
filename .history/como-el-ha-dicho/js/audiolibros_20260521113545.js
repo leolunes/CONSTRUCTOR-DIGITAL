@@ -322,7 +322,7 @@ function abrirAudiolibro(idLibro) {
 
             <p>
                 Selecciona una sección para leer,
-                escuchar, descargar, compartir o meditar.
+                escuchar o meditar.
             </p>
 
         </div>
@@ -350,9 +350,6 @@ function abrirAudiolibro(idLibro) {
         capitulo.audio &&
         capitulo.audio.trim() !== "";
 
-        const tituloCompartir =
-        `${libro.titulo} - ${capitulo.tipo} ${capitulo.titulo}`;
-
         item.innerHTML = `
 
             <div class="chapter-card-header">
@@ -373,43 +370,19 @@ function abrirAudiolibro(idLibro) {
 
             </div>
 
-            <div class="chapter-actions chapter-actions-mejorado">
+            <div class="chapter-actions">
 
                 ${
                     tienePdf
                     ? `
-                        <div class="recurso-box recurso-pdf-box">
+                        <a
+                        href="${capitulo.pdf}"
+                        target="_blank"
+                        class="btn-secondary">
 
-                            <span class="recurso-titulo">
-                                📖 Documento PDF
-                            </span>
+                            📖 Leer PDF
 
-                            <div class="recurso-botones">
-
-                                <a
-                                href="${capitulo.pdf}"
-                                target="_blank"
-                                class="btn-secondary btn-recurso">
-                                    Leer PDF
-                                </a>
-
-                                <button
-                                type="button"
-                                class="btn-secondary btn-recurso"
-                                onclick="descargarRecurso('${capitulo.pdf}','${crearNombreArchivo(libro.titulo, capitulo.titulo, 'pdf')}')">
-                                    Descargar PDF
-                                </button>
-
-                                <button
-                                type="button"
-                                class="btn-secondary btn-recurso btn-recurso-share"
-                                onclick="compartirRecurso('${tituloCompartir}','${capitulo.pdf}','PDF')">
-                                    Compartir PDF
-                                </button>
-
-                            </div>
-
-                        </div>
+                        </a>
                     `
                     : `
                         <button
@@ -425,10 +398,10 @@ function abrirAudiolibro(idLibro) {
                 ${
                     tieneAudio
                     ? `
-                        <div class="recurso-box recurso-audio-box">
+                        <div class="audio-capitulo-box">
 
-                            <span class="recurso-titulo">
-                                🎧 Audio del capítulo
+                            <span>
+                                🎧 Escuchar audio
                             </span>
 
                             <audio
@@ -443,24 +416,6 @@ function abrirAudiolibro(idLibro) {
                                 no soporta audio.
 
                             </audio>
-
-                            <div class="recurso-botones recurso-botones-audio">
-
-                                <button
-                                type="button"
-                                class="btn-secondary btn-recurso"
-                                onclick="descargarRecurso('${capitulo.audio}','${crearNombreArchivo(libro.titulo, capitulo.titulo, 'mp3')}')">
-                                    Descargar audio
-                                </button>
-
-                                <button
-                                type="button"
-                                class="btn-secondary btn-recurso btn-recurso-share"
-                                onclick="compartirRecurso('${tituloCompartir}','${capitulo.audio}','Audio')">
-                                    Compartir audio
-                                </button>
-
-                            </div>
 
                         </div>
                     `
@@ -495,133 +450,6 @@ function abrirAudiolibro(idLibro) {
         top: 0,
         behavior: "smooth"
     });
-
-}
-
-/* =====================================
-   DESCARGAR PDF / AUDIO
-===================================== */
-
-function descargarRecurso(ruta, nombreArchivo){
-
-    if(!ruta){
-
-        alert(
-            "Este recurso no está disponible."
-        );
-
-        return;
-
-    }
-
-    const enlace =
-    document.createElement("a");
-
-    enlace.href =
-    ruta;
-
-    enlace.download =
-    nombreArchivo || "";
-
-    enlace.target =
-    "_blank";
-
-    document.body.appendChild(
-        enlace
-    );
-
-    enlace.click();
-
-    document.body.removeChild(
-        enlace
-    );
-
-}
-
-/* =====================================
-   COMPARTIR PDF / AUDIO
-===================================== */
-
-async function compartirRecurso(titulo, ruta, tipo){
-
-    if(!ruta){
-
-        alert(
-            "Este recurso no está disponible para compartir."
-        );
-
-        return;
-
-    }
-
-    const urlAbsoluta =
-    new URL(
-        ruta,
-        window.location.href
-    ).href;
-
-    const texto =
-`${tipo} — ${titulo}
-
-${urlAbsoluta}
-
-Victoriosos en Cristo`;
-
-    if(navigator.share){
-
-        try{
-
-            await navigator.share({
-                title:
-                titulo,
-
-                text:
-                texto,
-
-                url:
-                urlAbsoluta
-            });
-
-            return;
-
-        }
-
-        catch(error){
-
-            console.log(
-                "Compartir cancelado o no disponible:",
-                error
-            );
-
-        }
-
-    }
-
-    const whatsapp =
-    `https://wa.me/?text=${encodeURIComponent(texto)}`;
-
-    window.open(
-        whatsapp,
-        "_blank"
-    );
-
-}
-
-/* =====================================
-   CREAR NOMBRE DE ARCHIVO
-===================================== */
-
-function crearNombreArchivo(tituloLibro, tituloCapitulo, extension){
-
-    const base =
-    `${tituloLibro}-${tituloCapitulo}`
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-
-    return `${base}.${extension}`;
 
 }
 
@@ -675,41 +503,9 @@ function abrirPildoras(idLibro){
                     return `
                         <div class="pildora-item">
 
-                            <div class="pildora-exportable">
+                            <div class="pildora-frase">
 
-                                <div class="pildora-frase">
-
-                                    💬 ${item}
-
-                                </div>
-
-                                <div class="pildora-marca">
-
-                                    Victoriosos en Cristo
-
-                                </div>
-
-                            </div>
-
-                            <div class="pildora-acciones-individuales">
-
-                                <button
-                                type="button"
-                                class="btn-pildora-mini"
-                                onclick="descargarPildoraIndividual(this)">
-
-                                    📥 Descargar
-
-                                </button>
-
-                                <button
-                                type="button"
-                                class="btn-pildora-mini btn-pildora-mini-share"
-                                onclick="compartirPildoraIndividual(this)">
-
-                                    📲 Compartir
-
-                                </button>
+                                💬 ${item}
 
                             </div>
 
@@ -722,55 +518,23 @@ function abrirPildoras(idLibro){
 
                     <div class="pildora-item">
 
-                        <div class="pildora-exportable">
+                        <div class="pildora-frase">
 
-                            <div class="pildora-frase">
-
-                                💬 ${item.frase || ""}
-
-                            </div>
-
-                            ${
-                                item.respuesta
-                                ? `
-                                    <div class="pildora-respuesta">
-
-                                        ➡️ ${item.respuesta}
-
-                                    </div>
-                                `
-                                : ""
-                            }
-
-                            <div class="pildora-marca">
-
-                                Victoriosos en Cristo
-
-                            </div>
+                            💬 ${item.frase || ""}
 
                         </div>
 
-                        <div class="pildora-acciones-individuales">
+                        ${
+                            item.respuesta
+                            ? `
+                                <div class="pildora-respuesta">
 
-                            <button
-                            type="button"
-                            class="btn-pildora-mini"
-                            onclick="descargarPildoraIndividual(this)">
+                                    ➡️ ${item.respuesta}
 
-                                📥 Descargar
-
-                            </button>
-
-                            <button
-                            type="button"
-                            class="btn-pildora-mini btn-pildora-mini-share"
-                            onclick="compartirPildoraIndividual(this)">
-
-                                📲 Compartir
-
-                            </button>
-
-                        </div>
+                                </div>
+                            `
+                            : ""
+                        }
 
                     </div>
 
@@ -818,7 +582,6 @@ function abrirPildoras(idLibro){
 
 /* =====================================
    DESCARGAR PÍLDORAS COMO IMAGEN
-   Exporta todo el bloque si decides usar botones generales.
 ===================================== */
 
 async function descargarPildorasComoImagen(){
@@ -896,174 +659,7 @@ async function descargarPildorasComoImagen(){
 }
 
 /* =====================================
-   DESCARGAR PÍLDORA INDIVIDUAL
-===================================== */
-
-async function descargarPildoraIndividual(boton){
-
-    const item =
-    boton.closest(".pildora-item");
-
-    if(!item){
-
-        alert(
-            "No se encontró la píldora para descargar."
-        );
-
-        return;
-
-    }
-
-    const card =
-    item.querySelector(".pildora-exportable");
-
-    if(!card){
-
-        alert(
-            "No se encontró la tarjeta exportable."
-        );
-
-        return;
-
-    }
-
-    if(typeof html2canvas === "undefined"){
-
-        alert(
-            "No se pudo cargar la herramienta de descarga. Verifica tu conexión a internet."
-        );
-
-        return;
-
-    }
-
-    card.classList.add(
-        "pildora-individual-exportando"
-    );
-
-    try{
-
-        const canvas =
-        await html2canvas(
-            card,
-            {
-                backgroundColor:"#ffffff",
-                scale:2,
-                useCORS:true,
-                logging:false
-            }
-        );
-
-        const enlace =
-        document.createElement("a");
-
-        enlace.download =
-        "pildora-espiritual.png";
-
-        enlace.href =
-        canvas.toDataURL("image/png");
-
-        enlace.click();
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Error descargando pildora individual:",
-            error
-        );
-
-        alert(
-            "No se pudo descargar esta píldora. Intenta nuevamente."
-        );
-
-    }
-
-    finally{
-
-        card.classList.remove(
-            "pildora-individual-exportando"
-        );
-
-    }
-
-}
-
-/* =====================================
-   COMPARTIR PÍLDORA INDIVIDUAL
-===================================== */
-
-async function compartirPildoraIndividual(boton){
-
-    const card =
-    boton.closest(".pildora-item");
-
-    if(!card){
-
-        alert(
-            "No se encontró la píldora para compartir."
-        );
-
-        return;
-
-    }
-
-    const frase =
-    card.querySelector(".pildora-frase")
-    ?.innerText || "";
-
-    const respuesta =
-    card.querySelector(".pildora-respuesta")
-    ?.innerText || "";
-
-    const texto =
-`${frase}
-
-${respuesta}
-
-Victoriosos en Cristo`;
-
-    if(navigator.share){
-
-        try{
-
-            await navigator.share({
-                title:
-                "Píldora espiritual",
-
-                text:
-                texto
-            });
-
-            return;
-
-        }
-
-        catch(error){
-
-            console.log(
-                "Compartir cancelado o no disponible:",
-                error
-            );
-
-        }
-
-    }
-
-    const whatsapp =
-    `https://wa.me/?text=${encodeURIComponent(texto)}`;
-
-    window.open(
-        whatsapp,
-        "_blank"
-    );
-
-}
-
-/* =====================================
    COMPARTIR PÍLDORAS
-   Comparte resumen general si decides usar botones generales.
 ===================================== */
 
 async function compartirPildoras(){
