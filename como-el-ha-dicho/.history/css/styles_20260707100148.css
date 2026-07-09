@@ -1,0 +1,4366 @@
+@font-face{
+    font-family:'Poppins';
+    src:url('../assets/fonts/Poppins-Regular.ttf');
+}
+
+@font-face{
+    font-family:'Poppins-Bold';
+    src:url('../assets/fonts/Poppins-Bold.ttf');
+}
+
+/* =====================================
+   RESET
+===================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* =====================================
+   BODY
+===================================== */
+
+body{
+
+    font-family:'Poppins', Arial, sans-serif;
+
+    background:#f5f5f7;
+
+    color:#222;
+
+    overflow-x:hidden;
+
+}
+
+/* =====================================
+   HEADER PRINCIPAL
+===================================== */
+
+.header{
+
+    background:
+    linear-gradient(
+        180deg,
+        #2c0663 0%,
+        #5b3cc4 100%
+    );
+
+    padding:35px 20px 45px;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo-app{
+
+    width:720px;
+
+    max-width:92%;
+
+    display:block;
+
+    margin:auto;
+
+}
+
+/* =====================================
+   OCULTAR H1 SOLO HOME
+===================================== */
+
+.header h1{
+
+    display:none;
+
+}
+
+/* =====================================
+   SUBTITLE
+===================================== */
+
+.subtitle{
+
+    font-size:16px;
+
+    max-width:850px;
+
+    margin:auto;
+
+    color:white;
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.navbar{
+
+    background:#4b22b5;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:55px;
+
+    padding:18px 20px 12px;
+
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+
+    border-bottom:1px solid rgba(255,255,255,0.1);
+
+}
+
+/* =====================================
+   LINKS NAVBAR
+===================================== */
+
+.navbar a{
+
+    color:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:16px;
+
+    transition:0.3s;
+
+    padding-bottom:12px;
+
+}
+
+/* =====================================
+   LINK ACTIVO
+===================================== */
+
+.navbar a:first-child{
+
+    color:white;
+
+    border-bottom:3px solid white;
+
+}
+
+/* =====================================
+   HOVER
+===================================== */
+
+.navbar a:hover{
+
+    color:white;
+
+    opacity:0.85;
+
+}
+
+/* =====================================
+   ICONOS NAVBAR
+===================================== */
+
+.navbar img{
+
+    width:24px;
+
+    height:24px;
+
+    object-fit:contain;
+
+}
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.container{
+
+    max-width:1450px;
+
+    margin:auto;
+
+    padding:50px 30px;
+
+}
+
+/* =====================================
+   GRID CATEGORÍAS
+===================================== */
+
+#categorias-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:35px;
+
+}
+
+/* =====================================
+   OTROS GRIDS
+===================================== */
+
+#declaraciones-container,
+#favoritos-container,
+#audios-container,
+#audios-categoria-container{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:30px;
+
+}
+
+/* =====================================
+   BOTÓN VOLVER
+===================================== */
+
+.btn-volver{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:30px;
+
+    background:#5b3cc4;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 22px;
+
+    border-radius:14px;
+
+    font-family:'Poppins-Bold';
+
+    transition:0.3s;
+
+}
+
+.btn-volver:hover{
+
+    background:#452d96;
+
+}
+
+.btn-volver img{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+/* =====================================
+   HEADER PÁGINAS INTERNAS
+===================================== */
+
+.header-small h1{
+
+    display:block !important;
+
+    color:#ffffff !important;
+
+    font-family:'Poppins-Bold';
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+}
+
+.header-small .subtitle{
+
+    color:white !important;
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:768px){
+
+    .logo-app{
+
+        width:95%;
+
+    }
+
+    .navbar{
+
+        gap:25px;
+
+        flex-wrap:wrap;
+
+    }
+
+    .navbar a{
+
+        font-size:14px;
+
+    }
+
+    #categorias-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+/* =====================================
+   ICONOS NAVBAR EN BLANCO
+===================================== */
+
+.navbar img{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+    opacity:1;
+}
+
+.navbar a{
+    color:white !important;
+    font-family:'Poppins-Bold';
+}
+
+.navbar a:hover{
+    opacity:0.85;
+}
+/* =====================================
+   CONFIGURACIÓN REAL
+   Victoriosos en Cristo
+   Pegar al final de css/styles.css
+===================================== */
+
+.configuracion-page {
+    min-height: 100vh;
+    padding: 22px 18px 95px;
+    background:
+        radial-gradient(circle at top left, rgba(122, 70, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, #f7f2ff 100%);
+}
+
+.config-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(79, 32, 143, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.page-title-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    border-radius: 16px;
+}
+
+.page-title-box h1 {
+    margin: 0;
+    font-size: 1.55rem;
+    color: #3f206e;
+    font-weight: 800;
+}
+
+.page-title-box p {
+    margin: 3px 0 0;
+    font-size: 0.9rem;
+    color: #7a6a91;
+}
+
+.config-card {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 24px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 14px 34px rgba(79, 32, 143, 0.11);
+    border: 1px solid rgba(122, 70, 255, 0.08);
+}
+
+.config-card.principal {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+    color: #ffffff;
+}
+
+.config-card-title {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.config-card-title h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.config-card-title p {
+    margin: 5px 0 0;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.config-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+}
+
+.config-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1;
+}
+
+.config-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 16px;
+    background: rgba(122, 70, 255, 0.11);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.config-card.principal .config-icon {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.config-info h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #43206f;
+    font-weight: 800;
+}
+
+.config-info p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #776487;
+}
+
+.config-extra {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(122, 70, 255, 0.13);
+}
+
+.config-label {
+    display: block;
+    font-size: 0.88rem;
+    color: #4c2875;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.input-config {
+    width: 100%;
+    max-width: 220px;
+    padding: 13px 14px;
+    border: 1px solid rgba(122, 70, 255, 0.2);
+    border-radius: 16px;
+    outline: none;
+    font-size: 1rem;
+    color: #3f206e;
+    background: #ffffff;
+}
+
+.input-config:focus {
+    border-color: #7a46ff;
+    box-shadow: 0 0 0 4px rgba(122, 70, 255, 0.11);
+}
+
+.config-note {
+    margin: 12px 0 0;
+    font-size: 0.84rem;
+    color: #8a789b;
+    line-height: 1.45;
+}
+
+.oculto-config {
+    display: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 58px;
+    height: 32px;
+    min-width: 58px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #d9cbed;
+    transition: 0.25s;
+    border-radius: 999px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #ffffff;
+    transition: 0.25s;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.switch input:checked + .slider {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.config-status {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    margin: 8px 0 14px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(73, 184, 120, 0.12);
+    color: #217246;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.config-status.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.config-status.error {
+    background: rgba(210, 60, 60, 0.12);
+    color: #a82424;
+}
+
+.config-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.btn-primary-config,
+.btn-secondary-config {
+    border: none;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.22s ease;
+}
+
+.btn-primary-config {
+    flex: 1;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+    box-shadow: 0 12px 24px rgba(107, 53, 216, 0.25);
+}
+
+.btn-secondary-config {
+    color: #5d348c;
+    background: #ffffff;
+    border: 1px solid rgba(122, 70, 255, 0.16);
+}
+
+.btn-primary-config:active,
+.btn-secondary-config:active {
+    transform: scale(0.98);
+}
+
+/* =====================================
+   MODO OSCURO GENERAL
+===================================== */
+
+body.modo-oscuro {
+    background: #160d25;
+    color: #f4edff;
+}
+
+body.modo-oscuro .configuracion-page {
+    background:
+        radial-gradient(circle at top left, rgba(155, 108, 255, 0.24), transparent 35%),
+        linear-gradient(180deg, #160d25 0%, #211235 100%);
+}
+
+body.modo-oscuro .btn-icon,
+body.modo-oscuro .config-card,
+body.modo-oscuro .btn-secondary-config,
+body.modo-oscuro .bottom-nav {
+    background: rgba(35, 20, 55, 0.96);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.modo-oscuro .page-title-box h1,
+body.modo-oscuro .config-info h3,
+body.modo-oscuro .config-label {
+    color: #ffffff;
+}
+
+body.modo-oscuro .page-title-box p,
+body.modo-oscuro .config-info p,
+body.modo-oscuro .config-note {
+    color: #cbb8df;
+}
+
+body.modo-oscuro .input-config {
+    background: #211235;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.13);
+}
+
+body.modo-oscuro .config-card.principal {
+    background: linear-gradient(135deg, #6b35d8, #9b6cff);
+}
+
+body.modo-oscuro .btn-secondary-config {
+    color: #ffffff;
+}
+
+body.modo-oscuro .bottom-nav a,
+body.modo-oscuro .nav-item span {
+    color: #e9ddff;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 480px) {
+
+    .configuracion-page {
+        padding: 18px 14px 95px;
+    }
+
+    .page-title-box h1 {
+        font-size: 1.35rem;
+    }
+
+    .config-row {
+        align-items: flex-start;
+    }
+
+    .config-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary-config,
+    .btn-secondary-config {
+        width: 100%;
+    }
+}
+
+
+/* =====================================
+   PDF PALABRAS - MODAL Y BOTONES
+===================================== */
+
+.btn-descargar-pdf{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 10px 22px
+    rgba(106,61,232,0.25);
+
+}
+
+.btn-descargar-pdf:hover{
+
+    transform:translateY(-2px);
+
+    opacity:0.96;
+
+}
+
+.btn-descargar-pdf:active{
+
+    transform:scale(0.98);
+
+}
+
+/* =====================================
+   MODAL OVERLAY
+===================================== */
+
+.modal-pdf-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(15,10,30,0.72);
+
+    backdrop-filter:blur(5px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    z-index:9999;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:0.3s;
+
+}
+
+.modal-pdf-overlay.activo{
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+
+}
+
+/* =====================================
+   CARD MODAL
+===================================== */
+
+.modal-pdf-card{
+
+    width:100%;
+
+    max-width:560px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:28px;
+
+    position:relative;
+
+    animation:modalEntradaPdf 0.35s ease;
+
+    box-shadow:
+    0 25px 55px
+    rgba(0,0,0,0.22);
+
+}
+
+@keyframes modalEntradaPdf{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(25px)
+        scale(0.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+/* =====================================
+   BOTÓN CERRAR
+===================================== */
+
+.modal-pdf-cerrar{
+
+    position:absolute;
+
+    top:16px;
+
+    right:16px;
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f3edff;
+
+    color:#5c33d1;
+
+    font-size:26px;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+}
+
+.modal-pdf-cerrar:hover{
+
+    background:#e8dcff;
+
+    transform:rotate(90deg);
+
+}
+
+/* =====================================
+   HEADER MODAL
+===================================== */
+
+.modal-pdf-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:28px;
+
+}
+
+.modal-pdf-logo{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:contain;
+
+}
+
+.modal-pdf-header h2{
+
+    color:#4b22b5;
+
+    font-size:28px;
+
+    margin-bottom:6px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.modal-pdf-header p{
+
+    color:#6f6593;
+
+    line-height:1.5;
+
+    font-size:14px;
+
+}
+
+/* =====================================
+   FORMULARIO
+===================================== */
+
+.modal-pdf-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.modal-pdf-form label{
+
+    color:#452d96;
+
+    font-family:'Poppins-Bold';
+
+    font-size:14px;
+
+}
+
+.modal-pdf-form input,
+.modal-pdf-form textarea{
+
+    width:100%;
+
+    border:
+    1px solid
+    rgba(91,60,196,0.16);
+
+    background:#faf8ff;
+
+    border-radius:18px;
+
+    padding:16px 18px;
+
+    font-family:'Poppins';
+
+    font-size:15px;
+
+    resize:none;
+
+    outline:none;
+
+    transition:0.25s;
+
+}
+
+.modal-pdf-form input:focus,
+.modal-pdf-form textarea:focus{
+
+    border-color:#6a3de8;
+
+    background:white;
+
+    box-shadow:
+    0 0 0 4px
+    rgba(106,61,232,0.12);
+
+}
+
+/* =====================================
+   ACCIONES MODAL
+===================================== */
+
+.modal-pdf-actions{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-top:10px;
+
+}
+
+.btn-pdf-principal,
+.btn-pdf-secundario{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:0.3s;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.btn-pdf-principal{
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    box-shadow:
+    0 10px 22px
+    rgba(106,61,232,0.25);
+
+}
+
+.btn-pdf-principal:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.btn-pdf-secundario{
+
+    background:#f4efff;
+
+    color:#4b22b5;
+
+}
+
+.btn-pdf-secundario:hover{
+
+    background:#ece3ff;
+
+}
+
+/* =====================================
+   MODO OSCURO MODAL PDF
+===================================== */
+
+body.modo-oscuro .modal-pdf-card{
+
+    background:#24163d;
+
+}
+
+body.modo-oscuro .modal-pdf-header h2{
+
+    color:white;
+
+}
+
+body.modo-oscuro .modal-pdf-header p{
+
+    color:#c9bae8;
+
+}
+
+body.modo-oscuro .modal-pdf-form label{
+
+    color:#ffffff;
+
+}
+
+body.modo-oscuro .modal-pdf-form input,
+body.modo-oscuro .modal-pdf-form textarea{
+
+    background:#1a102d;
+
+    color:white;
+
+    border-color:
+    rgba(255,255,255,0.08);
+
+}
+
+body.modo-oscuro .btn-pdf-secundario{
+
+    background:#1a102d;
+
+    color:white;
+
+}
+
+body.modo-oscuro .modal-pdf-cerrar{
+
+    background:#1a102d;
+
+    color:white;
+
+}
+
+/* =====================================
+   RESPONSIVE MODAL PDF
+===================================== */
+
+@media(max-width:768px){
+
+    .modal-pdf-card{
+
+        padding:22px;
+
+        border-radius:24px;
+
+    }
+
+    .modal-pdf-header{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .modal-pdf-actions{
+
+        flex-direction:column;
+
+    }
+
+    .modal-pdf-header h2{
+
+        font-size:24px;
+
+    }
+
+}
+/* =====================================
+   NECESITO ORACIÓN
+===================================== */
+
+.oracion-hero{
+    background:linear-gradient(135deg,#ffffff 0%,#f4ecff 100%);
+    border-radius:28px;
+    padding:34px 26px;
+    text-align:center;
+    margin-bottom:34px;
+    border:1px solid rgba(91,60,196,0.10);
+    box-shadow:0 14px 34px rgba(91,60,196,0.10);
+}
+
+.oracion-hero-icon{
+    width:78px;
+    height:78px;
+    border-radius:50%;
+    background:#ede1ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    margin:0 auto 18px;
+}
+
+.oracion-hero h2{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:34px;
+    margin-bottom:12px;
+}
+
+.oracion-hero p{
+    max-width:720px;
+    margin:auto;
+    color:#6a617d;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.oracion-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:24px;
+    margin-bottom:34px;
+}
+
+.oracion-tema-card{
+    background:#ffffff;
+    border:none;
+    border-radius:24px;
+    padding:28px 22px;
+    cursor:pointer;
+    text-align:left;
+    box-shadow:0 8px 24px rgba(91,60,196,0.08);
+    border:1px solid rgba(91,60,196,0.08);
+    transition:0.3s;
+    font-family:'Poppins';
+}
+
+.oracion-tema-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 34px rgba(91,60,196,0.15);
+}
+
+.oracion-tema-icon{
+    width:62px;
+    height:62px;
+    border-radius:20px;
+    background:#f4ecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    margin-bottom:18px;
+}
+
+.oracion-tema-card h3{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:24px;
+    margin-bottom:10px;
+}
+
+.oracion-tema-card p{
+    color:#6a617d;
+    font-size:15px;
+    line-height:1.6;
+}
+
+.oracion-respuesta{
+    margin-top:20px;
+    animation:fadeIn 0.35s ease;
+}
+
+.oracion-respuesta-card{
+    background:#ffffff;
+    border-radius:30px;
+    padding:32px;
+    box-shadow:0 18px 44px rgba(91,60,196,0.14);
+    border:1px solid rgba(91,60,196,0.10);
+    position:relative;
+    overflow:hidden;
+}
+
+.oracion-respuesta-card::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:7px;
+    background:linear-gradient(180deg,#5b3cc4,#9b6cff);
+}
+
+.oracion-respuesta-header{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-bottom:26px;
+}
+
+.oracion-respuesta-icon{
+    width:76px;
+    height:76px;
+    min-width:76px;
+    border-radius:24px;
+    background:#f4ecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+}
+
+.oracion-badge{
+    display:inline-flex;
+    background:#f0e7ff;
+    color:#5b3cc4;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-family:'Poppins-Bold';
+    margin-bottom:8px;
+}
+
+.oracion-respuesta-header h2{
+    color:#4b22b5;
+    font-size:32px;
+    font-family:'Poppins-Bold';
+    margin-bottom:4px;
+}
+
+.oracion-respuesta-header p{
+    color:#6a617d;
+    font-size:16px;
+}
+
+.oracion-bloque{
+    background:#faf7ff;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:18px;
+    border:1px solid rgba(91,60,196,0.08);
+}
+
+.oracion-bloque h3{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.oracion-bloque p{
+    color:#5f6472;
+    font-size:17px;
+    line-height:1.8;
+}
+
+.oracion-bloque strong{
+    display:block;
+    margin-top:10px;
+    color:#222;
+    font-family:'Poppins-Bold';
+}
+
+.oracion-bloque.declaracion{
+    background:linear-gradient(135deg,#f7f1ff,#ffffff);
+}
+
+.oracion-acciones{
+    margin-top:22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:14px;
+}
+
+.oracion-acciones .audio-btn,
+.oracion-acciones .btn-descargar-pdf,
+.oracion-acciones .btn-favorito{
+    margin-top:0;
+}
+
+@media(max-width:768px){
+    .oracion-hero{padding:28px 20px;}
+    .oracion-hero h2{font-size:28px;}
+    .oracion-respuesta-card{padding:26px 22px;}
+    .oracion-respuesta-header{flex-direction:column;text-align:center;}
+    .oracion-respuesta-header h2{font-size:27px;}
+    .oracion-bloque p{font-size:16px;}
+}
+
+
+/* =====================================
+   ACCESO HOME - NECESITO ORACIÓN
+===================================== */
+
+.home-oracion-acceso{
+
+    background:
+    linear-gradient(
+        135deg,
+        #5b3cc4 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:24px;
+
+    margin-bottom:36px;
+
+    box-shadow:
+    0 18px 42px
+    rgba(91,60,196,0.25);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.home-oracion-acceso::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+
+    height:220px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.10);
+
+    right:-80px;
+
+    top:-90px;
+
+}
+
+.home-oracion-icon{
+
+    width:78px;
+
+    height:78px;
+
+    min-width:78px;
+
+    border-radius:26px;
+
+    background:rgba(255,255,255,0.18);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:40px;
+
+}
+
+.home-oracion-info{
+
+    flex:1;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.home-oracion-info span{
+
+    display:inline-flex;
+
+    background:rgba(255,255,255,0.18);
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    margin-bottom:10px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.home-oracion-info h2{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.home-oracion-info p{
+
+    font-size:17px;
+
+    line-height:1.6;
+
+    opacity:0.95;
+
+}
+
+.home-oracion-btn{
+
+    position:relative;
+
+    z-index:2;
+
+    background:white;
+
+    color:#5b3cc4;
+
+    text-decoration:none;
+
+    padding:15px 26px;
+
+    border-radius:16px;
+
+    font-family:'Poppins-Bold';
+
+    transition:0.3s;
+
+    box-shadow:
+    0 10px 22px
+    rgba(0,0,0,0.16);
+
+}
+
+.home-oracion-btn:hover{
+
+    transform:translateY(-3px);
+
+    background:#f4ecff;
+
+}
+
+/* =====================================
+   BOTÓN WHATSAPP PDF
+===================================== */
+
+.btn-pdf-whatsapp{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:0.3s;
+
+    font-family:'Poppins-Bold';
+
+    background:
+    linear-gradient(
+        135deg,
+        #21c063 0%,
+        #128c7e 100%
+    );
+
+    color:white;
+
+    box-shadow:
+    0 10px 22px
+    rgba(18,140,126,0.25);
+
+}
+
+.btn-pdf-whatsapp:hover{
+
+    transform:translateY(-2px);
+
+    opacity:0.95;
+
+}
+
+/* =====================================
+   RESPONSIVE HOME ORACIÓN
+===================================== */
+
+@media(max-width:768px){
+
+    .home-oracion-acceso{
+
+        flex-direction:column;
+
+        text-align:center;
+
+        padding:28px 22px;
+
+    }
+
+    .home-oracion-info h2{
+
+        font-size:29px;
+
+    }
+
+    .home-oracion-info p{
+
+        font-size:16px;
+
+    }
+
+    .home-oracion-btn{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+    .btn-pdf-whatsapp{
+
+        width:100%;
+
+    }
+
+}
+
+/* =====================================
+   AJUSTE NAVBAR - 5 BOTONES + AUDIOLIBROS
+   Victoriosos en Cristo
+===================================== */
+
+.navbar{
+    gap:46px;
+    flex-wrap:wrap;
+}
+
+.navbar a{
+    white-space:nowrap;
+}
+
+.navbar a.activo,
+.navbar a.active{
+    color:white;
+    border-bottom:3px solid white;
+}
+
+/* Evita que siempre quede marcado Inicio cuando estés en otra página */
+.navbar a:first-child:not(.active):not(.activo){
+    border-bottom:none;
+}
+
+/* =====================================
+   AUDIOLIBROS
+===================================== */
+
+.audiolibros-hero{
+    background:
+    linear-gradient(
+        135deg,
+        #5b3cc4 0%,
+        #8d63ff 100%
+    );
+    color:white;
+    border-radius:30px;
+    padding:34px 30px;
+    display:flex;
+    align-items:center;
+    gap:24px;
+    margin-bottom:36px;
+    box-shadow:0 18px 42px rgba(91,60,196,0.25);
+    position:relative;
+    overflow:hidden;
+}
+
+.audiolibros-hero::after{
+    content:"";
+    position:absolute;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.10);
+    right:-90px;
+    top:-95px;
+}
+
+.audiolibros-hero-icon{
+    width:82px;
+    height:82px;
+    min-width:82px;
+    border-radius:28px;
+    background:rgba(255,255,255,0.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+    position:relative;
+    z-index:2;
+}
+
+.audiolibros-hero-info{
+    position:relative;
+    z-index:2;
+    flex:1;
+}
+
+.audiolibros-hero-info span{
+    display:inline-flex;
+    background:rgba(255,255,255,0.18);
+    padding:7px 13px;
+    border-radius:999px;
+    font-size:13px;
+    margin-bottom:10px;
+    font-family:'Poppins-Bold';
+}
+
+.audiolibros-hero-info h2{
+    font-size:36px;
+    margin-bottom:8px;
+    font-family:'Poppins-Bold';
+}
+
+.audiolibros-hero-info p{
+    font-size:17px;
+    line-height:1.65;
+    opacity:0.95;
+    max-width:780px;
+}
+
+#audiolibros-container,
+#listaAudiolibros{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.audiolibro-card{
+    background:#ffffff;
+    border-radius:28px;
+    padding:26px;
+    box-shadow:0 14px 34px rgba(91,60,196,0.10);
+    border:1px solid rgba(91,60,196,0.09);
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.audiolibro-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:6px;
+    background:linear-gradient(90deg,#5b3cc4,#9b6cff);
+}
+
+.audiolibro-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 42px rgba(91,60,196,0.16);
+}
+
+.audiolibro-icon{
+    width:66px;
+    height:66px;
+    border-radius:22px;
+    background:#f4ecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    margin-bottom:18px;
+}
+
+.audiolibro-card h3{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:24px;
+    margin-bottom:10px;
+}
+
+.audiolibro-card p{
+    color:#6a617d;
+    font-size:15px;
+    line-height:1.65;
+    margin-bottom:18px;
+}
+
+.audiolibro-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.audiolibro-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:#f0e7ff;
+    color:#5b3cc4;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-family:'Poppins-Bold';
+}
+
+.btn-audiolibro{
+    width:100%;
+    border:none;
+    background:linear-gradient(135deg,#6a3de8 0%,#8d63ff 100%);
+    color:white;
+    padding:15px 18px;
+    border-radius:16px;
+    font-family:'Poppins-Bold';
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    box-shadow:0 10px 22px rgba(106,61,232,0.25);
+}
+
+.btn-audiolibro:hover{
+    transform:translateY(-2px);
+    opacity:0.96;
+}
+
+.audiolibro-detalle,
+.book-detail{
+    background:#ffffff;
+    border-radius:30px;
+    padding:32px;
+    box-shadow:0 18px 44px rgba(91,60,196,0.14);
+    border:1px solid rgba(91,60,196,0.10);
+    animation:fadeIn 0.35s ease;
+}
+
+.audiolibro-detalle-header{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.audiolibro-detalle-icon{
+    width:78px;
+    height:78px;
+    min-width:78px;
+    border-radius:25px;
+    background:#f4ecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+}
+
+.audiolibro-detalle h2,
+.book-detail h2{
+    color:#4b22b5;
+    font-size:32px;
+    font-family:'Poppins-Bold';
+    margin-bottom:6px;
+}
+
+.audiolibro-detalle p,
+.book-detail p{
+    color:#6a617d;
+    line-height:1.65;
+}
+
+.capitulos-lista,
+.chapter-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-top:24px;
+}
+
+.capitulo-card,
+.chapter-card{
+    background:#faf7ff;
+    border-radius:24px;
+    padding:22px;
+    border:1px solid rgba(91,60,196,0.09);
+    box-shadow:0 8px 24px rgba(91,60,196,0.07);
+}
+
+.capitulo-card h3,
+.chapter-card h3{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:22px;
+    margin:8px 0 10px;
+}
+
+.capitulo-card p,
+.chapter-card p{
+    color:#6a617d;
+    line-height:1.6;
+}
+
+.capitulo-acciones,
+.chapter-actions{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:14px;
+    margin-top:16px;
+}
+
+.capitulo-acciones audio,
+.chapter-actions audio{
+    width:100%;
+    min-height:44px;
+}
+
+.btn-leer-pdf,
+.btn-secondary{
+    border:none;
+    border-radius:16px;
+    padding:14px 18px;
+    background:#f0e7ff;
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:15px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-leer-pdf:hover,
+.btn-secondary:hover{
+    background:#e6d8ff;
+    transform:translateY(-2px);
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =====================================
+   MODO OSCURO AUDIOLIBROS
+===================================== */
+
+body.modo-oscuro .audiolibro-card,
+body.modo-oscuro .audiolibro-detalle,
+body.modo-oscuro .book-detail{
+    background:#24163d;
+    border-color:rgba(255,255,255,0.08);
+}
+
+body.modo-oscuro .audiolibro-card h3,
+body.modo-oscuro .audiolibro-detalle h2,
+body.modo-oscuro .book-detail h2,
+body.modo-oscuro .capitulo-card h3,
+body.modo-oscuro .chapter-card h3{
+    color:#ffffff;
+}
+
+body.modo-oscuro .audiolibro-card p,
+body.modo-oscuro .audiolibro-detalle p,
+body.modo-oscuro .book-detail p,
+body.modo-oscuro .capitulo-card p,
+body.modo-oscuro .chapter-card p{
+    color:#c9bae8;
+}
+
+body.modo-oscuro .audiolibro-icon,
+body.modo-oscuro .audiolibro-detalle-icon,
+body.modo-oscuro .capitulo-card,
+body.modo-oscuro .chapter-card{
+    background:#1a102d;
+    border-color:rgba(255,255,255,0.08);
+}
+
+body.modo-oscuro .audiolibro-badge,
+body.modo-oscuro .btn-leer-pdf,
+body.modo-oscuro .btn-secondary{
+    background:#1a102d;
+    color:#ffffff;
+}
+
+/* =====================================
+   RESPONSIVE AUDIOLIBROS
+===================================== */
+
+@media(max-width:768px){
+
+    .navbar{
+        gap:18px;
+        padding:16px 10px 10px;
+    }
+
+    .navbar a{
+        font-size:13px;
+        gap:7px;
+    }
+
+    .navbar img{
+        width:20px;
+        height:20px;
+    }
+
+    .audiolibros-hero{
+        flex-direction:column;
+        text-align:center;
+        padding:28px 22px;
+    }
+
+    .audiolibros-hero-info h2{
+        font-size:30px;
+    }
+
+    .audiolibros-hero-info p{
+        font-size:16px;
+    }
+
+    #audiolibros-container,
+    #listaAudiolibros{
+        grid-template-columns:1fr;
+    }
+
+    .audiolibro-detalle,
+    .book-detail{
+        padding:26px 22px;
+    }
+
+    .audiolibro-detalle-header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .audiolibro-detalle h2,
+    .book-detail h2{
+        font-size:27px;
+    }
+
+    .capitulo-acciones,
+    .chapter-actions{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:480px){
+
+    .navbar{
+        gap:10px;
+    }
+
+    .navbar a{
+        font-size:11px;
+    }
+
+    .navbar img{
+        width:18px;
+        height:18px;
+    }
+}
+
+
+/* =====================================
+   AJUSTE FINAL NAVBAR / BOTTOM-NAV
+   5 BOTONES + AUDIOLIBROS
+   Victoriosos en Cristo
+===================================== */
+
+.navbar,
+.bottom-nav{
+    background:#4b22b5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:42px;
+    padding:18px 20px 12px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    flex-wrap:wrap;
+}
+
+.navbar a,
+.bottom-nav a,
+.bottom-nav .nav-item{
+    color:white !important;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:15px;
+    font-family:'Poppins-Bold';
+    transition:0.3s;
+    padding-bottom:12px;
+    white-space:nowrap;
+}
+
+.navbar a:hover,
+.bottom-nav a:hover,
+.bottom-nav .nav-item:hover{
+    color:white !important;
+    opacity:0.85;
+}
+
+.navbar img,
+.bottom-nav img{
+    width:23px;
+    height:23px;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+    opacity:1;
+}
+
+.navbar a.activo,
+.navbar a.active,
+.bottom-nav a.activo,
+.bottom-nav a.active,
+.bottom-nav .nav-item.activo,
+.bottom-nav .nav-item.active{
+    color:white !important;
+    border-bottom:3px solid white;
+}
+
+.navbar a:first-child:not(.active):not(.activo),
+.bottom-nav a:first-child:not(.active):not(.activo){
+    border-bottom:none;
+}
+
+/* =====================================
+   RESPONSIVE FINAL NAVBAR
+===================================== */
+
+@media(max-width:768px){
+
+    .navbar,
+    .bottom-nav{
+        gap:16px;
+        padding:16px 10px 10px;
+    }
+
+    .navbar a,
+    .bottom-nav a,
+    .bottom-nav .nav-item{
+        font-size:12px;
+        gap:6px;
+    }
+
+    .navbar img,
+    .bottom-nav img{
+        width:19px;
+        height:19px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .navbar,
+    .bottom-nav{
+        gap:9px;
+        justify-content:space-around;
+    }
+
+    .navbar a,
+    .bottom-nav a,
+    .bottom-nav .nav-item{
+        font-size:10.5px;
+        gap:5px;
+    }
+
+    .navbar img,
+    .bottom-nav img{
+        width:17px;
+        height:17px;
+    }
+
+}
+/* =====================================
+   BIBLIOTECA VISUAL AUDIOLIBROS
+   PORTADAS PREMIUM
+===================================== */
+
+.biblioteca-audiolibros{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:30px;
+
+    margin-top:20px;
+
+}
+
+/* =====================================
+   CARD PORTADA
+===================================== */
+
+.audiolibro-portada-card{
+
+    background:#ffffff;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:0.35s;
+
+    position:relative;
+
+    border:
+    1px solid
+    rgba(91,60,196,0.10);
+
+    box-shadow:
+    0 16px 38px
+    rgba(91,60,196,0.12);
+
+}
+
+.audiolibro-portada-card:hover{
+
+    transform:
+    translateY(-8px)
+    scale(1.01);
+
+    box-shadow:
+    0 26px 52px
+    rgba(91,60,196,0.20);
+
+}
+
+/* =====================================
+   IMAGEN PORTADA
+===================================== */
+
+.audiolibro-portada-wrap{
+
+    width:100%;
+
+    aspect-ratio:3/4;
+
+    overflow:hidden;
+
+    background:#f4ecff;
+
+    position:relative;
+
+}
+
+.audiolibro-portada{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:0.4s;
+
+}
+
+.audiolibro-portada-card:hover
+.audiolibro-portada{
+
+    transform:scale(1.05);
+
+}
+
+/* =====================================
+   INFO LIBRO
+===================================== */
+
+.audiolibro-portada-info{
+
+    padding:22px;
+
+}
+
+.audiolibro-portada-info h3{
+
+    color:#4b22b5;
+
+    font-size:24px;
+
+    line-height:1.3;
+
+    margin:12px 0 8px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.audiolibro-portada-info p{
+
+    color:#6a617d;
+
+    font-size:15px;
+
+    line-height:1.5;
+
+    margin-bottom:12px;
+
+}
+
+.audiolibro-portada-info small{
+
+    display:block;
+
+    color:#8a7ba5;
+
+    font-size:13px;
+
+}
+
+/* =====================================
+   BADGE
+===================================== */
+
+.audiolibro-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    background:#f0e7ff;
+
+    color:#5b3cc4;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+/* =====================================
+   DETALLE LIBRO
+===================================== */
+
+.audiolibro-detalle-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:28px;
+
+    margin-bottom:34px;
+
+    background:#faf7ff;
+
+    padding:24px;
+
+    border-radius:28px;
+
+}
+
+.audiolibro-detalle-portada-wrap{
+
+    width:180px;
+
+    min-width:180px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 12px 28px
+    rgba(91,60,196,0.18);
+
+}
+
+.audiolibro-detalle-portada{
+
+    width:100%;
+
+    display:block;
+
+    object-fit:cover;
+
+}
+
+.audiolibro-detalle-info h3{
+
+    color:#4b22b5;
+
+    font-size:30px;
+
+    margin:14px 0 10px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.audiolibro-detalle-info p{
+
+    color:#6a617d;
+
+    line-height:1.7;
+
+    font-size:16px;
+
+}
+
+/* =====================================
+   CAPÍTULOS
+===================================== */
+
+.chapter-card{
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:24px;
+
+    border:
+    1px solid
+    rgba(91,60,196,0.10);
+
+    box-shadow:
+    0 10px 26px
+    rgba(91,60,196,0.08);
+
+}
+
+.chapter-card-header{
+
+    margin-bottom:18px;
+
+}
+
+.chapter-card h3{
+
+    color:#4b22b5;
+
+    font-size:24px;
+
+    margin:12px 0 8px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.chapter-card p{
+
+    color:#7b6d92;
+
+    font-size:14px;
+
+}
+
+/* =====================================
+   AUDIO
+===================================== */
+
+.audio-capitulo-box{
+
+    background:#f8f4ff;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    border:
+    1px solid
+    rgba(91,60,196,0.08);
+
+}
+
+.audio-capitulo-box span{
+
+    display:block;
+
+    color:#5b3cc4;
+
+    font-family:'Poppins-Bold';
+
+    margin-bottom:10px;
+
+}
+
+.audio-capitulo-box audio{
+
+    width:100%;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:768px){
+
+    .biblioteca-audiolibros{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .audiolibro-detalle-header{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .audiolibro-detalle-portada-wrap{
+
+        width:220px;
+
+        min-width:220px;
+
+    }
+
+    .audiolibro-detalle-info h3{
+
+        font-size:26px;
+
+    }
+
+}
+/* =====================================
+   AJUSTE TAMAÑO PORTADAS AUDIOLIBROS
+===================================== */
+
+.biblioteca-audiolibros{
+    max-width:980px;
+    margin:20px auto 0;
+    grid-template-columns:repeat(auto-fit,minmax(220px,280px));
+    justify-content:center;
+}
+
+.audiolibro-portada-card{
+    max-width:280px;
+    margin:auto;
+}
+
+.audiolibro-portada-wrap{
+    aspect-ratio:2/3;
+}
+
+.audiolibro-portada{
+    object-fit:cover;
+}
+
+/* En móvil puede ocupar más ancho */
+@media(max-width:768px){
+
+    .biblioteca-audiolibros{
+        grid-template-columns:1fr;
+        max-width:360px;
+    }
+
+    .audiolibro-portada-card{
+        max-width:340px;
+    }
+
+}
+/* =====================================
+   MODAL PÍLDORAS
+===================================== */
+
+.modal-pildoras-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(16,10,35,0.75);
+
+    backdrop-filter:blur(8px);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+    padding:20px;
+
+}
+
+.modal-pildoras-activo{
+
+    display:flex;
+
+}
+
+.modal-pildoras-card{
+
+    width:100%;
+
+    max-width:950px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:#ffffff;
+
+    border-radius:32px;
+
+    padding:30px;
+
+    position:relative;
+
+    box-shadow:
+    0 25px 60px
+    rgba(0,0,0,0.25);
+
+}
+
+/* =====================================
+   BOTÓN CERRAR
+===================================== */
+
+.modal-pildoras-cerrar{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f3ecff;
+
+    color:#5b3cc4;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+.modal-pildoras-cerrar:hover{
+
+    transform:scale(1.08);
+
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.modal-pildoras-header{
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+}
+
+.modal-pildoras-icon{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:24px;
+
+    background:#f3ecff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:38px;
+
+}
+
+.modal-pildoras-header span{
+
+    color:#7b61d1;
+
+    font-size:13px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.modal-pildoras-header h2{
+
+    color:#4b22b5;
+
+    font-size:34px;
+
+    margin:8px 0;
+
+    line-height:1.2;
+
+}
+
+.modal-pildoras-header p{
+
+    color:#6f6784;
+
+    line-height:1.6;
+
+}
+
+/* =====================================
+   SECCIONES
+===================================== */
+
+.pildora-section{
+
+    background:#faf7ff;
+
+    border-radius:26px;
+
+    padding:24px;
+
+    margin-bottom:24px;
+
+    border:
+    1px solid
+    rgba(91,60,196,0.08);
+
+}
+
+.pildora-header{
+
+    margin-bottom:18px;
+
+}
+
+.pildora-header h3{
+
+    color:#4b22b5;
+
+    font-size:26px;
+
+    margin-top:12px;
+
+}
+
+/* =====================================
+   FRASES
+===================================== */
+
+.pildora-lista{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.pildora-item{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    line-height:1.7;
+
+    color:#4f4762;
+
+    font-size:16px;
+
+    border-left:
+    5px solid
+    #7b61d1;
+
+    box-shadow:
+    0 6px 18px
+    rgba(91,60,196,0.08);
+
+}
+
+/* =====================================
+   BOTÓN PÍLDORAS
+===================================== */
+
+.btn-pildoras{
+
+    background:
+    linear-gradient(
+        135deg,
+        #7b61d1,
+        #5b3cc4
+    );
+
+    color:#ffffff;
+
+    border:none;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:768px){
+
+    .modal-pildoras-card{
+
+        padding:22px;
+
+        border-radius:24px;
+
+    }
+
+    .modal-pildoras-header{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .modal-pildoras-header h2{
+
+        font-size:28px;
+
+    }
+
+    .pildora-header h3{
+
+        font-size:22px;
+
+    }
+
+}
+/* =====================================
+   FRASE Y RESPUESTA PÍLDORAS
+===================================== */
+
+.pildora-frase{
+
+    color:#4b22b5;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+    margin-bottom:14px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.pildora-respuesta{
+
+    background:#f4efff;
+
+    border-radius:18px;
+
+    padding:16px 18px;
+
+    color:#5f5675;
+
+    line-height:1.9;
+
+    border-left:
+    4px solid
+    #8b6cff;
+
+    box-shadow:
+    0 6px 18px
+    rgba(91,60,196,0.08);
+
+}
+/* =====================================
+   ACCIONES DESCARGAR / COMPARTIR PÍLDORAS
+===================================== */
+
+.area-exportar-pildoras{
+
+    background:#ffffff;
+
+    border-radius:28px;
+
+    padding:4px;
+
+}
+
+.acciones-pildoras{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:14px;
+
+    margin-top:24px;
+
+    padding-top:22px;
+
+    border-top:
+    1px solid
+    rgba(91,60,196,0.10);
+
+}
+
+.btn-pildora-accion{
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:16px 18px;
+
+    cursor:pointer;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8 0%,
+        #8d63ff 100%
+    );
+
+    box-shadow:
+    0 10px 24px
+    rgba(106,61,232,0.24);
+
+    transition:0.3s;
+
+}
+
+.btn-pildora-accion:hover{
+
+    transform:translateY(-2px);
+
+    opacity:0.96;
+
+}
+
+.btn-pildora-whatsapp{
+
+    background:
+    linear-gradient(
+        135deg,
+        #21c063 0%,
+        #128c7e 100%
+    );
+
+    box-shadow:
+    0 10px 24px
+    rgba(18,140,126,0.24);
+
+}
+
+.marca-pildoras{
+
+    text-align:center;
+
+    color:#7b61d1;
+
+    font-family:'Poppins-Bold';
+
+    font-size:13px;
+
+    margin-top:28px;
+
+    padding-top:18px;
+
+    border-top:
+    1px solid
+    rgba(91,60,196,0.10);
+
+}
+
+/* =====================================
+   FORMATO EXPORTACIÓN PNG
+===================================== */
+
+.exportando-pildoras{
+
+    padding:38px;
+
+    border-radius:32px;
+
+    background:
+    radial-gradient(
+        circle at top left,
+        rgba(141,99,255,0.10),
+        transparent 32%
+    ),
+    linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #fbf8ff 100%
+    );
+
+}
+
+.exportando-pildoras .modal-pildoras-header{
+
+    background:
+    linear-gradient(
+        135deg,
+        #5b3cc4 0%,
+        #8d63ff 100%
+    );
+
+    color:white;
+
+    border-radius:28px;
+
+    padding:26px;
+
+}
+
+.exportando-pildoras .modal-pildoras-header h2,
+.exportando-pildoras .modal-pildoras-header p,
+.exportando-pildoras .modal-pildoras-header span{
+
+    color:white;
+
+}
+
+.exportando-pildoras .modal-pildoras-icon{
+
+    background:rgba(255,255,255,0.18);
+
+}
+
+/* =====================================
+   RESPONSIVE ACCIONES PÍLDORAS
+===================================== */
+
+@media(max-width:768px){
+
+    .acciones-pildoras{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .btn-pildora-accion{
+
+        width:100%;
+
+    }
+
+}
+/* =====================================
+   PÍLDORAS INDIVIDUALES
+===================================== */
+
+.pildora-exportable{
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:24px;
+
+    box-shadow:
+    0 10px 28px
+    rgba(91,60,196,0.08);
+
+}
+
+.pildora-marca{
+
+    margin-top:18px;
+
+    text-align:center;
+
+    color:#7b61d1;
+
+    font-size:13px;
+
+    font-family:'Poppins-Bold';
+
+}
+
+.pildora-acciones-individuales{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:18px;
+
+}
+
+.btn-pildora-mini{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:12px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:14px;
+
+    font-family:'Poppins-Bold';
+
+    background:
+    linear-gradient(
+        135deg,
+        #6a3de8,
+        #8d63ff
+    );
+
+}
+
+.btn-pildora-mini-share{
+
+    background:
+    linear-gradient(
+        135deg,
+        #18b86a,
+        #128c7e
+    );
+
+}
+
+
+/* =====================================
+   BOTONES AUDIO - DESCARGAR / COMPARTIR
+   Victoriosos en Cristo
+===================================== */
+
+.btn-descargar-audio,
+.btn-compartir-audio{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:16px 18px;
+
+    cursor:pointer;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    color:#ffffff;
+
+    transition:0.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    box-shadow:
+    0 10px 22px
+    rgba(91,60,196,0.20);
+
+}
+
+.btn-descargar-audio{
+
+    background:
+    linear-gradient(
+        135deg,
+        #5b3cc4 0%,
+        #8d63ff 100%
+    );
+
+}
+
+.btn-compartir-audio{
+
+    background:
+    linear-gradient(
+        135deg,
+        #21c063 0%,
+        #128c7e 100%
+    );
+
+    box-shadow:
+    0 10px 22px
+    rgba(18,140,126,0.24);
+
+}
+
+.btn-descargar-audio:hover,
+.btn-compartir-audio:hover{
+
+    transform:
+    translateY(-2px);
+
+    opacity:0.96;
+
+}
+
+.btn-descargar-audio:active,
+.btn-compartir-audio:active{
+
+    transform:
+    scale(0.98);
+
+}
+
+/* =====================================
+   BOTONES DENTRO DE DECLARACIONES
+===================================== */
+
+.declaracion-contenido .audio-btn,
+.declaracion-contenido .btn-descargar-audio,
+.declaracion-contenido .btn-compartir-audio,
+.declaracion-contenido .btn-descargar-pdf,
+.declaracion-contenido .btn-favorito{
+
+    width:100%;
+
+    margin-top:14px;
+
+}
+
+/* =====================================
+   BOTÓN FAVORITO MÁS COHERENTE
+===================================== */
+
+.btn-favorito{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:16px 18px;
+
+    cursor:pointer;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    color:#5b3cc4;
+
+    background:#f0e7ff;
+
+    transition:0.3s;
+
+    box-shadow:
+    0 8px 20px
+    rgba(91,60,196,0.10);
+
+}
+
+.btn-favorito:hover{
+
+    background:#e6d8ff;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-favorito:active{
+
+    transform:scale(0.98);
+
+}
+
+/* =====================================
+   BOTÓN ESCUCHAR AUDIO
+===================================== */
+
+.audio-btn{
+
+    width:100%;
+
+    margin-top:14px;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:16px 18px;
+
+    cursor:pointer;
+
+    font-family:'Poppins-Bold';
+
+    font-size:15px;
+
+    color:#ffffff;
+
+    background:
+    linear-gradient(
+        135deg,
+        #4b22b5 0%,
+        #6a3de8 100%
+    );
+
+    transition:0.3s;
+
+    box-shadow:
+    0 10px 22px
+    rgba(75,34,181,0.22);
+
+}
+
+.audio-btn:hover{
+
+    transform:translateY(-2px);
+
+    opacity:0.96;
+
+}
+
+.audio-btn:active{
+
+    transform:scale(0.98);
+
+}
+
+/* =====================================
+   MODO OSCURO - AUDIO
+===================================== */
+
+body.modo-oscuro .btn-favorito{
+
+    background:#1a102d;
+
+    color:#ffffff;
+
+    border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+}
+
+body.modo-oscuro .btn-favorito:hover{
+
+    background:#2a1945;
+
+}
+
+body.modo-oscuro .btn-descargar-audio,
+body.modo-oscuro .btn-compartir-audio,
+body.modo-oscuro .audio-btn{
+
+    border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+}
+
+/* =====================================
+   RESPONSIVE BOTONES AUDIO
+===================================== */
+
+@media(max-width:768px){
+
+    .btn-descargar-audio,
+    .btn-compartir-audio,
+    .audio-btn,
+    .btn-favorito{
+
+        font-size:14px;
+
+        padding:15px 16px;
+
+    }
+
+}
+
+
+/* =====================================
+   REDISEÑO VISUAL HOME
+   Constructores del Reino
+===================================== */
+
+:root{
+    --reino-morado:#4b22b5;
+    --reino-morado-2:#7b4dff;
+    --reino-dorado:#d79b22;
+    --reino-tinta:#19132f;
+    --reino-texto:#5f5a70;
+    --reino-fondo:#fbf7ef;
+    --reino-card:#ffffff;
+    --reino-linea:rgba(91,60,196,0.11);
+}
+
+body{
+    background:
+    radial-gradient(circle at top left, rgba(215,155,34,0.10), transparent 28%),
+    linear-gradient(180deg,#fffaf2 0%,#f6f1ea 100%);
+    color:var(--reino-tinta);
+}
+
+.header-reino{
+    padding:26px 20px 30px !important;
+    background:
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,0.16), transparent 32%),
+    linear-gradient(135deg,#21064f 0%,#4b22b5 55%,#6b3be8 100%);
+}
+
+.header-reino-inner{
+    width:min(1180px,94%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:34px;
+}
+
+.logo-app-reino{
+    width:330px !important;
+    max-width:38vw !important;
+    background:#ffffff;
+    padding:14px 20px;
+    border-radius:8px;
+    box-shadow:0 18px 42px rgba(0,0,0,0.18);
+}
+
+.header-reino-texto{
+    text-align:left;
+    color:#ffffff;
+    max-width:520px;
+}
+
+.header-reino-texto span{
+    display:inline-flex;
+    padding:7px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.14);
+    font-family:'Poppins-Bold';
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.header-reino-texto h1{
+    display:block !important;
+    font-family:'Poppins-Bold';
+    font-size:42px;
+    line-height:1.1;
+    margin-bottom:10px;
+    color:#ffffff;
+}
+
+.header-reino-texto p{
+    font-size:17px;
+    line-height:1.6;
+    opacity:0.94;
+}
+
+.navbar{
+    background:#32107f !important;
+    padding:13px 20px 8px !important;
+}
+
+.home-reino-container{
+    max-width:1180px;
+    padding:36px 24px 60px;
+}
+
+.home-reino-hero{
+    display:grid;
+    grid-template-columns:1.5fr 0.75fr;
+    gap:26px;
+    align-items:stretch;
+    margin-bottom:24px;
+}
+
+.home-reino-hero-contenido{
+    background:
+    radial-gradient(circle at 90% 10%, rgba(215,155,34,0.16), transparent 28%),
+    linear-gradient(135deg,#ffffff 0%,#fff8ec 100%);
+    border:1px solid rgba(215,155,34,0.22);
+    border-radius:34px;
+    padding:38px;
+    box-shadow:0 22px 55px rgba(72,40,130,0.10);
+    position:relative;
+    overflow:hidden;
+}
+
+.home-reino-hero-contenido::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:8px;
+    background:linear-gradient(180deg,var(--reino-dorado),var(--reino-morado-2));
+}
+
+.home-reino-etiqueta{
+    display:inline-flex;
+    padding:8px 14px;
+    border-radius:999px;
+    background:#f1e4c9;
+    color:#7a4e08;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+.home-reino-hero h2{
+    color:var(--reino-tinta);
+    font-family:'Poppins-Bold';
+    font-size:43px;
+    line-height:1.12;
+    margin-bottom:18px;
+    max-width:800px;
+}
+
+.home-reino-hero p{
+    color:var(--reino-texto);
+    font-size:18px;
+    line-height:1.75;
+    max-width:830px;
+}
+
+.home-reino-versiculo{
+    margin-top:22px;
+    padding:18px 20px;
+    border-radius:22px;
+    background:#ffffff;
+    border:1px solid rgba(91,60,196,0.10);
+    box-shadow:0 10px 24px rgba(91,60,196,0.06);
+}
+
+.home-reino-versiculo strong{
+    display:block;
+    color:var(--reino-morado);
+    font-family:'Poppins-Bold';
+    margin-bottom:7px;
+}
+
+.home-reino-versiculo span{
+    color:#5f5870;
+    font-style:italic;
+    line-height:1.65;
+}
+
+.home-reino-acciones{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:24px;
+}
+
+.home-reino-btn{
+    text-decoration:none;
+    border-radius:18px;
+    padding:15px 20px;
+    font-family:'Poppins-Bold';
+    transition:0.28s;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.home-reino-btn:hover{
+    transform:translateY(-3px);
+}
+
+.home-reino-btn.principal{
+    background:linear-gradient(135deg,#4b22b5,#7b4dff);
+    color:#ffffff;
+    box-shadow:0 12px 26px rgba(75,34,181,0.22);
+}
+
+.home-reino-btn.secundario{
+    background:#fff1d5;
+    color:#7a4e08;
+}
+
+.home-reino-btn.claro{
+    background:#ffffff;
+    color:var(--reino-morado);
+    border:1px solid rgba(91,60,196,0.12);
+}
+
+.home-reino-card-destacada{
+    width:100%;
+    border-radius:34px;
+    padding:30px;
+    color:#ffffff;
+    background:
+    radial-gradient(circle at 70% 10%, rgba(255,255,255,0.20), transparent 28%),
+    linear-gradient(160deg,#2d0b6b 0%,#4b22b5 55%,#9b6cff 100%);
+    box-shadow:0 22px 55px rgba(75,34,181,0.22);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    min-height:360px;
+    position:relative;
+    overflow:hidden;
+}
+
+.home-reino-card-destacada::before{
+    content:"🏠";
+    position:absolute;
+    top:30px;
+    right:30px;
+    font-size:78px;
+    opacity:0.18;
+}
+
+.home-reino-card-destacada span{
+    display:inline-flex;
+    width:max-content;
+    padding:7px 13px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.16);
+    font-family:'Poppins-Bold';
+    font-size:13px;
+    margin-bottom:14px;
+}
+
+.home-reino-card-destacada h3{
+    font-family:'Poppins-Bold';
+    font-size:30px;
+    line-height:1.2;
+    margin-bottom:12px;
+}
+
+.home-reino-card-destacada p{
+    color:#ffffff;
+    opacity:0.92;
+    font-size:16px;
+}
+
+.home-reino-estadisticas{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin:0 0 28px;
+}
+
+.home-reino-estadisticas div{
+    background:#ffffff;
+    border-radius:24px;
+    padding:22px;
+    text-align:center;
+    border:1px solid var(--reino-linea);
+    box-shadow:0 10px 26px rgba(75,34,181,0.07);
+}
+
+.home-reino-estadisticas strong{
+    display:block;
+    color:var(--reino-morado);
+    font-family:'Poppins-Bold';
+    font-size:30px;
+    line-height:1;
+    margin-bottom:8px;
+}
+
+.home-reino-estadisticas span{
+    color:#7a738a;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+}
+
+.home-reino-modulos{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:34px;
+}
+
+.home-reino-modulo{
+    background:#ffffff;
+    border-radius:28px;
+    padding:28px;
+    text-decoration:none;
+    border:1px solid var(--reino-linea);
+    box-shadow:0 14px 34px rgba(75,34,181,0.08);
+    transition:0.3s;
+    color:inherit;
+    position:relative;
+    overflow:hidden;
+}
+
+.home-reino-modulo:hover{
+    transform:translateY(-6px);
+    box-shadow:0 22px 48px rgba(75,34,181,0.14);
+}
+
+.home-reino-modulo-icono{
+    width:64px;
+    height:64px;
+    border-radius:22px;
+    background:#f2eaff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:31px;
+    margin-bottom:18px;
+}
+
+.home-reino-modulo h3{
+    color:var(--reino-morado);
+    font-family:'Poppins-Bold';
+    font-size:23px;
+    margin-bottom:10px;
+}
+
+.home-reino-modulo p{
+    color:var(--reino-texto);
+    line-height:1.65;
+    margin-bottom:18px;
+}
+
+.home-reino-modulo span{
+    color:var(--reino-morado);
+    font-family:'Poppins-Bold';
+}
+
+.modulo-oracion{
+    background:linear-gradient(135deg,#ffffff 0%,#fff7e8 100%);
+    border-color:rgba(215,155,34,0.22);
+}
+
+.modulo-oracion .home-reino-modulo-icono{
+    background:#fff0d0;
+}
+
+.home-reino-biblioteca{
+    background:rgba(255,255,255,0.72);
+    border:1px solid rgba(91,60,196,0.08);
+    border-radius:32px;
+    padding:30px;
+    box-shadow:0 16px 40px rgba(75,34,181,0.07);
+}
+
+.home-reino-seccion-header{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    align-items:flex-end;
+    margin-bottom:24px;
+}
+
+.home-reino-seccion-header span{
+    color:var(--reino-morado);
+    font-family:'Poppins-Bold';
+    font-size:13px;
+}
+
+.home-reino-seccion-header h2{
+    color:var(--reino-tinta);
+    font-family:'Poppins-Bold';
+    font-size:32px;
+    margin:8px 0;
+}
+
+.home-reino-seccion-header p{
+    color:var(--reino-texto);
+    line-height:1.6;
+}
+
+.home-reino-busqueda{
+    min-width:320px;
+    display:flex;
+    gap:10px;
+    background:#ffffff;
+    padding:8px;
+    border-radius:18px;
+    border:1px solid rgba(91,60,196,0.10);
+    box-shadow:0 8px 20px rgba(75,34,181,0.06);
+}
+
+.home-reino-busqueda input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:12px;
+    font-family:'Poppins';
+    color:var(--reino-tinta);
+}
+
+.home-reino-busqueda button{
+    border:none;
+    border-radius:13px;
+    padding:0 14px;
+    background:#f0e7ff;
+    color:var(--reino-morado);
+    font-family:'Poppins-Bold';
+    cursor:pointer;
+}
+
+#categorias-container{
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr)) !important;
+    gap:22px !important;
+}
+
+.categoria-card{
+    border-radius:26px !important;
+    border:1px solid rgba(91,60,196,0.09) !important;
+    box-shadow:0 12px 30px rgba(75,34,181,0.08) !important;
+    transition:0.3s !important;
+    background:#ffffff !important;
+    padding:26px !important;
+}
+
+.categoria-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 22px 46px rgba(75,34,181,0.14) !important;
+}
+
+.categoria-card .card-icon{
+    background:#f2eaff !important;
+    border-radius:22px !important;
+}
+
+.categoria-card .card-info h2{
+    color:var(--reino-morado) !important;
+}
+
+.categoria-card.oculta-busqueda{
+    display:none !important;
+}
+
+.sin-resultados-home{
+    grid-column:1/-1;
+    background:#ffffff;
+    border-radius:22px;
+    padding:26px;
+    text-align:center;
+    color:var(--reino-texto);
+    border:1px solid rgba(91,60,196,0.09);
+}
+
+@media(max-width:900px){
+    .header-reino-inner,
+    .home-reino-seccion-header{
+        flex-direction:column;
+        text-align:center;
+        align-items:center;
+    }
+
+    .home-reino-hero{
+        grid-template-columns:1fr;
+    }
+
+    .header-reino-texto{
+        text-align:center;
+    }
+
+    .logo-app-reino{
+        max-width:86% !important;
+        width:320px !important;
+    }
+
+    .home-reino-hero h2{
+        font-size:34px;
+    }
+
+    .home-reino-estadisticas,
+    .home-reino-modulos{
+        grid-template-columns:1fr;
+    }
+
+    .home-reino-busqueda{
+        min-width:0;
+        width:100%;
+    }
+}
+
+@media(max-width:520px){
+    .home-reino-container{
+        padding:24px 14px 45px;
+    }
+
+    .home-reino-hero-contenido,
+    .home-reino-biblioteca{
+        padding:24px;
+        border-radius:26px;
+    }
+
+    .home-reino-hero h2{
+        font-size:29px;
+    }
+
+    .home-reino-acciones{
+        flex-direction:column;
+    }
+
+    .home-reino-btn{
+        width:100%;
+    }
+
+    .home-reino-busqueda{
+        flex-direction:column;
+    }
+
+    .home-reino-busqueda button{
+        padding:12px;
+    }
+}
+
+/* =====================================
+   REDISEÑO PREMIUM AUDIOLIBROS
+   Constructores del Reino
+===================================== */
+
+.header-audiolibros-reino{
+    padding:34px 20px 38px !important;
+    background:
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,0.16), transparent 32%),
+    linear-gradient(135deg,#21064f 0%,#4b22b5 55%,#6b3be8 100%) !important;
+}
+
+.header-audiolibros-inner{
+    width:min(1050px,94%);
+    margin:auto;
+    text-align:center;
+}
+
+.header-audiolibros-inner span{
+    display:inline-flex;
+    padding:7px 14px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.14);
+    color:#ffffff;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.audiolibros-reino-container{
+    max-width:1180px;
+    padding:34px 24px 70px;
+}
+
+.audiolibros-reino-hero{
+    display:grid;
+    grid-template-columns:1.4fr 0.7fr;
+    gap:24px;
+    align-items:stretch;
+    margin-bottom:34px;
+}
+
+.audiolibros-reino-hero-info{
+    background:
+    radial-gradient(circle at 90% 10%, rgba(215,155,34,0.16), transparent 28%),
+    linear-gradient(135deg,#ffffff 0%,#fff8ec 100%);
+    border:1px solid rgba(215,155,34,0.22);
+    border-radius:34px;
+    padding:36px;
+    box-shadow:0 22px 55px rgba(72,40,130,0.10);
+    position:relative;
+    overflow:hidden;
+}
+
+.audiolibros-reino-hero-info::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:8px;
+    background:linear-gradient(180deg,#d79b22,#7b4dff);
+}
+
+.audiolibros-reino-badge{
+    display:inline-flex;
+    padding:8px 14px;
+    border-radius:999px;
+    background:#f1e4c9;
+    color:#7a4e08;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+.audiolibros-reino-hero h2{
+    color:#19132f;
+    font-family:'Poppins-Bold';
+    font-size:39px;
+    line-height:1.14;
+    margin-bottom:16px;
+}
+
+.audiolibros-reino-hero p{
+    color:#5f5a70;
+    font-size:17px;
+    line-height:1.7;
+    max-width:780px;
+}
+
+.audiolibros-reino-busqueda{
+    margin-top:24px;
+    display:flex;
+    gap:10px;
+    background:#ffffff;
+    padding:8px;
+    border-radius:18px;
+    border:1px solid rgba(91,60,196,0.10);
+    box-shadow:0 8px 20px rgba(75,34,181,0.06);
+}
+
+.audiolibros-reino-busqueda input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:13px;
+    font-family:'Poppins';
+    color:#19132f;
+}
+
+.audiolibros-reino-busqueda button{
+    border:none;
+    border-radius:13px;
+    padding:0 16px;
+    background:#f0e7ff;
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    cursor:pointer;
+}
+
+.audiolibros-reino-resumen{
+    display:grid;
+    gap:16px;
+}
+
+.audiolibros-reino-resumen div{
+    background:#ffffff;
+    border-radius:26px;
+    padding:24px;
+    border:1px solid rgba(91,60,196,0.10);
+    box-shadow:0 14px 34px rgba(75,34,181,0.08);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.audiolibros-reino-resumen strong{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:28px;
+    line-height:1.1;
+    margin-bottom:8px;
+}
+
+.audiolibros-reino-resumen span{
+    color:#7a738a;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+}
+
+.biblioteca-audiolibros-reino{
+    max-width:1120px !important;
+    grid-template-columns:repeat(auto-fit,minmax(260px,310px)) !important;
+    gap:30px !important;
+}
+
+.audiolibro-portada-card-reino{
+    max-width:310px !important;
+    border-radius:32px !important;
+    border:1px solid rgba(91,60,196,0.11) !important;
+    box-shadow:0 18px 42px rgba(75,34,181,0.12) !important;
+}
+
+.audiolibro-portada-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,transparent 30%,rgba(20,8,50,0.68) 100%);
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding:22px;
+    opacity:0;
+    transition:0.3s;
+}
+
+.audiolibro-portada-card-reino:hover .audiolibro-portada-overlay{
+    opacity:1;
+}
+
+.audiolibro-portada-overlay span{
+    background:#ffffff;
+    color:#4b22b5;
+    padding:10px 16px;
+    border-radius:999px;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+}
+
+.audiolibro-card-top{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.badge-dorado{
+    background:#fff0d0 !important;
+    color:#7a4e08 !important;
+}
+
+.audiolibro-autor{
+    color:#7a738a !important;
+    font-family:'Poppins-Bold';
+    margin-bottom:12px !important;
+}
+
+.audiolibro-descripcion-card{
+    min-height:74px;
+    max-height:96px;
+    overflow:hidden;
+}
+
+.btn-abrir-libro{
+    margin-top:8px;
+}
+
+.audiolibro-detalle-reino{
+    background:rgba(255,255,255,0.82) !important;
+    border-radius:34px !important;
+    padding:30px !important;
+    border:1px solid rgba(91,60,196,0.10) !important;
+}
+
+.btn-volver-biblioteca{
+    margin-bottom:22px;
+}
+
+.detalle-libro-titulo-box{
+    background:#ffffff;
+    border-radius:28px;
+    padding:26px;
+    border:1px solid rgba(91,60,196,0.09);
+    box-shadow:0 12px 30px rgba(75,34,181,0.07);
+    margin-bottom:24px;
+}
+
+.detalle-libro-titulo-box span{
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    font-size:13px;
+}
+
+.detalle-libro-titulo-box h2{
+    margin-top:8px;
+    color:#19132f !important;
+}
+
+.audiolibro-detalle-header-reino{
+    background:
+    radial-gradient(circle at 90% 0%, rgba(215,155,34,0.16), transparent 28%),
+    linear-gradient(135deg,#ffffff 0%,#fff8ec 100%) !important;
+    border:1px solid rgba(215,155,34,0.18);
+    box-shadow:0 14px 34px rgba(75,34,181,0.08);
+}
+
+.audiolibro-detalle-header-reino .audiolibro-detalle-info h3{
+    color:#4b22b5;
+    font-size:32px;
+}
+
+.btn-pildoras-libro-premium{
+    margin-top:18px;
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px 18px;
+    color:#ffffff;
+    font-family:'Poppins-Bold';
+    cursor:pointer;
+    background:linear-gradient(135deg,#d79b22,#7b4dff);
+    box-shadow:0 12px 26px rgba(75,34,181,0.18);
+    transition:0.3s;
+}
+
+.btn-pildoras-libro-premium:hover{
+    transform:translateY(-2px);
+}
+
+.capitulos-reino-lista .chapter-card{
+    border-radius:26px !important;
+    background:#ffffff !important;
+    border:1px solid rgba(91,60,196,0.09) !important;
+    box-shadow:0 12px 30px rgba(75,34,181,0.07) !important;
+}
+
+.recurso-box{
+    background:#fbf8ff;
+    border-radius:20px;
+    padding:18px;
+    border:1px solid rgba(91,60,196,0.08);
+}
+
+.recurso-titulo{
+    display:block;
+    color:#4b22b5;
+    font-family:'Poppins-Bold';
+    margin-bottom:14px;
+}
+
+.recurso-botones{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.recurso-botones-audio{
+    margin-top:14px;
+}
+
+.btn-recurso{
+    font-size:13px !important;
+    padding:12px 14px !important;
+}
+
+.btn-recurso-share{
+    background:#e8fff2 !important;
+    color:#128c7e !important;
+}
+
+.audiolibros-empty-reino{
+    grid-column:1/-1;
+    text-align:center;
+    background:#ffffff;
+    border-radius:26px;
+    padding:30px;
+    border:1px solid rgba(91,60,196,0.09);
+}
+
+@media(max-width:900px){
+    .audiolibros-reino-hero{
+        grid-template-columns:1fr;
+    }
+
+    .audiolibros-reino-resumen{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .audiolibros-reino-hero h2{
+        font-size:32px;
+    }
+}
+
+@media(max-width:640px){
+    .audiolibros-reino-container{
+        padding:24px 14px 54px;
+    }
+
+    .audiolibros-reino-hero-info{
+        padding:24px;
+        border-radius:26px;
+    }
+
+    .audiolibros-reino-busqueda{
+        flex-direction:column;
+    }
+
+    .audiolibros-reino-busqueda button{
+        padding:13px;
+    }
+
+    .audiolibros-reino-resumen{
+        grid-template-columns:1fr;
+    }
+
+    .biblioteca-audiolibros-reino{
+        grid-template-columns:1fr !important;
+        max-width:360px !important;
+    }
+}
+
+
+/* =====================================
+   AJUSTE COMPLEMENTARIO HOME
+===================================== */
+
+.home-reino-hero-lateral{
+    display:flex;
+}
+
+
+/* =====================================
+   AJUSTE COMPLEMENTARIO AUDIOLIBROS RESPONSIVE
+===================================== */
+
+@media(max-width:640px){
+
+    .audiolibros-reino-busqueda input{
+        width:100%;
+    }
+
+}

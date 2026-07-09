@@ -1,0 +1,29 @@
+{
+  "A": {
+    "codigo": "A",
+    "nombre": "Pórtico del pasado",
+    "subtipo": "Depresión / carga retenida",
+    "frase": "El pasado pesa cuando el alma decide sostener lo que debía entregar.",
+    "versiculo": "Isaías 43:18 — “No os acordéis de las cosas pasadas…”",
+    "descripcion": "Tu resultado indica que el alma está reteniendo cargas asociadas al pasado. El flujo hacia el espíritu y hacia Cristo se encuentra interrumpido por recuerdos, peso emocional o procesos que no han sido completamente entregados. La carga llegó al alma, pero no descendió correctamente al espíritu ni alcanzó el fundamento. Esto produce desgaste, repetición mental y sensación de peso interior.",
+    "principio": "La depresión no es solo tristeza: es una estructura donde la carga nunca descendió."
+  },
+  "B": {
+    "codigo": "B",
+    "nombre": "Pórtico del presente",
+    "subtipo": "Gobierno correcto / paz",
+    "frase": "El presente es el único lugar donde el alma deja de cargar y el espíritu comienza a gobernar.",
+    "versiculo": "Hebreos 3:15 — “Si oyereis hoy su voz…”",
+    "descripcion": "Tu resultado indica un mejor equilibrio interior. El alma percibe, el espíritu gobierna y la carga encuentra mejor transferencia hacia Cristo. Este es el modelo más estable del diseño interior: no porque no existan cargas, sino porque están siguiendo el flujo correcto. Aquí aparece la paz, la claridad y el descanso que vienen de un sistema bien ordenado.",
+    "principio": "La paz no es ausencia de carga: es evidencia de un sistema correctamente gobernado."
+  },
+  "C": {
+    "codigo": "C",
+    "nombre": "Pórtico del futuro",
+    "subtipo": "Ansiedad / carga anticipada",
+    "frase": "El futuro pesa cuando el alma intenta controlar lo que aún no ha llegado.",
+    "versiculo": "Mateo 6:34 — “No os afanéis por el día de mañana…”",
+    "descripcion": "Tu resultado indica que el alma está anticipando escenarios futuros y cargando antes de tiempo lo que todavía no existe. El flujo está interrumpido por el intento de control. La carga no ha ocurrido plenamente, pero el alma ya la está sintiendo como si fuera real. Esto genera tensión, cansancio mental, inquietud y dificultad para descansar.",
+    "principio": "La ansiedad no nace del futuro: nace del intento del alma por controlarlo."
+  }
+}

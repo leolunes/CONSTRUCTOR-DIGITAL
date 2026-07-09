@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Audiolibros | Constructores del Reino</title>
+
+    <link rel="icon" href="./assets/icons/favicon.png">
+    <link rel="manifest" href="./pwa/manifest.json">
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/cards.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <header class="header header-small header-audiolibros-reino">
+
+        <div class="header-audiolibros-inner">
+
+            <span>Biblioteca Digital del Reino</span>
+
+            <h1>Audiolibros</h1>
+
+            <p class="subtitle">
+                Libros, enseñanzas, capítulos, audios y píldoras espirituales para edificar tu vida y tu hogar sobre Cristo.
+            </p>
+
+        </div>
+
+    </header>
+
+    <nav class="navbar">
+
+        <a href="index.html">
+            <img src="./assets/icons/home.png" alt="Inicio">
+            <span>Inicio</span>
+        </a>
+
+        <a href="favoritos.html">
+            <img src="./assets/icons/favorite.png" alt="Favoritos">
+            <span>Favoritos</span>
+        </a>
+
+        <a href="audios.html">
+            <img src="./assets/icons/play.png" alt="Audios">
+            <span>Audios</span>
+        </a>
+
+        <a href="audiolibros.html" class="active activo">
+            <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z'/%3E%3Cpath d='M8 6h8'/%3E%3Cpath d='M8 10h8'/%3E%3C/svg%3E"
+            alt="Audiolibros">
+            <span>Audiolibros</span>
+        </a>
+
+        <a href="perfil.html">
+            <img src="./assets/icons/profile.png" alt="Perfil">
+            <span>Perfil</span>
+        </a>
+
+    </nav>
+
+    <main class="container audiolibros-reino-container">
+
+        <a href="index.html" class="btn-volver">
+            <img src="./assets/icons/back.png" alt="Volver">
+            Volver al inicio
+        </a>
+
+        <section class="audiolibros-reino-hero">
+
+            <div class="audiolibros-reino-hero-info">
+
+                <span class="audiolibros-reino-badge">
+                    📚 Biblioteca espiritual
+                </span>
+
+                <h2>
+                    Escoge un audiolibro para leer, escuchar y meditar
+                </h2>
+
+                <p>
+                    Cada libro reúne capítulos en PDF, audios, descargas, recursos para compartir y píldoras espirituales organizadas por libro.
+                </p>
+
+                <div class="audiolibros-reino-busqueda">
+
+                    <input
+                    type="search"
+                    id="buscarAudiolibros"
+                    placeholder="Buscar por título, autor o descripción...">
+
+                    <button
+                    type="button"
+                    id="limpiarBusquedaAudiolibros">
+                        Limpiar
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="audiolibros-reino-resumen">
+
+                <div>
+                    <strong id="totalAudiolibrosVista">0</strong>
+                    <span>Audiolibros</span>
+                </div>
+
+                <div>
+                    <strong id="totalCapitulosVista">0</strong>
+                    <span>Secciones</span>
+                </div>
+
+                <div>
+                    <strong>PDF + Audio</strong>
+                    <span>Biblioteca activa</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="listaAudiolibros"
+        class="biblioteca-audiolibros biblioteca-audiolibros-reino">
+
+            <!-- Portadas dinámicas desde data/audiolibros.json -->
+
+        </section>
+
+        <section id="detalleAudiolibro"
+        class="book-detail audiolibro-detalle-reino hidden">
+
+            <button
+            type="button"
+            class="btn-secondary btn-volver-biblioteca"
+            onclick="cerrarDetalleAudiolibro()">
+                ← Volver a la biblioteca
+            </button>
+
+            <div class="detalle-libro-titulo-box">
+
+                <span>Libro seleccionado</span>
+
+                <h2 id="tituloLibro"></h2>
+
+                <p id="descripcionLibro"></p>
+
+            </div>
+
+            <div id="capitulosLibro"
+            class="chapter-list capitulos-reino-lista">
+
+                <!-- Capítulos dinámicos -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div class="modal-pildoras-overlay"
+    id="modalPildoras"
+    aria-hidden="true">
+
+        <div class="modal-pildoras-card">
+
+            <button
+            type="button"
+            class="modal-pildoras-cerrar"
+            id="cerrarModalPildoras"
+            aria-label="Cerrar píldoras">
+                ×
+            </button>
+
+            <div id="areaExportarPildoras"
+            class="area-exportar-pildoras">
+
+                <div class="modal-pildoras-header">
+
+                    <div class="modal-pildoras-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Píldoras espirituales
+                        </span>
+
+                        <h2 id="tituloPildoras">
+                            Frases destacadas
+                        </h2>
+
+                        <p id="descripcionPildoras">
+                            Resumen espiritual con frases clave del libro seleccionado.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div id="contenidoPildoras"
+                class="modal-pildoras-contenido">
+
+                    <!-- Píldoras dinámicas -->
+
+                </div>
+
+                <div class="marca-pildoras">
+                    Constructores del Reino · Biblioteca espiritual
+                </div>
+
+            </div>
+
+            <div class="acciones-pildoras">
+
+                <button
+                type="button"
+                class="btn-pildora-accion"
+                id="btnDescargarPildoras">
+                    📥 Descargar imagen
+                </button>
+
+                <button
+                type="button"
+                class="btn-pildora-accion btn-pildora-whatsapp"
+                id="btnCompartirPildoras">
+                    📲 Compartir
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="./js/audiolibros.js"></script>
+
+</body>
+
+</html>

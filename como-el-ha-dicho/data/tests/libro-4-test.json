@@ -1,0 +1,329 @@
+{
+  "id": "libro-4",
+  "slug": "el-pez-de-damasco",
+  "titulo": "El Pez de Damasco",
+  "subtitulo": "Cuando Cristo cambia el aroma del sistema",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 10 preguntas basada en los capítulos del libro El Pez de Damasco.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "5 a 7 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-4/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El pez del sistema",
+      "eje": "Identidad",
+      "pregunta": "¿Reconozco las áreas donde todavía puedo estar viviendo desde una identidad formada por el sistema y no por la presencia de Cristo?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El problema de Saulo no era falta de pasión, sino una identidad gobernada por el sistema. El Reino comienza cuando Cristo confronta aquello que define nuestra manera de reaccionar, servir y vivir."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "El camino que derriba",
+      "eje": "Rendición",
+      "pregunta": "¿Estoy dispuesto a que Cristo interrumpa caminos que parecen correctos, pero que no nacieron del diseño del Padre?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Damasco no fue castigo; fue misericordia. Dios muchas veces derriba aquello que el sistema construyó para rescatar al hombre de una dirección equivocada."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "La ceguera del fuego",
+      "eje": "Discernimiento",
+      "pregunta": "¿Permito que Dios apague percepciones formadas por orgullo, control o autosuficiencia para abrir en mí visión del Reino?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La ceguera de Saulo no fue oscuridad inútil; fue el inicio del discernimiento espiritual. Dios cerró los ojos del sistema para abrir los ojos del Reino."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "El olor del sistema",
+      "eje": "Aroma espiritual",
+      "pregunta": "¿Estoy dejando que el fuego de Dios revele y transforme el aroma espiritual que todavía gobierna mi corazón?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El fuego no revela solamente errores; revela aromas. El Reino no busca solo hombres activos, sino vidas que transmitan el aroma de Cristo."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "El pez que aprende a obedecer",
+      "eje": "Obediencia",
+      "pregunta": "¿Mi obediencia nace de una relación viva con el Padre o solamente de estructura, costumbre o presión religiosa?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La obediencia del Reino no nace del sistema; nace de la voz del Padre. Saulo comenzó a cambiar cuando preguntó: Señor, ¿qué quieres que yo haga?"
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "Cuando el fuego cambia el aroma",
+      "eje": "Transformación interior",
+      "pregunta": "¿Estoy permitiendo que el fuego del Reino transforme no solo mis acciones, sino también mi naturaleza interior?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Cristo no buscaba producir una versión religiosa mejorada de Saulo, sino formar una nueva criatura con aroma de Reino."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "El pez partido",
+      "eje": "Quebranto",
+      "pregunta": "¿Estoy dispuesto a que Dios parta mi vida correctamente para convertir mis procesos en alimento para otros?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El fuego cambia el aroma; el quebranto transforma la vida en alimento. Lo que Dios parte en obediencia, lo reparte para bendecir generaciones."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "De autoridad a paternidad",
+      "eje": "Servicio",
+      "pregunta": "¿Mi manera de ejercer autoridad refleja control del sistema o paternidad, ternura y servicio del Reino?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La autoridad madura cuando deja de dominar y comienza a alimentar. El fuego destruyó en Pablo la necesidad de controlar para formar el corazón de un padre espiritual."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "El nuevo aroma",
+      "eje": "Nueva naturaleza",
+      "pregunta": "¿Mi identidad depende más de Cristo que del reconocimiento, la posición o las estructuras que antes me daban seguridad?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El Reino no solo cambia comportamientos; cambia naturaleza. Pablo dejó de depender del sistema para saber quién era."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "Pan para las naciones",
+      "eje": "Propósito",
+      "pregunta": "¿Estoy permitiendo que Dios convierta mi vida procesada en alimento espiritual para bendecir a otros?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El propósito final del proceso no era solo transformar a Pablo, sino convertirlo en pan para las naciones. Una vida rendida termina alimentando generaciones."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Pez aún marcado por el sistema",
+      "mensaje": "Tu resultado muestra áreas donde el sistema todavía puede estar formando identidad, reacciones o dependencias internas.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3 y 4. Allí se confronta la identidad del sistema, el derribo, la visión equivocada y el aroma interior."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Pez en proceso de fuego",
+      "mensaje": "Hay sensibilidad espiritual y deseo de transformación, pero Dios todavía está trabajando obediencia, fuego y quebranto.",
+      "recomendacion": "Profundiza en los capítulos 5, 6 y 7. Allí se desarrolla la obediencia a la voz del Padre, el cambio de aroma y el quebranto que alimenta."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Vida con aroma de Reino",
+      "mensaje": "Tu resultado refleja un proceso serio de transformación, servicio y cambio de naturaleza bajo el gobierno de Cristo.",
+      "recomendacion": "Refuerza los capítulos 8, 9 y 10 para consolidar paternidad, nueva identidad y propósito para alimentar a otros."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Pan para generaciones",
+      "mensaje": "Tu evaluación evidencia una comprensión profunda del proceso del Reino: llamado, fuego, quebranto y envío.",
+      "recomendacion": "Repasa todo el libro como una guía continua para cuidar que tu vida conserve el aroma de Cristo y sirva como alimento espiritual."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — El pez del sistema",
+      "Capítulo 2 — El camino que derriba",
+      "Capítulo 3 — La ceguera del fuego",
+      "Capítulo 4 — El olor del sistema"
+    ],
+    "medio": [
+      "Capítulo 5 — El pez que aprende a obedecer",
+      "Capítulo 6 — Cuando el fuego cambia el aroma",
+      "Capítulo 7 — El pez partido"
+    ],
+    "alto": [
+      "Capítulo 8 — De autoridad a paternidad",
+      "Capítulo 9 — El nuevo aroma",
+      "Capítulo 10 — Pan para las naciones"
+    ]
+  },
+  "oracionFinal": "Padre, examina mi corazón y revela todo aroma del sistema que todavía permanezca dentro de mí. Derriba toda identidad construida fuera de Cristo, apaga toda visión gobernada por orgullo y enséñame a obedecer Tu voz. Permite que el fuego de Tu Reino transforme mi naturaleza, que el quebranto forme en mí compasión y que mi vida pueda convertirse en alimento para otros. Que no viva para preservar mi imagen, sino para reflejar a Cristo y servir al propósito del Padre. En el nombre de Jesús. Amén.",
+  "declaracionFinal": "Declaro que mi vida ya no será definida por el sistema. Cristo cambia mi aroma, gobierna mi identidad y transforma mi corazón. Renuncio al orgullo, a la autosuficiencia y al reconocimiento humano. Mi vida será procesada por el fuego del Reino y convertida en alimento para bendecir generaciones.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro El Pez de Damasco.",
+    "firma": "Constructores del Reino"
+  }
+}

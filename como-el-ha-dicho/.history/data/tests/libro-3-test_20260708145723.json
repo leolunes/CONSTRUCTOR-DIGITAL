@@ -1,0 +1,589 @@
+{
+  "id": "libro-3",
+  "slug": "a-plomo-y-a-nivel",
+  "titulo": "A Plomo y a Nivel",
+  "subtitulo": "Cuando el hogar vuelve a alinearse con el cielo",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 20 preguntas basada en los capítulos del libro A Plomo y a Nivel.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "8 a 10 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-3/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El arquitecto del diseño",
+      "eje": "Diseño",
+      "pregunta": "¿Consulto el diseño de Dios antes de tomar decisiones importantes sobre mi vida y mi hogar?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Toda construcción comienza con un diseño. Cuando ignoramos el plano del Arquitecto terminamos edificando según nuestras propias inclinaciones."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El arquitecto del diseño",
+      "eje": "Propósito",
+      "pregunta": "¿Reconozco que mi vida y mi hogar fueron diseñados para reflejar el propósito de Dios y no solo mis preferencias?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El hombre no fue producido por accidente; fue diseñado para representar a Dios. El hogar también necesita volver al plano original."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "La plomada del Espíritu",
+      "eje": "Verticalidad espiritual",
+      "pregunta": "¿La voz de Dios sigue siendo la referencia principal que alinea mi espíritu?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La plomada revela si la columna conserva verticalidad. El espíritu encuentra estabilidad cuando reconoce a Dios como referencia superior."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "La plomada del Espíritu",
+      "eje": "Rectitud interior",
+      "pregunta": "¿Permito que Dios examine inclinaciones espirituales que he normalizado con el tiempo?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La plomada de Dios no aparece para rechazar la casa, sino para salvarla. Toda restauración comienza con una revelación honesta."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "El nivel del alma",
+      "eje": "Gobierno emocional",
+      "pregunta": "¿Mis emociones me informan sin convertirse en la autoridad que gobierna mis decisiones?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Las emociones son excelentes mensajeras, pero pésimas gobernantes. El alma necesita permanecer bajo dirección espiritual."
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "El nivel del alma",
+      "eje": "Reposo",
+      "pregunta": "¿Estoy aprendiendo a acallar mi alma delante de Dios para que mi casa no viva inclinada por mis presiones interiores?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "David dijo: he acallado mi alma. La madurez espiritual se manifiesta cuando el espíritu aprende a gobernar el alma."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "La columna y la viga",
+      "eje": "Orden interior",
+      "pregunta": "¿Mi espíritu y mi alma están ocupando el lugar que Dios les asignó dentro de mi vida?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La estabilidad de una casa depende de que la columna y la viga trabajen en armonía. Cada dimensión debe volver a su función original."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "La columna y la viga",
+      "eje": "Armonía",
+      "pregunta": "¿Evito que mis emociones sustituyan la dirección espiritual que debo recibir de Dios?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La crisis comienza cuando el alma decide lo que el espíritu debe discernir. La paz aparece cuando cada parte vuelve a su lugar correcto."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "No se construye sobre inclinaciones",
+      "eje": "Fundamento",
+      "pregunta": "¿Estoy construyendo mi hogar sobre principios del Reino y no sobre impulsos, preferencias o emociones cambiantes?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Las inclinaciones construyen para el presente; el diseño construye para generaciones. La roca representa obediencia al diseño divino."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "No se construye sobre inclinaciones",
+      "eje": "Obediencia al diseño",
+      "pregunta": "¿Permito que el diseño de Dios tenga más autoridad que aquello que me parece correcto o conveniente?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "No todo lo que parece correcto está alineado con Dios. La estabilidad nace cuando la revelación pesa más que la percepción."
+    },
+    {
+      "id": "p11",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "Las grietas que nadie ve",
+      "eje": "Sanidad estructural",
+      "pregunta": "¿Estoy buscando las causas profundas de las grietas familiares y no solamente corrigiendo síntomas visibles?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Las grietas visibles son mensajes de problemas invisibles. Dios trabaja desde la raíz hacia el fruto."
+    },
+    {
+      "id": "p12",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "Las grietas que nadie ve",
+      "eje": "Herencia generacional",
+      "pregunta": "¿Estoy permitiendo que Dios sane tensiones para que la siguiente generación no cargue lo que yo debo entregar?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Lo que no se corrige en una generación suele convertirse en carga para la siguiente. La restauración del hogar es una obra generacional."
+    },
+    {
+      "id": "p13",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "La casa bajo tensión",
+      "eje": "Confianza",
+      "pregunta": "¿Estoy descansando en los tiempos de Dios en lugar de intentar controlar lo que solo Él puede sostener?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La tensión nace cuando el alma interpreta el silencio y trata de producir soluciones fuera del diseño."
+    },
+    {
+      "id": "p14",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "La casa bajo tensión",
+      "eje": "Entrega de cargas",
+      "pregunta": "¿He devuelto a Dios las cargas que mi alma ha intentado sostener por ansiedad o control?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El alma se agota cuando intenta cargar lo que solo Dios puede sostener. La paz comienza cuando las cargas regresan a Sus manos."
+    },
+    {
+      "id": "p15",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "Dios volvió a medir la casa",
+      "eje": "Corrección amorosa",
+      "pregunta": "¿Permito que la gracia de Dios confronte áreas que el tiempo me hizo ver como normales?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La desalineación más peligrosa es aquella que deja de parecernos un problema. Dios mide para revelar y restaurar."
+    },
+    {
+      "id": "p16",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "Dios volvió a medir la casa",
+      "eje": "Humildad",
+      "pregunta": "¿Respondo con humildad cuando Dios muestra inclinaciones que necesitan ser corregidas?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La corrección de Dios nace de Su amor. El Arquitecto ama demasiado la casa como para ignorar sus desalineaciones."
+    },
+    {
+      "id": "p17",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "Habitable para la presencia",
+      "eje": "Presencia",
+      "pregunta": "¿La presencia de Dios ocupa el centro de mi hogar y no solo un espacio religioso dentro de la rutina?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La presencia no fue creada para ocupar un lugar en la casa; la casa fue creada para albergar la presencia."
+    },
+    {
+      "id": "p18",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "Habitable para la presencia",
+      "eje": "Atmósfera del hogar",
+      "pregunta": "¿Mi hogar está desarrollando una atmósfera donde puedan respirarse paz, comunión y dirección de Dios?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Los mayores regalos de un hogar no siempre son materiales; muchas veces son atmósferas formadas por la presencia de Dios."
+    },
+    {
+      "id": "p19",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "A plomo y a nivel",
+      "eje": "Legado",
+      "pregunta": "¿Estoy edificando un legado espiritual saludable para las generaciones que vienen detrás de mí?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La mayor herencia que un padre puede dejar no es una propiedad; es un diseño saludable sostenido por Dios."
+    },
+    {
+      "id": "p20",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "A plomo y a nivel",
+      "eje": "Estabilidad del Reino",
+      "pregunta": "¿Mi casa refleja cada día más una vida a plomo delante de Dios y a nivel frente a las circunstancias?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La verdadera estabilidad aparece cuando la vida está a plomo delante de Dios y a nivel delante de las circunstancias."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Casa desalineada en proceso de medición",
+      "mensaje": "Tu resultado muestra áreas importantes donde Dios quiere volver a medir la estructura de tu vida y de tu hogar.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3, 4 y 5. Allí se restauran el diseño, la plomada, el nivel y el fundamento."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Casa en restauración",
+      "mensaje": "Hay señales de crecimiento y sensibilidad espiritual, pero todavía existen grietas, tensiones o normalizaciones que necesitan ser tratadas por Dios.",
+      "recomendacion": "Profundiza en los capítulos 6, 7 y 8. Allí Dios revela grietas, tensiones y áreas que el tiempo pudo normalizar."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Casa alineándose con el Reino",
+      "mensaje": "Tu resultado refleja un proceso saludable de alineación espiritual y emocional. Continúa permitiendo que Dios sostenga tu hogar.",
+      "recomendacion": "Refuerza los capítulos 9 y 10 para consolidar una casa habitable para la presencia y estable bajo el diseño del Reino."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Casa habitable para la presencia",
+      "mensaje": "Tu evaluación evidencia una comprensión profunda del diseño espiritual del hogar. Sigue cuidando la plomada del espíritu y el nivel del alma.",
+      "recomendacion": "Repasa todo el libro como una guía continua para mantener tu vida y tu hogar alineados con el cielo."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — El arquitecto del diseño",
+      "Capítulo 2 — La plomada del Espíritu",
+      "Capítulo 3 — El nivel del alma",
+      "Capítulo 4 — La columna y la viga",
+      "Capítulo 5 — No se construye sobre inclinaciones"
+    ],
+    "medio": [
+      "Capítulo 6 — Las grietas que nadie ve",
+      "Capítulo 7 — La casa bajo tensión",
+      "Capítulo 8 — Dios volvió a medir la casa"
+    ],
+    "alto": [
+      "Capítulo 9 — Habitable para la presencia",
+      "Capítulo 10 — A plomo y a nivel"
+    ]
+  },
+  "oracionFinal": "Padre, gracias porque nunca abandonas la obra de Tus manos. Vuelve a medir mi vida y mi hogar con Tu plomada y Tu nivel. Endereza toda inclinación espiritual, equilibra mi alma, sana las grietas invisibles y restaura cada área conforme a Tu diseño. Que mi casa deje de sostenerse por esfuerzo humano y comience a descansar sobre Tu propósito. Haz de mi hogar una morada habitable para Tu presencia. En el nombre de Jesús. Amén.",
+  "declaracionFinal": "Declaro que mi espíritu permanecerá a plomo delante de Dios, mi alma caminará a nivel bajo Su gobierno y mi hogar volverá a reflejar el diseño del Reino. Renuncio a construir sobre inclinaciones, ansiedad o control. Mi casa pertenece al Arquitecto eterno y será una morada para Su presencia.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro A Plomo y a Nivel.",
+    "firma": "Constructores del Reino"
+  }
+}

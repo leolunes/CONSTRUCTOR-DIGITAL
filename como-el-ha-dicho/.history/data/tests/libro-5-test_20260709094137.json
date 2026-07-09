@@ -1,0 +1,329 @@
+{
+  "id": "libro-5",
+  "slug": "congregados",
+  "titulo": "Congregados",
+  "subtitulo": "Bajo una sola voz",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 10 preguntas basada en los capítulos del libro Congregados.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "5 a 7 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-5/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El primer culto",
+      "eje": "Comunión",
+      "pregunta": "¿Entiendo que congregarme no es solamente asistir a un lugar, sino vivir bajo la voz de Dios?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El primer culto no ocurrió en un edificio; ocurrió donde un hombre escuchaba la voz de Dios. La congregación verdadera nace de la comunión."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "Jehová se paseaba en el huerto",
+      "eje": "Presencia",
+      "pregunta": "¿La presencia de Dios es una atmósfera constante en mi vida y mi hogar, o solo un evento ocasional?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Lo extraordinario del Edén no era el huerto, sino que Dios caminaba en medio de él. El Reino busca hogares habitados por Su presencia."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "Bajo una sola voz",
+      "eje": "Autoridad espiritual",
+      "pregunta": "¿La voz de Dios sigue siendo la referencia principal que gobierna mis decisiones?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Mientras una sola voz gobernó el Edén, todo permaneció en orden. La confusión comienza cuando demasiadas voces ocupan el lugar de Dios."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "No es bueno que el hombre esté solo",
+      "eje": "Comunión familiar",
+      "pregunta": "¿Estoy construyendo relaciones centradas en Cristo o solamente conexiones superficiales?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La primera carencia señalada por Dios no fue material, sino relacional. El Reino no fue diseñado para vivirse en aislamiento."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "Ayuda idónea",
+      "eje": "Unidad de propósito",
+      "pregunta": "¿Estoy ayudando a fortalecer el diseño de Dios en mi hogar, familia o comunidad?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La ayuda idónea no fue creada para sustituir la voz de Dios, sino para fortalecer el diseño que Dios había establecido."
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "La conversación que abrió la puerta",
+      "eje": "Discernimiento de voces",
+      "pregunta": "¿Estoy discerniendo qué voces están intentando influir en mi corazón, mi hogar o mi congregación?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La caída comenzó cuando una voz extraña obtuvo audiencia. Toda congregación permanece fuerte mientras la voz de Dios conserve el lugar más alto."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "El pecado comenzó antes de la mordida",
+      "eje": "Suficiencia de Dios",
+      "pregunta": "¿Mis opiniones, deseos o razonamientos han comenzado a pesar más que la voz de Dios?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La desobediencia visible fue fruto de una ruptura invisible. Toda caída espiritual comienza cuando la opinión humana reemplaza la autoridad divina."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "¿Dónde estás?",
+      "eje": "Restauración",
+      "pregunta": "¿Estoy respondiendo al llamado de Dios o permaneciendo escondido detrás de excusas, culpa o distancia espiritual?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Dios no buscaba la ubicación de Adán; confrontaba su condición. La restauración comienza cuando dejamos de escondernos y respondemos a Su voz."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "Entre los árboles del huerto",
+      "eje": "Transparencia",
+      "pregunta": "¿He convertido bendiciones, actividades o apariencia religiosa en escondites que reemplazan la comunión con Dios?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Es posible permanecer cerca de las cosas de Dios y aun así esconderse de Su presencia. Cristo nos llama a salir de detrás de los árboles."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "Congregados nuevamente en Cristo",
+      "eje": "Unidad en Cristo",
+      "pregunta": "¿Mi vida ayuda a reunir, restaurar y alinear a otros bajo la voz de Jesucristo?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Cristo vino a reunir lo que la caída había dispersado. La verdadera congregación vuelve a formarse cuando Su voz ocupa el centro."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Vida descongregada en proceso de llamado",
+      "mensaje": "Tu resultado muestra áreas donde la comunión, la presencia o la voz de Dios necesitan volver a ocupar el centro.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3 y 6. Allí se restauran la esencia de la congregación, la presencia y la autoridad de una sola voz."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Congregación en restauración",
+      "mensaje": "Hay sensibilidad espiritual y deseo de volver al diseño, pero todavía existen voces, opiniones o escondites que necesitan ser confrontados.",
+      "recomendacion": "Profundiza en los capítulos 4, 5, 7, 8 y 9. Allí se tratan la comunión, la ayuda idónea, la opinión, el escondite y la restauración."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Casa congregada bajo una sola voz",
+      "mensaje": "Tu resultado refleja un proceso saludable de alineación bajo la voz de Dios y una comprensión clara de la comunión en Cristo.",
+      "recomendacion": "Refuerza el capítulo 10 para consolidar una vida que ayuda a reunir y restaurar bajo la voz de Jesucristo."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Familia reunida alrededor de Cristo",
+      "mensaje": "Tu evaluación evidencia una comprensión profunda de la congregación como comunión, presencia, familia y unidad bajo Cristo.",
+      "recomendacion": "Repasa todo el libro como una guía continua para mantener tu vida, tu hogar y tu comunidad bajo una sola voz."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — El primer culto",
+      "Capítulo 2 — Jehová se paseaba en el huerto",
+      "Capítulo 3 — Bajo una sola voz",
+      "Capítulo 6 — La conversación que abrió la puerta"
+    ],
+    "medio": [
+      "Capítulo 4 — No es bueno que el hombre esté solo",
+      "Capítulo 5 — Ayuda idónea",
+      "Capítulo 7 — El pecado comenzó antes de la mordida",
+      "Capítulo 8 — ¿Dónde estás?",
+      "Capítulo 9 — Entre los árboles del huerto"
+    ],
+    "alto": [
+      "Capítulo 10 — Congregados nuevamente en Cristo"
+    ]
+  },
+  "oracionFinal": "Padre, vuelve a congregar mi vida bajo Tu voz. Perdóname por las veces que permití que otras voces, opiniones o escondites ocuparan el lugar de Tu presencia. Restaura mi comunión contigo, alinea mi hogar bajo Tu autoridad y hazme parte de una familia espiritual donde Cristo sea el centro. Que mi vida no viva dispersa, sino reunida nuevamente en Ti. En el nombre de Jesús. Amén.",
+  "declaracionFinal": "Declaro que mi vida, mi hogar y mi caminar espiritual estarán congregados bajo una sola voz: la voz de Jesucristo. Renuncio a toda voz extraña, a toda opinión que sustituya la verdad y a todo escondite que me aleje de la presencia. Cristo vuelve a ser el centro de mi comunión y de mi propósito.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro Congregados.",
+    "firma": "Constructores del Reino"
+  }
+}

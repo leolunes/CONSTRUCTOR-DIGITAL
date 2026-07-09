@@ -1,0 +1,329 @@
+{
+  "id": "libro-7",
+  "slug": "el-dar-tiene-rostro",
+  "titulo": "El Dar Tiene Rostro",
+  "subtitulo": "Cuando la generosidad vuelve a encontrar a Cristo",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 10 preguntas basada en los capítulos del libro El Dar Tiene Rostro.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "5 a 7 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-7/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "Antes de la ofrenda existía la vida",
+      "eje": "Gratitud",
+      "pregunta": "¿Mi generosidad nace de reconocer primero todo lo que he recibido de Dios en Cristo?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El dar no comenzó con una ofrenda humana, sino con la vida entregada por Dios. La verdadera generosidad nace como respuesta a Su gracia."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "El Dios que mira el rostro",
+      "eje": "Corazón",
+      "pregunta": "¿Estoy cuidando la condición de mi corazón antes de fijarme en lo que entrego exteriormente?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Dios mira primero el corazón. En el Reino, la persona y su motivación pesan más que la cantidad o la apariencia de la entrega."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "Caín y Abel",
+      "eje": "Motivación",
+      "pregunta": "¿Mis actos de servicio o generosidad nacen de comunión sincera y no de apariencia, comparación o obligación?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Dios no separa la ofrenda de la vida del oferente. La entrega revela lo que está ocurriendo en el corazón."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "Abraham y Melquisedec",
+      "eje": "Revelación",
+      "pregunta": "¿Lo que entrego a Dios nace de una revelación de quién es Él y no solamente de una costumbre religiosa?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Abraham respondió a una revelación. El dar del Reino nace cuando el corazón reconoce al Dios Altísimo como fuente, sustento y victoria."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "El sistema y la ofrenda",
+      "eje": "Libertad del sistema",
+      "pregunta": "¿Evito que mi generosidad se convierta en un mecanismo vacío desconectado del amor y la comunión?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Cuando el sistema reemplaza la comunión, la ofrenda pierde su rostro. Cristo vino a restaurar el corazón detrás de cada acto."
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "La viuda y las dos monedas",
+      "eje": "Confianza",
+      "pregunta": "¿Mi confianza en Dios se refleja aun cuando lo que puedo entregar parece pequeño ante los ojos humanos?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El cielo no mide como la tierra. La viuda reveló una confianza que superaba cualquier cálculo humano."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "El buen samaritano",
+      "eje": "Compasión",
+      "pregunta": "¿Estoy dispuesto a detenerme por amor cuando una necesidad concreta aparece en mi camino?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El buen samaritano mostró que la generosidad del Reino no es teoría, sino compasión que se acerca, se detiene y actúa."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "Lo hicisteis a mí",
+      "eje": "Reconocer a Cristo",
+      "pregunta": "¿Veo a Cristo detrás de las personas vulnerables, necesitadas o ignoradas?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Jesús reveló que servir al pequeño es servirlo a Él. La necesidad recupera rostro cuando aprendemos a reconocer a Cristo en las personas."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "El Cristo escondido",
+      "eje": "Visión espiritual",
+      "pregunta": "¿Estoy aprendiendo a mirar más allá de la necesidad visible para discernir el valor eterno de cada persona?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El Reino nos enseña a ver donde otros solo clasifican. Cristo puede estar escondido en rostros que el sistema deja de mirar."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "El dar tiene rostro",
+      "eje": "Generosidad con rostro",
+      "pregunta": "¿Mi manera de dar refleja amor, presencia, relación y reconocimiento de Cristo en el otro?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El dar recupera su rostro cuando deja de ser mecanismo y vuelve a ser encuentro. En el Reino, amar siempre implica ver a la persona."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Generosidad desconectada del rostro",
+      "mensaje": "Tu resultado muestra áreas donde el dar puede estar siendo entendido más como mecanismo, obligación o costumbre que como encuentro con Cristo.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3 y 5. Allí se restauran la gratitud, el corazón, la motivación y la libertad frente al sistema."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Corazón en formación generosa",
+      "mensaje": "Hay sensibilidad y deseo de vivir una generosidad más profunda, pero todavía necesitas crecer en visión, confianza y compasión práctica.",
+      "recomendacion": "Profundiza en los capítulos 4, 6 y 7. Allí se desarrollan la revelación, la confianza y la compasión que actúa."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Generosidad con visión de Reino",
+      "mensaje": "Tu resultado refleja un proceso saludable de generosidad, compasión y reconocimiento de Cristo en las personas.",
+      "recomendacion": "Refuerza los capítulos 8, 9 y 10 para consolidar la capacidad de reconocer a Cristo detrás de cada necesidad."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Dar con el rostro de Cristo",
+      "mensaje": "Tu evaluación evidencia una comprensión profunda de la generosidad como relación, presencia, compasión y reconocimiento de Cristo.",
+      "recomendacion": "Repasa todo el libro como una guía continua para que cada acto de amor conserve rostro, propósito y comunión."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — Antes de la ofrenda existía la vida",
+      "Capítulo 2 — El Dios que mira el rostro",
+      "Capítulo 3 — Caín y Abel",
+      "Capítulo 5 — El sistema y la ofrenda"
+    ],
+    "medio": [
+      "Capítulo 4 — Abraham y Melquisedec",
+      "Capítulo 6 — La viuda y las dos monedas",
+      "Capítulo 7 — El buen samaritano"
+    ],
+    "alto": [
+      "Capítulo 8 — Lo hicisteis a mí",
+      "Capítulo 9 — El Cristo escondido",
+      "Capítulo 10 — El dar tiene rostro"
+    ]
+  },
+  "oracionFinal": "Señor Jesús, abre mis ojos para verte en las personas que muchas veces he pasado por alto. Líbrame de una generosidad mecánica, de una entrega sin rostro y de un servicio sin amor. Enséñame a dar desde la gratitud, a servir desde la compasión y a reconocer Tu presencia detrás de cada necesidad. Que mi vida refleje el corazón del Padre. Amén.",
+  "declaracionFinal": "Declaro que mi generosidad recupera su rostro en Cristo. No daré desde la presión, la apariencia o el sistema, sino desde la gratitud, la compasión y el amor. Reconoceré a Cristo en las personas y cada acto de servicio será una oportunidad para honrar al Rey.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro El Dar Tiene Rostro.",
+    "firma": "Constructores del Reino"
+  }
+}

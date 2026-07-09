@@ -1,0 +1,353 @@
+[
+  {
+    "id": "libro-1",
+    "titulo": "Coherencia Espiritual",
+    "autor": "Leonard Moon",
+    "descripcion": "Cuando lo que crees, dices y vives deja de estar dividido. Un audiolibro espiritual sobre alineación, verdad, transformación y coherencia delante de Dios.",
+    "portada": "assets/libros/libro-1/portada.png",
+    "capitulos": [
+      {
+        "id": "prologo",
+        "tipo": "Prólogo",
+        "titulo": "El punto de quiebre",
+        "subtitulo": "Cuando la verdad deja de ser un discurso y se vuelve una evidencia",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-1/prologo.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/prologo.mp3"
+      },
+      {
+        "id": "capitulo-1",
+        "tipo": "Capítulo",
+        "titulo": "El problema no es lo que sabes",
+        "subtitulo": "El exceso de verdad sin aplicación",
+        "versiculo": "Santiago 1:22",
+        "pdf": "assets/libros/libro-1/capitulo-1.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-1.mp3"
+      },
+      {
+        "id": "capitulo-2",
+        "tipo": "Capítulo",
+        "titulo": "La vida dividida",
+        "subtitulo": "Cuando dices una cosa y vives otra",
+        "versiculo": "Mateo 15:8",
+        "pdf": "assets/libros/libro-1/capitulo-2.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-2.mp3"
+      },
+      {
+        "id": "capitulo-3",
+        "tipo": "Capítulo",
+        "titulo": "Ve y llama a tu marido",
+        "subtitulo": "La confrontación que revela la verdad",
+        "versiculo": "Juan 4:16–18",
+        "pdf": "assets/libros/libro-1/capitulo-3.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-3.mp3"
+      },
+      {
+        "id": "capitulo-4",
+        "tipo": "Capítulo",
+        "titulo": "El costo de la coherencia",
+        "subtitulo": "Lo que debes soltar para alinearte",
+        "versiculo": "Lucas 9:23",
+        "pdf": "assets/libros/libro-1/capitulo-4.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-4.mp3"
+      },
+      {
+        "id": "capitulo-5",
+        "tipo": "Capítulo",
+        "titulo": "La mente alineada",
+        "subtitulo": "Pensar como vives o vivir como piensas",
+        "versiculo": "Romanos 12:2",
+        "pdf": "assets/libros/libro-1/capitulo-5.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-5.mp3"
+      },
+      {
+        "id": "capitulo-6",
+        "tipo": "Capítulo",
+        "titulo": "La autoridad de lo coherente",
+        "subtitulo": "El peso espiritual que no se fabrica",
+        "versiculo": "Mateo 7:29",
+        "pdf": "assets/libros/libro-1/capitulo-6.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-6.mp3"
+      },
+      {
+        "id": "capitulo-7",
+        "tipo": "Capítulo",
+        "titulo": "La casa como espejo",
+        "subtitulo": "Donde se revela la verdad sin filtros",
+        "versiculo": "1 Timoteo 3:5",
+        "pdf": "assets/libros/libro-1/capitulo-7.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-7.mp3"
+      },
+      {
+        "id": "capitulo-8",
+        "tipo": "Capítulo",
+        "titulo": "El fin de la doble vida",
+        "subtitulo": "Cuando todo se unifica",
+        "versiculo": "Salmos 86:11",
+        "pdf": "assets/libros/libro-1/capitulo-8.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-8.mp3"
+      },
+      {
+        "id": "capitulo-9",
+        "tipo": "Capítulo",
+        "titulo": "La coherencia que transforma",
+        "subtitulo": "El impacto que no se fuerza",
+        "versiculo": "Mateo 5:16",
+        "pdf": "assets/libros/libro-1/capitulo-9.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-9.mp3"
+      },
+      {
+        "id": "capitulo-10",
+        "tipo": "Capítulo",
+        "titulo": "Volver a ser uno",
+        "subtitulo": "El diseño restaurado",
+        "versiculo": "Efesios 4:1",
+        "pdf": "assets/libros/libro-1/capitulo-10.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/capitulo-10.mp3"
+      },
+      {
+        "id": "conclusion",
+        "tipo": "Conclusión",
+        "titulo": "Cuando todo se alinea",
+        "subtitulo": "El fin del esfuerzo dividido",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-1/conclusion.pdf",
+        "audio": "assets/audio/audiolibros/libro-1/conclusion.mp3"
+      }
+    ]
+  },
+  {
+    "id": "libro-2",
+    "titulo": "Del Aula al Altar",
+    "autor": "Leonard Moon",
+    "descripcion": "Cuando el Espíritu reemplaza al sistema. Un audiolibro espiritual sobre el paso del conocimiento religioso a la transformación producida por la presencia de Cristo.",
+    "portada": "assets/libros/libro-2/portada.png",
+    "capitulos": [
+      {
+        "id": "prologo",
+        "tipo": "Prólogo",
+        "titulo": "El conocimiento que nunca pudo producir vida",
+        "subtitulo": "",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/prologo.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/prologo.mp3"
+      },
+      {
+        "id": "capitulo-1",
+        "tipo": "Capítulo",
+        "titulo": "El discípulo de Gamaliel",
+        "subtitulo": "Cuando la formación reemplaza la transformación",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-1.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-1.mp3"
+      },
+      {
+        "id": "capitulo-2",
+        "tipo": "Capítulo",
+        "titulo": "La religión del conocimiento",
+        "subtitulo": "Cuando saber acerca de Dios reemplaza conocer a Dios",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-2.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-2.mp3"
+      },
+      {
+        "id": "capitulo-3",
+        "tipo": "Capítulo",
+        "titulo": "El sistema que persigue al Espíritu",
+        "subtitulo": "Cuando la estructura teme aquello que no puede controlar",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-3.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-3.mp3"
+      },
+      {
+        "id": "capitulo-4",
+        "tipo": "Capítulo",
+        "titulo": "El camino a Damasco",
+        "subtitulo": "Cuando la luz confronta al sistema",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-4.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-4.mp3"
+      },
+      {
+        "id": "capitulo-5",
+        "tipo": "Capítulo",
+        "titulo": "La ceguera necesaria",
+        "subtitulo": "Cuando Dios apaga lo aprendido para revelar lo eterno",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-5.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-5.mp3"
+      },
+      {
+        "id": "capitulo-6",
+        "tipo": "Capítulo",
+        "titulo": "Tres días en silencio",
+        "subtitulo": "Cuando el Espíritu comienza a derribar el viejo edificio",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-6.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-6.mp3"
+      },
+      {
+        "id": "capitulo-7",
+        "tipo": "Capítulo",
+        "titulo": "Ananías y el gobierno del Reino",
+        "subtitulo": "Cuando Dios usa lo pequeño para confrontar lo grande",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-7.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-7.mp3"
+      },
+      {
+        "id": "capitulo-8",
+        "tipo": "Capítulo",
+        "titulo": "Del argumento a la revelación",
+        "subtitulo": "Cuando el Espíritu reemplaza la lógica humana",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-8.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-8.mp3"
+      },
+      {
+        "id": "capitulo-9",
+        "tipo": "Capítulo",
+        "titulo": "El fuego sobre el conocimiento",
+        "subtitulo": "Cuando la verdad deja de ser teoría",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-9.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-9.mp3"
+      },
+      {
+        "id": "capitulo-10",
+        "tipo": "Capítulo",
+        "titulo": "El altar del hombre nuevo",
+        "subtitulo": "Cuando Cristo se convierte en la única fuente",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/capitulo-10.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/capitulo-10.mp3"
+      },
+      {
+        "id": "conclusion",
+        "tipo": "Conclusión",
+        "titulo": "Cuando el Espíritu reemplaza al sistema",
+        "subtitulo": "El aula puede formar expertos en doctrina; el altar forma hombres transformados por la presencia de Cristo.",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-2/conclusion.pdf",
+        "audio": "assets/audio/audiolibros/libro-2/conclusion.mp3"
+      }
+    ]
+  },
+  {
+    "id": "libro-3",
+    "titulo": "A Plomo y a Nivel",
+    "autor": "Leonard Moon",
+    "descripcion": "Cuando el hogar vuelve a alinearse con el cielo. Un audiolibro espiritual sobre diseño, fundamento, alineación interior y restauración del hogar bajo el Reino de Dios.",
+    "portada": "assets/libros/libro-3/portada.png",
+    "capitulos": [
+      {
+        "id": "prologo",
+        "tipo": "Prólogo",
+        "titulo": "La casa que parecía estar bien",
+        "subtitulo": "Cuando descubres que la estabilidad visible no siempre revela la alineación interior",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/prologo.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/prologo.mp3"
+      },
+      {
+        "id": "capitulo-1",
+        "tipo": "Capítulo",
+        "titulo": "El arquitecto del diseño",
+        "subtitulo": "Cuando Dios establece la medida antes de levantar la estructura",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-1.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-1.mp3"
+      },
+      {
+        "id": "capitulo-2",
+        "tipo": "Capítulo",
+        "titulo": "La plomada del Espíritu",
+        "subtitulo": "Cuando Dios examina la verticalidad del hombre interior",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-2.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-2.mp3"
+      },
+      {
+        "id": "capitulo-3",
+        "tipo": "Capítulo",
+        "titulo": "El nivel del alma",
+        "subtitulo": "Cuando las emociones dejan de inclinar la casa",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-3.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-3.mp3"
+      },
+      {
+        "id": "capitulo-4",
+        "tipo": "Capítulo",
+        "titulo": "La columna y la viga",
+        "subtitulo": "Cuando espíritu y alma vuelven a trabajar juntos",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-4.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-4.mp3"
+      },
+      {
+        "id": "capitulo-5",
+        "tipo": "Capítulo",
+        "titulo": "No se construye sobre inclinaciones",
+        "subtitulo": "Cuando el diseño es más importante que las preferencias",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-5.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-5.mp3"
+      },
+      {
+        "id": "capitulo-6",
+        "tipo": "Capítulo",
+        "titulo": "Las grietas que nadie ve",
+        "subtitulo": "Cuando las fracturas internas aparecen en los hijos",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-6.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-6.mp3"
+      },
+      {
+        "id": "capitulo-7",
+        "tipo": "Capítulo",
+        "titulo": "La casa bajo tensión",
+        "subtitulo": "Cuando el alma intenta cargar lo que pertenece al espíritu",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-7.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-7.mp3"
+      },
+      {
+        "id": "capitulo-8",
+        "tipo": "Capítulo",
+        "titulo": "Dios volvió a medir la casa",
+        "subtitulo": "Cuando la gracia confronta lo que el tiempo normalizó",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-8.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-8.mp3"
+      },
+      {
+        "id": "capitulo-9",
+        "tipo": "Capítulo",
+        "titulo": "Habitable para la presencia",
+        "subtitulo": "Cuando el cielo encuentra una estructura alineada",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-9.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-9.mp3"
+      },
+      {
+        "id": "capitulo-10",
+        "tipo": "Capítulo",
+        "titulo": "A plomo y a nivel",
+        "subtitulo": "Cuando el hogar vuelve a reflejar el diseño del Reino",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/capitulo-10.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/capitulo-10.mp3"
+      },
+      {
+        "id": "conclusion",
+        "tipo": "Conclusión",
+        "titulo": "La casa donde el cielo descansa",
+        "subtitulo": "Cuando el diseño vuelve a ocupar su lugar",
+        "versiculo": "",
+        "pdf": "assets/libros/libro-3/conclusion.pdf",
+        "audio": "assets/audio/audiolibros/libro-3/conclusion.mp3"
+      }
+    ]
+  }
+]

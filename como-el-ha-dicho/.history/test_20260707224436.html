@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Test del Libro | Constructores del Reino</title>
+
+    <link rel="icon" href="./assets/icons/favicon.png">
+    <link rel="manifest" href="./pwa/manifest.json">
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/cards.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+</head>
+
+<body>
+
+    <header class="header header-small header-test-reino">
+
+        <div class="header-test-inner">
+
+            <span>Formación espiritual</span>
+
+            <h1>Test del Libro</h1>
+
+            <p class="subtitle">
+                Pon a prueba tu aprendizaje a partir de las píldoras espirituales del audiolibro.
+            </p>
+
+        </div>
+
+    </header>
+
+    <nav class="navbar">
+
+        <a href="index.html">
+            <img src="./assets/icons/home.png" alt="Inicio">
+            <span>Inicio</span>
+        </a>
+
+        <a href="favoritos.html">
+            <img src="./assets/icons/favorite.png" alt="Favoritos">
+            <span>Favoritos</span>
+        </a>
+
+        <a href="audios.html">
+            <img src="./assets/icons/play.png" alt="Audios">
+            <span>Audios</span>
+        </a>
+
+        <a href="audiolibros.html" class="active activo">
+            <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z'/%3E%3Cpath d='M8 6h8'/%3E%3Cpath d='M8 10h8'/%3E%3C/svg%3E"
+            alt="Audiolibros">
+            <span>Audiolibros</span>
+        </a>
+
+        <a href="perfil.html">
+            <img src="./assets/icons/profile.png" alt="Perfil">
+            <span>Perfil</span>
+        </a>
+
+    </nav>
+
+    <main class="container test-reino-container">
+
+        <a href="audiolibros.html" class="btn-volver">
+            <img src="./assets/icons/back.png" alt="Volver">
+            Volver a audiolibros
+        </a>
+
+        <section class="test-reino-hero">
+
+            <div class="test-reino-hero-info">
+
+                <span class="test-reino-badge">
+                    🧠 Evaluación espiritual
+                </span>
+
+                <h2 id="tituloTestLibro">
+                    Cargando test...
+                </h2>
+
+                <p id="descripcionTestLibro">
+                    Este test se construye automáticamente a partir de las píldoras espirituales del libro seleccionado.
+                </p>
+
+                <div class="test-reino-meta">
+
+                    <div>
+                        <strong id="totalPreguntasTest">0</strong>
+                        <span>Preguntas</span>
+                    </div>
+
+                    <div>
+                        <strong id="progresoTest">0%</strong>
+                        <span>Progreso</span>
+                    </div>
+
+                    <div>
+                        <strong id="puntajeTest">0</strong>
+                        <span>Puntaje</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="test-reino-lateral">
+
+                <span>
+                    Consejo
+                </span>
+
+                <h3>
+                    Lee con atención
+                </h3>
+
+                <p>
+                    Cada pregunta nace de una frase o enseñanza del libro. Responde con calma y permite que la verdad también examine tu corazón.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section id="testContenedor"
+        class="test-contenedor">
+
+            <!-- Test dinámico -->
+
+        </section>
+
+        <section id="testResultado"
+        class="test-resultado hidden">
+
+            <!-- Resultado dinámico -->
+
+        </section>
+
+    </main>
+
+    <script src="./js/test.js"></script>
+
+</body>
+
+</html>

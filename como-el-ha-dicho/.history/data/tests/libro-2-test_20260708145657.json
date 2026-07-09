@@ -1,0 +1,589 @@
+{
+  "id": "libro-2",
+  "slug": "del-aula-al-altar",
+  "titulo": "Del Aula al Altar",
+  "subtitulo": "Cuando el Espíritu reemplaza al sistema",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 20 preguntas basada en los capítulos del libro Del Aula al Altar.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "8 a 10 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-2/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El discípulo de Gamaliel",
+      "eje": "Comunión sobre información",
+      "pregunta": "¿Estoy permitiendo que el conocimiento espiritual me lleve a una comunión real con Dios y no solamente a acumular información?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El aula puede llenar la mente, pero solo el altar transforma el corazón. La formación espiritual verdadera debe conducir a la presencia de Cristo."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El discípulo de Gamaliel",
+      "eje": "Identidad espiritual",
+      "pregunta": "¿Mi identidad descansa más en Cristo que en lo que sé, en lo que he aprendido o en la aprobación de otros?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Saulo fue formado por el sistema, pero todavía necesitaba ser quebrantado por la presencia. El Reino no busca alumnos brillantes, sino hijos transformados."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "El maestro sin fuego",
+      "eje": "Revelación",
+      "pregunta": "¿Lo que enseño, digo o comparto nace de una vida transformada y no solamente de conceptos aprendidos?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El maestro sin Espíritu repite información; el testigo con fuego revela una vida procesada por Dios."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "El maestro sin fuego",
+      "eje": "Dependencia del Espíritu",
+      "pregunta": "¿Dependo del Espíritu Santo por encima de métodos, fórmulas, estructuras o voces humanas?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La información espiritual jamás sustituye la comunión. Todo maestro verdadero debe conducir al altar, no reemplazarlo."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "La letra que persigue",
+      "eje": "Sensibilidad espiritual",
+      "pregunta": "¿Reconozco cuando mi rigidez, control o juicio pueden estar resistiendo algo que Dios quiere hacer por Su Espíritu?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La letra sin fuego puede endurecer el corazón. El sistema persigue lo que no puede controlar, pero el Espíritu produce vida."
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "La letra que persigue",
+      "eje": "Humildad ante el fuego",
+      "pregunta": "¿Estoy dispuesto a que Dios confronte mis estructuras religiosas para recuperar sensibilidad a Su presencia?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Saulo creyó defender a Dios, pero perseguía aquello que el Espíritu había producido. La humildad permite que Dios corrija nuestra percepción."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "El orgullo del aula",
+      "eje": "Quebranto",
+      "pregunta": "¿Permito que Dios confronte el orgullo espiritual que puede esconderse detrás de conocimiento, servicio o apariencia de madurez?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El orgullo espiritual nace cuando el hombre encuentra identidad en lo aprendido y no en la voz del Padre."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "El orgullo del aula",
+      "eje": "Dependencia de Cristo",
+      "pregunta": "¿Estoy soltando la necesidad de reconocimiento para encontrar mi valor únicamente en Cristo?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El altar confronta la identidad del ego. Cuando Cristo se vuelve suficiente, la aprobación humana pierde su poder."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "El camino a Damasco",
+      "eje": "Interrupción divina",
+      "pregunta": "¿Acepto los momentos en que Dios interrumpe mi seguridad para revelar áreas que necesitan rendición?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Damasco fue el altar donde el sistema comenzó a quebrarse. Dios muchas veces derriba lo que el ego levantó para formar un hombre nuevo."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "El camino a Damasco",
+      "eje": "Rendición",
+      "pregunta": "¿Estoy dispuesto a caer delante de Cristo para que Él transforme lo que el sistema construyó dentro de mí?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El Reino no necesitaba otro experto religioso; necesitaba un hombre vacío de sí mismo y lleno del Espíritu."
+    },
+    {
+      "id": "p11",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "El silencio del maestro",
+      "eje": "Escucha interior",
+      "pregunta": "¿Estoy aprendiendo a escuchar la voz del Padre sin depender excesivamente de aprobación o dirección humana?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Todo maestro terrenal tiene un límite; el Espíritu no. La madurez llega cuando el corazón aprende a caminar con Dios."
+    },
+    {
+      "id": "p12",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "El silencio del maestro",
+      "eje": "Madurez espiritual",
+      "pregunta": "¿Estoy permitiendo que Dios rompa dependencias humanas para formar una comunión más directa con Él?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El Reino no busca alumnos eternos del sistema, sino hijos maduros guiados por el Espíritu."
+    },
+    {
+      "id": "p13",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "Del aula al desierto",
+      "eje": "Desaprendizaje",
+      "pregunta": "¿Estoy permitiendo que el Espíritu desaprenda en mí conceptos, hábitos o seguridades que no nacieron del Padre?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El desierto vacía al hombre antes de llenarlo. Dios muchas veces esconde y procesa antes de exponer."
+    },
+    {
+      "id": "p14",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "Del aula al desierto",
+      "eje": "Quietud",
+      "pregunta": "¿Puedo permanecer en silencio y quietud delante de Dios sin depender del ruido, la actividad o la validación externa?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El ruido espiritual puede impedir que el hombre escuche a Dios. El desierto forma sensibilidad donde el aula solo entregó información."
+    },
+    {
+      "id": "p15",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "El altar reemplaza el púlpito",
+      "eje": "Comunión",
+      "pregunta": "¿La comunión con Dios es más importante para mí que ser visto, reconocido o admirado espiritualmente?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El sistema enseña a buscar influencia; el altar enseña a buscar presencia. El altar produce hijos, no actores espirituales."
+    },
+    {
+      "id": "p16",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "El altar reemplaza el púlpito",
+      "eje": "Secreto del altar",
+      "pregunta": "¿Estoy aprendiendo a valorar el secreto del altar más que cualquier plataforma visible?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Dios forma Sus hombres más profundos lejos del ruido. La identidad espiritual no nace de ser visto, sino de permanecer cerca del Padre."
+    },
+    {
+      "id": "p17",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "El maestro interior",
+      "eje": "Gobierno del Espíritu",
+      "pregunta": "¿Estoy permitiendo que el Espíritu gobierne mis pensamientos, decisiones y motivaciones desde dentro?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El sistema dirige desde afuera; el Espíritu transforma desde adentro. La madurez espiritual es gobierno interior."
+    },
+    {
+      "id": "p18",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "El maestro interior",
+      "eje": "Libertad espiritual",
+      "pregunta": "¿Estoy dejando de vivir esclavizado a la aprobación externa para caminar guiado por el Espíritu Santo?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Cuando el Espíritu gobierna desde dentro, el hombre deja de depender del sistema para sostener su identidad."
+    },
+    {
+      "id": "p19",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "El testigo y no el erudito",
+      "eje": "Testimonio",
+      "pregunta": "¿Mi vida transmite el aroma de Cristo más que solo conocimiento, argumentos o lenguaje espiritual?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El sistema produce expertos; el fuego produce testigos. El Reino necesita hombres que reflejen verdaderamente a Cristo."
+    },
+    {
+      "id": "p20",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "El testigo y no el erudito",
+      "eje": "Cristo formado",
+      "pregunta": "¿Estoy permitiendo que Cristo viva en mí de tal manera que mi mensaje nazca de transformación y no de teoría?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El testigo no busca llamar la atención hacia sí mismo; busca revelar a Cristo desde una vida transformada por el fuego."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Formación sin altar",
+      "mensaje": "Tu resultado muestra áreas donde el conocimiento, la estructura o la aprobación externa aún pueden estar ocupando demasiado espacio.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3 y 4. Allí se confronta la información sin fuego, la dependencia del sistema y el orgullo espiritual."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Camino de rendición",
+      "mensaje": "Hay sensibilidad espiritual y deseo de transformación, pero el Espíritu todavía está desmontando seguridades antiguas.",
+      "recomendacion": "Profundiza en los capítulos 5, 6 y 7. Allí se revela el proceso de Damasco, el silencio del maestro y el desierto que desaprende."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Hombre en proceso de altar",
+      "mensaje": "Tu vida evidencia un proceso serio de rendición, comunión y dependencia del Espíritu por encima del sistema.",
+      "recomendacion": "Refuerza los capítulos 8, 9 y 10 para consolidar comunión, gobierno interior del Espíritu y testimonio con fuego."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Testigo nacido del fuego",
+      "mensaje": "Tu resultado refleja una comprensión profunda del paso del aula al altar. Sigue cuidando que todo conocimiento permanezca rendido a la presencia de Cristo.",
+      "recomendacion": "Repasa todo el libro como una guía continua para mantener el conocimiento bajo el gobierno del Espíritu."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — El discípulo de Gamaliel",
+      "Capítulo 2 — El maestro sin fuego",
+      "Capítulo 3 — La letra que persigue",
+      "Capítulo 4 — El orgullo del aula"
+    ],
+    "medio": [
+      "Capítulo 5 — El camino a Damasco",
+      "Capítulo 6 — El silencio del maestro",
+      "Capítulo 7 — Del aula al desierto"
+    ],
+    "alto": [
+      "Capítulo 8 — El altar reemplaza el púlpito",
+      "Capítulo 9 — El maestro interior",
+      "Capítulo 10 — El testigo y no el erudito"
+    ]
+  },
+  "oracionFinal": "Padre, llévame del aula al altar. No permitas que el conocimiento ocupe el lugar de Tu presencia ni que la estructura reemplace la comunión contigo. Rompe todo orgullo espiritual, toda dependencia humana y toda identidad construida fuera de Cristo. Que Tu Espíritu gobierne mi interior, transforme mi corazón y convierta toda información en vida. Hazme no solo alguien que habla de Ti, sino un verdadero testigo nacido del fuego. En el nombre de Jesús. Amén.",
+  "declaracionFinal": "Hoy declaro que mi vida no será sostenida por conocimiento sin presencia. Renuncio a la autosuficiencia espiritual, a la aprobación del sistema y al orgullo religioso. El Espíritu de Dios gobierna mi interior, Cristo es mi única fuente y el altar se convierte en el lugar donde mi corazón es transformado.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro Del Aula al Altar.",
+    "firma": "Constructores del Reino"
+  }
+}

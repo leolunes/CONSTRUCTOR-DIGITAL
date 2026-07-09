@@ -1,0 +1,329 @@
+{
+  "id": "libro-6",
+  "slug": "volver-a-ser-uno",
+  "titulo": "Volver a Ser Uno",
+  "subtitulo": "Cuando la vida vuelve a alinearse con el Padre",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 10 preguntas basada en los capítulos del libro Volver a Ser Uno.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "5 a 7 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-6/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "Cuando el espíritu deja de honrar",
+      "eje": "Comunión con el Padre",
+      "pregunta": "¿Estoy cuidando que mi espíritu siga honrando la comunión con el Padre por encima de mis deseos personales?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La división comienza cuando el corazón deja de valorar la comunión. Volver a ser uno exige reconocer dónde el espíritu dejó de honrar la cercanía con el Padre."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "El alma que quiere gobernar",
+      "eje": "Gobierno interior",
+      "pregunta": "¿Permito que el Espíritu gobierne mi alma o dejo que mis emociones tomen el control de mis decisiones?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Cuando el alma gobierna sin sujeción al Espíritu, la vida se fragmenta. La unidad interior se restaura cuando Cristo vuelve a ocupar el centro."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "El país lejano",
+      "eje": "Dependencia de Dios",
+      "pregunta": "¿Reconozco las formas en que puedo buscar libertad lejos del Padre, aunque parezcan correctas o convenientes?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El país lejano representa toda vida que intenta sostenerse lejos de Dios. La verdadera libertad no se encuentra en la independencia, sino en permanecer en el Padre."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "El hambre de una vida dividida",
+      "eje": "Vacío espiritual",
+      "pregunta": "¿Identifico cuándo mi cansancio, vacío o desgaste interior están revelando distancia espiritual?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La vida dividida siempre comienza a experimentar hambre. Aquello que el alma busca lejos del Padre nunca puede llenarla completamente."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "Volver en sí",
+      "eje": "Despertar espiritual",
+      "pregunta": "¿Estoy dispuesto a reconocer con humildad las áreas donde necesito volver al Padre?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Volver en sí es el inicio del regreso. Dios despierta el corazón para que deje de justificar la distancia y comience a desear comunión restaurada."
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "La decisión de volver",
+      "eje": "Arrepentimiento",
+      "pregunta": "¿Estoy tomando decisiones concretas para regresar a la comunión y no quedarme solamente en el reconocimiento del problema?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El regreso no se completa con entender la necesidad; requiere levantarse y caminar hacia el Padre. La gracia espera, pero el corazón debe responder."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "El Padre que corre",
+      "eje": "Gracia restauradora",
+      "pregunta": "¿Recibo la gracia del Padre como restauración y no como condenación?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El Padre corre hacia el hijo antes de que este pueda explicarlo todo. La gracia no minimiza el pecado, pero sí revela que el amor del Padre es mayor que la distancia."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "Restaurados como hijos",
+      "eje": "Identidad",
+      "pregunta": "¿Estoy permitiendo que Dios restaure mi identidad de hijo y no solo mi conducta externa?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El Padre no restauró al hijo como jornalero, sino como hijo. Cristo no vino a mejorar apariencias, sino a devolver identidad, dignidad y comunión."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "Cerca… pero dividido",
+      "eje": "Relación sobre apariencia",
+      "pregunta": "¿Evito vivir cerca de las cosas de Dios pero lejos de Su corazón?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "El hijo mayor revela que se puede estar en casa y aun así vivir dividido. La verdadera cercanía no es solo ubicación, sino comunión con el Padre."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "Volver a ser uno",
+      "eje": "Unidad espiritual",
+      "pregunta": "¿Estoy permitiendo que Cristo alinee mi espíritu, mi alma, mis decisiones y mi identidad con el Padre?",
+      "opciones": [
+        {
+          "texto": "Lo vivo de manera constante y consciente, permitiendo que Cristo gobierne esa área.",
+          "valor": 3
+        },
+        {
+          "texto": "Lo estoy practicando con intención, aunque todavía necesito crecer y afirmarme.",
+          "valor": 2
+        },
+        {
+          "texto": "Lo entiendo, pero pocas veces lo aplico de manera sostenida en mi vida diaria.",
+          "valor": 1
+        },
+        {
+          "texto": "Todavía me cuesta reconocerlo o permitir que esa verdad confronte mi vida.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Volver a ser uno es más que regresar a una práctica espiritual; es permitir que toda la vida vuelva a encontrar unidad en Cristo y comunión con el Padre."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Vida distante en proceso de llamado",
+      "mensaje": "Tu resultado muestra áreas donde la comunión con el Padre necesita ser restaurada con urgencia.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3 y 4. Allí se revela cómo comienza la división interior y el hambre de una vida lejos del Padre."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Corazón en camino de regreso",
+      "mensaje": "Hay reconocimiento y sensibilidad espiritual, pero todavía necesitas decisiones concretas para volver plenamente al Padre.",
+      "recomendacion": "Profundiza en los capítulos 5, 6 y 7. Allí se desarrolla el despertar, la decisión de regresar y la gracia restauradora del Padre."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Hijo restaurado en comunión",
+      "mensaje": "Tu resultado refleja un proceso saludable de regreso, restauración de identidad y deseo de comunión con Dios.",
+      "recomendacion": "Refuerza los capítulos 8, 9 y 10 para consolidar identidad, relación auténtica y unidad espiritual en Cristo."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Vida alineada con el Padre",
+      "mensaje": "Tu evaluación evidencia una comprensión profunda del llamado a vivir unido al Padre por medio de Cristo.",
+      "recomendacion": "Repasa todo el libro como una guía continua para permanecer cerca del Padre y cuidar la unidad interior."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — Cuando el espíritu deja de honrar",
+      "Capítulo 2 — El alma que quiere gobernar",
+      "Capítulo 3 — El país lejano",
+      "Capítulo 4 — El hambre de una vida dividida"
+    ],
+    "medio": [
+      "Capítulo 5 — Volver en sí",
+      "Capítulo 6 — La decisión de volver",
+      "Capítulo 7 — El Padre que corre"
+    ],
+    "alto": [
+      "Capítulo 8 — Restaurados como hijos",
+      "Capítulo 9 — Cerca… pero dividido",
+      "Capítulo 10 — Volver a ser uno"
+    ]
+  },
+  "oracionFinal": "Padre, reconozco que muchas veces mi corazón ha intentado vivir lejos de Tu comunión. Muéstrame toda área donde me he dividido, donde el alma ha querido gobernar y donde he buscado independencia fuera de Ti. Hoy decido volver a Ti. Recibo Tu gracia, Tu abrazo y la identidad que solo Tú puedes restaurar. Hazme volver a ser uno contigo por medio de Jesucristo. Amén.",
+  "declaracionFinal": "Declaro que mi vida vuelve al Padre. Renuncio a toda distancia, división interior, independencia y falsa identidad. En Cristo soy restaurado como hijo, mi alma se rinde al Espíritu y mi corazón vuelve a vivir en comunión con Dios.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro Volver a Ser Uno.",
+    "firma": "Constructores del Reino"
+  }
+}

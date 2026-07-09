@@ -1,0 +1,329 @@
+{
+  "id": "libro-1",
+  "slug": "coherencia-espiritual",
+  "titulo": "Coherencia Espiritual",
+  "subtitulo": "Cuando lo que crees, dices y vives deja de estar dividido",
+  "autor": "Leonard Moon",
+  "descripcion": "Evaluación espiritual de 10 preguntas basada en los capítulos del libro Coherencia Espiritual.",
+  "tipo": "Diagnóstico espiritual",
+  "duracion": "5 a 7 minutos",
+  "aprobacion": 70,
+  "portada": "assets/libros/libro-1/portada.png",
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo": "Capítulo 1",
+      "tituloCapitulo": "El problema no es lo que sabes",
+      "eje": "Obediencia",
+      "pregunta": "Cuando una verdad bíblica confronta una actitud o decisión de tu vida, ¿cómo respondes normalmente?",
+      "opciones": [
+        {
+          "texto": "La llevo a la práctica aunque me incomode, porque entiendo que la obediencia produce transformación.",
+          "valor": 3
+        },
+        {
+          "texto": "La reconozco y trato de aplicarla, aunque a veces postergo el cambio.",
+          "valor": 2
+        },
+        {
+          "texto": "La entiendo, pero casi siempre se queda como información y no como decisión.",
+          "valor": 1
+        },
+        {
+          "texto": "Prefiero escuchar más enseñanzas antes de confrontar lo que ya sé que debo cambiar.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La coherencia comienza cuando la verdad deja de ser solo conocimiento y se convierte en obediencia visible."
+    },
+    {
+      "id": "p2",
+      "capitulo": "Capítulo 2",
+      "tituloCapitulo": "La vida dividida",
+      "eje": "Definición interior",
+      "pregunta": "Cuando descubres que tu vida está caminando en dos direcciones, ¿qué haces?",
+      "opciones": [
+        {
+          "texto": "Tomo una decisión clara para dejar de negociar con aquello que me divide.",
+          "valor": 3
+        },
+        {
+          "texto": "Reconozco la división y comienzo a ordenar algunas áreas.",
+          "valor": 2
+        },
+        {
+          "texto": "Sé que hay división, pero la tolero porque no parece tan grave.",
+          "valor": 1
+        },
+        {
+          "texto": "Intento mantener ambas direcciones mientras no haya consecuencias visibles.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La vida dividida desgasta lentamente. La estabilidad espiritual nace cuando el corazón escoge una sola dirección."
+    },
+    {
+      "id": "p3",
+      "capitulo": "Capítulo 3",
+      "tituloCapitulo": "Ve y llama a tu marido",
+      "eje": "Confrontación",
+      "pregunta": "Cuando Dios toca un área específica que has evitado confrontar, ¿cuál es tu respuesta más honesta?",
+      "opciones": [
+        {
+          "texto": "Permito que Dios la confronte y decido caminar en verdad completa.",
+          "valor": 3
+        },
+        {
+          "texto": "Me incomodo, pero acepto que esa área necesita alineación.",
+          "valor": 2
+        },
+        {
+          "texto": "Cambio el tema hacia asuntos espirituales más generales para no enfrentar lo personal.",
+          "valor": 1
+        },
+        {
+          "texto": "Justifico esa área y prefiero no hablar de ella.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La confrontación de Dios no viene para avergonzar, sino para alinear lo que impide avanzar."
+    },
+    {
+      "id": "p4",
+      "capitulo": "Capítulo 4",
+      "tituloCapitulo": "El costo de la coherencia",
+      "eje": "Renuncia",
+      "pregunta": "Cuando obedecer a Dios te exige soltar algo cómodo o conocido, ¿qué decides?",
+      "opciones": [
+        {
+          "texto": "Suelto lo que me divide, aunque el proceso cueste.",
+          "valor": 3
+        },
+        {
+          "texto": "Quiero soltarlo y comienzo a dar pasos concretos.",
+          "valor": 2
+        },
+        {
+          "texto": "Sé que debo soltarlo, pero sigo esperando un momento más fácil.",
+          "valor": 1
+        },
+        {
+          "texto": "Prefiero conservarlo porque me da seguridad, aunque sepa que no está alineado.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La incoherencia permanece muchas veces por apego. La obediencia puede doler al inicio, pero libera después."
+    },
+    {
+      "id": "p5",
+      "capitulo": "Capítulo 5",
+      "tituloCapitulo": "La mente alineada",
+      "eje": "Renovación mental",
+      "pregunta": "¿Cómo gobiernas tus pensamientos cuando intentan justificar una conducta que Dios ya confrontó?",
+      "opciones": [
+        {
+          "texto": "Los confronto con la verdad de Dios y decido no negociar con ellos.",
+          "valor": 3
+        },
+        {
+          "texto": "Procuro identificarlos y reemplazarlos, aunque todavía lucho con algunos patrones.",
+          "valor": 2
+        },
+        {
+          "texto": "Los dejo permanecer porque parecen razonables o convenientes.",
+          "valor": 1
+        },
+        {
+          "texto": "No suelo examinar mis pensamientos; simplemente actúo según lo que siento.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "No se puede sostener una vida nueva con una mente antigua. La renovación mental sostiene la coherencia."
+    },
+    {
+      "id": "p6",
+      "capitulo": "Capítulo 6",
+      "tituloCapitulo": "La autoridad de lo coherente",
+      "eje": "Autoridad espiritual",
+      "pregunta": "¿Qué sostiene principalmente tu influencia espiritual delante de otros?",
+      "opciones": [
+        {
+          "texto": "Una vida que busca respaldar con hechos aquello que habla.",
+          "valor": 3
+        },
+        {
+          "texto": "Mi deseo sincero de vivir lo que enseño, aunque todavía estoy siendo formado.",
+          "valor": 2
+        },
+        {
+          "texto": "Mi conocimiento, mi forma de hablar o mi experiencia.",
+          "valor": 1
+        },
+        {
+          "texto": "La imagen que proyecto, aunque mi vida privada no siempre la respalde.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La autoridad espiritual no se fabrica con discurso; nace de una vida alineada que tiene respaldo."
+    },
+    {
+      "id": "p7",
+      "capitulo": "Capítulo 7",
+      "tituloCapitulo": "La casa como espejo",
+      "eje": "Vida privada y hogar",
+      "pregunta": "Si tu casa reflejara hoy tu verdadera vida espiritual, ¿qué mostraría principalmente?",
+      "opciones": [
+        {
+          "texto": "Un proceso real de coherencia, verdad, dirección y gobierno espiritual.",
+          "valor": 3
+        },
+        {
+          "texto": "Áreas en crecimiento, pero también una intención clara de alinear el hogar.",
+          "valor": 2
+        },
+        {
+          "texto": "Una diferencia notable entre lo que digo públicamente y lo que vivo en privado.",
+          "valor": 1
+        },
+        {
+          "texto": "Desorden, contradicción o falta de gobierno espiritual sostenido.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La casa no se impresiona con el discurso; revela lo que realmente gobierna el corazón."
+    },
+    {
+      "id": "p8",
+      "capitulo": "Capítulo 8",
+      "tituloCapitulo": "El fin de la doble vida",
+      "eje": "Unidad interior",
+      "pregunta": "¿Qué tan dispuesto estás a dejar de sostener versiones diferentes de ti mismo?",
+      "opciones": [
+        {
+          "texto": "Estoy decidido a vivir en verdad, sin doble vida, aunque eso implique ajustes profundos.",
+          "valor": 3
+        },
+        {
+          "texto": "Quiero vivir con más transparencia y ya estoy confrontando algunas áreas.",
+          "valor": 2
+        },
+        {
+          "texto": "Me cuesta dejar ciertas versiones porque me ayudan a sentirme aceptado o seguro.",
+          "valor": 1
+        },
+        {
+          "texto": "Prefiero mantener separadas algunas áreas de mi vida para evitar confrontación.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La libertad comienza cuando dejas de vivir dividido y permites que la verdad gobierne todas tus versiones."
+    },
+    {
+      "id": "p9",
+      "capitulo": "Capítulo 9",
+      "tituloCapitulo": "La coherencia que transforma",
+      "eje": "Impacto",
+      "pregunta": "¿Cómo buscas impactar espiritualmente a quienes te rodean?",
+      "opciones": [
+        {
+          "texto": "Desde una vida coherente que permite que Cristo se haga visible en lo que soy.",
+          "valor": 3
+        },
+        {
+          "texto": "Con palabras y ejemplo, aunque reconozco que aún debo crecer en consistencia.",
+          "valor": 2
+        },
+        {
+          "texto": "Principalmente con consejos, argumentos o conocimiento espiritual.",
+          "valor": 1
+        },
+        {
+          "texto": "Intento influir sin revisar primero si mi vida refleja lo que digo.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "La coherencia convierte la vida en evidencia. El impacto más profundo no se fuerza; fluye de una vida alineada."
+    },
+    {
+      "id": "p10",
+      "capitulo": "Capítulo 10",
+      "tituloCapitulo": "Volver a ser uno",
+      "eje": "Diseño restaurado",
+      "pregunta": "¿Cuál sería hoy tu mayor paso para volver a ser una vida alineada delante de Dios?",
+      "opciones": [
+        {
+          "texto": "Unificar lo que creo, digo y hago bajo el gobierno de Cristo.",
+          "valor": 3
+        },
+        {
+          "texto": "Seguir ordenando áreas que todavía no caminan en la misma dirección.",
+          "valor": 2
+        },
+        {
+          "texto": "Reconocer que estoy fragmentado, aunque todavía no tomo decisiones definitivas.",
+          "valor": 1
+        },
+        {
+          "texto": "Seguir funcionando como hasta ahora mientras no haya una crisis visible.",
+          "valor": 0
+        }
+      ],
+      "retroalimentacion": "Dios no está restaurando una imagen; está restaurando una vida que vuelva a ser una."
+    }
+  ],
+  "niveles": [
+    {
+      "min": 0,
+      "max": 39,
+      "nombre": "Vida fragmentada en proceso de confrontación",
+      "mensaje": "Tu resultado muestra áreas importantes de división interior. No lo recibas como condenación, sino como una invitación de Dios a confrontar con verdad lo que todavía no está alineado.",
+      "recomendacion": "Vuelve especialmente a los capítulos 1, 2, 3 y 8. Allí se confronta el autoengaño, la vida dividida y la doble vida."
+    },
+    {
+      "min": 40,
+      "max": 69,
+      "nombre": "Discípulo en alineación",
+      "mensaje": "Tu vida muestra sensibilidad espiritual y deseo de cambio, pero todavía hay áreas donde la verdad no ha pasado completamente de la mente a la práctica.",
+      "recomendacion": "Profundiza en los capítulos 4, 5 y 7. Allí encontrarás claves para renunciar, renovar la mente y ordenar la vida privada."
+    },
+    {
+      "min": 70,
+      "max": 89,
+      "nombre": "Constructor en coherencia",
+      "mensaje": "Tu resultado refleja un proceso serio de alineación. Hay evidencia de obediencia, confrontación y deseo de vivir sin división.",
+      "recomendacion": "Refuerza los capítulos 6, 9 y 10 para consolidar autoridad, impacto y unidad interior."
+    },
+    {
+      "min": 90,
+      "max": 100,
+      "nombre": "Vida alineada para reflejar el Reino",
+      "mensaje": "Tu resultado evidencia una comprensión profunda del llamado a vivir una vida coherente. Sigue cuidando la unidad entre lo que crees, dices y haces.",
+      "recomendacion": "Permanece repasando todo el libro como una guía de revisión espiritual continua."
+    }
+  ],
+  "capitulosRecomendados": {
+    "bajo": [
+      "Capítulo 1 — El problema no es lo que sabes",
+      "Capítulo 2 — La vida dividida",
+      "Capítulo 3 — Ve y llama a tu marido",
+      "Capítulo 8 — El fin de la doble vida"
+    ],
+    "medio": [
+      "Capítulo 4 — El costo de la coherencia",
+      "Capítulo 5 — La mente alineada",
+      "Capítulo 7 — La casa como espejo"
+    ],
+    "alto": [
+      "Capítulo 6 — La autoridad de lo coherente",
+      "Capítulo 9 — La coherencia que transforma",
+      "Capítulo 10 — Volver a ser uno"
+    ]
+  },
+  "oracionFinal": "Señor, alinea mi vida contigo. No permitas que lo que creo, lo que digo y lo que vivo permanezcan separados. Muéstrame toda área donde todavía existe división, evasión o negociación con la verdad. Dame valentía para obedecer, humildad para ser confrontado y firmeza para caminar en una sola dirección. Haz de mi vida una evidencia real de Tu gobierno. En el nombre de Jesús. Amén.",
+  "declaracionFinal": "Hoy decido vivir en coherencia espiritual. Renuncio a toda doble vida, a toda apariencia y a toda división interior. Cristo gobierna mi mente, mi casa, mis decisiones y mi caminar. Lo que creo, digo y vivo comienza a alinearse bajo Su verdad.",
+  "certificado": {
+    "titulo": "Certificado de formación espiritual",
+    "texto": "Ha completado el Test Espiritual del libro Coherencia Espiritual.",
+    "firma": "Constructores del Reino"
+  }
+}
