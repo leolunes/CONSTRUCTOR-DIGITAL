@@ -1,0 +1,52 @@
+.sin-registros {
+  padding: 35px;
+  text-align: center;
+  color: #687988;
+}
+
+#cuerpo-contratistas td:first-child {
+  min-width: 240px;
+}
+
+/* =========================================================
+   AJUSTE V1.19 — FORMULARIO DE CONTRATISTAS EDITABLE
+   Garantiza que todos los controles del modal reciban foco,
+   escritura, selección y clics dentro de Electron.
+   ========================================================= */
+#modal-contratista .modal__fondo {
+  z-index: 0;
+}
+
+#modal-contratista .modal__contenido {
+  z-index: 2;
+  pointer-events: auto;
+}
+
+#modal-contratista form,
+#modal-contratista .modal__cuerpo,
+#modal-contratista .rejilla-formulario,
+#modal-contratista .campo {
+  pointer-events: auto;
+}
+
+#modal-contratista input,
+#modal-contratista select,
+#modal-contratista textarea,
+#modal-contratista button {
+  position: relative;
+  z-index: 3;
+  pointer-events: auto !important;
+  -webkit-app-region: no-drag;
+}
+
+#modal-contratista input,
+#modal-contratista textarea {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  cursor: text;
+}
+
+#modal-contratista select,
+#modal-contratista button {
+  cursor: pointer;
+}

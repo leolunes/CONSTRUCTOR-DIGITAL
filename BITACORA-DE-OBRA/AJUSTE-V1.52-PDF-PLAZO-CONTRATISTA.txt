@@ -1,0 +1,9 @@
+BITÁCORA DE OBRA v1.52
+
+Ajuste puntual del PDF del folio:
+- Un plazo numérico guardado en el campo actual `plazo` se presenta en meses.
+- Los campos heredados `plazoDias` conservan la unidad días.
+- El PDF prioriza la lista persistente de contratistas recargada por IPC.
+- Se amplió la compatibilidad con estructuras antiguas y actuales para NIT,
+  representante legal, residente/responsable, dirección, teléfono y correo.
+- No se modificó el diseño del PDF ni otras exportaciones.

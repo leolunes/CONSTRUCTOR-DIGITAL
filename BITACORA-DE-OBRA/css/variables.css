@@ -1,0 +1,88 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/variables.css
+   Propósito: variables globales de diseño
+   ========================================================= */
+
+:root {
+  /* Colores principales */
+  --color-primario: #0799d3;
+  --color-primario-oscuro: #0478a8;
+  --color-secundario: #f5b400;
+  --color-secundario-oscuro: #d99b00;
+
+  /* Colores institucionales */
+  --color-rojo-titulo: #d40000;
+  --color-rojo-texto: #a8382b;
+  --color-azul-titulo: #087fae;
+
+  /* Fondos */
+  --color-fondo-app: #e9edf1;
+  --color-fondo-panel: #ffffff;
+  --color-fondo-suave: #f5f7f9;
+  --color-fondo-nota: #fffbdc;
+  --color-fondo-firmas: #fff8cf;
+  --color-fondo-toolbar: #f2f3f4;
+
+  /* Texto */
+  --color-texto: #20252a;
+  --color-texto-secundario: #59636d;
+  --color-texto-claro: #ffffff;
+  --color-placeholder: #9099a1;
+
+  /* Bordes */
+  --color-borde: #7d858c;
+  --color-borde-suave: #c5cbd0;
+  --color-borde-activo: #0799d3;
+
+  /* Estados */
+  --color-exito: #2f9e44;
+  --color-advertencia: #f08c00;
+  --color-error: #d62828;
+  --color-informacion: #1971c2;
+
+  /* Tipografía */
+  --fuente-principal: "Segoe UI", Tahoma, Arial, sans-serif;
+  --fuente-documento: Arial, Helvetica, sans-serif;
+
+  --tamano-texto-xs: 0.75rem;
+  --tamano-texto-sm: 0.875rem;
+  --tamano-texto-base: 1rem;
+  --tamano-texto-md: 1.1rem;
+  --tamano-texto-lg: 1.35rem;
+  --tamano-texto-xl: 1.75rem;
+  --tamano-texto-xxl: 2.2rem;
+
+  /* Espaciados */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1rem;
+  --espacio-5: 1.25rem;
+  --espacio-6: 1.5rem;
+  --espacio-8: 2rem;
+
+  /* Bordes redondeados */
+  --radio-sm: 3px;
+  --radio-md: 6px;
+  --radio-lg: 10px;
+  --radio-pill: 999px;
+
+  /* Sombras */
+  --sombra-suave: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --sombra-media: 0 5px 18px rgba(0, 0, 0, 0.14);
+  --sombra-ventana: 0 10px 30px rgba(0, 0, 0, 0.18);
+
+  /* Contenedores */
+  --ancho-maximo: 1500px;
+  --alto-editor-minimo: 430px;
+
+  /* Transiciones */
+  --transicion-rapida: 0.15s ease;
+  --transicion-normal: 0.25s ease;
+
+  /* Capas */
+  --z-menu: 100;
+  --z-modal: 1000;
+  --z-alerta: 1100;
+}

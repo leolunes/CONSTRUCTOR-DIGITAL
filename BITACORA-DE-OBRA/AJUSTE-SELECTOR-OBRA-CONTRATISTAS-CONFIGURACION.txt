@@ -1,0 +1,8 @@
+AJUSTE FUNCIONAL
+
+1. Selector de obra activa en la pantalla principal.
+2. Cambio de obra y carga de sus folios.
+3. Página funcional de Contratistas.
+4. Registro, edición, búsqueda y eliminación de contratistas.
+5. Página de Configuración conectada a persistencia local.
+6. Navegación lateral corregida.

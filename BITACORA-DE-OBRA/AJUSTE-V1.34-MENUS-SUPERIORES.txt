@@ -1,0 +1,4 @@
+BITÁCORA DE OBRA v1.34
+
+Se activaron los menús superiores Archivo, Editar, Ver y Ayuda.
+Las acciones reutilizan los botones y módulos existentes para no alterar la información guardada.

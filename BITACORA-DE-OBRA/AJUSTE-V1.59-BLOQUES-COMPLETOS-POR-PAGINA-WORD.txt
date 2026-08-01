@@ -1,0 +1,9 @@
+AJUSTE V1.59 — BLOQUES COMPLETOS POR PÁGINA EN WORD CONSOLIDADO
+
+Se modificó únicamente la exportación Word del Informe consolidado.
+
+Cambios:
+- La sección ANOTACIÓN DEL FOLIO comienza en una página nueva.
+- Se evita que una actividad, novedad, seguridad u otro bloque interno se divida entre páginas cuando cabe completo.
+- Se conserva el salto de página entre folios incorporado en la versión anterior.
+- No se modificaron PDF, Word individual, datos, fotografías, firmas ni formularios.

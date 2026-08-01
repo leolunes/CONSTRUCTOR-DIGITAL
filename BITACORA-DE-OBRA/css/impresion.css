@@ -1,0 +1,313 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/impresion.css
+   Propósito: diseño de impresión y exportación a PDF
+   ========================================================= */
+
+/* Configuración general de página */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+/* Vista previa de impresión */
+.vista-impresion {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 20px auto;
+  padding: 12mm;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: var(--sombra-media);
+}
+
+/* Elementos que no deben aparecer impresos */
+.no-imprimir,
+.barra-superior,
+.editor-toolbar,
+.editor-busqueda,
+.editor-estado,
+.alerta,
+.modal-fondo,
+.menu-contextual {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+/* Estilos específicos para impresión */
+@media print {
+  html,
+  body {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5pt;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .no-imprimir,
+  .barra-superior,
+  .editor-toolbar,
+  .editor-busqueda,
+  .editor-estado,
+  .alerta,
+  .modal-fondo,
+  .menu-contextual,
+  button {
+    display: none !important;
+  }
+
+  .contenedor,
+  .vista-impresion {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  /* Encabezado */
+  .encabezado {
+    display: grid !important;
+    grid-template-columns: 1fr 74mm;
+    gap: 6mm;
+    align-items: stretch;
+    padding: 0 0 5mm !important;
+    border-bottom: 1.2pt solid #000000 !important;
+    background: #ffffff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .empresa h1 {
+    margin: 0 0 2mm !important;
+    color: #000000 !important;
+    font-size: 16pt !important;
+  }
+
+  .empresa p {
+    margin: 0.8mm 0 !important;
+    color: #000000 !important;
+    font-size: 9.5pt !important;
+  }
+
+  .folio {
+    width: auto !important;
+    padding: 4mm !important;
+    border: 1.2pt solid #000000 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+  }
+
+  .folio h2 {
+    margin: 0 !important;
+    color: #000000 !important;
+    font-size: 14pt !important;
+  }
+
+  .folio h3 {
+    margin: 3mm 0 0 !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+
+  /* Datos de la obra */
+  .datos-obra {
+    padding: 4mm 0 !important;
+    border-bottom: 1pt solid #000000 !important;
+    background: #ffffff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .datos-obra h3 {
+    margin: 0 0 3mm !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+
+  .grid {
+    display: grid !important;
+    grid-template-columns: 30mm 1fr 30mm 1fr !important;
+    gap: 2mm 3mm !important;
+    align-items: center;
+  }
+
+  .grid label {
+    color: #000000 !important;
+    font-size: 9pt !important;
+    font-weight: 700 !important;
+  }
+
+  input,
+  select,
+  textarea {
+    min-height: 6mm !important;
+    padding: 1mm 1.5mm !important;
+    border: 0.6pt solid #000000 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    font-size: 9pt !important;
+  }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  /* Editor */
+  .editor {
+    display: block !important;
+    padding: 4mm 0 !important;
+    background: #ffffff !important;
+  }
+
+  .editor-contenido {
+    min-height: 130mm !important;
+    max-height: none !important;
+    padding: 4mm !important;
+    overflow: visible !important;
+    border: 0.8pt solid #000000 !important;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    font-size: 10pt !important;
+    line-height: 1.45 !important;
+  }
+
+  .editor-contenido:empty::before {
+    content: "" !important;
+  }
+
+  .editor-contenido img {
+    max-width: 100% !important;
+    max-height: 90mm !important;
+    margin: 3mm auto !important;
+    border: 0.5pt solid #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .editor-contenido table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .editor-contenido th,
+  .editor-contenido td {
+    padding: 2mm !important;
+    border: 0.6pt solid #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Nota */
+  .nota {
+    padding: 3mm 0 !important;
+    border-top: 0 !important;
+    background: #ffffff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .nota label {
+    margin-bottom: 2mm !important;
+    color: #000000 !important;
+    font-size: 9pt !important;
+  }
+
+  /* Firmas */
+  .firmas {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5mm !important;
+    padding: 8mm 0 0 !important;
+    border-top: 1pt solid #000000 !important;
+    background: #ffffff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .firmas div {
+    min-height: 24mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .firmas label {
+    order: 2;
+    margin: 2mm 0 0 !important;
+    color: #000000 !important;
+    font-size: 8.5pt !important;
+    text-align: center;
+  }
+
+  .firmas input {
+    order: 1;
+    min-height: 14mm !important;
+    border: 0 !important;
+    border-bottom: 0.7pt solid #000000 !important;
+    text-align: center !important;
+  }
+
+  /* Evitar cortes inadecuados */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  blockquote,
+  table,
+  tr,
+  img {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  tr,
+  img,
+  blockquote {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Enlaces impresos sin URL adicional */
+  a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  a[href]::after {
+    content: none !important;
+  }
+}

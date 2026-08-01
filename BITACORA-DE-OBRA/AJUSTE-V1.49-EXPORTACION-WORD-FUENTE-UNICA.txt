@@ -1,0 +1,9 @@
+BITÁCORA DE OBRA v1.49
+
+Corrección aplicada sobre BITACORA-DE-OBRA (7).zip:
+- Se retiró del index principal la carga del exportador Word antiguo.
+- El botón Word queda atendido únicamente por js/app.js.
+- El nombre del archivo exportado incluye FORMATO_v149 y fecha/hora para impedir abrir por error un Word anterior.
+- La sección documental se titula ANEXOS.
+- Las fotografías quedan exclusivamente en REGISTRO FOTOGRÁFICO.
+- El pie del documento identifica Formato v1.49.

@@ -1,0 +1,310 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/formularios.css
+   Propósito: estilos de formularios, etiquetas y campos
+   ========================================================= */
+
+/* Grupos de formulario */
+.grupo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.grupo-formulario label {
+  color: var(--color-texto);
+  font-size: var(--tamano-texto-sm);
+  font-weight: 700;
+}
+
+.grupo-formulario small {
+  color: var(--color-texto-secundario);
+  font-size: var(--tamano-texto-xs);
+}
+
+/* Filas y columnas */
+.fila-formulario {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.col-12 { grid-column: span 12; }
+.col-9  { grid-column: span 9; }
+.col-8  { grid-column: span 8; }
+.col-6  { grid-column: span 6; }
+.col-4  { grid-column: span 4; }
+.col-3  { grid-column: span 3; }
+.col-2  { grid-column: span 2; }
+
+/* Campos */
+.campo-texto,
+.campo-select,
+.campo-fecha,
+.campo-numero,
+.campo-textarea {
+  width: 100%;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+  background: var(--color-fondo-panel);
+  color: var(--color-texto);
+}
+
+.campo-textarea {
+  min-height: 110px;
+}
+
+/* Campos con icono */
+.campo-con-icono {
+  position: relative;
+}
+
+.campo-con-icono input {
+  padding-left: 38px;
+}
+
+.campo-con-icono .icono-campo {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: var(--color-texto-secundario);
+  pointer-events: none;
+}
+
+/* Estados de validación */
+.campo-valido {
+  border-color: var(--color-exito) !important;
+  box-shadow: 0 0 0 2px rgba(47, 158, 68, 0.12);
+}
+
+.campo-invalido {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 2px rgba(214, 40, 40, 0.12);
+}
+
+.mensaje-validacion {
+  display: none;
+  margin-top: 4px;
+  color: var(--color-error);
+  font-size: var(--tamano-texto-xs);
+  font-weight: 600;
+}
+
+.mensaje-validacion.visible {
+  display: block;
+}
+
+/* Campos obligatorios */
+label.obligatorio::after {
+  content: " *";
+  color: var(--color-error);
+}
+
+/* Fieldset */
+fieldset {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: var(--color-fondo-panel);
+}
+
+legend {
+  padding: 0 8px;
+  color: var(--color-primario-oscuro);
+  font-weight: 700;
+}
+
+/* Checkboxes y radios */
+.opcion-check,
+.opcion-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.opcion-check input,
+.opcion-radio input {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--color-primario);
+}
+
+/* Botones de formulario */
+.acciones-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radio-md);
+  font-weight: 700;
+  transition:
+    background-color var(--transicion-rapida),
+    color var(--transicion-rapida),
+    border-color var(--transicion-rapida),
+    transform var(--transicion-rapida);
+}
+
+.boton:hover {
+  transform: translateY(-1px);
+}
+
+.boton:active {
+  transform: translateY(0);
+}
+
+.boton-primario {
+  background: var(--color-primario);
+  color: var(--color-texto-claro);
+}
+
+.boton-primario:hover {
+  background: var(--color-primario-oscuro);
+}
+
+.boton-secundario {
+  border-color: var(--color-borde-suave);
+  background: var(--color-fondo-suave);
+  color: var(--color-texto);
+}
+
+.boton-secundario:hover {
+  background: #e5e9ec;
+}
+
+.boton-exito {
+  background: var(--color-exito);
+  color: var(--color-texto-claro);
+}
+
+.boton-advertencia {
+  background: var(--color-advertencia);
+  color: var(--color-texto-claro);
+}
+
+.boton-peligro {
+  background: var(--color-error);
+  color: var(--color-texto-claro);
+}
+
+.boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+/* Tabla de formularios o listados */
+.tabla-formulario {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-fondo-panel);
+}
+
+.tabla-formulario th,
+.tabla-formulario td {
+  padding: 10px;
+  border: 1px solid var(--color-borde-suave);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabla-formulario th {
+  background: var(--color-fondo-suave);
+  color: var(--color-texto);
+  font-size: var(--tamano-texto-sm);
+  font-weight: 700;
+}
+
+/* Paneles de formulario */
+.panel-formulario {
+  padding: 18px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: var(--color-fondo-panel);
+  box-shadow: var(--sombra-suave);
+}
+
+.panel-formulario + .panel-formulario {
+  margin-top: 16px;
+}
+
+.titulo-panel-formulario {
+  margin-bottom: 14px;
+  color: var(--color-primario-oscuro);
+  font-size: var(--tamano-texto-lg);
+}
+
+/* Carga de archivos */
+.carga-archivo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.carga-archivo input[type="file"] {
+  min-height: 38px;
+  padding: 6px;
+}
+
+.vista-previa-archivo {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px dashed var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: var(--color-fondo-suave);
+  color: var(--color-texto-secundario);
+}
+
+/* Adaptación */
+@media (max-width: 900px) {
+  .fila-formulario {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .col-12,
+  .col-9,
+  .col-8,
+  .col-6,
+  .col-4,
+  .col-3,
+  .col-2 {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .fila-formulario {
+    grid-template-columns: 1fr;
+  }
+
+  .acciones-formulario {
+    justify-content: stretch;
+  }
+
+  .acciones-formulario .boton {
+    width: 100%;
+  }
+
+  .tabla-formulario {
+    display: block;
+    overflow-x: auto;
+  }
+}

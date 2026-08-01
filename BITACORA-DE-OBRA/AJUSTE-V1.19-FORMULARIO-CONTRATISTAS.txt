@@ -1,0 +1,13 @@
+BITÁCORA DE OBRA — AJUSTE V1.19
+
+Se corrigió la ventana “Nuevo contratista” para permitir:
+- Escribir normalmente en todos los campos.
+- Seleccionar el tipo de contratista.
+- Usar el área de observaciones.
+- Guardar y cancelar sin bloqueos.
+
+Archivos modificados únicamente:
+- css/contratistas-pagina.css
+- js/contratistas-pagina.js
+
+El proyecto no fue reconstruido y se conservaron los datos y la estructura de la versión 1.18.

@@ -1,0 +1,13 @@
+AJUSTE V1.51 - PDF CON DATOS COMPLETOS
+
+Se modificó únicamente la alimentación de datos del PDF.
+
+- Antes de generar el PDF se recargan desde almacenamiento la obra y el contratista actuales.
+- Se leen correctamente los campos guardados tanto en formato antiguo como nuevo.
+- Valor: admite valorContrato, contrato.valorFinal y contrato.valorInicial.
+- Plazo: admite plazo, plazoDias y contrato.plazoDias.
+- Fecha final: admite fechaFinal, fechaTerminacion y contrato.fechaTerminacion.
+- Teléfono, dirección, municipio y departamento admiten las estructuras antiguas y actuales.
+- Contratista: se completan NIT, representante legal, residente/responsable, dirección, teléfono y correo con sus diferentes nombres de campo.
+
+No se modificaron el diseño del PDF, Word, informe consolidado, fotografías, firmas, folios, obras, contratistas ni otras funciones.

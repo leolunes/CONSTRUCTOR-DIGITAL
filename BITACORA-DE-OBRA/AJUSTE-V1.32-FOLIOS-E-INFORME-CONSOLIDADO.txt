@@ -1,0 +1,8 @@
+BITÁCORA DE OBRA v1.32
+
+Ajustes realizados:
+1. El botón Historial se presenta ahora como “Folios” para visualizar rápidamente todos los folios existentes de la obra activa.
+2. Se agregó el botón “Informe consolidado”.
+3. El informe consolida todos los folios guardados de la obra, ordenados por fecha y consecutivo.
+4. Incluye portada, relación de folios, anotaciones, notas, anexos y fotografías disponibles.
+5. El resultado se guarda como documento Word y se abre automáticamente.

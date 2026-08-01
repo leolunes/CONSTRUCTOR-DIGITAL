@@ -1,0 +1,7 @@
+BITÁCORA DE OBRA - AJUSTE V1.22
+
+- Se amplió el espacio visible de los datos de la obra.
+- El nombre de la obra ocupa todo el ancho disponible.
+- El nombre se resalta conservando la información existente.
+- Se reorganizaron los campos para evitar textos recortados.
+- No se modificó la lógica de guardado ni la base de datos.

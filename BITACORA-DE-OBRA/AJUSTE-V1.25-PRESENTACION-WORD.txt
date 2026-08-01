@@ -1,0 +1,10 @@
+AJUSTE V1.25 — PRESENTACIÓN COMPLETA DEL DOCUMENTO WORD
+
+1. Se incorporaron al Word los datos completos de la obra.
+2. Se incorporaron los datos del contratista asociado.
+3. Se incluyeron estado del folio, nota, ubicación GPS y anexos.
+4. Se reorganizó la anotación en una sección clara y de ancho controlado.
+5. Las fotografías quedan dentro del ancho útil de la hoja y conservan su proporción.
+6. Las imágenes insertadas dentro de la anotación también se limitan al ancho de la página.
+7. Se configuró hoja A4 con márgenes uniformes y tablas adaptadas al ancho disponible.
+8. No se modificó la base de datos ni la lógica de guardado del folio.

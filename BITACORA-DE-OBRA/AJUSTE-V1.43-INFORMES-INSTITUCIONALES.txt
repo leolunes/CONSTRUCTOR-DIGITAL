@@ -1,0 +1,18 @@
+BITÁCORA DE OBRA v1.43
+
+AJUSTES REALIZADOS
+- Rediseño institucional del informe Word y PDF.
+- Encabezado con logo configurable por obra.
+- Nuevo campo obligatorio Código de la obra.
+- Datos del informe leídos directamente de la obra activa.
+- Inclusión de código, objeto, valor, entidad, plazo, teléfono y fechas.
+- Eliminación completa de GPS, mapa, coordenadas y ubicación del registro.
+- Fotografías en recuadros uniformes, dos por fila y de menor tamaño.
+- Eliminación de fotografías duplicadas en el informe.
+- Las imágenes incrustadas se retiran del cuerpo de la anotación y se muestran una sola vez en el registro fotográfico.
+- Mejor control de saltos de página para tablas, bloques, fotografías y firmas.
+- Firmas del contratista y de la interventoría juntas al final.
+- Nuevo módulo en Configuración para insertar, cambiar o eliminar el logo de la empresa por obra.
+
+BASE
+Se modificó únicamente lo necesario sobre BITACORA-DE-OBRA (6).zip.

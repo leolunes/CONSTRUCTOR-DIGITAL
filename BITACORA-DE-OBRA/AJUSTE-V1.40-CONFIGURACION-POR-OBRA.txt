@@ -1,0 +1,13 @@
+BITÁCORA DE OBRA v1.40
+
+AJUSTE: CONFIGURACIÓN INDEPENDIENTE POR OBRA
+
+- La configuración se guarda por el identificador de la obra activa.
+- Al cambiar de obra, la pantalla Configuración carga únicamente los datos de esa obra.
+- Los informes y exportaciones que consultan la configuración reciben automáticamente la correspondiente a la obra activa.
+- La información general anterior se conserva como base de compatibilidad y no se elimina.
+- El botón Limpiar datos afecta solamente la configuración de la obra activa.
+- Sin una obra activa, la pantalla informa que debe seleccionarse una obra y desactiva Guardar/Limpiar.
+
+Archivo persistente nuevo en datos de usuario:
+configuraciones-obras.json

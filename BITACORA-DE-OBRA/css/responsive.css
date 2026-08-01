@@ -1,0 +1,152 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/responsive.css
+   Propósito: adaptación responsiva de toda la aplicación
+   ========================================================= */
+
+/* Pantallas grandes */
+@media (min-width:1400px){
+  .contenedor{
+    max-width:1400px;
+    margin:0 auto;
+  }
+}
+
+/* Portátiles */
+@media (max-width:1200px){
+  .contenedor{
+    padding:16px;
+  }
+
+  .encabezado{
+    gap:16px;
+  }
+
+  .grid{
+    grid-template-columns:160px 1fr 160px 1fr;
+  }
+}
+
+/* Tablets */
+@media (max-width:992px){
+
+  .encabezado{
+    flex-direction:column;
+  }
+
+  .folio{
+    width:100%;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .fila-formulario{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .firmas{
+    grid-template-columns:1fr;
+  }
+
+  .editor-toolbar{
+    position:static;
+  }
+
+  .acciones-formulario{
+    justify-content:flex-start;
+  }
+}
+
+/* Móviles */
+@media (max-width:768px){
+
+  html{
+    font-size:15px;
+  }
+
+  .contenedor{
+    padding:12px;
+  }
+
+  .menu{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .menu button{
+    width:100%;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .editor-contenido{
+    min-height:300px;
+    padding:14px;
+  }
+
+  .modal{
+    width:100%;
+  }
+
+  .tabla-formulario{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+}
+
+/* Teléfonos pequeños */
+@media (max-width:480px){
+
+  html{
+    font-size:14px;
+  }
+
+  .empresa h1{
+    font-size:1.35rem;
+  }
+
+  .folio h2{
+    font-size:1.2rem;
+  }
+
+  .editor-toolbar{
+    gap:4px;
+  }
+
+  .editor-toolbar button{
+    min-width:34px;
+    height:34px;
+    padding:0 6px;
+  }
+
+  .editor-toolbar select{
+    width:100%;
+    min-width:100%;
+  }
+
+  .boton{
+    width:100%;
+  }
+
+  .acciones-formulario{
+    flex-direction:column;
+  }
+
+  .alerta{
+    right:10px;
+    left:10px;
+    width:auto;
+  }
+}
+
+/* Soporte para pantallas de alta resolución */
+@media (min-resolution:2dppx){
+  img{
+    image-rendering:auto;
+  }
+}

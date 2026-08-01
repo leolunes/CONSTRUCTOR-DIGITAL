@@ -1,0 +1,9 @@
+BITÁCORA DE OBRA v1.47
+
+Corrección aplicada en la función real documentoHTML() usada por el botón Word:
+- El título oficial ahora es únicamente ANEXOS.
+- Se eliminan del contenido editable los títulos heredados ANEXOS Y FOTOGRAFÍAS y REGISTRO FOTOGRÁFICO.
+- Las imágenes del editor no se reproducen dentro de la anotación.
+- Las fotografías aparecen solamente en REGISTRO FOTOGRÁFICO.
+- La deduplicación compara el contenido de la imagen, no solo su identificador.
+- Se fuerza la recarga de js/app.js con versión 1.47.

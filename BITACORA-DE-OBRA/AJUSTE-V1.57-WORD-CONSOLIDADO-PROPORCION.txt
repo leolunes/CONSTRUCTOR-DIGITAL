@@ -1,0 +1,10 @@
+AJUSTE V1.57 — WORD DEL INFORME CONSOLIDADO
+
+Se aplicaron al Word del Informe consolidado las mismas correcciones ya aprobadas para el Word del folio:
+- Logo normalizado y con dimensiones físicas fijas compatibles con Microsoft Word.
+- Fotografías normalizadas en formato horizontal, conservando proporción y márgenes blancos cuando sea necesario.
+- Recuadros fotográficos uniformes en dos columnas.
+- Firmas con dimensiones estables.
+- Se reutiliza exactamente la misma función de ajuste exclusivo para Word del folio.
+
+No se modificaron el PDF, el Word individual, los datos guardados ni los formularios.

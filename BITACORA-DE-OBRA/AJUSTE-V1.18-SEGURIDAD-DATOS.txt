@@ -1,0 +1,13 @@
+BITÁCORA DE OBRA — AJUSTE v1.18
+
+Se corrigió el sistema de botones "Agregar otro..." para evitar que altere,
+descuadre o se guarde dentro del contenido del folio.
+
+Los botones se generan únicamente como controles temporales de interfaz y se
+excluyen del borrador local y del guardado persistente.
+
+La versión se construyó sobre v1.16, que fue la última versión confirmada como
+funcional por el usuario, y solo se modificaron:
+- js/editor-profesional.js
+- js/app.js
+- css/editor.css

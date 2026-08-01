@@ -1,0 +1,7 @@
+AJUSTE V1.27 - CAPTURA GPS
+
+- Se habilitó el permiso de geolocalización para la ventana local de Electron.
+- El botón Capturar GPS realiza dos intentos: alta precisión y ubicación de red/Wi-Fi.
+- Se muestran mensajes específicos cuando Windows niega el permiso, no encuentra ubicación o agota el tiempo.
+- Se mantiene el ingreso manual como alternativa.
+- Se registran latitud, longitud, precisión y fecha/hora de captura.

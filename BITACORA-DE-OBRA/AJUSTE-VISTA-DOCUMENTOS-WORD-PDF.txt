@@ -1,0 +1,7 @@
+AJUSTE: APERTURA AUTOMÁTICA DE WORD Y PDF
+
+Se modificó únicamente js/app.js.
+
+- Al guardar Word, la aplicación registra la ruta en el folio y abre el documento automáticamente con Microsoft Word o el programa predeterminado.
+- Al guardar PDF, la aplicación registra la ruta en el folio y abre el archivo automáticamente con el lector PDF predeterminado.
+- Los documentos continúan disponibles desde Historial mediante los botones Word y PDF.

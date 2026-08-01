@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "consecutivos": {
+    "folio": {
+      "prefijo": "",
+      "ultimoNumero": 0,
+      "cantidadDigitos": 5,
+      "reinicioAnual": false,
+      "anioActual": 2026
+    },
+    "obra": {
+      "prefijo": "OBR-",
+      "ultimoNumero": 0,
+      "cantidadDigitos": 4
+    },
+    "contratista": {
+      "prefijo": "CTR-",
+      "ultimoNumero": 0,
+      "cantidadDigitos": 4
+    },
+    "anexo": {
+      "prefijo": "ANX-",
+      "ultimoNumero": 0,
+      "cantidadDigitos": 5
+    },
+    "imagen": {
+      "prefijo": "IMG-",
+      "ultimoNumero": 0,
+      "cantidadDigitos": 5
+    }
+  },
+  "auditoria": {
+    "actualizado": "2026-07-29T00:00:00.000Z"
+  }
+}

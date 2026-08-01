@@ -1,0 +1,8 @@
+REPARACIÓN DE BOTONES
+
+- Agregar fotografías usa ahora el selector nativo de Windows.
+- Agregar anexos usa ahora el selector nativo de Windows.
+- Los archivos se leen y se incorporan al folio como datos persistentes.
+- Capturar GPS ofrece ingreso manual cuando Windows no entrega geolocalización.
+- Usar ubicación de la obra aplica dirección, municipio y departamento.
+- Si la obra no tiene coordenadas, permite ingresarlas manualmente.

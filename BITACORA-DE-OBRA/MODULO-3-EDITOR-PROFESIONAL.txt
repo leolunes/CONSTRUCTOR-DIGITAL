@@ -1,0 +1,16 @@
+MÓDULO 3 — EDITOR PROFESIONAL
+
+Incluye:
+- Formato de títulos, subtítulos, texto y citas.
+- Tipografía y tamaño.
+- Negrita, cursiva, subrayado y tachado.
+- Alineación y justificación.
+- Listas, sangrías, deshacer y rehacer.
+- Enlaces, tablas, separadores, fecha y hora.
+- Búsqueda interna con navegación de resultados.
+- Bloques técnicos rápidos para actividad, novedad, seguridad,
+  calidad, personal/equipos y compromisos.
+- Pantalla completa.
+- Contador de palabras y caracteres.
+- Borrador local automático y recuperación.
+- Limpieza segura del contenido pegado.

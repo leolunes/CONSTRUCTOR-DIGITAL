@@ -1,0 +1,7 @@
+AJUSTE V1.35
+
+- Se agregó un botón circular con X sobre cada fotografía insertada en la anotación.
+- El botón solicita confirmación antes de eliminar la fotografía.
+- También funciona con fotografías ya guardadas al volver a abrir el folio.
+- El control de eliminación no se guarda dentro del contenido del folio ni aparece en Word, PDF o impresión.
+- No se modificó la base de datos ni la estructura del proyecto.

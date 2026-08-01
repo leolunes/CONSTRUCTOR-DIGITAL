@@ -1,0 +1,9 @@
+AJUSTE V1.60 — PDF DEL FOLIO Y PDF CONSOLIDADO
+
+- El botón PDF muestra dos opciones:
+  1. PDF del folio actual.
+  2. PDF consolidado de todos los folios de la obra activa.
+- El consolidado utiliza la misma plantilla aprobada del PDF individual.
+- Cada folio comienza en una página nueva.
+- Al terminar la exportación se restaura el folio que estaba abierto.
+- No se modificaron Word, Informe consolidado Word ni los datos guardados.

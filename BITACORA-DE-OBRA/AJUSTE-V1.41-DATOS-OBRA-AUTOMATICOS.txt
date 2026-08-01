@@ -1,0 +1,7 @@
+BITÁCORA DE OBRA v1.41
+
+- Se agregó Teléfono de contacto al formulario Crear/Editar obra.
+- Los datos visibles del folio se cargan desde la obra activa y quedaron de solo lectura.
+- Ciudad y otros textos largos ajustan automáticamente su tamaño dentro del recuadro.
+- Nombre y dirección conservan visualización multilínea.
+- Se preservó la estructura existente del proyecto.

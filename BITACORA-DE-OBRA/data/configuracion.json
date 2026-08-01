@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "aplicacion": {
+    "nombre": "Bitácora de Obra",
+    "idioma": "es-CO",
+    "zonaHoraria": "America/Bogota",
+    "formatoFecha": "DD/MM/YYYY",
+    "tema": "claro"
+  },
+  "guardado": {
+    "automatico": true,
+    "intervaloMinutos": 5,
+    "confirmarEliminacion": true,
+    "crearCopiaAlCerrar": false
+  },
+  "exportacion": {
+    "incluirLogo": true,
+    "incluirFirmas": true,
+    "incluirImagenes": true,
+    "calidadImagenes": 0.85,
+    "tamanoPapel": "A4",
+    "orientacion": "vertical"
+  },
+  "ubicacion": {
+    "usarGPS": true,
+    "solicitarPermiso": true,
+    "precisionDeseadaMetros": 50
+  },
+  "rutas": {
+    "copiasSeguridad": "",
+    "exportaciones": "",
+    "anexos": ""
+  },
+  "auditoria": {
+    "creado": "2026-07-29T00:00:00.000Z",
+    "actualizado": "2026-07-29T00:00:00.000Z"
+  }
+}

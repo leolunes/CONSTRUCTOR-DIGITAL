@@ -1,0 +1,8 @@
+AJUSTE V1.54
+
+Se corrigió la presentación de Word e Informe consolidado sin modificar el PDF:
+- Logo con ancho fijo compatible con Microsoft Word.
+- Fotografías con ancho fijo para impedir que ocupen páginas completas.
+- Firmas con ancho fijo y alineación estable.
+- Se reforzó CSS compatible con el motor de Word.
+- Word e Informe consolidado continúan usando los mismos datos y secciones del PDF.

@@ -1,0 +1,6 @@
+AJUSTE V1.23
+
+- El nombre de la obra ahora permite varias líneas y crece automáticamente.
+- La dirección de la obra ahora permite varias líneas y crece automáticamente.
+- Se conserva el estilo resaltado del nombre de la obra.
+- No se modificó la estructura de datos ni la lógica de guardado.

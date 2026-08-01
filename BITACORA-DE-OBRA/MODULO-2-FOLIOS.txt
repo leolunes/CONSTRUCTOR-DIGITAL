@@ -1,0 +1,11 @@
+MÓDULO 2 — FOLIOS DE BITÁCORA
+
+Incluye:
+- Consecutivo automático por obra.
+- Guardado persistente.
+- Folio activo.
+- Historial por obra.
+- Búsqueda y filtro por estado.
+- Apertura, duplicado y eliminación.
+- Navegación anterior/siguiente.
+- Integración con botones Nuevo, Abrir, Guardar e Historial.

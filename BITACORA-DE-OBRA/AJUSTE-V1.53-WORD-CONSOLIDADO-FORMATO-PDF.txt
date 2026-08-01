@@ -1,0 +1,8 @@
+AJUSTE V1.53 — WORD E INFORME CONSOLIDADO CON FORMATO PDF
+
+1. El botón Word refresca obra y contratista por la misma ruta del PDF.
+2. Word reutiliza exactamente documentoHTML(), la plantilla aprobada del PDF.
+3. Informe consolidado genera cada folio con esa misma plantilla completa.
+4. Se conserva un salto de página entre folios.
+5. Al terminar el consolidado se restaura el folio que estaba abierto.
+6. No se modificó la generación del PDF ni la persistencia de datos.

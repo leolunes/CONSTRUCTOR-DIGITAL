@@ -1,0 +1,3162 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Gestión de anexos y documentos de la aplicación Bitácora de Obra."
+  >
+
+  <title>
+    Anexos | Bitácora de Obra
+  </title>
+
+  <!-- =====================================================
+       ESTILOS DEL PROYECTO
+  ====================================================== -->
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/general.css">
+  <link rel="stylesheet" href="../css/menu.css">
+  <link rel="stylesheet" href="../css/bitacora.css">
+  <link rel="stylesheet" href="../css/formularios.css">
+  <link rel="stylesheet" href="../css/modales.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#173b57">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+</head>
+
+<body>
+
+  <div class="aplicacion">
+
+    <!-- ===================================================
+         MENÚ LATERAL
+    ==================================================== -->
+
+    <aside
+      class="menu-lateral"
+      id="menu-lateral"
+      aria-label="Menú principal"
+    >
+
+      <div class="menu-lateral__encabezado">
+
+        <div class="menu-lateral__marca">
+
+          <div
+            class="menu-lateral__logo"
+            aria-hidden="true"
+          >
+            BO
+          </div>
+
+          <div>
+
+            <strong>
+              Bitácora de Obra
+            </strong>
+
+            <small>
+              Gestión de registros
+            </small>
+
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="boton-icono"
+          id="btn-cerrar-menu"
+          aria-label="Cerrar menú"
+          title="Cerrar menú"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <nav class="menu-lateral__navegacion">
+
+        <a
+          class="menu-enlace"
+          href="./index.html"
+        >
+          <span aria-hidden="true">📝</span>
+          <span>Bitácora</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./historial.html"
+        >
+          <span aria-hidden="true">🗂️</span>
+          <span>Historial</span>
+        </a>
+
+        <a
+          class="menu-enlace menu-enlace--activo"
+          href="./anexos.html"
+          aria-current="page"
+        >
+          <span aria-hidden="true">📎</span>
+          <span>Anexos</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./obras.html"
+        >
+          <span aria-hidden="true">🏗️</span>
+          <span>Obras</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./contratistas.html"
+        >
+          <span aria-hidden="true">👷</span>
+          <span>Contratistas</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./configuracion.html"
+        >
+          <span aria-hidden="true">⚙️</span>
+          <span>Configuración</span>
+        </a>
+
+      </nav>
+
+      <div class="menu-lateral__pie">
+
+        <small>
+          Aplicación de escritorio
+        </small>
+
+        <span id="version-aplicacion">
+          Versión local
+        </span>
+
+      </div>
+
+    </aside>
+
+    <!-- ===================================================
+         CONTENIDO PRINCIPAL
+    ==================================================== -->
+
+    <div class="contenido-aplicacion">
+
+      <header class="barra-superior">
+
+        <div class="barra-superior__izquierda">
+
+          <button
+            type="button"
+            class="boton-icono"
+            id="btn-abrir-menu"
+            aria-label="Abrir menú"
+            title="Abrir menú"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <h1>
+              Anexos
+            </h1>
+
+            <p>
+              Administración de archivos, fotografías y documentos de soporte
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="barra-superior__acciones">
+
+          <button
+            type="button"
+            class="boton boton-secundario"
+            id="btn-exportar-anexos"
+          >
+            Exportar listado
+          </button>
+
+          <button
+            type="button"
+            class="boton boton-primario"
+            id="btn-nuevo-anexo"
+          >
+            Agregar anexo
+          </button>
+
+        </div>
+
+      </header>
+
+      <main class="contenido-principal">
+
+        <div
+          id="contenedor-alertas"
+          class="contenedor-alertas"
+          aria-live="polite"
+          aria-atomic="true"
+        ></div>
+
+        <!-- ===============================================
+             RESUMEN
+        ================================================ -->
+
+        <section class="grupo-tarjetas-resumen">
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Total de anexos
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor"
+              id="resumen-total-anexos"
+            >
+              0
+            </strong>
+
+          </article>
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Fotografías
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor"
+              id="resumen-total-imagenes"
+            >
+              0
+            </strong>
+
+          </article>
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Documentos
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor"
+              id="resumen-total-documentos"
+            >
+              0
+            </strong>
+
+          </article>
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Tamaño total
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor tarjeta-resumen__valor--texto"
+              id="resumen-tamano-total"
+            >
+              0 MB
+            </strong>
+
+          </article>
+
+        </section>
+
+        <!-- ===============================================
+             FILTROS
+        ================================================ -->
+
+        <section class="tarjeta">
+
+          <div class="tarjeta__encabezado">
+
+            <div>
+
+              <h2>
+                Buscar anexos
+              </h2>
+
+              <p>
+                Filtre los soportes por nombre, tipo, obra, folio o fecha.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="rejilla-formulario rejilla-formulario--tres-columnas">
+
+            <div class="campo campo--completo">
+
+              <label for="buscar-anexo">
+                Búsqueda general
+              </label>
+
+              <input
+                type="search"
+                id="buscar-anexo"
+                placeholder="Buscar por nombre, descripción, obra o folio"
+                autocomplete="off"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-tipo-anexo">
+                Tipo de anexo
+              </label>
+
+              <select id="filtro-tipo-anexo">
+
+                <option value="">
+                  Todos los tipos
+                </option>
+
+                <option value="Fotografía">
+                  Fotografía
+                </option>
+
+                <option value="Documento">
+                  Documento
+                </option>
+
+                <option value="Plano">
+                  Plano
+                </option>
+
+                <option value="Acta">
+                  Acta
+                </option>
+
+                <option value="Informe">
+                  Informe
+                </option>
+
+                <option value="Ensayo">
+                  Ensayo
+                </option>
+
+                <option value="Otro">
+                  Otro
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-obra">
+                Obra
+              </label>
+
+              <select id="filtro-obra">
+
+                <option value="">
+                  Todas las obras
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-folio">
+                Folio
+              </label>
+
+              <select id="filtro-folio">
+
+                <option value="">
+                  Todos los folios
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-fecha-inicial">
+                Fecha inicial
+              </label>
+
+              <input
+                type="date"
+                id="filtro-fecha-inicial"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-fecha-final">
+                Fecha final
+              </label>
+
+              <input
+                type="date"
+                id="filtro-fecha-final"
+              >
+
+            </div>
+
+            <div class="campo campo--acciones">
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-limpiar-filtros"
+              >
+                Limpiar filtros
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===============================================
+             LISTADO DE ANEXOS
+        ================================================ -->
+
+        <section class="tarjeta">
+
+          <div class="tarjeta__encabezado">
+
+            <div>
+
+              <h2>
+                Archivos registrados
+              </h2>
+
+              <p id="texto-resultados">
+                No hay anexos registrados.
+              </p>
+
+            </div>
+
+            <div class="grupo-botones">
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-vista-tabla"
+                aria-pressed="true"
+              >
+                Vista de tabla
+              </button>
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-vista-tarjetas"
+                aria-pressed="false"
+              >
+                Vista previa
+              </button>
+
+            </div>
+
+          </div>
+
+          <div
+            id="vista-tabla-anexos"
+            class="tabla-contenedor"
+          >
+
+            <table class="tabla">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Archivo
+                  </th>
+
+                  <th>
+                    Tipo
+                  </th>
+
+                  <th>
+                    Obra
+                  </th>
+
+                  <th>
+                    Folio
+                  </th>
+
+                  <th>
+                    Fecha
+                  </th>
+
+                  <th>
+                    Tamaño
+                  </th>
+
+                  <th>
+                    Acciones
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody id="cuerpo-tabla-anexos">
+
+                <tr>
+
+                  <td
+                    colspan="7"
+                    class="tabla__vacio"
+                  >
+                    No hay anexos registrados.
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <div
+            id="vista-tarjetas-anexos"
+            class="galeria-anexos"
+            hidden
+          ></div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================================
+       MODAL: CREAR O EDITAR ANEXO
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="modal-anexo"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal__fondo"
+      data-cerrar-anexo
+    ></div>
+
+    <section
+      class="modal__contenido modal__contenido--grande"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-anexo-titulo"
+    >
+
+      <header class="modal__encabezado">
+
+        <div>
+
+          <h2 id="modal-anexo-titulo">
+            Agregar anexo
+          </h2>
+
+          <p>
+            Registre un archivo relacionado con la obra o con un folio.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="boton-icono"
+          data-cerrar-anexo
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+      <form
+        id="formulario-anexo"
+        novalidate
+      >
+
+        <div class="modal__cuerpo">
+
+          <input
+            type="hidden"
+            id="anexo-id"
+            name="id"
+          >
+
+          <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+
+            <div class="campo campo--completo">
+
+              <label for="anexo-archivo">
+                Archivo
+                <span aria-hidden="true">*</span>
+              </label>
+
+              <input
+                type="file"
+                id="anexo-archivo"
+                name="archivo"
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.jpg,.jpeg,.png,.webp,.gif,.zip,.dwg,.dxf"
+              >
+
+              <small class="campo__ayuda">
+                Puede adjuntar fotografías, PDF, Word, Excel, planos, archivos ZIP y otros documentos de soporte.
+              </small>
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <div
+                id="previsualizacion-archivo"
+                class="previsualizacion-archivo"
+                hidden
+              >
+
+                <img
+                  id="previsualizacion-imagen"
+                  alt="Vista previa del anexo"
+                  hidden
+                >
+
+                <div
+                  id="previsualizacion-documento"
+                  class="previsualizacion-documento"
+                  hidden
+                >
+
+                  <span aria-hidden="true">
+                    📄
+                  </span>
+
+                  <strong id="previsualizacion-nombre">
+                    Archivo seleccionado
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="anexo-tipo">
+                Tipo de anexo
+              </label>
+
+              <select
+                id="anexo-tipo"
+                name="tipo"
+              >
+
+                <option value="Fotografía">
+                  Fotografía
+                </option>
+
+                <option value="Documento">
+                  Documento
+                </option>
+
+                <option value="Plano">
+                  Plano
+                </option>
+
+                <option value="Acta">
+                  Acta
+                </option>
+
+                <option value="Informe">
+                  Informe
+                </option>
+
+                <option value="Ensayo">
+                  Ensayo
+                </option>
+
+                <option value="Otro">
+                  Otro
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="anexo-fecha">
+                Fecha
+              </label>
+
+              <input
+                type="date"
+                id="anexo-fecha"
+                name="fecha"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="anexo-obra">
+                Obra
+              </label>
+
+              <select
+                id="anexo-obra"
+                name="obraId"
+              >
+
+                <option value="">
+                  Sin obra asociada
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="anexo-folio">
+                Folio
+              </label>
+
+              <select
+                id="anexo-folio"
+                name="folioId"
+              >
+
+                <option value="">
+                  Sin folio asociado
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <label for="anexo-titulo">
+                Título o nombre descriptivo
+              </label>
+
+              <input
+                type="text"
+                id="anexo-titulo"
+                name="titulo"
+                maxlength="180"
+                placeholder="Ejemplo: Registro fotográfico del vaciado de concreto"
+              >
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <label for="anexo-descripcion">
+                Descripción
+              </label>
+
+              <textarea
+                id="anexo-descripcion"
+                name="descripcion"
+                rows="4"
+                maxlength="1200"
+                placeholder="Describa brevemente el contenido o propósito del anexo"
+              ></textarea>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="anexo-categoria">
+                Categoría
+              </label>
+
+              <input
+                type="text"
+                id="anexo-categoria"
+                name="categoria"
+                maxlength="100"
+                placeholder="Ejemplo: Control de calidad"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="anexo-etiquetas">
+                Etiquetas
+              </label>
+
+              <input
+                type="text"
+                id="anexo-etiquetas"
+                name="etiquetas"
+                maxlength="250"
+                placeholder="Separadas por comas"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <footer class="modal__pie">
+
+          <button
+            type="button"
+            class="boton boton-secundario"
+            data-cerrar-anexo
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="boton boton-primario"
+          >
+            Guardar anexo
+          </button>
+
+        </footer>
+
+      </form>
+
+    </section>
+
+  </div>
+
+  <!-- =====================================================
+       MODAL DE DETALLE
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="modal-detalle-anexo"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal__fondo"
+      data-cerrar-detalle
+    ></div>
+
+    <section
+      class="modal__contenido modal__contenido--grande"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="detalle-anexo-titulo"
+    >
+
+      <header class="modal__encabezado">
+
+        <div>
+
+          <h2 id="detalle-anexo-titulo">
+            Detalle del anexo
+          </h2>
+
+          <p id="detalle-anexo-subtitulo">
+            Información del archivo seleccionado
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="boton-icono"
+          data-cerrar-detalle
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+      <div class="modal__cuerpo">
+
+        <div
+          id="detalle-vista-previa"
+          class="previsualizacion-archivo previsualizacion-archivo--grande"
+        ></div>
+
+        <dl class="lista-informacion">
+
+          <div>
+
+            <dt>
+              Nombre del archivo
+            </dt>
+
+            <dd id="detalle-nombre-archivo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Tipo
+            </dt>
+
+            <dd id="detalle-tipo-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Obra
+            </dt>
+
+            <dd id="detalle-obra-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Folio
+            </dt>
+
+            <dd id="detalle-folio-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Fecha
+            </dt>
+
+            <dd id="detalle-fecha-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Tamaño
+            </dt>
+
+            <dd id="detalle-tamano-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Categoría
+            </dt>
+
+            <dd id="detalle-categoria-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Descripción
+            </dt>
+
+            <dd id="detalle-descripcion-anexo">
+              Sin información
+            </dd>
+
+          </div>
+
+        </dl>
+
+      </div>
+
+      <footer class="modal__pie">
+
+        <button
+          type="button"
+          class="boton boton-secundario"
+          data-cerrar-detalle
+        >
+          Cerrar
+        </button>
+
+        <button
+          type="button"
+          class="boton boton-secundario"
+          id="btn-editar-desde-detalle"
+        >
+          Editar
+        </button>
+
+        <button
+          type="button"
+          class="boton boton-primario"
+          id="btn-abrir-desde-detalle"
+        >
+          Abrir archivo
+        </button>
+
+      </footer>
+
+    </section>
+
+  </div>
+
+  <!-- =====================================================
+       MODAL DE CONFIRMACIÓN
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="modal-confirmacion"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal__fondo"
+      data-cerrar-confirmacion
+    ></div>
+
+    <section
+      class="modal__contenido"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-confirmacion-titulo"
+    >
+
+      <header class="modal__encabezado">
+
+        <h2 id="modal-confirmacion-titulo">
+          Eliminar anexo
+        </h2>
+
+        <button
+          type="button"
+          class="boton-icono"
+          data-cerrar-confirmacion
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+      <div class="modal__cuerpo">
+
+        <p id="modal-confirmacion-mensaje">
+          ¿Desea eliminar este anexo?
+        </p>
+
+      </div>
+
+      <footer class="modal__pie">
+
+        <button
+          type="button"
+          class="boton boton-secundario"
+          data-cerrar-confirmacion
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="boton boton-peligro"
+          id="btn-confirmar-eliminacion"
+        >
+          Eliminar
+        </button>
+
+      </footer>
+
+    </section>
+
+  </div>
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script src="../js/estado.js"></script>
+  <script src="../js/utilidades.js"></script>
+  <script src="../js/validaciones.js"></script>
+  <script src="../js/almacenamiento.js"></script>
+  <script src="../js/base-datos.js"></script>
+  <script src="../js/anexos.js"></script>
+  <script src="../js/imagenes.js"></script>
+  <script src="../js/buscador.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/browser-api.js"></script>
+  <script src="../js/ipc-renderer.js"></script>
+
+  <script>
+    'use strict';
+
+    (() => {
+
+      let anexos = [];
+      let anexosFiltrados = [];
+      let obras = [];
+      let folios = [];
+      let anexoSeleccionado = null;
+      let anexoPendienteEliminar = null;
+      let contenidoArchivoTemporal = null;
+      let vistaActual = 'tabla';
+
+      const elementos = {};
+
+      function obtenerElemento(id) {
+        return document.getElementById(id);
+      }
+
+      function iniciarElementos() {
+
+        elementos.botonNuevo =
+          obtenerElemento('btn-nuevo-anexo');
+
+        elementos.botonExportar =
+          obtenerElemento('btn-exportar-anexos');
+
+        elementos.buscar =
+          obtenerElemento('buscar-anexo');
+
+        elementos.filtroTipo =
+          obtenerElemento('filtro-tipo-anexo');
+
+        elementos.filtroObra =
+          obtenerElemento('filtro-obra');
+
+        elementos.filtroFolio =
+          obtenerElemento('filtro-folio');
+
+        elementos.filtroFechaInicial =
+          obtenerElemento('filtro-fecha-inicial');
+
+        elementos.filtroFechaFinal =
+          obtenerElemento('filtro-fecha-final');
+
+        elementos.botonLimpiar =
+          obtenerElemento('btn-limpiar-filtros');
+
+        elementos.botonVistaTabla =
+          obtenerElemento('btn-vista-tabla');
+
+        elementos.botonVistaTarjetas =
+          obtenerElemento('btn-vista-tarjetas');
+
+        elementos.vistaTabla =
+          obtenerElemento('vista-tabla-anexos');
+
+        elementos.vistaTarjetas =
+          obtenerElemento('vista-tarjetas-anexos');
+
+        elementos.tabla =
+          obtenerElemento('cuerpo-tabla-anexos');
+
+        elementos.textoResultados =
+          obtenerElemento('texto-resultados');
+
+        elementos.totalAnexos =
+          obtenerElemento('resumen-total-anexos');
+
+        elementos.totalImagenes =
+          obtenerElemento('resumen-total-imagenes');
+
+        elementos.totalDocumentos =
+          obtenerElemento('resumen-total-documentos');
+
+        elementos.tamanoTotal =
+          obtenerElemento('resumen-tamano-total');
+
+        elementos.contenedorAlertas =
+          obtenerElemento('contenedor-alertas');
+
+        elementos.modalAnexo =
+          obtenerElemento('modal-anexo');
+
+        elementos.modalDetalle =
+          obtenerElemento('modal-detalle-anexo');
+
+        elementos.modalConfirmacion =
+          obtenerElemento('modal-confirmacion');
+
+        elementos.formulario =
+          obtenerElemento('formulario-anexo');
+
+        elementos.archivo =
+          obtenerElemento('anexo-archivo');
+
+        elementos.mensajeConfirmacion =
+          obtenerElemento('modal-confirmacion-mensaje');
+
+        elementos.botonConfirmarEliminacion =
+          obtenerElemento('btn-confirmar-eliminacion');
+
+        elementos.botonEditarDesdeDetalle =
+          obtenerElemento('btn-editar-desde-detalle');
+
+        elementos.botonAbrirDesdeDetalle =
+          obtenerElemento('btn-abrir-desde-detalle');
+
+      }
+
+      function generarId() {
+
+        if (window.crypto?.randomUUID) {
+          return `anexo-${window.crypto.randomUUID()}`;
+        }
+
+        return `anexo-${Date.now()}-${Math.random()
+          .toString(16)
+          .slice(2)}`;
+
+      }
+
+      function escaparHTML(valor) {
+
+        return String(valor ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+
+      }
+
+      function normalizarTexto(valor) {
+
+        return String(valor ?? '')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .trim();
+
+      }
+
+      function formatearFecha(fecha) {
+
+        if (!fecha) return 'Sin fecha';
+
+        const partes = String(fecha).split('-');
+
+        if (partes.length === 3) {
+          return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        return String(fecha);
+
+      }
+
+      function formatearTamano(bytes) {
+
+        const valor = Number(bytes || 0);
+
+        if (valor < 1024) {
+          return `${valor} B`;
+        }
+
+        if (valor < 1024 * 1024) {
+          return `${(valor / 1024).toFixed(1)} KB`;
+        }
+
+        if (valor < 1024 * 1024 * 1024) {
+          return `${(valor / (1024 * 1024)).toFixed(1)} MB`;
+        }
+
+        return `${(
+          valor / (1024 * 1024 * 1024)
+        ).toFixed(2)} GB`;
+
+      }
+
+      function esImagen(anexo) {
+
+        const tipoMime =
+          String(anexo.tipoMime || '').toLowerCase();
+
+        const nombre =
+          String(anexo.nombreArchivo || '').toLowerCase();
+
+        return (
+          tipoMime.startsWith('image/') ||
+          /\.(jpg|jpeg|png|gif|webp|bmp)$/i.test(nombre) ||
+          anexo.tipo === 'Fotografía'
+        );
+
+      }
+
+      function mostrarMensaje(mensaje, tipo = 'exito') {
+
+        if (!elementos.contenedorAlertas) return;
+
+        const alerta = document.createElement('div');
+
+        alerta.className =
+          `alerta alerta-${tipo}`;
+
+        alerta.textContent = mensaje;
+
+        elementos.contenedorAlertas.appendChild(alerta);
+
+        setTimeout(() => {
+          alerta.remove();
+        }, 4000);
+
+      }
+
+      function abrirModal(modal) {
+
+        if (!modal) return;
+
+        modal.hidden = false;
+        modal.setAttribute('aria-hidden', 'false');
+
+        document.body.classList.add('modal-abierto');
+
+      }
+
+      function cerrarModal(modal) {
+
+        if (!modal) return;
+
+        modal.hidden = true;
+        modal.setAttribute('aria-hidden', 'true');
+
+        if (
+          elementos.modalAnexo?.hidden &&
+          elementos.modalDetalle?.hidden &&
+          elementos.modalConfirmacion?.hidden
+        ) {
+          document.body.classList.remove('modal-abierto');
+        }
+
+      }
+
+      function obtenerEstado() {
+        return window.BitacoraEstado?.obtener?.() || {};
+      }
+
+      function obtenerAnexosDesdeModulo() {
+
+        const modulo = window.BitacoraAnexos;
+
+        if (typeof modulo?.listar === 'function') {
+          return modulo.listar();
+        }
+
+        if (typeof modulo?.obtenerTodos === 'function') {
+          return modulo.obtenerTodos();
+        }
+
+        if (typeof modulo?.obtener === 'function') {
+          return modulo.obtener();
+        }
+
+        return null;
+
+      }
+
+      function normalizarAnexo(anexo) {
+
+        return {
+          id:
+            anexo.id || generarId(),
+
+          titulo:
+            anexo.titulo ||
+            anexo.nombre ||
+            anexo.nombreArchivo ||
+            'Anexo sin título',
+
+          nombreArchivo:
+            anexo.nombreArchivo ||
+            anexo.archivo?.nombre ||
+            anexo.nombre ||
+            'Archivo',
+
+          tipo:
+            anexo.tipo ||
+            anexo.tipoAnexo ||
+            'Documento',
+
+          tipoMime:
+            anexo.tipoMime ||
+            anexo.archivo?.tipo ||
+            '',
+
+          tamano:
+            Number(
+              anexo.tamano ??
+              anexo.archivo?.tamano ??
+              0
+            ),
+
+          fecha:
+            anexo.fecha ||
+            anexo.creadoEn?.slice?.(0, 10) ||
+            new Date().toISOString().slice(0, 10),
+
+          obraId:
+            anexo.obraId ||
+            anexo.obra?.id ||
+            '',
+
+          obraNombre:
+            anexo.obraNombre ||
+            anexo.obra?.nombre ||
+            '',
+
+          folioId:
+            anexo.folioId ||
+            anexo.folio?.id ||
+            '',
+
+          folioNombre:
+            anexo.folioNombre ||
+            anexo.folio?.folio ||
+            anexo.numeroFolio ||
+            '',
+
+          descripcion:
+            anexo.descripcion || '',
+
+          categoria:
+            anexo.categoria || '',
+
+          etiquetas:
+            Array.isArray(anexo.etiquetas)
+              ? anexo.etiquetas
+              : String(anexo.etiquetas || '')
+                  .split(',')
+                  .map(item => item.trim())
+                  .filter(Boolean),
+
+          ruta:
+            anexo.ruta ||
+            anexo.path ||
+            anexo.archivo?.ruta ||
+            '',
+
+          contenido:
+            anexo.contenido ||
+            anexo.dataUrl ||
+            anexo.archivo?.contenido ||
+            '',
+
+          creadoEn:
+            anexo.creadoEn ||
+            new Date().toISOString(),
+
+          actualizadoEn:
+            anexo.actualizadoEn ||
+            anexo.creadoEn ||
+            new Date().toISOString()
+        };
+
+      }
+
+      function cargarDatos() {
+
+        const estado = obtenerEstado();
+
+        obras =
+          Array.isArray(estado.catalogos?.obras)
+            ? estado.catalogos.obras
+            : [];
+
+        folios =
+          Array.isArray(estado.registros?.folios)
+            ? estado.registros.folios
+            : [];
+
+        let fuente = null;
+
+        try {
+          fuente = obtenerAnexosDesdeModulo();
+        }
+        catch (error) {
+          console.warn(
+            'No fue posible cargar anexos desde el módulo:',
+            error
+          );
+        }
+
+        if (!Array.isArray(fuente)) {
+          fuente =
+            Array.isArray(estado.registros?.anexos)
+              ? estado.registros.anexos
+              : [];
+        }
+
+        anexos =
+          fuente
+            .map(normalizarAnexo)
+            .sort((a, b) =>
+              String(b.fecha).localeCompare(String(a.fecha))
+            );
+
+        actualizarSelectores();
+        aplicarFiltros();
+
+      }
+
+      function actualizarSelect(
+        elemento,
+        opciones,
+        etiquetaInicial
+      ) {
+
+        const valorActual = elemento.value;
+
+        elemento.innerHTML = `
+          <option value="">
+            ${escaparHTML(etiquetaInicial)}
+          </option>
+
+          ${opciones
+            .map(opcion => `
+              <option value="${escaparHTML(opcion.valor)}">
+                ${escaparHTML(opcion.etiqueta)}
+              </option>
+            `)
+            .join('')}
+        `;
+
+        if (
+          opciones.some(
+            opcion => opcion.valor === valorActual
+          )
+        ) {
+          elemento.value = valorActual;
+        }
+
+      }
+
+      function actualizarSelectores() {
+
+        const opcionesObras =
+          obras
+            .map(obra => ({
+              valor: obra.id,
+              etiqueta: obra.nombre || 'Obra sin nombre'
+            }))
+            .sort(
+              (a, b) =>
+                a.etiqueta.localeCompare(b.etiqueta, 'es')
+            );
+
+        const opcionesFolios =
+          folios
+            .map(folio => ({
+              valor: folio.id,
+              etiqueta:
+                folio.folio ||
+                folio.numeroFolio ||
+                folio.consecutivo ||
+                'Folio sin número'
+            }))
+            .sort(
+              (a, b) =>
+                a.etiqueta.localeCompare(b.etiqueta, 'es')
+            );
+
+        actualizarSelect(
+          elementos.filtroObra,
+          opcionesObras,
+          'Todas las obras'
+        );
+
+        actualizarSelect(
+          elementos.filtroFolio,
+          opcionesFolios,
+          'Todos los folios'
+        );
+
+        actualizarSelect(
+          obtenerElemento('anexo-obra'),
+          opcionesObras,
+          'Sin obra asociada'
+        );
+
+        actualizarSelect(
+          obtenerElemento('anexo-folio'),
+          opcionesFolios,
+          'Sin folio asociado'
+        );
+
+      }
+
+      function aplicarFiltros() {
+
+        const texto =
+          normalizarTexto(elementos.buscar.value);
+
+        const tipo =
+          elementos.filtroTipo.value;
+
+        const obraId =
+          elementos.filtroObra.value;
+
+        const folioId =
+          elementos.filtroFolio.value;
+
+        const fechaInicial =
+          elementos.filtroFechaInicial.value;
+
+        const fechaFinal =
+          elementos.filtroFechaFinal.value;
+
+        anexosFiltrados =
+          anexos.filter(anexo => {
+
+            const contenido = normalizarTexto([
+              anexo.titulo,
+              anexo.nombreArchivo,
+              anexo.descripcion,
+              anexo.categoria,
+              anexo.etiquetas.join(' '),
+              anexo.obraNombre,
+              anexo.folioNombre
+            ].join(' '));
+
+            return (
+              (!texto || contenido.includes(texto)) &&
+              (!tipo || anexo.tipo === tipo) &&
+              (!obraId || anexo.obraId === obraId) &&
+              (!folioId || anexo.folioId === folioId) &&
+              (!fechaInicial || anexo.fecha >= fechaInicial) &&
+              (!fechaFinal || anexo.fecha <= fechaFinal)
+            );
+
+          });
+
+        actualizarResumen();
+        renderizar();
+
+      }
+
+      function actualizarResumen() {
+
+        elementos.totalAnexos.textContent =
+          String(anexosFiltrados.length);
+
+        elementos.totalImagenes.textContent =
+          String(
+            anexosFiltrados.filter(esImagen).length
+          );
+
+        elementos.totalDocumentos.textContent =
+          String(
+            anexosFiltrados.filter(
+              anexo => !esImagen(anexo)
+            ).length
+          );
+
+        const totalBytes =
+          anexosFiltrados.reduce(
+            (suma, anexo) =>
+              suma + Number(anexo.tamano || 0),
+            0
+          );
+
+        elementos.tamanoTotal.textContent =
+          formatearTamano(totalBytes);
+
+      }
+
+      function renderizar() {
+
+        elementos.textoResultados.textContent =
+          anexosFiltrados.length === 1
+            ? 'Se encontró 1 anexo.'
+            : `Se encontraron ${anexosFiltrados.length} anexos.`;
+
+        renderizarTabla();
+        renderizarTarjetas();
+
+      }
+
+      function renderizarTabla() {
+
+        if (!anexosFiltrados.length) {
+
+          elementos.tabla.innerHTML = `
+            <tr>
+              <td colspan="7" class="tabla__vacio">
+                No hay anexos que coincidan con los filtros.
+              </td>
+            </tr>
+          `;
+
+          return;
+
+        }
+
+        elementos.tabla.innerHTML =
+          anexosFiltrados
+            .map(anexo => `
+              <tr>
+
+                <td>
+
+                  <strong>
+                    ${escaparHTML(anexo.titulo)}
+                  </strong>
+
+                  <small>
+                    ${escaparHTML(anexo.nombreArchivo)}
+                  </small>
+
+                </td>
+
+                <td>
+                  ${escaparHTML(anexo.tipo)}
+                </td>
+
+                <td>
+                  ${escaparHTML(
+                    anexo.obraNombre ||
+                    obtenerNombreObra(anexo.obraId) ||
+                    'Sin asociar'
+                  )}
+                </td>
+
+                <td>
+                  ${escaparHTML(
+                    anexo.folioNombre ||
+                    obtenerNombreFolio(anexo.folioId) ||
+                    'Sin asociar'
+                  )}
+                </td>
+
+                <td>
+                  ${escaparHTML(
+                    formatearFecha(anexo.fecha)
+                  )}
+                </td>
+
+                <td>
+                  ${escaparHTML(
+                    formatearTamano(anexo.tamano)
+                  )}
+                </td>
+
+                <td>
+
+                  <div class="grupo-acciones-tabla">
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="ver"
+                      data-id="${escaparHTML(anexo.id)}"
+                      title="Ver detalle"
+                      aria-label="Ver detalle"
+                    >
+                      👁
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="abrir"
+                      data-id="${escaparHTML(anexo.id)}"
+                      title="Abrir archivo"
+                      aria-label="Abrir archivo"
+                    >
+                      ↗
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="editar"
+                      data-id="${escaparHTML(anexo.id)}"
+                      title="Editar"
+                      aria-label="Editar"
+                    >
+                      ✎
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="descargar"
+                      data-id="${escaparHTML(anexo.id)}"
+                      title="Guardar copia"
+                      aria-label="Guardar copia"
+                    >
+                      ⬇
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono boton-icono--peligro"
+                      data-accion="eliminar"
+                      data-id="${escaparHTML(anexo.id)}"
+                      title="Eliminar"
+                      aria-label="Eliminar"
+                    >
+                      🗑
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+            `)
+            .join('');
+
+      }
+
+      function renderizarTarjetas() {
+
+        if (!anexosFiltrados.length) {
+
+          elementos.vistaTarjetas.innerHTML = `
+            <div class="tabla__vacio">
+              No hay anexos que coincidan con los filtros.
+            </div>
+          `;
+
+          return;
+
+        }
+
+        elementos.vistaTarjetas.innerHTML =
+          anexosFiltrados
+            .map(anexo => {
+
+              const vistaPrevia =
+                esImagen(anexo) && anexo.contenido
+                  ? `
+                    <img
+                      src="${escaparHTML(anexo.contenido)}"
+                      alt="${escaparHTML(anexo.titulo)}"
+                    >
+                  `
+                  : `
+                    <div class="tarjeta-anexo__icono">
+                      ${obtenerIconoTipo(anexo)}
+                    </div>
+                  `;
+
+              return `
+                <article class="tarjeta-anexo">
+
+                  <button
+                    type="button"
+                    class="tarjeta-anexo__vista"
+                    data-accion="ver"
+                    data-id="${escaparHTML(anexo.id)}"
+                    aria-label="Ver ${escaparHTML(anexo.titulo)}"
+                  >
+                    ${vistaPrevia}
+                  </button>
+
+                  <div class="tarjeta-anexo__contenido">
+
+                    <strong>
+                      ${escaparHTML(anexo.titulo)}
+                    </strong>
+
+                    <small>
+                      ${escaparHTML(anexo.tipo)}
+                      ·
+                      ${escaparHTML(
+                        formatearFecha(anexo.fecha)
+                      )}
+                    </small>
+
+                    <p>
+                      ${escaparHTML(
+                        anexo.descripcion ||
+                        anexo.nombreArchivo
+                      )}
+                    </p>
+
+                  </div>
+
+                  <div class="tarjeta-anexo__acciones">
+
+                    <button
+                      type="button"
+                      class="boton boton-secundario"
+                      data-accion="abrir"
+                      data-id="${escaparHTML(anexo.id)}"
+                    >
+                      Abrir
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="editar"
+                      data-id="${escaparHTML(anexo.id)}"
+                      aria-label="Editar"
+                    >
+                      ✎
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono boton-icono--peligro"
+                      data-accion="eliminar"
+                      data-id="${escaparHTML(anexo.id)}"
+                      aria-label="Eliminar"
+                    >
+                      🗑
+                    </button>
+
+                  </div>
+
+                </article>
+              `;
+
+            })
+            .join('');
+
+      }
+
+      function obtenerIconoTipo(anexo) {
+
+        if (esImagen(anexo)) return '🖼️';
+
+        const nombre =
+          String(anexo.nombreArchivo || '').toLowerCase();
+
+        if (/\.pdf$/i.test(nombre)) return '📕';
+        if (/\.(doc|docx)$/i.test(nombre)) return '📘';
+        if (/\.(xls|xlsx|csv)$/i.test(nombre)) return '📊';
+        if (/\.(dwg|dxf)$/i.test(nombre)) return '📐';
+        if (/\.zip$/i.test(nombre)) return '🗜️';
+
+        return '📄';
+
+      }
+
+      function obtenerNombreObra(id) {
+
+        return obras.find(
+          obra => obra.id === id
+        )?.nombre || '';
+
+      }
+
+      function obtenerNombreFolio(id) {
+
+        const folio =
+          folios.find(item => item.id === id);
+
+        return (
+          folio?.folio ||
+          folio?.numeroFolio ||
+          folio?.consecutivo ||
+          ''
+        );
+
+      }
+
+      function cambiarVista(vista) {
+
+        vistaActual = vista;
+
+        const mostrarTabla =
+          vista === 'tabla';
+
+        elementos.vistaTabla.hidden =
+          !mostrarTabla;
+
+        elementos.vistaTarjetas.hidden =
+          mostrarTabla;
+
+        elementos.botonVistaTabla.setAttribute(
+          'aria-pressed',
+          String(mostrarTabla)
+        );
+
+        elementos.botonVistaTarjetas.setAttribute(
+          'aria-pressed',
+          String(!mostrarTabla)
+        );
+
+      }
+
+      function limpiarFormulario() {
+
+        elementos.formulario.reset();
+
+        obtenerElemento('anexo-id').value = '';
+        obtenerElemento('anexo-fecha').value =
+          new Date().toISOString().slice(0, 10);
+
+        obtenerElemento('anexo-tipo').value =
+          'Fotografía';
+
+        contenidoArchivoTemporal = null;
+
+        limpiarPrevisualizacion();
+
+      }
+
+      function abrirNuevoAnexo() {
+
+        limpiarFormulario();
+
+        obtenerElemento(
+          'modal-anexo-titulo'
+        ).textContent =
+          'Agregar anexo';
+
+        elementos.archivo.required = true;
+
+        abrirModal(elementos.modalAnexo);
+
+      }
+
+      function limpiarPrevisualizacion() {
+
+        const contenedor =
+          obtenerElemento('previsualizacion-archivo');
+
+        const imagen =
+          obtenerElemento('previsualizacion-imagen');
+
+        const documento =
+          obtenerElemento('previsualizacion-documento');
+
+        contenedor.hidden = true;
+        imagen.hidden = true;
+        imagen.removeAttribute('src');
+        documento.hidden = true;
+
+      }
+
+      function mostrarPrevisualizacionArchivo(archivo) {
+
+        const contenedor =
+          obtenerElemento('previsualizacion-archivo');
+
+        const imagen =
+          obtenerElemento('previsualizacion-imagen');
+
+        const documento =
+          obtenerElemento('previsualizacion-documento');
+
+        const nombre =
+          obtenerElemento('previsualizacion-nombre');
+
+        contenedor.hidden = false;
+
+        if (archivo.type.startsWith('image/')) {
+
+          const lector = new FileReader();
+
+          lector.onload = evento => {
+
+            contenidoArchivoTemporal =
+              evento.target.result;
+
+            imagen.src =
+              contenidoArchivoTemporal;
+
+            imagen.hidden = false;
+            documento.hidden = true;
+
+          };
+
+          lector.readAsDataURL(archivo);
+
+        }
+        else {
+
+          contenidoArchivoTemporal = null;
+
+          imagen.hidden = true;
+          documento.hidden = false;
+          nombre.textContent = archivo.name;
+
+        }
+
+      }
+
+      function detectarTipo(archivo) {
+
+        const tipoMime =
+          archivo.type.toLowerCase();
+
+        const nombre =
+          archivo.name.toLowerCase();
+
+        if (
+          tipoMime.startsWith('image/') ||
+          /\.(jpg|jpeg|png|gif|webp)$/i.test(nombre)
+        ) {
+          return 'Fotografía';
+        }
+
+        if (/\.(dwg|dxf)$/i.test(nombre)) {
+          return 'Plano';
+        }
+
+        if (/acta/i.test(nombre)) {
+          return 'Acta';
+        }
+
+        if (/informe/i.test(nombre)) {
+          return 'Informe';
+        }
+
+        if (/ensayo/i.test(nombre)) {
+          return 'Ensayo';
+        }
+
+        return 'Documento';
+
+      }
+
+      function manejarArchivoSeleccionado() {
+
+        const archivo =
+          elementos.archivo.files?.[0];
+
+        if (!archivo) {
+          limpiarPrevisualizacion();
+          return;
+        }
+
+        mostrarPrevisualizacionArchivo(archivo);
+
+        obtenerElemento('anexo-tipo').value =
+          detectarTipo(archivo);
+
+        if (
+          !obtenerElemento('anexo-titulo').value
+        ) {
+          obtenerElemento('anexo-titulo').value =
+            archivo.name.replace(/\.[^.]+$/, '');
+        }
+
+      }
+
+      function cargarFormulario(anexo) {
+
+        obtenerElemento('anexo-id').value =
+          anexo.id;
+
+        obtenerElemento('anexo-tipo').value =
+          anexo.tipo;
+
+        obtenerElemento('anexo-fecha').value =
+          anexo.fecha;
+
+        obtenerElemento('anexo-obra').value =
+          anexo.obraId;
+
+        obtenerElemento('anexo-folio').value =
+          anexo.folioId;
+
+        obtenerElemento('anexo-titulo').value =
+          anexo.titulo;
+
+        obtenerElemento('anexo-descripcion').value =
+          anexo.descripcion;
+
+        obtenerElemento('anexo-categoria').value =
+          anexo.categoria;
+
+        obtenerElemento('anexo-etiquetas').value =
+          anexo.etiquetas.join(', ');
+
+        contenidoArchivoTemporal =
+          anexo.contenido || null;
+
+        const contenedor =
+          obtenerElemento('previsualizacion-archivo');
+
+        const imagen =
+          obtenerElemento('previsualizacion-imagen');
+
+        const documento =
+          obtenerElemento('previsualizacion-documento');
+
+        contenedor.hidden = false;
+
+        if (esImagen(anexo) && anexo.contenido) {
+
+          imagen.src = anexo.contenido;
+          imagen.hidden = false;
+          documento.hidden = true;
+
+        }
+        else {
+
+          imagen.hidden = true;
+          documento.hidden = false;
+
+          obtenerElemento(
+            'previsualizacion-nombre'
+          ).textContent =
+            anexo.nombreArchivo;
+
+        }
+
+      }
+
+      function editarAnexo(id) {
+
+        const anexo =
+          anexos.find(item => item.id === id);
+
+        if (!anexo) return;
+
+        cargarFormulario(anexo);
+
+        elementos.archivo.required = false;
+
+        obtenerElemento(
+          'modal-anexo-titulo'
+        ).textContent =
+          'Editar anexo';
+
+        abrirModal(elementos.modalAnexo);
+
+      }
+
+      function leerFormulario() {
+
+        const archivo =
+          elementos.archivo.files?.[0];
+
+        const id =
+          obtenerElemento('anexo-id').value ||
+          generarId();
+
+        const obraId =
+          obtenerElemento('anexo-obra').value;
+
+        const folioId =
+          obtenerElemento('anexo-folio').value;
+
+        const existente =
+          anexos.find(item => item.id === id);
+
+        return {
+
+          id,
+
+          titulo:
+            obtenerElemento('anexo-titulo')
+              .value
+              .trim() ||
+            archivo?.name ||
+            existente?.titulo ||
+            'Anexo',
+
+          nombreArchivo:
+            archivo?.name ||
+            existente?.nombreArchivo ||
+            'Archivo',
+
+          tipo:
+            obtenerElemento('anexo-tipo').value,
+
+          tipoMime:
+            archivo?.type ||
+            existente?.tipoMime ||
+            '',
+
+          tamano:
+            archivo?.size ||
+            existente?.tamano ||
+            0,
+
+          fecha:
+            obtenerElemento('anexo-fecha').value ||
+            new Date().toISOString().slice(0, 10),
+
+          obraId,
+
+          obraNombre:
+            obtenerNombreObra(obraId),
+
+          folioId,
+
+          folioNombre:
+            obtenerNombreFolio(folioId),
+
+          descripcion:
+            obtenerElemento('anexo-descripcion')
+              .value
+              .trim(),
+
+          categoria:
+            obtenerElemento('anexo-categoria')
+              .value
+              .trim(),
+
+          etiquetas:
+            obtenerElemento('anexo-etiquetas')
+              .value
+              .split(',')
+              .map(item => item.trim())
+              .filter(Boolean),
+
+          ruta:
+            archivo?.path ||
+            existente?.ruta ||
+            '',
+
+          contenido:
+            contenidoArchivoTemporal ||
+            existente?.contenido ||
+            '',
+
+          creadoEn:
+            existente?.creadoEn ||
+            new Date().toISOString(),
+
+          actualizadoEn:
+            new Date().toISOString()
+
+        };
+
+      }
+
+      function persistirAnexos() {
+
+        window.BitacoraEstado?.actualizar?.(
+          'registros.anexos',
+          anexos,
+          {
+            origen: 'anexos'
+          }
+        );
+
+        if (window.BitacoraAlmacenamiento?.guardar) {
+
+          window.BitacoraAlmacenamiento.guardar(
+            'bitacora_estado',
+            window.BitacoraEstado.obtener()
+          );
+
+        }
+
+      }
+
+      async function guardarAnexo(evento) {
+
+        evento.preventDefault();
+
+        const id =
+          obtenerElemento('anexo-id').value;
+
+        if (
+          !id &&
+          !elementos.archivo.files?.[0]
+        ) {
+
+          mostrarMensaje(
+            'Seleccione un archivo para continuar.',
+            'advertencia'
+          );
+
+          return;
+
+        }
+
+        const anexo = leerFormulario();
+
+        const indice =
+          anexos.findIndex(
+            item => item.id === anexo.id
+          );
+
+        try {
+
+          if (
+            indice >= 0 &&
+            typeof window.BitacoraAnexos?.actualizar ===
+              'function'
+          ) {
+
+            await window.BitacoraAnexos.actualizar(
+              anexo.id,
+              anexo
+            );
+
+          }
+          else if (
+            indice < 0 &&
+            typeof window.BitacoraAnexos?.agregar ===
+              'function'
+          ) {
+
+            await window.BitacoraAnexos.agregar(anexo);
+
+          }
+
+        }
+        catch (error) {
+
+          console.warn(
+            'El módulo de anexos no pudo guardar directamente:',
+            error
+          );
+
+        }
+
+        if (indice >= 0) {
+
+          anexos[indice] = anexo;
+
+        }
+        else {
+
+          anexos.unshift(anexo);
+
+        }
+
+        persistirAnexos();
+        aplicarFiltros();
+        cerrarModal(elementos.modalAnexo);
+
+        mostrarMensaje(
+          indice >= 0
+            ? 'El anexo fue actualizado correctamente.'
+            : 'El anexo fue agregado correctamente.',
+          'exito'
+        );
+
+      }
+
+      function mostrarDetalle(id) {
+
+        const anexo =
+          anexos.find(item => item.id === id);
+
+        if (!anexo) return;
+
+        anexoSeleccionado = anexo;
+
+        obtenerElemento(
+          'detalle-anexo-titulo'
+        ).textContent =
+          anexo.titulo;
+
+        obtenerElemento(
+          'detalle-anexo-subtitulo'
+        ).textContent =
+          anexo.nombreArchivo;
+
+        obtenerElemento(
+          'detalle-nombre-archivo'
+        ).textContent =
+          anexo.nombreArchivo;
+
+        obtenerElemento(
+          'detalle-tipo-anexo'
+        ).textContent =
+          anexo.tipo;
+
+        obtenerElemento(
+          'detalle-obra-anexo'
+        ).textContent =
+          anexo.obraNombre ||
+          obtenerNombreObra(anexo.obraId) ||
+          'Sin asociar';
+
+        obtenerElemento(
+          'detalle-folio-anexo'
+        ).textContent =
+          anexo.folioNombre ||
+          obtenerNombreFolio(anexo.folioId) ||
+          'Sin asociar';
+
+        obtenerElemento(
+          'detalle-fecha-anexo'
+        ).textContent =
+          formatearFecha(anexo.fecha);
+
+        obtenerElemento(
+          'detalle-tamano-anexo'
+        ).textContent =
+          formatearTamano(anexo.tamano);
+
+        obtenerElemento(
+          'detalle-categoria-anexo'
+        ).textContent =
+          anexo.categoria ||
+          'Sin registrar';
+
+        obtenerElemento(
+          'detalle-descripcion-anexo'
+        ).textContent =
+          anexo.descripcion ||
+          'Sin descripción';
+
+        const vista =
+          obtenerElemento('detalle-vista-previa');
+
+        if (esImagen(anexo) && anexo.contenido) {
+
+          vista.innerHTML = `
+            <img
+              src="${escaparHTML(anexo.contenido)}"
+              alt="${escaparHTML(anexo.titulo)}"
+            >
+          `;
+
+        }
+        else {
+
+          vista.innerHTML = `
+            <div class="previsualizacion-documento">
+              <span aria-hidden="true">
+                ${obtenerIconoTipo(anexo)}
+              </span>
+              <strong>
+                ${escaparHTML(anexo.nombreArchivo)}
+              </strong>
+            </div>
+          `;
+
+        }
+
+        abrirModal(elementos.modalDetalle);
+
+      }
+
+      async function abrirArchivo(anexo) {
+
+        try {
+
+          if (
+            anexo.ruta &&
+            typeof window.BitacoraIPC?.abrirRuta ===
+              'function'
+          ) {
+
+            await window.BitacoraIPC.abrirRuta(
+              anexo.ruta
+            );
+
+            return;
+
+          }
+
+          if (anexo.contenido) {
+
+            window.open(
+              anexo.contenido,
+              '_blank',
+              'noopener'
+            );
+
+            return;
+
+          }
+
+          throw new Error(
+            'El anexo no contiene una ruta o contenido disponible.'
+          );
+
+        }
+        catch (error) {
+
+          console.error(error);
+
+          mostrarMensaje(
+            'No fue posible abrir el archivo.',
+            'error'
+          );
+
+        }
+
+      }
+
+      async function guardarCopia(anexo) {
+
+        try {
+
+          if (
+            typeof window.BitacoraIPC?.guardarArchivo ===
+              'function'
+          ) {
+
+            await window.BitacoraIPC.guardarArchivo({
+              titulo: 'Guardar copia del anexo',
+              nombreSugerido:
+                anexo.nombreArchivo,
+              contenido:
+                anexo.contenido || '',
+              origen:
+                anexo.ruta || ''
+            });
+
+          }
+          else if (anexo.contenido) {
+
+            const enlace =
+              document.createElement('a');
+
+            enlace.href = anexo.contenido;
+            enlace.download = anexo.nombreArchivo;
+            enlace.click();
+
+          }
+          else {
+
+            throw new Error(
+              'No hay contenido disponible para guardar.'
+            );
+
+          }
+
+          mostrarMensaje(
+            'La copia del archivo fue guardada.',
+            'exito'
+          );
+
+        }
+        catch (error) {
+
+          console.error(error);
+
+          mostrarMensaje(
+            'No fue posible guardar una copia del archivo.',
+            'error'
+          );
+
+        }
+
+      }
+
+      function solicitarEliminar(id) {
+
+        const anexo =
+          anexos.find(item => item.id === id);
+
+        if (!anexo) return;
+
+        anexoPendienteEliminar = anexo;
+
+        elementos.mensajeConfirmacion.textContent =
+          `¿Desea eliminar el anexo "${anexo.titulo}"? Esta acción no se puede deshacer.`;
+
+        abrirModal(
+          elementos.modalConfirmacion
+        );
+
+      }
+
+      async function eliminarAnexo() {
+
+        if (!anexoPendienteEliminar) return;
+
+        const id =
+          anexoPendienteEliminar.id;
+
+        try {
+
+          if (
+            typeof window.BitacoraAnexos?.eliminar ===
+              'function'
+          ) {
+
+            await window.BitacoraAnexos.eliminar(id);
+
+          }
+
+        }
+        catch (error) {
+
+          console.warn(
+            'El módulo de anexos no pudo eliminar directamente:',
+            error
+          );
+
+        }
+
+        anexos =
+          anexos.filter(
+            anexo => anexo.id !== id
+          );
+
+        persistirAnexos();
+
+        anexoPendienteEliminar = null;
+
+        cerrarModal(
+          elementos.modalConfirmacion
+        );
+
+        aplicarFiltros();
+
+        mostrarMensaje(
+          'El anexo fue eliminado.',
+          'exito'
+        );
+
+      }
+
+      async function exportarListado() {
+
+        if (!anexosFiltrados.length) {
+
+          mostrarMensaje(
+            'No hay anexos para exportar.',
+            'advertencia'
+          );
+
+          return;
+
+        }
+
+        const encabezados = [
+          'Título',
+          'Archivo',
+          'Tipo',
+          'Obra',
+          'Folio',
+          'Fecha',
+          'Tamaño',
+          'Categoría',
+          'Descripción'
+        ];
+
+        const filas =
+          anexosFiltrados.map(anexo => [
+            anexo.titulo,
+            anexo.nombreArchivo,
+            anexo.tipo,
+            anexo.obraNombre ||
+              obtenerNombreObra(anexo.obraId),
+            anexo.folioNombre ||
+              obtenerNombreFolio(anexo.folioId),
+            anexo.fecha,
+            formatearTamano(anexo.tamano),
+            anexo.categoria,
+            anexo.descripcion
+          ]);
+
+        const escaparCSV = valor =>
+          `"${String(valor ?? '')
+            .replaceAll('"', '""')}"`;
+
+        const contenido = [
+          encabezados.map(escaparCSV).join(';'),
+          ...filas.map(
+            fila => fila.map(escaparCSV).join(';')
+          )
+        ].join('\n');
+
+        const nombre =
+          `anexos-bitacora-${
+            new Date().toISOString().slice(0, 10)
+          }.csv`;
+
+        try {
+
+          if (
+            typeof window.BitacoraIPC?.guardarArchivo ===
+              'function'
+          ) {
+
+            await window.BitacoraIPC.guardarArchivo({
+              titulo: 'Guardar listado de anexos',
+              nombreSugerido: nombre,
+              contenido:
+                '\uFEFF' + contenido,
+              filtros: [
+                {
+                  name: 'Archivo CSV',
+                  extensions: ['csv']
+                }
+              ]
+            });
+
+          }
+          else {
+
+            const blob =
+              new Blob(
+                ['\uFEFF' + contenido],
+                {
+                  type:
+                    'text/csv;charset=utf-8'
+                }
+              );
+
+            const enlace =
+              document.createElement('a');
+
+            enlace.href =
+              URL.createObjectURL(blob);
+
+            enlace.download = nombre;
+            enlace.click();
+
+            URL.revokeObjectURL(enlace.href);
+
+          }
+
+          mostrarMensaje(
+            'El listado de anexos fue exportado.',
+            'exito'
+          );
+
+        }
+        catch (error) {
+
+          console.error(error);
+
+          mostrarMensaje(
+            'No fue posible exportar el listado.',
+            'error'
+          );
+
+        }
+
+      }
+
+      function manejarAcciones(evento) {
+
+        const boton =
+          evento.target.closest(
+            '[data-accion][data-id]'
+          );
+
+        if (!boton) return;
+
+        const { accion, id } = boton.dataset;
+
+        const anexo =
+          anexos.find(item => item.id === id);
+
+        if (!anexo) return;
+
+        if (accion === 'ver') {
+          mostrarDetalle(id);
+        }
+
+        if (accion === 'abrir') {
+          abrirArchivo(anexo);
+        }
+
+        if (accion === 'editar') {
+          editarAnexo(id);
+        }
+
+        if (accion === 'descargar') {
+          guardarCopia(anexo);
+        }
+
+        if (accion === 'eliminar') {
+          solicitarEliminar(id);
+        }
+
+      }
+
+      function limpiarFiltros() {
+
+        elementos.buscar.value = '';
+        elementos.filtroTipo.value = '';
+        elementos.filtroObra.value = '';
+        elementos.filtroFolio.value = '';
+        elementos.filtroFechaInicial.value = '';
+        elementos.filtroFechaFinal.value = '';
+
+        aplicarFiltros();
+
+      }
+
+      function vincularEventos() {
+
+        elementos.botonNuevo.addEventListener(
+          'click',
+          abrirNuevoAnexo
+        );
+
+        elementos.botonExportar.addEventListener(
+          'click',
+          exportarListado
+        );
+
+        elementos.formulario.addEventListener(
+          'submit',
+          guardarAnexo
+        );
+
+        elementos.archivo.addEventListener(
+          'change',
+          manejarArchivoSeleccionado
+        );
+
+        elementos.botonVistaTabla.addEventListener(
+          'click',
+          () => cambiarVista('tabla')
+        );
+
+        elementos.botonVistaTarjetas.addEventListener(
+          'click',
+          () => cambiarVista('tarjetas')
+        );
+
+        elementos.tabla.addEventListener(
+          'click',
+          manejarAcciones
+        );
+
+        elementos.vistaTarjetas.addEventListener(
+          'click',
+          manejarAcciones
+        );
+
+        [
+          elementos.buscar,
+          elementos.filtroTipo,
+          elementos.filtroObra,
+          elementos.filtroFolio,
+          elementos.filtroFechaInicial,
+          elementos.filtroFechaFinal
+        ].forEach(elemento => {
+
+          const evento =
+            elemento.type === 'search'
+              ? 'input'
+              : 'change';
+
+          elemento.addEventListener(
+            evento,
+            aplicarFiltros
+          );
+
+        });
+
+        elementos.botonLimpiar.addEventListener(
+          'click',
+          limpiarFiltros
+        );
+
+        elementos.botonConfirmarEliminacion.addEventListener(
+          'click',
+          eliminarAnexo
+        );
+
+        elementos.botonEditarDesdeDetalle.addEventListener(
+          'click',
+          () => {
+
+            if (!anexoSeleccionado) return;
+
+            cerrarModal(elementos.modalDetalle);
+
+            editarAnexo(
+              anexoSeleccionado.id
+            );
+
+          }
+        );
+
+        elementos.botonAbrirDesdeDetalle.addEventListener(
+          'click',
+          () => {
+
+            if (anexoSeleccionado) {
+              abrirArchivo(anexoSeleccionado);
+            }
+
+          }
+        );
+
+        document.querySelectorAll(
+          '[data-cerrar-anexo]'
+        ).forEach(elemento => {
+
+          elemento.addEventListener(
+            'click',
+            () => cerrarModal(
+              elementos.modalAnexo
+            )
+          );
+
+        });
+
+        document.querySelectorAll(
+          '[data-cerrar-detalle]'
+        ).forEach(elemento => {
+
+          elemento.addEventListener(
+            'click',
+            () => {
+
+              anexoSeleccionado = null;
+
+              cerrarModal(
+                elementos.modalDetalle
+              );
+
+            }
+          );
+
+        });
+
+        document.querySelectorAll(
+          '[data-cerrar-confirmacion]'
+        ).forEach(elemento => {
+
+          elemento.addEventListener(
+            'click',
+            () => {
+
+              anexoPendienteEliminar = null;
+
+              cerrarModal(
+                elementos.modalConfirmacion
+              );
+
+            }
+          );
+
+        });
+
+        document.addEventListener(
+          'keydown',
+          evento => {
+
+            if (evento.key !== 'Escape') return;
+
+            anexoSeleccionado = null;
+            anexoPendienteEliminar = null;
+
+            cerrarModal(elementos.modalAnexo);
+            cerrarModal(elementos.modalDetalle);
+            cerrarModal(elementos.modalConfirmacion);
+
+          }
+        );
+
+      }
+
+      async function cargarVersion() {
+
+        try {
+
+          const informacion =
+            await window.BitacoraIPC
+              ?.informacionAplicacion?.();
+
+          if (informacion?.version) {
+
+            obtenerElemento(
+              'version-aplicacion'
+            ).textContent =
+              `Versión ${informacion.version}`;
+
+          }
+
+        }
+        catch (error) {
+
+          console.warn(
+            'No fue posible consultar la versión:',
+            error
+          );
+
+        }
+
+      }
+
+      function iniciar() {
+
+        iniciarElementos();
+        vincularEventos();
+        cambiarVista(vistaActual);
+        cargarDatos();
+        cargarVersion();
+
+      }
+
+      if (document.readyState === 'loading') {
+
+        document.addEventListener(
+          'DOMContentLoaded',
+          iniciar,
+          {
+            once: true
+          }
+        );
+
+      }
+      else {
+
+        iniciar();
+
+      }
+
+    })();
+  </script>
+
+  <script src="../js/pwa.js"></script>
+</body>
+
+</html>

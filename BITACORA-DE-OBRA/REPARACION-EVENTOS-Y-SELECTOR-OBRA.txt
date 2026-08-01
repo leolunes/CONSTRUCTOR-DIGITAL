@@ -1,0 +1,12 @@
+REPARACIÓN CRÍTICA
+
+Causa encontrada:
+- La función capturarGPS había quedado eliminada durante el ajuste anterior.
+- Al iniciar la aplicación, JavaScript intentaba enlazar botones con esa función inexistente.
+- Ese error detenía toda la inicialización de app.js.
+- Por eso no funcionaban Obras, el selector de obra activa ni los demás botones.
+
+Corrección:
+- Se restauró capturarGPS.
+- Se añadió protección para que un error opcional no desactive todos los eventos.
+- Se verificó la sintaxis de app.js, editor-profesional.js, main.js y preload.js.

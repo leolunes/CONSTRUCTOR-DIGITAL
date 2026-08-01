@@ -1,0 +1,13 @@
+BITÁCORA DE OBRA — AJUSTE V1.38
+
+Se agregó el botón “Limpiar” en la barra principal.
+
+Al utilizarlo y confirmar:
+- retira la obra activa y el folio activo;
+- limpia el formulario, el editor, notas, anexos, fotografías y firmas;
+- deja el selector de obra y contratista sin selección;
+- borra los datos del responsable guardados en Configuración;
+- elimina referencias locales que podían volver a mostrar información anterior;
+- conserva intactas las obras, contratistas y folios ya archivados.
+
+También se agregó el botón “Limpiar datos” en Configuración para borrar y guardar vacíos los campos Nombre, Cargo, Entidad y Correo.

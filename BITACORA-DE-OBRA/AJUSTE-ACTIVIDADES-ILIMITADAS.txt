@@ -1,0 +1,7 @@
+AJUSTE — ACTIVIDADES EJECUTADAS ILIMITADAS
+
+- El botón ahora se identifica como “+ Agregar actividad ejecutada”.
+- Cada pulsación agrega una nueva actividad independiente al final del editor.
+- Se pueden agregar tantas actividades como sean necesarias.
+- El consecutivo se actualiza automáticamente: N.º 1, N.º 2, N.º 3, etc.
+- Se conserva la opción de minimizar, expandir y eliminar cada actividad.

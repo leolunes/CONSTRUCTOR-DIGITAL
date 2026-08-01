@@ -1,0 +1,229 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/general.css
+   Propósito: estilos generales de toda la aplicación
+   ========================================================= */
+
+/* Reinicio básico */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--color-fondo-app);
+  color: var(--color-texto);
+  font-family: var(--fuente-principal);
+  font-size: var(--tamano-texto-base);
+  line-height: 1.4;
+}
+
+/* Elementos de formulario */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+  background: var(--color-fondo-panel);
+  color: var(--color-texto);
+  padding: 0.45rem 0.6rem;
+  outline: none;
+  transition:
+    border-color var(--transicion-rapida),
+    box-shadow var(--transicion-rapida),
+    background-color var(--transicion-rapida);
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-borde-activo);
+  box-shadow: 0 0 0 2px rgba(7, 153, 211, 0.16);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-placeholder);
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  background: #eceff1;
+  color: #767f87;
+}
+
+/* Títulos y textos */
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+}
+
+a {
+  color: var(--color-primario-oscuro);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor principal */
+.contenedor {
+  width: calc(100% - 16px);
+  max-width: var(--ancho-maximo);
+  margin: 8px auto;
+  border: 1px solid var(--color-borde);
+  background: var(--color-fondo-panel);
+  box-shadow: var(--sombra-media);
+}
+
+/* Utilidades */
+.oculto {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.solo-lectura {
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8;
+}
+
+.texto-centrado {
+  text-align: center;
+}
+
+.texto-derecha {
+  text-align: right;
+}
+
+.texto-izquierda {
+  text-align: left;
+}
+
+.texto-negrita {
+  font-weight: 700;
+}
+
+.texto-secundario {
+  color: var(--color-texto-secundario);
+}
+
+.requerido::after {
+  content: " *";
+  color: var(--color-error);
+}
+
+/* Indicadores generales */
+.estado-exito {
+  color: var(--color-exito);
+}
+
+.estado-advertencia {
+  color: var(--color-advertencia);
+}
+
+.estado-error {
+  color: var(--color-error);
+}
+
+.estado-informacion {
+  color: var(--color-informacion);
+}
+
+/* Accesibilidad */
+:focus-visible {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(7, 153, 211, 0.24);
+}
+
+/* Barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e6e9ec;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid #e6e9ec;
+  border-radius: var(--radio-pill);
+  background: #9aa3ab;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #747e87;
+}
+
+/* Clase usada mientras la interfaz se está iniciando */
+.app-cargando {
+  cursor: wait;
+}
+
+.app-cargando * {
+  pointer-events: none;
+}
+
+/* Impresión básica; se ampliará en impresion.css */
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .contenedor {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+  }
+}

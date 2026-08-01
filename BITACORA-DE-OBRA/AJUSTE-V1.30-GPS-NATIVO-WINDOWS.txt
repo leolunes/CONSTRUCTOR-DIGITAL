@@ -1,0 +1,13 @@
+BITÁCORA DE OBRA v1.30
+
+AJUSTE REALIZADO
+- El botón Capturar GPS consulta primero el servicio nativo de ubicación de Windows.
+- Se agregó un canal IPC seguro entre la interfaz y el proceso principal de Electron.
+- Si Windows no entrega ubicación, la app intenta como respaldo la geolocalización de Chromium.
+- Se conservan el ingreso manual y la opción Usar ubicación de la obra.
+
+REQUISITO EN WINDOWS
+Configuración > Privacidad y seguridad > Ubicación:
+1. Servicios de ubicación: Activado.
+2. Permitir que las aplicaciones accedan a la ubicación: Activado.
+3. Permitir que las aplicaciones de escritorio accedan a la ubicación: Activado.

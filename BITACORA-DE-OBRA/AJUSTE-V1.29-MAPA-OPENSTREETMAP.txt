@@ -1,0 +1,6 @@
+AJUSTE V1.29 - MAPA OPENSTREETMAP
+
+- Corrige la validación para que campos vacíos no se interpreten como 0.000000, 0.000000.
+- Muestra el mapa real de OpenStreetMap con marcador cuando existen coordenadas válidas.
+- Conserva la vista informativa cuando todavía no hay coordenadas.
+- No modifica la base de datos ni los folios guardados.

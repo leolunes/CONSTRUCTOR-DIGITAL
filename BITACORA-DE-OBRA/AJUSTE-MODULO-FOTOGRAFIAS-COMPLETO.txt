@@ -1,0 +1,31 @@
+AJUSTE — MÓDULO COMPLETO DE FOTOGRAFÍAS
+
+Alcance incorporado:
+1. El botón “Agregar fotografías” abre el selector nativo de Windows.
+2. Permite seleccionar varias imágenes.
+3. Copia las fotografías a la carpeta persistente de la aplicación:
+   userData/bitacora-de-obra/storage/imagenes/<obra>/<folio>/
+4. El folio guarda solamente los metadatos y la ruta de cada fotografía.
+5. Al volver a abrir un folio desde el historial, las fotografías se cargan desde su ruta.
+6. Cada fotografía tiene numeración, fecha de incorporación, descripción editable y botón Eliminar.
+7. La exportación Word incluye las fotografías y sus descripciones.
+8. La exportación PDF incluye las fotografías y sus descripciones.
+9. El historial muestra la cantidad de fotografías de cada folio.
+
+Archivos ajustados:
+- main.js
+- preload.js
+- js/ipc-renderer.js
+- js/app.js
+- app/historial.html
+- js/historial-folios.js
+
+Prueba recomendada:
+1. Seleccionar una obra activa.
+2. Crear o abrir un folio.
+3. Pulsar “Agregar fotografías”.
+4. Seleccionar dos o más imágenes.
+5. Escribir descripciones.
+6. Guardar el folio.
+7. Abrir Historial, comprobar el contador y volver a abrir el folio.
+8. Exportar a Word y PDF.

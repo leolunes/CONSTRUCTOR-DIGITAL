@@ -1,0 +1,8 @@
+AJUSTE V1.58 - SALTO DE PÁGINA ENTRE FOLIOS EN WORD CONSOLIDADO
+
+Se modificó únicamente el generador del Informe consolidado de Word.
+
+Cambio realizado:
+- Se inserta un salto de página explícito compatible con Microsoft Word antes de cada folio, excepto el primero.
+- Cada folio del consolidado inicia en una hoja nueva.
+- No se modificaron el PDF, el Word individual, el diseño, las fotografías, las firmas ni los datos guardados.

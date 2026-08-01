@@ -1,0 +1,157 @@
+:root {
+  --azul: #123c6b;
+  --azul-claro: #e9f2fb;
+  --borde: #ccd6e0;
+  --fondo: #f4f6f8;
+  --peligro: #a42323;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: #1c2a36;
+  font-family: Arial, sans-serif;
+}
+
+.historial-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 32px;
+  background: white;
+  border-bottom: 1px solid var(--borde);
+}
+
+.historial-cabecera h1 {
+  margin: 0 0 5px;
+  color: var(--azul);
+}
+
+.historial-cabecera p {
+  margin: 0;
+  color: #5f6f7e;
+}
+
+.historial-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.historial-contenido {
+  padding: 26px 32px;
+}
+
+.panel-filtros {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 220px 190px;
+  gap: 18px;
+  align-items: end;
+  padding: 20px;
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.panel-filtros label {
+  display: grid;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.panel-filtros input,
+.panel-filtros select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+}
+
+.resumen {
+  display: grid;
+  justify-items: center;
+  padding: 9px;
+  border-radius: 8px;
+  background: var(--azul-claro);
+}
+
+.resumen strong {
+  font-size: 1.5rem;
+  color: var(--azul);
+}
+
+.panel-tabla {
+  overflow: auto;
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 950px;
+}
+
+th, td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #e5eaf0;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--azul);
+  background: #f7f9fb;
+}
+
+.estado-folio {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--azul-claro);
+  color: var(--azul);
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.acciones-folio {
+  white-space: nowrap;
+}
+
+.acciones-folio button {
+  margin: 0 5px 5px 0;
+  padding: 7px 10px;
+  border: 1px solid var(--borde);
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+}
+
+.acciones-folio button:hover {
+  background: #eef4fa;
+}
+
+.acciones-folio .peligro {
+  color: var(--peligro);
+}
+
+.sin-folios {
+  padding: 45px;
+  text-align: center;
+  color: #667788;
+}
+
+@media (max-width: 800px) {
+  .historial-cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .panel-filtros {
+    grid-template-columns: 1fr;
+  }
+}

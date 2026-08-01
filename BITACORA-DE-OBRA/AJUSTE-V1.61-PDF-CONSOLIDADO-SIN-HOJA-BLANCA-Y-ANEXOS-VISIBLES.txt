@@ -1,0 +1,15 @@
+BITÁCORA DE OBRA — AJUSTE V1.61
+
+Cambios realizados exclusivamente en la exportación PDF:
+
+1. PDF consolidado
+- Se eliminó el elemento vacío que generaba una página en blanco entre folios.
+- Cada folio posterior al primero inicia mediante un único salto de página aplicado directamente a su sección.
+
+2. Anexos visibles
+- Los anexos JPG, JPEG, PNG, WEBP, GIF y BMP se cargan e incrustan dentro de la sección ANEXOS.
+- Se conserva la tabla con nombre, descripción y tipo.
+- Los anexos de otros formatos permanecen registrados en la tabla sin intentar incrustarlos.
+- La vista del anexo se aplica tanto al PDF del folio como al PDF consolidado.
+
+No se modificaron Word, Informe consolidado Word, obras, contratistas, folios, firmas ni fotografías.

@@ -1,0 +1,387 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/bitacora.css
+   Diseño principal de la interfaz
+   ========================================================= */
+
+.encabezado{
+    display:flex;
+    justify-content:space-between;
+    align-items:stretch;
+    gap:20px;
+    padding:18px;
+    border-bottom:2px solid var(--color-borde);
+    background:var(--color-fondo-panel);
+}
+
+.empresa{
+    flex:1;
+}
+
+.empresa h1{
+    margin:0 0 8px;
+    color:var(--color-azul-titulo);
+    font-size:var(--tamano-texto-xl);
+}
+
+
+.selector-contratista-obra{
+    margin:0 0 12px;
+}
+
+.selector-contratista-obra label{
+    display:block;
+    margin-bottom:5px;
+    color:var(--color-texto-secundario);
+    font-weight:700;
+}
+
+.selector-contratista-obra select{
+    width:100%;
+    min-height:42px;
+    padding:8px 10px;
+    border:1px solid var(--color-borde);
+    border-radius:var(--radio-sm);
+    background:#fff;
+    color:var(--color-texto-principal);
+    font:inherit;
+}
+
+.empresa p{
+    margin:4px 0;
+    color:var(--color-texto-secundario);
+}
+
+.folio{
+    width:320px;
+    border:2px solid var(--color-borde);
+    border-radius:var(--radio-md);
+    text-align:center;
+    padding:14px;
+    background:#fff;
+}
+
+.folio h2{
+    margin:0;
+    color:var(--color-rojo-titulo);
+    font-size:1.55rem;
+}
+
+.folio h3{
+    margin-top:12px;
+    color:var(--color-azul-titulo);
+}
+
+.datos-obra{
+    padding:18px;
+    border-bottom:1px solid var(--color-borde-suave);
+    background:var(--color-fondo-suave);
+}
+
+.datos-obra h3{
+    margin-bottom:16px;
+    color:var(--color-rojo-texto);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:170px 1fr 170px 1fr;
+    gap:12px;
+    align-items:center;
+}
+
+.grid label{
+    font-weight:600;
+}
+
+.editor{
+    padding:18px;
+    background:#fff;
+}
+
+.editor-toolbar{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    padding-bottom:12px;
+}
+
+.editor-toolbar button{
+    width:42px;
+    height:42px;
+    border:1px solid var(--color-borde-suave);
+    border-radius:var(--radio-sm);
+    background:#fff;
+    transition:all var(--transicion-normal);
+}
+
+.editor-toolbar button:hover{
+    background:var(--color-primario);
+    color:#fff;
+    border-color:var(--color-primario);
+}
+
+.editor-contenido{
+    min-height:var(--alto-editor-minimo);
+    padding:18px;
+    border:1px solid var(--color-borde);
+    border-radius:var(--radio-md);
+    background:#fff;
+    font-family:var(--fuente-documento);
+    font-size:1rem;
+    line-height:1.7;
+    overflow:auto;
+}
+
+.editor-contenido:focus{
+    outline:none;
+    border-color:var(--color-borde-activo);
+    box-shadow:0 0 0 2px rgba(7,153,211,.18);
+}
+
+.nota{
+    padding:18px;
+    background:var(--color-fondo-nota);
+    border-top:1px solid var(--color-borde-suave);
+}
+
+.nota label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.firmas{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    padding:22px 18px;
+    background:var(--color-fondo-firmas);
+    border-top:2px solid var(--color-borde);
+}
+
+.firmas label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.firmas input{
+    text-align:center;
+}
+
+@media (max-width:1100px){
+
+    .encabezado{
+        flex-direction:column;
+    }
+
+    .folio{
+        width:100%;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .firmas{
+        grid-template-columns:1fr;
+    }
+}
+
+/* Selector de obra activa */
+.selector-obra-activa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 360px;
+  padding: 5px 9px;
+  border: 1px solid #cbd5df;
+  border-radius: 7px;
+  background: #eef4f9;
+}
+
+.selector-obra-activa label {
+  white-space: nowrap;
+  color: #123c6b;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.selector-obra-activa select {
+  width: 100%;
+  min-width: 220px;
+  padding: 7px 9px;
+  border: 1px solid #b9c6d2;
+  border-radius: 5px;
+  background: white;
+}
+
+@media (max-width: 950px) {
+  .selector-obra-activa {
+    min-width: 100%;
+  }
+}
+
+
+/* =========================================================
+   AJUSTE V1.22 - DATOS DE LA OBRA COMPLETAMENTE VISIBLES
+   ========================================================= */
+.grid-datos-obra{
+    grid-template-columns:120px minmax(220px,1fr) 120px minmax(220px,1fr);
+    grid-template-areas:
+        "nombre-etiqueta nombre-campo nombre-campo nombre-campo"
+        "contrato-etiqueta contrato-campo inicio-etiqueta inicio-campo"
+        "direccion-etiqueta direccion-campo final-etiqueta final-campo"
+        "telefono-etiqueta telefono-campo ciudad-etiqueta ciudad-campo"
+        "departamento-etiqueta departamento-campo estado-etiqueta estado-campo"
+        "valor-etiqueta valor-campo valor-campo valor-campo";
+    column-gap:14px;
+    row-gap:12px;
+}
+
+.grid-datos-obra label[for="obra-nombre"]{grid-area:nombre-etiqueta;}
+.grid-datos-obra #obra-nombre{grid-area:nombre-campo;}
+.grid-datos-obra label[for="numero-contrato"]{grid-area:contrato-etiqueta;}
+.grid-datos-obra #numero-contrato{grid-area:contrato-campo;}
+.grid-datos-obra label[for="fecha-inicio"]{grid-area:inicio-etiqueta;}
+.grid-datos-obra #fecha-inicio{grid-area:inicio-campo;}
+.grid-datos-obra label[for="obra-direccion"]{grid-area:direccion-etiqueta;}
+.grid-datos-obra #obra-direccion{grid-area:direccion-campo;}
+.grid-datos-obra label[for="fecha-final"]{grid-area:final-etiqueta;}
+.grid-datos-obra #fecha-final{grid-area:final-campo;}
+.grid-datos-obra label[for="obra-telefono"]{grid-area:telefono-etiqueta;}
+.grid-datos-obra #obra-telefono{grid-area:telefono-campo;}
+.grid-datos-obra label[for="obra-ciudad"]{grid-area:ciudad-etiqueta;}
+.grid-datos-obra #obra-ciudad{grid-area:ciudad-campo;}
+.grid-datos-obra label[for="obra-departamento"]{grid-area:departamento-etiqueta;}
+.grid-datos-obra #obra-departamento{grid-area:departamento-campo;}
+.grid-datos-obra label[for="obra-estado"]{grid-area:estado-etiqueta;}
+.grid-datos-obra #obra-estado{grid-area:estado-campo;}
+.grid-datos-obra label[for="obra-valor"]{grid-area:valor-etiqueta;}
+.grid-datos-obra #obra-valor{grid-area:valor-campo;font-weight:700;}
+
+.grid-datos-obra input,
+.grid-datos-obra select{
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+}
+
+.grid-datos-obra #obra-nombre{
+    min-height:48px;
+    padding:10px 14px;
+    border:2px solid var(--color-primario);
+    background:rgba(7,153,211,.08);
+    color:var(--color-azul-titulo);
+    font-size:1.15rem;
+    font-weight:800;
+    letter-spacing:.01em;
+}
+
+@media (max-width:900px){
+    .grid-datos-obra{
+        grid-template-columns:120px minmax(0,1fr);
+        grid-template-areas:
+            "nombre-etiqueta nombre-campo"
+            "contrato-etiqueta contrato-campo"
+            "inicio-etiqueta inicio-campo"
+            "direccion-etiqueta direccion-campo"
+            "final-etiqueta final-campo"
+            "telefono-etiqueta telefono-campo"
+            "ciudad-etiqueta ciudad-campo"
+            "departamento-etiqueta departamento-campo"
+            "estado-etiqueta estado-campo"
+            "valor-etiqueta valor-campo";
+    }
+}
+
+
+/* =========================================================
+   AJUSTE V1.23 - NOMBRE Y DIRECCION SIN TEXTO RECORTADO
+   ========================================================= */
+.grid-datos-obra textarea{
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    font:inherit;
+    line-height:1.35;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    resize:none;
+    overflow:hidden;
+}
+
+.grid-datos-obra #obra-nombre{
+    min-height:64px;
+    padding:10px 14px;
+    border:2px solid var(--color-primario);
+    background:rgba(7,153,211,.08);
+    color:var(--color-azul-titulo);
+    font-size:1.15rem;
+    font-weight:800;
+    letter-spacing:.01em;
+}
+
+.grid-datos-obra #obra-direccion{
+    min-height:52px;
+    padding:10px 12px;
+}
+
+
+/* Firmas digitales v1.33 */
+.firma--digital { min-width: 0; }
+.firma-digital__lienzo {
+  width: 100%;
+  height: 125px;
+  margin-top: 8px;
+  border: 1px solid #94a3b8;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+  touch-action: none;
+}
+.firma-digital__lienzo canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+.firma-digital__limpiar {
+  margin-top: 7px;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #334155;
+  font-weight: 700;
+  cursor: pointer;
+}
+.firma-digital__limpiar:hover { background: #f1f5f9; }
+.firma--digital p { margin: 8px 0 0; font-weight: 700; }
+
+
+/* =========================================================
+   AJUSTE V1.41 - DATOS DE OBRA DESDE LA FICHA MAESTRA
+   ========================================================= */
+.grid-datos-obra input[readonly],
+.grid-datos-obra textarea[readonly],
+.grid-datos-obra select[aria-readonly="true"] {
+  background: #f8fafc;
+  color: #0f172a;
+  cursor: default;
+}
+.grid-datos-obra select[aria-readonly="true"] {
+  pointer-events: none;
+}
+.grid-datos-obra #obra-ciudad {
+  width: 100%;
+  min-height: 52px;
+  padding: 9px 12px;
+  line-height: 1.2;
+  overflow: hidden;
+  resize: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

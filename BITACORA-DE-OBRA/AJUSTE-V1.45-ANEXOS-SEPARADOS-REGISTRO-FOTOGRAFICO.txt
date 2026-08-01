@@ -1,0 +1,10 @@
+BITÁCORA DE OBRA — AJUSTE V1.45
+
+Cambios realizados:
+1. La sección «Anexos y fotografías» fue renombrada a «Anexos».
+2. El informe Word/PDF mantiene «ANEXOS» como sección independiente.
+3. El «REGISTRO FOTOGRÁFICO» permanece separado para evitar repetir fotografías.
+4. Cuando no existen anexos, se muestra «Sin anexos» sin mezclar fotografías.
+5. Se añadió una normalización preventiva para folios antiguos que conservaran el título combinado.
+
+No se modificaron obras, contratistas, folios ni datos guardados.

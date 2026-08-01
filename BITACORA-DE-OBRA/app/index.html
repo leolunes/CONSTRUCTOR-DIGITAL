@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="
+      default-src 'self' data: blob: https:;
+      script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com;
+      style-src 'self' 'unsafe-inline' https://unpkg.com;
+      img-src 'self' data: blob: https:;
+      connect-src 'self' https:;
+      font-src 'self' data: https:;
+    "
+  >
+
+  <title>Bitácora de Obra</title>
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/general.css">
+  <link rel="stylesheet" href="../css/menu.css">
+  <link rel="stylesheet" href="../css/bitacora.css">
+  <link rel="stylesheet" href="../css/editor.css">
+  <link rel="stylesheet" href="../css/formularios.css">
+  <link rel="stylesheet" href="../css/modales.css">
+  <link rel="stylesheet" href="../css/impresion.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/evidencias-ubicacion.css">
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#173b57">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+</head>
+
+<body>
+
+  <header class="barra-superior no-imprimir">
+
+    <nav class="menu-principal" aria-label="Menú principal">
+      <button type="button" data-menu="archivo">Archivo</button>
+      <button type="button" data-menu="editar">Editar</button>
+      <button type="button" data-menu="ver">Ver</button>
+      <button type="button" data-menu="ayuda">Ayuda</button>
+    </nav>
+
+    <div class="barra-herramientas">
+
+
+      <div class="selector-obra-activa" title="Seleccione la obra para trabajar sus folios">
+        <label for="selector-obra-activa">Obra activa</label>
+        <select id="selector-obra-activa">
+          <option value="">Seleccione una obra...</option>
+        </select>
+      </div>
+
+
+      <button
+        id="btn-nuevo"
+        class="boton"
+        type="button"
+        data-accion="nuevo"
+        title="Crear un nuevo folio"
+      >
+        📄 Nuevo
+      </button>
+
+      <button
+        id="btn-abrir"
+        class="boton"
+        type="button"
+        data-accion="abrir"
+        title="Abrir información guardada"
+      >
+        📂 Abrir
+      </button>
+
+      <button
+        id="btn-limpiar"
+        class="boton boton-peligro-suave"
+        type="button"
+        title="Limpiar la pantalla y comenzar una nueva obra desde cero"
+      >
+        🧹 Limpiar
+      </button>
+
+      <button
+        id="btn-obras"
+        class="boton"
+        type="button"
+        title="Administrar obras"
+      >
+        🏗 Obras
+      </button>
+
+      <button
+        id="btn-historial"
+        class="boton"
+        type="button"
+        title="Visualizar rápidamente todos los folios de la obra"
+      >
+        📚 Folios
+      </button>
+
+      <button
+        id="btn-informe-consolidado"
+        class="boton"
+        type="button"
+        title="Consolidar todos los folios de la obra en un solo informe Word"
+      >
+        📘 Informe consolidado
+      </button>
+
+      <button
+        id="btn-guardar"
+        class="boton boton-primario"
+        type="button"
+        data-accion="guardar"
+        title="Guardar"
+      >
+        💾 Guardar
+      </button>
+
+      <button
+        id="btn-word"
+        class="boton"
+        type="button"
+        data-accion="word"
+        title="Exportar a Word"
+      >
+        🟦 Word
+      </button>
+
+      <button
+        id="btn-pdf"
+        class="boton"
+        type="button"
+        data-accion="pdf"
+        title="Exportar a PDF"
+      >
+        📕 PDF
+      </button>
+
+      <button
+        id="btn-zip"
+        class="boton"
+        type="button"
+        data-accion="zip"
+        title="Crear respaldo ZIP"
+      >
+        🗜 ZIP
+      </button>
+
+      <button
+        id="btn-imprimir"
+        class="boton"
+        type="button"
+        data-accion="imprimir"
+        title="Imprimir"
+      >
+        🖨 Imprimir
+      </button>
+
+      <button
+        id="btn-atras"
+        class="boton"
+        type="button"
+        data-accion="atras"
+        title="Folio anterior"
+      >
+        ⬅
+      </button>
+
+      <button
+        id="btn-adelante"
+        class="boton"
+        type="button"
+        data-accion="adelante"
+        title="Folio siguiente"
+      >
+        ➡
+      </button>
+
+      <span
+        id="estado-guardado"
+        class="estado-guardado"
+        data-estado-guardado
+        aria-live="polite"
+      >
+        Listo
+      </span>
+
+    </div>
+  </header>
+
+  <main class="contenedor vista-impresion">
+
+    <form
+      id="formulario-bitacora"
+      data-bitacora
+      autocomplete="off"
+    >
+
+      <section class="encabezado">
+
+        <div class="empresa">
+          <h1 id="nombre-contratista-obra">CONTRATISTA NO ASIGNADO</h1>
+
+          <div class="selector-contratista-obra">
+            <label for="selector-contratista-obra">Contratista de la obra</label>
+            <select id="selector-contratista-obra">
+              <option value="">Seleccione un contratista...</option>
+            </select>
+          </div>
+
+          <p>
+            <strong>NIT:</strong>
+            <input
+              id="empresa-nit"
+              name="empresaNit"
+              type="text"
+              placeholder="Número de identificación tributaria"
+            >
+          </p>
+
+          <p>
+            <strong>Dirección:</strong>
+            <input
+              id="empresa-direccion"
+              name="empresaDireccion"
+              type="text"
+              placeholder="Dirección"
+            >
+          </p>
+
+          <p>
+            <strong>Teléfono:</strong>
+            <input
+              id="empresa-telefono"
+              name="empresaTelefono"
+              type="tel"
+              placeholder="Teléfono"
+            >
+          </p>
+        </div>
+
+        <div class="folio">
+          <h2>BITÁCORA DE OBRA</h2>
+
+          <label for="numero-folio">
+            Folio No.
+          </label>
+
+          <input
+            id="numero-folio"
+            name="folio"
+            data-campo="folio"
+            type="text"
+            value="00001"
+            readonly
+          >
+
+          <label for="fecha-folio">
+            Fecha del folio
+          </label>
+
+          <input
+            id="fecha-folio"
+            name="fechaFolio"
+            type="date"
+          >
+
+          <label for="estado-folio">
+            Estado del folio
+          </label>
+
+          <select
+            id="estado-folio"
+            name="estadoFolio"
+          >
+            <option value="Borrador">Borrador</option>
+            <option value="En revisión">En revisión</option>
+            <option value="Aprobado">Aprobado</option>
+            <option value="Cerrado">Cerrado</option>
+          </select>
+        </div>
+
+      </section>
+
+      <section class="seccion-bitacora">
+
+        <h2>DATOS DE LA OBRA</h2>
+
+        <div class="grid grid-datos-obra">
+
+          <label for="obra-nombre">Nombre</label>
+          <textarea
+            id="obra-nombre"
+            name="nombreObra"
+            data-campo="obra.nombre"
+            rows="2"
+            required
+          
+            readonly></textarea>
+
+          <label for="numero-contrato">Contrato</label>
+          <input
+            id="numero-contrato"
+            name="numeroContrato"
+            data-campo="obra.numeroContrato"
+            type="text"
+          
+            readonly>
+
+          <label for="fecha-inicio">Fecha inicio</label>
+          <input
+            id="fecha-inicio"
+            name="fechaInicio"
+            data-campo="obra.fechaInicio"
+            type="date"
+          
+            readonly>
+
+          <label for="obra-direccion">Dirección</label>
+          <textarea
+            id="obra-direccion"
+            name="direccion"
+            data-campo="obra.direccion"
+            rows="2"
+          
+            readonly></textarea>
+
+          <label for="obra-telefono">Teléfono</label>
+          <input
+            id="obra-telefono"
+            name="telefono"
+            data-campo="obra.telefono"
+            type="tel"
+          
+            readonly>
+
+          <label for="fecha-final">Fecha final</label>
+          <input
+            id="fecha-final"
+            name="fechaFinal"
+            data-campo="obra.fechaFinal"
+            type="date"
+          
+            readonly>
+
+          <label for="obra-ciudad">Ciudad</label>
+          <textarea
+            id="obra-ciudad"
+            name="ciudad"
+            data-campo="obra.ciudad"
+            rows="2"
+            readonly
+          ></textarea>
+
+          <label for="obra-departamento">Departamento</label>
+          <input
+            id="obra-departamento"
+            name="departamento"
+            data-campo="obra.departamento"
+            type="text"
+          
+            readonly>
+
+          <label for="obra-valor">Valor</label>
+          <input
+            id="obra-valor"
+            name="valorContrato"
+            data-campo="obra.valorContrato"
+            type="text"
+            readonly>
+
+          <label for="obra-estado">Estado</label>
+          <select
+            id="obra-estado"
+            name="estado"
+            data-campo="estado"
+            aria-readonly="true"
+            tabindex="-1"
+          >
+            <option value="INICIO">INICIO</option>
+            <option value="EN EJECUCIÓN">EN EJECUCIÓN</option>
+            <option value="SUSPENDIDA">SUSPENDIDA</option>
+            <option value="REINICIADA">REINICIADA</option>
+            <option value="TERMINADA">TERMINADA</option>
+          </select>
+
+        </div>
+      </section>
+
+      <section class="seccion-bitacora">
+
+        <div class="editor-profesional no-imprimir">
+
+          <div class="editor-toolbar editor-toolbar--principal">
+
+            <select
+              id="editor-formato"
+              data-editor-formato
+              title="Formato del párrafo"
+              aria-label="Formato del párrafo"
+            >
+              <option value="p">Texto normal</option>
+              <option value="h2">Título de sección</option>
+              <option value="h3">Subtítulo</option>
+              <option value="blockquote">Cita u observación</option>
+            </select>
+
+            <select
+              data-editor-fuente
+              title="Tipo de letra"
+              aria-label="Tipo de letra"
+            >
+              <option value="Arial">Arial</option>
+              <option value="Calibri">Calibri</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Verdana">Verdana</option>
+            </select>
+
+            <select
+              data-editor-tamano
+              title="Tamaño del texto"
+              aria-label="Tamaño del texto"
+            >
+              <option value="2">Pequeño</option>
+              <option value="3" selected>Normal</option>
+              <option value="4">Mediano</option>
+              <option value="5">Grande</option>
+            </select>
+
+            <span class="separador"></span>
+
+            <button type="button" data-accion="negrita" title="Negrita (Ctrl+B)">
+              <strong>B</strong>
+            </button>
+
+            <button type="button" data-accion="cursiva" title="Cursiva (Ctrl+I)">
+              <em>I</em>
+            </button>
+
+            <button type="button" data-accion="subrayado" title="Subrayado (Ctrl+U)">
+              <u>U</u>
+            </button>
+
+            <button type="button" data-accion="tachado" title="Tachado">
+              <s>S</s>
+            </button>
+
+            <button type="button" data-accion="limpiarFormato" title="Limpiar formato">
+              Tx
+            </button>
+
+            <span class="separador"></span>
+
+            <button type="button" data-accion="izquierda" title="Alinear a la izquierda">≡</button>
+            <button type="button" data-accion="centro" title="Centrar">≡</button>
+            <button type="button" data-accion="derecha" title="Alinear a la derecha">≡</button>
+            <button type="button" data-accion="justificar" title="Justificar">☰</button>
+
+            <span class="separador"></span>
+
+            <button type="button" data-accion="lista" title="Lista con viñetas">• Lista</button>
+            <button type="button" data-accion="numeracion" title="Lista numerada">1. Lista</button>
+            <button type="button" data-accion="quitarSangria" title="Reducir sangría">⇤</button>
+            <button type="button" data-accion="sangria" title="Aumentar sangría">⇥</button>
+
+            <span class="separador"></span>
+
+            <button type="button" data-accion="deshacer" title="Deshacer">↶</button>
+            <button type="button" data-accion="rehacer" title="Rehacer">↷</button>
+
+          </div>
+
+          <div class="editor-toolbar editor-toolbar--secundaria">
+
+            <button type="button" data-accion="enlace" title="Insertar enlace">🔗 Enlace</button>
+            <button type="button" data-accion="tabla" title="Insertar tabla">▦ Tabla</button>
+            <button type="button" data-accion="linea" title="Insertar separador">― Línea</button>
+            <button type="button" data-accion="fechaHora" title="Insertar fecha y hora">🕒 Fecha/hora</button>
+
+            <button
+              id="btn-imagen"
+              type="button"
+              data-accion="imagen"
+              title="Insertar fotografía en la anotación"
+            >
+              📷 Imagen
+            </button>
+
+            <button
+              id="btn-anexo"
+              type="button"
+              data-accion="anexo"
+              title="Adjuntar documento"
+            >
+              📎 Anexo
+            </button>
+
+            <button
+              id="btn-buscar"
+              type="button"
+              data-accion="buscar"
+              title="Buscar en la anotación (Ctrl+F)"
+            >
+              🔍 Buscar
+            </button>
+
+            <button
+              id="btn-gps"
+              type="button"
+              data-accion="gps"
+              title="Capturar ubicación GPS"
+            >
+              📍 GPS
+            </button>
+
+            <button
+              id="btn-editor-pantalla-completa"
+              type="button"
+              title="Editar en pantalla completa"
+            >
+              ⛶ Ampliar
+            </button>
+
+            <button
+              id="btn-guardar-avance-editor"
+              class="boton-guardar-avance"
+              type="button"
+              title="Guardar los cambios del folio"
+            >
+              💾 Guardar avance
+            </button>
+
+          </div>
+
+          <div class="editor-plantillas-rapidas">
+            <span>Insertar bloque:</span>
+            <button type="button" data-plantilla-editor="actividad" title="Agregar otra actividad ejecutada">+ Agregar actividad ejecutada</button>
+            <button type="button" data-plantilla-editor="novedad">Novedad</button>
+            <button type="button" data-plantilla-editor="seguridad">Seguridad</button>
+            <button type="button" data-plantilla-editor="calidad">Calidad</button>
+            <button type="button" data-plantilla-editor="personal">Personal y equipos</button>
+            <button type="button" data-plantilla-editor="compromiso">Compromiso</button>
+          </div>
+
+          <div
+            id="editor-busqueda"
+            class="editor-busqueda"
+          >
+            <input
+              id="campo-busqueda-editor"
+              data-editor-busqueda-campo
+              type="search"
+              placeholder="Buscar dentro de la anotación..."
+            >
+            <span
+              id="resultado-busqueda-editor"
+              data-editor-busqueda-resultado
+            >
+              0 resultados
+            </span>
+            <button type="button" data-accion="buscar-anterior">Anterior</button>
+            <button type="button" data-accion="buscar-siguiente">Siguiente</button>
+            <button type="button" data-accion="cerrar-busqueda">Cerrar</button>
+          </div>
+
+        </div>
+
+        <div
+          id="editor-contenido"
+          class="editor-contenido"
+          contenteditable="true"
+          role="textbox"
+          aria-multiline="true"
+          data-placeholder="Escriba aquí la anotación diaria de la Bitácora de Obra..."
+        ></div>
+
+        <div class="editor-estado no-imprimir">
+          <span id="estado-editor" data-estado-editor>
+            Editor listo
+          </span>
+
+          <span id="estado-borrador-editor">
+            Borrador local actualizado
+          </span>
+
+          <span id="contador-editor" class="contador">
+            0 palabras · 0 caracteres
+          </span>
+        </div>
+
+        <label for="nota">NOTA</label>
+        <textarea
+          id="nota"
+          name="nota"
+          rows="4"
+          placeholder="Observaciones adicionales"
+        ></textarea>
+
+      </section>
+
+      <section
+        id="panel-anexos"
+        class="seccion-bitacora seccion-evidencias"
+      >
+        <div class="encabezado-seccion-activa">
+          <div>
+            <h2>Anexos</h2>
+            <p>
+              Incorpore los documentos anexos del folio. El registro fotográfico
+              se presenta en su sección independiente.
+            </p>
+          </div>
+
+          <div class="acciones-seccion no-imprimir">
+            <button
+              id="btn-agregar-fotos-panel"
+              class="boton"
+              type="button"
+            >
+              📷 Agregar fotografías
+            </button>
+
+            <button
+              id="btn-agregar-anexos-panel"
+              class="boton"
+              type="button"
+            >
+              📎 Agregar anexos
+            </button>
+          </div>
+        </div>
+
+        <div class="resumen-evidencias">
+          <span>
+            <strong id="total-imagenes-folio">0</strong>
+            fotografías
+          </span>
+
+          <span>
+            <strong id="total-anexos-folio">0</strong>
+            anexos
+          </span>
+        </div>
+
+        <div class="subseccion-evidencias">
+          <h3>Registro fotográfico</h3>
+
+          <div
+            id="galeria-imagenes"
+            class="galeria-evidencias"
+          ></div>
+
+          <div
+            id="sin-imagenes"
+            class="estado-vacio"
+          >
+            No se han agregado fotografías a este folio.
+          </div>
+        </div>
+
+        <div class="subseccion-evidencias">
+          <h3>Documentos anexos</h3>
+
+          <div
+            id="lista-anexos"
+            class="lista-anexos-activa"
+          ></div>
+
+          <div
+            id="sin-anexos"
+            class="estado-vacio"
+          >
+            No se han agregado documentos anexos.
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="seccion-mapa"
+        class="seccion-bitacora seccion-ubicacion no-imprimir"
+        hidden
+        aria-hidden="true"
+        style="display: none !important;"
+      >
+        <div class="encabezado-seccion-activa">
+          <div>
+            <h2>Ubicación del registro</h2>
+            <p>
+              Registre las coordenadas donde se ejecutaron las actividades
+              descritas en este folio.
+            </p>
+          </div>
+
+          <div class="acciones-seccion">
+            <button
+              id="btn-capturar-ubicacion-panel"
+              class="boton boton-primario"
+              type="button"
+            >
+              📍 Capturar GPS
+            </button>
+
+            <button
+              id="btn-usar-ubicacion-obra"
+              class="boton"
+              type="button"
+            >
+              🏗 Usar ubicación de la obra
+            </button>
+          </div>
+        </div>
+
+        <div class="rejilla-ubicacion">
+          <div class="campo-ubicacion campo-ubicacion--completo">
+            <label for="direccion-registro">
+              Lugar o referencia
+            </label>
+
+            <input
+              id="direccion-registro"
+              name="direccionRegistro"
+              type="text"
+              placeholder="Ej.: Frente norte, vía principal, estructura del bloque A"
+            >
+          </div>
+
+          <div class="campo-ubicacion">
+            <label for="latitud">Latitud</label>
+
+            <input
+              id="latitud"
+              name="latitud"
+              type="number"
+              step="any"
+              placeholder="7.125390"
+            >
+          </div>
+
+          <div class="campo-ubicacion">
+            <label for="longitud">Longitud</label>
+
+            <input
+              id="longitud"
+              name="longitud"
+              type="number"
+              step="any"
+              placeholder="-73.119800"
+            >
+          </div>
+
+          <div class="campo-ubicacion">
+            <label for="precision-gps">Precisión</label>
+
+            <input
+              id="precision-gps"
+              name="precisionGps"
+              type="text"
+              readonly
+              placeholder="Sin captura GPS"
+            >
+          </div>
+
+          <div class="campo-ubicacion">
+            <label for="fecha-ubicacion">
+              Fecha y hora de captura
+            </label>
+
+            <input
+              id="fecha-ubicacion"
+              name="fechaUbicacion"
+              type="text"
+              readonly
+            >
+          </div>
+        </div>
+
+        <div class="acciones-coordenadas">
+          <button
+            id="btn-copiar-coordenadas"
+            class="boton"
+            type="button"
+          >
+            Copiar coordenadas
+          </button>
+
+          <button
+            id="btn-abrir-mapa-externo"
+            class="boton"
+            type="button"
+          >
+            Abrir en el mapa
+          </button>
+
+          <span id="estado-ubicacion">
+            Coordenadas pendientes
+          </span>
+        </div>
+
+        <div
+          id="mapa"
+          class="mapa-local"
+          aria-label="Vista previa de la ubicación"
+        >
+          <iframe
+            id="mapa-openstreetmap"
+            class="mapa-local__iframe"
+            title="Mapa de OpenStreetMap"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            hidden
+          ></iframe>
+
+          <div class="mapa-local__cuadricula"></div>
+
+          <div
+            id="marcador-mapa-local"
+            class="mapa-local__marcador"
+            hidden
+          >
+            <span>●</span>
+          </div>
+
+          <div
+            id="mensaje-mapa-local"
+            class="mapa-local__mensaje"
+          >
+            Capture el GPS o diligencie las coordenadas para activar la vista previa.
+          </div>
+
+          <div
+            id="coordenadas-mapa-local"
+            class="mapa-local__coordenadas"
+          ></div>
+        </div>
+      </section>
+
+      <section class="firmas">
+
+        <div class="firma firma--elaborado">
+          <input
+            id="elaborado-por"
+            name="elaboradoPor"
+            type="text"
+          >
+          <p>Elaborado por</p>
+        </div>
+
+        <div class="firma firma--digital">
+          <input
+            id="representante-contratista"
+            name="representanteContratista"
+            type="text"
+            placeholder="Nombre del representante"
+          >
+          <div class="firma-digital__lienzo">
+            <canvas id="canvas-firma-contratista" aria-label="Firma digital del representante del contratista"></canvas>
+          </div>
+          <input id="firma-contratista-digital" name="firmaContratista" type="hidden">
+          <button type="button" class="firma-digital__limpiar no-imprimir" data-limpiar-firma="contratista">Limpiar firma</button>
+          <p>Representante del Contratista</p>
+        </div>
+
+        <div class="firma firma--digital">
+          <input
+            id="representante-contratante"
+            name="representanteContratante"
+            type="text"
+            placeholder="Nombre del representante"
+          >
+          <div class="firma-digital__lienzo">
+            <canvas id="canvas-firma-interventoria" aria-label="Firma digital del representante de la interventoría"></canvas>
+          </div>
+          <input id="firma-interventoria-digital" name="firmaInterventoria" type="hidden">
+          <button type="button" class="firma-digital__limpiar no-imprimir" data-limpiar-firma="interventoria">Limpiar firma</button>
+          <p>Representante de la Interventoría</p>
+        </div>
+
+      </section>
+
+    </form>
+  </main>
+
+  <input
+    id="input-imagen"
+    class="oculto"
+    type="file"
+    accept="image/*"
+    multiple
+  >
+
+  <input
+    id="input-anexo"
+    class="oculto"
+    type="file"
+    multiple
+  >
+
+  <div
+    id="contenedor-alertas"
+    class="contenedor-alertas no-imprimir"
+    aria-live="polite"
+  ></div>
+
+  <!-- Librerías externas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Orden de carga de los módulos -->
+  <script src="../js/utilidades.js"></script>
+  <script src="../js/estado.js"></script>
+  <script src="../js/validaciones.js"></script>
+  <script src="../js/almacenamiento.js"></script>
+  <script src="../js/base-datos.js"></script>
+  <script src="../js/browser-api.js"></script>
+  <script src="../js/ipc-renderer.js"></script>
+
+  <script src="../js/obras.js"></script>
+  <script src="../js/contratistas.js"></script>
+  <script src="../js/folios.js"></script>
+  <script src="../js/anexos.js"></script>
+  <script src="../js/imagenes.js"></script>
+
+  <script src="../js/editor.js"></script>
+  <script src="../js/editor-profesional.js"></script>
+  <script src="../js/buscador.js"></script>
+  <script src="../js/mapas.js"></script>
+
+  <script src="../js/copias-seguridad.js"></script>
+  <script src="../js/exportar-pdf.js"></script>
+  <script src="../js/exportar-zip.js"></script>
+  <script src="../js/imprimir.js"></script>
+
+  <script src="../js/bitacora.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/app.js?v=1.49.0"></script>
+
+  <script src="../js/pwa.js"></script>
+</body>
+</html>

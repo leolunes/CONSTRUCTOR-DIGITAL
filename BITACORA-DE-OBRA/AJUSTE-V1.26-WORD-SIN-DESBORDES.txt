@@ -1,0 +1,8 @@
+AJUSTE V1.26 — PRESENTACIÓN DEL INFORME WORD
+
+1. Se normaliza el contenido pegado en la anotación antes de exportarlo a Word.
+2. Se eliminan anchos, alturas y tamaños de letra incompatibles provenientes de tablas copiadas desde Excel u otros documentos.
+3. Las tablas se ajustan al ancho útil de la hoja y distribuyen sus columnas sin salirse de los márgenes.
+4. Las imágenes se limitan al ancho útil del documento y conservan su proporción.
+5. Se mantiene la información completa de obra, contratista, folio, nota, ubicación, anexos y registro fotográfico.
+6. No se modifica la base de datos ni el guardado de los folios.

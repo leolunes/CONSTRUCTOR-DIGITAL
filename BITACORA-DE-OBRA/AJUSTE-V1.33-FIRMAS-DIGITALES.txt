@@ -1,0 +1,8 @@
+BITÁCORA DE OBRA v1.33
+
+- Se cambia el rótulo “Representante del Contratante” por “Representante de la Interventoría”.
+- Se agregan dos áreas de firma digital en pantalla: contratista e interventoría.
+- Las firmas se guardan dentro de cada folio.
+- Las firmas aparecen al final de los informes Word/PDF de cada folio.
+- Las firmas aparecen al final de cada folio dentro del informe consolidado.
+- Se mantiene el campo “Elaborado por”.

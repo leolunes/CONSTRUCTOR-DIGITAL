@@ -1,0 +1,10 @@
+AJUSTE V1.56 — WORD: PROPORCIÓN DEL LOGO Y REGISTRO FOTOGRÁFICO
+
+Se modificó únicamente la exportación Word del folio:
+- El logo se normaliza en un lienzo cuadrado y se exporta con dimensiones físicas fijas.
+- Se elimina la regla de Microsoft Word que ampliaba todas las imágenes al 100 %.
+- Las fotografías se normalizan en formato horizontal 5:3, conservando la proporción original con márgenes blancos cuando sea necesario.
+- Los recuadros fotográficos quedan uniformes, en dos columnas y sin deformación.
+- Las firmas mantienen dimensiones uniformes.
+
+No se modificaron PDF, Informe consolidado, datos guardados ni formularios.

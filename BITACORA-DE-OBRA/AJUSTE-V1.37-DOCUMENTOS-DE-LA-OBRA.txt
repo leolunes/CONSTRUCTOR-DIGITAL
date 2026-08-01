@@ -1,0 +1,23 @@
+BITÁCORA DE OBRA — AJUSTE V1.37
+
+Se agregó el módulo "Documentos de la Obra" en la pantalla Obras.
+
+FUNCIONES:
+- Botón de carpeta en cada obra registrada.
+- Carga múltiple de PDF, Word, Excel, PowerPoint, imágenes, DWG, DXF, ZIP, RAR y otros archivos.
+- Copia segura de los documentos a la carpeta privada de cada obra.
+- Listado independiente por obra.
+- Búsqueda por nombre o tipo.
+- Abrir el archivo con la aplicación predeterminada de Windows.
+- Descargar/guardar una copia en la ubicación elegida por el usuario.
+- Eliminar documentos con confirmación.
+- Conservación de nombre, extensión, tamaño y fecha de carga.
+
+ARCHIVOS MODIFICADOS:
+- app/obras.html
+- css/obras-pagina.css
+- preload.js
+- main.js
+
+ARCHIVO NUEVO:
+- js/documentos-obra.js

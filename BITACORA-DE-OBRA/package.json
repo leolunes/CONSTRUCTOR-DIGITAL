@@ -1,0 +1,16 @@
+{
+  "name": "bitacora-de-obra",
+  "version": "1.49.0",
+  "description": "Aplicación de escritorio para la gestión técnica, administrativa y documental de una Bitácora de Obra.",
+  "main": "main.js",
+  "author": "Leonardo Luna",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "31.7.7"
+  }
+}

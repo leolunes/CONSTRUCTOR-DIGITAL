@@ -1,0 +1,7 @@
+AJUSTE V1.42
+
+- Se agregó el campo Valor en DATOS DE LA OBRA del folio.
+- El valor se toma automáticamente de la obra activa y se presenta en pesos colombianos.
+- El folio reconcilia la obra activa con la versión más reciente guardada, evitando datos antiguos o incompletos.
+- Teléfono, fecha final y valor son obligatorios al crear o editar una obra.
+- Los campos del folio permanecen de solo lectura y se alimentan exclusivamente desde la ficha de la obra.

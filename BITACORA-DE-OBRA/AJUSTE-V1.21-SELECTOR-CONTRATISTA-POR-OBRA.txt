@@ -1,0 +1,4 @@
+BITÁCORA DE OBRA v1.21
+
+Se agregó en el encabezado del folio un selector de contratistas cargado desde la base de datos.
+La selección se guarda como asociación de la obra activa y actualiza nombre, NIT, dirección y teléfono sin alterar los folios existentes.

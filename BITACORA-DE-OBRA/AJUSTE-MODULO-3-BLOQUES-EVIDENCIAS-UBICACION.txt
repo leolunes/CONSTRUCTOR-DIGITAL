@@ -1,0 +1,22 @@
+AJUSTE DEL MÓDULO 3
+
+1. Bloques técnicos:
+- Cada campo ahora tiene una zona editable explícita.
+- Los títulos y etiquetas permanecen protegidos.
+- Se pueden editar también las celdas de Personal y Equipos.
+- Cada bloque incorpora botón para eliminarlo.
+- Los bloques antiguos se convierten automáticamente al nuevo formato.
+
+2. Anexos y fotografías:
+- Sección activa con botones propios.
+- Fotografías con miniatura, descripción, visualización y eliminación.
+- Anexos con descripción, apertura y eliminación.
+- Fotografías y anexos se guardan dentro del folio y se recuperan al abrirlo.
+
+3. Ubicación:
+- Captura GPS.
+- Uso de coordenadas registradas en la obra.
+- Lugar o referencia.
+- Precisión y fecha de captura.
+- Copiar coordenadas y abrir en OpenStreetMap.
+- Vista previa local que funciona sin conexión a internet.

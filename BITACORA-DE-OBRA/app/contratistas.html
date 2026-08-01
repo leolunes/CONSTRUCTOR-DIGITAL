@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contratistas | Bitácora de Obra</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/general.css">
+  <link rel="stylesheet" href="../css/formularios.css">
+  <link rel="stylesheet" href="../css/obras-pagina.css">
+  <link rel="stylesheet" href="../css/contratistas-pagina.css">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#173b57">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+</head>
+<body>
+  <div class="aplicacion">
+    <aside class="menu-lateral">
+      <div class="menu-lateral__marca">
+        <div class="menu-lateral__logo">BO</div>
+        <div><strong>Bitácora de Obra</strong><small>Gestión de registros</small></div>
+      </div>
+
+      <nav class="menu-lateral__navegacion">
+        <a class="menu-enlace" href="./index.html">📝 <span>Bitácora</span></a>
+        <a class="menu-enlace" href="./obras.html">🏗️ <span>Obras</span></a>
+        <a class="menu-enlace menu-enlace--activo" href="./contratistas.html">👷 <span>Contratistas</span></a>
+        <a class="menu-enlace" href="./configuracion.html">⚙️ <span>Configuración</span></a>
+      </nav>
+    </aside>
+
+    <div class="contenido-aplicacion">
+      <header class="barra-superior">
+        <div>
+          <h1>Contratistas</h1>
+          <p>Registro y administración de contratistas e interventorías</p>
+        </div>
+
+        <div class="barra-superior__acciones">
+          <a class="boton" href="./index.html">Volver a la bitácora</a>
+          <button id="btn-nuevo-contratista" class="boton boton-primario">Nuevo contratista</button>
+        </div>
+      </header>
+
+      <main class="contenido-principal">
+        <section class="tarjeta">
+          <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+            <div class="campo campo--completo">
+              <label for="buscar-contratista">Buscar contratista</label>
+              <input id="buscar-contratista" type="search" placeholder="Nombre, NIT, representante o municipio">
+            </div>
+          </div>
+        </section>
+
+        <section class="tarjeta">
+          <div class="tarjeta__encabezado">
+            <div>
+              <h2>Contratistas registrados</h2>
+              <p id="resumen-contratistas">0 contratistas</p>
+            </div>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table class="tabla">
+              <thead>
+                <tr>
+                  <th>Nombre / Razón social</th>
+                  <th>NIT</th>
+                  <th>Tipo</th>
+                  <th>Representante</th>
+                  <th>Contacto</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="cuerpo-contratistas"></tbody>
+            </table>
+          </div>
+
+          <div id="sin-contratistas" class="sin-registros">
+            No hay contratistas registrados.
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-contratista" class="modal" hidden>
+    <div class="modal__fondo" data-cerrar-modal></div>
+
+    <section class="modal__contenido modal__contenido--grande">
+      <form id="formulario-contratista">
+        <header class="modal__encabezado">
+          <div>
+            <h2 id="titulo-modal-contratista">Nuevo contratista</h2>
+            <p>Complete la información principal.</p>
+          </div>
+          <button class="boton-icono" type="button" data-cerrar-modal>×</button>
+        </header>
+
+        <div class="modal__cuerpo">
+          <input id="contratista-id" type="hidden">
+
+          <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+            <div class="campo campo--completo">
+              <label for="contratista-nombre">Nombre o razón social *</label>
+              <input id="contratista-nombre" required maxlength="180">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-nit">NIT o documento *</label>
+              <input id="contratista-nit" required maxlength="50">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-tipo">Tipo</label>
+              <select id="contratista-tipo">
+                <option>Persona Jurídica</option>
+                <option>Persona Natural</option>
+                <option>Consorcio</option>
+                <option>Unión Temporal</option>
+                <option>Entidad Pública</option>
+                <option>Interventoría</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="contratista-representante">Representante legal</label>
+              <input id="contratista-representante">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-residente">Residente / Responsable</label>
+              <input id="contratista-residente">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-telefono">Teléfono</label>
+              <input id="contratista-telefono">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-celular">Celular</label>
+              <input id="contratista-celular">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-correo">Correo</label>
+              <input id="contratista-correo" type="email">
+            </div>
+
+            <div class="campo">
+              <label for="contratista-ciudad">Ciudad / Municipio</label>
+              <input id="contratista-ciudad">
+            </div>
+
+            <div class="campo campo--completo">
+              <label for="contratista-direccion">Dirección</label>
+              <input id="contratista-direccion">
+            </div>
+
+            <div class="campo campo--completo">
+              <label for="contratista-observaciones">Observaciones</label>
+              <textarea id="contratista-observaciones" rows="4"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <footer class="modal__pie">
+          <button class="boton" type="button" data-cerrar-modal>Cancelar</button>
+          <button class="boton boton-primario" type="submit">Guardar contratista</button>
+        </footer>
+      </form>
+    </section>
+  </div>
+
+  <div id="contenedor-alertas" class="contenedor-alertas"></div>
+
+  <script src="../js/browser-api.js"></script>
+  <script src="../js/ipc-renderer.js"></script>
+  <script src="../js/contratistas-pagina.js"></script>
+  <script src="../js/pwa.js"></script>
+</body>
+</html>

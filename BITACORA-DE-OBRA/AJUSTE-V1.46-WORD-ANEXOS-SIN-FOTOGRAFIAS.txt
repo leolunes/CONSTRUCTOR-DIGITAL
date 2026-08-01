@@ -1,0 +1,7 @@
+BITÁCORA DE OBRA v1.46
+
+Corrección aplicada sobre v1.45:
+- El informe Word/PDF usa exclusivamente el título ANEXOS.
+- Se normaliza el HTML final para eliminar cualquier título heredado ANEXOS Y FOTOGRAFÍAS.
+- Las fotografías permanecen únicamente en REGISTRO FOTOGRÁFICO.
+- Se fuerza la recarga de js/app.js mediante versión de recurso v1.46.

@@ -1,0 +1,8 @@
+AJUSTE V1.36 — ELIMINAR IMÁGENES INCRUSTADAS EN LA ANOTACIÓN
+
+- Se reconocen las fotografías insertadas mediante el botón Imagen.
+- Las imágenes de folios anteriores se convierten automáticamente al formato administrable.
+- Cada imagen muestra un botón circular X para eliminarla.
+- Se solicita confirmación y se elimina únicamente la imagen seleccionada.
+- El nombre del archivo se integra como pie de fotografía.
+- Los controles no se incluyen en Word, PDF ni impresión.

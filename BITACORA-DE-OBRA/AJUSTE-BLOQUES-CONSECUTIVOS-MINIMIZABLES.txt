@@ -1,0 +1,7 @@
+AJUSTE — BLOQUES CONSECUTIVOS Y MINIMIZABLES
+
+1. Las actividades ejecutadas se numeran automáticamente: N.º 1, N.º 2, N.º 3...
+2. El usuario puede insertar todas las actividades que necesite.
+3. Al eliminar una actividad, la numeración se reorganiza automáticamente.
+4. Todos los bloques (Actividad, Novedad, Seguridad, Calidad, Personal y equipos y Compromiso) incluyen botón para minimizar y expandir.
+5. Se conservó la estructura existente y solo se ajustaron los archivos necesarios.

@@ -1,0 +1,11 @@
+AJUSTE DEL MÓDULO 3
+
+Correcciones:
+- Botones del editor con texto más pequeño y dimensiones automáticas.
+- El texto ya no se sale del recuadro.
+- Nuevo botón visible: Guardar avance.
+- Ctrl+S guarda el folio.
+- Guardado automático persistente después de 12 segundos sin escribir.
+- Estado visible: cambios pendientes, guardando y guardado.
+- Confirmación antes de cambiar de obra, folio o crear uno nuevo.
+- Aviso antes de cerrar cuando existen cambios pendientes.

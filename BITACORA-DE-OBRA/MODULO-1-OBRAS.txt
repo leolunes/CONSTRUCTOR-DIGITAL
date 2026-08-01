@@ -1,0 +1,15 @@
+MÓDULO 1 — GESTIÓN DE OBRAS
+
+Funciones incluidas:
+- Crear, editar, listar, buscar y eliminar obras.
+- Persistencia en archivo JSON dentro de userData de Electron.
+- Selección de obra activa.
+- Carga automática de la obra activa en la bitácora principal.
+- Acceso mediante el botón Obras.
+
+Prueba:
+1. npm start
+2. Clic en Obras
+3. Nueva obra
+4. Guardar
+5. Seleccionar con el botón ✓

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Historial de folios | Bitácora de Obra</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/general.css">
+  <link rel="stylesheet" href="../css/formularios.css">
+  <link rel="stylesheet" href="../css/modales.css">
+  <link rel="stylesheet" href="../css/historial-folios.css">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#173b57">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+</head>
+<body>
+  <header class="historial-cabecera">
+    <div>
+      <h1>Historial de folios</h1>
+      <p id="nombre-obra-activa">Obra activa</p>
+    </div>
+    <div class="historial-acciones">
+      <button id="btn-nuevo-folio" class="boton boton-primario">＋ Nuevo folio</button>
+      <button id="btn-volver-bitacora" class="boton">← Volver a la bitácora</button>
+    </div>
+  </header>
+
+  <main class="historial-contenido">
+    <section class="panel-filtros">
+      <label>
+        Buscar
+        <input id="buscar-folios" type="search" placeholder="Número, fecha, estado o contenido">
+      </label>
+
+      <label>
+        Estado
+        <select id="filtro-estado">
+          <option value="">Todos</option>
+          <option value="Borrador">Borrador</option>
+          <option value="En revisión">En revisión</option>
+          <option value="Aprobado">Aprobado</option>
+          <option value="Cerrado">Cerrado</option>
+        </select>
+      </label>
+
+      <div class="resumen">
+        <strong id="total-folios">0</strong>
+        <span>folios registrados</span>
+      </div>
+    </section>
+
+    <section class="panel-tabla">
+      <table>
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Resumen de la anotación</th>
+            <th>Fotografías</th>
+            <th>Actualizado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-folios"></tbody>
+      </table>
+
+      <div id="sin-folios" class="sin-folios" hidden>
+        No existen folios registrados para la obra activa.
+      </div>
+    </section>
+  </main>
+
+  <div id="contenedor-alertas" class="contenedor-alertas"></div>
+
+  <script src="../js/browser-api.js"></script>
+  <script src="../js/ipc-renderer.js"></script>
+  <script src="../js/historial-folios.js"></script>
+  <script src="../js/pwa.js"></script>
+</body>
+</html>

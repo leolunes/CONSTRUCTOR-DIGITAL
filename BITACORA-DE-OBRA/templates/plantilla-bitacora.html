@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Plantilla Bitácora</title>
+<style>
+body{font-family:Arial,sans-serif;margin:25px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #444;padding:6px}
+h1,h2{text-align:center}
+img{max-width:250px;margin:8px}
+</style>
+</head>
+<body>
+<h1>BITÁCORA DE OBRA</h1>
+<p><b>Proyecto:</b> {{obra}}</p>
+<p><b>Contrato:</b> {{contrato}}</p>
+<p><b>Contratista:</b> {{contratista}}</p>
+<p><b>Interventor:</b> {{interventor}}</p>
+<p><b>Fecha:</b> {{fecha}}</p>
+
+<h2>Actividades</h2>
+<table>
+<thead>
+<tr><th>Hora</th><th>Actividad</th><th>Responsable</th></tr>
+</thead>
+<tbody>
+{{filas}}
+</tbody>
+</table>
+
+<h2>Observaciones</h2>
+<p>{{observaciones}}</p>
+
+<h2>Registro Fotográfico</h2>
+{{imagenes}}
+</body>
+</html>

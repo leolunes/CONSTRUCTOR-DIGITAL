@@ -1,0 +1,2041 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Administración de obras de la aplicación Bitácora de Obra."
+  >
+
+  <title>
+    Obras | Bitácora de Obra
+  </title>
+
+  <!-- =====================================================
+       ESTILOS GENERALES DEL PROYECTO
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="../css/variables.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/general.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/menu.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/formularios.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/modales.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/responsive.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/obras-pagina.css"
+  >
+
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#173b57">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+</head>
+
+<body>
+
+  <div class="aplicacion">
+
+    <!-- ===================================================
+         MENÚ LATERAL
+    ==================================================== -->
+
+    <aside
+      class="menu-lateral"
+      id="menu-lateral"
+      aria-label="Menú principal"
+    >
+
+      <div class="menu-lateral__encabezado">
+
+        <div class="menu-lateral__marca">
+
+          <div
+            class="menu-lateral__logo"
+            aria-hidden="true"
+          >
+            BO
+          </div>
+
+          <div>
+
+            <strong>
+              Bitácora de Obra
+            </strong>
+
+            <small>
+              Gestión de registros
+            </small>
+
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="boton-icono"
+          id="btn-cerrar-menu"
+          aria-label="Cerrar menú"
+          title="Cerrar menú"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <nav class="menu-lateral__navegacion">
+
+        <a
+          class="menu-enlace"
+          href="./index.html"
+        >
+          <span aria-hidden="true">📝</span>
+          <span>Bitácora</span>
+        </a>
+
+        <a
+          class="menu-enlace menu-enlace--activo"
+          href="./obras.html"
+          aria-current="page"
+        >
+          <span aria-hidden="true">🏗️</span>
+          <span>Obras</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./contratistas.html"
+        >
+          <span aria-hidden="true">👷</span>
+          <span>Contratistas</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./configuracion.html"
+        >
+          <span aria-hidden="true">⚙️</span>
+          <span>Configuración</span>
+        </a>
+
+      </nav>
+
+      <div class="menu-lateral__pie">
+
+        <small>
+          Aplicación de escritorio
+        </small>
+
+        <span id="version-aplicacion">
+          Versión local
+        </span>
+
+      </div>
+
+    </aside>
+
+    <!-- ===================================================
+         CONTENIDO PRINCIPAL
+    ==================================================== -->
+
+    <div class="contenido-aplicacion">
+
+      <header class="barra-superior">
+
+        <div class="barra-superior__izquierda">
+
+          <button
+            type="button"
+            class="boton-icono"
+            id="btn-abrir-menu"
+            aria-label="Abrir menú"
+            title="Abrir menú"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <h1>
+              Obras
+            </h1>
+
+            <p>
+              Registro y administración de los proyectos de obra
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="barra-superior__acciones">
+
+          <a
+            class="boton boton-secundario"
+            href="./index.html"
+          >
+            Volver a la bitácora
+          </a>
+
+          <button
+            type="button"
+            class="boton boton-primario"
+            id="btn-nueva-obra"
+          >
+            Nueva obra
+          </button>
+
+        </div>
+
+      </header>
+
+      <main class="contenido-principal">
+
+        <div
+          id="contenedor-alertas"
+          class="contenedor-alertas"
+          aria-live="polite"
+          aria-atomic="true"
+        ></div>
+
+        <!-- ===============================================
+             RESUMEN
+        ================================================ -->
+
+        <section class="grupo-tarjetas-resumen">
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Obras registradas
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor"
+              id="total-obras"
+            >
+              0
+            </strong>
+
+          </article>
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Obras activas
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor"
+              id="total-obras-activas"
+            >
+              0
+            </strong>
+
+          </article>
+
+          <article class="tarjeta-resumen">
+
+            <span class="tarjeta-resumen__etiqueta">
+              Obras finalizadas
+            </span>
+
+            <strong
+              class="tarjeta-resumen__valor"
+              id="total-obras-finalizadas"
+            >
+              0
+            </strong>
+
+          </article>
+
+        </section>
+
+        <!-- ===============================================
+             FILTROS
+        ================================================ -->
+
+        <section class="tarjeta">
+
+          <div class="rejilla-formulario rejilla-formulario--tres-columnas">
+
+            <div class="campo campo--completo">
+
+              <label for="buscar-obra">
+                Buscar obra
+              </label>
+
+              <input
+                type="search"
+                id="buscar-obra"
+                placeholder="Buscar por nombre, contrato, municipio o entidad"
+                autocomplete="off"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-estado">
+                Estado
+              </label>
+
+              <select id="filtro-estado">
+
+                <option value="">
+                  Todos los estados
+                </option>
+
+                <option value="Activa">
+                  Activa
+                </option>
+
+                <option value="Suspendida">
+                  Suspendida
+                </option>
+
+                <option value="Finalizada">
+                  Finalizada
+                </option>
+
+                <option value="Liquidada">
+                  Liquidada
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="filtro-municipio">
+                Municipio
+              </label>
+
+              <select id="filtro-municipio">
+
+                <option value="">
+                  Todos los municipios
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo campo--acciones">
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-limpiar-filtros"
+              >
+                Limpiar filtros
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===============================================
+             LISTADO DE OBRAS
+        ================================================ -->
+
+        <section class="tarjeta">
+
+          <div class="tarjeta__encabezado">
+
+            <div>
+
+              <h2>
+                Obras registradas
+              </h2>
+
+              <p id="texto-resultados">
+                No hay obras registradas.
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="tabla-contenedor">
+
+            <table class="tabla">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Obra
+                  </th>
+
+                  <th>
+                    Contrato
+                  </th>
+
+                  <th>
+                    Entidad
+                  </th>
+
+                  <th>
+                    Ubicación
+                  </th>
+
+                  <th>
+                    Estado
+                  </th>
+
+                  <th>
+                    Acciones
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody id="cuerpo-tabla-obras">
+
+                <tr id="fila-sin-obras">
+
+                  <td
+                    colspan="6"
+                    class="tabla__vacio"
+                  >
+                    No hay obras registradas.
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================================
+       MODAL: CREAR O EDITAR OBRA
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="modal-obra"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal__fondo"
+      data-cerrar-modal
+    ></div>
+
+    <section
+      class="modal__contenido modal__contenido--grande"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-obra-titulo"
+    >
+
+      <header class="modal__encabezado">
+
+        <div>
+
+          <h2 id="modal-obra-titulo">
+            Nueva obra
+          </h2>
+
+          <p>
+            Complete la información principal del proyecto.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="boton-icono"
+          data-cerrar-modal
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+      <form
+        id="formulario-obra"
+        novalidate
+      >
+
+        <div class="modal__cuerpo">
+
+          <input
+            type="hidden"
+            id="obra-id"
+            name="id"
+          >
+
+          <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+
+            <div class="campo campo--completo">
+
+              <label for="obra-nombre">
+                Nombre de la obra
+                <span aria-hidden="true">*</span>
+              </label>
+
+              <input
+                type="text"
+                id="obra-nombre"
+                name="nombre"
+                required
+                maxlength="180"
+                placeholder="Nombre completo del proyecto"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-codigo">
+                Código de la obra
+              </label>
+
+              <input
+                type="text"
+                id="obra-codigo"
+                name="codigo"
+                required
+                maxlength="80"
+                placeholder="Ejemplo: OB-001-2026"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-numero-contrato">
+                Número de contrato
+              </label>
+
+              <input
+                type="text"
+                id="obra-numero-contrato"
+                name="numeroContrato"
+                required
+                maxlength="80"
+                placeholder="Ejemplo: CO-001-2026"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-estado">
+                Estado
+              </label>
+
+              <select
+                id="obra-estado"
+                name="estado"
+              >
+
+                <option value="Activa">
+                  Activa
+                </option>
+
+                <option value="Suspendida">
+                  Suspendida
+                </option>
+
+                <option value="Finalizada">
+                  Finalizada
+                </option>
+
+                <option value="Liquidada">
+                  Liquidada
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <label for="obra-objeto-contrato">
+                Objeto contractual
+              </label>
+
+              <textarea
+                id="obra-objeto-contrato"
+                name="objetoContrato"
+                rows="4"
+                maxlength="1000"
+                placeholder="Descripción del objeto del contrato"
+              ></textarea>
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <label for="obra-entidad">
+                Entidad contratante
+              </label>
+
+              <input
+                type="text"
+                id="obra-entidad"
+                name="entidadContratante"
+                maxlength="180"
+                placeholder="Nombre de la entidad contratante"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-departamento">
+                Departamento
+              </label>
+
+              <input
+                type="text"
+                id="obra-departamento"
+                name="departamento"
+                maxlength="100"
+                value="Santander"
+              
+                required>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-municipio">
+                Municipio
+              </label>
+
+              <input
+                type="text"
+                id="obra-municipio"
+                name="municipio"
+                maxlength="100"
+                placeholder="Municipio de ejecución"
+              
+                required>
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <label for="obra-direccion">
+                Dirección o ubicación
+              </label>
+
+              <input
+                type="text"
+                id="obra-direccion"
+                name="direccion"
+                maxlength="250"
+                placeholder="Dirección, vereda, barrio o sector"
+              
+                required>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-telefono">
+                Teléfono de contacto
+              </label>
+
+              <input
+                type="tel"
+                id="obra-telefono"
+                name="telefono"
+                maxlength="40"
+                required
+                placeholder="Teléfono o celular de contacto"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-fecha-inicio">
+                Fecha de inicio
+              </label>
+
+              <input
+                type="date"
+                id="obra-fecha-inicio"
+                name="fechaInicio"
+              
+                required>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-fecha-final">
+                Fecha prevista de terminación
+              </label>
+
+              <input
+                type="date"
+                id="obra-fecha-final"
+                name="fechaFinal"
+              
+                required>
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-valor-contrato">
+                Valor del contrato
+              </label>
+
+              <input
+                type="number"
+                id="obra-valor-contrato"
+                name="valorContrato"
+                min="0"
+                step="1"
+                placeholder="0"
+                required
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-plazo">
+                Plazo contractual
+              </label>
+
+              <input
+                type="text"
+                id="obra-plazo"
+                name="plazo"
+                maxlength="100"
+                placeholder="Ejemplo: 8 meses"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-latitud">
+                Latitud
+              </label>
+
+              <input
+                type="number"
+                id="obra-latitud"
+                name="latitud"
+                step="any"
+                placeholder="7.000000"
+              >
+
+            </div>
+
+            <div class="campo">
+
+              <label for="obra-longitud">
+                Longitud
+              </label>
+
+              <input
+                type="number"
+                id="obra-longitud"
+                name="longitud"
+                step="any"
+                placeholder="-73.000000"
+              >
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-capturar-ubicacion"
+              >
+                Capturar ubicación GPS
+              </button>
+
+            </div>
+
+            <div class="campo campo--completo">
+
+              <label for="obra-observaciones">
+                Observaciones
+              </label>
+
+              <textarea
+                id="obra-observaciones"
+                name="observaciones"
+                rows="4"
+                maxlength="1200"
+                placeholder="Información adicional de la obra"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <footer class="modal__pie">
+
+          <button
+            type="button"
+            class="boton boton-secundario"
+            data-cerrar-modal
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="boton boton-primario"
+          >
+            Guardar obra
+          </button>
+
+        </footer>
+
+      </form>
+
+    </section>
+
+  </div>
+
+  <!-- =====================================================
+       MODAL DE CONFIRMACIÓN
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="modal-confirmacion"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal__fondo"
+      data-cerrar-confirmacion
+    ></div>
+
+    <section
+      class="modal__contenido"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmacion-titulo"
+    >
+
+      <header class="modal__encabezado">
+
+        <h2 id="confirmacion-titulo">
+          Eliminar obra
+        </h2>
+
+        <button
+          type="button"
+          class="boton-icono"
+          data-cerrar-confirmacion
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+      <div class="modal__cuerpo">
+
+        <p id="confirmacion-mensaje">
+          ¿Desea eliminar esta obra?
+        </p>
+
+      </div>
+
+      <footer class="modal__pie">
+
+        <button
+          type="button"
+          class="boton boton-secundario"
+          data-cerrar-confirmacion
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="boton boton-peligro"
+          id="btn-confirmar-eliminacion"
+        >
+          Eliminar
+        </button>
+
+      </footer>
+
+    </section>
+
+  </div>
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+
+  <script src="../js/estado.js"></script>
+
+  <script src="../js/utilidades.js"></script>
+
+  <script src="../js/validaciones.js"></script>
+
+  <script src="../js/almacenamiento.js"></script>
+
+  <script src="../js/base-datos.js"></script>
+
+  <script src="../js/obras.js"></script>
+
+  <script src="../js/mapas.js"></script>
+
+  <script src="../js/menu.js"></script>
+
+  <script src="../js/browser-api.js"></script>
+  <script src="../js/ipc-renderer.js"></script>
+
+  <script>
+    'use strict';
+
+    (() => {
+
+      let obras = [];
+      let obraPendienteEliminar = null;
+
+      const elementos = {};
+
+      function obtenerElemento(id) {
+        return document.getElementById(id);
+      }
+
+      function iniciarElementos() {
+
+        elementos.botonNuevaObra =
+          obtenerElemento('btn-nueva-obra');
+
+        elementos.modalObra =
+          obtenerElemento('modal-obra');
+
+        elementos.formulario =
+          obtenerElemento('formulario-obra');
+
+        elementos.tituloModal =
+          obtenerElemento('modal-obra-titulo');
+
+        elementos.tabla =
+          obtenerElemento('cuerpo-tabla-obras');
+
+        elementos.buscar =
+          obtenerElemento('buscar-obra');
+
+        elementos.filtroEstado =
+          obtenerElemento('filtro-estado');
+
+        elementos.filtroMunicipio =
+          obtenerElemento('filtro-municipio');
+
+        elementos.botonLimpiar =
+          obtenerElemento('btn-limpiar-filtros');
+
+        elementos.total =
+          obtenerElemento('total-obras');
+
+        elementos.totalActivas =
+          obtenerElemento('total-obras-activas');
+
+        elementos.totalFinalizadas =
+          obtenerElemento('total-obras-finalizadas');
+
+        elementos.textoResultados =
+          obtenerElemento('texto-resultados');
+
+        elementos.contenedorAlertas =
+          obtenerElemento('contenedor-alertas');
+
+        elementos.modalConfirmacion =
+          obtenerElemento('modal-confirmacion');
+
+        elementos.mensajeConfirmacion =
+          obtenerElemento('confirmacion-mensaje');
+
+        elementos.botonConfirmarEliminacion =
+          obtenerElemento('btn-confirmar-eliminacion');
+
+        elementos.botonCapturarUbicacion =
+          obtenerElemento('btn-capturar-ubicacion');
+
+      }
+
+      function generarId() {
+
+        if (window.crypto?.randomUUID) {
+          return `obra-${window.crypto.randomUUID()}`;
+        }
+
+        return `obra-${Date.now()}-${Math.random()
+          .toString(16)
+          .slice(2)}`;
+
+      }
+
+      function escaparHTML(valor) {
+
+        return String(valor ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+
+      }
+
+      function mostrarMensaje(mensaje, tipo = 'exito') {
+
+        if (!elementos.contenedorAlertas) return;
+
+        const alerta = document.createElement('div');
+
+        alerta.className =
+          `alerta alerta-${tipo}`;
+
+        alerta.textContent = mensaje;
+
+        elementos.contenedorAlertas.appendChild(alerta);
+
+        setTimeout(() => {
+          alerta.remove();
+        }, 4000);
+
+      }
+
+      function abrirModal(modal) {
+
+        if (!modal) return;
+
+        modal.hidden = false;
+        modal.setAttribute('aria-hidden', 'false');
+
+        document.body.classList.add('modal-abierto');
+
+      }
+
+      function cerrarModal(modal) {
+
+        if (!modal) return;
+
+        modal.hidden = true;
+        modal.setAttribute('aria-hidden', 'true');
+
+        if (
+          elementos.modalObra?.hidden &&
+          elementos.modalConfirmacion?.hidden
+        ) {
+          document.body.classList.remove('modal-abierto');
+        }
+
+      }
+
+      function obtenerObrasDesdeEstado() {
+
+        const estado =
+          window.BitacoraEstado?.obtener?.();
+
+        const catalogo =
+          estado?.catalogos?.obras;
+
+        const registros =
+          estado?.registros?.obras;
+
+        if (Array.isArray(catalogo)) {
+          return catalogo;
+        }
+
+        if (Array.isArray(registros)) {
+          return registros;
+        }
+
+        return [];
+
+      }
+
+      function guardarObrasEnEstado() {
+
+        if (!window.BitacoraEstado?.actualizar) {
+          return;
+        }
+
+        window.BitacoraEstado.actualizar(
+          'catalogos.obras',
+          obras,
+          {
+            origen: 'obras'
+          }
+        );
+
+        if (window.BitacoraAlmacenamiento?.guardar) {
+
+          window.BitacoraAlmacenamiento.guardar(
+            'bitacora_estado',
+            window.BitacoraEstado.obtener()
+          );
+
+        }
+
+      }
+
+      async function cargarObras() {
+
+        try {
+          const respuesta = await window.BitacoraIPC?.listarObras?.();
+          obras = respuesta?.ok && Array.isArray(respuesta.obras)
+            ? respuesta.obras
+            : obtenerObrasDesdeEstado();
+        }
+        catch (error) {
+          console.error('No fue posible cargar las obras persistentes:', error);
+          obras = obtenerObrasDesdeEstado();
+          mostrarMensaje('No fue posible cargar las obras guardadas.', 'error');
+        }
+
+        obras = obras.map(obra => ({
+          id: obra.id || generarId(),
+          nombre: obra.nombre || '',
+          numeroContrato: obra.numeroContrato || '',
+          objetoContrato: obra.objetoContrato || '',
+          entidadContratante: obra.entidadContratante || '',
+          departamento: obra.departamento || obra.ubicacion?.departamento || '',
+          municipio: obra.municipio || obra.ubicacion?.municipio || '',
+          direccion: obra.direccion || obra.ubicacion?.direccion || '',
+          telefono: obra.telefono || obra.contacto?.telefono || '',
+          estado: obra.estado || 'Activa',
+          fechaInicio: obra.fechaInicio || obra.contrato?.fechaInicio || '',
+          fechaFinal: obra.fechaFinal || obra.contrato?.fechaTerminacion || '',
+          valorContrato: Number(obra.valorContrato || obra.contrato?.valorFinal || 0),
+          plazo: obra.plazo || obra.contrato?.plazoDias || '',
+          ubicacion: {
+            latitud: obra.ubicacion?.latitud ?? obra.latitud ?? null,
+            longitud: obra.ubicacion?.longitud ?? obra.longitud ?? null
+          },
+          observaciones: obra.observaciones || '',
+          creadoEn: obra.creadoEn || '',
+          actualizadoEn: obra.actualizadoEn || ''
+        }));
+
+        actualizarFiltroMunicipios();
+        renderizar();
+      }
+
+      function filtrarObras() {
+
+        const texto =
+          elementos.buscar.value
+            .trim()
+            .toLowerCase();
+
+        const estado =
+          elementos.filtroEstado.value;
+
+        const municipio =
+          elementos.filtroMunicipio.value;
+
+        return obras.filter(obra => {
+
+          const contenido = [
+            obra.nombre,
+            obra.numeroContrato,
+            obra.entidadContratante,
+            obra.municipio,
+            obra.departamento,
+            obra.direccion
+          ]
+            .join(' ')
+            .toLowerCase();
+
+          const coincideTexto =
+            !texto || contenido.includes(texto);
+
+          const coincideEstado =
+            !estado || obra.estado === estado;
+
+          const coincideMunicipio =
+            !municipio || obra.municipio === municipio;
+
+          return (
+            coincideTexto &&
+            coincideEstado &&
+            coincideMunicipio
+          );
+
+        });
+
+      }
+
+      function crearEtiquetaEstado(estado) {
+
+        const normalizado =
+          String(estado || 'Activa')
+            .toLowerCase()
+            .replaceAll(' ', '-');
+
+        return `
+          <span class="etiqueta etiqueta--${escaparHTML(normalizado)}">
+            ${escaparHTML(estado || 'Activa')}
+          </span>
+        `;
+
+      }
+
+      function renderizar() {
+
+        const filtradas = filtrarObras();
+
+        elementos.total.textContent =
+          String(obras.length);
+
+        elementos.totalActivas.textContent =
+          String(
+            obras.filter(
+              obra => obra.estado === 'Activa'
+            ).length
+          );
+
+        elementos.totalFinalizadas.textContent =
+          String(
+            obras.filter(
+              obra =>
+                obra.estado === 'Finalizada' ||
+                obra.estado === 'Liquidada'
+            ).length
+          );
+
+        elementos.textoResultados.textContent =
+          filtradas.length === 1
+            ? 'Se encontró 1 obra.'
+            : `Se encontraron ${filtradas.length} obras.`;
+
+        if (!filtradas.length) {
+
+          elementos.tabla.innerHTML = `
+            <tr>
+              <td colspan="6" class="tabla__vacio">
+                No hay obras que coincidan con los filtros.
+              </td>
+            </tr>
+          `;
+
+          return;
+
+        }
+
+        elementos.tabla.innerHTML =
+          filtradas
+            .map(obra => `
+              <tr>
+
+                <td>
+
+                  <strong>
+                    ${escaparHTML(obra.nombre)}
+                  </strong>
+
+                  <small>
+                    ${escaparHTML(
+                      obra.objetoContrato || 'Sin objeto contractual'
+                    )}
+                  </small>
+
+                </td>
+
+                <td>
+                  ${escaparHTML(
+                    obra.numeroContrato || 'Sin registrar'
+                  )}
+                </td>
+
+                <td>
+                  ${escaparHTML(
+                    obra.entidadContratante || 'Sin registrar'
+                  )}
+                </td>
+
+                <td>
+
+                  <span>
+                    ${escaparHTML(
+                      obra.municipio || 'Sin municipio'
+                    )}
+                  </span>
+
+                  <small>
+                    ${escaparHTML(
+                      obra.departamento || ''
+                    )}
+                  </small>
+
+                </td>
+
+                <td>
+                  ${crearEtiquetaEstado(obra.estado)}
+                </td>
+
+                <td>
+
+                  <div class="grupo-acciones-tabla">
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="usar"
+                      data-id="${escaparHTML(obra.id)}"
+                      title="Seleccionar obra"
+                      aria-label="Seleccionar obra"
+                    >
+                      ✓
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono boton-documentos-obra"
+                      data-accion="documentos"
+                      data-id="${escaparHTML(obra.id)}"
+                      title="Documentos de la Obra"
+                      aria-label="Documentos de la Obra"
+                    >
+                      📁
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono"
+                      data-accion="editar"
+                      data-id="${escaparHTML(obra.id)}"
+                      title="Editar obra"
+                      aria-label="Editar obra"
+                    >
+                      ✎
+                    </button>
+
+                    <button
+                      type="button"
+                      class="boton-icono boton-icono--peligro"
+                      data-accion="eliminar"
+                      data-id="${escaparHTML(obra.id)}"
+                      title="Eliminar obra"
+                      aria-label="Eliminar obra"
+                    >
+                      🗑
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+            `)
+            .join('');
+
+      }
+
+      function actualizarFiltroMunicipios() {
+
+        const valorActual =
+          elementos.filtroMunicipio.value;
+
+        const municipios = [
+          ...new Set(
+            obras
+              .map(obra => obra.municipio)
+              .filter(Boolean)
+          )
+        ].sort(
+          (a, b) => a.localeCompare(b, 'es')
+        );
+
+        elementos.filtroMunicipio.innerHTML = `
+          <option value="">
+            Todos los municipios
+          </option>
+
+          ${municipios
+            .map(municipio => `
+              <option value="${escaparHTML(municipio)}">
+                ${escaparHTML(municipio)}
+              </option>
+            `)
+            .join('')}
+        `;
+
+        if (municipios.includes(valorActual)) {
+          elementos.filtroMunicipio.value =
+            valorActual;
+        }
+
+      }
+
+      function limpiarFormulario() {
+
+        elementos.formulario.reset();
+
+        obtenerElemento('obra-id').value = '';
+        obtenerElemento('obra-estado').value = 'Activa';
+        obtenerElemento('obra-departamento').value =
+          'Santander';
+
+      }
+
+      function abrirNuevaObra() {
+
+        limpiarFormulario();
+
+        elementos.tituloModal.textContent =
+          'Nueva obra';
+
+        abrirModal(elementos.modalObra);
+
+        setTimeout(() => {
+          obtenerElemento('obra-nombre')?.focus();
+        }, 50);
+
+      }
+
+      function cargarFormulario(obra) {
+
+        obtenerElemento('obra-id').value =
+          obra.id || '';
+
+        obtenerElemento('obra-nombre').value =
+          obra.nombre || '';
+
+        obtenerElemento('obra-codigo').value =
+          obra.codigo || '';
+
+        obtenerElemento('obra-numero-contrato').value =
+          obra.numeroContrato || '';
+
+        obtenerElemento('obra-estado').value =
+          obra.estado || 'Activa';
+
+        obtenerElemento('obra-objeto-contrato').value =
+          obra.objetoContrato || '';
+
+        obtenerElemento('obra-entidad').value =
+          obra.entidadContratante || '';
+
+        obtenerElemento('obra-departamento').value =
+          obra.departamento || '';
+
+        obtenerElemento('obra-municipio').value =
+          obra.municipio || '';
+
+        obtenerElemento('obra-direccion').value =
+          obra.direccion || '';
+
+        obtenerElemento('obra-telefono').value =
+          obra.telefono || '';
+
+        obtenerElemento('obra-fecha-inicio').value =
+          obra.fechaInicio || '';
+
+        obtenerElemento('obra-fecha-final').value =
+          obra.fechaFinal || '';
+
+        obtenerElemento('obra-valor-contrato').value =
+          obra.valorContrato || '';
+
+        obtenerElemento('obra-plazo').value =
+          obra.plazo || '';
+
+        obtenerElemento('obra-latitud').value =
+          obra.ubicacion?.latitud ?? '';
+
+        obtenerElemento('obra-longitud').value =
+          obra.ubicacion?.longitud ?? '';
+
+        obtenerElemento('obra-observaciones').value =
+          obra.observaciones || '';
+
+      }
+
+      function editarObra(id) {
+
+        const obra =
+          obras.find(item => item.id === id);
+
+        if (!obra) return;
+
+        cargarFormulario(obra);
+
+        elementos.tituloModal.textContent =
+          'Editar obra';
+
+        abrirModal(elementos.modalObra);
+
+      }
+
+      function leerFormulario() {
+
+        return {
+
+          id:
+            obtenerElemento('obra-id').value ||
+            generarId(),
+
+          nombre:
+            obtenerElemento('obra-nombre')
+              .value
+              .trim(),
+
+          codigo:
+            obtenerElemento('obra-codigo')
+              .value
+              .trim(),
+
+          numeroContrato:
+            obtenerElemento('obra-numero-contrato')
+              .value
+              .trim(),
+
+          estado:
+            obtenerElemento('obra-estado').value,
+
+          objetoContrato:
+            obtenerElemento('obra-objeto-contrato')
+              .value
+              .trim(),
+
+          entidadContratante:
+            obtenerElemento('obra-entidad')
+              .value
+              .trim(),
+
+          departamento:
+            obtenerElemento('obra-departamento')
+              .value
+              .trim(),
+
+          municipio:
+            obtenerElemento('obra-municipio')
+              .value
+              .trim(),
+
+          direccion:
+            obtenerElemento('obra-direccion')
+              .value
+              .trim(),
+
+          telefono:
+            obtenerElemento('obra-telefono')
+              .value
+              .trim(),
+
+          fechaInicio:
+            obtenerElemento('obra-fecha-inicio').value,
+
+          fechaFinal:
+            obtenerElemento('obra-fecha-final').value,
+
+          valorContrato:
+            Number(
+              obtenerElemento('obra-valor-contrato').value
+            ) || 0,
+
+          plazo:
+            obtenerElemento('obra-plazo')
+              .value
+              .trim(),
+
+          ubicacion: {
+
+            latitud:
+              obtenerElemento('obra-latitud').value !== ''
+                ? Number(
+                    obtenerElemento('obra-latitud').value
+                  )
+                : null,
+
+            longitud:
+              obtenerElemento('obra-longitud').value !== ''
+                ? Number(
+                    obtenerElemento('obra-longitud').value
+                  )
+                : null
+
+          },
+
+          observaciones:
+            obtenerElemento('obra-observaciones')
+              .value
+              .trim(),
+
+          actualizadoEn:
+            new Date().toISOString()
+
+        };
+
+      }
+
+      async function guardarObra(evento) {
+
+        evento.preventDefault();
+
+        if (!elementos.formulario.checkValidity()) {
+          elementos.formulario.reportValidity();
+
+          const primerInvalido =
+            elementos.formulario.querySelector(':invalid');
+
+          primerInvalido?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+
+          primerInvalido?.focus();
+
+          mostrarMensaje(
+            'Complete todos los campos obligatorios de la obra, incluidos teléfono, fecha final y valor del contrato.',
+            'advertencia'
+          );
+
+          return;
+        }
+
+        const obra = leerFormulario();
+        const indice = obras.findIndex(item => item.id === obra.id);
+
+        try {
+          const respuesta = await window.BitacoraIPC?.guardarObra?.(obra);
+          if (!respuesta?.ok || !respuesta.obra) {
+            throw new Error(respuesta?.error || 'No se recibió confirmación del guardado.');
+          }
+
+          if (indice >= 0) obras[indice] = respuesta.obra;
+          else obras.push(respuesta.obra);
+
+          guardarObrasEnEstado();
+          actualizarFiltroMunicipios();
+          renderizar();
+          cerrarModal(elementos.modalObra);
+
+          mostrarMensaje(
+            indice >= 0
+              ? 'La obra fue actualizada correctamente.'
+              : 'La obra fue creada correctamente.',
+            'exito'
+          );
+        }
+        catch (error) {
+          console.error(error);
+          mostrarMensaje(
+            error?.message
+              ? `No fue posible guardar la obra: ${error.message}`
+              : 'No fue posible guardar la obra.',
+            'error'
+          );
+        }
+      }
+
+      async function seleccionarObra(id) {
+
+        const obra = obras.find(item => item.id === id);
+        if (!obra) return;
+
+        try {
+          const respuesta = await window.BitacoraIPC?.seleccionarObra?.(obra);
+          if (!respuesta?.ok) throw new Error('No fue posible seleccionar la obra.');
+
+          window.BitacoraEstado?.actualizarVarios?.({
+            'sesion.obraActualId': obra.id,
+            'bitacoraActual.obra.id': obra.id,
+            'bitacoraActual.obra.nombre': obra.nombre,
+            'bitacoraActual.obra.numeroContrato': obra.numeroContrato,
+            'bitacoraActual.obra.objetoContrato': obra.objetoContrato,
+            'bitacoraActual.obra.entidadContratante': obra.entidadContratante,
+            'bitacoraActual.obra.municipio': obra.municipio,
+            'bitacoraActual.obra.departamento': obra.departamento,
+            'bitacoraActual.obra.direccion': obra.direccion,
+            'bitacoraActual.obra.ubicacion': obra.ubicacion
+          }, { origen: 'seleccion-obra' });
+
+          mostrarMensaje(`La obra "${obra.nombre}" quedó seleccionada.`, 'exito');
+          setTimeout(() => { window.location.href = './index.html'; }, 650);
+        }
+        catch (error) {
+          console.error(error);
+          mostrarMensaje('No fue posible seleccionar la obra.', 'error');
+        }
+      }
+
+      function solicitarEliminar(id) {
+
+        const obra =
+          obras.find(item => item.id === id);
+
+        if (!obra) return;
+
+        obraPendienteEliminar = obra;
+
+        elementos.mensajeConfirmacion.textContent =
+          `¿Desea eliminar la obra "${obra.nombre}"? Esta acción no se puede deshacer.`;
+
+        abrirModal(
+          elementos.modalConfirmacion
+        );
+
+      }
+
+      async function eliminarObra() {
+
+        if (!obraPendienteEliminar) return;
+        const id = obraPendienteEliminar.id;
+
+        try {
+          const respuesta = await window.BitacoraIPC?.eliminarObra?.(id);
+          if (!respuesta?.ok) throw new Error('No se confirmó la eliminación.');
+
+          obras = obras.filter(obra => obra.id !== id);
+          obraPendienteEliminar = null;
+          cerrarModal(elementos.modalConfirmacion);
+          guardarObrasEnEstado();
+          actualizarFiltroMunicipios();
+          renderizar();
+          mostrarMensaje('La obra fue eliminada.', 'exito');
+        }
+        catch (error) {
+          console.error(error);
+          mostrarMensaje('No fue posible eliminar la obra.', 'error');
+        }
+      }
+
+      async function capturarUbicacion() {
+
+        try {
+
+          let coordenadas = null;
+
+          if (
+            typeof window.BitacoraMapas?.capturarGPS ===
+            'function'
+          ) {
+
+            coordenadas =
+              await window.BitacoraMapas.capturarGPS();
+
+          }
+          else if (
+            typeof window.BitacoraMapas?.obtenerGPS ===
+            'function'
+          ) {
+
+            coordenadas =
+              await window.BitacoraMapas.obtenerGPS();
+
+          }
+          else if (
+            typeof window.BitacoraUtilidades?.obtenerGPS ===
+            'function'
+          ) {
+
+            coordenadas =
+              await window.BitacoraUtilidades.obtenerGPS();
+
+          }
+
+          if (!coordenadas) {
+            throw new Error(
+              'No se recibieron coordenadas.'
+            );
+          }
+
+          obtenerElemento('obra-latitud').value =
+            coordenadas.latitud ?? '';
+
+          obtenerElemento('obra-longitud').value =
+            coordenadas.longitud ?? '';
+
+          mostrarMensaje(
+            'La ubicación GPS fue capturada.',
+            'exito'
+          );
+
+        }
+        catch (error) {
+
+          console.error(error);
+
+          mostrarMensaje(
+            'No fue posible obtener la ubicación GPS.',
+            'error'
+          );
+
+        }
+
+      }
+
+      function manejarAccionesTabla(evento) {
+
+        const boton =
+          evento.target.closest(
+            '[data-accion][data-id]'
+          );
+
+        if (!boton) return;
+
+        const { accion, id } = boton.dataset;
+
+        if (accion === 'usar') {
+          seleccionarObra(id);
+        }
+
+        if (accion === 'editar') {
+          editarObra(id);
+        }
+
+        if (accion === 'eliminar') {
+          solicitarEliminar(id);
+        }
+
+      }
+
+      function limpiarFiltros() {
+
+        elementos.buscar.value = '';
+        elementos.filtroEstado.value = '';
+        elementos.filtroMunicipio.value = '';
+
+        renderizar();
+
+      }
+
+      function vincularEventos() {
+
+        elementos.botonNuevaObra.addEventListener(
+          'click',
+          abrirNuevaObra
+        );
+
+        elementos.formulario.addEventListener(
+          'submit',
+          guardarObra
+        );
+
+        elementos.tabla.addEventListener(
+          'click',
+          manejarAccionesTabla
+        );
+
+        elementos.buscar.addEventListener(
+          'input',
+          renderizar
+        );
+
+        elementos.filtroEstado.addEventListener(
+          'change',
+          renderizar
+        );
+
+        elementos.filtroMunicipio.addEventListener(
+          'change',
+          renderizar
+        );
+
+        elementos.botonLimpiar.addEventListener(
+          'click',
+          limpiarFiltros
+        );
+
+        elementos.botonConfirmarEliminacion.addEventListener(
+          'click',
+          eliminarObra
+        );
+
+        elementos.botonCapturarUbicacion.addEventListener(
+          'click',
+          capturarUbicacion
+        );
+
+        document.querySelectorAll(
+          '[data-cerrar-modal]'
+        ).forEach(elemento => {
+
+          elemento.addEventListener(
+            'click',
+            () => cerrarModal(
+              elementos.modalObra
+            )
+          );
+
+        });
+
+        document.querySelectorAll(
+          '[data-cerrar-confirmacion]'
+        ).forEach(elemento => {
+
+          elemento.addEventListener(
+            'click',
+            () => {
+
+              obraPendienteEliminar = null;
+
+              cerrarModal(
+                elementos.modalConfirmacion
+              );
+
+            }
+          );
+
+        });
+
+        document.addEventListener(
+          'keydown',
+          evento => {
+
+            if (evento.key !== 'Escape') return;
+
+            cerrarModal(elementos.modalObra);
+
+            obraPendienteEliminar = null;
+
+            cerrarModal(
+              elementos.modalConfirmacion
+            );
+
+          }
+        );
+
+      }
+
+      async function cargarVersion() {
+
+        try {
+
+          const informacion =
+            await window.BitacoraIPC
+              ?.informacionAplicacion?.();
+
+          if (informacion?.version) {
+
+            obtenerElemento(
+              'version-aplicacion'
+            ).textContent =
+              `Versión ${informacion.version}`;
+
+          }
+
+        }
+        catch (error) {
+
+          console.warn(
+            'No fue posible consultar la versión:',
+            error
+          );
+
+        }
+
+      }
+
+      function iniciar() {
+
+        iniciarElementos();
+        vincularEventos();
+        cargarObras();
+        cargarVersion();
+
+      }
+
+      if (
+        document.readyState === 'loading'
+      ) {
+
+        document.addEventListener(
+          'DOMContentLoaded',
+          iniciar,
+          {
+            once: true
+          }
+        );
+
+      }
+      else {
+
+        iniciar();
+
+      }
+
+    })();
+  </script>
+
+  <div class="modal-documentos" id="modal-documentos-obra" role="dialog" aria-modal="true" aria-labelledby="titulo-documentos-obra">
+    <section class="modal-documentos__panel">
+      <header class="modal-documentos__cabecera">
+        <div><h2 id="titulo-documentos-obra">Documentos de la Obra</h2><p id="nombre-obra-documentos"></p></div>
+        <button type="button" class="boton-icono" id="cerrar-documentos-obra" aria-label="Cerrar">×</button>
+      </header>
+      <div class="modal-documentos__herramientas">
+        <input type="search" id="buscar-documentos-obra" placeholder="Buscar documento por nombre o tipo...">
+        <span id="contador-documentos-obra">0 documentos</span>
+        <button type="button" class="boton boton-primario" id="agregar-documento-obra">＋ Agregar documento</button>
+      </div>
+      <div class="lista-documentos-obra" id="lista-documentos-obra"></div>
+    </section>
+  </div>
+
+  <script src="../js/documentos-obra.js"></script>
+
+  <script src="../js/pwa.js"></script>
+</body>
+
+</html>

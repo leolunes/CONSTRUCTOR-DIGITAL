@@ -1,0 +1,13 @@
+BITÁCORA DE OBRA v1.50
+
+Ajuste realizado:
+- Se agregó la función escaparHTML dentro de js/app.js.
+- Se corrigió el error "escaparHTML is not defined" que detenía Word e Informe consolidado.
+- No se modificó el diseño de los informes ni la información guardada.
+
+Prueba recomendada:
+1. Cerrar por completo la versión anterior de la aplicación.
+2. Ejecutar npm start desde esta carpeta.
+3. Abrir un folio guardado.
+4. Probar Word.
+5. Probar Informe consolidado.

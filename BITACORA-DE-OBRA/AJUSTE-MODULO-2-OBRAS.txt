@@ -1,0 +1,11 @@
+AJUSTE DE LA PANTALLA OBRAS
+
+Se corrigió:
+- Modal fuera de pantalla.
+- Desplazamiento vertical dentro del formulario.
+- Pie del modal fijo y siempre visible.
+- Botón Guardar obra accesible.
+- Diseño de dos columnas.
+- Validación visible de nombre y número de contrato.
+- Mensaje real del error de guardado.
+- Adaptación a pantallas pequeñas.

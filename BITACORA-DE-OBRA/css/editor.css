@@ -1,0 +1,669 @@
+/* =========================================================
+   BITÁCORA DE OBRA
+   Archivo: css/editor.css
+   Propósito: estilos del editor de anotaciones
+   ========================================================= */
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editor-toolbar {
+  position: sticky;
+  top: 104px;
+  z-index: calc(var(--z-menu) - 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 10px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: linear-gradient(#ffffff, #eef1f3);
+  box-shadow: var(--sombra-suave);
+}
+
+.editor-toolbar .separador {
+  width: 1px;
+  height: 28px;
+  margin: 0 3px;
+  background: var(--color-borde-suave);
+}
+
+.editor-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 9px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-sm);
+  background: #ffffff;
+  color: var(--color-texto);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition:
+    background-color var(--transicion-rapida),
+    border-color var(--transicion-rapida),
+    color var(--transicion-rapida),
+    transform var(--transicion-rapida);
+}
+
+.editor-toolbar button:hover {
+  border-color: var(--color-primario);
+  background: var(--color-primario);
+  color: var(--color-texto-claro);
+  transform: translateY(-1px);
+}
+
+.editor-toolbar button:active {
+  transform: translateY(0);
+}
+
+.editor-toolbar button.activo {
+  border-color: var(--color-primario-oscuro);
+  background: var(--color-primario-oscuro);
+  color: var(--color-texto-claro);
+}
+
+.editor-toolbar button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  background: #e9ecef;
+  color: #7d858c;
+  transform: none;
+}
+
+.editor-toolbar select {
+  width: auto;
+  min-width: 110px;
+  height: 38px;
+  min-height: 38px;
+  padding: 0 30px 0 10px;
+  background: #ffffff;
+}
+
+.editor-contenido {
+  position: relative;
+  min-height: var(--alto-editor-minimo);
+  max-height: 680px;
+  padding: 24px 28px;
+  overflow-y: auto;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  background: #ffffff;
+  color: #111111;
+  font-family: var(--fuente-documento);
+  font-size: 1rem;
+  line-height: 1.65;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.editor-contenido:empty::before {
+  content: "Escriba aquí la anotación diaria de la Bitácora de Obra...";
+  color: var(--color-placeholder);
+  pointer-events: none;
+}
+
+.editor-contenido:focus {
+  outline: none;
+  border-color: var(--color-borde-activo);
+  box-shadow: 0 0 0 3px rgba(7, 153, 211, 0.14);
+}
+
+.editor-contenido p {
+  margin: 0 0 0.85rem;
+}
+
+.editor-contenido h1,
+.editor-contenido h2,
+.editor-contenido h3 {
+  margin: 1rem 0 0.6rem;
+}
+
+.editor-contenido ul,
+.editor-contenido ol {
+  margin: 0.5rem 0 0.9rem 1.6rem;
+  padding: 0;
+}
+
+.editor-contenido blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--color-primario);
+  background: var(--color-fondo-suave);
+  color: var(--color-texto-secundario);
+}
+
+.editor-contenido img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 14px auto;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  box-shadow: var(--sombra-suave);
+}
+
+.editor-contenido a {
+  color: var(--color-primario-oscuro);
+  text-decoration: underline;
+}
+
+.editor-contenido table {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+}
+
+.editor-contenido th,
+.editor-contenido td {
+  padding: 8px;
+  border: 1px solid var(--color-borde);
+  vertical-align: top;
+}
+
+.editor-contenido th {
+  background: var(--color-fondo-suave);
+  font-weight: 700;
+}
+
+.editor-estado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-sm);
+  background: var(--color-fondo-suave);
+  color: var(--color-texto-secundario);
+  font-size: var(--tamano-texto-sm);
+}
+
+.editor-estado .contador {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.editor-busqueda {
+  display: none;
+  grid-template-columns: minmax(180px, 1fr) auto auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: #ffffff;
+}
+
+.editor-busqueda.visible {
+  display: grid;
+}
+
+.editor-busqueda input {
+  min-height: 36px;
+}
+
+.editor-busqueda button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-sm);
+  background: var(--color-fondo-suave);
+  color: var(--color-texto);
+  font-weight: 600;
+}
+
+.editor-busqueda button:hover {
+  background: var(--color-primario);
+  color: #ffffff;
+}
+
+.marca-busqueda {
+  border-radius: 2px;
+  background: #fff176;
+  color: #111111;
+}
+
+.marca-busqueda.actual {
+  background: #ffb300;
+}
+
+.editor.solo-lectura .editor-toolbar {
+  opacity: 0.6;
+}
+
+.editor.solo-lectura .editor-contenido {
+  background: #f6f7f8;
+  cursor: default;
+}
+
+@media (max-width: 900px) {
+  .editor-toolbar {
+    position: static;
+  }
+
+  .editor-toolbar select {
+    min-width: 95px;
+  }
+
+  .editor-contenido {
+    min-height: 360px;
+    padding: 18px;
+  }
+
+  .editor-busqueda {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .editor-toolbar {
+    gap: 5px;
+  }
+
+  .editor-toolbar button {
+    min-width: 36px;
+    height: 36px;
+  }
+
+  .editor-toolbar select {
+    width: 100%;
+  }
+
+  .editor-contenido {
+    min-height: 320px;
+    padding: 14px;
+  }
+
+  .editor-estado {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .editor-estado .contador {
+    margin-left: 0;
+  }
+
+  .editor-busqueda {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MÓDULO 3 — EDITOR PROFESIONAL
+   ========================================================= */
+
+.editor-profesional {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.editor-toolbar--principal,
+.editor-toolbar--secundaria {
+  position: static;
+}
+
+.editor-toolbar--principal button:nth-of-type(5),
+.editor-toolbar--principal button:nth-of-type(6),
+.editor-toolbar--principal button:nth-of-type(7) {
+  font-family: Arial, sans-serif;
+}
+
+.editor-toolbar--principal button:nth-of-type(5) {
+  text-align: left;
+}
+
+.editor-toolbar--principal button:nth-of-type(6) {
+  text-align: center;
+}
+
+.editor-toolbar--principal button:nth-of-type(7) {
+  text-align: right;
+}
+
+.editor-plantillas-rapidas {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding: 9px 10px;
+  border: 1px solid var(--color-borde-suave);
+  border-radius: var(--radio-md);
+  background: #f8fafc;
+}
+
+.editor-plantillas-rapidas > span {
+  color: var(--color-texto-secundario);
+  font-size: .86rem;
+  font-weight: 700;
+}
+
+.editor-plantillas-rapidas button {
+  padding: 7px 10px;
+  border: 1px solid #cbd6df;
+  border-radius: 999px;
+  background: white;
+  color: #23415e;
+  font-size: .82rem;
+  cursor: pointer;
+}
+
+.editor-plantillas-rapidas button:hover {
+  border-color: var(--color-primario);
+  background: #eaf6fb;
+}
+
+.editor-contenido .bloque-editor {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border: 1px solid #cbd6df;
+  border-left: 5px solid #2878b5;
+  border-radius: 6px;
+  background: #f8fbfd;
+}
+
+.editor-contenido .bloque-editor h3 {
+  margin: 0 0 10px;
+  color: #123c6b;
+  font-size: 1rem;
+}
+
+.editor-contenido .bloque-editor p {
+  margin: 6px 0;
+}
+
+.editor-contenido .bloque-novedad {
+  border-left-color: #d97706;
+  background: #fffaf0;
+}
+
+.editor-contenido .bloque-seguridad {
+  border-left-color: #dc2626;
+  background: #fff7f7;
+}
+
+.editor-contenido .bloque-calidad {
+  border-left-color: #7c3aed;
+  background: #faf7ff;
+}
+
+.editor-contenido .bloque-personal {
+  border-left-color: #059669;
+  background: #f4fcf8;
+}
+
+.editor-contenido .bloque-compromiso {
+  border-left-color: #2563eb;
+  background: #f4f7ff;
+}
+
+.editor-estado {
+  flex-wrap: wrap;
+}
+
+#estado-borrador-editor {
+  color: #607486;
+  font-size: .82rem;
+}
+
+.editor-pantalla-completa {
+  position: fixed !important;
+  inset: 14px;
+  z-index: 20000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0 !important;
+  padding: 16px !important;
+  border: 1px solid #aebdca;
+  border-radius: 12px;
+  background: #f3f6f8;
+  box-shadow: 0 25px 80px rgba(0,0,0,.35);
+}
+
+.editor-pantalla-completa .editor-profesional {
+  flex: 0 0 auto;
+}
+
+.editor-pantalla-completa .editor-contenido {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.editor-pantalla-completa > label,
+.editor-pantalla-completa > textarea {
+  display: none;
+}
+
+body.editor-modal-activo {
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .editor-toolbar--principal select {
+    flex: 1 1 130px;
+  }
+
+  .editor-pantalla-completa {
+    inset: 4px;
+    padding: 8px !important;
+  }
+}
+
+
+/* =========================================================
+   AJUSTE DEL EDITOR — BOTONES Y GUARDADO
+   ========================================================= */
+
+.editor-toolbar--secundaria {
+  align-items: stretch;
+}
+
+.editor-toolbar--secundaria button {
+  width: auto;
+  min-width: 74px;
+  height: 38px;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.editor-toolbar--secundaria #btn-imagen,
+.editor-toolbar--secundaria #btn-anexo,
+.editor-toolbar--secundaria #btn-buscar,
+.editor-toolbar--secundaria #btn-gps,
+.editor-toolbar--secundaria #btn-editor-pantalla-completa {
+  min-width: 76px;
+}
+
+.editor-toolbar--secundaria .boton-guardar-avance {
+  min-width: 132px;
+  border-color: #1f7a3f;
+  background: #eaf8ef;
+  color: #14532d;
+}
+
+.editor-toolbar--secundaria .boton-guardar-avance:hover {
+  border-color: #176b35;
+  background: #1f7a3f;
+  color: #fff;
+}
+
+.editor-plantillas-rapidas button {
+  min-height: 34px;
+  padding: 7px 12px;
+  white-space: nowrap;
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+#estado-editor[data-tipo="guardando"] {
+  color: #8a5a00;
+}
+
+#estado-editor[data-tipo="guardado"] {
+  color: #1f7a3f;
+  font-weight: 700;
+}
+
+#estado-editor[data-tipo="error"] {
+  color: #b42318;
+  font-weight: 700;
+}
+
+@media (max-width: 1050px) {
+  .editor-toolbar--secundaria button {
+    min-width: 68px;
+    font-size: 0.72rem;
+  }
+
+  .editor-toolbar--secundaria .boton-guardar-avance {
+    min-width: 118px;
+  }
+}
+
+/* =========================================================
+   Bloques consecutivos y minimizables
+   ========================================================= */
+.editor-contenido .bloque-editor > h3 {
+  padding-right: 78px;
+}
+
+.editor-contenido .bloque-actividad .consecutivo-bloque {
+  display: inline-block;
+  margin-left: 4px;
+  color: #2878b5;
+  font-weight: 800;
+}
+
+.minimizar-bloque-editor {
+  position: absolute;
+  top: 7px;
+  right: 41px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 1px solid #9db6c8;
+  border-radius: 50%;
+  background: #fff;
+  color: #235575;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.minimizar-bloque-editor:hover {
+  border-color: #2878b5;
+  background: #eaf6fb;
+}
+
+.editor-contenido .bloque-editor.bloque-minimizado {
+  min-height: 50px;
+  padding-top: 13px;
+  padding-bottom: 9px;
+}
+
+.editor-contenido .bloque-editor.bloque-minimizado > :not(h3):not(.minimizar-bloque-editor):not(.eliminar-bloque-editor) {
+  display: none !important;
+}
+
+.editor-contenido .bloque-editor.bloque-minimizado > h3 {
+  margin-bottom: 0;
+}
+
+
+/* Botón contextual debajo del último bloque de cada tipo. No se guarda con el folio. */
+.editor-contenido .agregar-otro-bloque-editor {
+  display: block;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin: 10px auto 24px;
+  padding: 9px 16px;
+  border: 1px solid #b7cbe0;
+  border-radius: 20px;
+  background: #fff;
+  color: #145a96;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.editor-contenido .agregar-otro-bloque-editor:hover {
+  background: #eef6fd;
+  border-color: #7ca9d1;
+}
+@media print {
+  .agregar-otro-bloque-editor { display: none !important; }
+}
+
+
+/* v1.35: control para eliminar fotografías insertadas dentro del editor */
+.editor-contenido figure.imagen-editor {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin: 12px 0;
+}
+
+.editor-contenido .boton-eliminar-imagen-editor {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #dc2626;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #b91c1c;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.editor-contenido .boton-eliminar-imagen-editor:hover {
+  background: #fee2e2;
+}
+
+@media print {
+  .boton-eliminar-imagen-editor {
+    display: none !important;
+  }
+}
+
+
+/* v1.36: fotografías insertadas con el botón Imagen, incluidas las de folios antiguos */
+.editor-contenido figure.imagen-editor > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.editor-contenido figure.imagen-editor > figcaption {
+  display: block;
+  margin-top: 6px;
+  padding-right: 42px;
+  color: #334155;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}

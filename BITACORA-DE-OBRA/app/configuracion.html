@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Configuración general de la aplicación Bitácora de Obra."
+  >
+
+  <title>
+    Configuración | Bitácora de Obra
+  </title>
+
+  <!-- =====================================================
+       ESTILOS GENERALES DEL PROYECTO
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="../css/variables.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/general.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/menu.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/formularios.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/modales.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/responsive.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/obras-pagina.css"
+  >
+
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="theme-color" content="#173b57">
+  <link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+</head>
+
+<body>
+
+  <div class="aplicacion">
+
+    <!-- ===================================================
+         BARRA LATERAL
+    ==================================================== -->
+
+    <aside
+      class="menu-lateral"
+      id="menu-lateral"
+      aria-label="Menú principal"
+    >
+
+      <div class="menu-lateral__encabezado">
+
+        <div class="menu-lateral__marca">
+
+          <div
+            class="menu-lateral__logo"
+            aria-hidden="true"
+          >
+            BO
+          </div>
+
+          <div>
+
+            <strong>
+              Bitácora de Obra
+            </strong>
+
+            <small>
+              Gestión de registros
+            </small>
+
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="boton-icono"
+          id="btn-cerrar-menu"
+          aria-label="Cerrar menú"
+          title="Cerrar menú"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <nav class="menu-lateral__navegacion">
+
+        <a
+          class="menu-enlace"
+          href="./index.html"
+        >
+          <span aria-hidden="true">📝</span>
+          <span>Bitácora</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./obras.html"
+        >
+          <span aria-hidden="true">🏗️</span>
+          <span>Obras</span>
+        </a>
+
+        <a
+          class="menu-enlace"
+          href="./contratistas.html"
+        >
+          <span aria-hidden="true">👷</span>
+          <span>Contratistas</span>
+        </a>
+
+        <a
+          class="menu-enlace menu-enlace--activo"
+          href="./configuracion.html"
+          aria-current="page"
+        >
+          <span aria-hidden="true">⚙️</span>
+          <span>Configuración</span>
+        </a>
+
+      </nav>
+
+      <div class="menu-lateral__pie">
+
+        <small>
+          Aplicación de escritorio
+        </small>
+
+        <span id="version-aplicacion">
+          Versión local
+        </span>
+
+      </div>
+
+    </aside>
+
+    <!-- ===================================================
+         CONTENIDO PRINCIPAL
+    ==================================================== -->
+
+    <div class="contenido-aplicacion">
+
+      <header class="barra-superior">
+
+        <div class="barra-superior__izquierda">
+
+          <button
+            type="button"
+            class="boton-icono"
+            id="btn-abrir-menu"
+            aria-label="Abrir menú"
+            title="Abrir menú"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <h1>
+              Configuración
+            </h1>
+
+            <p>
+              Preferencias generales de la aplicación
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="barra-superior__acciones">
+
+          <a
+            class="boton boton-secundario"
+            href="./index.html"
+          >
+            Volver a la bitácora
+          </a>
+
+          <button
+            type="button"
+            class="boton boton-secundario"
+            id="btn-limpiar-configuracion"
+            title="Borrar los datos del responsable y guardar los campos vacíos"
+          >
+            Limpiar datos
+          </button>
+
+          <button
+            type="button"
+            class="boton boton-primario"
+            id="btn-guardar-configuracion"
+          >
+            Guardar configuración
+          </button>
+
+        </div>
+
+      </header>
+
+      <main class="contenido-principal">
+
+        <div
+          id="contenedor-alertas"
+          class="contenedor-alertas"
+          aria-live="polite"
+          aria-atomic="true"
+        ></div>
+
+        <form
+          id="formulario-configuracion"
+          class="formulario-configuracion"
+          novalidate
+        >
+
+          <!-- ===============================================
+               INFORMACIÓN DEL USUARIO
+          ================================================ -->
+
+          <section class="tarjeta">
+
+            <div class="tarjeta__encabezado">
+
+              <div>
+
+                <h2>
+                  Información del responsable
+                </h2>
+
+                <p>
+                  Datos que se utilizarán en los registros y exportaciones.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+
+              <div class="campo campo--completo">
+
+                <label for="usuario-nombre">
+                  Nombre completo
+                </label>
+
+                <input
+                  type="text"
+                  id="usuario-nombre"
+                  name="usuarioNombre"
+                  autocomplete="name"
+                  placeholder="Nombre del responsable de la bitácora"
+                >
+
+              </div>
+
+              <div class="campo">
+
+                <label for="usuario-cargo">
+                  Cargo
+                </label>
+
+                <input
+                  type="text"
+                  id="usuario-cargo"
+                  name="usuarioCargo"
+                  placeholder="Ejemplo: Supervisor de obra"
+                >
+
+              </div>
+
+              <div class="campo">
+
+                <label for="usuario-entidad">
+                  Entidad o empresa
+                </label>
+
+                <input
+                  type="text"
+                  id="usuario-entidad"
+                  name="usuarioEntidad"
+                  placeholder="Nombre de la entidad"
+                >
+
+              </div>
+
+              <div class="campo campo--completo">
+
+                <label for="usuario-correo">
+                  Correo electrónico
+                </label>
+
+                <input
+                  type="email"
+                  id="usuario-correo"
+                  name="usuarioCorreo"
+                  autocomplete="email"
+                  placeholder="correo@ejemplo.com"
+                >
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- ===============================================
+               IDENTIDAD GRÁFICA DE LA OBRA
+          ================================================ -->
+
+          <section class="tarjeta">
+            <div class="tarjeta__encabezado">
+              <div>
+                <h2>Identidad gráfica de la obra</h2>
+                <p>El logo se guarda únicamente para la obra activa y se incorpora en Word, PDF e impresión.</p>
+              </div>
+            </div>
+            <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+              <div class="campo campo--completo">
+                <label>Logo de la empresa</label>
+                <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+                  <div style="width:180px;height:100px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden">
+                    <img id="vista-logo-empresa" alt="Vista previa del logo" style="max-width:100%;max-height:100%;display:none">
+                    <span id="texto-logo-vacio" style="color:#64748b">Sin logo</span>
+                  </div>
+                  <div class="grupo-botones">
+                    <button type="button" class="boton boton-secundario" id="btn-seleccionar-logo">Insertar logo empresa</button>
+                    <button type="button" class="boton boton-peligro" id="btn-eliminar-logo">Eliminar logo</button>
+                  </div>
+                </div>
+                <input type="file" id="input-logo-empresa" accept="image/png,image/jpeg,image/webp" hidden>
+                <input type="hidden" id="logo-empresa" name="logoEmpresa">
+                <small class="campo__ayuda">Use preferiblemente PNG o JPG horizontal. El archivo se adapta automáticamente al rótulo.</small>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===============================================
+               PREFERENCIAS GENERALES
+          ================================================ -->
+
+          <section class="tarjeta">
+
+            <div class="tarjeta__encabezado">
+
+              <div>
+
+                <h2>
+                  Preferencias generales
+                </h2>
+
+                <p>
+                  Ajuste el comportamiento y la presentación de la aplicación.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="rejilla-formulario rejilla-formulario--dos-columnas">
+
+              <div class="campo">
+
+                <label for="config-idioma">
+                  Idioma
+                </label>
+
+                <select
+                  id="config-idioma"
+                  name="idioma"
+                >
+
+                  <option value="es-CO">
+                    Español — Colombia
+                  </option>
+
+                </select>
+
+              </div>
+
+              <div class="campo">
+
+                <label for="config-zona-horaria">
+                  Zona horaria
+                </label>
+
+                <select
+                  id="config-zona-horaria"
+                  name="zonaHoraria"
+                >
+
+                  <option value="America/Bogota">
+                    América/Bogotá
+                  </option>
+
+                </select>
+
+              </div>
+
+              <div class="campo">
+
+                <label for="config-formato-fecha">
+                  Formato de fecha
+                </label>
+
+                <select
+                  id="config-formato-fecha"
+                  name="formatoFecha"
+                >
+
+                  <option value="DD/MM/YYYY">
+                    Día / Mes / Año
+                  </option>
+
+                  <option value="YYYY-MM-DD">
+                    Año - Mes - Día
+                  </option>
+
+                </select>
+
+              </div>
+
+              <div class="campo">
+
+                <label for="config-tema">
+                  Apariencia
+                </label>
+
+                <select
+                  id="config-tema"
+                  name="tema"
+                >
+
+                  <option value="claro">
+                    Tema claro
+                  </option>
+
+                  <option value="oscuro">
+                    Tema oscuro
+                  </option>
+
+                  <option value="sistema">
+                    Usar configuración del sistema
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- ===============================================
+               GUARDADO AUTOMÁTICO
+          ================================================ -->
+
+          <section class="tarjeta">
+
+            <div class="tarjeta__encabezado">
+
+              <div>
+
+                <h2>
+                  Guardado automático
+                </h2>
+
+                <p>
+                  Proteja los cambios realizados mientras diligencia la bitácora.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="lista-opciones">
+
+              <label class="opcion-interruptor">
+
+                <span>
+
+                  <strong>
+                    Activar guardado automático
+                  </strong>
+
+                  <small>
+                    Guarda periódicamente los cambios del folio actual.
+                  </small>
+
+                </span>
+
+                <input
+                  type="checkbox"
+                  id="config-guardado-automatico"
+                  name="guardadoAutomatico"
+                  checked
+                >
+
+              </label>
+
+              <div class="campo">
+
+                <label for="config-intervalo-guardado">
+                  Intervalo de guardado
+                </label>
+
+                <div class="campo-con-unidad">
+
+                  <input
+                    type="number"
+                    id="config-intervalo-guardado"
+                    name="intervaloGuardadoSegundos"
+                    min="10"
+                    max="600"
+                    step="5"
+                    value="30"
+                  >
+
+                  <span>
+                    segundos
+                  </span>
+
+                </div>
+
+                <small class="campo__ayuda">
+                  El valor mínimo recomendado es de 30 segundos.
+                </small>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- ===============================================
+               AYUDAS DE INTERFAZ
+          ================================================ -->
+
+          <section class="tarjeta">
+
+            <div class="tarjeta__encabezado">
+
+              <div>
+
+                <h2>
+                  Interfaz y ayudas
+                </h2>
+
+                <p>
+                  Personalice la asistencia visual durante el uso de la aplicación.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="lista-opciones">
+
+              <label class="opcion-interruptor">
+
+                <span>
+
+                  <strong>
+                    Mostrar ayudas contextuales
+                  </strong>
+
+                  <small>
+                    Presenta recomendaciones breves en los formularios.
+                  </small>
+
+                </span>
+
+                <input
+                  type="checkbox"
+                  id="config-mostrar-ayudas"
+                  name="mostrarAyudas"
+                  checked
+                >
+
+              </label>
+
+              <label class="opcion-interruptor">
+
+                <span>
+
+                  <strong>
+                    Confirmar antes de eliminar
+                  </strong>
+
+                  <small>
+                    Solicita confirmación antes de borrar folios o anexos.
+                  </small>
+
+                </span>
+
+                <input
+                  type="checkbox"
+                  id="config-confirmar-eliminacion"
+                  name="confirmarEliminacion"
+                  checked
+                >
+
+              </label>
+
+            </div>
+
+          </section>
+
+          <!-- ===============================================
+               COPIAS DE SEGURIDAD
+          ================================================ -->
+
+          <section class="tarjeta">
+
+            <div class="tarjeta__encabezado">
+
+              <div>
+
+                <h2>
+                  Copias de seguridad
+                </h2>
+
+                <p>
+                  Exporte o recupere la información almacenada en la aplicación.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="grupo-botones">
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-crear-copia"
+              >
+                Crear copia de seguridad
+              </button>
+
+              <button
+                type="button"
+                class="boton boton-secundario"
+                id="btn-restaurar-copia"
+              >
+                Restaurar copia
+              </button>
+
+              <button
+                type="button"
+                class="boton boton-peligro"
+                id="btn-reiniciar-aplicacion"
+              >
+                Restablecer información
+              </button>
+
+            </div>
+
+            <input
+              type="file"
+              id="input-restaurar-copia"
+              accept=".json,.zip"
+              hidden
+            >
+
+          </section>
+
+          <!-- ===============================================
+               INFORMACIÓN DE LA APLICACIÓN
+          ================================================ -->
+
+          <section class="tarjeta">
+
+            <div class="tarjeta__encabezado">
+
+              <div>
+
+                <h2>
+                  Información de la aplicación
+                </h2>
+
+                <p>
+                  Datos técnicos de la instalación actual.
+                </p>
+
+              </div>
+
+            </div>
+
+            <dl class="lista-informacion">
+
+              <div>
+
+                <dt>
+                  Aplicación
+                </dt>
+
+                <dd id="info-nombre-aplicacion">
+                  Bitácora de Obra
+                </dd>
+
+              </div>
+
+              <div>
+
+                <dt>
+                  Versión
+                </dt>
+
+                <dd id="info-version-aplicacion">
+                  No disponible
+                </dd>
+
+              </div>
+
+              <div>
+
+                <dt>
+                  Plataforma
+                </dt>
+
+                <dd id="info-plataforma">
+                  No disponible
+                </dd>
+
+              </div>
+
+              <div>
+
+                <dt>
+                  Estado
+                </dt>
+
+                <dd id="estado-configuracion">
+                  Configuración cargada
+                </dd>
+
+              </div>
+
+            </dl>
+
+          </section>
+
+          <div class="acciones-formulario">
+
+            <button
+              type="button"
+              class="boton boton-secundario"
+              id="btn-restaurar-configuracion"
+            >
+              Restaurar valores
+            </button>
+
+            <button
+              type="submit"
+              class="boton boton-primario"
+            >
+              Guardar configuración
+            </button>
+
+          </div>
+
+        </form>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================================
+       MODAL DE CONFIRMACIÓN
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="modal-confirmacion"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div
+      class="modal__fondo"
+      data-cerrar-modal
+    ></div>
+
+    <section
+      class="modal__contenido"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-confirmacion-titulo"
+    >
+
+      <header class="modal__encabezado">
+
+        <h2 id="modal-confirmacion-titulo">
+          Confirmar acción
+        </h2>
+
+        <button
+          type="button"
+          class="boton-icono"
+          data-cerrar-modal
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+      <div class="modal__cuerpo">
+
+        <p id="modal-confirmacion-mensaje">
+          ¿Desea continuar con esta acción?
+        </p>
+
+      </div>
+
+      <footer class="modal__pie">
+
+        <button
+          type="button"
+          class="boton boton-secundario"
+          data-cerrar-modal
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="boton boton-peligro"
+          id="btn-confirmar-accion"
+        >
+          Confirmar
+        </button>
+
+      </footer>
+
+    </section>
+
+  </div>
+
+  <!-- =====================================================
+       SCRIPTS
+       El orden respeta las dependencias del proyecto.
+  ====================================================== -->
+
+  <script src="../js/estado.js"></script>
+
+  <script src="../js/utilidades.js"></script>
+
+  <script src="../js/validaciones.js"></script>
+
+  <script src="../js/almacenamiento.js"></script>
+
+  <script src="../js/base-datos.js"></script>
+
+  <script src="../js/copias-seguridad.js"></script>
+
+  <script src="../js/menu.js"></script>
+
+  <script src="../js/browser-api.js"></script>
+  <script src="../js/ipc-renderer.js"></script>
+
+  <script>
+    (() => {
+      const formulario = document.getElementById('formulario-configuracion');
+      const botonGuardar = document.getElementById('btn-guardar-configuracion');
+      const botonLimpiar = document.getElementById('btn-limpiar-configuracion');
+      const contenedor = document.getElementById('contenedor-alertas');
+      let obraConfiguracion = null;
+      const inputLogo = document.getElementById('input-logo-empresa');
+      const campoLogo = document.getElementById('logo-empresa');
+      const vistaLogo = document.getElementById('vista-logo-empresa');
+      const textoLogoVacio = document.getElementById('texto-logo-vacio');
+
+      function actualizarVistaLogo(datos = '') {
+        if (campoLogo) campoLogo.value = datos || '';
+        if (vistaLogo) {
+          vistaLogo.src = datos || '';
+          vistaLogo.style.display = datos ? 'block' : 'none';
+        }
+        if (textoLogoVacio) textoLogoVacio.style.display = datos ? 'none' : 'block';
+      }
+
+      function seleccionarLogo() { inputLogo?.click(); }
+
+      function leerLogo(evento) {
+        const archivo = evento.target.files?.[0];
+        if (!archivo) return;
+        if (!archivo.type.startsWith('image/')) {
+          mostrar('Seleccione un archivo de imagen válido.', 'error');
+          return;
+        }
+        if (archivo.size > 3 * 1024 * 1024) {
+          mostrar('El logo no debe superar 3 MB.', 'error');
+          return;
+        }
+        const lector = new FileReader();
+        lector.onload = () => { actualizarVistaLogo(String(lector.result || '')); mostrar('Logo cargado. Pulse Guardar configuración.', 'exito'); };
+        lector.onerror = () => mostrar('No fue posible leer el logo.', 'error');
+        lector.readAsDataURL(archivo);
+      }
+
+      function asegurarAvisoObra() {
+        let aviso = document.getElementById('configuracion-obra-activa');
+        if (aviso) return aviso;
+
+        aviso = document.createElement('div');
+        aviso.id = 'configuracion-obra-activa';
+        aviso.style.cssText = [
+          'margin: 0 0 18px',
+          'padding: 14px 18px',
+          'border-radius: 10px',
+          'background: #eaf3ff',
+          'border: 1px solid #9fc5f8',
+          'color: #123b66',
+          'font-weight: 700'
+        ].join(';');
+
+        formulario?.parentElement?.insertBefore(aviso, formulario);
+        return aviso;
+      }
+
+      function actualizarAvisoObra(obra) {
+        const aviso = asegurarAvisoObra();
+        if (!aviso) return;
+
+        if (obra?.id) {
+          aviso.textContent = `Configuración exclusiva de la obra: ${obra.nombre || obra.id}`;
+          aviso.style.background = '#eaf3ff';
+          aviso.style.borderColor = '#9fc5f8';
+          botonGuardar.disabled = false;
+          botonLimpiar.disabled = false;
+        }
+        else {
+          aviso.textContent = 'Seleccione una obra activa antes de guardar su configuración.';
+          aviso.style.background = '#fff4df';
+          aviso.style.borderColor = '#e8bd68';
+          botonGuardar.disabled = true;
+          botonLimpiar.disabled = true;
+        }
+      }
+
+      function ipc() {
+        return window.BitacoraIPC || null;
+      }
+
+      function mostrar(mensaje, tipo = 'informacion') {
+        const item = document.createElement('div');
+        item.className = `alerta alerta-${tipo}`;
+        item.textContent = mensaje;
+        contenedor?.appendChild(item);
+        setTimeout(() => item.remove(), 3500);
+      }
+
+      function asignar(name, value) {
+        const campo = formulario?.elements?.namedItem(name);
+        if (campo) {
+          if (campo.type === 'checkbox') {
+            campo.checked = Boolean(value);
+          }
+          else {
+            campo.value = value ?? '';
+          }
+        }
+      }
+
+      function leer() {
+        const datos = {};
+        if (!formulario) return datos;
+
+        Array.from(formulario.elements).forEach(campo => {
+          if (!campo.name) return;
+
+          datos[campo.name] =
+            campo.type === 'checkbox'
+              ? campo.checked
+              : campo.value;
+        });
+
+        return datos;
+      }
+
+      async function cargar() {
+        const respuestaObra = await ipc()?.obtenerObraActiva?.();
+        obraConfiguracion = respuestaObra?.ok ? respuestaObra.obra : null;
+        actualizarAvisoObra(obraConfiguracion);
+
+        if (formulario) formulario.reset();
+
+        const respuesta = await ipc()?.obtenerConfiguracion?.({
+          obraId: obraConfiguracion?.id || '',
+          obraNombre: obraConfiguracion?.nombre || ''
+        });
+
+        const datos = respuesta?.ok ? respuesta.configuracion : {};
+
+        Object.entries(datos || {}).forEach(
+          ([clave, valor]) => asignar(clave, valor)
+        );
+
+        actualizarVistaLogo(datos?.logoEmpresa || '');
+
+        const informacion =
+          await ipc()?.obtenerInformacionAplicacion?.();
+
+        const version =
+          informacion?.version ||
+          informacion?.nombre ||
+          'local';
+
+        const elementoVersion =
+          document.getElementById('version-aplicacion');
+
+        if (elementoVersion) {
+          elementoVersion.textContent =
+            `Versión ${version}`;
+        }
+      }
+
+      async function guardar(evento) {
+        evento?.preventDefault?.();
+
+        if (!obraConfiguracion?.id) {
+          mostrar('Seleccione una obra activa antes de guardar.', 'error');
+          return;
+        }
+
+        const respuesta = await ipc()?.guardarConfiguracion?.(
+          leer(),
+          {
+            obraId: obraConfiguracion.id,
+            obraNombre: obraConfiguracion.nombre || ''
+          }
+        );
+
+        if (respuesta?.ok) {
+          mostrar(
+            'Configuración guardada correctamente.',
+            'exito'
+          );
+        }
+        else {
+          mostrar(
+            'No fue posible guardar la configuración.',
+            'error'
+          );
+        }
+      }
+
+      async function limpiarDatosResponsable() {
+        const confirmar = window.confirm(
+          'Se borrarán el nombre, cargo, entidad y correo del responsable. ¿Desea continuar?'
+        );
+
+        if (!confirmar) return;
+
+        ['usuarioNombre', 'usuarioCargo', 'usuarioEntidad', 'usuarioCorreo']
+          .forEach(nombre => asignar(nombre, ''));
+
+        if (!obraConfiguracion?.id) {
+          mostrar('Seleccione una obra activa antes de limpiar.', 'error');
+          return;
+        }
+
+        const respuesta = await ipc()?.guardarConfiguracion?.(
+          leer(),
+          {
+            obraId: obraConfiguracion.id,
+            obraNombre: obraConfiguracion.nombre || ''
+          }
+        );
+
+        if (respuesta?.ok) {
+          mostrar('Datos del responsable eliminados correctamente.', 'exito');
+        }
+        else {
+          mostrar('No fue posible limpiar los datos del responsable.', 'error');
+        }
+      }
+
+      formulario?.addEventListener('submit', guardar);
+      botonGuardar?.addEventListener('click', guardar);
+      botonLimpiar?.addEventListener('click', limpiarDatosResponsable);
+      document.getElementById('btn-seleccionar-logo')?.addEventListener('click', seleccionarLogo);
+      document.getElementById('btn-eliminar-logo')?.addEventListener('click', () => { actualizarVistaLogo(''); if (inputLogo) inputLogo.value = ''; });
+      inputLogo?.addEventListener('change', leerLogo);
+
+      if (document.readyState === 'loading') {
+        document.addEventListener(
+          'DOMContentLoaded',
+          cargar,
+          { once: true }
+        );
+      }
+      else {
+        cargar();
+      }
+    })();
+</script>
+
+  <script src="../js/pwa.js"></script>
+</body>
+
+</html>

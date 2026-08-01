@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Impresión</title>
+<style>
+body{font-family:Arial}
+button{margin-bottom:20px}
+@media print{button{display:none}}
+</style>
+</head>
+<body>
+<button onclick="window.print()">Imprimir</button>
+{{contenido}}
+</body>
+</html>

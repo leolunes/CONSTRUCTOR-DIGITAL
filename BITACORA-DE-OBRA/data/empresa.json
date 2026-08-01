@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "empresa": {
+    "id": "empresa-principal",
+    "nombre": "",
+    "nit": "",
+    "direccion": "",
+    "municipio": "",
+    "departamento": "Santander",
+    "pais": "Colombia",
+    "telefono": "",
+    "correo": "",
+    "sitioWeb": "",
+    "logo": "",
+    "representanteLegal": {
+      "nombre": "",
+      "identificacion": "",
+      "cargo": ""
+    }
+  },
+  "auditoria": {
+    "creado": "2026-07-29T00:00:00.000Z",
+    "actualizado": "2026-07-29T00:00:00.000Z",
+    "version": 1
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "contratistas": [],
+  "estructura": {
+    "campos": [
+      "id",
+      "tipoPersona",
+      "nombreRazonSocial",
+      "nitIdentificacion",
+      "representanteLegal",
+      "direccion",
+      "municipio",
+      "departamento",
+      "telefono",
+      "correo",
+      "directorObra",
+      "residenteObra",
+      "responsableSST",
+      "activo",
+      "observaciones",
+      "auditoria"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+AJUSTE V1.28 — MAPA Y RESUMEN FOTOGRÁFICO EN EL INFORME WORD
+
+1. El informe Word muestra una sección "Anexos y fotografías".
+2. Cuando existen coordenadas válidas, incluye un mapa de OpenStreetMap con marcador.
+3. Debajo del mapa muestra latitud, longitud, referencia y enlace para abrir la ubicación.
+4. Incluye una fila de tres registros fotográficos, similar a la presentación de referencia.
+5. Las imágenes y el mapa se mantienen dentro del ancho útil de la hoja.
+6. Se conserva el registro fotográfico detallado existente.

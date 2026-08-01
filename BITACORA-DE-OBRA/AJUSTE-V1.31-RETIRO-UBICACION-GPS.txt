@@ -1,0 +1,13 @@
+VERSIÓN 1.31
+
+Se retiró visualmente del formulario del folio toda la sección "Ubicación del registro", incluyendo:
+- Capturar GPS
+- Usar ubicación de la obra
+- Lugar o referencia
+- Latitud y longitud
+- Precisión y fecha de captura
+- Copiar coordenadas
+- Abrir en el mapa
+- Vista previa del mapa
+
+La estructura interna se conservó oculta para no afectar la carga de folios existentes ni otras funciones del proyecto.
