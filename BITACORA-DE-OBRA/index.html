@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173b57">
+  <meta name="description" content="Gestión profesional de bitácoras y folios de obra">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+  <title>Bitácora de Obra</title>
+  <script>
+    (() => {
+      const destino = new URL('./app/', window.location.href);
+      destino.search = window.location.search;
+      destino.hash = window.location.hash;
+      window.location.replace(destino.href);
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Bitácora de Obra</h1>
+    <p>Abriendo la aplicación…</p>
+    <p><a href="./app/">Ingresar a Bitácora de Obra</a></p>
+  </main>
+</body>
+</html>
