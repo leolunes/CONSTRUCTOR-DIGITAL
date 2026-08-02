@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'bitacora-obra-v1.63.0';
+const CACHE_VERSION = 'bitacora-obra-v1.64.0';
 const APP_SHELL = [
   './',
   './index.html',

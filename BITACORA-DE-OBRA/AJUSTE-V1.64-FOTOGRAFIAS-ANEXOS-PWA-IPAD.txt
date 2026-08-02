@@ -1,0 +1,7 @@
+AJUSTE V1.64 — FOTOGRAFÍAS Y ANEXOS EN PWA / IPAD
+
+- Corrige la respuesta del selector web para que app.js reciba la propiedad archivos.
+- Guarda fotografías y anexos con datos/dataUrl compatibles con Safari.
+- Persiste folios con evidencias en IndexedDB para evitar el límite de localStorage.
+- Mantiene compatibilidad con Electron y con los registros anteriores.
+- Actualiza la caché PWA a v1.64.0.

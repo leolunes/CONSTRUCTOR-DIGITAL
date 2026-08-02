@@ -33,9 +33,37 @@
     async eliminarObra(x){const a=get('obras',[]).filter(o=>String(o.id)!==String(x));set('obras',a);return {ok:true,eliminado:true,obras:a}},
     async seleccionarObra(o={}){set('obraActiva',o||null);return {ok:true,obra:o||null}},
     async obtenerObraActiva(){return {ok:true,obra:get('obraActiva',null)}},
-    async listarFolios(f={}){let a=get('folios',[]);if(f.obraId)a=a.filter(x=>String(x.obraId)===String(f.obraId));return {ok:true,folios:a}},
-    async guardarFolio(o={}){const r=saveEntity('folios',o,'folio');return {ok:true,folio:r.registro,folios:r.a}},
-    async eliminarFolio(x){const a=get('folios',[]).filter(o=>String(o.id)!==String(x));set('folios',a);return {ok:true,eliminado:true,folios:a}},
+    async listarFolios(f={}){
+      const locales=get('folios',[]);
+      const almacenados=await idbLeer('folios',null);
+      let a=Array.isArray(almacenados)?almacenados:locales;
+      if(almacenados===null&&Array.isArray(locales))try{await idbGuardar('folios',locales)}catch{}
+      if(f.obraId)a=a.filter(x=>String(x.obraId)===String(f.obraId));
+      return {ok:true,folios:a};
+    },
+    async guardarFolio(o={}){
+      try{
+        const actuales=(await api.listarFolios({})).folios||[];
+        const registro={...o,id:o.id||id('folio'),actualizadoEn:new Date().toISOString()};
+        const n=actuales.findIndex(x=>String(x.id)===String(registro.id));
+        n>=0?actuales[n]=registro:actuales.push(registro);
+        await idbGuardar('folios',actuales);
+        /* Mantener un respaldo liviano en localStorage solo cuando sea posible. */
+        set('folios',actuales);
+        return {ok:true,folio:registro,folios:actuales};
+      }catch(error){
+        console.error('Error guardando folio con evidencias:',error);
+        return {ok:false,mensaje:'No fue posible guardar el folio con sus fotografías o anexos. Verifique que Safari no esté en navegación privada y que el dispositivo tenga espacio disponible.'};
+      }
+    },
+    async eliminarFolio(x){
+      try{
+        const actuales=(await api.listarFolios({})).folios||[];
+        const a=actuales.filter(o=>String(o.id)!==String(x));
+        await idbGuardar('folios',a);set('folios',a);
+        return {ok:true,eliminado:true,folios:a};
+      }catch(error){return {ok:false,mensaje:'No fue posible eliminar el folio.'}}
+    },
     async seleccionarFolio(o={}){set('folioActivo',o||null);return {ok:true,folio:o||null}},
     async obtenerFolioActivo(){return {ok:true,folio:get('folioActivo',null)}},
     async obtenerNuevoConsecutivo(obraId){const a=get('folios',[]).filter(x=>String(x.obraId)===String(obraId));const max=a.reduce((m,x)=>Math.max(m,Number(x.consecutivo||x.numero||0)),0);return {ok:true,consecutivo:max+1}},
@@ -71,9 +99,26 @@
     async obtenerConfiguracion(o={}){const all=get('configuracion',{});const obraId=o.obraId||'';return {ok:true,configuracion:obraId?(all.porObra?.[obraId]||{}):all}},
     async guardarConfiguracion(c={},o={}){let all=get('configuracion',{});if(o.obraId){all.porObra=all.porObra||{};all.porObra[o.obraId]=c}else all=c;set('configuracion',all);return {ok:true,configuracion:c}},
     async seleccionarArchivos(o={}){const fs=await pick((o.filtros||[]).flatMap(x=>x.extensions||[]).map(x=>'.'+x).join(','),o.multiple!==false);return {ok:true,archivos:await Promise.all(fs.map(async f=>({nombre:f.name,name:f.name,tamano:f.size,tipo:f.type,dataUrl:await toData(f)})))}},
-    async seleccionarImagenesEvidencia(){const fs=await pick('image/*',true);return {ok:true,imagenes:await Promise.all(fs.map(async f=>({id:id('img'),nombre:f.name,ruta:f.name,tipo:f.type,tamano:f.size,dataUrl:await toData(f)})))}},
-    async seleccionarAnexosEvidencia(){const fs=await pick('*/*',true);return {ok:true,anexos:await Promise.all(fs.map(async f=>({id:id('anexo'),nombre:f.name,ruta:f.name,tipo:f.type,tamano:f.size,dataUrl:await toData(f)})))}},
-    async leerImagenEvidencia(i={}){return {ok:true,dataUrl:i.dataUrl||i.base64||''}}, async eliminarImagenEvidencia(){return {ok:true}},
+    async seleccionarImagenesEvidencia(){
+      const fs=await pick('image/*',true);
+      const archivos=await Promise.all(fs.map(async f=>{
+        const datos=await toData(f);
+        return {id:id('img'),nombre:f.name,ruta:f.name,tipo:f.type,tamano:f.size,datos,dataUrl:datos,fechaAgregada:new Date().toISOString()};
+      }));
+      return {ok:true,cancelado:!archivos.length,archivos,imagenes:archivos};
+    },
+    async seleccionarAnexosEvidencia(){
+      const fs=await pick('*/*',true);
+      const archivos=await Promise.all(fs.map(async f=>{
+        const datos=await toData(f);
+        return {id:id('anexo'),nombre:f.name,ruta:f.name,tipo:f.type||'application/octet-stream',tamano:f.size,datos,dataUrl:datos,fechaAgregada:new Date().toISOString()};
+      }));
+      return {ok:true,cancelado:!archivos.length,archivos,anexos:archivos};
+    },
+    async leerImagenEvidencia(i={}){
+      const datos=i.datos||i.dataUrl||i.base64||'';
+      return {ok:!!datos,datos,dataUrl:datos,tipo:i.tipo||'',tamano:i.tamano||0};
+    }, async eliminarImagenEvidencia(){return {ok:true}},
     async guardarArchivo(o={}){const b=o.contenido instanceof Blob?o.contenido:new Blob([o.contenido||''],{type:o.tipoMime||'text/plain;charset=utf-8'});download(b,o.nombreSugerido||o.nombre||'archivo.txt');return {ok:true,ruta:o.nombreSugerido||o.nombre}},
     async guardarArchivoBinario(o={}){let b=o.contenido||o.datos||'';if(typeof b==='string'&&b.startsWith('data:')){const r=await fetch(b);b=await r.blob()}else if(!(b instanceof Blob))b=new Blob([b]);download(b,o.nombreSugerido||o.nombre||'archivo');return {ok:true}},
     async guardarPDFDesdeHTML(){window.print();return {ok:true}}, async imprimir(){window.print();return {ok:true}},
