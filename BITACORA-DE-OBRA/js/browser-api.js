@@ -4,7 +4,19 @@
   if (window.electronAPI) return;
   const K='bitacora.pwa.';
   const get=(k,d)=>{try{const v=localStorage.getItem(K+k);return v===null?d:JSON.parse(v)}catch{return d}};
-  const set=(k,v)=>{localStorage.setItem(K+k,JSON.stringify(v));return v};
+  const set=(k,v)=>{try{localStorage.setItem(K+k,JSON.stringify(v));return true}catch(error){console.warn('No fue posible guardar en localStorage:',error);return false}};
+
+  const DB_NAME='bitacora-obra-pwa';
+  const DB_STORE='datos';
+  const abrirDB=()=>new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){reject(new Error('IndexedDB no disponible'));return;}
+    const req=indexedDB.open(DB_NAME,1);
+    req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE)};
+    req.onsuccess=()=>resolve(req.result);
+    req.onerror=()=>reject(req.error||new Error('No fue posible abrir IndexedDB'));
+  });
+  const idbLeer=async(clave,def)=>{try{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readonly');const req=tx.objectStore(DB_STORE).get(clave);req.onsuccess=()=>resolve(req.result===undefined?def:req.result);req.onerror=()=>reject(req.error);tx.oncomplete=()=>db.close()})}catch(error){console.warn('Lectura IndexedDB no disponible:',error);return def}};
+  const idbGuardar=async(clave,valor)=>{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put(valor,clave);tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error||new Error('No fue posible guardar en IndexedDB'))};tx.onabort=()=>{db.close();reject(tx.error||new Error('Guardado cancelado'))}})};
   const id=(p='id')=>`${p}-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;
   const download=(blob,name)=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name||'archivo';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
   const pick=(accept='',multiple=true)=>new Promise(resolve=>{const i=document.createElement('input');i.type='file';i.accept=accept;i.multiple=multiple;i.onchange=()=>resolve([...i.files]);i.click()});
@@ -27,9 +39,35 @@
     async seleccionarFolio(o={}){set('folioActivo',o||null);return {ok:true,folio:o||null}},
     async obtenerFolioActivo(){return {ok:true,folio:get('folioActivo',null)}},
     async obtenerNuevoConsecutivo(obraId){const a=get('folios',[]).filter(x=>String(x.obraId)===String(obraId));const max=a.reduce((m,x)=>Math.max(m,Number(x.consecutivo||x.numero||0)),0);return {ok:true,consecutivo:max+1}},
-    async listarContratistas(){return {ok:true,contratistas:get('contratistas',[])}},
-    async guardarContratista(o={}){const r=saveEntity('contratistas',o,'contratista');return {ok:true,contratista:r.registro,contratistas:r.a}},
-    async eliminarContratista(x){const a=get('contratistas',[]).filter(o=>String(o.id)!==String(x));set('contratistas',a);return {ok:true,eliminado:true,contratistas:a}},
+    async listarContratistas(){
+      const local=get('contratistas',[]);
+      const almacenados=await idbLeer('contratistas',null);
+      const contratistas=Array.isArray(almacenados)?almacenados:local;
+      if(almacenados===null&&Array.isArray(local))try{await idbGuardar('contratistas',local)}catch{}
+      return {ok:true,contratistas};
+    },
+    async guardarContratista(o={}){
+      try{
+        const actuales=(await api.listarContratistas()).contratistas||[];
+        const registro={...o,id:o.id||id('contratista'),actualizadoEn:new Date().toISOString()};
+        const n=actuales.findIndex(x=>String(x.id)===String(registro.id));
+        n>=0?actuales[n]=registro:actuales.push(registro);
+        await idbGuardar('contratistas',actuales);
+        set('contratistas',actuales);
+        return {ok:true,contratista:registro,contratistas:actuales};
+      }catch(error){
+        console.error('Error guardando contratista:',error);
+        return {ok:false,mensaje:'Safari no permitió guardar la información. Verifique que no esté usando navegación privada y que haya espacio disponible en el dispositivo.'};
+      }
+    },
+    async eliminarContratista(x){
+      try{
+        const actuales=(await api.listarContratistas()).contratistas||[];
+        const a=actuales.filter(o=>String(o.id)!==String(x));
+        await idbGuardar('contratistas',a);set('contratistas',a);
+        return {ok:true,eliminado:true,contratistas:a};
+      }catch(error){return {ok:false,mensaje:'No fue posible eliminar el contratista.'}}
+    },
     async obtenerConfiguracion(o={}){const all=get('configuracion',{});const obraId=o.obraId||'';return {ok:true,configuracion:obraId?(all.porObra?.[obraId]||{}):all}},
     async guardarConfiguracion(c={},o={}){let all=get('configuracion',{});if(o.obraId){all.porObra=all.porObra||{};all.porObra[o.obraId]=c}else all=c;set('configuracion',all);return {ok:true,configuracion:c}},
     async seleccionarArchivos(o={}){const fs=await pick((o.filtros||[]).flatMap(x=>x.extensions||[]).map(x=>'.'+x).join(','),o.multiple!==false);return {ok:true,archivos:await Promise.all(fs.map(async f=>({nombre:f.name,name:f.name,tamano:f.size,tipo:f.type,dataUrl:await toData(f)})))}},

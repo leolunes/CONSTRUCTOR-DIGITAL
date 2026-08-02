@@ -167,10 +167,29 @@
       return;
     }
 
-    const respuesta =
-      await ipc()?.guardarContratista?.(
-        leerFormulario()
-      );
+    const botonGuardar = evento.currentTarget.querySelector('button[type="submit"]');
+    if (botonGuardar) {
+      botonGuardar.disabled = true;
+      botonGuardar.textContent = 'Guardando...';
+    }
+
+    let respuesta;
+    try {
+      respuesta = await ipc()?.guardarContratista?.(leerFormulario());
+    }
+    catch (error) {
+      console.error('Error al guardar contratista:', error);
+      respuesta = {
+        ok: false,
+        mensaje: 'No fue posible guardar. Verifique que Safari no esté en navegación privada y que el dispositivo tenga espacio disponible.'
+      };
+    }
+    finally {
+      if (botonGuardar) {
+        botonGuardar.disabled = false;
+        botonGuardar.textContent = 'Guardar contratista';
+      }
+    }
 
     if (!respuesta?.ok) {
       alerta(
