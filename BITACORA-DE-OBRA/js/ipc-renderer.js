@@ -37,6 +37,7 @@
     guardarContratista: (contratista = {}) => llamar('guardarContratista', contratista),
     eliminarContratista: (id) => llamar('eliminarContratista', id),
     obtenerConfiguracion: (opciones = {}) => llamar('obtenerConfiguracion', opciones),
+    obtenerLogoEmpresa: (opciones = {}) => llamar('obtenerLogoEmpresa', opciones),
     guardarConfiguracion: (configuracion = {}, opciones = {}) => llamar('guardarConfiguracion', configuracion, opciones),
     seleccionarImagenesEvidencia: (opciones = {}) => llamar('seleccionarImagenesEvidencia', opciones),
     seleccionarAnexosEvidencia: (opciones = {}) => llamar('seleccionarAnexosEvidencia', opciones),

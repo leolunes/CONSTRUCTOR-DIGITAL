@@ -2073,10 +2073,21 @@ Las obras, contratistas y folios ya archivados no serán eliminados. ¿Desea con
       obraId: obra.id || '',
       obraNombre: obra.nombre || ''
     });
-    window.__bitacoraConfiguracionInforme = respuesta?.ok
-      ? (respuesta.configuracion || {})
-      : {};
-    return window.__bitacoraConfiguracionInforme;
+    const configuracion = respuesta?.ok ? (respuesta.configuracion || {}) : {};
+    if (!configuracion.logoEmpresa && !configuracion.empresaLogo) {
+      try {
+        const logoRespuesta = await ipc()?.obtenerLogoEmpresa?.({
+          obraId: obra.id || '',
+          obraNombre: obra.nombre || ''
+        });
+        if (logoRespuesta?.ok && logoRespuesta.logo) configuracion.logoEmpresa = logoRespuesta.logo;
+      }
+      catch (error) {
+        console.warn('No fue posible recuperar el logo para el informe.', error);
+      }
+    }
+    window.__bitacoraConfiguracionInforme = configuracion;
+    return configuracion;
   }
 
   function contenidoAnotacionSinImagenes(html) {
@@ -2521,19 +2532,24 @@ ${cabeceraHTML}
 
       const resultado = await ipc()?.guardarArchivo?.({
         titulo: 'Guardar informe consolidado de bitácora',
-        nombreSugerido: `Informe_Consolidado_WORD_v159_${nombreSeguro || 'Obra'}.doc`,
+        nombreSugerido: `Informe_Consolidado_WORD_v167_${nombreSeguro || 'Obra'}.doc`,
         contenido,
+        tipoMime: 'application/msword',
         filtros: [{ name: 'Documento Word', extensions: ['doc'] }]
       });
 
       if (resultado?.ok) {
-        const apertura = await ipc()?.abrirRuta?.(resultado.ruta);
-        alerta(
-          apertura?.ok
-            ? `Informe consolidado generado con ${folios.length} folios y abierto correctamente.`
-            : `Informe consolidado generado con ${folios.length} folios.`,
-          apertura?.ok ? 'exito' : 'advertencia'
-        );
+        if (resultado.entorno === 'navegador') {
+          alerta(`Informe consolidado Word descargado con ${folios.length} folios. Ábralo desde Archivos o desde Microsoft Word.`, 'exito');
+        } else {
+          const apertura = await ipc()?.abrirRuta?.(resultado.ruta);
+          alerta(
+            apertura?.ok
+              ? `Informe consolidado generado con ${folios.length} folios y abierto correctamente.`
+              : `Informe consolidado generado con ${folios.length} folios.`,
+            apertura?.ok ? 'exito' : 'advertencia'
+          );
+        }
       }
     }
     catch (error) {
@@ -2659,8 +2675,9 @@ ${cabeceraHTML}
     const resultado = await ipc()?.guardarArchivo?.({
       titulo: 'Exportar a Word',
       nombreSugerido:
-        `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_v154_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.doc`,
+        `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_v167_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.doc`,
       contenido,
+      tipoMime: 'application/msword',
       filtros: [{
         name: 'Documento Word',
         extensions: ['doc']
@@ -2670,19 +2687,15 @@ ${cabeceraHTML}
     if (resultado?.ok) {
       await registrarExportacion('word', resultado);
 
-      const apertura = await ipc()?.abrirRuta?.(resultado.ruta);
-
-      if (apertura?.ok) {
-        alerta(
-          'Documento Word guardado, referenciado y abierto para revisar su presentación.',
-          'exito'
-        );
-      }
-      else {
-        alerta(
-          'Documento Word guardado y referenciado. No fue posible abrirlo automáticamente.',
-          'advertencia'
-        );
+      if (resultado.entorno === 'navegador') {
+        alerta('Documento Word descargado. Ábralo desde Archivos o desde Microsoft Word; Safari ya no mostrará el código HTML como informe.', 'exito');
+      } else {
+        const apertura = await ipc()?.abrirRuta?.(resultado.ruta);
+        if (apertura?.ok) {
+          alerta('Documento Word guardado, referenciado y abierto para revisar su presentación.', 'exito');
+        } else {
+          alerta('Documento Word guardado y referenciado. No fue posible abrirlo automáticamente.', 'advertencia');
+        }
       }
     }
   }

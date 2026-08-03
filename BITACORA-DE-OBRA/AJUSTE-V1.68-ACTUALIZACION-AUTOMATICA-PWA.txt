@@ -1,0 +1,17 @@
+BITÁCORA DE OBRA — AJUSTE v1.68
+SISTEMA PROFESIONAL DE ACTUALIZACIÓN PWA
+
+Ajuste realizado sobre el ZIP entregado, conservando el contenido existente.
+
+Incluye:
+- Detección automática de nuevas versiones del Service Worker.
+- Aviso: "Nueva versión disponible".
+- Botones "Actualizar ahora" y "Más tarde".
+- Activación de la nueva versión con un toque y recarga controlada.
+- Advertencia si existen cambios posiblemente no guardados.
+- Comprobación al abrir, al regresar a la app y cada 15 minutos.
+- Indicador visible: BITÁCORA DE OBRA · v1.68.0.
+- Conservación de IndexedDB y demás datos locales durante la actualización.
+
+No se modificaron los módulos funcionales de obras, contratistas, folios,
+fotografías, anexos, informes ni exportaciones.

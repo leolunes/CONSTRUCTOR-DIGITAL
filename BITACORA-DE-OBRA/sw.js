@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'bitacora-obra-v1.65.0';
+const CACHE_VERSION = 'bitacora-obra-v1.68.0';
 const APP_SHELL = [
   './',
   './index.html',
@@ -37,7 +37,6 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_VERSION)
       .then(cache => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
   );
 });
 

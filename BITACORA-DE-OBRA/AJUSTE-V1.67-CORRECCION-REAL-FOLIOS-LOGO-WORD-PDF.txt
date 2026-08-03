@@ -1,0 +1,9 @@
+BITÁCORA DE OBRA v1.67
+
+Correcciones aplicadas sobre el ZIP actual:
+- Folios almacenados individualmente en IndexedDB para evitar sobrescrituras.
+- Migración automática de folios guardados en versiones anteriores.
+- Consolidado PDF y listado leen todos los folios de la obra.
+- Recuperación reforzada del logo por obra y respaldo general.
+- En iPad/iPhone, Word usa la hoja Compartir para enviarlo a Archivos o Microsoft Word y evitar que Safari muestre el HTML como texto.
+- Caché PWA actualizada a v1.67.0.

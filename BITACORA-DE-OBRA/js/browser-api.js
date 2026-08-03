@@ -8,17 +8,61 @@
 
   const DB_NAME='bitacora-obra-pwa';
   const DB_STORE='datos';
+  const DB_FOLIOS='folios';
   const abrirDB=()=>new Promise((resolve,reject)=>{
     if(!('indexedDB' in window)){reject(new Error('IndexedDB no disponible'));return;}
-    const req=indexedDB.open(DB_NAME,1);
-    req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE)};
+    const req=indexedDB.open(DB_NAME,2);
+    req.onupgradeneeded=()=>{
+      const db=req.result;
+      if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE);
+      if(!db.objectStoreNames.contains(DB_FOLIOS))db.createObjectStore(DB_FOLIOS,{keyPath:'id'});
+    };
     req.onsuccess=()=>resolve(req.result);
     req.onerror=()=>reject(req.error||new Error('No fue posible abrir IndexedDB'));
   });
   const idbLeer=async(clave,def)=>{try{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readonly');const req=tx.objectStore(DB_STORE).get(clave);req.onsuccess=()=>resolve(req.result===undefined?def:req.result);req.onerror=()=>reject(req.error);tx.oncomplete=()=>db.close()})}catch(error){console.warn('Lectura IndexedDB no disponible:',error);return def}};
   const idbGuardar=async(clave,valor)=>{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_STORE,'readwrite');tx.objectStore(DB_STORE).put(valor,clave);tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error||new Error('No fue posible guardar en IndexedDB'))};tx.onabort=()=>{db.close();reject(tx.error||new Error('Guardado cancelado'))}})};
+  const idbListarFolios=async()=>{try{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_FOLIOS,'readonly');const req=tx.objectStore(DB_FOLIOS).getAll();req.onsuccess=()=>resolve(Array.isArray(req.result)?req.result:[]);req.onerror=()=>reject(req.error);tx.oncomplete=()=>db.close()})}catch(error){console.warn('No fue posible listar folios individuales:',error);return []}};
+  const idbGuardarFolio=async(folio)=>{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_FOLIOS,'readwrite');tx.objectStore(DB_FOLIOS).put(folio);tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error||new Error('No fue posible guardar el folio'))};tx.onabort=()=>{db.close();reject(tx.error||new Error('Guardado de folio cancelado'))}})};
+  const idbEliminarFolio=async(folioId)=>{const db=await abrirDB();return await new Promise((resolve,reject)=>{const tx=db.transaction(DB_FOLIOS,'readwrite');tx.objectStore(DB_FOLIOS).delete(folioId);tx.oncomplete=()=>{db.close();resolve(true)};tx.onerror=()=>{db.close();reject(tx.error||new Error('No fue posible eliminar el folio'))}})};
+  const claveFolio=(item={})=>String(item.id||`${item.obraId||''}:${item.numero||item.consecutivo||''}`);
+  const unirFolios=(...listas)=>{const mapa=new Map();listas.flat().filter(Boolean).forEach(item=>{const clave=claveFolio(item);const anterior=mapa.get(clave)||{};mapa.set(clave,{...anterior,...item,id:item.id||anterior.id||clave})});return [...mapa.values()]};
+
   const id=(p='id')=>`${p}-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;
-  const download=(blob,name)=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name||'archivo';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+  const download=(blob,name)=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=name||'archivo';
+    a.rel='noopener';
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},10000);
+  };
+  const esperarImagenes=(doc)=>Promise.all([...doc.images].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,4000)})));
+  const imprimirHTML=async(html,titulo='Bitácora de Obra')=>{
+    const marco=document.createElement('iframe');
+    marco.setAttribute('aria-hidden','true');
+    marco.style.position='fixed';
+    marco.style.right='0';
+    marco.style.bottom='0';
+    marco.style.width='1px';
+    marco.style.height='1px';
+    marco.style.border='0';
+    marco.style.opacity='0';
+    document.body.appendChild(marco);
+    const doc=marco.contentDocument;
+    doc.open();
+    doc.write(String(html||'').replace(/<title>[\s\S]*?<\/title>/i,`<title>${titulo}</title>`));
+    doc.close();
+    await new Promise(resolve=>setTimeout(resolve,250));
+    await esperarImagenes(doc);
+    marco.contentWindow.focus();
+    marco.contentWindow.print();
+    setTimeout(()=>marco.remove(),15000);
+    return {ok:true,entorno:'navegador',impreso:true};
+  };
   const pick=(accept='',multiple=true)=>new Promise(resolve=>{const i=document.createElement('input');i.type='file';i.accept=accept;i.multiple=multiple;i.onchange=()=>resolve([...i.files]);i.click()});
   const toData=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
   async function seed(key,file,def=[]){if(localStorage.getItem(K+key)!==null)return;try{const r=await fetch(`../data/${file}`);if(r.ok)set(key,await r.json());else set(key,def)}catch{set(key,def)}}
@@ -35,21 +79,30 @@
     async obtenerObraActiva(){return {ok:true,obra:get('obraActiva',null)}},
     async listarFolios(f={}){
       const locales=get('folios',[]);
-      const almacenados=await idbLeer('folios',null);
-      let a=Array.isArray(almacenados)?almacenados:locales;
-      if(almacenados===null&&Array.isArray(locales))try{await idbGuardar('folios',locales)}catch{}
+      const legado=await idbLeer('folios',[]);
+      const individuales=await idbListarFolios();
+      const unidos=unirFolios(
+        Array.isArray(locales)?locales:[],
+        Array.isArray(legado)?legado:[],
+        Array.isArray(individuales)?individuales:[]
+      );
+      /* Migrar una sola vez los folios heredados al almacén individual. */
+      if(unidos.length!==individuales.length){
+        for(const folio of unidos){try{await idbGuardarFolio(folio)}catch(error){console.warn('No fue posible migrar un folio:',error)}}
+      }
+      let a=unidos;
       if(f.obraId)a=a.filter(x=>String(x.obraId)===String(f.obraId));
+      a=[...a].sort((x,y)=>Number(x.consecutivo||x.numero||0)-Number(y.consecutivo||y.numero||0));
       return {ok:true,folios:a};
     },
     async guardarFolio(o={}){
       try{
-        const actuales=(await api.listarFolios({})).folios||[];
         const registro={...o,id:o.id||id('folio'),actualizadoEn:new Date().toISOString()};
-        const n=actuales.findIndex(x=>String(x.id)===String(registro.id));
-        n>=0?actuales[n]=registro:actuales.push(registro);
-        await idbGuardar('folios',actuales);
-        /* Mantener un respaldo liviano en localStorage solo cuando sea posible. */
-        set('folios',actuales);
+        await idbGuardarFolio(registro);
+        const actuales=(await api.listarFolios({})).folios||[];
+        /* Respaldo liviano: no bloquear el guardado si localStorage está lleno. */
+        set('folios',actuales.map(f=>({...f,imagenes:(f.imagenes||[]).map(({dataUrl,datos,url,...m})=>m),anexos:(f.anexos||[]).map(({dataUrl,datos,url,...m})=>m)})));
+        set('folioActivo',registro);
         return {ok:true,folio:registro,folios:actuales};
       }catch(error){
         console.error('Error guardando folio con evidencias:',error);
@@ -58,15 +111,16 @@
     },
     async eliminarFolio(x){
       try{
+        await idbEliminarFolio(String(x));
         const actuales=(await api.listarFolios({})).folios||[];
         const a=actuales.filter(o=>String(o.id)!==String(x));
-        await idbGuardar('folios',a);set('folios',a);
+        set('folios',a);
         return {ok:true,eliminado:true,folios:a};
       }catch(error){return {ok:false,mensaje:'No fue posible eliminar el folio.'}}
     },
     async seleccionarFolio(o={}){set('folioActivo',o||null);return {ok:true,folio:o||null}},
     async obtenerFolioActivo(){return {ok:true,folio:get('folioActivo',null)}},
-    async obtenerNuevoConsecutivo(obraId){const a=get('folios',[]).filter(x=>String(x.obraId)===String(obraId));const max=a.reduce((m,x)=>Math.max(m,Number(x.consecutivo||x.numero||0)),0);return {ok:true,consecutivo:max+1}},
+    async obtenerNuevoConsecutivo(obraId){const a=(await api.listarFolios({obraId})).folios||[];const max=a.reduce((m,x)=>Math.max(m,Number(x.consecutivo||x.numero||0)),0);return {ok:true,consecutivo:max+1,numero:String(max+1).padStart(5,'0')}},
     async listarContratistas(){
       const local=get('contratistas',[]);
       const almacenados=await idbLeer('contratistas',null);
@@ -101,11 +155,18 @@
       const almacenada=await idbLeer('configuracion',null);
       const all=(almacenada&&typeof almacenada==='object')?almacenada:local;
       if(almacenada===null&&all&&typeof all==='object')try{await idbGuardar('configuracion',all)}catch{}
-      const obraId=o.obraId||'';
+      const obraId=String(o.obraId||'');
       if(!obraId)return {ok:true,configuracion:all||{}};
       const base={...(all||{})};
       delete base.porObra;
-      return {ok:true,configuracion:{...base,...((all&&all.porObra&&all.porObra[obraId])||{})}};
+      const porObra=(all&&all.porObra&&typeof all.porObra==='object')?all.porObra:{};
+      const especifica=porObra[obraId]||porObra[Object.keys(porObra).find(k=>String(k)===obraId)]||{};
+      const algunaConLogo=Object.values(porObra).find(c=>c&&(c.logoEmpresa||c.empresaLogo))||{};
+      const combinada={...base,...especifica};
+      if(!combinada.logoEmpresa&&!combinada.empresaLogo){
+        combinada.logoEmpresa=algunaConLogo.logoEmpresa||algunaConLogo.empresaLogo||base.logoEmpresa||base.empresaLogo||'';
+      }
+      return {ok:true,configuracion:combinada};
     },
     async guardarConfiguracion(c={},o={}){
       try{
@@ -150,9 +211,40 @@
       const datos=i.datos||i.dataUrl||i.base64||'';
       return {ok:!!datos,datos,dataUrl:datos,tipo:i.tipo||'',tamano:i.tamano||0};
     }, async eliminarImagenEvidencia(){return {ok:true}},
-    async guardarArchivo(o={}){const b=o.contenido instanceof Blob?o.contenido:new Blob([o.contenido||''],{type:o.tipoMime||'text/plain;charset=utf-8'});download(b,o.nombreSugerido||o.nombre||'archivo.txt');return {ok:true,ruta:o.nombreSugerido||o.nombre}},
+    async obtenerLogoEmpresa(o={}){
+      const cfg=(await api.obtenerConfiguracion(o)).configuracion||{};
+      let logo=cfg.logoEmpresa||cfg.empresaLogo||'';
+      if(!logo){
+        const all=await idbLeer('configuracion',{});
+        const porObra=all&&all.porObra&&typeof all.porObra==='object'?all.porObra:{};
+        const encontrado=Object.values(porObra).find(x=>x&&(x.logoEmpresa||x.empresaLogo));
+        logo=encontrado?.logoEmpresa||encontrado?.empresaLogo||all?.logoEmpresa||all?.empresaLogo||'';
+      }
+      return {ok:true,logo};
+    },
+    async guardarArchivo(o={}){
+      const nombre=o.nombreSugerido||o.nombre||'archivo.txt';
+      const esWord=/\.docx?$/i.test(nombre);
+      const tipo=o.tipoMime||(esWord?'application/msword':'text/plain;charset=utf-8');
+      const contenido=o.contenido instanceof Blob?o.contenido:(esWord?'\ufeff'+String(o.contenido||''):o.contenido||'');
+      const b=contenido instanceof Blob?contenido:new Blob([contenido],{type:tipo});
+      /* En iPad/iPhone Safari el atributo download puede abrir el HTML como texto.
+         La hoja Compartir entrega el archivo directamente a Word o Archivos. */
+      try{
+        const archivo=new File([b],nombre,{type:tipo,lastModified:Date.now()});
+        if(esWord&&navigator.share&&navigator.canShare?.({files:[archivo]})){
+          await navigator.share({title:o.titulo||'Documento Word',files:[archivo]});
+          return {ok:true,ruta:nombre,entorno:'navegador',compartido:true};
+        }
+      }catch(error){
+        if(error?.name==='AbortError')return {ok:false,cancelado:true,mensaje:'Operación cancelada.'};
+        console.warn('No fue posible usar Compartir; se usará descarga normal.',error);
+      }
+      download(b,nombre);
+      return {ok:true,ruta:nombre,entorno:'navegador',descargado:true};
+    },
     async guardarArchivoBinario(o={}){let b=o.contenido||o.datos||'';if(typeof b==='string'&&b.startsWith('data:')){const r=await fetch(b);b=await r.blob()}else if(!(b instanceof Blob))b=new Blob([b]);download(b,o.nombreSugerido||o.nombre||'archivo');return {ok:true}},
-    async guardarPDFDesdeHTML(){window.print();return {ok:true}}, async imprimir(){window.print();return {ok:true}},
+    async guardarPDFDesdeHTML(o={}){return imprimirHTML(o.contenidoHTML||'',o.titulo||'Bitácora de Obra')}, async imprimir(o={}){if(o.contenidoHTML)return imprimirHTML(o.contenidoHTML,o.titulo||'Bitácora de Obra');window.print();return {ok:true,entorno:'navegador'}},
     async abrirRuta(r=''){if(/^https?:|^data:|^blob:/.test(r))window.open(r,'_blank');return {ok:true}}, async abrirArchivo(){return {ok:false,error:'Use el selector de archivos del navegador.'}},
     async seleccionarCarpeta(){return {ok:true,ruta:'Descargas'}}, async obtenerInformacionAplicacion(){return {ok:true,nombre:'Bitácora de Obra PWA',version:'1.50.0',plataforma:navigator.platform}},
     async listarDocumentosObra(obraId=''){return {ok:true,documentos:get('docs.'+obraId,[])}},

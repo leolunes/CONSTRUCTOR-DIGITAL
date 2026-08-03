@@ -1,0 +1,8 @@
+AJUSTE V1.66 — PWA IPAD / GITHUB PAGES
+
+- PDF individual y consolidado imprimen el HTML generado, no la pantalla activa.
+- El consolidado PDF incluye todos los folios guardados.
+- Word se descarga con MIME application/msword y BOM UTF-8 para evitar que Safari muestre el código HTML.
+- Recuperación reforzada del logo por obra y compatibilidad con configuraciones anteriores.
+- Listado y consecutivo de folios usan IndexedDB y fusionan respaldos sin perder registros.
+- Caché PWA actualizada a v1.66.
