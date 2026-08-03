@@ -1,0 +1,8 @@
+BITÁCORA DE OBRA v1.70
+
+Ajuste aplicado sobre v1.69:
+- En navegador/iPad, Word individual y consolidado se generan como archivos DOCX reales.
+- Se conserva la generación anterior .doc en Electron.
+- El archivo DOCX puede abrirse, guardarse en Archivos y compartirse desde iOS.
+- Se mantiene logo, fotografías y contenido del informe dentro del documento.
+- Actualización PWA a v1.70.0.

@@ -251,7 +251,7 @@
     async guardarArchivo(o={}){
       const nombre=o.nombreSugerido||o.nombre||'archivo.txt';
       const esWord=/\.docx?$/i.test(nombre);
-      const tipo=o.tipoMime||(esWord?'application/msword':'text/plain;charset=utf-8');
+      const tipo=o.tipoMime||(nombre.toLowerCase().endsWith('.docx')?'application/vnd.openxmlformats-officedocument.wordprocessingml.document':(esWord?'application/msword':'text/plain;charset=utf-8'));
       const contenido=o.contenido instanceof Blob?o.contenido:(esWord?'\ufeff'+String(o.contenido||''):o.contenido||'');
       const b=contenido instanceof Blob?contenido:new Blob([contenido],{type:tipo});
       /* En iPad/iPhone Safari el atributo download puede abrir el HTML como texto.

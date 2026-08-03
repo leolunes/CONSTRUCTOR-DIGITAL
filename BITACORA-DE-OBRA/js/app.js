@@ -2530,12 +2530,18 @@ ${cabeceraHTML}
         .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-zA-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 55);
 
+      const esElectron = /Electron/i.test(navigator.userAgent || '');
+      const contenidoConsolidado = esElectron ? contenido : await construirDocxRealDesdeHTML(contenido);
       const resultado = await ipc()?.guardarArchivo?.({
         titulo: 'Guardar informe consolidado de bitácora',
-        nombreSugerido: `Informe_Consolidado_WORD_v167_${nombreSeguro || 'Obra'}.doc`,
-        contenido,
-        tipoMime: 'application/msword',
-        filtros: [{ name: 'Documento Word', extensions: ['doc'] }]
+        nombreSugerido: esElectron
+          ? `Informe_Consolidado_WORD_${nombreSeguro || 'Obra'}.doc`
+          : `Informe_Consolidado_WORD_${nombreSeguro || 'Obra'}.docx`,
+        contenido: contenidoConsolidado,
+        tipoMime: esElectron
+          ? 'application/msword'
+          : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        filtros: [{ name: 'Documento Word', extensions: [esElectron ? 'doc' : 'docx'] }]
       });
 
       if (resultado?.ok) {
@@ -2665,6 +2671,144 @@ ${cabeceraHTML}
     return String(valor || '').replace(/\s+/g, '').match(new RegExp(`.{1,${ancho}}`, 'g'))?.join('\r\n') || '';
   }
 
+
+  async function construirDocxRealDesdeHTML(html = '') {
+    if (!window.docx) throw new Error('La librería DOCX no está disponible.');
+
+    const {
+      Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+      ImageRun, WidthType, HeadingLevel, AlignmentType, PageBreak
+    } = window.docx;
+
+    const documentoHTML = new DOMParser().parseFromString(String(html || ''), 'text/html');
+    documentoHTML.querySelectorAll('script,style,button,input,select,textarea,noscript').forEach(n => n.remove());
+
+    const limpiar = texto => String(texto || '').replace(/\s+/g, ' ').trim();
+
+    async function datosImagen(src) {
+      if (!src) return null;
+      try {
+        const respuesta = await fetch(src);
+        const buffer = await respuesta.arrayBuffer();
+        const tipo = (respuesta.headers.get('content-type') || '').toLowerCase();
+        let extension = 'png';
+        if (tipo.includes('jpeg') || /^data:image\/jpeg/i.test(src)) extension = 'jpg';
+        if (tipo.includes('gif') || /^data:image\/gif/i.test(src)) extension = 'gif';
+        if (tipo.includes('webp') || /^data:image\/webp/i.test(src)) extension = 'webp';
+
+        const medida = await new Promise(resolve => {
+          const img = new Image();
+          img.onload = () => resolve({ ancho: img.naturalWidth || 640, alto: img.naturalHeight || 360 });
+          img.onerror = () => resolve({ ancho: 640, alto: 360 });
+          img.src = src;
+        });
+
+        const maxAncho = 520;
+        const maxAlto = 680;
+        const escala = Math.min(1, maxAncho / medida.ancho, maxAlto / medida.alto);
+        return {
+          data: new Uint8Array(buffer),
+          type: extension,
+          width: Math.max(40, Math.round(medida.ancho * escala)),
+          height: Math.max(25, Math.round(medida.alto * escala))
+        };
+      } catch (error) {
+        console.warn('No fue posible incorporar una imagen al DOCX:', error);
+        return null;
+      }
+    }
+
+    async function parrafosElemento(elemento) {
+      const salida = [];
+      const imagenes = [...elemento.querySelectorAll(':scope > img')];
+      for (const img of imagenes) {
+        const info = await datosImagen(img.getAttribute('src'));
+        if (info) {
+          salida.push(new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [new ImageRun({ data: info.data, transformation: { width: info.width, height: info.height }, type: info.type })]
+          }));
+        }
+      }
+
+      const texto = limpiar([...elemento.childNodes]
+        .filter(n => n.nodeType === Node.TEXT_NODE || (n.nodeType === Node.ELEMENT_NODE && n.tagName !== 'IMG' && !['TABLE','DIV','SECTION'].includes(n.tagName)))
+        .map(n => n.textContent || '').join(' '));
+      if (texto) salida.push(new Paragraph({ children: [new TextRun(texto)] }));
+      return salida;
+    }
+
+    async function convertirTabla(tabla) {
+      const filas = [];
+      for (const tr of [...tabla.querySelectorAll(':scope > thead > tr, :scope > tbody > tr, :scope > tr')]) {
+        const celdas = [];
+        for (const td of [...tr.children].filter(x => ['TD','TH'].includes(x.tagName))) {
+          const contenido = [];
+          for (const img of [...td.querySelectorAll('img')]) {
+            const info = await datosImagen(img.getAttribute('src'));
+            if (info) contenido.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: info.data, transformation: { width: Math.min(info.width, 220), height: Math.min(info.height, 220) }, type: info.type })] }));
+          }
+          const texto = limpiar(td.innerText || td.textContent);
+          if (texto) contenido.push(new Paragraph({ children: [new TextRun({ text: texto, bold: td.tagName === 'TH' })] }));
+          if (!contenido.length) contenido.push(new Paragraph(''));
+          celdas.push(new TableCell({ children: contenido }));
+        }
+        if (celdas.length) filas.push(new TableRow({ children: celdas }));
+      }
+      return filas.length ? new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows: filas }) : null;
+    }
+
+    async function procesarNodo(nodo, salida) {
+      if (!nodo || nodo.nodeType !== Node.ELEMENT_NODE) return;
+      const tag = nodo.tagName;
+
+      if (tag === 'TABLE') {
+        const tabla = await convertirTabla(nodo);
+        if (tabla) salida.push(tabla, new Paragraph(''));
+        return;
+      }
+      if (tag === 'IMG') {
+        const info = await datosImagen(nodo.getAttribute('src'));
+        if (info) salida.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: info.data, transformation: { width: info.width, height: info.height }, type: info.type })] }));
+        return;
+      }
+      if (/^H[1-6]$/.test(tag)) {
+        const niveles = { H1: HeadingLevel.TITLE, H2: HeadingLevel.HEADING_1, H3: HeadingLevel.HEADING_2, H4: HeadingLevel.HEADING_3 };
+        salida.push(new Paragraph({ heading: niveles[tag] || HeadingLevel.HEADING_3, children: [new TextRun(limpiar(nodo.innerText || nodo.textContent))] }));
+        return;
+      }
+      if (tag === 'P' || tag === 'LI') {
+        const texto = limpiar(nodo.innerText || nodo.textContent);
+        if (texto) salida.push(new Paragraph({ children: [new TextRun(texto)], bullet: tag === 'LI' ? { level: 0 } : undefined }));
+        return;
+      }
+      if (nodo.classList?.contains('MsoNormal') && /page-break-before/i.test(nodo.getAttribute('style') || '')) {
+        salida.push(new Paragraph({ children: [new PageBreak()] }));
+        return;
+      }
+
+      const hijos = [...nodo.children].filter(h => !['SCRIPT','STYLE'].includes(h.tagName));
+      if (hijos.length) {
+        for (const hijo of hijos) await procesarNodo(hijo, salida);
+      } else {
+        salida.push(...await parrafosElemento(nodo));
+      }
+    }
+
+    const elementos = [];
+    for (const nodo of [...documentoHTML.body.children]) await procesarNodo(nodo, elementos);
+    if (!elementos.length) elementos.push(new Paragraph('BITÁCORA DE OBRA'));
+
+    const documento = new Document({
+      sections: [{
+        properties: { page: { margin: { top: 700, right: 700, bottom: 700, left: 700 } } },
+        children: elementos
+      }]
+    });
+
+    return Packer.toBlob(documento);
+  }
+
   function construirWordMHTML(html = '') {
     const limite = `----=_BitacoraObra_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const imagenes = [];
@@ -2734,17 +2878,20 @@ ${cabeceraHTML}
     }
 
     const esElectron = /Electron/i.test(navigator.userAgent || '');
-    const contenidoWord = esElectron ? contenido : construirWordMHTML(contenido);
+    const contenidoWord = esElectron ? contenido : await construirDocxRealDesdeHTML(contenido);
 
     const resultado = await ipc()?.guardarArchivo?.({
       titulo: 'Exportar a Word',
-      nombreSugerido:
-        `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_v169_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.doc`,
+      nombreSugerido: esElectron
+        ? `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.doc`
+        : `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.docx`,
       contenido: contenidoWord,
-      tipoMime: 'application/msword',
+      tipoMime: esElectron
+        ? 'application/msword'
+        : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       filtros: [{
         name: 'Documento Word',
-        extensions: ['doc']
+        extensions: [esElectron ? 'doc' : 'docx']
       }]
     });
 
