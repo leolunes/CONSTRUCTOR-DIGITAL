@@ -1,0 +1,8 @@
+BITÁCORA DE OBRA — AJUSTE v1.72
+
+Cambios aplicados sobre v1.71:
+- Rótulo del Word consolidado reconstruido en una sola fila para evitar que el logo y las columnas se deformen en Word para iPad.
+- Logo escalado conservando su proporción dentro del espacio disponible.
+- Cada folio del consolidado se genera como una sección independiente de Word; se eliminan los párrafos de salto que producían páginas en blanco.
+- Las imágenes de anexos se extraen de la celda angosta de la tabla y se incorporan a ancho útil, conservando la imagen completa y su descripción.
+- Se mantiene intacto el resto de la aplicación.

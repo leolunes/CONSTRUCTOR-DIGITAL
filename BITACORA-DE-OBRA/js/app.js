@@ -2509,15 +2509,10 @@ ${datos.nota ? `<div class="bloque"><h2>OBSERVACIONES</h2><div class="anotacion"
             'class="bloque-editor$1" style="page-break-inside:avoid;mso-break-inside:avoid;break-inside:avoid;"'
           );
 
-        // Word no siempre respeta page-break-before aplicado a section. Por eso
-        // se inserta un salto de página explícito compatible con Microsoft Word
-        // antes de cada folio, excepto el primero.
-        if (i > 0) {
-          cuerpos.push(
-            '<p class="MsoNormal" style="page-break-before:always;mso-break-before:page;margin:0;height:0;line-height:0;font-size:0;">&nbsp;</p>'
-          );
-        }
-        cuerpos.push(`<div class="folio-consolidado-word">${cuerpo}</div>`);
+        // Cada folio se marca como una unidad independiente. El generador DOCX
+        // crea una sección nueva por folio, evitando párrafos de salto que en
+        // Word para iPad podían convertirse en una página completamente blanca.
+        cuerpos.push(`<div class="folio-consolidado-word" data-folio-indice="${i}">${cuerpo}</div>`);
       }
 
       const contenido = `<!doctype html>
@@ -2678,7 +2673,7 @@ ${cabeceraHTML}
     const {
       Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
       ImageRun, WidthType, AlignmentType, PageBreak, BorderStyle,
-      ShadingType, VerticalAlign, TableLayoutType
+      ShadingType, VerticalAlign, TableLayoutType, SectionType
     } = window.docx;
 
     const COLOR_AZUL = '0B4F7C';
@@ -2707,6 +2702,55 @@ ${cabeceraHTML}
 
     const documentoHTML = new DOMParser().parseFromString(String(html || ''), 'text/html');
     documentoHTML.querySelectorAll('script,style,button,input,select,textarea,noscript').forEach(n => n.remove());
+
+    // Normalización exclusiva para DOCX: Word para iPad interpreta de forma
+    // inestable las celdas con rowspan del rótulo. Se reconstruye el encabezado
+    // en una sola fila, conservando logo, título, obra y metadatos.
+    documentoHTML.querySelectorAll('table.rotulo').forEach(tabla => {
+      const filas = [...tabla.querySelectorAll(':scope > tbody > tr, :scope > tr')];
+      if (filas.length < 2) return;
+      const primera = [...filas[0].children].filter(n => ['TD','TH'].includes(n.tagName));
+      const segunda = [...filas[1].children].filter(n => ['TD','TH'].includes(n.tagName));
+      if (primera.length < 3) return;
+
+      const logo = primera[0].cloneNode(true);
+      const centro = primera[1].cloneNode(true);
+      const meta = primera[2].cloneNode(true);
+      logo.removeAttribute('rowspan');
+      meta.removeAttribute('rowspan');
+      if (segunda[0]) {
+        const obra = documentoHTML.createElement('div');
+        obra.className = 'obra-titulo-word';
+        obra.textContent = segunda[0].textContent || '';
+        centro.appendChild(obra);
+      }
+      const fila = documentoHTML.createElement('tr');
+      fila.append(logo, centro, meta);
+      tabla.innerHTML = '';
+      const tbody = documentoHTML.createElement('tbody');
+      tbody.appendChild(fila);
+      tabla.appendChild(tbody);
+    });
+
+    // Los anexos-imagen no deben quedar dentro de la celda angosta de la tabla.
+    // Se extraen y se agregan, completos, inmediatamente después de la tabla.
+    documentoHTML.querySelectorAll('table').forEach(tabla => {
+      const vistas = [...tabla.querySelectorAll('.anexo-vista')];
+      if (!vistas.length) return;
+      const contenedor = documentoHTML.createElement('div');
+      contenedor.className = 'anexos-imagenes-word';
+      vistas.forEach((vista, indice) => {
+        const bloque = vista.cloneNode(true);
+        bloque.classList.add('anexo-vista-docx');
+        const titulo = documentoHTML.createElement('div');
+        titulo.className = 'anexo-titulo-docx';
+        titulo.textContent = `Anexo ${indice + 1}`;
+        bloque.insertBefore(titulo, bloque.firstChild);
+        contenedor.appendChild(bloque);
+        vista.remove();
+      });
+      tabla.insertAdjacentElement('afterend', contenedor);
+    });
 
     const limpiar = texto => String(texto || '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
     const esClase = (nodo, clase) => Boolean(nodo?.classList?.contains(clase));
@@ -2763,10 +2807,10 @@ ${cabeceraHTML}
 
     function dimensionesImagen(img) {
       const contenedor = img.closest('.logo,.foto-marco,.firma-img,.anexo-vista');
-      if (contenedor?.classList.contains('logo')) return { ancho: 82, alto: 82 };
+      if (contenedor?.classList.contains('logo')) return { ancho: 72, alto: 64 };
       if (contenedor?.classList.contains('foto-marco')) return { ancho: 295, alto: 176 };
       if (contenedor?.classList.contains('firma-img')) return { ancho: 180, alto: 86 };
-      if (contenedor?.classList.contains('anexo-vista')) return { ancho: 500, alto: 340 };
+      if (contenedor?.classList.contains('anexo-vista-docx') || contenedor?.classList.contains('anexo-vista')) return { ancho: 500, alto: 650 };
       const anchoAttr = Number(img.getAttribute('width') || 0);
       const altoAttr = Number(img.getAttribute('height') || 0);
       return {
@@ -2904,11 +2948,11 @@ ${cabeceraHTML}
                 children: [new TextRun({ text: texto, bold: true, color: COLOR_AZUL, size: 30, font: 'Arial' })]
               }));
             }
-            else if (esClase(hijo, 'empresa')) {
+            else if (esClase(hijo, 'empresa') || esClase(hijo, 'obra-titulo-word')) {
               bloques.push(new Paragraph({
                 alignment: AlignmentType.CENTER,
-                spacing: { before: 0, after: 25 },
-                children: [new TextRun({ text: texto, bold: true, size: 18, font: 'Arial' })]
+                spacing: { before: esClase(hijo, 'obra-titulo-word') ? 35 : 0, after: 25 },
+                children: [new TextRun({ text: texto, bold: true, size: esClase(hijo, 'obra-titulo-word') ? 17 : 18, font: 'Arial' })]
               }));
             }
             else if (esClase(hijo, 'cargo')) {
@@ -2953,8 +2997,9 @@ ${cabeceraHTML}
     }
 
     function anchoCelda(celda, totalCeldas) {
-      if (esClase(celda, 'logo')) return 20;
-      if (esClase(celda, 'meta')) return 25;
+      if (esClase(celda, 'logo')) return 18;
+      if (esClase(celda, 'meta')) return 27;
+      if (celda.closest('table.rotulo')) return 55;
       if (esClase(celda, 'etiqueta')) return 28;
       if (esClase(celda, 'foto-celda')) return 50;
       const colspan = Math.max(1, Number(celda.getAttribute('colspan') || 1));
@@ -3043,6 +3088,22 @@ ${cabeceraHTML}
         salida.push(parrafoTexto(nodo, { bullet: tag === 'LI' ? { level: 0 } : undefined }));
         return;
       }
+      if (esClase(nodo, 'anexo-vista-docx')) {
+        const titulo = limpiar(nodo.querySelector('.anexo-titulo-docx')?.textContent || 'Anexo');
+        salida.push(new Paragraph({
+          keepNext: true,
+          spacing: { before: 120, after: 55 },
+          children: [new TextRun({ text: titulo, bold: true, color: COLOR_AZUL, size: 20 })]
+        }));
+        const img = nodo.querySelector('img');
+        if (img) {
+          const p = await parrafoImagen(img);
+          if (p) salida.push(p);
+        }
+        const pie = limpiar(nodo.querySelector('.anexo-pie')?.textContent || '');
+        if (pie) salida.push(new Paragraph({ spacing: { before: 20, after: 90 }, children: [new TextRun({ text: pie, size: 17 })] }));
+        return;
+      }
       if (esClase(nodo, 'anotacion')) {
         const hijos = [...nodo.children];
         if (!hijos.length) {
@@ -3066,9 +3127,36 @@ ${cabeceraHTML}
       for (const hijo of [...nodo.childNodes]) await procesarNodo(hijo, salida);
     }
 
-    const elementos = [];
-    for (const nodo of [...documentoHTML.body.childNodes]) await procesarNodo(nodo, elementos);
-    if (!elementos.length) elementos.push(new Paragraph('BITÁCORA DE OBRA'));
+    const propiedadesPagina = {
+      page: {
+        size: { width: 11906, height: 16838 },
+        margin: { top: 765, right: 765, bottom: 822, left: 765 }
+      }
+    };
+
+    const foliosRaiz = [...documentoHTML.body.children].filter(n => n.classList?.contains('folio-consolidado-word'));
+    const secciones = [];
+
+    if (foliosRaiz.length) {
+      for (let indice = 0; indice < foliosRaiz.length; indice += 1) {
+        const elementosFolio = [];
+        for (const nodo of [...foliosRaiz[indice].childNodes]) await procesarNodo(nodo, elementosFolio);
+        if (!elementosFolio.length) elementosFolio.push(new Paragraph('BITÁCORA DE OBRA'));
+        secciones.push({
+          properties: {
+            ...propiedadesPagina,
+            type: indice === 0 ? undefined : SectionType.NEXT_PAGE
+          },
+          children: elementosFolio
+        });
+      }
+    }
+    else {
+      const elementos = [];
+      for (const nodo of [...documentoHTML.body.childNodes]) await procesarNodo(nodo, elementos);
+      if (!elementos.length) elementos.push(new Paragraph('BITÁCORA DE OBRA'));
+      secciones.push({ properties: propiedadesPagina, children: elementos });
+    }
 
     const documento = new Document({
       styles: {
@@ -3079,15 +3167,7 @@ ${cabeceraHTML}
           }
         }
       },
-      sections: [{
-        properties: {
-          page: {
-            size: { width: 11906, height: 16838 },
-            margin: { top: 765, right: 765, bottom: 822, left: 765 }
-          }
-        },
-        children: elementos
-      }]
+      sections: secciones
     });
 
     return Packer.toBlob(documento);
