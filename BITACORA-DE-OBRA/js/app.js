@@ -2651,6 +2651,67 @@ ${cabeceraHTML}
       .replace(/\.firma-img img\{[^}]*\}/i, '.firma-img img{width:4.8cm!important;height:2.3cm!important;max-width:4.8cm!important;max-height:2.3cm!important;mso-width-source:userset;mso-height-source:userset}');
   }
 
+  function base64DesdeTextoUTF8(texto = '') {
+    const bytes = new TextEncoder().encode(String(texto));
+    let binario = '';
+    const tamanoBloque = 0x8000;
+    for (let i = 0; i < bytes.length; i += tamanoBloque) {
+      binario += String.fromCharCode(...bytes.subarray(i, i + tamanoBloque));
+    }
+    return btoa(binario);
+  }
+
+  function envolverBase64(valor = '', ancho = 76) {
+    return String(valor || '').replace(/\s+/g, '').match(new RegExp(`.{1,${ancho}}`, 'g'))?.join('\r\n') || '';
+  }
+
+  function construirWordMHTML(html = '') {
+    const limite = `----=_BitacoraObra_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const imagenes = [];
+    let numero = 0;
+
+    const htmlReferenciado = String(html).replace(
+      /src=(['"])(data:image\/(png|jpe?g|gif|bmp|webp);base64,([^'"]+))\1/gi,
+      (_coincidencia, comilla, _dataUrl, subtipo, datosBase64) => {
+        numero += 1;
+        const normalizado = String(subtipo || 'jpeg').toLowerCase();
+        const extension = normalizado === 'jpeg' || normalizado === 'jpg' ? 'jpg' : normalizado;
+        const tipoMime = normalizado === 'jpg' ? 'image/jpeg' : `image/${normalizado}`;
+        const nombre = `imagen_word_${String(numero).padStart(3, '0')}.${extension}`;
+        imagenes.push({ nombre, tipoMime, datosBase64: envolverBase64(datosBase64) });
+        return `src=${comilla}${nombre}${comilla}`;
+      }
+    );
+
+    const partes = [
+      'MIME-Version: 1.0',
+      `Content-Type: multipart/related; boundary="${limite}"; type="text/html"`,
+      'X-MimeOLE: Produced By BITÁCORA DE OBRA',
+      '',
+      `--${limite}`,
+      'Content-Type: text/html; charset="utf-8"',
+      'Content-Transfer-Encoding: base64',
+      'Content-Location: documento_bitacora.html',
+      '',
+      envolverBase64(base64DesdeTextoUTF8(htmlReferenciado))
+    ];
+
+    imagenes.forEach(imagen => {
+      partes.push(
+        `--${limite}`,
+        `Content-Type: ${imagen.tipoMime}`,
+        'Content-Transfer-Encoding: base64',
+        `Content-Location: ${imagen.nombre}`,
+        `Content-ID: <${imagen.nombre}>`,
+        '',
+        imagen.datosBase64
+      );
+    });
+
+    partes.push(`--${limite}--`, '');
+    return new Blob([partes.join('\r\n')], { type: 'application/msword' });
+  }
+
   async function exportarWord() {
     const guardado = await guardarFolio();
     if (!guardado) return;
@@ -2672,11 +2733,14 @@ ${cabeceraHTML}
       restaurarRecursos();
     }
 
+    const esElectron = /Electron/i.test(navigator.userAgent || '');
+    const contenidoWord = esElectron ? contenido : construirWordMHTML(contenido);
+
     const resultado = await ipc()?.guardarArchivo?.({
       titulo: 'Exportar a Word',
       nombreSugerido:
-        `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_v167_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.doc`,
-      contenido,
+        `Bitacora_Folio_${$('#numero-folio').value}_FORMATO_PDF_v169_${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}.doc`,
+      contenido: contenidoWord,
       tipoMime: 'application/msword',
       filtros: [{
         name: 'Documento Word',

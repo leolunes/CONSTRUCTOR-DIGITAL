@@ -111,12 +111,38 @@
     },
     async eliminarFolio(x){
       try{
-        await idbEliminarFolio(String(x));
-        const actuales=(await api.listarFolios({})).folios||[];
-        const a=actuales.filter(o=>String(o.id)!==String(x));
-        set('folios',a);
-        return {ok:true,eliminado:true,folios:a};
-      }catch(error){return {ok:false,mensaje:'No fue posible eliminar el folio.'}}
+        const folioId=String(x||'');
+        if(!folioId)return {ok:false,mensaje:'No se recibió el identificador del folio.'};
+
+        /* El folio puede existir simultáneamente en tres respaldos PWA:
+           almacén individual, bloque legado de IndexedDB y localStorage.
+           Debe retirarse de todos para impedir que reaparezca al recargar. */
+        await idbEliminarFolio(folioId);
+
+        const locales=get('folios',[]);
+        const legado=await idbLeer('folios',[]);
+        const individuales=await idbListarFolios();
+        const restantes=unirFolios(
+          Array.isArray(locales)?locales:[],
+          Array.isArray(legado)?legado:[],
+          Array.isArray(individuales)?individuales:[]
+        ).filter(o=>String(o.id)!==folioId);
+
+        await idbGuardar('folios',restantes);
+        set('folios',restantes.map(f=>({
+          ...f,
+          imagenes:(f.imagenes||[]).map(({dataUrl,datos,url,...m})=>m),
+          anexos:(f.anexos||[]).map(({dataUrl,datos,url,...m})=>m)
+        })));
+
+        const activo=get('folioActivo',null);
+        if(activo&&String(activo.id)===folioId)set('folioActivo',null);
+
+        return {ok:true,eliminado:true,folios:restantes};
+      }catch(error){
+        console.error('Error eliminando folio en PWA:',error);
+        return {ok:false,mensaje:'No fue posible eliminar definitivamente el folio.'};
+      }
     },
     async seleccionarFolio(o={}){set('folioActivo',o||null);return {ok:true,folio:o||null}},
     async obtenerFolioActivo(){return {ok:true,folio:get('folioActivo',null)}},

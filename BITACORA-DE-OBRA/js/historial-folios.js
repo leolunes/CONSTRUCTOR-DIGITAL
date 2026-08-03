@@ -233,12 +233,26 @@
 
     if (!confirmar) return;
 
-    const respuesta =
-      await ipc()?.eliminarFolio?.(id);
+    const boton = document.querySelector(`[data-eliminar="${CSS.escape(String(id))}"]`);
+    if (boton) {
+      boton.disabled = true;
+      boton.textContent = 'Eliminando…';
+    }
+
+    const respuesta = await ipc()?.eliminarFolio?.(id);
 
     if (respuesta?.ok) {
-      alerta('Folio eliminado.', 'exito');
+      estado.folios = estado.folios.filter(item => String(item.id) !== String(id));
+      renderizar();
+      alerta('Folio eliminado definitivamente.', 'exito');
       await cargar();
+    }
+    else {
+      if (boton) {
+        boton.disabled = false;
+        boton.textContent = 'Eliminar';
+      }
+      alerta(respuesta?.mensaje || 'No fue posible eliminar el folio.', 'error');
     }
   }
 

@@ -1,0 +1,20 @@
+BITÁCORA DE OBRA — AJUSTE v1.69
+
+Cambios realizados sobre la versión v1.68:
+
+1. WORD CON LOGO EN IPAD / NAVEGADOR
+- La exportación web ahora empaqueta el informe como documento MHTML compatible con Microsoft Word.
+- El logo, fotografías, anexos de imagen y firmas se incluyen como recursos internos del archivo Word.
+- La versión Electron conserva su mecanismo de exportación existente.
+
+2. ELIMINACIÓN DEFINITIVA DE FOLIOS
+- El folio se elimina del almacén individual de IndexedDB.
+- También se elimina del respaldo legado de IndexedDB y de localStorage.
+- Se limpia el folio activo si corresponde al registro eliminado.
+- El historial muestra confirmación o error y evita pulsaciones dobles.
+
+3. PWA
+- Caché y versión actualizadas a v1.69.0.
+- Se conserva el sistema automático de aviso de actualización.
+
+No se modificaron otras funciones del proyecto.

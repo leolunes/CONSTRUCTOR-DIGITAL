@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const APP_VERSION = '1.68.0';
+  const APP_VERSION = '1.69.0';
   const UPDATE_CHECK_INTERVAL = 15 * 60 * 1000;
   let registroPwa = null;
   let recargaIniciada = false;
