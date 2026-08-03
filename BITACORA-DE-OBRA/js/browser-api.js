@@ -96,8 +96,39 @@
         return {ok:true,eliminado:true,contratistas:a};
       }catch(error){return {ok:false,mensaje:'No fue posible eliminar el contratista.'}}
     },
-    async obtenerConfiguracion(o={}){const all=get('configuracion',{});const obraId=o.obraId||'';return {ok:true,configuracion:obraId?(all.porObra?.[obraId]||{}):all}},
-    async guardarConfiguracion(c={},o={}){let all=get('configuracion',{});if(o.obraId){all.porObra=all.porObra||{};all.porObra[o.obraId]=c}else all=c;set('configuracion',all);return {ok:true,configuracion:c}},
+    async obtenerConfiguracion(o={}){
+      const local=get('configuracion',{});
+      const almacenada=await idbLeer('configuracion',null);
+      const all=(almacenada&&typeof almacenada==='object')?almacenada:local;
+      if(almacenada===null&&all&&typeof all==='object')try{await idbGuardar('configuracion',all)}catch{}
+      const obraId=o.obraId||'';
+      if(!obraId)return {ok:true,configuracion:all||{}};
+      const base={...(all||{})};
+      delete base.porObra;
+      return {ok:true,configuracion:{...base,...((all&&all.porObra&&all.porObra[obraId])||{})}};
+    },
+    async guardarConfiguracion(c={},o={}){
+      try{
+        const local=get('configuracion',{});
+        const almacenada=await idbLeer('configuracion',null);
+        let all=(almacenada&&typeof almacenada==='object')?almacenada:local;
+        if(!all||typeof all!=='object')all={};
+        if(o.obraId){
+          all.porObra=all.porObra||{};
+          all.porObra[o.obraId]={...c};
+        }else{
+          const porObra=all.porObra||{};
+          all={...c,porObra};
+        }
+        await idbGuardar('configuracion',all);
+        /* Respaldo secundario. Puede fallar si el logo supera la cuota de localStorage. */
+        set('configuracion',all);
+        return {ok:true,configuracion:c};
+      }catch(error){
+        console.error('Error guardando configuración y logo:',error);
+        return {ok:false,mensaje:'No fue posible guardar la configuración o el logo. Verifique el espacio disponible del dispositivo.'};
+      }
+    },
     async seleccionarArchivos(o={}){const fs=await pick((o.filtros||[]).flatMap(x=>x.extensions||[]).map(x=>'.'+x).join(','),o.multiple!==false);return {ok:true,archivos:await Promise.all(fs.map(async f=>({nombre:f.name,name:f.name,tamano:f.size,tipo:f.type,dataUrl:await toData(f)})))}},
     async seleccionarImagenesEvidencia(){
       const fs=await pick('image/*',true);

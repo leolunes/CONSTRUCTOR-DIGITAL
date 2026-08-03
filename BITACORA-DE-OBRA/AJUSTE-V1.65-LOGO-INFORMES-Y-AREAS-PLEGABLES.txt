@@ -1,0 +1,8 @@
+BITÁCORA DE OBRA v1.65
+
+1. El logo y la configuración se guardan en IndexedDB para evitar la limitación de localStorage en Safari/iPad.
+2. La configuración por obra hereda los datos generales, incluido el logo.
+3. PDF y Word reciben el logo almacenado para la obra activa.
+4. Las áreas principales del folio pueden minimizarse o expandirse individualmente.
+5. Se añadieron controles globales Minimizar áreas y Expandir áreas para pantallas pequeñas.
+6. La impresión y los informes no ocultan contenido aunque las áreas estén minimizadas en pantalla.

@@ -3475,4 +3475,67 @@ ${cabeceraHTML}
   }
 
   window.addEventListener('resize', ajustarTextoDatosObra);
+
+  /* =========================================================
+     Áreas plegables para tabletas y celulares
+     ========================================================= */
+  function inicializarAreasPlegables() {
+    const formulario = document.getElementById('formulario-bitacora');
+    if (!formulario || formulario.dataset.areasPlegables === '1') return;
+    formulario.dataset.areasPlegables = '1';
+
+    const definiciones = [
+      { selector: ':scope > .encabezado', titulo: 'Encabezado del folio' },
+      { selector: ':scope > .seccion-bitacora:nth-of-type(2)', titulo: 'Datos de la obra' },
+      { selector: ':scope > .seccion-bitacora:nth-of-type(3)', titulo: 'Anotación del folio' },
+      { selector: ':scope > #panel-anexos', titulo: 'Fotografías y anexos' },
+      { selector: ':scope > .firmas', titulo: 'Firmas' }
+    ];
+
+    const secciones = [];
+    definiciones.forEach((definicion, indice) => {
+      const seccion = formulario.querySelector(definicion.selector);
+      if (!seccion || seccion.dataset.plegable === '1') return;
+      seccion.dataset.plegable = '1';
+      seccion.classList.add('area-plegable');
+      seccion.id ||= `area-plegable-${indice + 1}`;
+
+      const control = document.createElement('div');
+      control.className = 'control-area-plegable no-imprimir';
+      control.innerHTML = `
+        <strong>${definicion.titulo}</strong>
+        <button type="button" class="boton-area-plegable" aria-expanded="true" aria-controls="${seccion.id}" title="Minimizar esta área">−</button>`;
+      seccion.insertBefore(control, seccion.firstChild);
+
+      const boton = control.querySelector('button');
+      const aplicar = minimizada => {
+        seccion.classList.toggle('area-minimizada', minimizada);
+        boton.textContent = minimizada ? '+' : '−';
+        boton.title = minimizada ? 'Expandir esta área' : 'Minimizar esta área';
+        boton.setAttribute('aria-expanded', String(!minimizada));
+      };
+      boton.addEventListener('click', () => aplicar(!seccion.classList.contains('area-minimizada')));
+      secciones.push({ seccion, aplicar });
+    });
+
+    if (!secciones.length) return;
+    const barra = document.createElement('div');
+    barra.className = 'barra-areas-plegables no-imprimir';
+    barra.innerHTML = `
+      <span>Vista compacta</span>
+      <button type="button" data-areas="minimizar">Minimizar áreas</button>
+      <button type="button" data-areas="expandir">Expandir áreas</button>`;
+    formulario.insertBefore(barra, formulario.firstChild);
+    barra.addEventListener('click', evento => {
+      const accion = evento.target.closest('[data-areas]')?.dataset.areas;
+      if (!accion) return;
+      secciones.forEach(item => item.aplicar(accion === 'minimizar'));
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializarAreasPlegables, { once: true });
+  } else {
+    inicializarAreasPlegables();
+  }
 })();

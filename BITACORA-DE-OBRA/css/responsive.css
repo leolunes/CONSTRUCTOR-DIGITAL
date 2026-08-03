@@ -150,3 +150,73 @@
     image-rendering:auto;
   }
 }
+
+/* =========================================================
+   Áreas plegables del folio
+   ========================================================= */
+.barra-areas-plegables{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:8px;
+  padding:8px 10px;
+  margin-bottom:8px;
+  border:1px solid var(--color-borde-suave,#d7e0e8);
+  border-radius:8px;
+  background:#f7fafc;
+}
+.barra-areas-plegables span{margin-right:auto;font-weight:700;color:#0f4f78}
+.barra-areas-plegables button,
+.boton-area-plegable{
+  min-height:34px;
+  border:1px solid #b8c7d3;
+  border-radius:7px;
+  background:#fff;
+  color:#0f4f78;
+  font-weight:700;
+  cursor:pointer;
+}
+.barra-areas-plegables button{padding:6px 10px}
+.area-plegable{position:relative}
+.control-area-plegable{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:100%;
+  padding:7px 10px;
+  margin:0 0 10px;
+  border-bottom:1px solid #d7e0e8;
+  background:linear-gradient(90deg,#edf6fb,#f8fbfd);
+  color:#0f4f78;
+}
+.boton-area-plegable{
+  flex:0 0 38px;
+  width:38px;
+  height:34px;
+  padding:0;
+  font-size:22px;
+  line-height:1;
+}
+.area-plegable.area-minimizada{
+  min-height:0!important;
+  padding-bottom:0!important;
+}
+.area-plegable.area-minimizada > :not(.control-area-plegable){display:none!important}
+.area-plegable.area-minimizada .control-area-plegable{margin-bottom:0;border-bottom:0}
+
+@media (max-width:992px){
+  .barra-areas-plegables{position:sticky;top:0;z-index:35;flex-wrap:wrap;box-shadow:0 2px 8px rgba(15,79,120,.12)}
+  .barra-areas-plegables span{width:100%;margin:0}
+  .barra-areas-plegables button{flex:1}
+  .control-area-plegable{position:sticky;top:76px;z-index:20;margin-left:-4px;margin-right:-4px;width:calc(100% + 8px)}
+}
+@media (max-width:480px){
+  .barra-areas-plegables{top:0}
+  .barra-areas-plegables button{width:auto;min-width:0;font-size:13px}
+  .control-area-plegable{top:88px}
+}
+@media print{
+  .barra-areas-plegables,.control-area-plegable{display:none!important}
+  .area-plegable.area-minimizada > :not(.control-area-plegable){display:revert!important}
+}
