@@ -1,0 +1,16 @@
+BITÁCORA DE OBRA — AJUSTE v1.71
+
+Ajuste aplicado sobre la versión v1.70.
+
+Objetivo:
+- Generar Word DOCX real con el mismo contenido y presentación base del PDF actual.
+- Incluir logo, fotografías, anexos-imagen y firmas dentro del DOCX.
+- Conservar tablas, rótulo, títulos, colores, márgenes, registro fotográfico y pie del informe.
+- Mantener descarga/compartir compatible con Safari, iPad, iPhone y Microsoft Word.
+
+Archivos modificados:
+- js/app.js
+- js/pwa.js
+- sw.js
+
+No se modificaron los módulos de obras, contratistas, folios, almacenamiento, PDF, anexos ni fotografías.

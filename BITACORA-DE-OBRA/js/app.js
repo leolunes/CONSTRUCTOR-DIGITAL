@@ -2677,137 +2677,422 @@ ${cabeceraHTML}
 
     const {
       Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-      ImageRun, WidthType, HeadingLevel, AlignmentType, PageBreak
+      ImageRun, WidthType, AlignmentType, PageBreak, BorderStyle,
+      ShadingType, VerticalAlign, TableLayoutType
     } = window.docx;
+
+    const COLOR_AZUL = '0B4F7C';
+    const COLOR_AZUL_CLARO = 'EAF3F8';
+    const COLOR_ENCABEZADO = 'DCEBF5';
+    const COLOR_ETIQUETA = 'F3F6F8';
+    const COLOR_BORDE = '7F8C99';
+    const COLOR_TEXTO = '1F2937';
+    const COLOR_SUAVE = '64748B';
+    const SIN_BORDES = {
+      top: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+      bottom: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+      left: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+      right: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+      insideHorizontal: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' },
+      insideVertical: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }
+    };
+    const BORDES_TABLA = {
+      top: { style: BorderStyle.SINGLE, size: 5, color: COLOR_BORDE },
+      bottom: { style: BorderStyle.SINGLE, size: 5, color: COLOR_BORDE },
+      left: { style: BorderStyle.SINGLE, size: 5, color: COLOR_BORDE },
+      right: { style: BorderStyle.SINGLE, size: 5, color: COLOR_BORDE },
+      insideHorizontal: { style: BorderStyle.SINGLE, size: 4, color: COLOR_BORDE },
+      insideVertical: { style: BorderStyle.SINGLE, size: 4, color: COLOR_BORDE }
+    };
 
     const documentoHTML = new DOMParser().parseFromString(String(html || ''), 'text/html');
     documentoHTML.querySelectorAll('script,style,button,input,select,textarea,noscript').forEach(n => n.remove());
 
-    const limpiar = texto => String(texto || '').replace(/\s+/g, ' ').trim();
+    const limpiar = texto => String(texto || '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+    const esClase = (nodo, clase) => Boolean(nodo?.classList?.contains(clase));
 
-    async function datosImagen(src) {
+    function bytesBase64(base64) {
+      const binario = atob(String(base64 || '').replace(/\s+/g, ''));
+      const bytes = new Uint8Array(binario.length);
+      for (let i = 0; i < binario.length; i += 1) bytes[i] = binario.charCodeAt(i);
+      return bytes;
+    }
+
+    async function imagenComoJpeg(src, maxAncho = 520, maxAlto = 680) {
       if (!src) return null;
       try {
-        const respuesta = await fetch(src);
-        const buffer = await respuesta.arrayBuffer();
-        const tipo = (respuesta.headers.get('content-type') || '').toLowerCase();
-        let extension = 'png';
-        if (tipo.includes('jpeg') || /^data:image\/jpeg/i.test(src)) extension = 'jpg';
-        if (tipo.includes('gif') || /^data:image\/gif/i.test(src)) extension = 'gif';
-        if (tipo.includes('webp') || /^data:image\/webp/i.test(src)) extension = 'webp';
-
-        const medida = await new Promise(resolve => {
+        const imagen = await new Promise((resolve, reject) => {
           const img = new Image();
-          img.onload = () => resolve({ ancho: img.naturalWidth || 640, alto: img.naturalHeight || 360 });
-          img.onerror = () => resolve({ ancho: 640, alto: 360 });
+          img.onload = () => resolve(img);
+          img.onerror = reject;
           img.src = src;
         });
-
-        const maxAncho = 520;
-        const maxAlto = 680;
-        const escala = Math.min(1, maxAncho / medida.ancho, maxAlto / medida.alto);
+        const anchoNatural = Math.max(1, imagen.naturalWidth || imagen.width || 640);
+        const altoNatural = Math.max(1, imagen.naturalHeight || imagen.height || 360);
+        const escala = Math.min(1, maxAncho / anchoNatural, maxAlto / altoNatural);
+        const ancho = Math.max(1, Math.round(anchoNatural * escala));
+        const alto = Math.max(1, Math.round(altoNatural * escala));
+        const canvas = document.createElement('canvas');
+        canvas.width = ancho;
+        canvas.height = alto;
+        const contexto = canvas.getContext('2d');
+        contexto.fillStyle = '#ffffff';
+        contexto.fillRect(0, 0, ancho, alto);
+        contexto.drawImage(imagen, 0, 0, ancho, alto);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
         return {
-          data: new Uint8Array(buffer),
-          type: extension,
-          width: Math.max(40, Math.round(medida.ancho * escala)),
-          height: Math.max(25, Math.round(medida.alto * escala))
+          data: bytesBase64(dataUrl.split(',')[1]),
+          type: 'jpg',
+          width: ancho,
+          height: alto
         };
-      } catch (error) {
-        console.warn('No fue posible incorporar una imagen al DOCX:', error);
-        return null;
+      }
+      catch (error) {
+        try {
+          const coincidencia = String(src).match(/^data:image\/(png|jpe?g|gif|bmp);base64,(.+)$/i);
+          if (!coincidencia) throw error;
+          const tipo = coincidencia[1].toLowerCase().replace('jpeg', 'jpg');
+          return { data: bytesBase64(coincidencia[2]), type: tipo, width: maxAncho, height: maxAlto };
+        }
+        catch (segundoError) {
+          console.warn('No fue posible incorporar una imagen al DOCX:', segundoError);
+          return null;
+        }
       }
     }
 
-    async function parrafosElemento(elemento) {
-      const salida = [];
-      const imagenes = [...elemento.querySelectorAll(':scope > img')];
-      for (const img of imagenes) {
-        const info = await datosImagen(img.getAttribute('src'));
-        if (info) {
-          salida.push(new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [new ImageRun({ data: info.data, transformation: { width: info.width, height: info.height }, type: info.type })]
-          }));
-        }
-      }
+    function dimensionesImagen(img) {
+      const contenedor = img.closest('.logo,.foto-marco,.firma-img,.anexo-vista');
+      if (contenedor?.classList.contains('logo')) return { ancho: 82, alto: 82 };
+      if (contenedor?.classList.contains('foto-marco')) return { ancho: 295, alto: 176 };
+      if (contenedor?.classList.contains('firma-img')) return { ancho: 180, alto: 86 };
+      if (contenedor?.classList.contains('anexo-vista')) return { ancho: 500, alto: 340 };
+      const anchoAttr = Number(img.getAttribute('width') || 0);
+      const altoAttr = Number(img.getAttribute('height') || 0);
+      return {
+        ancho: anchoAttr > 0 ? Math.min(anchoAttr, 520) : 440,
+        alto: altoAttr > 0 ? Math.min(altoAttr, 680) : 300
+      };
+    }
 
-      const texto = limpiar([...elemento.childNodes]
-        .filter(n => n.nodeType === Node.TEXT_NODE || (n.nodeType === Node.ELEMENT_NODE && n.tagName !== 'IMG' && !['TABLE','DIV','SECTION'].includes(n.tagName)))
-        .map(n => n.textContent || '').join(' '));
-      if (texto) salida.push(new Paragraph({ children: [new TextRun(texto)] }));
-      return salida;
+    async function parrafoImagen(img) {
+      const objetivo = dimensionesImagen(img);
+      const info = await imagenComoJpeg(img.getAttribute('src'), objetivo.ancho, objetivo.alto);
+      if (!info) return null;
+      const escala = Math.min(1, objetivo.ancho / info.width, objetivo.alto / info.height);
+      return new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 40, after: 40 },
+        children: [new ImageRun({
+          data: info.data,
+          type: info.type,
+          transformation: {
+            width: Math.max(10, Math.round(info.width * escala)),
+            height: Math.max(10, Math.round(info.height * escala))
+          }
+        })]
+      });
+    }
+
+    function ejecutarEstiloInline(nodo, heredado = {}) {
+      const tag = nodo?.nodeType === Node.ELEMENT_NODE ? nodo.tagName : '';
+      return {
+        bold: heredado.bold || tag === 'STRONG' || tag === 'B',
+        italics: heredado.italics || tag === 'EM' || tag === 'I',
+        underline: heredado.underline || tag === 'U' ? {} : undefined,
+        color: heredado.color || undefined
+      };
+    }
+
+    function runsDesdeNodo(nodo, estilo = {}) {
+      const runs = [];
+      if (!nodo) return runs;
+      if (nodo.nodeType === Node.TEXT_NODE) {
+        const texto = String(nodo.nodeValue || '').replace(/\s+/g, ' ');
+        if (texto.trim()) runs.push(new TextRun({ text: texto, ...estilo }));
+        return runs;
+      }
+      if (nodo.nodeType !== Node.ELEMENT_NODE || nodo.tagName === 'IMG') return runs;
+      const estiloActual = ejecutarEstiloInline(nodo, estilo);
+      [...nodo.childNodes].forEach(hijo => runs.push(...runsDesdeNodo(hijo, estiloActual)));
+      return runs;
+    }
+
+    function parrafoTexto(nodo, opciones = {}) {
+      const runs = runsDesdeNodo(nodo);
+      const texto = limpiar(nodo?.textContent || '');
+      if (!runs.length && texto) runs.push(new TextRun(texto));
+      return new Paragraph({
+        alignment: opciones.alignment,
+        bullet: opciones.bullet,
+        spacing: opciones.spacing || { before: 0, after: 60, line: 276 },
+        keepNext: Boolean(opciones.keepNext),
+        pageBreakBefore: Boolean(opciones.pageBreakBefore),
+        border: opciones.border,
+        shading: opciones.shading,
+        indent: opciones.indent,
+        children: runs.length ? runs : [new TextRun('')]
+      });
+    }
+
+    function encabezadoSeccion(texto) {
+      return new Paragraph({
+        keepNext: true,
+        spacing: { before: 170, after: 80 },
+        border: {
+          top: { style: BorderStyle.SINGLE, size: 5, color: '9FB7C8' },
+          bottom: { style: BorderStyle.SINGLE, size: 5, color: '9FB7C8' },
+          left: { style: BorderStyle.SINGLE, size: 5, color: '9FB7C8' },
+          right: { style: BorderStyle.SINGLE, size: 5, color: '9FB7C8' }
+        },
+        shading: { type: ShadingType.CLEAR, fill: COLOR_AZUL_CLARO, color: 'auto' },
+        indent: { left: 90, right: 90 },
+        children: [new TextRun({ text: limpiar(texto), bold: true, size: 23, color: COLOR_AZUL, font: 'Arial' })]
+      });
+    }
+
+    function filasDirectas(tabla) {
+      const filas = [];
+      [...tabla.children].forEach(hijo => {
+        if (hijo.tagName === 'TR') filas.push(hijo);
+        else if (hijo.tagName === 'THEAD' || hijo.tagName === 'TBODY' || hijo.tagName === 'TFOOT') {
+          [...hijo.children].forEach(tr => { if (tr.tagName === 'TR') filas.push(tr); });
+        }
+      });
+      return filas;
+    }
+
+    async function bloquesCelda(celda) {
+      const bloques = [];
+      const hijos = [...celda.childNodes];
+      for (const hijo of hijos) {
+        if (hijo.nodeType === Node.TEXT_NODE) {
+          const texto = limpiar(hijo.nodeValue);
+          if (texto) bloques.push(new Paragraph({ spacing: { after: 40 }, children: [new TextRun(texto)] }));
+          continue;
+        }
+        if (hijo.nodeType !== Node.ELEMENT_NODE) continue;
+        if (hijo.tagName === 'IMG') {
+          const p = await parrafoImagen(hijo);
+          if (p) bloques.push(p);
+          continue;
+        }
+        if (hijo.tagName === 'TABLE') {
+          const tabla = await convertirTabla(hijo);
+          if (tabla) bloques.push(tabla);
+          continue;
+        }
+        const imgs = [...hijo.querySelectorAll('img')];
+        if (imgs.length) {
+          for (const img of imgs) {
+            const p = await parrafoImagen(img);
+            if (p) bloques.push(p);
+          }
+          const clones = hijo.cloneNode(true);
+          clones.querySelectorAll('img').forEach(img => img.remove());
+          const texto = limpiar(clones.textContent);
+          if (texto) bloques.push(new Paragraph({ spacing: { before: 30, after: 50 }, children: [new TextRun(texto)] }));
+          continue;
+        }
+        if (['P','DIV','SPAN','STRONG','EM','B','I','U','LI'].includes(hijo.tagName)) {
+          const texto = limpiar(hijo.textContent);
+          if (texto) {
+            if (esClase(hijo, 'titulo')) {
+              bloques.push(new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { before: 20, after: 35 },
+                children: [new TextRun({ text: texto, bold: true, color: COLOR_AZUL, size: 30, font: 'Arial' })]
+              }));
+            }
+            else if (esClase(hijo, 'empresa')) {
+              bloques.push(new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { before: 0, after: 25 },
+                children: [new TextRun({ text: texto, bold: true, size: 18, font: 'Arial' })]
+              }));
+            }
+            else if (esClase(hijo, 'cargo')) {
+              bloques.push(new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { before: 0, after: 15 },
+                children: [new TextRun({ text: texto, bold: true, size: 18, font: 'Arial' })]
+              }));
+            }
+            else if (esClase(hijo, 'nombre') || esClase(hijo, 'foto-pie') || esClase(hijo, 'anexo-pie')) {
+              bloques.push(new Paragraph({
+                alignment: esClase(hijo, 'nombre') ? AlignmentType.CENTER : undefined,
+                spacing: { before: 25, after: 25 },
+                children: [new TextRun({ text: texto, size: esClase(hijo, 'nombre') ? 17 : 16, font: 'Arial' })]
+              }));
+            }
+            else if (esClase(hijo, 'firma-linea')) {
+              bloques.push(new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { before: 20, after: 15 },
+                border: { top: { style: BorderStyle.SINGLE, size: 5, color: '111111' } },
+                children: [new TextRun('')]
+              }));
+            }
+            else if (esClase(hijo, 'sin-datos')) {
+              bloques.push(new Paragraph({
+                spacing: { before: 0, after: 50 },
+                children: [new TextRun({ text: texto, italics: true, color: COLOR_SUAVE, size: 17 })]
+              }));
+            }
+            else {
+              bloques.push(parrafoTexto(hijo, { bullet: hijo.tagName === 'LI' ? { level: 0 } : undefined }));
+            }
+          }
+          continue;
+        }
+        const texto = limpiar(hijo.textContent);
+        if (texto) bloques.push(new Paragraph({ spacing: { after: 40 }, children: [new TextRun(texto)] }));
+      }
+      if (!bloques.length) bloques.push(new Paragraph(''));
+      return bloques;
+    }
+
+    function anchoCelda(celda, totalCeldas) {
+      if (esClase(celda, 'logo')) return 20;
+      if (esClase(celda, 'meta')) return 25;
+      if (esClase(celda, 'etiqueta')) return 28;
+      if (esClase(celda, 'foto-celda')) return 50;
+      const colspan = Math.max(1, Number(celda.getAttribute('colspan') || 1));
+      return Math.min(100, Math.round((100 / Math.max(1, totalCeldas)) * colspan));
     }
 
     async function convertirTabla(tabla) {
+      const filasHTML = filasDirectas(tabla);
       const filas = [];
-      for (const tr of [...tabla.querySelectorAll(':scope > thead > tr, :scope > tbody > tr, :scope > tr')]) {
+      const tablaFirmas = esClase(tabla, 'firmas');
+      const tablaRotulo = esClase(tabla, 'rotulo');
+      const tablaGaleria = esClase(tabla, 'galeria');
+
+      for (const tr of filasHTML) {
+        const celdasHTML = [...tr.children].filter(x => ['TD','TH'].includes(x.tagName));
         const celdas = [];
-        for (const td of [...tr.children].filter(x => ['TD','TH'].includes(x.tagName))) {
-          const contenido = [];
-          for (const img of [...td.querySelectorAll('img')]) {
-            const info = await datosImagen(img.getAttribute('src'));
-            if (info) contenido.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: info.data, transformation: { width: Math.min(info.width, 220), height: Math.min(info.height, 220) }, type: info.type })] }));
-          }
-          const texto = limpiar(td.innerText || td.textContent);
-          if (texto) contenido.push(new Paragraph({ children: [new TextRun({ text: texto, bold: td.tagName === 'TH' })] }));
-          if (!contenido.length) contenido.push(new Paragraph(''));
-          celdas.push(new TableCell({ children: contenido }));
+        for (const celda of celdasHTML) {
+          const esCabecera = celda.tagName === 'TH';
+          const esEtiqueta = esClase(celda, 'etiqueta');
+          const esLogo = esClase(celda, 'logo');
+          const esMeta = esClase(celda, 'meta');
+          const contenido = await bloquesCelda(celda);
+          const relleno = esCabecera ? COLOR_ENCABEZADO : (esEtiqueta ? COLOR_ETIQUETA : 'FFFFFF');
+          const opciones = {
+            children: contenido,
+            width: { size: anchoCelda(celda, celdasHTML.length), type: WidthType.PERCENTAGE },
+            columnSpan: Math.max(1, Number(celda.getAttribute('colspan') || 1)),
+            rowSpan: Math.max(1, Number(celda.getAttribute('rowspan') || 1)),
+            verticalAlign: esLogo || esMeta ? VerticalAlign.CENTER : VerticalAlign.TOP,
+            margins: { top: 70, bottom: 70, left: 90, right: 90 },
+            shading: { type: ShadingType.CLEAR, fill: relleno, color: 'auto' },
+            borders: tablaFirmas ? SIN_BORDES : BORDES_TABLA
+          };
+          celdas.push(new TableCell(opciones));
         }
-        if (celdas.length) filas.push(new TableRow({ children: celdas }));
+        if (celdas.length) filas.push(new TableRow({ children: celdas, cantSplit: true }));
       }
-      return filas.length ? new Table({ width: { size: 100, type: WidthType.PERCENTAGE }, rows: filas }) : null;
+      if (!filas.length) return null;
+      return new Table({
+        width: { size: 100, type: WidthType.PERCENTAGE },
+        layout: TableLayoutType.FIXED,
+        borders: tablaFirmas ? SIN_BORDES : BORDES_TABLA,
+        rows: filas,
+        alignment: AlignmentType.CENTER,
+        style: tablaRotulo || tablaGaleria ? undefined : undefined
+      });
     }
 
     async function procesarNodo(nodo, salida) {
-      if (!nodo || nodo.nodeType !== Node.ELEMENT_NODE) return;
+      if (!nodo) return;
+      if (nodo.nodeType === Node.TEXT_NODE) {
+        const texto = limpiar(nodo.nodeValue);
+        if (texto) salida.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun(texto)] }));
+        return;
+      }
+      if (nodo.nodeType !== Node.ELEMENT_NODE) return;
       const tag = nodo.tagName;
 
-      if (tag === 'TABLE') {
-        const tabla = await convertirTabla(nodo);
-        if (tabla) salida.push(tabla, new Paragraph(''));
-        return;
-      }
-      if (tag === 'IMG') {
-        const info = await datosImagen(nodo.getAttribute('src'));
-        if (info) salida.push(new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: info.data, transformation: { width: info.width, height: info.height }, type: info.type })] }));
-        return;
-      }
-      if (/^H[1-6]$/.test(tag)) {
-        const niveles = { H1: HeadingLevel.TITLE, H2: HeadingLevel.HEADING_1, H3: HeadingLevel.HEADING_2, H4: HeadingLevel.HEADING_3 };
-        salida.push(new Paragraph({ heading: niveles[tag] || HeadingLevel.HEADING_3, children: [new TextRun(limpiar(nodo.innerText || nodo.textContent))] }));
-        return;
-      }
-      if (tag === 'P' || tag === 'LI') {
-        const texto = limpiar(nodo.innerText || nodo.textContent);
-        if (texto) salida.push(new Paragraph({ children: [new TextRun(texto)], bullet: tag === 'LI' ? { level: 0 } : undefined }));
-        return;
-      }
       if (nodo.classList?.contains('MsoNormal') && /page-break-before/i.test(nodo.getAttribute('style') || '')) {
         salida.push(new Paragraph({ children: [new PageBreak()] }));
         return;
       }
-
-      const hijos = [...nodo.children].filter(h => !['SCRIPT','STYLE'].includes(h.tagName));
-      if (hijos.length) {
-        for (const hijo of hijos) await procesarNodo(hijo, salida);
-      } else {
-        salida.push(...await parrafosElemento(nodo));
+      if (tag === 'TABLE') {
+        const tabla = await convertirTabla(nodo);
+        if (tabla) salida.push(tabla, new Paragraph({ spacing: { after: 60 }, children: [new TextRun('')] }));
+        return;
       }
+      if (tag === 'IMG') {
+        const p = await parrafoImagen(nodo);
+        if (p) salida.push(p);
+        return;
+      }
+      if (tag === 'H2') {
+        salida.push(encabezadoSeccion(nodo.textContent));
+        return;
+      }
+      if (/^H[1-6]$/.test(tag)) {
+        salida.push(new Paragraph({
+          keepNext: true,
+          spacing: { before: 150, after: 80 },
+          children: [new TextRun({ text: limpiar(nodo.textContent), bold: true, color: COLOR_AZUL, size: tag === 'H1' ? 30 : 22 })]
+        }));
+        return;
+      }
+      if (tag === 'P' || tag === 'LI') {
+        salida.push(parrafoTexto(nodo, { bullet: tag === 'LI' ? { level: 0 } : undefined }));
+        return;
+      }
+      if (esClase(nodo, 'anotacion')) {
+        const hijos = [...nodo.children];
+        if (!hijos.length) {
+          const texto = limpiar(nodo.textContent);
+          if (texto) salida.push(new Paragraph({ spacing: { after: 60 }, children: [new TextRun(texto)] }));
+        } else {
+          for (const hijo of hijos) await procesarNodo(hijo, salida);
+        }
+        return;
+      }
+      if (esClase(nodo, 'pie')) {
+        salida.push(new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { before: 120, after: 0 },
+          border: { top: { style: BorderStyle.SINGLE, size: 4, color: '9CA3AF' } },
+          children: [new TextRun({ text: limpiar(nodo.textContent), color: COLOR_SUAVE, size: 15 })]
+        }));
+        return;
+      }
+
+      for (const hijo of [...nodo.childNodes]) await procesarNodo(hijo, salida);
     }
 
     const elementos = [];
-    for (const nodo of [...documentoHTML.body.children]) await procesarNodo(nodo, elementos);
+    for (const nodo of [...documentoHTML.body.childNodes]) await procesarNodo(nodo, elementos);
     if (!elementos.length) elementos.push(new Paragraph('BITÁCORA DE OBRA'));
 
     const documento = new Document({
+      styles: {
+        default: {
+          document: {
+            run: { font: 'Arial', size: 19, color: COLOR_TEXTO },
+            paragraph: { spacing: { line: 276, after: 60 } }
+          }
+        }
+      },
       sections: [{
-        properties: { page: { margin: { top: 700, right: 700, bottom: 700, left: 700 } } },
+        properties: {
+          page: {
+            size: { width: 11906, height: 16838 },
+            margin: { top: 765, right: 765, bottom: 822, left: 765 }
+          }
+        },
         children: elementos
       }]
     });
 
     return Packer.toBlob(documento);
   }
+
 
   function construirWordMHTML(html = '') {
     const limite = `----=_BitacoraObra_${Date.now()}_${Math.random().toString(36).slice(2)}`;
