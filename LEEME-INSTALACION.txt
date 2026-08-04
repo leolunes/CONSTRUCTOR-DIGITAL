@@ -1,22 +1,32 @@
-PORTAL CORPORATIVO DEFINITIVO - CONSTRUCTOR DIGITAL
+CONSTRUCTOR DIGITAL - DOS PORTALES
 
-Este paquete reemplaza únicamente el antiguo index.html del portal "Ministerio Digital".
+Este paquete crea:
+1. Portal matriz en la raíz.
+2. Portal Ingeniería y Construcción en /constructor/
+3. Portal Ingeniería Espiritual en /espiritual/
 
-COPIAR A LA RAÍZ DE CONSTRUCTOR-DIGITAL:
-- index.html
-- css/constructor-digital.css
-- js/constructor-digital.js
-- assets/logo-constructor-digital.png
+COPIE A LA RAÍZ DEL REPOSITORIO CONSTRUCTOR-DIGITAL:
+- index.html (reemplace el portal anterior)
+- carpetas css, js, assets, constructor y espiritual
 
-No modifique ni reemplace la carpeta BITACORA-DE-OBRA.
+No modifique ni elimine:
+- BITACORA-DE-OBRA
+- las demás carpetas de aplicaciones
 
-Después ejecute:
+Luego ejecute:
 git add .
-git commit -m "Crear portal corporativo definitivo Constructor Digital"
+git commit -m "Crear portales Ingeniería y Construcción e Ingeniería Espiritual"
 git push
 
-Portal:
+Rutas:
+Portal matriz:
 https://leolunes.github.io/CONSTRUCTOR-DIGITAL/
 
-Bitácora:
+Ingeniería:
+https://leolunes.github.io/CONSTRUCTOR-DIGITAL/constructor/
+
+Espiritual:
+https://leolunes.github.io/CONSTRUCTOR-DIGITAL/espiritual/
+
+Bitácora directa:
 https://leolunes.github.io/CONSTRUCTOR-DIGITAL/BITACORA-DE-OBRA/

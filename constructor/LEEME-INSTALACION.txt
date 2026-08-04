@@ -1,0 +1,22 @@
+PORTAL CORPORATIVO DEFINITIVO - CONSTRUCTOR DIGITAL
+
+Este paquete reemplaza únicamente el antiguo index.html del portal "Ministerio Digital".
+
+COPIAR A LA RAÍZ DE CONSTRUCTOR-DIGITAL:
+- index.html
+- css/constructor-digital.css
+- js/constructor-digital.js
+- assets/logo-constructor-digital.png
+
+No modifique ni reemplace la carpeta BITACORA-DE-OBRA.
+
+Después ejecute:
+git add .
+git commit -m "Crear portal corporativo definitivo Constructor Digital"
+git push
+
+Portal:
+https://leolunes.github.io/CONSTRUCTOR-DIGITAL/
+
+Bitácora:
+https://leolunes.github.io/CONSTRUCTOR-DIGITAL/BITACORA-DE-OBRA/
