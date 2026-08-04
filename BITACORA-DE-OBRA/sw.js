@@ -1,10 +1,11 @@
 'use strict';
 
-const CACHE_VERSION = 'bitacora-obra-v1.72.0';
+const CACHE_VERSION = 'bitacora-obra-v1.73.0';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
+  './version.json',
   './app/',
   './app/index.html',
   './app/obras.html',
@@ -60,6 +61,13 @@ self.addEventListener('fetch', event => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  // version.json nunca se sirve desde caché: es el indicador confiable de
+  // nuevas versiones, especialmente para Safari en iPhone.
+  if (url.pathname.endsWith('/version.json')) {
+    event.respondWith(fetch(request, { cache: 'no-store' }));
+    return;
+  }
 
   // Navegación: red primero para publicar cambios inmediatamente; si no hay
   // conexión, usa la página exacta almacenada o la entrada principal.

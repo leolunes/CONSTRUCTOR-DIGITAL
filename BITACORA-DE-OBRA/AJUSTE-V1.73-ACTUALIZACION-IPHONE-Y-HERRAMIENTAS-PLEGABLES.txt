@@ -1,0 +1,7 @@
+BITÁCORA DE OBRA — AJUSTE v1.73
+
+1. Se agregó version.json consultado sin caché para detectar nuevas publicaciones en iPhone, iPad, Android y computador.
+2. El botón Actualizar ahora fuerza la limpieza exclusiva de cachés de la PWA cuando Safari no instala inmediatamente el Service Worker.
+3. En pantallas de hasta 640 px, la barra de herramientas inicia plegada y puede mostrarse u ocultarse con un botón.
+4. En iPad y computador se conserva la presentación actual.
+5. Se mantiene intacta la información guardada en IndexedDB/localStorage.

@@ -1,11 +1,13 @@
 'use strict';
 
 (() => {
-  const APP_VERSION = '1.72.0';
+  const APP_VERSION = '1.73.0';
+  const VERSION_URL = new URL('../version.json', document.baseURI).href;
   const UPDATE_CHECK_INTERVAL = 15 * 60 * 1000;
   let registroPwa = null;
   let recargaIniciada = false;
   let cambiosPendientes = false;
+  let versionPublicada = APP_VERSION;
 
   const crearEstilos = () => {
     if (document.getElementById('pwa-actualizacion-estilos')) return;
@@ -42,8 +44,21 @@
         .pwa-actualizacion__acciones { display: grid; grid-template-columns: 1fr 1fr; }
         .pwa-actualizacion__boton { width: 100%; }
       }
+      #pwa-toggle-herramientas { display:none; }
+      @media (max-width: 640px) {
+        #pwa-toggle-herramientas {
+          display:flex; align-items:center; justify-content:center; gap:8px;
+          width:calc(100% - 20px); margin:8px 10px; padding:10px 12px;
+          border:1px solid #b8c7d3; border-radius:9px;
+          background:#173b57; color:#fff; font-weight:800; font-size:15px;
+          box-shadow:0 2px 7px rgba(15,79,120,.18);
+        }
+        .barra-superior.herramientas-movil-ocultas .barra-herramientas { display:none !important; }
+        .barra-superior .barra-herramientas { max-height:72vh; overflow:auto; -webkit-overflow-scrolling:touch; }
+        .barra-superior .menu-principal { position:relative; z-index:2; }
+      }
       @media print {
-        #pwa-version-indicador, #pwa-actualizacion-aviso { display: none !important; }
+        #pwa-version-indicador, #pwa-actualizacion-aviso, #pwa-toggle-herramientas { display: none !important; }
       }
     `;
     document.head.appendChild(style);
@@ -80,7 +95,7 @@
         aviso.hidden = true;
       });
 
-      aviso.querySelector('#pwa-actualizar-ahora')?.addEventListener('click', () => {
+      aviso.querySelector('#pwa-actualizar-ahora')?.addEventListener('click', async () => {
         if (cambiosPendientes) {
           const continuar = window.confirm(
             'Hay información que podría no haberse guardado.\n\n' +
@@ -90,18 +105,34 @@
           if (!continuar) return;
         }
 
-        const worker = registroPwa?.waiting;
-        if (!worker) {
-          window.location.reload();
-          return;
-        }
-
         const boton = aviso.querySelector('#pwa-actualizar-ahora');
         if (boton) {
           boton.disabled = true;
           boton.textContent = 'Actualizando…';
         }
-        worker.postMessage({ type: 'SKIP_WAITING' });
+
+        try {
+          await registroPwa?.update();
+          await new Promise(resolve => setTimeout(resolve, 1200));
+          const worker = registroPwa?.waiting;
+          if (worker) {
+            worker.postMessage({ type: 'SKIP_WAITING' });
+            return;
+          }
+
+          // Respaldo específico para Safari/iPhone: elimina solo cachés de la app
+          // y recarga con un parámetro de versión para forzar archivos nuevos.
+          if ('caches' in window) {
+            const nombres = await caches.keys();
+            await Promise.all(nombres.filter(n => n.startsWith('bitacora-obra-')).map(n => caches.delete(n)));
+          }
+          const url = new URL(window.location.href);
+          url.searchParams.set('actualizacion', versionPublicada || Date.now());
+          window.location.replace(url.href);
+        } catch (error) {
+          console.warn('No fue posible completar la actualización:', error);
+          window.location.reload();
+        }
       });
     }
   };
@@ -110,6 +141,70 @@
     crearInterfaz();
     const aviso = document.getElementById('pwa-actualizacion-aviso');
     if (aviso) aviso.hidden = false;
+  };
+
+  const compararVersiones = (a, b) => {
+    const pa = String(a || '').split('.').map(n => Number.parseInt(n, 10) || 0);
+    const pb = String(b || '').split('.').map(n => Number.parseInt(n, 10) || 0);
+    for (let i = 0; i < Math.max(pa.length, pb.length); i += 1) {
+      if ((pa[i] || 0) > (pb[i] || 0)) return 1;
+      if ((pa[i] || 0) < (pb[i] || 0)) return -1;
+    }
+    return 0;
+  };
+
+  const consultarVersionPublicada = async () => {
+    try {
+      const url = new URL(VERSION_URL);
+      url.searchParams.set('_', Date.now().toString());
+      const respuesta = await fetch(url.href, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
+      if (!respuesta.ok) return false;
+      const datos = await respuesta.json();
+      versionPublicada = String(datos.version || '').trim() || APP_VERSION;
+      if (compararVersiones(versionPublicada, APP_VERSION) > 0) {
+        mostrarActualizacion();
+        registroPwa?.update().catch(() => {});
+        return true;
+      }
+    } catch (error) {
+      console.warn('No fue posible consultar version.json:', error);
+    }
+    return false;
+  };
+
+  const configurarHerramientasMoviles = () => {
+    const cabecera = document.querySelector('.barra-superior');
+    const herramientas = cabecera?.querySelector('.barra-herramientas');
+    if (!cabecera || !herramientas || document.getElementById('pwa-toggle-herramientas')) return;
+
+    const boton = document.createElement('button');
+    boton.type = 'button';
+    boton.id = 'pwa-toggle-herramientas';
+    boton.setAttribute('aria-controls', 'barra-herramientas-principal');
+    herramientas.id ||= 'barra-herramientas-principal';
+
+    const clave = 'bitacora-herramientas-movil-abiertas';
+    const esMovil = () => window.matchMedia('(max-width: 640px)').matches;
+    const aplicar = abierta => {
+      const ocultas = esMovil() && !abierta;
+      cabecera.classList.toggle('herramientas-movil-ocultas', ocultas);
+      boton.setAttribute('aria-expanded', String(!ocultas));
+      boton.textContent = ocultas ? '☰ Mostrar herramientas' : '✕ Ocultar herramientas';
+    };
+
+    let abiertas = false;
+    try { abiertas = localStorage.getItem(clave) === '1'; } catch (_) {}
+    aplicar(abiertas);
+    cabecera.insertBefore(boton, herramientas);
+
+    boton.addEventListener('click', () => {
+      abiertas = cabecera.classList.contains('herramientas-movil-ocultas');
+      aplicar(abiertas);
+      try { localStorage.setItem(clave, abiertas ? '1' : '0'); } catch (_) {}
+      if (abiertas) herramientas.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
+
+    window.addEventListener('resize', () => aplicar(abiertas), { passive: true });
   };
 
   const vigilarCambiosSinGuardar = () => {
@@ -143,7 +238,9 @@
 
   const iniciar = async () => {
     crearInterfaz();
+    configurarHerramientasMoviles();
     vigilarCambiosSinGuardar();
+    consultarVersionPublicada();
 
     if (!('serviceWorker' in navigator)) return;
     if (!/^https?:$/.test(window.location.protocol)) return;
@@ -179,9 +276,9 @@
       // Revisa al abrir, al regresar a la aplicación y periódicamente.
       registroPwa.update().catch(() => {});
       document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') registroPwa?.update().catch(() => {});
+        if (document.visibilityState === 'visible') { registroPwa?.update().catch(() => {}); consultarVersionPublicada(); }
       });
-      window.setInterval(() => registroPwa?.update().catch(() => {}), UPDATE_CHECK_INTERVAL);
+      window.setInterval(() => { registroPwa?.update().catch(() => {}); consultarVersionPublicada(); }, UPDATE_CHECK_INTERVAL);
     } catch (error) {
       console.warn('No fue posible registrar o actualizar la PWA:', error);
     }

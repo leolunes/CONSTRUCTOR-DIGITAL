@@ -220,3 +220,18 @@
   .barra-areas-plegables,.control-area-plegable{display:none!important}
   .area-plegable.area-minimizada > :not(.control-area-plegable){display:revert!important}
 }
+
+
+/* =========================================================
+   v1.73 — Barra de herramientas plegable en teléfonos
+   El punto de corte no afecta iPad (768 px o más).
+   ========================================================= */
+@media (max-width:640px){
+  .barra-superior{max-height:100dvh;overflow:visible}
+  .barra-superior .menu-principal{display:grid;grid-template-columns:repeat(4,1fr);padding:4px 6px;gap:2px}
+  .barra-superior .menu-principal button{min-width:0;padding:7px 3px;font-size:13px}
+  .barra-superior .barra-herramientas{display:grid;grid-template-columns:1fr;gap:8px;padding:8px 10px 12px}
+  .barra-superior .barra-herramientas .selector-obra-activa{width:100%;box-sizing:border-box}
+  .barra-superior .barra-herramientas button{width:100%;min-width:0;justify-content:center;box-sizing:border-box}
+  body{padding-bottom:max(42px,env(safe-area-inset-bottom))}
+}
