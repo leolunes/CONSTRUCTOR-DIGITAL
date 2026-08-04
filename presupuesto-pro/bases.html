@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Bases APU | Presupuesto PRO</title>
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <meta name="theme-color" content="#5b21b6"/>
+  <link rel="icon" href="assets/icon-192.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html" aria-label="Volver a proyectos">←</a>
+    <div class="logo" aria-hidden="true"><img src="assets/icon-192.svg" alt="" style="width:30px;height:30px;border-radius:10px"></div>
+    <div>
+      <div class="title">BASES APU</div>
+      <div class="subtitle">Administre varias bases sin reemplazar las anteriores</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a class="navbtn" href="proyectos.html">Ir a proyectos</a>
+    <button class="navbtn" id="btnImportBase" type="button">Importar nueva Base APU</button>
+    <input id="fileBase" type="file" accept=".xlsx,.xls" hidden>
+    <button class="navbtn" id="btnRefreshBases" type="button">Actualizar listado</button>
+    <button class="navbtn danger" id="btnDeleteAllBases" type="button">Eliminar todas</button>
+  </nav>
+</header>
+<main class="container">
+  <section class="hero">
+    <article class="hero-main">
+      <span class="hero-kicker">Biblioteca de Bases APU</span>
+      <h1>Conserve todas sus bases organizadas en un solo lugar</h1>
+      <p>Importe varias bases con el mismo formato XLSX que la aplicación ya reconoce. Cada base se guarda de forma independiente y puede utilizarse en diferentes proyectos.</p>
+      <div class="hero-actions">
+        <button class="btn primary" id="btnImportBaseHero" type="button">Importar nueva base</button>
+        <a class="btn" href="proyectos.html">Volver a proyectos</a>
+      </div>
+    </article>
+    <aside class="hero-side">
+      <div class="eyebrow">Base activa</div>
+      <h2>Seleccione la base general</h2>
+      <p>La base activa se usa como referencia general y como respaldo para proyectos antiguos.</p>
+      <button class="btn" id="btnRefreshBasesHero" type="button">Actualizar información</button>
+    </aside>
+  </section>
+
+  <section class="grid kpis" id="basesSummary"></section>
+  <section id="baseMessage" class="notice info" style="display:none"></section>
+
+  <section class="card">
+    <div class="cardhead">
+      <div class="row space">
+        <div>
+          <h2>Bases APU instaladas</h2>
+          <p class="muted small">Importar una nueva base no elimina ni reemplaza las anteriores.</p>
+        </div>
+        <button class="btn primary" id="btnImportBaseSecondary" type="button">+ Importar base</button>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table class="table" style="min-width:1180px">
+        <thead>
+          <tr>
+            <th>Base APU</th><th style="text-align:right">Ítems</th><th style="text-align:right">Insumos</th><th style="text-align:right">Costos directos</th><th style="text-align:right">Subproductos</th><th>Importada</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="basesBody"></tbody>
+      </table>
+    </div>
+    <div class="muted" id="basesEmpty" style="display:none;margin-top:12px">No hay Bases APU instaladas.</div>
+  </section>
+
+  <section class="feature-grid">
+    <article class="feature-card"><div class="feature-icon">📥</div><h3>Importar varias bases</h3><p>Todas pueden conservar el mismo formato XLSX que la aplicación ya reconoce.</p></article>
+    <article class="feature-card"><div class="feature-icon">✅</div><h3>Seleccionar base activa</h3><p>Defina cuál base se usará como referencia general de la aplicación.</p></article>
+    <article class="feature-card"><div class="feature-icon">🗂️</div><h3>Conservar cada base</h3><p>Cada importación queda almacenada de forma independiente en IndexedDB.</p></article>
+    <article class="feature-card"><div class="feature-icon">🏗️</div><h3>Crear proyectos independientes</h3><p>Cada proyecto puede quedar vinculado a una base distinta.</p></article>
+  </section>
+</main>
+<script src="js/ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/base-import.js"></script>
+<script src="js/bases.js"></script>
+<script>
+  document.getElementById("btnImportBaseHero")?.addEventListener("click", function(){document.getElementById("btnImportBase")?.click();});
+  document.getElementById("btnImportBaseSecondary")?.addEventListener("click", function(){document.getElementById("btnImportBase")?.click();});
+  document.getElementById("btnRefreshBasesHero")?.addEventListener("click", function(){document.getElementById("btnRefreshBases")?.click();});
+</script>
+</body>
+</html>

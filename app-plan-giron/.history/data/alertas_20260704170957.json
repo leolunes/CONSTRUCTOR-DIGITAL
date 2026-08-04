@@ -1,0 +1,233 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion":"Sistema de alertas estratégicas del Plan de Desarrollo Municipal. Este archivo permite que la aplicación identifique automáticamente temas críticos para seguimiento, control político, formulación de propuestas y análisis de riesgos.",
+
+  "niveles":[
+
+    {
+      "codigo":"ALTA",
+      "color":"Rojo",
+      "descripcion":"Requiere atención inmediata."
+    },
+
+    {
+      "codigo":"MEDIA",
+      "color":"Amarillo",
+      "descripcion":"Debe monitorearse permanentemente."
+    },
+
+    {
+      "codigo":"BAJA",
+      "color":"Verde",
+      "descripcion":"Situación estable con seguimiento normal."
+    }
+
+  ],
+
+  "alertas":[
+
+    {
+
+      "id":"ALT-001",
+
+      "categoria":"Presupuesto",
+
+      "titulo":"Baja ejecución presupuestal",
+
+      "nivel":"ALTA",
+
+      "descripcion":"Cuando un sector presenta baja ejecución frente a la programación financiera.",
+
+      "preguntasIA":[
+
+        "¿Por qué el sector presenta baja ejecución?",
+
+        "¿Qué proyectos están retrasados?",
+
+        "¿Qué impacto tiene sobre las metas?"
+
+      ]
+
+    },
+
+    {
+
+      "id":"ALT-002",
+
+      "categoria":"Metas",
+
+      "titulo":"Metas con bajo cumplimiento",
+
+      "nivel":"ALTA",
+
+      "descripcion":"Metas cuyo avance sea inferior al esperado.",
+
+      "preguntasIA":[
+
+        "¿Qué metas presentan retraso?",
+
+        "¿Qué dependencia es responsable?",
+
+        "¿Qué acciones correctivas pueden implementarse?"
+
+      ]
+
+    },
+
+    {
+
+      "id":"ALT-003",
+
+      "categoria":"Indicadores",
+
+      "titulo":"Indicadores críticos",
+
+      "nivel":"ALTA",
+
+      "descripcion":"Indicadores cuyo comportamiento refleja deterioro o incumplimiento.",
+
+      "preguntasIA":[
+
+        "¿Qué indicador empeoró?",
+
+        "¿Cuál es la tendencia?",
+
+        "¿Qué sectores afecta?"
+
+      ]
+
+    },
+
+    {
+
+      "id":"ALT-004",
+
+      "categoria":"Proyectos",
+
+      "titulo":"Proyecto estratégico retrasado",
+
+      "nivel":"ALTA",
+
+      "descripcion":"Proyecto priorizado con retraso en ejecución física o financiera."
+
+    },
+
+    {
+
+      "id":"ALT-005",
+
+      "categoria":"Infraestructura",
+
+      "titulo":"Obra prioritaria sin iniciar",
+
+      "nivel":"MEDIA",
+
+      "descripcion":"Obras contempladas en el Plan sin inicio de ejecución."
+
+    },
+
+    {
+
+      "id":"ALT-006",
+
+      "categoria":"Ambiente",
+
+      "titulo":"Riesgo ambiental",
+
+      "nivel":"MEDIA",
+
+      "descripcion":"Situaciones relacionadas con recursos hídricos, cambio climático o zonas de riesgo."
+
+    },
+
+    {
+
+      "id":"ALT-007",
+
+      "categoria":"Movilidad",
+
+      "titulo":"Congestión vial",
+
+      "nivel":"MEDIA",
+
+      "descripcion":"Incremento de problemas de movilidad urbana."
+
+    },
+
+    {
+
+      "id":"ALT-008",
+
+      "categoria":"Control Político",
+
+      "titulo":"Sector sin avance significativo",
+
+      "nivel":"ALTA",
+
+      "descripcion":"Sectores que mantienen bajos niveles de cumplimiento durante varias vigencias."
+
+    },
+
+    {
+
+      "id":"ALT-009",
+
+      "categoria":"Planeación",
+
+      "titulo":"Desviación entre metas e indicadores",
+
+      "nivel":"MEDIA",
+
+      "descripcion":"Cuando los indicadores no reflejan el cumplimiento esperado de las metas."
+
+    },
+
+    {
+
+      "id":"ALT-010",
+
+      "categoria":"Gestión",
+
+      "titulo":"Riesgo institucional",
+
+      "nivel":"MEDIA",
+
+      "descripcion":"Situaciones que afectan la capacidad administrativa para ejecutar el Plan."
+
+    }
+
+  ],
+
+  "consultasIA":[
+
+    "¿Qué alertas tiene actualmente el municipio?",
+
+    "¿Qué sectores requieren atención inmediata?",
+
+    "¿Qué proyectos deberían revisarse primero?",
+
+    "¿Qué alertas debe conocer un concejal?",
+
+    "¿Qué alertas debería atender el alcalde?"
+
+  ],
+
+  "usoApp":[
+
+    "Dashboard Ejecutivo",
+
+    "Semáforos",
+
+    "Alertas automáticas",
+
+    "Control político",
+
+    "Seguimiento del Plan",
+
+    "Inteligencia Artificial"
+
+  ]
+}

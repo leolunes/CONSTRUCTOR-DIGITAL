@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Indicadores - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+<h1>Indicadores Municipales</h1>
+<p>Cifras clave para seguimiento, control político y análisis del Plan.</p>
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>Seleccione un sector</h2>
+
+<select id="selectorSectorIndicadores" onchange="cargarIndicadores()">
+<option value="">Seleccione un sector</option>
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Indicadores del sector</h2>
+
+<div id="contenedorIndicadores">
+<p class="texto-suave">Seleccione un sector para consultar sus indicadores.</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Consulta Inteligente</h2>
+
+<textarea
+id="preguntaIndicadoresIA"
+placeholder="Ejemplo: ¿Qué indicadores debe revisar un concejal en salud?">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaIndicadoresIA','respuestaIndicadoresIA')">
+Consultar IA
+</button>
+
+<div id="respuestaIndicadoresIA"></div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="buscador.html">Buscar</a>
+<a href="presupuesto.html">Presupuesto</a>
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ia.js"></script>
+
+<script>
+function cargarSelectIndicadores() {
+    const select = document.getElementById("selectorSectorIndicadores");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!select || !base.sectores || !base.sectores.sectores) return;
+
+    base.sectores.sectores.forEach(sector => {
+        const option = document.createElement("option");
+        option.value = sector.id;
+        option.textContent = sector.nombre;
+        select.appendChild(option);
+    });
+}
+
+function cargarIndicadores() {
+    const sectorId = document.getElementById("selectorSectorIndicadores").value;
+    const contenedor = document.getElementById("contenedorIndicadores");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!sectorId) {
+        contenedor.innerHTML = "<p class='texto-suave'>Seleccione un sector para consultar indicadores.</p>";
+        return;
+    }
+
+    const bloque = base.indicadores.sectores.find(item => item.sectorId === sectorId);
+
+    if (!bloque || !bloque.indicadores || bloque.indicadores.length === 0) {
+        contenedor.innerHTML = "<p class='texto-suave'>No hay indicadores registrados para este sector.</p>";
+        return;
+    }
+
+    contenedor.innerHTML = bloque.indicadores.map(indicador => `
+        <div class="indicador">
+            <h4>${indicador.nombre}</h4>
+            <p><strong>Tipo:</strong> ${indicador.tipo || "No especificado"}</p>
+            <p><strong>Unidad:</strong> ${indicador.unidad || "No especificada"}</p>
+            <p class="texto-suave">${indicador.descripcion || ""}</p>
+        </div>
+    `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cargarSelectIndicadores, 700);
+});
+</script>
+
+</body>
+
+</html>

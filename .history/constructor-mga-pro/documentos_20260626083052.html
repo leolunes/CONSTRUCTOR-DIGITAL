@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Documentos MGA | Constructor MGA Pro</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Documentos MGA</div>
+      <div class="subtitle" id="documentosSub">Textos listos para copiar en MGA Web</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnMGA" href="#">Integración MGA</a>
+    <a class="navbtn" id="btnDiagnostico" href="#">Diagnóstico</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <button class="navbtn primary" id="btnGenerarDocumentos" type="button">Generar textos</button>
+  </nav>
+</header>
+
+<main class="container">
+
+<section class="card">
+  <div class="cardhead">
+    <h2>Generador de textos MGA</h2>
+    <p class="muted small">
+      Este módulo consolida la información formulada y genera textos base para copiar en la plataforma MGA Web.
+    </p>
+  </div>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Descripción del problema</h2>
+  </div>
+  <textarea id="txtDescripcionProblema" rows="8"></textarea>
+  <button class="btn" data-copy="txtDescripcionProblema" type="button">Copiar</button>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Justificación</h2>
+  </div>
+  <textarea id="txtJustificacion" rows="8"></textarea>
+  <button class="btn" data-copy="txtJustificacion" type="button">Copiar</button>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Objetivo general</h2>
+  </div>
+  <textarea id="txtObjetivoGeneral" rows="5"></textarea>
+  <button class="btn" data-copy="txtObjetivoGeneral" type="button">Copiar</button>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Análisis de alternativas</h2>
+  </div>
+  <textarea id="txtAlternativas" rows="8"></textarea>
+  <button class="btn" data-copy="txtAlternativas" type="button">Copiar</button>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Beneficios esperados</h2>
+  </div>
+  <textarea id="txtBeneficios" rows="8"></textarea>
+  <button class="btn" data-copy="txtBeneficios" type="button">Copiar</button>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Sostenibilidad</h2>
+  </div>
+  <textarea id="txtSostenibilidad" rows="8"></textarea>
+  <button class="btn" data-copy="txtSostenibilidad" type="button">Copiar</button>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Texto consolidado</h2>
+  </div>
+  <textarea id="txtConsolidado" rows="16"></textarea>
+  <button class="btn primary" data-copy="txtConsolidado" type="button">Copiar consolidado</button>
+</section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/documentos.js"></script>
+
+</body>
+</html>

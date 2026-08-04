@@ -1,0 +1,85 @@
+/* =====================================
+   REPORTE EJECUTIVO MGA
+   ===================================== */
+
+.reporte-ejecutivo-mga-card{
+  background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+  border:1px solid var(--border,#1f2937);
+  border-radius:18px;
+  padding:16px;
+  color:var(--text,#e5e7eb);
+}
+
+.reporte-head{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:14px;
+}
+
+.reporte-head h2{
+  margin:0 0 6px 0;
+  font-size:18px;
+}
+
+.reporte-head p{
+  margin:0;
+  color:var(--muted,#9ca3af);
+  font-size:13px;
+}
+
+.reporte-kpis{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.reporte-kpis div{
+  padding:12px;
+  border-radius:14px;
+  background:#0b1220;
+  border:1px solid var(--border,#1f2937);
+}
+
+.reporte-kpis strong{
+  display:block;
+  font-size:19px;
+}
+
+.reporte-kpis span{
+  display:block;
+  color:var(--muted,#9ca3af);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.reporte-bloque{
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--border,#1f2937);
+  background:#0b1220;
+  margin-top:12px;
+}
+
+.reporte-bloque h3{
+  margin:0 0 8px 0;
+  font-size:15px;
+}
+
+.reporte-bloque p{
+  margin:6px 0;
+}
+
+#txtReporteEjecutivoMGA{
+  width:100%;
+  min-height:260px;
+  margin-top:14px;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@media(max-width:900px){
+  .reporte-head{flex-direction:column}
+  .reporte-kpis{grid-template-columns:1fr}
+}

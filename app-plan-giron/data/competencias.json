@@ -1,0 +1,119 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Competencias estratégicas del Concejo Municipal, la Alcaldía y las dependencias municipales frente al Plan de Desarrollo.",
+
+  "competencias": [
+    {
+      "actor": "Concejo Municipal",
+      "tipo": "Corporación pública territorial",
+      "competenciasGenerales": [
+        "Ejercer control político sobre la Administración Municipal.",
+        "Aprobar el Plan de Desarrollo Municipal.",
+        "Aprobar el presupuesto municipal.",
+        "Solicitar informes a las secretarías y entidades descentralizadas.",
+        "Verificar el cumplimiento de metas, programas y proyectos.",
+        "Promover debates sobre problemáticas municipales.",
+        "Representar los intereses de la comunidad."
+      ]
+    },
+    {
+      "actor": "Alcalde Municipal",
+      "tipo": "Primera autoridad administrativa del municipio",
+      "competenciasGenerales": [
+        "Dirigir la administración municipal.",
+        "Ejecutar el Plan de Desarrollo.",
+        "Presentar proyectos de acuerdo al Concejo.",
+        "Coordinar las secretarías municipales.",
+        "Gestionar recursos ante entidades departamentales y nacionales.",
+        "Garantizar la prestación de servicios a cargo del municipio.",
+        "Rendir cuentas a la ciudadanía."
+      ]
+    },
+    {
+      "actor": "Secretarías Municipales",
+      "tipo": "Dependencias ejecutoras",
+      "competenciasGenerales": [
+        "Formular planes de acción sectoriales.",
+        "Ejecutar programas y proyectos del Plan de Desarrollo.",
+        "Reportar avances físicos y financieros.",
+        "Atender requerimientos de control político.",
+        "Coordinar acciones con entidades públicas y privadas.",
+        "Producir información técnica para seguimiento."
+      ]
+    }
+  ],
+
+  "competenciasPorSector": [
+    {
+      "sectorId": "salud-proteccion-social",
+      "sector": "Salud",
+      "concejo": [
+        "Solicitar informes sobre salud pública, vacunación y aseguramiento.",
+        "Citar debates sobre atención a población vulnerable.",
+        "Verificar la ejecución presupuestal del sector salud."
+      ],
+      "alcaldia": [
+        "Dirigir la política local de salud.",
+        "Coordinar acciones con EPS, IPS y autoridad sanitaria.",
+        "Ejecutar programas de promoción y prevención."
+      ]
+    },
+    {
+      "sectorId": "educacion",
+      "sector": "Educación",
+      "concejo": [
+        "Hacer seguimiento a cobertura, calidad y permanencia escolar.",
+        "Solicitar informes sobre PAE e infraestructura educativa.",
+        "Revisar la inversión educativa del municipio."
+      ],
+      "alcaldia": [
+        "Garantizar la prestación del servicio educativo municipal.",
+        "Ejecutar programas de acceso, permanencia y calidad.",
+        "Coordinar acciones con instituciones educativas."
+      ]
+    },
+    {
+      "sectorId": "transporte",
+      "sector": "Transporte",
+      "concejo": [
+        "Solicitar informes sobre accidentalidad y seguridad vial.",
+        "Revisar proyectos de infraestructura vial.",
+        "Hacer seguimiento a políticas de movilidad."
+      ],
+      "alcaldia": [
+        "Dirigir la política de movilidad y tránsito.",
+        "Ejecutar obras viales.",
+        "Implementar estrategias de seguridad vial."
+      ]
+    },
+    {
+      "sectorId": "ambiente-desarrollo-sostenible",
+      "sector": "Ambiente y Desarrollo Sostenible",
+      "concejo": [
+        "Hacer seguimiento a la gestión ambiental.",
+        "Solicitar informes sobre gestión del riesgo.",
+        "Verificar acciones de protección de ecosistemas y fuentes hídricas."
+      ],
+      "alcaldia": [
+        "Coordinar la política ambiental municipal.",
+        "Implementar acciones de gestión del riesgo.",
+        "Articularse con la autoridad ambiental competente."
+      ]
+    },
+    {
+      "sectorId": "gobierno-territorial",
+      "sector": "Gobierno Territorial",
+      "concejo": [
+        "Ejercer control sobre desempeño institucional y ejecución presupuestal.",
+        "Solicitar informes de rendición de cuentas.",
+        "Promover debates sobre participación ciudadana y transparencia."
+      ],
+      "alcaldia": [
+        "Fortalecer la administración municipal.",
+        "Garantizar transparencia, eficiencia y participación.",
+        "Ejecutar el sistema de seguimiento al Plan de Desarrollo."
+      ]
+    }
+  ]
+}

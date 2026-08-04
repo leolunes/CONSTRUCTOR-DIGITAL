@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cadena de Valor | Constructor MGA Pro</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Cadena de Valor</div>
+      <div class="subtitle" id="cadenaSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnDiagnostico" href="#">Diagnóstico</a>
+    <a class="navbtn" id="btnArbolObjetivos" href="#">Árbol de Objetivos</a>
+    <a class="navbtn" id="btnIndicadores" href="#">Indicadores</a>
+    <a class="navbtn" id="btnCronograma" href="#">Cronograma</a>
+    <button class="navbtn primary" id="btnGuardarCadenaTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <div class="cardhead">
+      <div>
+        <h2>Cadena de valor del proyecto</h2>
+        <p class="muted small">
+          Relacione objetivo general, objetivos específicos, productos y actividades. Esta sección será la conexión entre la formulación MGA y el presupuesto oficial.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="item">
+        <div class="name">Lógica MGA</div>
+        <div class="muted small">
+          Objetivo específico → Producto → Actividad → Ítems presupuestales.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Integración futura</div>
+        <div class="muted small">
+          Las actividades podrán asociarse con capítulos e ítems del presupuesto de obra.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <form class="form" id="formCadenaValor">
+
+      <div class="cardhead">
+        <h2>Objetivo general</h2>
+      </div>
+
+      <textarea id="objetivoGeneral" rows="4" placeholder="Objetivo general del proyecto..."></textarea>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Objetivos específicos</h2>
+        <p class="muted small">Agregue los objetivos específicos que permitirán cumplir el objetivo general.</p>
+      </div>
+
+      <div id="objetivosEspecificosList"></div>
+
+      <div class="row" style="margin-top:10px; gap:10px">
+        <input id="objetivoEspecificoInput" placeholder="Nuevo objetivo específico..." />
+        <button class="btn" id="btnAddObjetivoEspecifico" type="button">Agregar</button>
+      </div>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Productos</h2>
+        <p class="muted small">Cada producto debe responder a un objetivo específico.</p>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Nombre del producto</label>
+          <input id="productoNombre" placeholder="Ej: Infraestructura comunitaria construida">
+        </div>
+
+        <div>
+          <label>Unidad de medida</label>
+          <input id="productoUnidad" placeholder="Ej: Unidad, metro cuadrado, beneficiarios">
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:10px">
+        <div>
+          <label>Meta</label>
+          <input id="productoMeta" inputmode="decimal" placeholder="Ej: 1">
+        </div>
+
+        <div>
+          <label>Objetivo específico asociado</label>
+          <select id="productoObjetivo"></select>
+        </div>
+      </div>
+
+      <label style="margin-top:10px">Descripción del producto</label>
+      <textarea id="productoDescripcion" rows="3" placeholder="Describa el producto que entregará el proyecto..."></textarea>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="btnAddProducto" type="button">Agregar producto</button>
+      </div>
+
+      <div class="tablewrap" style="margin-top:12px">
+        <table class="table" style="min-width:980px">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Unidad</th>
+              <th>Meta</th>
+              <th>Objetivo asociado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productosBody"></tbody>
+        </table>
+      </div>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Actividades</h2>
+        <p class="muted small">Cada actividad debe estar asociada a un producto.</p>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Nombre de la actividad</label>
+          <input id="actividadNombre" placeholder="Ej: Ejecutar obras civiles">
+        </div>
+
+        <div>
+          <label>Producto asociado</label>
+          <select id="actividadProducto"></select>
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:10px">
+        <div>
+          <label>Duración estimada (meses)</label>
+          <input id="actividadDuracion" inputmode="decimal" placeholder="Ej: 4">
+        </div>
+
+        <div>
+          <label>Valor estimado</label>
+          <input id="actividadValor" inputmode="decimal" placeholder="Ej: 150000000">
+        </div>
+      </div>
+
+      <label style="margin-top:10px">Descripción de la actividad</label>
+      <textarea id="actividadDescripcion" rows="3" placeholder="Describa la actividad..."></textarea>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="btnAddActividad" type="button">Agregar actividad</button>
+      </div>
+
+      <div class="tablewrap" style="margin-top:12px">
+        <table class="table" style="min-width:980px">
+          <thead>
+            <tr>
+              <th>Actividad</th>
+              <th>Producto asociado</th>
+              <th>Duración</th>
+              <th>Valor</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="actividadesBody"></tbody>
+        </table>
+      </div>
+
+      <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" type="submit">Guardar cadena de valor</button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Vista resumida</h2>
+      <p class="muted small">Relación lógica entre objetivos, productos y actividades.</p>
+    </div>
+
+    <div id="vistaCadenaValor"></div>
+  </section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/cadena-valor.js"></script>
+
+</body>
+</html>

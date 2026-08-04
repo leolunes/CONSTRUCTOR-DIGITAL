@@ -1,0 +1,652 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+  "descripcion": "Relación de barrios mencionados en el Plan de Desarrollo Municipal de Girón 2024-2027, asociados a temas de servicios públicos, espacio público, movilidad, ambiente urbano y equipamientos.",
+
+  "barrios": [
+    {
+      "id": "BAR-001",
+      "nombre": "Santa Cruz",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Alcantarillado"],
+      "referenciasPlan": [
+        "Parque ecológico El Gallineral",
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 160 y 167"
+    },
+    {
+      "id": "BAR-002",
+      "nombre": "Río de Oro",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Movilidad"],
+      "referenciasPlan": [
+        "Parque ecológico El Gallineral",
+        "Perimetral Río de Oro / Carrera 22 C"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 93 y 167"
+    },
+    {
+      "id": "BAR-003",
+      "nombre": "El Malecón",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde"],
+      "referenciasPlan": [
+        "Parque ecológico El Gallineral"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "BAR-004",
+      "nombre": "Sagrado Corazón",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Alcantarillado"],
+      "referenciasPlan": [
+        "Parque Sagrado Corazón",
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 160 y 167"
+    },
+    {
+      "id": "BAR-005",
+      "nombre": "Meseta I",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde"],
+      "referenciasPlan": [
+        "Parque Meseta"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "BAR-006",
+      "nombre": "Meseta II",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde"],
+      "referenciasPlan": [
+        "Parque Meseta"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "BAR-007",
+      "nombre": "Meseta III",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde"],
+      "referenciasPlan": [
+        "Parque Meseta"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "BAR-008",
+      "nombre": "La Arboleda",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde"],
+      "referenciasPlan": [
+        "Parque La Arboleda"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "BAR-009",
+      "nombre": "Castilla la Nueva",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde"],
+      "referenciasPlan": [
+        "Parque La Arboleda"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "BAR-010",
+      "nombre": "El Llanito",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Alcantarillado"],
+      "referenciasPlan": [
+        "Parque La Arboleda",
+        "Quintas del Llanito dentro del perímetro sanitario"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 160 y 167"
+    },
+    {
+      "id": "BAR-011",
+      "nombre": "El Poblado",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Movilidad"],
+      "referenciasPlan": [
+        "Parque El Poblado",
+        "Calle 43 - Barrio El Poblado",
+        "Carrera 26 - Barrio El Poblado",
+        "Carrera 23 - Barrio El Poblado"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 93 y 167"
+    },
+    {
+      "id": "BAR-012",
+      "nombre": "Altos de Arenales",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Alcantarillado"],
+      "referenciasPlan": [
+        "Parque Jardín de Arenales",
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 160 y 167"
+    },
+    {
+      "id": "BAR-013",
+      "nombre": "Jardín de Arenales",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Alcantarillado"],
+      "referenciasPlan": [
+        "Parque Jardín de Arenales",
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 160 y 167"
+    },
+    {
+      "id": "BAR-014",
+      "nombre": "El Progreso",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Espacio público", "Zona verde", "Alcantarillado"],
+      "referenciasPlan": [
+        "Parque Jardín de Arenales",
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 160 y 167"
+    },
+    {
+      "id": "BAR-015",
+      "nombre": "Carrizal",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-016",
+      "nombre": "San Antonio del Carrizal",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-017",
+      "nombre": "Balcones de Alejandría",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-018",
+      "nombre": "Betania",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-019",
+      "nombre": "Bellavista",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-020",
+      "nombre": "Campestre Norte",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-021",
+      "nombre": "Paraíso",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-022",
+      "nombre": "Quintas del Llanito",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-023",
+      "nombre": "Jardín de la Aldea",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-024",
+      "nombre": "Palmeras",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-025",
+      "nombre": "Balcones de Girón",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-026",
+      "nombre": "Ciudadela del Oriente",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-027",
+      "nombre": "Brisas de la Campiña",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-028",
+      "nombre": "Aldea Alta",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-029",
+      "nombre": "Aldea Baja",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-030",
+      "nombre": "Eloy Valenzuela",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-031",
+      "nombre": "La Campiña",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-032",
+      "nombre": "Balcones del Sur",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-033",
+      "nombre": "Altos del Tejar",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-034",
+      "nombre": "El Gallineral",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-035",
+      "nombre": "Primero de Mayo",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-036",
+      "nombre": "Corviandi",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-037",
+      "nombre": "Río Prado",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-038",
+      "nombre": "Arenales del Campestre",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-039",
+      "nombre": "Arenales IV",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-040",
+      "nombre": "Arenales de Girón",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-041",
+      "nombre": "Mirador de Arenales",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-042",
+      "nombre": "Bahondo",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos", "Movilidad"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón",
+        "Transversal Bahondo"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, páginas 93 y 160"
+    },
+    {
+      "id": "BAR-043",
+      "nombre": "Villa de Los Caballeros",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-044",
+      "nombre": "Riviera del Río",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-045",
+      "nombre": "Villas de San Juan",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-046",
+      "nombre": "La Meseta",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-047",
+      "nombre": "El Consuelo",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-048",
+      "nombre": "Portal del Campestre",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-049",
+      "nombre": "Angulito",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-050",
+      "nombre": "Cristal Alto",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-051",
+      "nombre": "Villampiss",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-052",
+      "nombre": "Vida en Primavera",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-053",
+      "nombre": "Brisas de Provenza",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-054",
+      "nombre": "Villa Don Juan I",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-055",
+      "nombre": "Villa de Don Juan II Etapa",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-056",
+      "nombre": "Prados de Cataluña",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-057",
+      "nombre": "Brisas del Campo",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-058",
+      "nombre": "Alpes del Campestre",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-059",
+      "nombre": "Almenares de San Juan",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-060",
+      "nombre": "Girón Campestre",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "BAR-061",
+      "nombre": "Villamil",
+      "clasificacion": "Urbano",
+      "temasRelacionados": ["Alcantarillado", "Servicios públicos"],
+      "referenciasPlan": [
+        "Perímetro sanitario de Girón"
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    }
+  ],
+
+  "resumen": {
+    "barriosRegistradosEnEsteArchivo": "61",
+    "criterio": "Solo se incluyeron barrios mencionados expresamente en el Plan de Desarrollo Municipal 2024-2027.",
+    "principalesTemasIdentificados": [
+      "Alcantarillado",
+      "Servicios públicos",
+      "Espacio público",
+      "Zona verde",
+      "Movilidad"
+    ]
+  },
+
+  "fuenteGeneral": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "secciones": [
+      "Sector Transporte",
+      "Sector Vivienda, Ciudad y Territorio",
+      "Espacio público"
+    ],
+    "paginasReferencia": ["93", "160", "167"]
+  }
+}

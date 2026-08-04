@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Aplicación para consultar, calcular y resumir el costo horario y la tarifa de alquiler de equipos de construcción."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Inicio | Costos de Alquiler de Equipos
+  </title>
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- =====================================================
+         MENÚ LATERAL
+         Se conserva de la estructura actual
+    ====================================================== -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTOS DE ALQUILER
+          </strong>
+
+          <span>
+            Equipo de Construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item active"
+          href="index.html"
+          aria-current="page"
+        >
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Inicio
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          BASE DE DATOS
+        </div>
+
+        <a
+          class="nav-item"
+          href="entradas.html"
+        >
+          <span class="nav-icon">
+            1
+          </span>
+
+          <span>
+            Entradas
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="calculo.html"
+        >
+          <span class="nav-icon">
+            2
+          </span>
+
+          <span>
+            Cálculo
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="resumen.html"
+        >
+          <span class="nav-icon">
+            3
+          </span>
+
+          <span>
+            Resumen
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="catalogo-modelos.html"
+        >
+          <span class="nav-icon">
+            4
+          </span>
+
+          <span>
+            Catálogo de modelos
+          </span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+
+            <span class="status-dot success"></span>
+
+            <strong>
+              Base disponible
+            </strong>
+
+          </div>
+
+          <span>
+            Seleccione una de las cuatro secciones
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span class="topbar-eyebrow">
+              BASE DE COSTO HORARIO
+            </span>
+
+            <h1>
+              Inicio
+            </h1>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <div class="page-content">
+
+        <!-- ===================================================
+             PRESENTACIÓN
+        ==================================================== -->
+
+        <section class="hero">
+
+          <div>
+
+            <span class="section-kicker">
+              COSTOS DE ALQUILER DE EQUIPOS
+            </span>
+
+            <h2>
+              Consulte la base mediante sus cuatro secciones principales
+            </h2>
+
+            <p>
+              La aplicación conserva la información de cada equipo y organiza
+              su funcionamiento siguiendo la misma lógica de la plantilla Excel:
+              Entradas, Cálculo, Resumen y Catálogo de modelos.
+            </p>
+
+          </div>
+
+          <div class="catalog-summary">
+
+            <div class="catalog-summary-item">
+
+              <span>
+                Equipo disponible para prueba
+              </span>
+
+              <strong>
+                1
+              </strong>
+
+            </div>
+
+            <div class="catalog-summary-item">
+
+              <span>
+                Modelo cargado
+              </span>
+
+              <strong style="font-size:1.1rem;">
+                EQMTA0089
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             CUATRO BOTONES PRINCIPALES
+        ==================================================== -->
+
+        <section
+          class="quick-actions-grid"
+          aria-label="Secciones principales"
+        >
+
+          <a
+            class="quick-action-card"
+            href="entradas.html"
+          >
+
+            <span class="section-kicker">
+              SECCIÓN 1
+            </span>
+
+            <h3>
+              Entradas
+            </h3>
+
+            <p>
+              Seleccione el equipo y consulte o modifique los parámetros
+              técnicos, económicos y operativos usados en los cálculos.
+            </p>
+
+            <span class="button button-primary">
+              Abrir Entradas
+            </span>
+
+          </a>
+
+          <a
+            class="quick-action-card"
+            href="calculo.html"
+          >
+
+            <span class="section-kicker">
+              SECCIÓN 2
+            </span>
+
+            <h3>
+              Cálculo
+            </h3>
+
+            <p>
+              Revise el desglose del costo horario: propiedad, combustible,
+              lubricantes, rodaje, mantenimiento, operador y demás componentes.
+            </p>
+
+            <span class="button button-primary">
+              Abrir Cálculo
+            </span>
+
+          </a>
+
+          <a
+            class="quick-action-card"
+            href="resumen.html"
+          >
+
+            <span class="section-kicker">
+              SECCIÓN 3
+            </span>
+
+            <h3>
+              Resumen
+            </h3>
+
+            <p>
+              Consulte el costo directo, margen, tarifa comercial,
+              transporte equivalente, rendimiento y costo por unidad.
+            </p>
+
+            <span class="button button-primary">
+              Abrir Resumen
+            </span>
+
+          </a>
+
+          <a
+            class="quick-action-card"
+            href="catalogo-modelos.html"
+          >
+
+            <span class="section-kicker">
+              SECCIÓN 4
+            </span>
+
+            <h3>
+              Catálogo de modelos
+            </h3>
+
+            <p>
+              Visualice los modelos registrados, sus imágenes, códigos,
+              familias y acceso a la ficha técnica completa.
+            </p>
+
+            <span class="button button-primary">
+              Abrir Catálogo
+            </span>
+
+          </a>
+
+        </section>
+
+        <!-- ===================================================
+             EQUIPO DE PRUEBA
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <span class="section-kicker">
+            PRUEBA INICIAL
+          </span>
+
+          <h3>
+            Motoniveladora EQMTA0089
+          </h3>
+
+          <p style="color:var(--color-text-soft); line-height:1.7;">
+            Este será el primer equipo utilizado para comprobar el flujo
+            completo entre Entradas, Cálculo, Resumen y Catálogo de modelos.
+          </p>
+
+          <a
+            class="button button-secondary"
+            href="equipo.html?id=motoniveladora"
+          >
+            Ver ficha técnica actual
+          </a>
+
+        </section>
+
+      </div>
+
+      <footer class="app-footer">
+
+        <span>
+          Costos de Alquiler Equipo de Construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script
+    src="js/app.js"
+    defer
+  ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "documentoPrincipal": {
+    "nombre": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "titulo": "Más Campo para el Progreso",
+    "tipo": "Plan de Desarrollo Municipal",
+    "vigencia": "2024-2027",
+    "municipio": "Girón",
+    "departamento": "Santander"
+  },
+
+  "capitulos": [
+
+    {
+      "id": 1,
+      "nombre": "Información General",
+      "descripcion": "Presentación, equipo de gobierno, estructura institucional y fundamentos del Plan."
+    },
+
+    {
+      "id": 2,
+      "nombre": "Fundamentos del Plan",
+      "descripcion": "Marco conceptual, principios, enfoques, normatividad y articulación con otros instrumentos de planificación."
+    },
+
+    {
+      "id": 3,
+      "nombre": "Diagnóstico Situacional",
+      "descripcion": "Caracterización general del municipio y análisis por sectores."
+    },
+
+    {
+      "id": 4,
+      "nombre": "Componente Estratégico",
+      "descripcion": "Ejes estratégicos, programas, indicadores, metas y proyectos."
+    },
+
+    {
+      "id": 5,
+      "nombre": "Componente Financiero",
+      "descripcion": "Plan plurianual de inversiones, presupuesto y fuentes de financiación."
+    },
+
+    {
+      "id": 6,
+      "nombre": "Seguimiento y Evaluación",
+      "descripcion": "Sistema de monitoreo del cumplimiento del Plan de Desarrollo."
+    }
+
+  ],
+
+  "fuentesExternas": [
+
+    {
+      "nombre": "DANE",
+      "descripcion": "Información demográfica, censos y proyecciones de población."
+    },
+
+    {
+      "nombre": "Departamento Nacional de Planeación - DNP",
+      "descripcion": "Indicadores territoriales, desempeño municipal y metodologías."
+    },
+
+    {
+      "nombre": "Ministerio de Salud",
+      "descripcion": "Indicadores de salud pública y aseguramiento."
+    },
+
+    {
+      "nombre": "Ministerio de Educación",
+      "descripcion": "Cobertura, permanencia y calidad educativa."
+    },
+
+    {
+      "nombre": "Ministerio de Transporte",
+      "descripcion": "Información de movilidad y seguridad vial."
+    },
+
+    {
+      "nombre": "IDEAM",
+      "descripcion": "Información climática y ambiental."
+    },
+
+    {
+      "nombre": "Área Metropolitana de Bucaramanga",
+      "descripcion": "Información regional y proyectos metropolitanos."
+    }
+
+  ],
+
+  "criteriosExtraccion": [
+
+    "Todos los datos deben provenir del Plan de Desarrollo o de fuentes oficiales citadas por el Plan.",
+
+    "Toda estadística debe conservar su contexto original.",
+
+    "Cada indicador debe asociarse al sector correspondiente.",
+
+    "Cada meta debe relacionarse con su programa y proyecto.",
+
+    "Cada proyecto debe relacionarse con su presupuesto.",
+
+    "Toda información deberá conservar la referencia del capítulo y la página donde fue encontrada."
+
+  ],
+
+  "estructuraReferencia": {
+
+    "cadaDatoDebeContener": [
+
+      "Documento de origen",
+
+      "Capítulo",
+
+      "Sección",
+
+      "Página",
+
+      "Sector",
+
+      "Programa",
+
+      "Proyecto",
+
+      "Indicador relacionado",
+
+      "Fecha de extracción",
+
+      "Observaciones"
+
+    ]
+
+  },
+
+  "versionBaseConocimiento": {
+
+    "version": "1.0",
+
+    "estado": "Estructura inicial",
+
+    "ultimaActualizacion": "2026",
+
+    "descripcion": "Primera versión de la Base de Conocimiento Inteligente del Municipio de Girón."
+
+  }
+
+}

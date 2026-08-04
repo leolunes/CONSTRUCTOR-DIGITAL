@@ -1,0 +1,323 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Banco de estadísticas oficiales del municipio extraídas del Plan de Desarrollo. Este archivo alimentará los tableros de control, gráficas, comparativos e inteligencia de la aplicación.",
+
+  "estadisticas": [
+
+    {
+      "categoria": "Información General",
+      "datos": [
+        {
+          "nombre": "Municipio",
+          "valor": "Girón"
+        },
+        {
+          "nombre": "Departamento",
+          "valor": "Santander"
+        },
+        {
+          "nombre": "Periodo del Plan",
+          "valor": "2024-2027"
+        },
+        {
+          "nombre": "Área Metropolitana",
+          "valor": "Bucaramanga"
+        }
+      ]
+    },
+
+    {
+      "categoria": "Demografía",
+      "datos": [
+
+        {
+          "nombre": "Población Total",
+          "valor": "Pendiente de extracción"
+        },
+
+        {
+          "nombre": "Hombres",
+          "valor": "Pendiente de extracción"
+        },
+
+        {
+          "nombre": "Mujeres",
+          "valor": "Pendiente de extracción"
+        },
+
+        {
+          "nombre": "Zona Urbana",
+          "valor": "Pendiente de extracción"
+        },
+
+        {
+          "nombre": "Zona Rural",
+          "valor": "Pendiente de extracción"
+        }
+
+      ]
+    },
+
+    {
+
+      "categoria":"Salud",
+
+      "datos":[
+
+        {
+
+          "nombre":"Cobertura en Salud",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Cobertura de Vacunación",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Mortalidad Infantil",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Esperanza de Vida",
+
+          "valor":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "categoria":"Educación",
+
+      "datos":[
+
+        {
+
+          "nombre":"Cobertura Educativa",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Deserción Escolar",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Repitencia",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Pruebas Saber",
+
+          "valor":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "categoria":"Economía",
+
+      "datos":[
+
+        {
+
+          "nombre":"Tasa de Desempleo",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Empresas Registradas",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Emprendimientos",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Competitividad",
+
+          "valor":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "categoria":"Movilidad",
+
+      "datos":[
+
+        {
+
+          "nombre":"Parque Automotor",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Accidentes de Tránsito",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Víctimas Fatales",
+
+          "valor":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "categoria":"Ambiente",
+
+      "datos":[
+
+        {
+
+          "nombre":"Índice de Riesgo",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Índice de Vulnerabilidad",
+
+          "valor":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "nombre":"Crecimiento Verde",
+
+          "valor":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "categoria":"Finanzas",
+
+      "datos":[
+
+        {
+
+          "nombre":"Presupuesto Total",
+
+          "valor":"1.217.466",
+          "unidad":"Millones de pesos"
+
+        },
+
+        {
+
+          "nombre":"Sector con mayor inversión",
+
+          "valor":"Educación"
+
+        },
+
+        {
+
+          "nombre":"Segundo sector con mayor inversión",
+
+          "valor":"Salud"
+
+        },
+
+        {
+
+          "nombre":"Sectores financiados",
+
+          "valor":"17"
+
+        }
+
+      ]
+
+    }
+
+  ],
+
+  "utilidadApp":[
+
+    "Construcción automática de gráficas.",
+
+    "Dashboard Municipal.",
+
+    "Comparativos por sectores.",
+
+    "Discursos sustentados en cifras.",
+
+    "Respuestas automáticas de IA.",
+
+    "Informes para candidatos.",
+
+    "Presentaciones para Concejo.",
+
+    "Seguimiento del Plan."
+
+  ]
+
+}

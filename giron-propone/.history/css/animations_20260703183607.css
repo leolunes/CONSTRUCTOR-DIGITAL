@@ -1,0 +1,205 @@
+/* =========================================================
+   GIRÓN PROPONE
+   Archivo: css/animations.css
+   Descripción: Animaciones, transiciones y efectos visuales.
+========================================================= */
+
+/* =========================================================
+   ANIMACIONES DE ENTRADA
+========================================================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================================================
+   ANIMACIONES CONTINUAS
+========================================================= */
+@keyframes floatCard {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 rgba(109,93,252,.25);
+    }
+    50% {
+        box-shadow: 0 0 22px rgba(109,93,252,.30);
+    }
+    100% {
+        box-shadow: 0 0 0 rgba(109,93,252,.25);
+    }
+}
+
+@keyframes shimmer {
+    from {
+        background-position: -300px 0;
+    }
+    to {
+        background-position: 300px 0;
+    }
+}
+
+/* =========================================================
+   CLASES REUTILIZABLES
+========================================================= */
+.fade-in {
+    animation: fadeIn .35s ease both;
+}
+
+.fade-up {
+    animation: fadeInUp .35s ease both;
+}
+
+.fade-down {
+    animation: fadeInDown .35s ease both;
+}
+
+.zoom-in {
+    animation: zoomIn .35s ease both;
+}
+
+.float {
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+.glow {
+    animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* =========================================================
+   HOVER GENERALES
+========================================================= */
+.hover-lift {
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+}
+
+.hover-scale {
+    transition: transform .25s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.03);
+}
+
+/* =========================================================
+   EFECTO SKELETON
+========================================================= */
+.skeleton {
+    border-radius: 14px;
+    background:
+        linear-gradient(
+            90deg,
+            #eef2f7 25%,
+            #f8fafc 50%,
+            #eef2f7 75%
+        );
+    background-size: 600px 100%;
+    animation: shimmer 1.4s infinite linear;
+}
+
+.skeleton.text {
+    height: 14px;
+    margin-bottom: 10px;
+}
+
+.skeleton.title {
+    height: 24px;
+    width: 55%;
+    margin-bottom: 18px;
+}
+
+.skeleton.card {
+    height: 180px;
+}
+
+/* =========================================================
+   DELAYS
+========================================================= */
+.delay-1 { animation-delay: .08s; }
+.delay-2 { animation-delay: .16s; }
+.delay-3 { animation-delay: .24s; }
+.delay-4 { animation-delay: .32s; }
+.delay-5 { animation-delay: .40s; }
+
+/* =========================================================
+   TRANSICIONES GLOBALES
+========================================================= */
+.card,
+.stat-card,
+.sector-card,
+.project-card,
+.metric-card,
+.quick-action,
+.btn,
+.btn-card,
+.nav-item,
+.icon-button {
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        color .25s ease;
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+}

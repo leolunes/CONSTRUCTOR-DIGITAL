@@ -1,0 +1,54 @@
+{
+  "aplicacion": {
+    "nombre": "Girón Propone",
+    "subtitulo": "Plataforma de Inteligencia Territorial y Programática",
+    "version": "1.0.0",
+    "municipioBase": "Girón",
+    "departamento": "Santander",
+    "pais": "Colombia"
+  },
+  "objetivo": "Ayudar a candidatos al Concejo Municipal de Girón a construir propuestas programáticas con diagnóstico, estadísticas, estrategias, discursos, publicaciones y fichas PDF por sector.",
+  "modulos": [
+    "Dashboard",
+    "Sectores",
+    "Diagnóstico territorial",
+    "Estadísticas",
+    "Estrategias de campaña",
+    "Discursos",
+    "Redes sociales",
+    "Banco de proyectos",
+    "Debate",
+    "Control político",
+    "Fuentes de financiación",
+    "Exportación PDF"
+  ],
+  "botonesSector": [
+    "Ver diagnóstico",
+    "Ver estadísticas",
+    "Crear estrategia de campaña",
+    "Generar discurso",
+    "Generar publicación para redes",
+    "Exportar ficha PDF"
+  ],
+  "fuentesSugeridas": [
+    "DANE",
+    "Alcaldía de Girón",
+    "Plan de Desarrollo Municipal",
+    "POT",
+    "SISBÉN",
+    "SECOP",
+    "Ministerio de Educación",
+    "Ministerio de Salud",
+    "Ministerio de Vivienda",
+    "MinTIC",
+    "Sistema General de Regalías",
+    "Gobernación de Santander"
+  ],
+  "parametros": {
+    "mostrarFuentes": true,
+    "mostrarFechaActualizacion": true,
+    "permitirExportarPDF": true,
+    "permitirCopiarTextos": true,
+    "modoDemo": true
+  }
+}

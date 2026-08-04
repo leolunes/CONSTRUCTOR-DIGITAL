@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Seguimiento - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Seguimiento de Metas</h1>
+
+<p>Consulta de metas, avances esperados y herramientas de seguimiento al Plan.</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>✅ Metas por Sector</h2>
+
+<select id="selectorSectorSeguimiento" onchange="cargarSeguimiento()">
+<option value="">Seleccione un sector</option>
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Detalle de seguimiento</h2>
+
+<div id="contenedorSeguimiento">
+
+<p class="texto-suave">
+Seleccione un sector para consultar metas y seguimiento.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="presupuesto.html">Presupuesto</a>
+<a href="comparador.html">Comparador</a>
+
+</nav>
+
+<script src="js/seguimiento.js"></script>
+
+</body>
+
+</html>

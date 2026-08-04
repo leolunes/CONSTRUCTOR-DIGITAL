@@ -1,0 +1,50 @@
+[
+  {
+    "sector": "DESARROLLO_SOCIAL",
+    "nombre": "Servicio de atención integral brindado",
+    "unidad": "Personas atendidas",
+    "indicador": "Número de personas atendidas"
+  },
+  {
+    "sector": "SALUD",
+    "nombre": "Servicio de promoción y prevención implementado",
+    "unidad": "Personas beneficiadas",
+    "indicador": "Personas beneficiadas con acciones de promoción y prevención"
+  },
+  {
+    "sector": "DEPORTE",
+    "nombre": "Escenario deportivo construido o adecuado",
+    "unidad": "Unidad",
+    "indicador": "Escenarios deportivos construidos o adecuados"
+  },
+  {
+    "sector": "EDUCACION",
+    "nombre": "Infraestructura educativa mejorada",
+    "unidad": "Sede",
+    "indicador": "Sedes educativas mejoradas"
+  },
+  {
+    "sector": "TRANSPORTE",
+    "nombre": "Vía urbana o rural mejorada",
+    "unidad": "Kilómetro",
+    "indicador": "Kilómetros de vía mejorados"
+  },
+  {
+    "sector": "AGUA",
+    "nombre": "Red de acueducto construida o optimizada",
+    "unidad": "Metro lineal",
+    "indicador": "Metros lineales de red construida u optimizada"
+  },
+  {
+    "sector": "CULTURA",
+    "nombre": "Espacio cultural construido o adecuado",
+    "unidad": "Unidad",
+    "indicador": "Espacios culturales construidos o adecuados"
+  },
+  {
+    "sector": "AMBIENTE",
+    "nombre": "Área ambiental restaurada o protegida",
+    "unidad": "Hectárea",
+    "indicador": "Hectáreas restauradas o protegidas"
+  }
+]

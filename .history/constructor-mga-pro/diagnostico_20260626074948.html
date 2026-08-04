@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Diagnóstico | Constructor MGA Pro</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Diagnóstico MGA</div>
+      <div class="subtitle" id="diagSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnArbolProblemas" href="#">Árbol de Problemas</a>
+    <a class="navbtn" id="btnArbolObjetivos" href="#">Árbol de Objetivos</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <button class="navbtn primary" id="btnGuardarDiagnosticoTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <div class="cardhead">
+      <div>
+        <h2>Diagnóstico del proyecto</h2>
+        <p class="muted small">
+          Esta sección construye la base técnica del proyecto: situación actual, problema, población, oferta, demanda y brecha.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="item">
+        <div class="name">Regla MGA</div>
+        <div class="muted small">
+          No redacte el problema como falta de una solución. Ejemplo incorrecto: “No existe un centro”.
+          Ejemplo correcto: “Insuficiente acceso de la población a servicios...”.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Resultado esperado</div>
+        <div class="muted small">
+          Al guardar este módulo, la aplicación podrá alimentar el árbol de problemas, objetivos y documentos MGA.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <form class="form" id="formDiagnostico">
+
+      <div class="cardhead">
+        <h2>Información territorial y sectorial</h2>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Sector</label>
+          <input name="sector" id="sector" placeholder="Ej: Salud, Educación, Transporte, Deporte, Desarrollo Social">
+        </div>
+
+        <div>
+          <label>Programa</label>
+          <input name="programa" id="programa" placeholder="Ej: Promoción y prevención, infraestructura social...">
+        </div>
+      </div>
+
+      <div class="grid two" style="margin-top:10px">
+        <div>
+          <label>Departamento</label>
+          <input name="departamento" id="departamento" placeholder="Ej: Santander">
+        </div>
+
+        <div>
+          <label>Municipio</label>
+          <input name="municipio" id="municipio" placeholder="Ej: Floridablanca">
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label>Localización específica</label>
+        <input name="localizacion" id="localizacion" placeholder="Barrio, vereda, zona, institución, corredor vial, predio, etc.">
+      </div>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Problema y situación actual</h2>
+      </div>
+
+      <label>Situación actual</label>
+      <textarea name="situacionActual" id="situacionActual" rows="6" placeholder="Describa cómo se encuentra actualmente la población, el territorio, el servicio, la infraestructura o la necesidad pública."></textarea>
+
+      <label style="margin-top:10px">Problema central</label>
+      <textarea name="problemaCentral" id="problemaCentral" rows="4" placeholder="Ej: Insuficiente acceso de la población adulta mayor a espacios integrales de bienestar, prevención y desarrollo social en..."></textarea>
+
+      <label style="margin-top:10px">Magnitud del problema</label>
+      <textarea name="magnitudProblema" id="magnitudProblema" rows="4" placeholder="Incluya datos, estimaciones, población afectada, cobertura insuficiente, déficit, frecuencia o evidencia disponible."></textarea>
+
+      <label style="margin-top:10px">Antecedentes</label>
+      <textarea name="antecedentes" id="antecedentes" rows="4" placeholder="Describa antecedentes institucionales, comunitarios, técnicos o históricos relacionados con el problema."></textarea>
+
+      <label style="margin-top:10px">Justificación</label>
+      <textarea name="justificacion" id="justificacion" rows="5" placeholder="Explique por qué el proyecto es necesario, pertinente y oportuno."></textarea>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Población</h2>
+      </div>
+
+      <label>Población afectada</label>
+      <textarea name="poblacionAfectada" id="poblacionAfectada" rows="4" placeholder="Describa quiénes padecen el problema y en qué condiciones."></textarea>
+
+      <label style="margin-top:10px">Población objetivo</label>
+      <textarea name="poblacionObjetivo" id="poblacionObjetivo" rows="4" placeholder="Describa a quiénes atenderá directamente el proyecto."></textarea>
+
+      <label style="margin-top:10px">Análisis territorial</label>
+      <textarea name="analisisTerritorial" id="analisisTerritorial" rows="4" placeholder="Incluya características del territorio, accesibilidad, entorno social, condiciones físicas o institucionales."></textarea>
+
+      <hr class="sep">
+
+      <div class="cardhead">
+        <h2>Oferta, demanda y brecha</h2>
+      </div>
+
+      <label>Oferta actual</label>
+      <textarea name="ofertaActual" id="ofertaActual" rows="4" placeholder="Describa la capacidad actual de atención, infraestructura, programas, servicios o bienes disponibles."></textarea>
+
+      <label style="margin-top:10px">Demanda actual</label>
+      <textarea name="demandaActual" id="demandaActual" rows="4" placeholder="Describa la necesidad existente, usuarios potenciales, frecuencia de uso o demanda insatisfecha."></textarea>
+
+      <label style="margin-top:10px">Brecha identificada</label>
+      <textarea name="brecha" id="brecha" rows="4" placeholder="Explique la diferencia entre la oferta actual y la demanda o necesidad de la población."></textarea>
+
+      <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" type="submit">Guardar diagnóstico</button>
+        <button class="btn" id="btnGenerarTextoProblema" type="button">Generar texto problema</button>
+        <button class="btn" id="btnLimpiarDiagnostico" type="button">Limpiar formulario</button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Texto sugerido para MGA Web</h2>
+      <p class="muted small">
+        Este texto se genera con la información diligenciada. Puede copiarlo, ajustarlo y usarlo como base en la plataforma MGA Web.
+      </p>
+    </div>
+
+    <textarea id="textoProblemaGenerado" rows="8" placeholder="Aquí aparecerá el texto sugerido..." readonly></textarea>
+
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="btnCopiarTextoProblema" type="button">Copiar texto</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/diagnostico.js"></script>
+
+</body>
+</html>

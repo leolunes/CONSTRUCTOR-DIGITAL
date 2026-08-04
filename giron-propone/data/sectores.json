@@ -1,0 +1,431 @@
+{
+  "version": {
+    "estructura": "2.0.0",
+    "tipo": "Catálogo Maestro de Sectores",
+    "ultimaActualizacion": "2026-07-04",
+    "estado": "DESARROLLO"
+  },
+
+  "configuracion": {
+
+    "totalSectores": 12,
+
+    "permitirNuevosSectores": true,
+
+    "ordenAutomatico": true,
+
+    "activarComparativos": true,
+
+    "activarGraficas": true,
+
+    "activarDashboard": true,
+
+    "activarIA": true,
+
+    "activarExportacionPDF": true
+
+  },
+
+  "productosIA":[
+
+    "Diagnóstico",
+
+    "Interpretación",
+
+    "Resumen Ejecutivo",
+
+    "Estadísticas",
+
+    "Mapa de Problemas",
+
+    "Mapa de Oportunidades",
+
+    "Estrategia de Campaña",
+
+    "Discurso",
+
+    "Control Político",
+
+    "Proyecto Tipo",
+
+    "Proyecto de Acuerdo",
+
+    "Debate",
+
+    "Derecho de Petición",
+
+    "Publicaciones",
+
+    "Ficha PDF"
+
+  ],
+
+  "sectores":[
+
+    {
+
+      "id":"educacion",
+
+      "codigo":"SEC-01",
+
+      "nombre":"Infraestructura educativa",
+
+      "icono":"🏫",
+
+      "color":"#3949AB",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Infraestructura",
+
+      "archivo":"data/sectores/infraestructura-educativa.json",
+
+      "ods":[4,10,11],
+
+      "dependenciaMunicipal":"Secretaría de Educación",
+
+      "ministerio":"Ministerio de Educación Nacional",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"salud",
+
+      "codigo":"SEC-02",
+
+      "nombre":"Infraestructura en salud",
+
+      "icono":"🏥",
+
+      "color":"#E53935",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Infraestructura",
+
+      "archivo":"data/sectores/infraestructura-salud.json",
+
+      "ods":[3,10,11],
+
+      "dependenciaMunicipal":"Secretaría de Salud",
+
+      "ministerio":"Ministerio de Salud",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"vias",
+
+      "codigo":"SEC-03",
+
+      "nombre":"Infraestructura vial",
+
+      "icono":"🛣️",
+
+      "color":"#FB8C00",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Infraestructura",
+
+      "archivo":"data/sectores/infraestructura-vial.json",
+
+      "ods":[9,11],
+
+      "dependenciaMunicipal":"Secretaría de Infraestructura",
+
+      "ministerio":"Ministerio de Transporte",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"agua",
+
+      "codigo":"SEC-04",
+
+      "nombre":"Agua potable y saneamiento",
+
+      "icono":"💧",
+
+      "color":"#039BE5",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Servicios Públicos",
+
+      "archivo":"data/sectores/agua-potable-saneamiento.json",
+
+      "ods":[6,11],
+
+      "dependenciaMunicipal":"Empresa de Servicios Públicos",
+
+      "ministerio":"Ministerio de Vivienda",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"vivienda",
+
+      "codigo":"SEC-05",
+
+      "nombre":"Vivienda",
+
+      "icono":"🏘️",
+
+      "color":"#43A047",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Desarrollo Urbano",
+
+      "archivo":"data/sectores/vivienda.json",
+
+      "ods":[1,11],
+
+      "dependenciaMunicipal":"Secretaría de Vivienda",
+
+      "ministerio":"Ministerio de Vivienda",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"equipamientos",
+
+      "codigo":"SEC-06",
+
+      "nombre":"Equipamientos públicos",
+
+      "icono":"🏛️",
+
+      "color":"#8E24AA",
+
+      "prioridad":"MEDIA",
+
+      "tipo":"Infraestructura",
+
+      "archivo":"data/sectores/equipamientos-publicos.json",
+
+      "ods":[11,16],
+
+      "dependenciaMunicipal":"Secretaría de Infraestructura",
+
+      "ministerio":"Ministerio del Interior",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"deporte",
+
+      "codigo":"SEC-07",
+
+      "nombre":"Deporte y recreación",
+
+      "icono":"⚽",
+
+      "color":"#EF6C00",
+
+      "prioridad":"MEDIA",
+
+      "tipo":"Social",
+
+      "archivo":"data/sectores/deporte-recreacion.json",
+
+      "ods":[3,11],
+
+      "dependenciaMunicipal":"Instituto de Deportes",
+
+      "ministerio":"Ministerio del Deporte",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"cultura",
+
+      "codigo":"SEC-08",
+
+      "nombre":"Cultura",
+
+      "icono":"🎭",
+
+      "color":"#D81B60",
+
+      "prioridad":"MEDIA",
+
+      "tipo":"Social",
+
+      "archivo":"data/sectores/cultura.json",
+
+      "ods":[4,11],
+
+      "dependenciaMunicipal":"Secretaría de Cultura",
+
+      "ministerio":"Ministerio de las Culturas",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"agricultura",
+
+      "codigo":"SEC-09",
+
+      "nombre":"Agricultura",
+
+      "icono":"🌾",
+
+      "color":"#7CB342",
+
+      "prioridad":"MEDIA",
+
+      "tipo":"Productivo",
+
+      "archivo":"data/sectores/agricultura.json",
+
+      "ods":[2,8,15],
+
+      "dependenciaMunicipal":"Secretaría de Agricultura",
+
+      "ministerio":"Ministerio de Agricultura",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"ambiente",
+
+      "codigo":"SEC-10",
+
+      "nombre":"Ambiente",
+
+      "icono":"🌳",
+
+      "color":"#00897B",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Ambiental",
+
+      "archivo":"data/sectores/ambiente.json",
+
+      "ods":[13,15],
+
+      "dependenciaMunicipal":"Secretaría de Ambiente",
+
+      "ministerio":"Ministerio de Ambiente",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"tic",
+
+      "codigo":"SEC-11",
+
+      "nombre":"TIC",
+
+      "icono":"💻",
+
+      "color":"#1E88E5",
+
+      "prioridad":"MEDIA",
+
+      "tipo":"Tecnología",
+
+      "archivo":"data/sectores/tic.json",
+
+      "ods":[4,9],
+
+      "dependenciaMunicipal":"Oficina TIC",
+
+      "ministerio":"MinTIC",
+
+      "estado":"ACTIVO"
+
+    },
+
+    {
+
+      "id":"desarrollo-social",
+
+      "codigo":"SEC-12",
+
+      "nombre":"Desarrollo social",
+
+      "icono":"🤝",
+
+      "color":"#E53935",
+
+      "prioridad":"ALTA",
+
+      "tipo":"Social",
+
+      "archivo":"data/sectores/desarrollo-social.json",
+
+      "ods":[1,3,5,10,16],
+
+      "dependenciaMunicipal":"Secretaría de Desarrollo Social",
+
+      "ministerio":"Ministerio de Igualdad y Equidad",
+
+      "estado":"ACTIVO"
+
+    }
+
+  ],
+
+  "nivelesPrioridad":[
+
+    "ALTA",
+
+    "MEDIA",
+
+    "BAJA"
+
+  ],
+
+  "tiposSector":[
+
+    "Infraestructura",
+
+    "Servicios Públicos",
+
+    "Desarrollo Urbano",
+
+    "Social",
+
+    "Productivo",
+
+    "Ambiental",
+
+    "Tecnología"
+
+  ]
+
+}

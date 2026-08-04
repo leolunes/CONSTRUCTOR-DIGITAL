@@ -1,0 +1,272 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Banco de debilidades identificadas a partir del diagnóstico del Plan de Desarrollo Municipal de Girón 2024-2027. Estas debilidades corresponden a factores internos que limitan el desarrollo del municipio y requieren intervención institucional.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud y Protección Social",
+
+      "debilidades":[
+
+        "Persisten diferencias en el acceso oportuno a algunos servicios de salud.",
+
+        "Necesidad de fortalecer acciones preventivas.",
+
+        "Mayor demanda de atención en salud mental.",
+
+        "Necesidad de mejorar indicadores de promoción de la salud.",
+
+        "Incremento de enfermedades asociadas a hábitos no saludables."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "debilidades":[
+
+        "Persisten riesgos de deserción escolar.",
+
+        "Necesidad de fortalecer la calidad educativa.",
+
+        "Brechas entre zonas urbanas y rurales.",
+
+        "Limitaciones en innovación tecnológica.",
+
+        "Necesidad de fortalecer procesos pedagógicos."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Agricultura y Desarrollo Rural",
+
+      "debilidades":[
+
+        "Baja competitividad de algunos productores.",
+
+        "Limitaciones para comercialización.",
+
+        "Necesidad de fortalecer asistencia técnica.",
+
+        "Infraestructura rural susceptible de mejora.",
+
+        "Dependencia de condiciones climáticas."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Transporte",
+
+      "debilidades":[
+
+        "Congestión en corredores estratégicos.",
+
+        "Necesidad de ampliar infraestructura vial.",
+
+        "Accidentalidad en algunos sectores.",
+
+        "Limitaciones para movilidad sostenible.",
+
+        "Incremento permanente del parque automotor."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "debilidades":[
+
+        "Presión sobre recursos naturales.",
+
+        "Necesidad de fortalecer conservación de cuencas.",
+
+        "Procesos de ocupación en zonas sensibles.",
+
+        "Mayor exposición a eventos climáticos.",
+
+        "Necesidad de fortalecer cultura ambiental."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "debilidades":[
+
+        "Déficit de vivienda.",
+
+        "Necesidad de ampliar espacio público efectivo.",
+
+        "Cobertura desigual de algunos servicios públicos.",
+
+        "Crecimiento urbano acelerado.",
+
+        "Retos de planificación territorial."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Inclusión Social y Reconciliación",
+
+      "debilidades":[
+
+        "Persisten brechas sociales.",
+
+        "Mayor demanda de programas para población vulnerable.",
+
+        "Necesidad de fortalecer inclusión de personas con discapacidad.",
+
+        "Retos para atención integral de juventudes.",
+
+        "Necesidad de fortalecer articulación institucional."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Comercio, Industria y Turismo",
+
+      "debilidades":[
+
+        "Aprovechamiento parcial del potencial turístico.",
+
+        "Necesidad de fortalecer competitividad.",
+
+        "Procesos de formalización empresarial por fortalecer.",
+
+        "Limitaciones para algunos emprendimientos.",
+
+        "Mayor promoción del patrimonio histórico."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Trabajo",
+
+      "debilidades":[
+
+        "Necesidad de generar más oportunidades laborales.",
+
+        "Empleabilidad juvenil susceptible de fortalecimiento.",
+
+        "Mayor articulación entre formación y empleo.",
+
+        "Fortalecer procesos de emprendimiento.",
+
+        "Reducir niveles de informalidad."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno Territorial",
+
+      "debilidades":[
+
+        "Necesidad de fortalecer seguimiento al Plan de Desarrollo.",
+
+        "Mayor integración entre dependencias.",
+
+        "Fortalecer procesos de Gobierno Digital.",
+
+        "Ampliar mecanismos de participación ciudadana.",
+
+        "Optimizar procesos administrativos."
+
+      ]
+
+    }
+
+  ],
+
+  "debilidadesTransversales":[
+
+    "Crecimiento urbano acelerado que demanda mayor capacidad institucional.",
+
+    "Necesidad permanente de fortalecer la planeación territorial.",
+
+    "Mayor articulación entre entidades municipales.",
+
+    "Retos para garantizar sostenibilidad ambiental.",
+
+    "Necesidad de mejorar indicadores sociales en algunos sectores.",
+
+    "Fortalecer seguimiento y evaluación del Plan de Desarrollo.",
+
+    "Incrementar eficiencia en la ejecución de proyectos.",
+
+    "Fortalecer capacidades institucionales para atender el crecimiento poblacional."
+
+  ],
+
+  "consultasIA":[
+
+    "¿Cuáles son las principales debilidades de Girón?",
+
+    "¿Qué debilidades identifica el Plan de Desarrollo?",
+
+    "¿Qué aspectos requieren mayor fortalecimiento institucional?",
+
+    "¿Qué sectores presentan mayores retos?",
+
+    "¿Qué debilidades deberían convertirse en prioridades de gobierno?"
+
+  ],
+
+  "utilidadApp":[
+
+    "Construcción automática de análisis DOFA.",
+
+    "Preparación de programas de gobierno.",
+
+    "Generación de propuestas de campaña.",
+
+    "Priorización de inversiones.",
+
+    "Preparación de debates de control político.",
+
+    "Generación automática de diagnósticos.",
+
+    "Apoyo al módulo de Inteligencia Artificial."
+
+  ],
+
+  "fuente":{
+
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "capitulo":"Diagnóstico General y Diagnósticos Sectoriales"
+
+  }
+
+}

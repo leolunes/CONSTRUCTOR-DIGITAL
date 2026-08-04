@@ -1,0 +1,272 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Banco de fortalezas identificadas en el Plan de Desarrollo Municipal de Girón 2024-2027. Este archivo consolida las capacidades, ventajas competitivas y potencialidades reconocidas en el diagnóstico territorial.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud y Protección Social",
+
+      "fortalezas":[
+
+        "Cobertura institucional del sistema de salud.",
+
+        "Presencia de programas de promoción y prevención.",
+
+        "Articulación con entidades del sector salud.",
+
+        "Capacidad institucional para ejecutar acciones de salud pública.",
+
+        "Existencia de programas dirigidos a poblaciones vulnerables."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "fortalezas":[
+
+        "Cobertura del servicio educativo.",
+
+        "Presencia de instituciones educativas oficiales.",
+
+        "Programas de permanencia escolar.",
+
+        "Oferta de educación básica y media.",
+
+        "Compromiso institucional con el mejoramiento de la calidad."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Agricultura y Desarrollo Rural",
+
+      "fortalezas":[
+
+        "Vocación agropecuaria del territorio rural.",
+
+        "Diversidad productiva.",
+
+        "Potencial para fortalecer cadenas productivas.",
+
+        "Experiencia de productores rurales.",
+
+        "Disponibilidad de recursos naturales."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Transporte",
+
+      "fortalezas":[
+
+        "Ubicación estratégica dentro del Área Metropolitana.",
+
+        "Conectividad regional.",
+
+        "Corredores viales principales.",
+
+        "Potencial para mejorar movilidad urbana.",
+
+        "Importancia logística para el departamento."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "fortalezas":[
+
+        "Importantes recursos hídricos.",
+
+        "Áreas de conservación ambiental.",
+
+        "Diversidad biológica.",
+
+        "Paisajes naturales con potencial ecoturístico.",
+
+        "Interés institucional por la sostenibilidad."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "fortalezas":[
+
+        "Crecimiento urbano organizado.",
+
+        "Existencia de espacio público recuperable.",
+
+        "Capacidad de planificación territorial.",
+
+        "Desarrollo de nuevos proyectos urbanos.",
+
+        "Ubicación estratégica para expansión."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Inclusión Social y Reconciliación",
+
+      "fortalezas":[
+
+        "Programas dirigidos a población vulnerable.",
+
+        "Enfoque diferencial incorporado en el Plan.",
+
+        "Participación de organizaciones sociales.",
+
+        "Capacidad institucional para atención social.",
+
+        "Articulación interinstitucional."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Comercio, Industria y Turismo",
+
+      "fortalezas":[
+
+        "Reconocimiento histórico y patrimonial de Girón.",
+
+        "Potencial turístico.",
+
+        "Actividad comercial creciente.",
+
+        "Ubicación estratégica para el desarrollo empresarial.",
+
+        "Oferta gastronómica y cultural."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Trabajo",
+
+      "fortalezas":[
+
+        "Capital humano joven.",
+
+        "Potencial emprendedor.",
+
+        "Ubicación cercana a importantes centros económicos.",
+
+        "Capacidad para generar nuevas oportunidades laborales.",
+
+        "Oferta de formación para el trabajo."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno Territorial",
+
+      "fortalezas":[
+
+        "Existencia del Plan de Desarrollo como instrumento de planificación.",
+
+        "Capacidad administrativa municipal.",
+
+        "Articulación con entidades nacionales y departamentales.",
+
+        "Experiencia en formulación de proyectos.",
+
+        "Compromiso institucional con la transparencia."
+
+      ]
+
+    }
+
+  ],
+
+  "fortalezasMunicipales":[
+
+    "Ubicación estratégica dentro del Área Metropolitana de Bucaramanga.",
+
+    "Importante patrimonio histórico y cultural.",
+
+    "Potencial turístico reconocido a nivel nacional.",
+
+    "Territorio con vocación agrícola y ambiental.",
+
+    "Capacidad para atraer inversión pública y privada.",
+
+    "Conectividad vial regional.",
+
+    "Diversidad económica.",
+
+    "Capital humano con potencial de desarrollo."
+
+  ],
+
+  "consultasIA":[
+
+    "¿Cuáles son las principales fortalezas de Girón?",
+
+    "¿Qué ventajas competitivas tiene el municipio?",
+
+    "¿Qué fortalezas identifica el Plan de Desarrollo?",
+
+    "¿Sobre qué fortalezas puede construirse un programa de gobierno?",
+
+    "¿Qué sectores presentan mayor potencial de crecimiento?"
+
+  ],
+
+  "utilidadApp":[
+
+    "Construcción de diagnósticos estratégicos.",
+
+    "Generación automática de propuestas de campaña.",
+
+    "Preparación de discursos.",
+
+    "Apoyo a la Inteligencia Artificial.",
+
+    "Comparativos sectoriales.",
+
+    "Planeación territorial.",
+
+    "Análisis DOFA municipal."
+
+  ],
+
+  "fuente":{
+
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "capitulo":"Diagnóstico General y Diagnósticos Sectoriales"
+
+  }
+
+}

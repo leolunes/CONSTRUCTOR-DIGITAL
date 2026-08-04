@@ -1,0 +1,115 @@
+/* =====================================
+   SEMÁFORO RADICACIÓN MGA
+   ===================================== */
+
+.semaforo-mga-card{
+  background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+  border:1px solid var(--border,#1f2937);
+  border-radius:18px;
+  padding:16px;
+  color:var(--text,#e5e7eb);
+}
+
+.semaforo-head{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+}
+
+.semaforo-head h2{
+  margin:0 0 6px 0;
+  font-size:18px;
+}
+
+.semaforo-head p{
+  margin:0;
+  color:var(--muted,#9ca3af);
+  font-size:13px;
+}
+
+.semaforo-score{
+  width:96px;
+  height:96px;
+  border-radius:24px;
+  display:grid;
+  place-items:center;
+  background:#0b1220;
+  border:1px solid var(--border,#1f2937);
+  text-align:center;
+}
+
+.semaforo-score strong{
+  display:block;
+  font-size:24px;
+}
+
+.semaforo-score span{
+  display:block;
+  font-size:12px;
+  font-weight:900;
+}
+
+.semaforo-score.ok{color:#22c55e;border-color:rgba(34,197,94,.35)}
+.semaforo-score.warn{color:#f59e0b;border-color:rgba(245,158,11,.35)}
+.semaforo-score.bad{color:#ef4444;border-color:rgba(239,68,68,.35)}
+
+.semaforo-msg{
+  margin-top:14px;
+  padding:12px;
+  border-radius:14px;
+  font-weight:800;
+  border:1px solid var(--border,#1f2937);
+}
+
+.semaforo-msg.ok{background:rgba(34,197,94,.08); color:#bbf7d0; border-color:rgba(34,197,94,.35)}
+.semaforo-msg.warn{background:rgba(245,158,11,.08); color:#fde68a; border-color:rgba(245,158,11,.35)}
+.semaforo-msg.bad{background:rgba(239,68,68,.08); color:#fecaca; border-color:rgba(239,68,68,.35)}
+
+.semaforo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:14px;
+}
+
+.semaforo-item{
+  padding:12px;
+  border-radius:14px;
+  background:#0b1220;
+  border:1px solid var(--border,#1f2937);
+}
+
+.semaforo-item strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.semaforo-item span,
+.semaforo-item small{
+  display:block;
+  color:var(--muted,#9ca3af);
+  font-size:12px;
+}
+
+.semaforo-item.ok{border-color:rgba(34,197,94,.35)}
+.semaforo-item.bad{border-color:rgba(239,68,68,.35)}
+
+.semaforo-next{
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid rgba(96,165,250,.35);
+  background:rgba(37,99,235,.12);
+}
+
+.semaforo-next strong{
+  display:block;
+  color:#bfdbfe;
+  margin-bottom:5px;
+}
+
+@media(max-width:900px){
+  .semaforo-head{flex-direction:column}
+  .semaforo-grid{grid-template-columns:1fr}
+}

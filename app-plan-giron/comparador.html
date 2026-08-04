@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Comparador - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+<h1>Comparador Estratégico</h1>
+<p>Compare sectores, presupuesto, problemáticas, riesgos y oportunidades.</p>
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+<h2>Seleccione dos sectores</h2>
+
+<select id="sectorA" onchange="compararSectores()">
+<option value="">Primer sector</option>
+</select>
+
+<br><br>
+
+<select id="sectorB" onchange="compararSectores()">
+<option value="">Segundo sector</option>
+</select>
+</section>
+
+<section class="card">
+<h2>Resultado de la comparación</h2>
+
+<div id="resultadoComparador">
+<p class="texto-suave">Seleccione dos sectores para comparar.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>Consulta Inteligente</h2>
+
+<textarea
+id="preguntaComparadorIA"
+placeholder="Ejemplo: Compare salud y educación.">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaComparadorIA','respuestaComparadorIA')">
+Consultar IA
+</button>
+
+<div id="respuestaComparadorIA"></div>
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="seguimiento.html">Seguimiento</a>
+<a href="propuestas.html">Propuestas</a>
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ia.js"></script>
+
+<script>
+function cargarSelectComparador() {
+    const base = window.BASE_CONOCIMIENTO || {};
+    const selectA = document.getElementById("sectorA");
+    const selectB = document.getElementById("sectorB");
+
+    if (!base.sectores || !base.sectores.sectores) return;
+
+    base.sectores.sectores.forEach(sector => {
+        const optionA = document.createElement("option");
+        optionA.value = sector.id;
+        optionA.textContent = sector.nombre;
+        selectA.appendChild(optionA);
+
+        const optionB = document.createElement("option");
+        optionB.value = sector.id;
+        optionB.textContent = sector.nombre;
+        selectB.appendChild(optionB);
+    });
+}
+
+function obtenerPresupuestoSector(sectorId) {
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!base.presupuesto || !base.presupuesto.sectores) return null;
+
+    return base.presupuesto.sectores.find(item => item.sectorId === sectorId);
+}
+
+function obtenerBloqueSector(archivo, sectorId, campo) {
+    const base = window.BASE_CONOCIMIENTO || {};
+    const data = base[archivo];
+
+    if (!data || !data.sectores) return [];
+
+    const bloque = data.sectores.find(item => item.sectorId === sectorId);
+
+    if (!bloque || !bloque[campo]) return [];
+
+    return bloque[campo];
+}
+
+function compararSectores() {
+    const idA = document.getElementById("sectorA").value;
+    const idB = document.getElementById("sectorB").value;
+    const contenedor = document.getElementById("resultadoComparador");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!idA || !idB) {
+        contenedor.innerHTML = "<p class='texto-suave'>Seleccione dos sectores para comparar.</p>";
+        return;
+    }
+
+    if (idA === idB) {
+        contenedor.innerHTML = "<p class='texto-suave'>Seleccione sectores diferentes.</p>";
+        return;
+    }
+
+    const sectorA = base.sectores.sectores.find(s => s.id === idA);
+    const sectorB = base.sectores.sectores.find(s => s.id === idB);
+
+    const presA = obtenerPresupuestoSector(idA);
+    const presB = obtenerPresupuestoSector(idB);
+
+    const probA = obtenerBloqueSector("problematicas", idA, "problematicas");
+    const probB = obtenerBloqueSector("problematicas", idB, "problematicas");
+
+    const riesA = obtenerBloqueSector("riesgos", idA, "riesgos");
+    const riesB = obtenerBloqueSector("riesgos", idB, "riesgos");
+
+    contenedor.innerHTML = `
+        <div class="comparador-grid">
+
+            <div class="comparador-columna comparador-diagnostico">
+                <h3>${sectorA.nombre}</h3>
+                <p><strong>Presupuesto:</strong> ${presA ? "$ " + presA.totalCuatrienio + " millones" : "Sin dato"}</p>
+                <p><strong>Participación:</strong> ${presA ? presA.participacionPorcentual : "Sin dato"}</p>
+
+                <h4>Problemáticas</h4>
+                <ul>
+                    ${probA.slice(0, 4).map(p => `<li>${p}</li>`).join("") || "<li>Sin información</li>"}
+                </ul>
+
+                <h4>Riesgos</h4>
+                <ul>
+                    ${riesA.slice(0, 4).map(p => `<li>${p}</li>`).join("") || "<li>Sin información</li>"}
+                </ul>
+            </div>
+
+            <div class="comparador-columna comparador-propuesta">
+                <h3>${sectorB.nombre}</h3>
+                <p><strong>Presupuesto:</strong> ${presB ? "$ " + presB.totalCuatrienio + " millones" : "Sin dato"}</p>
+                <p><strong>Participación:</strong> ${presB ? presB.participacionPorcentual : "Sin dato"}</p>
+
+                <h4>Problemáticas</h4>
+                <ul>
+                    ${probB.slice(0, 4).map(p => `<li>${p}</li>`).join("") || "<li>Sin información</li>"}
+                </ul>
+
+                <h4>Riesgos</h4>
+                <ul>
+                    ${riesB.slice(0, 4).map(p => `<li>${p}</li>`).join("") || "<li>Sin información</li>"}
+                </ul>
+            </div>
+
+        </div>
+    `;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cargarSelectComparador, 700);
+});
+</script>
+
+</body>
+
+</html>

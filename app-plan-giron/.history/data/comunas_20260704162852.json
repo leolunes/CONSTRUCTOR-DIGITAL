@@ -1,0 +1,201 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+  "descripcion": "Archivo territorial para organizar información urbana del Plan de Desarrollo Municipal. El Plan menciona el enfoque territorial para intervenciones en territorios urbano-rurales y niveles desagregados como comunas o corregimientos, pero no presenta una tabla oficial de comunas con numeración o listado completo de barrios.",
+
+  "criterioConstruccion": "Este archivo no inventa comunas ni asigna barrios a comunas sin soporte documental. Agrupa únicamente las zonas urbanas mencionadas expresamente en el Plan por temas de intervención: espacio público, servicios públicos, movilidad y ambiente urbano.",
+
+  "agrupacionesUrbanas": [
+    {
+      "id": "AGR-URB-001",
+      "nombre": "Zona urbana asociada a espacio público verde",
+      "tipo": "Agrupación temática urbana",
+      "temaPrincipal": "Espacio público",
+      "barriosRelacionados": [
+        "Santa Cruz",
+        "Río de Oro",
+        "El Malecón",
+        "Sagrado Corazón",
+        "Meseta I",
+        "Meseta II",
+        "Meseta III",
+        "La Arboleda",
+        "Castilla la Nueva",
+        "El Llanito",
+        "El Poblado",
+        "Altos de Arenales",
+        "Jardín de Arenales",
+        "El Progreso"
+      ],
+      "referenciasPlan": [
+        "Parque ecológico El Gallineral en los barrios Santa Cruz, Río de Oro y El Malecón.",
+        "Parque Sagrado Corazón en el barrio Sagrado Corazón.",
+        "Parque Meseta en los barrios Meseta I, II y III.",
+        "Parque La Arboleda en cañada de los barrios La Arboleda, Castilla la Nueva, El Llanito y El Poblado.",
+        "Parque El Poblado en la cañada del barrio El Poblado.",
+        "Parque Jardín de Arenales en Altos de Arenales, Jardín de Arenales y El Progreso."
+      ],
+      "indicadoresRelacionados": [
+        {
+          "nombre": "Espacio público zona verde de Girón",
+          "valor": "9,4",
+          "unidad": "Hectáreas"
+        },
+        {
+          "nombre": "Índice de espacio público verde por habitante",
+          "valor": "0,58",
+          "unidad": "Metros cuadrados por habitante"
+        }
+      ],
+      "sectoresRelacionados": [
+        "Vivienda, Ciudad y Territorio",
+        "Ambiente y Desarrollo Sostenible",
+        "Deporte y Recreación",
+        "Gobierno Territorial"
+      ],
+      "usoApp": [
+        "Consultar barrios relacionados con parques urbanos.",
+        "Identificar déficit de espacio público verde.",
+        "Preparar propuestas de recuperación y mantenimiento de parques.",
+        "Construir preguntas de control político sobre espacio público."
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 167"
+    },
+    {
+      "id": "AGR-URB-002",
+      "nombre": "Zona urbana asociada a perímetro sanitario",
+      "tipo": "Agrupación temática urbana",
+      "temaPrincipal": "Alcantarillado y servicios públicos",
+      "barriosRelacionados": [
+        "Santa Cruz",
+        "Sagrado Corazón",
+        "Carrizal",
+        "San Antonio del Carrizal",
+        "Balcones de Alejandría",
+        "Betania",
+        "Bellavista",
+        "Campestre Norte",
+        "Paraíso",
+        "Quintas del Llanito",
+        "Jardín de la Aldea",
+        "Palmeras",
+        "Balcones de Girón",
+        "Ciudadela del Oriente",
+        "Brisas de la Campiña",
+        "Aldea Alta",
+        "Aldea Baja",
+        "Eloy Valenzuela",
+        "La Campiña",
+        "Balcones del Sur",
+        "Altos del Tejar",
+        "El Gallineral",
+        "Primero de Mayo",
+        "Corviandi",
+        "Río Prado",
+        "Arenales del Campestre",
+        "Arenales IV",
+        "Arenales de Girón",
+        "Mirador de Arenales",
+        "Bahondo",
+        "Villa de Los Caballeros",
+        "Riviera del Río",
+        "Villas de San Juan",
+        "La Meseta",
+        "El Consuelo",
+        "Portal del Campestre",
+        "Angulito",
+        "Cristal Alto",
+        "Villampiss",
+        "Vida en Primavera",
+        "Brisas de Provenza",
+        "Villa Don Juan I",
+        "Villa de Don Juan II Etapa",
+        "Prados de Cataluña",
+        "Brisas del Campo",
+        "Alpes del Campestre",
+        "Almenares de San Juan",
+        "Girón Campestre",
+        "Villamil"
+      ],
+      "referenciasPlan": [
+        "Barrios incluidos dentro del perímetro sanitario de Girón."
+      ],
+      "sectoresRelacionados": [
+        "Vivienda, Ciudad y Territorio",
+        "Ambiente y Desarrollo Sostenible",
+        "Gobierno Territorial"
+      ],
+      "usoApp": [
+        "Consultar barrios relacionados con servicios públicos.",
+        "Preparar control político sobre alcantarillado.",
+        "Relacionar necesidades urbanas con saneamiento básico.",
+        "Identificar zonas urbanas mencionadas en el diagnóstico de servicios públicos."
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 160"
+    },
+    {
+      "id": "AGR-URB-003",
+      "nombre": "Zona urbana asociada a corredores viales",
+      "tipo": "Agrupación temática urbana",
+      "temaPrincipal": "Movilidad urbana",
+      "barriosRelacionados": [
+        "El Poblado",
+        "Río de Oro",
+        "Bahondo"
+      ],
+      "referenciasPlan": [
+        "Perimetral Río de Oro / Carrera 22 C.",
+        "Calle 43 - Barrio El Poblado.",
+        "Carrera 26 - Barrio El Poblado.",
+        "Carrera 23 - Barrio El Poblado.",
+        "Transversal Bahondo."
+      ],
+      "sectoresRelacionados": [
+        "Transporte",
+        "Gobierno Territorial",
+        "Vivienda, Ciudad y Territorio"
+      ],
+      "usoApp": [
+        "Consultar sectores urbanos relacionados con movilidad.",
+        "Preparar propuestas de mejoramiento vial.",
+        "Identificar vías urbanas mencionadas en el Plan.",
+        "Construir preguntas de control político sobre infraestructura vial."
+      ],
+      "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 93"
+    }
+  ],
+
+  "enfoqueTerritorial": {
+    "descripcion": "El Plan adopta enfoque territorial para atender la realidad urbano-rural y niveles desagregados como comunas o corregimientos.",
+    "aplicacionEnLaApp": [
+      "Permitir consultas por zona urbana.",
+      "Relacionar barrios con sectores de inversión.",
+      "Preparar recorridos y propuestas territoriales.",
+      "Evitar asignaciones territoriales no soportadas por el documento."
+    ],
+    "fuente": "Plan de Desarrollo Municipal Girón 2024-2027, página 32"
+  },
+
+  "resumen": {
+    "numeroAgrupacionesUrbanas": "3",
+    "barriosRelacionados": "61",
+    "temasPrincipales": [
+      "Espacio público",
+      "Servicios públicos",
+      "Alcantarillado",
+      "Movilidad urbana"
+    ],
+    "notaTecnica": "El Plan menciona comunas como nivel territorial, pero no aporta un listado oficial de comunas ni asignación completa de barrios a comunas. Por confiabilidad, este archivo conserva agrupaciones urbanas temáticas basadas solo en menciones expresas del Plan."
+  },
+
+  "fuenteGeneral": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "paginasReferencia": [
+      "32",
+      "93",
+      "160",
+      "167"
+    ]
+  }
+}

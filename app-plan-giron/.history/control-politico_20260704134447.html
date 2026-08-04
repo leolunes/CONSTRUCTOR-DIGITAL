@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Control Político - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Control Político</h1>
+
+<p>Preguntas estratégicas para debates, seguimiento y vigilancia de la gestión municipal.</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>🏛 Preguntas por Sector</h2>
+
+<select id="selectorSectorControl" onchange="cargarPreguntasControl()">
+<option value="">Seleccione un sector</option>
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Preguntas sugeridas</h2>
+
+<div id="contenedorPreguntasControl">
+
+<p class="texto-suave">
+Seleccione un sector para ver preguntas de control político.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="buscador.html">Buscar</a>
+<a href="propuestas.html">Propuestas</a>
+
+</nav>
+
+<script src="js/control-politico.js"></script>
+
+</body>
+
+</html>

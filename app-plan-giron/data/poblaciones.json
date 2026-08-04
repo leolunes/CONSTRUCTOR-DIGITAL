@@ -1,0 +1,217 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Poblaciones priorizadas por el Plan de Desarrollo Municipal de Girón 2024-2027, de acuerdo con los enfoques diferenciales, poblacionales y de derechos.",
+
+  "poblaciones":[
+
+    {
+      "id":"POB-001",
+      "nombre":"Primera Infancia",
+      "grupoEtario":"0 a 5 años",
+      "enfoque":"Protección Integral",
+      "temasRelacionados":[
+        "Salud",
+        "Nutrición",
+        "Educación Inicial",
+        "Protección"
+      ],
+      "sectoresRelacionados":[
+        "Salud y Protección Social",
+        "Educación",
+        "Inclusión Social y Reconciliación"
+      ],
+      "objetivoGeneral":"Garantizar el desarrollo integral durante los primeros años de vida."
+    },
+
+    {
+      "id":"POB-002",
+      "nombre":"Niñez",
+      "grupoEtario":"6 a 11 años",
+      "enfoque":"Garantía de Derechos",
+      "temasRelacionados":[
+        "Educación",
+        "Salud",
+        "Recreación",
+        "Protección"
+      ],
+      "sectoresRelacionados":[
+        "Educación",
+        "Salud y Protección Social",
+        "Deporte y Recreación"
+      ],
+      "objetivoGeneral":"Promover el desarrollo integral y la permanencia escolar."
+    },
+
+    {
+      "id":"POB-003",
+      "nombre":"Adolescencia",
+      "grupoEtario":"12 a 17 años",
+      "enfoque":"Desarrollo Integral",
+      "temasRelacionados":[
+        "Educación",
+        "Salud Mental",
+        "Prevención",
+        "Participación"
+      ],
+      "sectoresRelacionados":[
+        "Educación",
+        "Salud y Protección Social",
+        "Deporte y Recreación"
+      ],
+      "objetivoGeneral":"Fortalecer oportunidades educativas, deportivas y de participación."
+    },
+
+    {
+      "id":"POB-004",
+      "nombre":"Juventud",
+      "grupoEtario":"14 a 28 años",
+      "enfoque":"Participación y Desarrollo",
+      "temasRelacionados":[
+        "Educación Superior",
+        "Empleo",
+        "Emprendimiento",
+        "Participación Ciudadana"
+      ],
+      "sectoresRelacionados":[
+        "Educación",
+        "Trabajo",
+        "Comercio, Industria y Turismo"
+      ],
+      "objetivoGeneral":"Generar oportunidades para el desarrollo social y económico de los jóvenes."
+    },
+
+    {
+      "id":"POB-005",
+      "nombre":"Mujeres",
+      "enfoque":"Equidad de Género",
+      "temasRelacionados":[
+        "Autonomía Económica",
+        "Prevención de Violencias",
+        "Participación",
+        "Salud"
+      ],
+      "sectoresRelacionados":[
+        "Inclusión Social y Reconciliación",
+        "Salud y Protección Social"
+      ],
+      "objetivoGeneral":"Promover la igualdad de oportunidades y la protección integral de las mujeres."
+    },
+
+    {
+      "id":"POB-006",
+      "nombre":"Adulto Mayor",
+      "enfoque":"Envejecimiento Activo",
+      "temasRelacionados":[
+        "Salud",
+        "Protección Social",
+        "Recreación",
+        "Participación"
+      ],
+      "sectoresRelacionados":[
+        "Salud y Protección Social",
+        "Inclusión Social y Reconciliación",
+        "Deporte y Recreación"
+      ],
+      "objetivoGeneral":"Mejorar la calidad de vida y promover un envejecimiento digno."
+    },
+
+    {
+      "id":"POB-007",
+      "nombre":"Personas con Discapacidad",
+      "enfoque":"Inclusión",
+      "temasRelacionados":[
+        "Accesibilidad",
+        "Salud",
+        "Educación",
+        "Participación"
+      ],
+      "sectoresRelacionados":[
+        "Inclusión Social y Reconciliación",
+        "Salud y Protección Social",
+        "Educación"
+      ],
+      "objetivoGeneral":"Garantizar la inclusión y el ejercicio pleno de los derechos."
+    },
+
+    {
+      "id":"POB-008",
+      "nombre":"Víctimas del Conflicto Armado",
+      "enfoque":"Reparación Integral",
+      "temasRelacionados":[
+        "Atención",
+        "Reparación",
+        "Inclusión",
+        "Participación"
+      ],
+      "sectoresRelacionados":[
+        "Inclusión Social y Reconciliación",
+        "Gobierno Territorial"
+      ],
+      "objetivoGeneral":"Garantizar la atención integral y el acceso a la oferta institucional."
+    },
+
+    {
+      "id":"POB-009",
+      "nombre":"Población Migrante",
+      "enfoque":"Integración Social",
+      "temasRelacionados":[
+        "Salud",
+        "Educación",
+        "Regularización",
+        "Inclusión"
+      ],
+      "sectoresRelacionados":[
+        "Salud y Protección Social",
+        "Educación",
+        "Inclusión Social y Reconciliación"
+      ],
+      "objetivoGeneral":"Facilitar el acceso a los servicios institucionales y promover la integración social."
+    },
+
+    {
+      "id":"POB-010",
+      "nombre":"Población Campesina",
+      "enfoque":"Desarrollo Rural",
+      "temasRelacionados":[
+        "Producción Agropecuaria",
+        "Comercialización",
+        "Asistencia Técnica",
+        "Infraestructura Rural"
+      ],
+      "sectoresRelacionados":[
+        "Agricultura y Desarrollo Rural",
+        "Transporte",
+        "Ambiente y Desarrollo Sostenible"
+      ],
+      "objetivoGeneral":"Fortalecer el desarrollo económico y social del sector rural."
+    }
+
+  ],
+
+  "enfoquesTransversales":[
+    "Enfoque de Derechos Humanos",
+    "Enfoque Diferencial",
+    "Enfoque de Género",
+    "Enfoque Territorial",
+    "Enfoque de Curso de Vida",
+    "Participación Ciudadana"
+  ],
+
+  "consultasIA":[
+    "¿Qué poblaciones prioriza el Plan de Desarrollo de Girón?",
+    "¿Qué programas benefician a la juventud?",
+    "¿Qué acciones contempla el Plan para las mujeres?",
+    "¿Cómo atiende el municipio a las personas con discapacidad?",
+    "¿Qué políticas existen para el adulto mayor?",
+    "¿Qué estrategias se plantean para la población campesina?"
+  ],
+
+  "fuente":{
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+    "capitulo":"Enfoques poblacionales y diferenciales",
+    "descripcion":"Las poblaciones corresponden a los grupos priorizados en el Plan para la formulación e implementación de políticas, programas y proyectos."
+  }
+}

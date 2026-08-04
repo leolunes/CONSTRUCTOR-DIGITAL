@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cronograma | Constructor MGA Pro</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Cronograma del Proyecto</div>
+      <div class="subtitle" id="cronogramaSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <a class="navbtn" id="btnIndicadores" href="#">Indicadores</a>
+    <a class="navbtn" id="btnRiesgos" href="#">Riesgos</a>
+    <button class="navbtn primary" id="btnGuardarCronogramaTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+<section class="card">
+<div class="cardhead">
+<h2>Programación física y financiera</h2>
+<p class="muted small">
+Las actividades provienen de la Cadena de Valor. Aquí se asignan las fechas de ejecución y el valor programado.
+</p>
+</div>
+
+<div class="grid two">
+<div>
+<label>Fecha de inicio del proyecto</label>
+<input type="date" id="fechaInicio">
+</div>
+
+<div>
+<label>Fecha de terminación del proyecto</label>
+<input type="date" id="fechaFin">
+</div>
+</div>
+</section>
+
+<section class="card" style="margin-top:14px">
+
+<div class="cardhead">
+<h2>Actividades programadas</h2>
+<p class="muted small">
+En la siguiente fase estas actividades se conectarán automáticamente con el Presupuesto Oficial y los APUs.
+</p>
+</div>
+
+<div class="tablewrap">
+<table class="table" style="min-width:1200px">
+<thead>
+<tr>
+<th>Actividad</th>
+<th>Producto</th>
+<th>Inicio</th>
+<th>Fin</th>
+<th>Duración (meses)</th>
+<th>Valor Programado</th>
+<th>Estado</th>
+</tr>
+</thead>
+
+<tbody id="cronogramaBody"></tbody>
+
+</table>
+</div>
+
+<div class="row" style="margin-top:14px">
+<button class="btn" id="btnGenerarCronograma" type="button">
+Generar desde Cadena de Valor
+</button>
+
+<button class="btn primary" id="btnGuardarCronograma" type="button">
+Guardar Cronograma
+</button>
+</div>
+
+</section>
+
+<section class="card" style="margin-top:14px">
+
+<div class="cardhead">
+<h2>Resumen</h2>
+</div>
+
+<div id="resumenCronograma"></div>
+
+</section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/cronograma.js"></script>
+
+</body>
+</html>

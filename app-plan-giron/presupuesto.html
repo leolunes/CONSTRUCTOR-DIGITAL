@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Presupuesto Municipal</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Presupuesto Municipal</h1>
+
+<p>
+Plan Plurianual de Inversiones del Municipio de Girón 2024-2027
+</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>Resumen General</h2>
+
+<div id="resumenPresupuesto">
+<p class="texto-suave">
+Cargando información presupuestal...
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Presupuesto por Vigencia</h2>
+
+<div id="vigenciasPresupuesto"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Ranking por Sectores</h2>
+
+<div id="rankingSectores"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Consultar un Sector</h2>
+
+<select id="selectorSectorPresupuesto" onchange="mostrarSectorPresupuesto()">
+
+<option value="">
+Seleccione un sector
+</option>
+
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Detalle del Sector</h2>
+
+<div id="detalleSectorPresupuesto">
+
+<p class="texto-suave">
+Seleccione un sector.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Consulta Inteligente</h2>
+
+<textarea
+id="preguntaPresupuestoIA"
+placeholder="Ejemplo:
+¿Cuál es el sector con mayor presupuesto?">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaPresupuestoIA','respuestaPresupuestoIA')">
+
+Consultar IA
+
+</button>
+
+<div id="respuestaPresupuestoIA"></div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+
+<a href="sectores.html">Sectores</a>
+
+<a href="indicadores.html">Indicadores</a>
+
+<a href="presupuesto.html">Presupuesto</a>
+
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ia.js"></script>
+
+<script>
+
+function cargarPresupuesto(){
+
+    const base=window.BASE_CONOCIMIENTO||{};
+
+    if(!base.presupuesto){
+
+        return;
+
+    }
+
+    const presupuesto=base.presupuesto;
+
+    document.getElementById("resumenPresupuesto").innerHTML=`
+
+        <h3>
+
+        Presupuesto Total
+
+        </h3>
+
+        <div class="numeroGrande">
+
+        $ ${presupuesto.totalesPorVigencia.totalCuatrienio}
+
+        </div>
+
+        <p>
+
+        Millones de pesos colombianos
+
+        </p>
+
+    `;
+
+    document.getElementById("vigenciasPresupuesto").innerHTML=`
+
+        <table class="tabla">
+
+        <tr>
+
+        <th>Vigencia</th>
+
+        <th>Valor</th>
+
+        </tr>
+
+        <tr>
+
+        <td>2024</td>
+
+        <td>$ ${presupuesto.totalesPorVigencia["2024"]}</td>
+
+        </tr>
+
+        <tr>
+
+        <td>2025</td>
+
+        <td>$ ${presupuesto.totalesPorVigencia["2025"]}</td>
+
+        </tr>
+
+        <tr>
+
+        <td>2026</td>
+
+        <td>$ ${presupuesto.totalesPorVigencia["2026"]}</td>
+
+        </tr>
+
+        <tr>
+
+        <td>2027</td>
+
+        <td>$ ${presupuesto.totalesPorVigencia["2027"]}</td>
+
+        </tr>
+
+        </table>
+
+    `;
+
+    document.getElementById("rankingSectores").innerHTML=
+
+    presupuesto.sectores.map(sector=>`
+
+        <div class="card-sector">
+
+            <h3>
+
+            ${sector.ranking}. ${sector.sector}
+
+            </h3>
+
+            <p>
+
+            Total:
+
+            <strong>
+
+            $ ${sector.totalCuatrienio}
+
+            </strong>
+
+            </p>
+
+            <p>
+
+            Participación:
+
+            ${sector.participacionPorcentual} %
+
+            </p>
+
+        </div>
+
+    `).join("");
+
+    const select=document.getElementById("selectorSectorPresupuesto");
+
+    presupuesto.sectores.forEach(sector=>{
+
+        const option=document.createElement("option");
+
+        option.value=sector.sectorId;
+
+        option.textContent=sector.sector;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+function mostrarSectorPresupuesto(){
+
+    const base=window.BASE_CONOCIMIENTO||{};
+
+    const id=document.getElementById("selectorSectorPresupuesto").value;
+
+    const sector=
+
+    base.presupuesto.sectores.find(
+
+        s=>s.sectorId===id
+
+    );
+
+    if(!sector){
+
+        return;
+
+    }
+
+    document.getElementById("detalleSectorPresupuesto").innerHTML=`
+
+        <h3>
+
+        ${sector.sector}
+
+        </h3>
+
+        <table class="tabla">
+
+        <tr>
+
+        <th>Año</th>
+
+        <th>Valor</th>
+
+        </tr>
+
+        <tr>
+
+        <td>2024</td>
+
+        <td>$ ${sector.valores["2024"]}</td>
+
+        </tr>
+
+        <tr>
+
+        <td>2025</td>
+
+        <td>$ ${sector.valores["2025"]}</td>
+
+        </tr>
+
+        <tr>
+
+        <td>2026</td>
+
+        <td>$ ${sector.valores["2026"]}</td>
+
+        </tr>
+
+        <tr>
+
+        <td>2027</td>
+
+        <td>$ ${sector.valores["2027"]}</td>
+
+        </tr>
+
+        </table>
+
+        <br>
+
+        <strong>
+
+        Total Cuatrienio:
+
+        </strong>
+
+        $ ${sector.totalCuatrienio}
+
+        <br><br>
+
+        <strong>
+
+        Participación:
+
+        </strong>
+
+        ${sector.participacionPorcentual} %
+
+    `;
+
+}
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+setTimeout(
+
+cargarPresupuesto,
+
+700
+
+);
+
+}
+
+);
+
+</script>
+
+</body>
+
+</html>

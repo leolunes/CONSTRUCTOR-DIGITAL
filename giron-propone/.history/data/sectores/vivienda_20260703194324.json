@@ -1,0 +1,187 @@
+{
+  "id": "vivienda",
+  "nombre": "Vivienda",
+  "icono": "🏘️",
+  "color": "#22c55e",
+  "descripcion": "Vivienda nueva, mejoramiento de vivienda y urbanismo.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de actualización con fuentes oficiales",
+  "situacionActual": {
+    "titulo": "Vivienda digna para el crecimiento de Girón",
+    "resumen": "El crecimiento demográfico del municipio exige una política de vivienda orientada al acceso, mejoramiento y planificación urbana sostenible, priorizando a los hogares más vulnerables.",
+    "enfoquePolitico": "Una vivienda digna fortalece la familia, mejora la calidad de vida y promueve el desarrollo ordenado del territorio.",
+    "advertenciaDatos": "Las cifras deberán actualizarse con información oficial antes de su utilización pública."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Déficit cuantitativo de vivienda",
+      "valor": null,
+      "unidad": "hogares",
+      "estado": "pendiente",
+      "fuente": "DANE / Ministerio de Vivienda"
+    },
+    {
+      "indicador": "Déficit cualitativo de vivienda",
+      "valor": null,
+      "unidad": "hogares",
+      "estado": "pendiente",
+      "fuente": "DANE"
+    },
+    {
+      "indicador": "Viviendas que requieren mejoramiento",
+      "valor": null,
+      "unidad": "viviendas",
+      "estado": "pendiente",
+      "fuente": "Municipio"
+    },
+    {
+      "indicador": "Proyectos VIS/VIP en ejecución",
+      "valor": null,
+      "unidad": "proyectos",
+      "estado": "pendiente",
+      "fuente": "Secretaría de Planeación"
+    },
+    {
+      "indicador": "Barrios priorizados para urbanismo",
+      "valor": null,
+      "unidad": "barrios",
+      "estado": "pendiente",
+      "fuente": "Plan de Desarrollo"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Déficit habitacional",
+      "descripcion": "Persisten hogares sin acceso a vivienda adecuada.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Viviendas en mal estado",
+      "descripcion": "Muchas familias requieren mejoramientos locativos.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Urbanización desordenada",
+      "descripcion": "Se requieren mejores espacios públicos y planificación.",
+      "impacto": "Medio-Alto"
+    },
+    {
+      "titulo": "Acceso limitado a programas",
+      "descripcion": "No todas las familias conocen o acceden a subsidios.",
+      "impacto": "Medio"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Hogar Seguro",
+      "objetivo": "Promover programas de mejoramiento de vivienda y acceso a subsidios.",
+      "mensajeCentral": "Cada familia merece una vivienda digna."
+    },
+    {
+      "nombre": "Barrios para Vivir Mejor",
+      "objetivo": "Impulsar proyectos integrales de urbanismo y espacio público.",
+      "mensajeCentral": "La vivienda también necesita entorno seguro y ordenado."
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre vivienda",
+    "duracion": "3 minutos",
+    "texto": "Hablar de vivienda es hablar de familias. Desde el Concejo promoveremos programas de mejoramiento de vivienda, acceso a subsidios, urbanismo responsable y gestión de proyectos que permitan construir un Girón más ordenado, seguro y con mejores oportunidades para todos."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "🏘️ Trabajemos por viviendas dignas y barrios mejor planificados para Girón.",
+    "facebook": "La vivienda digna es una prioridad. Impulsaremos mejoramientos, urbanismo y gestión de proyectos para las familias gironesas.",
+    "instagram": "🏠 Más vivienda digna. 🌳 Mejores barrios. 👨‍👩‍👧‍👦 Mejor calidad de vida.",
+    "tiktok": "Un hogar digno cambia el futuro de una familia. Construyamos juntos un mejor Girón."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Programa de mejoramiento de vivienda",
+      "componentes": [
+        "Cubiertas",
+        "Pisos",
+        "Baños",
+        "Cocinas",
+        "Instalaciones"
+      ],
+      "fuentes": [
+        "Ministerio de Vivienda",
+        "Municipio",
+        "SGR"
+      ]
+    },
+    {
+      "nombre": "Urbanismo integral",
+      "componentes": [
+        "Andenes",
+        "Parques",
+        "Iluminación",
+        "Espacio público"
+      ],
+      "fuentes": [
+        "Municipio",
+        "Gobernación"
+      ]
+    },
+    {
+      "nombre": "Vivienda VIS/VIP",
+      "componentes": [
+        "Urbanismo",
+        "Construcción",
+        "Servicios públicos"
+      ],
+      "fuentes": [
+        "Ministerio de Vivienda",
+        "Constructoras",
+        "Recursos propios"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Cuál es el déficit de vivienda en Girón?",
+    "¿Cuántas viviendas requieren mejoramiento?",
+    "¿Qué proyectos de vivienda están formulados?"
+  ],
+  "controlPolitico": [
+    "Solicitar informes sobre subsidios de vivienda.",
+    "Revisar ejecución de proyectos VIS/VIP.",
+    "Verificar planes de mejoramiento barrial."
+  ],
+  "fuentesFinanciacion": [
+    "Ministerio de Vivienda",
+    "Sistema General de Regalías",
+    "Recursos propios",
+    "Gobernación de Santander",
+    "Findeter"
+  ],
+  "normatividad": [
+    "Ley 388 de 1997",
+    "Ley 1537 de 2012",
+    "Plan de Ordenamiento Territorial",
+    "Plan de Desarrollo Municipal"
+  ],
+  "ods": [
+    {
+      "numero": 1,
+      "nombre": "Fin de la pobreza"
+    },
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Vivienda",
+    "subtitulo": "Hogar digno para Girón",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia",
+      "Discurso",
+      "Proyectos",
+      "Financiación"
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Girón 2024 - 2027</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-contenido">
+        <h1>Plan Girón 2024 - 2027</h1>
+        <p>Asistente Estratégico Municipal</p>
+    </div>
+</header>
+
+<main class="contenedor">
+
+    <section class="hero">
+        <h2>Más Campo para el Progreso</h2>
+        <p>
+            Herramienta de consulta inteligente basada en el Plan de Desarrollo
+            del Municipio de Girón, Santander.
+        </p>
+
+        <div class="buscador-inicio">
+            <input 
+                type="text" 
+                id="busquedaInicio" 
+                placeholder="Buscar salud, educación, movilidad, vivienda..."
+            >
+            <button onclick="buscarDesdeInicio()">Buscar</button>
+        </div>
+    </section>
+
+    <section class="resumen">
+        <h2>Resumen General</h2>
+
+        <div class="grid-resumen">
+            <div class="card">
+                <h3>Municipio</h3>
+                <p>Girón, Santander</p>
+            </div>
+
+            <div class="card">
+                <h3>Periodo</h3>
+                <p>2024 - 2027</p>
+            </div>
+
+            <div class="card">
+                <h3>Plan</h3>
+                <p>Más Campo para el Progreso</p>
+            </div>
+
+            <div class="card">
+                <h3>Uso Estratégico</h3>
+                <p>Consulta, propuestas, control político y seguimiento.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion">
+        <h2>Ejes Estratégicos</h2>
+
+        <div class="grid-cards">
+            <div class="card eje">
+                <span>1</span>
+                <h3>Administración Afectiva y Efectiva</h3>
+                <p>Gestión pública, gobierno territorial, justicia, TIC y movilidad.</p>
+            </div>
+
+            <div class="card eje">
+                <span>2</span>
+                <h3>Programas Sociales y Calidad de Vida</h3>
+                <p>Salud, educación, inclusión social y atención poblacional.</p>
+            </div>
+
+            <div class="card eje">
+                <span>3</span>
+                <h3>Obras para Transformar a Girón</h3>
+                <p>Infraestructura, vivienda, espacio público, transporte y equipamientos.</p>
+            </div>
+
+            <div class="card eje">
+                <span>4</span>
+                <h3>Progreso, Ocio Productivo y Recreativo</h3>
+                <p>Ruralidad, cultura, turismo, empleo, innovación y deporte.</p>
+            </div>
+
+            <div class="card eje">
+                <span>5</span>
+                <h3>Sostenibilidad y Visión de Largo Plazo</h3>
+                <p>Ambiente, ordenamiento, información estadística y desarrollo sostenible.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion">
+        <h2>Accesos Rápidos</h2>
+
+        <div class="grid-menu">
+            <a href="sectores.html" class="boton-menu">Sectores</a>
+            <a href="buscador.html" class="boton-menu">Buscador</a>
+            <a href="propuestas.html" class="boton-menu">Propuestas</a>
+            <a href="control-politico.html" class="boton-menu">Control Político</a>
+            <a href="indicadores.html" class="boton-menu">Indicadores</a>
+            <a href="presupuesto.html" class="boton-menu">Presupuesto</a>
+            <a href="seguimiento.html" class="boton-menu">Seguimiento</a>
+            <a href="comparador.html" class="boton-menu">Comparador</a>
+        </div>
+    </section>
+
+</main>
+
+<nav class="nav-inferior">
+    <a href="index.html">Inicio</a>
+    <a href="sectores.html">Sectores</a>
+    <a href="buscador.html">Buscar</a>
+    <a href="propuestas.html">Propuestas</a>
+</nav>
+
+<script>
+function buscarDesdeInicio() {
+    const texto = document.getElementById("busquedaInicio").value.trim();
+
+    if (texto === "") {
+        alert("Escriba una palabra para buscar en el Plan de Desarrollo.");
+        return;
+    }
+
+    localStorage.setItem("busquedaPlanGiron", texto);
+    window.location.href = "buscador.html";
+}
+</script>
+
+</body>
+</html>
+
+El siguiente archivo sería sectores.html.

@@ -1,0 +1,233 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+
+  "descripcion": "Banco inteligente de preguntas para candidatos, concejales, periodistas, ciudadanos y funcionarios. Las preguntas están organizadas por sector y servirán para debates, entrevistas, control político y preparación de campañas.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud",
+
+      "preguntas":[
+
+        "¿Cuál es el principal problema de salud pública que enfrenta actualmente Girón?",
+
+        "¿Qué porcentaje de las metas del sector salud presenta avance?",
+
+        "¿Qué programas de salud tienen mayor inversión?",
+
+        "¿Qué indicadores de salud empeoraron respecto al año anterior?",
+
+        "¿Qué proyectos de salud aún no comienzan ejecución?",
+
+        "¿Qué sectores de la población presentan mayores dificultades para acceder a los servicios de salud?",
+
+        "¿Cómo puede fortalecerse la atención preventiva?",
+
+        "¿Qué propuestas pueden mejorar la calidad del servicio de salud en Girón?"
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "preguntas":[
+
+        "¿Cuál es el estado actual de la educación en Girón?",
+
+        "¿Qué indicadores educativos muestran mayor rezago?",
+
+        "¿Cuáles son las principales causas de deserción escolar?",
+
+        "¿Qué instituciones requieren mayor inversión?",
+
+        "¿Qué programas benefician a la primera infancia?",
+
+        "¿Cómo fortalecer la educación rural?",
+
+        "¿Qué propuestas podrían mejorar la calidad educativa?",
+
+        "¿Cómo puede el Concejo hacer seguimiento a las metas educativas?"
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Movilidad",
+
+      "preguntas":[
+
+        "¿Cuáles son los principales problemas de movilidad del municipio?",
+
+        "¿Qué vías requieren intervención prioritaria?",
+
+        "¿Qué proyectos viales están financiados?",
+
+        "¿Qué acciones disminuyen la accidentalidad?",
+
+        "¿Cómo mejorar el transporte público?",
+
+        "¿Qué sectores presentan mayor congestión?",
+
+        "¿Cómo fortalecer la movilidad sostenible?",
+
+        "¿Qué inversiones hacen falta en infraestructura vial?"
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente",
+
+      "preguntas":[
+
+        "¿Cuáles son las principales amenazas ambientales del municipio?",
+
+        "¿Qué fuentes hídricas requieren mayor protección?",
+
+        "¿Qué programas ambientales tienen mayor impacto?",
+
+        "¿Cómo se fortalece la gestión del riesgo?",
+
+        "¿Qué acciones existen frente al cambio climático?",
+
+        "¿Qué zonas presentan mayor vulnerabilidad ambiental?",
+
+        "¿Cómo involucrar más a la comunidad en la protección ambiental?",
+
+        "¿Qué proyectos ambientales requieren mayor financiación?"
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Seguridad",
+
+      "preguntas":[
+
+        "¿Cómo ha evolucionado la seguridad ciudadana?",
+
+        "¿Qué barrios presentan mayores índices de inseguridad?",
+
+        "¿Qué estrategias de prevención existen?",
+
+        "¿Cómo fortalecer la convivencia ciudadana?",
+
+        "¿Qué indicadores utiliza el municipio para medir seguridad?",
+
+        "¿Qué inversiones existen para fortalecer la seguridad?",
+
+        "¿Qué resultados presentan los programas actuales?",
+
+        "¿Qué propuestas pueden mejorar la percepción de seguridad?"
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno",
+
+      "preguntas":[
+
+        "¿Cuál es el porcentaje de ejecución del Plan de Desarrollo?",
+
+        "¿Qué metas presentan mayor retraso?",
+
+        "¿Qué sectores concentran la mayor inversión?",
+
+        "¿Qué indicadores muestran mejores resultados?",
+
+        "¿Qué proyectos presentan riesgos de incumplimiento?",
+
+        "¿Qué dependencias muestran mejor desempeño?",
+
+        "¿Cómo fortalecer la transparencia institucional?",
+
+        "¿Qué mecanismos existen para que la ciudadanía haga seguimiento al Plan?"
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Desarrollo Económico",
+
+      "preguntas":[
+
+        "¿Qué acciones fortalecen el empleo local?",
+
+        "¿Cómo apoyar a los emprendedores?",
+
+        "¿Qué sectores generan mayor empleo?",
+
+        "¿Cómo impulsar el turismo histórico de Girón?",
+
+        "¿Qué estrategias fortalecen el comercio?",
+
+        "¿Qué programas benefician al sector rural?",
+
+        "¿Cómo atraer inversión privada?",
+
+        "¿Qué oportunidades económicas identifica el Plan?"
+
+      ]
+
+    }
+
+  ],
+
+  "tiposPregunta":[
+
+    "Diagnóstico",
+
+    "Control Político",
+
+    "Debate",
+
+    "Entrevista",
+
+    "Campaña",
+
+    "Planeación",
+
+    "Seguimiento",
+
+    "Rendición de Cuentas"
+
+  ],
+
+  "usoDentroDeLaApp":[
+
+    "Preparar debates del Concejo.",
+
+    "Generar preguntas automáticas mediante IA.",
+
+    "Preparar entrevistas a candidatos.",
+
+    "Construir foros ciudadanos.",
+
+    "Realizar seguimiento al Plan de Desarrollo.",
+
+    "Capacitar nuevos concejales.",
+
+    "Apoyar campañas políticas con información técnica.",
+
+    "Fortalecer ejercicios de participación ciudadana."
+
+  ]
+
+}

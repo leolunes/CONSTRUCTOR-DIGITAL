@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Aplicación para consultar costos de alquiler de equipos de construcción."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Costos de Alquiler Equipo de Construcción
+  </title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/icons/favicon.png"
+  >
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- =========================================
+         MENÚ LATERAL
+    ========================================== -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTOS DE ALQUILER
+          </strong>
+
+          <span>
+            Equipo de Construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item active"
+          href="index.html"
+          aria-current="page"
+        >
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Inicio
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          EQUIPOS
+        </div>
+
+        <a
+          class="nav-item"
+          href="equipos.html"
+        >
+          <span class="nav-icon">
+            ▦
+          </span>
+
+          <span>
+            Todos los equipos
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="equipos.html?accion=buscar"
+        >
+          <span class="nav-icon">
+            ⌕
+          </span>
+
+          <span>
+            Buscar equipo
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          INFORMACIÓN
+        </div>
+
+        <button
+          class="nav-item nav-button"
+          id="btnActualizarDatos"
+          type="button"
+        >
+          <span class="nav-icon">
+            ↻
+          </span>
+
+          <span>
+            Actualizar catálogo
+          </span>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+
+            <span
+              class="status-dot"
+              id="statusDot"
+            ></span>
+
+            <strong id="statusTitle">
+              Modo local
+            </strong>
+
+          </div>
+
+          <span id="statusDescription">
+            Información cargada desde archivos del proyecto
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+    ========================================== -->
+
+    <main class="main-content">
+
+      <!-- =========================================
+           BARRA SUPERIOR
+      ========================================== -->
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span class="topbar-eyebrow">
+              PLATAFORMA DE CONSULTA DE EQUIPOS
+            </span>
+
+            <h1>
+              Centro de Control
+            </h1>
+
+          </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <a
+            class="button button-secondary"
+            href="equipos.html"
+          >
+            Ver catálogo
+          </a>
+
+          <a
+            class="button button-primary"
+            href="equipos.html?accion=buscar"
+          >
+            Buscar equipo
+          </a>
+
+        </div>
+
+      </header>
+
+      <!-- =========================================
+           CONTENIDO DEL DASHBOARD
+      ========================================== -->
+
+      <div class="page-content">
+
+        <!-- HERO -->
+
+        <section class="hero-panel">
+
+          <div class="hero-copy">
+
+            <span class="section-kicker">
+              GESTIÓN DE COSTOS DE MAQUINARIA
+            </span>
+
+            <h2>
+              Toda la información de alquiler de equipos,
+              organizada desde un solo lugar
+            </h2>
+
+            <p>
+              Consulte las características técnicas, costos de
+              propiedad, costos de operación, rendimientos y tarifas
+              comerciales de cada equipo de construcción.
+            </p>
+
+            <div class="hero-actions">
+
+              <a
+                class="button button-primary"
+                href="equipos.html"
+              >
+                Abrir equipos
+              </a>
+
+              <button
+                class="button button-light"
+                id="btnEnfocarBuscador"
+                type="button"
+              >
+                Buscar por nombre
+              </button>
+
+            </div>
+
+          </div>
+
+          <div
+            class="hero-visual"
+            aria-hidden="true"
+          >
+
+            <div class="hero-machine">
+              🚜
+            </div>
+
+            <div class="hero-badge">
+              Catálogo técnico y comercial
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- INDICADORES -->
+
+        <section
+          class="stats-grid"
+          aria-label="Indicadores generales"
+        >
+
+          <article class="stat-card">
+
+            <div class="stat-card-header">
+
+              <span>
+                Equipos registrados
+              </span>
+
+              <span class="stat-icon">
+                ▦
+              </span>
+
+            </div>
+
+            <strong
+              class="stat-value"
+              id="totalEquipos"
+            >
+              0
+            </strong>
+
+            <span class="stat-caption">
+              Disponibles en el catálogo
+            </span>
+
+          </article>
+
+          <article class="stat-card">
+
+            <div class="stat-card-header">
+
+              <span>
+                Equipos con imagen
+              </span>
+
+              <span class="stat-icon">
+                ◉
+              </span>
+
+            </div>
+
+            <strong
+              class="stat-value"
+              id="equiposConImagen"
+            >
+              0
+            </strong>
+
+            <span class="stat-caption">
+              Fichas con fotografía principal
+            </span>
+
+          </article>
+
+          <article class="stat-card">
+
+            <div class="stat-card-header">
+
+              <span>
+                Tarifa promedio
+              </span>
+
+              <span class="stat-icon">
+                $
+              </span>
+
+            </div>
+
+            <strong
+              class="stat-value stat-value-money"
+              id="tarifaPromedio"
+            >
+              $0
+            </strong>
+
+            <span class="stat-caption">
+              Promedio de tarifas comerciales
+            </span>
+
+          </article>
+
+          <article class="stat-card">
+
+            <div class="stat-card-header">
+
+              <span>
+                Estado
+              </span>
+
+              <span class="stat-icon">
+                ✓
+              </span>
+
+            </div>
+
+            <strong
+              class="stat-value stat-value-status"
+              id="estadoCatalogo"
+            >
+              Cargando
+            </strong>
+
+            <span class="stat-caption">
+              Lectura directa de archivos
+            </span>
+
+          </article>
+
+        </section>
+
+        <!-- BUSCADOR -->
+
+        <section
+          class="search-panel"
+          id="seccionBuscador"
+        >
+
+          <div class="section-heading">
+
+            <div>
+
+              <span class="section-kicker">
+                CONSULTA DIRECTA
+              </span>
+
+              <h2>
+                Buscar equipo
+              </h2>
+
+            </div>
+
+            <a
+              class="text-link"
+              href="equipos.html"
+            >
+              Ver listado completo →
+            </a>
+
+          </div>
+
+          <form
+            class="search-form"
+            id="formBuscadorInicio"
+            autocomplete="off"
+          >
+
+            <label
+              class="sr-only"
+              for="busquedaInicio"
+            >
+              Nombre del equipo
+            </label>
+
+            <div class="search-input-wrap">
+
+              <span class="search-input-icon">
+                ⌕
+              </span>
+
+              <input
+                id="busquedaInicio"
+                name="busqueda"
+                type="search"
+                placeholder="Escriba el nombre del equipo..."
+              >
+
+              <button
+                class="button button-primary"
+                type="submit"
+              >
+                Buscar
+              </button>
+
+            </div>
+
+          </form>
+
+          <div
+            class="quick-results"
+            id="resultadosBusquedaInicio"
+            aria-live="polite"
+          ></div>
+
+        </section>
+
+        <!-- MÓDULOS -->
+
+        <section class="dashboard-layout">
+
+          <div class="dashboard-main">
+
+            <div class="section-heading">
+
+              <div>
+
+                <span class="section-kicker">
+                  ACCESOS PRINCIPALES
+                </span>
+
+                <h2>
+                  Módulos de consulta
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div class="module-grid">
+
+              <a
+                class="module-card module-card-featured"
+                href="equipos.html"
+              >
+
+                <div class="module-icon">
+                  ▦
+                </div>
+
+                <span class="module-label">
+                  CATÁLOGO
+                </span>
+
+                <h3>
+                  Todos los equipos
+                </h3>
+
+                <p>
+                  Consulte el listado completo organizado por nombre
+                  de equipo.
+                </p>
+
+                <span class="module-action">
+                  Abrir catálogo →
+                </span>
+
+              </a>
+
+              <a
+                class="module-card"
+                href="equipos.html?accion=buscar"
+              >
+
+                <div class="module-icon">
+                  ⌕
+                </div>
+
+                <span class="module-label">
+                  CONSULTA
+                </span>
+
+                <h3>
+                  Buscar equipo
+                </h3>
+
+                <p>
+                  Encuentre rápidamente un equipo por su nombre o
+                  referencia.
+                </p>
+
+                <span class="module-action">
+                  Iniciar búsqueda →
+                </span>
+
+              </a>
+
+              <article class="module-card">
+
+                <div class="module-icon">
+                  ⓘ
+                </div>
+
+                <span class="module-label">
+                  INFORMACIÓN
+                </span>
+
+                <h3>
+                  Ficha técnica y económica
+                </h3>
+
+                <p>
+                  Abra cualquier equipo para consultar todos sus datos
+                  técnicos y comerciales.
+                </p>
+
+                <span class="module-note">
+                  Disponible desde el catálogo
+                </span>
+
+              </article>
+
+              <article class="module-card">
+
+                <div class="module-icon">
+                  ＋
+                </div>
+
+                <span class="module-label">
+                  CRECIMIENTO
+                </span>
+
+                <h3>
+                  Nuevos equipos
+                </h3>
+
+                <p>
+                  Incorpore equipos creando una carpeta, su archivo
+                  de datos y su imagen.
+                </p>
+
+                <span class="module-note">
+                  Sin importar archivos Excel
+                </span>
+
+              </article>
+
+            </div>
+
+          </div>
+
+          <!-- PANEL DERECHO -->
+
+          <aside class="recent-panel">
+
+            <div class="recent-panel-header">
+
+              <div>
+
+                <span class="section-kicker">
+                  BASE INICIAL
+                </span>
+
+                <h2>
+                  Equipos disponibles
+                </h2>
+
+              </div>
+
+              <span
+                class="count-badge"
+                id="contadorPanelEquipos"
+              >
+                0
+              </span>
+
+            </div>
+
+            <div
+              class="recent-list"
+              id="listaEquiposInicio"
+            >
+
+              <div class="empty-state">
+
+                <div class="empty-state-icon">
+                  ⌛
+                </div>
+
+                <strong>
+                  Cargando equipos
+                </strong>
+
+                <p>
+                  Espere mientras se consulta el catálogo.
+                </p>
+
+              </div>
+
+            </div>
+
+            <a
+              class="button button-primary button-full"
+              href="equipos.html"
+            >
+              Abrir catálogo completo
+            </a>
+
+          </aside>
+
+        </section>
+
+      </div>
+
+      <!-- =========================================
+           PIE DE PÁGINA
+      ========================================== -->
+
+      <footer class="app-footer">
+
+        <span>
+          Costos de Alquiler Equipo de Construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================
+       MENSAJES DE LA APP
+  ========================================== -->
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================== -->
+
+  <script
+    src="js/app.js"
+    defer
+  ></script>
+
+</body>
+
+</html>

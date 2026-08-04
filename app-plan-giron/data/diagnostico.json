@@ -1,0 +1,351 @@
+{
+  "municipio": "Girón",
+  "descripcion": "Diagnóstico integral del Municipio de Girón construido a partir del Plan de Desarrollo Municipal 2024-2027.",
+
+  "componentes": [
+
+    {
+      "id": "territorio",
+      "nombre": "Territorio",
+
+      "descripcion": "Caracterización general del municipio, localización, organización territorial y dinámica urbana y rural.",
+
+      "aspectos": [
+
+        "Ubicación geográfica",
+
+        "División político administrativa",
+
+        "Área urbana",
+
+        "Área rural",
+
+        "Corregimientos",
+
+        "Veredas",
+
+        "Expansión urbana",
+
+        "Área metropolitana",
+
+        "Relaciones regionales"
+
+      ]
+
+    },
+
+    {
+
+      "id":"demografia",
+
+      "nombre":"Demografía",
+
+      "descripcion":"Características generales de la población.",
+
+      "aspectos":[
+
+        "Población total",
+
+        "Proyección poblacional",
+
+        "Distribución urbano-rural",
+
+        "Pirámide poblacional",
+
+        "Grupos etarios",
+
+        "Natalidad",
+
+        "Mortalidad",
+
+        "Migración",
+
+        "Esperanza de vida"
+
+      ]
+
+    },
+
+    {
+
+      "id":"economia",
+
+      "nombre":"Economía",
+
+      "descripcion":"Condiciones económicas y productivas del municipio.",
+
+      "aspectos":[
+
+        "Actividad económica",
+
+        "Empleo",
+
+        "Desempleo",
+
+        "Emprendimiento",
+
+        "Formalización",
+
+        "Turismo",
+
+        "Industria",
+
+        "Comercio",
+
+        "Agricultura",
+
+        "Competitividad"
+
+      ]
+
+    },
+
+    {
+
+      "id":"social",
+
+      "nombre":"Condiciones Sociales",
+
+      "descripcion":"Estado general de los principales sectores sociales.",
+
+      "aspectos":[
+
+        "Salud",
+
+        "Educación",
+
+        "Cultura",
+
+        "Deporte",
+
+        "Recreación",
+
+        "Seguridad",
+
+        "Vivienda",
+
+        "Servicios Públicos",
+
+        "Participación Ciudadana"
+
+      ]
+
+    },
+
+    {
+
+      "id":"ambiente",
+
+      "nombre":"Ambiente",
+
+      "descripcion":"Situación ambiental y recursos naturales.",
+
+      "aspectos":[
+
+        "Recursos hídricos",
+
+        "Bosques",
+
+        "Ecosistemas",
+
+        "Biodiversidad",
+
+        "Cambio climático",
+
+        "Gestión del riesgo",
+
+        "Amenazas naturales",
+
+        "Residuos sólidos",
+
+        "Calidad del aire"
+
+      ]
+
+    },
+
+    {
+
+      "id":"institucional",
+
+      "nombre":"Fortalecimiento Institucional",
+
+      "descripcion":"Capacidad administrativa y financiera del municipio.",
+
+      "aspectos":[
+
+        "Gobierno",
+
+        "Finanzas",
+
+        "Planeación",
+
+        "Gestión Pública",
+
+        "Transparencia",
+
+        "Participación",
+
+        "Control",
+
+        "Modernización",
+
+        "Gobierno Digital"
+
+      ]
+
+    }
+
+  ],
+
+  "fortalezas":[
+
+    "Ubicación estratégica dentro del Área Metropolitana de Bucaramanga.",
+
+    "Importante patrimonio histórico y cultural.",
+
+    "Potencial turístico.",
+
+    "Crecimiento económico sostenido.",
+
+    "Potencial agrícola.",
+
+    "Infraestructura institucional.",
+
+    "Ubicación logística privilegiada."
+
+  ],
+
+  "debilidades":[
+
+    "Presión por crecimiento urbano.",
+
+    "Necesidades de movilidad.",
+
+    "Déficit de infraestructura vial.",
+
+    "Problemas ambientales.",
+
+    "Necesidades de vivienda.",
+
+    "Retos en seguridad.",
+
+    "Desigualdad territorial."
+
+  ],
+
+  "oportunidades":[
+
+    "Desarrollo turístico.",
+
+    "Innovación.",
+
+    "Economía naranja.",
+
+    "Digitalización.",
+
+    "Atracción de inversión.",
+
+    "Fortalecimiento del sector rural.",
+
+    "Articulación metropolitana."
+
+  ],
+
+  "amenazas":[
+
+    "Cambio climático.",
+
+    "Crecimiento urbano desordenado.",
+
+    "Presión ambiental.",
+
+    "Congestión vehicular.",
+
+    "Inseguridad.",
+
+    "Déficit fiscal futuro.",
+
+    "Eventos de riesgo."
+
+  ],
+
+  "sectoresDiagnosticados":[
+
+    "Salud",
+
+    "Educación",
+
+    "Inclusión Social",
+
+    "Seguridad",
+
+    "Gobierno",
+
+    "Justicia",
+
+    "Movilidad",
+
+    "Transporte",
+
+    "Infraestructura",
+
+    "Vivienda",
+
+    "Servicios Públicos",
+
+    "Ambiente",
+
+    "Agricultura",
+
+    "Turismo",
+
+    "Comercio",
+
+    "Industria",
+
+    "Trabajo",
+
+    "Emprendimiento",
+
+    "Cultura",
+
+    "Deporte",
+
+    "Recreación",
+
+    "Tecnologías de la Información"
+
+  ],
+
+  "objetivoDiagnostico":"Servir como línea base para la formulación de programas, proyectos, indicadores, metas y presupuesto del Plan de Desarrollo.",
+
+  "utilidadParaLaApp":[
+
+    "Responder preguntas sobre el estado actual del municipio.",
+
+    "Construir propuestas de campaña.",
+
+    "Identificar oportunidades de mejora.",
+
+    "Preparar debates de control político.",
+
+    "Comparar problemáticas entre sectores.",
+
+    "Relacionar indicadores con necesidades.",
+
+    "Fundamentar discursos con datos reales."
+
+  ],
+
+  "estadoExtraccion":"Primera extracción estructural del diagnóstico. Será enriquecido automáticamente durante las siguientes fases de extracción inteligente del Plan.",
+
+  "fuente":{
+
+      "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+      "seccion":"Diagnóstico Situacional"
+
+  }
+
+}

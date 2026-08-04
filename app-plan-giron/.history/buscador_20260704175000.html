@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Buscador - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+<h1>Buscador Inteligente</h1>
+<p>Consulte información en toda la Base de Conocimiento del Plan de Desarrollo.</p>
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>Buscar en el Plan</h2>
+
+<input
+type="text"
+id="inputBusqueda"
+placeholder="Ejemplo: salud, educación, presupuesto, movilidad, adulto mayor...">
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="realizarBusqueda()">
+Buscar
+</button>
+
+</section>
+
+<section class="card">
+
+<h2>Resultados</h2>
+
+<div id="resultadosBusqueda">
+<p class="texto-suave">Digite una palabra clave para consultar información.</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Consulta Inteligente</h2>
+
+<textarea
+id="preguntaBuscadorIA"
+placeholder="Ejemplo: ¿Qué propuestas hay para salud?">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaBuscadorIA','respuestaBuscadorIA')">
+Consultar IA
+</button>
+
+<div id="respuestaBuscadorIA"></div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="buscador.html">Buscar</a>
+<a href="propuestas.html">Propuestas</a>
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/buscador.js"></script>
+<script src="js/ia.js"></script>
+
+</body>
+
+</html>

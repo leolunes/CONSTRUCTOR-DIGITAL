@@ -1,0 +1,108 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Banco de preguntas estratégicas de control político para seguimiento al Plan de Desarrollo Municipal.",
+
+  "preguntas": [
+    {
+      "sectorId": "salud-proteccion-social",
+      "sector": "Salud",
+      "preguntas": [
+        "¿Cuál es el avance de las metas de salud pública establecidas en el Plan de Desarrollo?",
+        "¿Qué acciones se han ejecutado para mejorar la cobertura de vacunación?",
+        "¿Cómo se está atendiendo a la población vulnerable en salud?",
+        "¿Qué indicadores de salud han mejorado y cuáles presentan rezago?"
+      ]
+    },
+    {
+      "sectorId": "educacion",
+      "sector": "Educación",
+      "preguntas": [
+        "¿Cuál es el avance en cobertura educativa por nivel escolar?",
+        "¿Qué acciones se han implementado para reducir la deserción escolar?",
+        "¿Cómo se está fortaleciendo la calidad educativa?",
+        "¿Cuál es el estado actual del Programa de Alimentación Escolar?"
+      ]
+    },
+    {
+      "sectorId": "transporte",
+      "sector": "Transporte",
+      "preguntas": [
+        "¿Cuáles son los puntos críticos de accidentalidad vial en Girón?",
+        "¿Qué inversiones se han ejecutado en infraestructura vial?",
+        "¿Qué avances existen en movilidad sostenible?",
+        "¿Cómo se está fortaleciendo la seguridad vial?"
+      ]
+    },
+    {
+      "sectorId": "ambiente-desarrollo-sostenible",
+      "sector": "Ambiente y Desarrollo Sostenible",
+      "preguntas": [
+        "¿Qué acciones se han ejecutado para proteger fuentes hídricas?",
+        "¿Cuál es el avance en gestión del riesgo de desastres?",
+        "¿Qué zonas presentan mayor vulnerabilidad ambiental?",
+        "¿Cómo se articula el municipio con la autoridad ambiental?"
+      ]
+    },
+    {
+      "sectorId": "vivienda-ciudad-territorio",
+      "sector": "Vivienda, Ciudad y Territorio",
+      "preguntas": [
+        "¿Cuál es el avance en programas de vivienda y mejoramiento habitacional?",
+        "¿Qué acciones se han ejecutado para mejorar acueducto y alcantarillado?",
+        "¿Qué proyectos se han desarrollado para recuperar espacio público?",
+        "¿Cómo se está atendiendo el déficit de vivienda?"
+      ]
+    },
+    {
+      "sectorId": "inclusion-social-reconciliacion",
+      "sector": "Inclusión Social y Reconciliación",
+      "preguntas": [
+        "¿Cuál es el avance de los programas dirigidos al adulto mayor?",
+        "¿Qué acciones se han implementado para mujeres, jóvenes y familias?",
+        "¿Cómo se atiende a la población con discapacidad?",
+        "¿Qué programas existen para víctimas, migrantes y población vulnerable?"
+      ]
+    },
+    {
+      "sectorId": "gobierno-territorial",
+      "sector": "Gobierno Territorial",
+      "preguntas": [
+        "¿Cuál es el avance del sistema de seguimiento al Plan de Desarrollo?",
+        "¿Qué indicadores de desempeño institucional han mejorado?",
+        "¿Cómo se está fortaleciendo la participación ciudadana?",
+        "¿Cuál es el estado de la ejecución presupuestal por sector?"
+      ]
+    },
+    {
+      "sectorId": "comercio-industria-turismo",
+      "sector": "Comercio, Industria y Turismo",
+      "preguntas": [
+        "¿Qué acciones se han ejecutado para fortalecer el turismo en Girón?",
+        "¿Cómo se está apoyando al comercio local?",
+        "¿Qué resultados tienen las estrategias de competitividad?",
+        "¿Cómo se articula el sector turístico con el patrimonio histórico del municipio?"
+      ]
+    },
+    {
+      "sectorId": "trabajo",
+      "sector": "Trabajo",
+      "preguntas": [
+        "¿Cuántas personas han accedido a programas de empleabilidad?",
+        "¿Qué alianzas existen con el sector empresarial?",
+        "¿Qué resultados tienen los programas de emprendimiento?",
+        "¿Cómo se promueve la formalización laboral?"
+      ]
+    },
+    {
+      "sectorId": "deporte-recreacion",
+      "sector": "Deporte y Recreación",
+      "preguntas": [
+        "¿Cuántos niños, jóvenes y adultos mayores participan en programas deportivos?",
+        "¿Qué escenarios deportivos han sido intervenidos?",
+        "¿Cuál es el presupuesto ejecutado en deporte y recreación?",
+        "¿Qué programas existen para promover el uso sano del tiempo libre?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "pais": "Colombia",
+  "periodo": "2024-2027",
+  "nombrePlan": "Más Campo para el Progreso",
+  "alcalde": "Campo Elías Ramírez Padilla",
+  "tipoDocumento": "Plan de Desarrollo Municipal",
+  "enfoqueApp": "Asistente Estratégico Municipal para candidatos, concejales, alcaldes, asesores y ciudadanía",
+
+  "descripcionGeneral": "El Plan de Desarrollo Municipal de Girón 2024-2027 es el instrumento estratégico que orienta las decisiones gubernamentales del municipio, definiendo la ruta para el desarrollo social, económico, ambiental e institucional del territorio.",
+
+  "proposito": "Convertir las necesidades ciudadanas en oportunidades de progreso mediante seguridad, movilidad, salud, educación, deporte, cultura, obras, programas sociales, fortalecimiento institucional, sostenibilidad y visión de largo plazo.",
+
+  "componentesDelPlan": [
+    {
+      "id": 1,
+      "nombre": "Fundamentos del Plan",
+      "descripcion": "Define los referentes conceptuales, normativos, metodológicos, principios, enfoques y alineación con instrumentos de planeación."
+    },
+    {
+      "id": 2,
+      "nombre": "Diagnóstico Situacional",
+      "descripcion": "Presenta el estado actual del municipio por sectores, incluyendo problemáticas, indicadores, estadísticas y condiciones territoriales."
+    },
+    {
+      "id": 3,
+      "nombre": "Componente Estratégico",
+      "descripcion": "Contiene los ejes estratégicos, programas, metas y apuestas de desarrollo para el cuatrienio."
+    },
+    {
+      "id": 4,
+      "nombre": "Componente Financiero",
+      "descripcion": "Incluye el diagnóstico financiero, techos presupuestales, plan plurianual de inversiones y fuentes de financiación."
+    },
+    {
+      "id": 5,
+      "nombre": "Sistema de Seguimiento y Evaluación",
+      "descripcion": "Define objetivos, responsables, estructura de seguimiento, rutinas, instrumentos y rendición de cuentas."
+    }
+  ],
+
+  "ejesEstrategicos": [
+    {
+      "id": 1,
+      "nombre": "Administración Afectiva y Efectiva al Servicio de los Ciudadanos",
+      "descripcion": "Fortalecimiento institucional, justicia, tecnologías de la información, transporte y gobierno territorial."
+    },
+    {
+      "id": 2,
+      "nombre": "Programas Sociales y Calidad de Vida para Todos",
+      "descripcion": "Salud, educación, inclusión social, reconciliación y atención a poblaciones vulnerables."
+    },
+    {
+      "id": 3,
+      "nombre": "Obras para Transformar a Girón",
+      "descripcion": "Infraestructura, salud, educación, transporte, cultura, vivienda, deporte y gobierno territorial."
+    },
+    {
+      "id": 4,
+      "nombre": "Progreso, Ocio Productivo y Recreativo",
+      "descripcion": "Agricultura, cultura, turismo, trabajo, ciencia, tecnología, innovación, deporte y recreación."
+    },
+    {
+      "id": 5,
+      "nombre": "Sostenibilidad y Visión de Largo Plazo",
+      "descripcion": "Información estadística, ambiente, vivienda, ciudad, territorio y gobierno territorial."
+    }
+  ],
+
+  "enfoques": [
+    "Enfoque de género",
+    "Enfoque diferencial",
+    "Enfoque territorial"
+  ],
+
+  "instrumentosAlineacion": [
+    "Objetivos de Desarrollo Sostenible - ODS",
+    "Plan Nacional de Desarrollo",
+    "Plan Departamental de Desarrollo",
+    "Propósitos Metropolitanos",
+    "Instrumentos locales de planeación"
+  ],
+
+  "usoParaCandidato": [
+    "Consultar información real del municipio.",
+    "Preparar propuestas de campaña.",
+    "Diseñar discursos por sector.",
+    "Construir preguntas de control político.",
+    "Identificar problemas y oportunidades.",
+    "Comparar metas del Plan con propuestas propias.",
+    "Analizar presupuesto e inversión.",
+    "Hacer seguimiento a la ejecución municipal."
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027 Más Campo para el Progreso",
+    "paginasReferencia": [
+      1,
+      20,
+      21,
+      196,
+      300,
+      316
+    ]
+  }
+}

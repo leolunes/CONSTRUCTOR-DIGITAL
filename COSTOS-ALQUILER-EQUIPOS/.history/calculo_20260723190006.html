@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5b21b6">
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <meta name="description" content="Desglose del costo horario del equipo seleccionado.">
+  <title>Cálculo | Costos de Alquiler de Equipos</title>
+</head>
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <img src="assets/images/logo.png" alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+          <div class="brand-logo-fallback" id="logoFallback">CE</div>
+        </div>
+        <div class="brand-text">
+          <strong>COSTOS DE ALQUILER</strong>
+          <span>Equipo de Construcción</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación principal">
+        <a class="nav-item" href="index.html"><span class="nav-icon">⌂</span><span>Inicio</span></a>
+        <div class="nav-section-title">BASE DE DATOS</div>
+        <a class="nav-item" href="entradas.html"><span class="nav-icon">1</span><span>Entradas</span></a>
+        <a class="nav-item active" aria-current="page" href="calculo.html"><span class="nav-icon">2</span><span>Cálculo</span></a>
+        <a class="nav-item" href="resumen.html"><span class="nav-icon">3</span><span>Resumen</span></a>
+        <a class="nav-item" href="catalogo-modelos.html"><span class="nav-icon">4</span><span>Catálogo de modelos</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-card">
+          <div class="status-line">
+            <span class="status-dot success"></span>
+            <strong>Base disponible</strong>
+          </div>
+          <span>Flujo conectado con Entradas</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="btnMenu" type="button" aria-label="Abrir o cerrar menú" aria-expanded="false">☰</button>
+          <div><span class="topbar-eyebrow">SECCIÓN 2</span><h1>Cálculo</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <a class="button button-secondary" href="entradas.html">Volver a Entradas</a>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="section-card full">
+          <span class="section-kicker">EQUIPO SELECCIONADO</span>
+          <h2 id="calculoNombreEquipo">—</h2>
+          <p id="calculoReferenciaEquipo" style="color:var(--color-text-soft);">
+            Los valores se tomarán de la sección Entradas.
+          </p>
+        </section>
+
+        <section class="section-card full" style="margin-top:24px;">
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:end;flex-wrap:wrap;margin-bottom:18px;">
+            <div>
+              <span class="section-kicker">DESGLOSE AUTOMÁTICO</span>
+              <h3 style="margin:6px 0 0;">Costo horario por componentes</h3>
+            </div>
+            <button class="button button-secondary" id="btnRecalcular" type="button">Recalcular</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Grupo</th>
+                  <th>Concepto</th>
+                  <th>Fórmula aplicada</th>
+                  <th>Resultado</th>
+                  <th>Unidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td rowspan="3"><strong>Costos de propiedad</strong></td>
+                  <td>Depreciación</td>
+                  <td>(Precio − rescate) / vida útil</td>
+                  <td id="calcDepreciacion">—</td>
+                  <td>COP/h</td>
+                </tr>
+                <tr>
+                  <td>Interés sobre inversión</td>
+                  <td>Inversión media × tasa / horas año</td>
+                  <td id="calcInteres">—</td>
+                  <td>COP/h</td>
+                </tr>
+                <tr>
+                  <td>Seguro y costos fijos</td>
+                  <td>Seguro anual + mantenimiento fijo</td>
+                  <td id="calcSeguroFijo">—</td>
+                  <td>COP/h</td>
+                </tr>
+
+                <tr>
+                  <td rowspan="5"><strong>Costos de operación</strong></td>
+                  <td>Combustible</td>
+                  <td>Consumo × precio</td>
+                  <td id="calcCombustible">—</td>
+                  <td>COP/h</td>
+                </tr>
+                <tr>
+                  <td>Lubricantes</td>
+                  <td>Combustible × factor lubricantes</td>
+                  <td id="calcLubricantes">—</td>
+                  <td>COP/h</td>
+                </tr>
+                <tr>
+                  <td>Rodaje</td>
+                  <td>Costo rodaje / vida rodaje</td>
+                  <td id="calcRodaje">—</td>
+                  <td>COP/h</td>
+                </tr>
+                <tr>
+                  <td>Operador</td>
+                  <td>Costo mensual / horas mensuales</td>
+                  <td id="calcOperador">—</td>
+                  <td>COP/h</td>
+                </tr>
+                <tr>
+                  <td>Otros costos operativos</td>
+                  <td>Según parámetros del equipo</td>
+                  <td id="calcOtros">—</td>
+                  <td>COP/h</td>
+                </tr>
+
+                <tr>
+                  <td><strong>Transporte equivalente</strong></td>
+                  <td>Movilización y desmovilización</td>
+                  <td>(Mov. + Desmov.) / horas amortización</td>
+                  <td id="calcTransporte">—</td>
+                  <td>COP/h</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="3">Costo directo horario</th>
+                  <th id="calcCostoDirecto">—</th>
+                  <th>COP/h</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </section>
+
+        <section class="section-card full" style="margin-top:24px;">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;">
+            <a class="button button-secondary" href="entradas.html">Modificar Entradas</a>
+            <a class="button button-primary" href="resumen.html">Continuar a Resumen</a>
+          </div>
+        </section>
+      </div>
+
+      <footer class="app-footer"><span>Costos de Alquiler Equipo de Construcción</span><span id="footerYear"></span></footer>
+    </main>
+  </div>
+  <script src="js/calculos.js" defer></script>
+</body>
+</html>

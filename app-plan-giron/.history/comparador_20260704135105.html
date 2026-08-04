@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Comparador - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Comparador Estratégico</h1>
+
+<p>Compare necesidades del Plan de Desarrollo con propuestas del candidato.</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>📌 Sector a comparar</h2>
+
+<select id="selectorSectorComparador" onchange="cargarComparador()">
+<option value="">Seleccione un sector</option>
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Diagnóstico vs Propuesta</h2>
+
+<div id="contenedorComparador">
+
+<p class="texto-suave">
+Seleccione un sector para comparar problemáticas, metas y propuestas.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="seguimiento.html">Seguimiento</a>
+<a href="propuestas.html">Propuestas</a>
+
+</nav>
+
+<script src="js/comparador.js"></script>
+
+</body>
+
+</html>

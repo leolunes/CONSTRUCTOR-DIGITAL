@@ -1,0 +1,186 @@
+{
+  "id": "agua-potable-saneamiento",
+  "nombre": "Agua potable y saneamiento",
+  "icono": "💧",
+  "color": "#38bdf8",
+  "descripcion": "Acueductos, alcantarillados, PTAP, PTAR y redes hidráulicas.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de actualización con fuentes oficiales",
+  "situacionActual": {
+    "titulo": "Agua segura y saneamiento para todos",
+    "resumen": "El crecimiento urbano y rural exige ampliar y modernizar la infraestructura de agua potable y saneamiento, garantizando cobertura, continuidad y calidad del servicio.",
+    "enfoquePolitico": "El acceso al agua potable y al saneamiento básico es un derecho y una condición para el desarrollo sostenible.",
+    "advertenciaDatos": "Las cifras deben actualizarse con información oficial antes de su uso público."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Cobertura de acueducto",
+      "valor": null,
+      "unidad": "%",
+      "estado": "pendiente",
+      "fuente": "Alcaldía / DANE"
+    },
+    {
+      "indicador": "Cobertura de alcantarillado",
+      "valor": null,
+      "unidad": "%",
+      "estado": "pendiente",
+      "fuente": "Alcaldía / DANE"
+    },
+    {
+      "indicador": "PTAR en operación",
+      "valor": null,
+      "unidad": "plantas",
+      "estado": "pendiente",
+      "fuente": "Empresa de Servicios Públicos"
+    },
+    {
+      "indicador": "PTAP en operación",
+      "valor": null,
+      "unidad": "plantas",
+      "estado": "pendiente",
+      "fuente": "Empresa de Servicios Públicos"
+    },
+    {
+      "indicador": "Sectores con deficiencias en redes",
+      "valor": null,
+      "unidad": "sectores",
+      "estado": "pendiente",
+      "fuente": "Plan Maestro de Acueducto"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Cobertura insuficiente",
+      "descripcion": "Existen sectores que requieren ampliación de redes.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Redes envejecidas",
+      "descripcion": "Pérdidas de agua y daños frecuentes por infraestructura antigua.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Tratamiento insuficiente",
+      "descripcion": "Necesidad de fortalecer PTAP y PTAR.",
+      "impacto": "Medio-Alto"
+    },
+    {
+      "titulo": "Manejo de aguas lluvias",
+      "descripcion": "Puntos críticos de inundación y drenaje.",
+      "impacto": "Alto"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Agua para el Futuro",
+      "objetivo": "Gestionar proyectos de ampliación, modernización y protección del sistema de agua potable.",
+      "mensajeCentral": "Cada familia merece agua segura y servicios públicos de calidad."
+    },
+    {
+      "nombre": "Saneamiento para Girón",
+      "objetivo": "Fortalecer alcantarillado, tratamiento de aguas y drenaje urbano.",
+      "mensajeCentral": "El saneamiento protege la salud y el ambiente."
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre agua potable y saneamiento",
+    "duracion": "3 minutos",
+    "texto": "Hablar de agua potable es hablar de salud, dignidad y calidad de vida. Desde el Concejo impulsaremos el fortalecimiento de acueductos, alcantarillados, plantas de tratamiento y redes hidráulicas para que cada familia de Girón tenga acceso a servicios confiables y sostenibles."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "💧 Agua potable y saneamiento para todos. Trabajemos por un Girón con servicios públicos de calidad.",
+    "facebook": "El agua segura transforma comunidades. Gestionaremos proyectos para ampliar cobertura y fortalecer el saneamiento básico.",
+    "instagram": "💧 Más cobertura. 🚰 Mejor servicio. ♻️ Más saneamiento. #Girón",
+    "tiktok": "El agua no puede faltar. Trabajemos por un Girón con infraestructura moderna y sostenible."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Ampliación de redes de acueducto",
+      "componentes": [
+        "Redes",
+        "Válvulas",
+        "Macromedición",
+        "Conexiones"
+      ],
+      "fuentes": [
+        "Municipio",
+        "SGR",
+        "Ministerio de Vivienda"
+      ]
+    },
+    {
+      "nombre": "Optimización de alcantarillado",
+      "componentes": [
+        "Colectores",
+        "Pozos",
+        "Emisarios",
+        "Drenajes"
+      ],
+      "fuentes": [
+        "Municipio",
+        "Gobernación",
+        "SGR"
+      ]
+    },
+    {
+      "nombre": "Modernización PTAP/PTAR",
+      "componentes": [
+        "Equipos",
+        "Obras civiles",
+        "Automatización"
+      ],
+      "fuentes": [
+        "Ministerio de Vivienda",
+        "SGR"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Cuál es la cobertura actual de acueducto y alcantarillado?",
+    "¿Qué inversiones se requieren para modernizar las redes?",
+    "¿Cuál es el estado de las PTAP y PTAR?"
+  ],
+  "controlPolitico": [
+    "Solicitar informes de cobertura y continuidad del servicio.",
+    "Revisar inversiones en acueducto y alcantarillado.",
+    "Verificar proyectos de tratamiento de aguas."
+  ],
+  "fuentesFinanciacion": [
+    "Sistema General de Regalías",
+    "Recursos propios",
+    "Ministerio de Vivienda",
+    "Gobernación de Santander",
+    "Findeter"
+  ],
+  "normatividad": [
+    "Ley 142 de 1994",
+    "Ley 373 de 1997",
+    "Plan Departamental de Aguas",
+    "Plan de Desarrollo Municipal"
+  ],
+  "ods": [
+    {
+      "numero": 6,
+      "nombre": "Agua limpia y saneamiento"
+    },
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Agua Potable y Saneamiento",
+    "subtitulo": "Agua segura para Girón",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia",
+      "Discurso",
+      "Proyectos",
+      "Financiación"
+    ]
+  }
+}

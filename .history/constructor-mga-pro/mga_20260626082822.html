@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MGA Web | Constructor MGA Pro</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">MGA Web</div>
+      <div class="subtitle" id="mgaSub">Integración general del proyecto</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnDiagnostico" href="#">Diagnóstico</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <a class="navbtn" id="btnDocumentos" href="#">Documentos MGA</a>
+    <button class="navbtn primary" id="btnGuardarMGA" type="button">Guardar integración</button>
+  </nav>
+</header>
+
+<main class="container">
+
+<section class="card">
+  <div class="cardhead">
+    <div>
+      <h2>Integración MGA del proyecto</h2>
+      <p class="muted small">
+        Este módulo consolida diagnóstico, cadena de valor, indicadores, riesgos, cronograma y presupuesto oficial.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid kpis" id="mgaKpis"></div>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Relación Actividad MGA ↔ Ítems del presupuesto</h2>
+    <p class="muted small">
+      Seleccione una actividad de la cadena de valor y asígnele ítems del presupuesto oficial. Esto permite calcular costos por actividad, producto y objetivo específico.
+    </p>
+  </div>
+
+  <div class="grid two">
+    <div>
+      <label>Actividad MGA</label>
+      <select id="selActividadMGA"></select>
+    </div>
+
+    <div>
+      <label>Ítem del presupuesto</label>
+      <select id="selItemPresupuesto"></select>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:12px; gap:10px; flex-wrap:wrap">
+    <button class="btn primary" id="btnVincularItem" type="button">Vincular ítem</button>
+    <button class="btn" id="btnAutoVincular" type="button">Autovincular por descripción</button>
+  </div>
+
+  <hr class="sep">
+
+  <div class="tablewrap">
+    <table class="table" style="min-width:1120px">
+      <thead>
+        <tr>
+          <th>Actividad MGA</th>
+          <th>Ítem presupuesto</th>
+          <th>Descripción</th>
+          <th>Unidad</th>
+          <th>Cantidad</th>
+          <th>PU</th>
+          <th>Parcial</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="vinculosBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Costos consolidados por actividad</h2>
+    <p class="muted small">Valores calculados desde los ítems vinculados del presupuesto oficial.</p>
+  </div>
+
+  <div class="tablewrap">
+    <table class="table" style="min-width:980px">
+      <thead>
+        <tr>
+          <th>Actividad</th>
+          <th>Producto</th>
+          <th>Ítems vinculados</th>
+          <th style="text-align:right">Costo directo vinculado</th>
+        </tr>
+      </thead>
+      <tbody id="costosActividadBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Chequeo de consistencia MGA</h2>
+    <p class="muted small">Revisión rápida antes de preparar textos y documentos para MGA Web.</p>
+  </div>
+
+  <div id="checklistMGA"></div>
+</section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/mga-integracion.js"></script>
+
+</body>
+</html>

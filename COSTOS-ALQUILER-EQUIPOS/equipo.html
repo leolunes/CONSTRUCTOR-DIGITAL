@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ficha del equipo | Costos de alquiler</title>
+  <meta name="theme-color" content="#5b21b6">
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css?v=20260727-autonomo-1">
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <img
+            src="assets/images/logo.png"
+            alt="Logo"
+            onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';"
+          >
+          <div class="brand-logo-fallback" id="logoFallback">CE</div>
+        </div>
+
+        <div class="brand-text">
+          <strong>COSTOS DE ALQUILER</strong>
+          <span>Equipo de Construcción</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación principal">
+        <a class="nav-item" href="index.html">
+          <span class="nav-icon">⌂</span>
+          <span>Equipos disponibles</span>
+        </a>
+
+        <div class="nav-section-title">EQUIPO SELECCIONADO</div>
+
+        <a class="nav-item active" href="#fichaEquipo">
+          <span class="nav-icon">▣</span>
+          <span>Ficha del equipo</span>
+        </a>
+
+        <a class="nav-item" id="menuEntradas" href="entradas.html">
+          <span class="nav-icon">1</span>
+          <span>Entradas</span>
+        </a>
+
+        <a class="nav-item" id="menuCalculo" href="calculo.html">
+          <span class="nav-icon">2</span>
+          <span>Cálculo</span>
+        </a>
+
+        <a class="nav-item" id="menuResumen" href="resumen.html">
+          <span class="nav-icon">3</span>
+          <span>Resumen</span>
+        </a>
+
+        <a class="nav-item" id="menuCatalogo" href="catalogo-modelos.html">
+          <span class="nav-icon">4</span>
+          <span>Catálogo de modelos</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-card">
+          <div class="status-line">
+            <span class="status-dot success"></span>
+            <strong>Equipo cargado</strong>
+          </div>
+          <span id="nombreEquipoSidebar">Equipo seleccionado</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >☰</button>
+
+          <div>
+            <span class="topbar-eyebrow">FICHA TÉCNICA Y COMERCIAL</span>
+            <h1 id="tituloPagina">Equipo seleccionado</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="button button-secondary" href="index.html">
+            Volver a equipos
+          </a>
+        </div>
+      </header>
+
+      <div class="page-content">
+
+        <section class="error-panel" id="panelError" hidden>
+          <strong>No fue posible cargar el equipo.</strong>
+          <p id="mensajeError"></p>
+        </section>
+
+        <section class="equipo-hero" id="fichaEquipo">
+          <div class="equipo-imagen">
+            <img id="imagenEquipo" src="" alt="Imagen del equipo">
+
+            <div
+              class="catalog-card-image-fallback"
+              id="imagenFallback"
+              hidden
+            >🏗️</div>
+          </div>
+
+          <div class="equipo-encabezado">
+            <span class="section-kicker" id="familiaEquipo">Familia</span>
+
+            <h2 id="nombreEquipo">Equipo</h2>
+
+            <p id="referenciaEquipo">Referencia del equipo</p>
+
+            <div class="equipo-etiquetas">
+              <span class="badge" id="codigoEquipo">—</span>
+              <span class="badge" id="marcaEquipo">Marca: —</span>
+              <span class="badge" id="modeloEquipo">Modelo: —</span>
+              <span class="badge" id="rodajeEquipo">Rodaje: —</span>
+              <span class="badge" id="combustibleEquipo">Combustible: —</span>
+            </div>
+
+            <div class="hero-actions">
+              <button
+                class="button button-primary"
+                id="btnSeleccionar"
+                type="button"
+              >Seleccionar para calcular</button>
+
+              <a
+                class="button button-secondary"
+                id="btnEntradas"
+                href="entradas.html"
+              >Ver entradas</a>
+            </div>
+
+            <div class="resumen-costos-grid">
+              <div class="resumen-costo">
+                <span>Tarifa comercial</span>
+                <strong id="tarifaComercial">$ 0</strong>
+                <small id="unidadAlquiler">Por unidad</small>
+              </div>
+
+              <div class="resumen-costo">
+                <span>Costo directo</span>
+                <strong id="costoDirecto">$ 0</strong>
+                <small>Antes de utilidad</small>
+              </div>
+
+              <div class="resumen-costo">
+                <span>Rendimiento</span>
+                <strong id="rendimiento">0</strong>
+                <small id="unidadRendimiento">unidad/h</small>
+              </div>
+
+              <div class="resumen-costo">
+                <span>Costo por unidad</span>
+                <strong id="costoUnidad">$ 0</strong>
+                <small id="textoCostoUnidad">Por unidad producida</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="detalles-grid">
+          <article class="detalle-card">
+            <span class="section-kicker">INFORMACIÓN GENERAL</span>
+            <h3>Identificación del equipo</h3>
+
+            <dl class="lista-datos">
+              <div class="fila-dato"><dt>ID</dt><dd id="detalleId">—</dd></div>
+              <div class="fila-dato"><dt>Código</dt><dd id="detalleCodigo">—</dd></div>
+              <div class="fila-dato"><dt>Familia</dt><dd id="detalleFamilia">—</dd></div>
+              <div class="fila-dato"><dt>Marca</dt><dd id="detalleMarca">—</dd></div>
+              <div class="fila-dato"><dt>Modelo</dt><dd id="detalleModelo">—</dd></div>
+              <div class="fila-dato"><dt>Rodaje</dt><dd id="detalleRodaje">—</dd></div>
+              <div class="fila-dato"><dt>Combustible</dt><dd id="detalleCombustible">—</dd></div>
+              <div class="fila-dato"><dt>Unidad de alquiler</dt><dd id="detalleUnidad">—</dd></div>
+            </dl>
+          </article>
+
+          <article class="detalle-card">
+            <span class="section-kicker">RESULTADOS COMERCIALES</span>
+            <h3>Resumen del equipo</h3>
+
+            <dl class="lista-datos">
+              <div class="fila-dato"><dt>Costo directo horario</dt><dd id="resultadoCostoDirecto">$ 0</dd></div>
+              <div class="fila-dato"><dt>Alquiler equivalente</dt><dd id="resultadoAlquiler">$ 0</dd></div>
+              <div class="fila-dato"><dt>Costo por unidad</dt><dd id="resultadoCostoUnidad">$ 0</dd></div>
+              <div class="fila-dato"><dt>Transporte equivalente</dt><dd id="resultadoTransporte">$ 0</dd></div>
+              <div class="fila-dato"><dt>Costo comercial final</dt><dd id="resultadoCostoFinal">$ 0</dd></div>
+            </dl>
+          </article>
+        </section>
+
+        <section class="section-card full" style="margin-top:24px;">
+          <span class="section-kicker">PARÁMETROS ECONÓMICOS</span>
+          <h3>Datos base del cálculo</h3>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>Concepto</th><th>Valor</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Precio de adquisición</td><td id="pPrecio">$ 0</td></tr>
+                <tr><td>Valor de rescate</td><td id="pRescate">0 %</td></tr>
+                <tr><td>Vida útil</td><td id="pVida">0 h</td></tr>
+                <tr><td>Horas de trabajo por año</td><td id="pHorasAnio">0 h</td></tr>
+                <tr><td>Tasa de interés</td><td id="pInteres">0 %</td></tr>
+                <tr><td>Seguro anual</td><td id="pSeguro">0 %</td></tr>
+                <tr><td>Mantenimiento fijo anual</td><td id="pMantenimiento">$ 0</td></tr>
+                <tr><td>Consumo de combustible</td><td id="pConsumo">0 L/h</td></tr>
+                <tr><td>Precio del combustible</td><td id="pCombustible">$ 0</td></tr>
+                <tr><td>Factor de lubricantes</td><td id="pLubricantes">0 %</td></tr>
+                <tr><td>Costo de rodaje</td><td id="pRodaje">$ 0</td></tr>
+                <tr><td>Vida del rodaje</td><td id="pVidaRodaje">0 h</td></tr>
+                <tr><td>Costo mensual del operador</td><td id="pOperador">$ 0</td></tr>
+                <tr><td>Horas mensuales del operador</td><td id="pHorasOperador">0 h</td></tr>
+                <tr><td>Margen de alquiler</td><td id="pMargen">0 %</td></tr>
+                <tr><td>Movilización</td><td id="pMovilizacion">$ 0</td></tr>
+                <tr><td>Desmovilización</td><td id="pDesmovilizacion">$ 0</td></tr>
+                <tr><td>Horas de amortización</td><td id="pAmortizacion">0 h</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <footer class="app-footer">
+        <span>Costos de Alquiler Equipo de Construcción</span>
+        <span id="footerYear"></span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+  "use strict";
+
+  const CLAVE_EQUIPO = "costos_alquiler_equipo_actual";
+  const CLAVE_RESULTADOS = "costos_alquiler_resultados_calculo";
+
+  document.addEventListener("DOMContentLoaded", iniciar);
+
+  async function iniciar() {
+    document.getElementById("footerYear").textContent = new Date().getFullYear();
+    configurarMenu();
+
+    try {
+      const parametros = new URLSearchParams(window.location.search);
+      const id = parametros.get("id") || parametros.get("equipo");
+
+      if (!id) {
+        throw new Error("La dirección no contiene el identificador del equipo.");
+      }
+
+      const respuestaIndice = await fetch(
+        "data/equipos-index.json?v=" + Date.now(),
+        { cache: "no-store" }
+      );
+
+      if (!respuestaIndice.ok) {
+        throw new Error("No se pudo abrir data/equipos-index.json.");
+      }
+
+      const contenidoIndice = await respuestaIndice.json();
+      const lista = Array.isArray(contenidoIndice)
+        ? contenidoIndice
+        : (contenidoIndice.equipos || []);
+
+      const registro = lista.find(function(item) {
+        return String(item.id) === String(id);
+      });
+
+      if (!registro) {
+        throw new Error('No se encontró el equipo "' + id + '".');
+      }
+
+      limpiarVariables();
+
+      const ruta = registro.rutaDatos ||
+                   registro.ruta ||
+                   ("data/equipos/" + registro.id + "/datos.js");
+
+      await cargarScript(ruta);
+
+      const datos =
+        window.DATOS_EQUIPO ||
+        window.EQUIPO_DATOS ||
+        window.EQUIPO ||
+        window.equipo ||
+        window.datosEquipo ||
+        window.equipoActual;
+
+      if (!datos || typeof datos !== "object") {
+        throw new Error(
+          "El archivo " + ruta + " cargó, pero no creó window.DATOS_EQUIPO."
+        );
+      }
+
+      renderizar(datos, registro, ruta);
+    } catch (error) {
+      console.error(error);
+      document.getElementById("mensajeError").textContent = error.message;
+      document.getElementById("panelError").hidden = false;
+    }
+  }
+
+  function cargarScript(ruta) {
+    return new Promise(function(resolve, reject) {
+      const script = document.createElement("script");
+      const separador = ruta.indexOf("?") >= 0 ? "&" : "?";
+
+      script.src = ruta + separador + "v=" + Date.now();
+      script.async = false;
+
+      script.onload = function() {
+        resolve();
+      };
+
+      script.onerror = function() {
+        reject(new Error("No fue posible cargar " + ruta + "."));
+      };
+
+      document.head.appendChild(script);
+    });
+  }
+
+  function limpiarVariables() {
+    [
+      "DATOS_EQUIPO",
+      "EQUIPO_DATOS",
+      "EQUIPO",
+      "equipo",
+      "datosEquipo",
+      "equipoActual"
+    ].forEach(function(nombre) {
+      try {
+        delete window[nombre];
+      } catch (error) {
+        window[nombre] = undefined;
+      }
+    });
+  }
+
+  function renderizar(d, r, ruta) {
+    const e = d.entradas || {};
+    const c = d.calculados || {};
+
+    const nombre = d.nombre || r.nombreEquipo || "Equipo";
+    const codigo = d.codigo || r.codigoModelo || "—";
+    const familia = d.familia || "—";
+    const marca = d.marca || "—";
+    const modelo = d.modelo || "—";
+    const rodaje = d.rodaje || "—";
+    const combustible = d.combustible || "—";
+    const unidad = d.unidadAlquiler || e.unidadAlquiler || r.unidadAlquiler || "—";
+    const referencia = d.referencia || r.equipoReferencia || "—";
+
+    const tarifa = primero(
+      c.tarifaComercial,
+      e.tarifaComercialObjetivo,
+      r.tarifaComercial
+    );
+
+    const costoDirecto = primero(c.costoDirectoHorario);
+    const rendimiento = primero(e.rendimiento);
+    const unidadRendimiento = e.unidadRendimiento || "unidad/h";
+    const costoUnidad = primero(c.costoPorUnidad, c.alquilerPorUnidad);
+
+    texto("tituloPagina", nombre);
+    texto("nombreEquipoSidebar", nombre);
+    texto("nombreEquipo", nombre);
+    texto("familiaEquipo", familia);
+    texto("referenciaEquipo", referencia);
+    texto("codigoEquipo", codigo);
+    texto("marcaEquipo", "Marca: " + marca);
+    texto("modeloEquipo", "Modelo: " + modelo);
+    texto("rodajeEquipo", "Rodaje: " + rodaje);
+    texto("combustibleEquipo", "Combustible: " + combustible);
+
+    texto("tarifaComercial", moneda(tarifa));
+    texto("unidadAlquiler", "Por " + unidad);
+    texto("costoDirecto", moneda(costoDirecto));
+    texto("rendimiento", numero(rendimiento, 2));
+    texto("unidadRendimiento", unidadRendimiento);
+    texto("costoUnidad", moneda(costoUnidad));
+    texto("textoCostoUnidad", e.unidadCostoProduccion || "Por unidad producida");
+
+    texto("detalleId", d.id || r.id);
+    texto("detalleCodigo", codigo);
+    texto("detalleFamilia", familia);
+    texto("detalleMarca", marca);
+    texto("detalleModelo", modelo);
+    texto("detalleRodaje", rodaje);
+    texto("detalleCombustible", combustible);
+    texto("detalleUnidad", unidad);
+
+    texto("resultadoCostoDirecto", moneda(c.costoDirectoHorario));
+    texto("resultadoAlquiler", moneda(c.alquilerEquivalente));
+    texto("resultadoCostoUnidad", moneda(costoUnidad));
+    texto("resultadoTransporte", moneda(c.costoTransporteEquivalente));
+    texto("resultadoCostoFinal", moneda(c.costoComercialFinal));
+
+    texto("pPrecio", moneda(e.precioAdquisicion));
+    texto("pRescate", porcentaje(e.valorRescate));
+    texto("pVida", numero(e.vidaUtilHoras, 2) + " h");
+    texto("pHorasAnio", numero(e.horasAnio, 0) + " h");
+    texto("pInteres", porcentaje(e.tasaInteres));
+    texto("pSeguro", porcentaje(e.seguroAnual));
+    texto("pMantenimiento", moneda(e.mantenimientoFijoAnual));
+    texto("pConsumo", numero(e.consumoCombustible, 3) + " L/h");
+    texto("pCombustible", moneda(e.precioCombustible));
+    texto("pLubricantes", porcentaje(e.factorLubricantes));
+    texto("pRodaje", moneda(e.costoRodaje));
+    texto("pVidaRodaje", numero(e.vidaRodajeHoras, 0) + " h");
+    texto("pOperador", moneda(e.operadorMes));
+    texto("pHorasOperador", numero(e.horasOperadorMes, 0) + " h");
+    texto("pMargen", porcentaje(e.margenAlquiler));
+    texto("pMovilizacion", moneda(e.movilizacion));
+    texto("pDesmovilizacion", moneda(e.desmovilizacion));
+    texto("pAmortizacion", numero(e.horasAmortizacion, 0) + " h");
+
+    configurarImagen(d, r, nombre);
+    configurarEnlaces(d.id || r.id);
+    guardarSeleccion(d, r, ruta, tarifa);
+
+    document.title = nombre + " | Costos de Alquiler";
+  }
+
+  function configurarImagen(d, r, nombre) {
+    const img = document.getElementById("imagenEquipo");
+    const fallback = document.getElementById("imagenFallback");
+
+    let ruta = r.imagen;
+
+    if (!ruta) {
+      if (d.imagen && d.imagen.indexOf("/") >= 0) {
+        ruta = d.imagen;
+      } else {
+        ruta = "data/equipos/" + d.id + "/" + (d.imagen || "imagen.jpg");
+      }
+    }
+
+    img.alt = "Imagen de " + nombre;
+
+    img.onload = function() {
+      img.hidden = false;
+      fallback.hidden = true;
+    };
+
+    img.onerror = function() {
+      img.hidden = true;
+      fallback.hidden = false;
+    };
+
+    img.src = ruta + "?v=" + Date.now();
+  }
+
+  function configurarEnlaces(id) {
+    const query = "?id=" + encodeURIComponent(id);
+
+    [
+      ["menuEntradas", "entradas.html" + query],
+      ["menuCalculo", "calculo.html" + query],
+      ["menuResumen", "resumen.html" + query],
+      ["menuCatalogo", "catalogo-modelos.html" + query],
+      ["btnEntradas", "entradas.html" + query]
+    ].forEach(function(par) {
+      const el = document.getElementById(par[0]);
+      if (el) el.href = par[1];
+    });
+  }
+
+  function guardarSeleccion(d, r, ruta, tarifa) {
+    const seleccion = {
+      id: d.id || r.id,
+      nombreEquipo: d.nombre || r.nombreEquipo,
+      codigoModelo: d.codigo || r.codigoModelo,
+      rutaDatos: ruta,
+      imagen: r.imagen || ("data/equipos/" + d.id + "/imagen.jpg"),
+      unidadAlquiler: d.unidadAlquiler || r.unidadAlquiler,
+      tarifaComercial: tarifa,
+      datos: d,
+      seleccionadoEn: new Date().toISOString()
+    };
+
+    try {
+      localStorage.setItem(CLAVE_EQUIPO, JSON.stringify(seleccion));
+      localStorage.removeItem(CLAVE_RESULTADOS);
+    } catch (error) {
+      console.warn(error);
+    }
+
+    document.getElementById("btnSeleccionar").addEventListener("click", function() {
+      try {
+        localStorage.setItem(CLAVE_EQUIPO, JSON.stringify(seleccion));
+        localStorage.removeItem(CLAVE_RESULTADOS);
+      } catch (error) {
+        console.warn(error);
+      }
+
+      this.textContent = "Equipo seleccionado";
+      this.disabled = true;
+    });
+  }
+
+  function primero() {
+    for (let i = 0; i < arguments.length; i++) {
+      const n = Number(arguments[i]);
+      if (Number.isFinite(n)) return n;
+    }
+    return 0;
+  }
+
+  function texto(id, valor) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = valor == null ? "—" : valor;
+  }
+
+  function moneda(valor) {
+    const n = Number(valor);
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      maximumFractionDigits: 0
+    }).format(Number.isFinite(n) ? n : 0);
+  }
+
+  function numero(valor, decimales) {
+    const n = Number(valor);
+    return new Intl.NumberFormat("es-CO", {
+      minimumFractionDigits: decimales,
+      maximumFractionDigits: decimales
+    }).format(Number.isFinite(n) ? n : 0);
+  }
+
+  function porcentaje(valor) {
+    const n = Number(valor);
+    if (!Number.isFinite(n)) return "0 %";
+
+    const p = Math.abs(n) <= 1 ? n * 100 : n;
+    return numero(p, 2) + " %";
+  }
+
+  function configurarMenu() {
+    const boton = document.getElementById("btnMenu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (!boton || !sidebar) return;
+
+    boton.addEventListener("click", function() {
+      const abierto = sidebar.classList.toggle("open");
+      boton.setAttribute("aria-expanded", String(abierto));
+    });
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,995 @@
+/* ==========================================================
+   APP PLAN GIRÓN 2024 - 2027
+   Tarjetas, paneles, sectores y componentes visuales
+   ========================================================== */
+
+/* =========================
+   TARJETA BASE
+========================= */
+
+.card {
+    background: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+    transition: var(--transicion);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-media);
+}
+
+.card h2 {
+    color: var(--verde-oscuro);
+    margin-bottom: 14px;
+}
+
+.card h3 {
+    color: var(--verde-principal);
+}
+
+.card p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================
+   RESUMEN GENERAL
+========================= */
+
+.resumen {
+    margin-bottom: 34px;
+}
+
+.grid-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.grid-resumen .card {
+    text-align: center;
+    border-top: 5px solid var(--verde-principal);
+}
+
+.grid-resumen .card h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grid-resumen .card p {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--gris-oscuro);
+}
+
+/* =========================
+   EJES ESTRATÉGICOS
+========================= */
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.eje {
+    position: relative;
+    overflow: hidden;
+    border-left: 7px solid var(--verde-principal);
+}
+
+.eje span {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--dorado);
+    color: var(--verde-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.25rem;
+}
+
+.eje h3 {
+    padding-right: 58px;
+    color: var(--verde-oscuro);
+    font-size: 1.2rem;
+}
+
+.eje p {
+    color: var(--gris-medio);
+}
+
+/* =========================
+   SECTORES
+========================= */
+
+.grid-sectores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.card-sector {
+    background: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 22px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+    border-top: 6px solid var(--verde-principal);
+    cursor: pointer;
+    transition: var(--transicion);
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-sector:hover {
+    background: var(--verde-suave);
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-media);
+}
+
+.card-sector-icono {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.card-sector h3 {
+    color: var(--verde-oscuro);
+    font-size: 1.18rem;
+    margin-bottom: 8px;
+}
+
+.card-sector p {
+    color: var(--gris-medio);
+    font-size: 0.95rem;
+}
+
+.card-sector-footer {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-sector-footer span {
+    font-size: 0.82rem;
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.card-sector-footer a {
+    color: var(--verde-principal);
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+/* =========================
+   DETALLE DE SECTOR
+========================= */
+
+.detalle-sector-header {
+    background: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: var(--sombra-suave);
+    border-left: 8px solid var(--dorado);
+}
+
+.detalle-sector-header h2 {
+    font-size: 1.7rem;
+    color: var(--verde-oscuro);
+}
+
+.detalle-sector-header p {
+    color: var(--gris-medio);
+}
+
+.detalle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.detalle-item {
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    border-left: 5px solid var(--verde-principal);
+}
+
+.detalle-item h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 8px;
+}
+
+/* =========================
+   ESTADÍSTICAS
+========================= */
+
+.grid-estadisticas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.card-estadistica {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 18px;
+    text-align: center;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+    border-bottom: 5px solid var(--verde-principal);
+}
+
+.card-estadistica .numero {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--verde-principal);
+    margin-bottom: 6px;
+}
+
+.card-estadistica .etiqueta {
+    color: var(--gris-medio);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* =========================
+   INDICADORES
+========================= */
+
+.indicador {
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+    padding: 15px;
+    margin-bottom: 12px;
+    border-left: 5px solid var(--verde-principal);
+}
+
+.indicador h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 6px;
+}
+
+.indicador p {
+    color: var(--gris-medio);
+    margin-bottom: 8px;
+}
+
+.indicador-valor {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--verde-principal);
+}
+
+.barra-indicador {
+    width: 100%;
+    height: 12px;
+    background: var(--gris-claro);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.barra-indicador span {
+    display: block;
+    height: 100%;
+    background: var(--verde-principal);
+    border-radius: 999px;
+}
+
+/* =========================
+   METAS
+========================= */
+
+.meta {
+    background: var(--blanco);
+    border: 1px solid var(--gris-claro);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--sombra-suave);
+}
+
+.meta h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 8px;
+}
+
+.meta .estado-meta {
+    margin-top: 10px;
+}
+
+.estado-meta {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.estado-programada {
+    background: var(--dorado-suave);
+    color: var(--dorado-oscuro);
+}
+
+.estado-avance {
+    background: #eaf2ff;
+    color: var(--azul);
+}
+
+.estado-cumplida {
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+}
+
+.estado-alerta {
+    background: #fdecea;
+    color: var(--rojo);
+}
+
+/* =========================
+   PROGRAMAS
+========================= */
+
+.programa {
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+    padding: 17px;
+    margin-bottom: 14px;
+    border-left: 5px solid var(--dorado);
+}
+
+.programa h4 {
+    color: var(--verde-oscuro);
+    font-size: 1.05rem;
+}
+
+.programa p {
+    color: var(--gris-medio);
+}
+
+.programa .programa-codigo {
+    display: inline-block;
+    background: var(--dorado);
+    color: var(--verde-oscuro);
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+/* =========================
+   PROYECTOS
+========================= */
+
+.proyecto {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    margin-bottom: 14px;
+    border: 1px solid var(--gris-claro);
+    box-shadow: var(--sombra-suave);
+}
+
+.proyecto h4 {
+    color: var(--verde-principal);
+    margin-bottom: 8px;
+}
+
+.proyecto ul {
+    margin-top: 8px;
+}
+
+/* =========================
+   PRESUPUESTO
+========================= */
+
+.presupuesto-card {
+    background: linear-gradient(135deg, var(--verde-principal), var(--verde-oscuro));
+    color: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: var(--sombra-media);
+}
+
+.presupuesto-card h3 {
+    color: var(--blanco);
+    font-size: 1.15rem;
+}
+
+.presupuesto-card .valor {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--dorado);
+    margin: 8px 0;
+}
+
+.presupuesto-card p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.presupuesto-lista {
+    list-style: none;
+    padding-left: 0;
+}
+
+.presupuesto-lista li {
+    background: var(--verde-suave);
+    padding: 13px 14px;
+    border-radius: var(--radio-pequeno);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-left: 4px solid var(--verde-principal);
+}
+
+.presupuesto-lista strong {
+    color: var(--verde-oscuro);
+}
+
+/* =========================
+   PROPUESTAS
+========================= */
+
+.propuesta {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 18px;
+    margin-bottom: 15px;
+    border: 1px solid var(--gris-claro);
+    border-left: 6px solid var(--verde-principal);
+    box-shadow: var(--sombra-suave);
+}
+
+.propuesta h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 8px;
+}
+
+.propuesta p {
+    color: var(--gris-medio);
+}
+
+.propuesta-enfoque {
+    background: var(--dorado-suave);
+    color: var(--dorado-oscuro);
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   CONTROL POLÍTICO
+========================= */
+
+.pregunta-control {
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+    padding: 17px;
+    margin-bottom: 14px;
+    border-left: 5px solid var(--verde-principal);
+}
+
+.pregunta-control h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 8px;
+}
+
+.pregunta-control p {
+    color: var(--gris-oscuro);
+    font-weight: 600;
+}
+
+.pregunta-control .uso {
+    color: var(--gris-medio);
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+/* =========================
+   COMPARADOR
+========================= */
+
+.comparador-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.comparador-columna {
+    background: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 20px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+}
+
+.comparador-columna h3 {
+    color: var(--verde-oscuro);
+    border-bottom: 2px solid var(--verde-claro);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+}
+
+.comparador-diagnostico {
+    border-top: 6px solid var(--rojo);
+}
+
+.comparador-propuesta {
+    border-top: 6px solid var(--verde-principal);
+}
+
+/* =========================
+   RESULTADOS DE BÚSQUEDA
+========================= */
+
+.resultado-busqueda {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 17px;
+    margin-bottom: 14px;
+    border: 1px solid var(--gris-claro);
+    box-shadow: var(--sombra-suave);
+}
+
+.resultado-busqueda h4 {
+    color: var(--verde-principal);
+    margin-bottom: 7px;
+}
+
+.resultado-busqueda p {
+    color: var(--gris-medio);
+}
+
+.resultado-busqueda .categoria {
+    display: inline-block;
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+/* =========================
+   FUENTE DEL PLAN
+========================= */
+
+.card-fuente {
+    background: #f9fafb;
+    border-radius: var(--radio-medio);
+    padding: 15px;
+    border-left: 5px solid var(--dorado);
+    color: var(--gris-medio);
+}
+
+.card-fuente strong {
+    color: var(--verde-oscuro);
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dashboard-card {
+    background: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 20px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+    text-align: center;
+}
+
+.dashboard-card .icono {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.dashboard-card .valor {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: var(--verde-principal);
+}
+
+.dashboard-card .titulo {
+    font-size: 0.9rem;
+    color: var(--gris-medio);
+    font-weight: 700;
+}
+
+/* =========================
+   POBLACIONES BENEFICIADAS
+========================= */
+
+.poblacion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.poblacion-card {
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--verde-claro);
+}
+
+.poblacion-card .icono {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.poblacion-card h4 {
+    color: var(--verde-oscuro);
+}
+
+/* =========================
+   NORMATIVIDAD
+========================= */
+
+.norma {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 15px;
+    margin-bottom: 12px;
+    border-left: 5px solid var(--azul);
+    box-shadow: var(--sombra-suave);
+}
+
+.norma h4 {
+    color: var(--azul);
+}
+
+.norma p {
+    color: var(--gris-medio);
+}
+
+/* =========================
+   COMPETENCIAS
+========================= */
+
+.competencia {
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    margin-bottom: 13px;
+    border-left: 5px solid var(--verde-principal);
+}
+
+.competencia h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 7px;
+}
+
+.competencia p {
+    color: var(--gris-medio);
+}
+
+/* =========================
+   ALERTAS ESTRATÉGICAS
+========================= */
+
+.alerta-estrategica {
+    background: #fff4f2;
+    border: 1px solid #ffd8d2;
+    border-left: 6px solid var(--rojo);
+    border-radius: var(--radio-medio);
+    padding: 17px;
+    margin-bottom: 15px;
+}
+
+.alerta-estrategica h4 {
+    color: var(--rojo);
+}
+
+.alerta-estrategica p {
+    color: var(--gris-oscuro);
+}
+
+/* =========================
+   OPORTUNIDADES
+========================= */
+
+.oportunidad {
+    background: var(--dorado-suave);
+    border: 1px solid #ffeaa0;
+    border-left: 6px solid var(--dorado);
+    border-radius: var(--radio-medio);
+    padding: 17px;
+    margin-bottom: 15px;
+}
+
+.oportunidad h4 {
+    color: var(--dorado-oscuro);
+}
+
+.oportunidad p {
+    color: var(--gris-oscuro);
+}
+
+/* =========================
+   CONSULTA INTELIGENTE
+========================= */
+
+.consulta-ia {
+    background: linear-gradient(135deg, var(--verde-suave), var(--blanco));
+    border-radius: var(--radio-grande);
+    padding: 20px;
+    border: 1px solid var(--verde-claro);
+}
+
+.respuesta-ia {
+    margin-top: 16px;
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    border-left: 5px solid var(--verde-principal);
+    box-shadow: var(--sombra-suave);
+}
+
+/* =========================
+   TARJETAS PEQUEÑAS
+========================= */
+
+.card-mini {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 14px;
+    border: 1px solid var(--gris-claro);
+    box-shadow: var(--sombra-suave);
+}
+
+.card-mini h4 {
+    color: var(--verde-oscuro);
+    margin-bottom: 6px;
+}
+
+.card-mini p {
+    color: var(--gris-medio);
+    font-size: 0.92rem;
+}
+
+/* =========================
+   GRID AUXILIARES
+========================= */
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 17px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 17px;
+}
+
+/* =========================
+   ENCABEZADOS INTERNOS
+========================= */
+
+.encabezado-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.encabezado-seccion h2 {
+    margin-bottom: 0;
+}
+
+.encabezado-seccion .accion {
+    background: var(--verde-principal);
+    color: var(--blanco);
+    padding: 9px 14px;
+    border-radius: var(--radio-pequeno);
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+/* =========================
+   TARJETA DE PERFIL POLÍTICO
+========================= */
+
+.perfil-politico {
+    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-principal));
+    color: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 24px;
+    box-shadow: var(--sombra-media);
+}
+
+.perfil-politico h3 {
+    color: var(--blanco);
+    font-size: 1.3rem;
+}
+
+.perfil-politico p {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.perfil-politico .rol {
+    display: inline-block;
+    background: var(--dorado);
+    color: var(--verde-oscuro);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+/* =========================
+   IMPACTO MUNICIPAL
+========================= */
+
+.impacto {
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 5px solid var(--dorado);
+    box-shadow: var(--sombra-suave);
+}
+
+.impacto h4 {
+    color: var(--verde-oscuro);
+}
+
+.impacto .nivel {
+    font-weight: 900;
+    color: var(--dorado-oscuro);
+}
+
+/* =========================
+   CRONOGRAMA / SEGUIMIENTO
+========================= */
+
+.linea-tiempo {
+    position: relative;
+    padding-left: 24px;
+}
+
+.linea-tiempo::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--verde-claro);
+    border-radius: 999px;
+}
+
+.evento-tiempo {
+    position: relative;
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    padding: 15px;
+    margin-bottom: 14px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+}
+
+.evento-tiempo::before {
+    content: "";
+    position: absolute;
+    left: -23px;
+    top: 18px;
+    width: 13px;
+    height: 13px;
+    background: var(--verde-principal);
+    border-radius: 50%;
+    border: 3px solid var(--blanco);
+    box-shadow: 0 0 0 2px var(--verde-principal);
+}
+
+.evento-tiempo h4 {
+    color: var(--verde-oscuro);
+}
+
+/* =========================
+   BOTONES DE ACCIÓN EN TARJETAS
+========================= */
+
+.acciones-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.acciones-card a,
+.acciones-card button {
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+    padding: 9px 12px;
+    border-radius: var(--radio-pequeno);
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.acciones-card a:hover,
+.acciones-card button:hover {
+    background: var(--verde-principal);
+    color: var(--blanco);
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+.mensaje-exito {
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+    padding: 14px;
+    border-radius: var(--radio-medio);
+    border-left: 5px solid var(--verde-principal);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.mensaje-error {
+    background: #fdecea;
+    color: var(--rojo);
+    padding: 14px;
+    border-radius: var(--radio-medio);
+    border-left: 5px solid var(--rojo);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.mensaje-info {
+    background: #eaf2ff;
+    color: var(--azul);
+    padding: 14px;
+    border-radius: var(--radio-medio);
+    border-left: 5px solid var(--azul);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* =========================
+   FINAL
+========================= */

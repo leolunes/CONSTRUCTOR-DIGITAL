@@ -1,0 +1,367 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Banco maestro de proyectos del Plan de Desarrollo Municipal. Durante la extracción inteligente se incorporarán todos los proyectos oficiales del documento con su información técnica.",
+
+  "sectores": [
+
+    {
+
+      "sectorId":"salud-proteccion-social",
+
+      "sector":"Salud y Protección Social",
+
+      "proyectos":[
+
+        {
+
+          "id":"PRY-SAL-001",
+
+          "nombre":"Fortalecimiento de la Salud Pública",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Proyecto orientado al fortalecimiento de acciones de promoción y prevención.",
+
+          "programa":"Salud Pública",
+
+          "secretaria":"Secretaría de Salud",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"PRY-SAL-002",
+
+          "nombre":"Fortalecimiento del Programa de Vacunación",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Acciones para ampliar la cobertura de vacunación.",
+
+          "programa":"Salud Pública",
+
+          "secretaria":"Secretaría de Salud",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"educacion",
+
+      "sector":"Educación",
+
+      "proyectos":[
+
+        {
+
+          "id":"PRY-EDU-001",
+
+          "nombre":"Fortalecimiento de Instituciones Educativas",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Mejoramiento de infraestructura y calidad educativa.",
+
+          "programa":"Calidad Educativa",
+
+          "secretaria":"Secretaría de Educación",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"PRY-EDU-002",
+
+          "nombre":"Permanencia Escolar",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Acciones para reducir la deserción escolar.",
+
+          "programa":"Cobertura Educativa",
+
+          "secretaria":"Secretaría de Educación",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"transporte",
+
+      "sector":"Transporte",
+
+      "proyectos":[
+
+        {
+
+          "id":"PRY-MOV-001",
+
+          "nombre":"Mejoramiento de Infraestructura Vial",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Construcción y rehabilitación de vías urbanas y rurales.",
+
+          "programa":"Movilidad",
+
+          "secretaria":"Secretaría de Infraestructura",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"PRY-MOV-002",
+
+          "nombre":"Seguridad Vial",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Acciones para disminuir accidentalidad y fortalecer cultura vial.",
+
+          "programa":"Movilidad Segura",
+
+          "secretaria":"Secretaría de Tránsito",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"ambiente-desarrollo-sostenible",
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "proyectos":[
+
+        {
+
+          "id":"PRY-AMB-001",
+
+          "nombre":"Protección de Ecosistemas Estratégicos",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Conservación ambiental y recuperación ecológica.",
+
+          "programa":"Sostenibilidad Ambiental",
+
+          "secretaria":"Secretaría de Ambiente",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"PRY-AMB-002",
+
+          "nombre":"Gestión Integral del Riesgo",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Reducción del riesgo de desastres y fortalecimiento institucional.",
+
+          "programa":"Gestión del Riesgo",
+
+          "secretaria":"Secretaría de Ambiente",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"vivienda-ciudad-territorio",
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "proyectos":[
+
+        {
+
+          "id":"PRY-VIV-001",
+
+          "nombre":"Mejoramiento Integral de Vivienda",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Programa de mejoramiento de vivienda urbana y rural.",
+
+          "programa":"Vivienda",
+
+          "secretaria":"Secretaría de Vivienda",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"PRY-VIV-002",
+
+          "nombre":"Espacio Público",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Construcción y recuperación de parques y zonas públicas.",
+
+          "programa":"Ciudad y Territorio",
+
+          "secretaria":"Secretaría de Infraestructura",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"gobierno-territorial",
+
+      "sector":"Gobierno Territorial",
+
+      "proyectos":[
+
+        {
+
+          "id":"PRY-GOB-001",
+
+          "nombre":"Fortalecimiento Institucional",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Modernización administrativa y fortalecimiento de la gestión pública.",
+
+          "programa":"Gobierno Territorial",
+
+          "secretaria":"Despacho del Alcalde",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"PRY-GOB-002",
+
+          "nombre":"Gobierno Digital",
+
+          "estado":"Pendiente de extracción",
+
+          "descripcion":"Implementación de herramientas tecnológicas para mejorar la atención al ciudadano.",
+
+          "programa":"Modernización Institucional",
+
+          "secretaria":"Secretaría TIC",
+
+          "presupuesto":null,
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    }
+
+  ],
+
+  "estructuraFutura":{
+
+    "cadaProyectoTendra":[
+
+      "Código oficial",
+
+      "Nombre oficial",
+
+      "Descripción",
+
+      "Sector",
+
+      "Programa",
+
+      "Meta relacionada",
+
+      "Indicadores relacionados",
+
+      "Secretaría responsable",
+
+      "Valor presupuestado",
+
+      "Fuente de financiación",
+
+      "Cronograma",
+
+      "Estado de ejecución",
+
+      "Cobertura",
+
+      "Población beneficiada",
+
+      "ODS relacionados",
+
+      "Ubicación geográfica",
+
+      "Página exacta del Plan",
+
+      "Fuente documental"
+
+    ]
+
+  },
+
+  "estadoBaseConocimiento":"Estructura creada. Durante la extracción inteligente del Plan se incorporarán todos los proyectos oficiales del documento."
+}

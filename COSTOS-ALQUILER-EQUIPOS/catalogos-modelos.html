@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Catálogo de modelos | Costos de alquiler</title>
+
+  <meta
+    name="description"
+    content="Catálogo general de modelos de equipos de construcción con imagen, referencia, código y tarifa comercial."
+  >
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <meta name="theme-color" content="#0f172a">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-brand">
+
+        <img
+          src="assets/images/logo.png"
+          alt="Logo Costos de Alquiler de Equipos"
+          class="sidebar-logo"
+        >
+
+        <div>
+          <strong>Costos de alquiler</strong>
+          <span>Equipos de construcción</span>
+        </div>
+
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación principal">
+
+        <a href="index.html">
+          Inicio
+        </a>
+
+        <a href="entradas.html">
+          Entradas
+        </a>
+
+        <a href="calculo.html">
+          Cálculo
+        </a>
+
+        <a href="resumen.html">
+          Resumen
+        </a>
+
+        <a href="catalogos-modelo.html">
+          Catálogo de modelos
+        </a>
+
+        <a href="equipos.html">
+          Buscar equipos
+        </a>
+
+      </nav>
+
+    </aside>
+
+    <div class="app-main">
+
+      <header class="topbar">
+
+        <button
+          type="button"
+          class="menu-button"
+          id="btnMenu"
+          aria-label="Abrir o cerrar menú"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <div class="topbar-title">
+          <span>Base de datos comercial</span>
+          <strong>Catálogo de modelos</strong>
+        </div>
+
+        <a
+          href="equipos.html"
+          class="button button-secondary"
+        >
+          Buscar equipos
+        </a>
+
+      </header>
+
+      <main class="page-content">
+
+        <section class="page-heading">
+
+          <div>
+
+            <p class="eyebrow">
+              Base maestra
+            </p>
+
+            <h1>
+              Catálogo de equipos
+            </h1>
+
+            <p>
+              Consulta los modelos disponibles, sus referencias,
+              fotografías, unidades de alquiler y tarifas comerciales.
+            </p>
+
+          </div>
+
+        </section>
+
+        <section
+          class="alert alert-error"
+          id="panelCatalogoError"
+          hidden
+        >
+          <strong>No fue posible cargar el catálogo.</strong>
+          <p id="mensajeCatalogoError"></p>
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <div>
+
+              <p class="eyebrow">
+                Filtros del catálogo
+              </p>
+
+              <h2>
+                Buscar y clasificar equipos
+              </h2>
+
+            </div>
+
+            <div
+              id="contadorCatalogo"
+              data-contador-catalogo
+              class="results-counter"
+            >
+              0 equipos disponibles
+            </div>
+
+          </div>
+
+          <div class="catalog-filters">
+
+            <div class="form-field">
+
+              <label for="buscarCatalogo">
+                Buscar equipo
+              </label>
+
+              <input
+                type="search"
+                id="buscarCatalogo"
+                data-buscar-catalogo
+                placeholder="Nombre, código, referencia, marca o modelo"
+                autocomplete="off"
+                spellcheck="false"
+              >
+
+            </div>
+
+            <div class="form-field">
+
+              <label for="filtroFamilia">
+                Familia
+              </label>
+
+              <select
+                id="filtroFamilia"
+                data-filtro-familia
+              >
+                <option value="">
+                  Todas las familias
+                </option>
+              </select>
+
+            </div>
+
+            <div class="form-field form-field-actions">
+
+              <span class="form-label-placeholder">
+                Acciones
+              </span>
+
+              <button
+                type="button"
+                class="button button-secondary"
+                id="btnLimpiarCatalogo"
+                data-limpiar-catalogo
+              >
+                Limpiar filtros
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <div>
+
+              <p class="eyebrow">
+                Modelos registrados
+              </p>
+
+              <h2>
+                Equipos disponibles
+              </h2>
+
+            </div>
+
+          </div>
+
+          <div class="table-responsive">
+
+            <table class="data-table catalog-table">
+
+              <thead>
+
+                <tr>
+                  <th>Imagen</th>
+                  <th>Código</th>
+                  <th>Equipo</th>
+                  <th>Referencia</th>
+                  <th>Unidad</th>
+                  <th>Tarifa comercial</th>
+                  <th>Acciones</th>
+                </tr>
+
+              </thead>
+
+              <tbody
+                id="tablaCatalogoBody"
+                data-tabla-catalogo
+              >
+
+                <tr>
+
+                  <td colspan="7">
+
+                    <div class="search-empty">
+
+                      <strong>
+                        Cargando catálogo...
+                      </strong>
+
+                      <p>
+                        Espera un momento mientras se consulta la base de datos.
+                      </p>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <div>
+
+              <p class="eyebrow">
+                Uso del catálogo
+              </p>
+
+              <h2>
+                Acciones disponibles
+              </h2>
+
+            </div>
+
+          </div>
+
+          <div class="data-grid">
+
+            <article class="data-item">
+
+              <span>
+                Consultar
+              </span>
+
+              <strong>
+                Revisa la información general y la tarifa comercial
+                de cada modelo.
+              </strong>
+
+            </article>
+
+            <article class="data-item">
+
+              <span>
+                Ver ficha
+              </span>
+
+              <strong>
+                Abre la ficha técnica y económica completa del equipo.
+              </strong>
+
+            </article>
+
+            <article class="data-item">
+
+              <span>
+                Seleccionar
+              </span>
+
+              <strong>
+                Envía el modelo a la hoja de entradas para realizar
+                el cálculo.
+              </strong>
+
+            </article>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <footer class="app-footer">
+
+        <span>
+          © <span id="footerYear"></span>
+          Costos de Alquiler de Equipos
+        </span>
+
+      </footer>
+
+    </div>
+
+  </div>
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/catalogo.js"></script>
+
+</body>
+
+</html>

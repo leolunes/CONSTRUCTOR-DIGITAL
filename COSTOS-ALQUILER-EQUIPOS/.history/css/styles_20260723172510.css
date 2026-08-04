@@ -1,0 +1,57 @@
+/* COSTOS DE ALQUILER EQUIPO DE CONSTRUCCIÓN / / styles.css */
+
+:root{ –primary:#5b21b6; –primary-dark:#4c1d95; –bg:#f5f6fb; –card:#fff;
+–text:#1f2937; –muted:#6b7280; –border:#e5e7eb; –radius:18px; –shadow:0
+10px 30px rgba(0,0,0,.08); } *{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Segoe
+UI,Arial,sans-serif;background:var(–bg);color:var(–text)}
+.app-shell{display:grid;grid-template-columns:280px
+1fr;min-height:100vh}
+.sidebar{background:#2f1859;color:#fff;padding:24px;display:flex;flex-direction:column}
+.sidebar-brand{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+.sidebar-brand img,.brand-logo-fallback{width:54px;height:54px}
+.brand-logo-fallback{display:none;border-radius:50%;background:#fff;color:var(–primary);align-items:center;justify-content:center;font-weight:bold}
+.brand-text strong{display:block;font-size:16px}.brand-text
+span{font-size:12px;opacity:.8} .nav-section-title{margin:18px 0
+8px;font-size:11px;letter-spacing:1px;opacity:.7}
+.nav-item{display:flex;gap:12px;align-items:center;text-decoration:none;color:#fff;padding:12px
+14px;border-radius:12px;margin-bottom:6px}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.12)}
+.nav-button{width:100%;border:none;background:none;color:#fff;cursor:pointer;font:inherit}
+.sidebar-footer{margin-top:auto}
+.status-card{background:rgba(255,255,255,.08);padding:14px;border-radius:12px}
+.status-line{display:flex;gap:8px;align-items:center}.status-dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
+.main-content{display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid
+var(–border);display:flex;justify-content:space-between;align-items:center;padding:22px
+30px}
+.topbar-left{display:flex;gap:18px;align-items:center}.menu-toggle{background:none;border:none;font-size:22px;cursor:pointer}
+.topbar-eyebrow,.section-kicker{font-size:11px;color:var(–primary);font-weight:700;letter-spacing:1px}
+.page-content{padding:30px}
+.hero-panel{display:flex;justify-content:space-between;align-items:center;padding:34px;background:linear-gradient(135deg,#efe9ff,#fff);border-radius:var(–radius);box-shadow:var(–shadow);margin-bottom:25px}
+.hero-panel h2{margin:12px 0;font-size:34px}.hero-panel
+p{max-width:650px;color:var(–muted);line-height:1.6}
+.hero-actions{display:flex;gap:12px;margin-top:22px}
+.button{display:inline-flex;justify-content:center;align-items:center;padding:12px
+20px;border-radius:12px;text-decoration:none;border:none;cursor:pointer;font-weight:600}
+.button-primary{background:var(–primary);color:#fff}.button-secondary{background:#ede9fe;color:var(–primary)}.button-light{background:#fff;border:1px
+solid var(–border)}.button-full{width:100%}
+.hero-machine{font-size:72px}.hero-badge{text-align:center;color:var(–muted)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:25px}
+.stat-card,.search-panel,.module-card,.recent-panel{background:#fff;border-radius:var(–radius);box-shadow:var(–shadow)}
+.stat-card{padding:20px}.stat-card-header{display:flex;justify-content:space-between;color:var(–muted)}.stat-value{display:block;margin:14px
+0 6px;font-size:30px;font-weight:700}
+.search-panel{padding:24px;margin-bottom:25px}.section-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.search-input-wrap{display:flex;gap:12px}.search-input-wrap
+input{flex:1;padding:14px;border:1px solid
+var(–border);border-radius:12px}
+.dashboard-layout{display:grid;grid-template-columns:2fr 1fr;gap:24px}
+.module-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.module-card{padding:22px;text-decoration:none;color:inherit}.module-card-featured{background:linear-gradient(135deg,var(–primary),#7c3aed);color:#fff}
+.module-icon{font-size:30px;margin-bottom:16px}.recent-panel{padding:22px}.empty-state{text-align:center;padding:35px
+15px;color:var(–muted)} .app-footer{margin-top:auto;padding:18px
+30px;border-top:1px solid
+var(–border);display:flex;justify-content:space-between;background:#fff;font-size:13px;color:var(–muted)}
+@media(max-width:1000px){.app-shell{grid-template-columns:1fr}.sidebar{display:none}.dashboard-layout{grid-template-columns:1fr}.hero-panel{flex-direction:column;text-align:center}}
+@media(max-width:700px){.topbar{flex-direction:column;align-items:flex-start;gap:15px}.hero-panel
+h2{font-size:28px}.search-input-wrap{flex-direction:column}}

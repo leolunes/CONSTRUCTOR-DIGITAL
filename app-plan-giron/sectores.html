@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sectores - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+<h1>Sectores Estratégicos</h1>
+<p>Consulte los sectores del Plan de Desarrollo Municipal de Girón.</p>
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+<h2>Buscar sector</h2>
+
+<input
+type="text"
+id="buscarSector"
+placeholder="Ejemplo: salud, educación, ambiente, transporte..."
+onkeyup="filtrarSectores()">
+</section>
+
+<section class="seccion">
+<h2>Listado de Sectores</h2>
+
+<div class="grid-sectores" id="listaSectores">
+<p class="texto-suave">Cargando sectores...</p>
+</div>
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="buscador.html">Buscar</a>
+<a href="propuestas.html">Propuestas</a>
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+
+<script>
+let sectoresGlobal = [];
+
+function cargarSectoresPantalla() {
+    const contenedor = document.getElementById("listaSectores");
+
+    if (!contenedor) return;
+
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!base.sectores || !base.sectores.sectores) {
+        contenedor.innerHTML = "<p class='texto-suave'>No se pudieron cargar los sectores.</p>";
+        return;
+    }
+
+    sectoresGlobal = base.sectores.sectores;
+
+    pintarSectores(sectoresGlobal);
+}
+
+function pintarSectores(sectores) {
+    const contenedor = document.getElementById("listaSectores");
+
+    if (!contenedor) return;
+
+    if (!sectores || sectores.length === 0) {
+        contenedor.innerHTML = `
+            <div class="estado-vacio">
+                <h3>Sin resultados</h3>
+                <p>No se encontraron sectores con ese criterio.</p>
+            </div>
+        `;
+        return;
+    }
+
+    contenedor.innerHTML = sectores.map(sector => `
+        <div class="card-sector" onclick="ROUTER.irSector('${sector.id}')">
+            <div>
+                <div class="card-sector-icono">${sector.icono || "📌"}</div>
+                <h3>${sector.nombre}</h3>
+                <p>${sector.descripcion || ""}</p>
+            </div>
+
+            <div class="card-sector-footer">
+                <span>Eje ${sector.ejePrincipal || ""}</span>
+                <a>Ver ficha</a>
+            </div>
+        </div>
+    `).join("");
+}
+
+function filtrarSectores() {
+    const input = document.getElementById("buscarSector");
+    const texto = input.value.toLowerCase();
+
+    const filtrados = sectoresGlobal.filter(sector => {
+        const contenido = `
+            ${sector.nombre}
+            ${sector.descripcion}
+            ${sector.usoApp}
+            ${sector.ejePrincipal}
+        `.toLowerCase();
+
+        return contenido.includes(texto);
+    });
+
+    pintarSectores(filtrados);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cargarSectoresPantalla, 600);
+});
+</script>
+
+</body>
+
+</html>

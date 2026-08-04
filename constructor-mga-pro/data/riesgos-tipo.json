@@ -1,0 +1,37 @@
+[
+  {
+    "tipo": "Técnico",
+    "descripcion": "Ajustes técnicos por condiciones no previstas.",
+    "probabilidad": "Media",
+    "impacto": "Medio",
+    "mitigacion": "Revisión técnica previa y validación de diseños, cantidades y especificaciones."
+  },
+  {
+    "tipo": "Financiero",
+    "descripcion": "Variación de precios de materiales, transporte o mano de obra.",
+    "probabilidad": "Media",
+    "impacto": "Alto",
+    "mitigacion": "Actualizar presupuesto, revisar APUs y prever mecanismos contractuales permitidos."
+  },
+  {
+    "tipo": "Jurídico",
+    "descripcion": "Demoras por permisos, autorizaciones o trámites contractuales.",
+    "probabilidad": "Media",
+    "impacto": "Medio",
+    "mitigacion": "Verificar requisitos jurídicos desde la estructuración."
+  },
+  {
+    "tipo": "Social",
+    "descripcion": "Baja apropiación comunitaria o resistencia de actores.",
+    "probabilidad": "Baja",
+    "impacto": "Medio",
+    "mitigacion": "Realizar socialización y participación comunitaria."
+  },
+  {
+    "tipo": "Ambiental",
+    "descripcion": "Impactos ambientales menores durante la ejecución.",
+    "probabilidad": "Baja",
+    "impacto": "Medio",
+    "mitigacion": "Aplicar buenas prácticas ambientales y manejo de residuos."
+  }
+]

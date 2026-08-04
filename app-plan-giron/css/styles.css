@@ -1,0 +1,576 @@
+/* ==========================================================
+   APP PLAN GIRÓN 2024 - 2027
+   Archivo principal de estilos
+   ========================================================== */
+
+/* =========================
+   VARIABLES GENERALES
+========================= */
+
+:root {
+    --verde-principal: #0b7a3b;
+    --verde-oscuro: #045c2c;
+    --verde-claro: #e8f6ee;
+    --verde-suave: #f4fbf7;
+
+    --dorado: #f4c430;
+    --dorado-oscuro: #d6a800;
+    --dorado-suave: #fff7d6;
+
+    --blanco: #ffffff;
+    --gris-fondo: #f5f7f8;
+    --gris-claro: #e6e9ec;
+    --gris-medio: #7a7f85;
+    --gris-oscuro: #2f3437;
+
+    --negro: #101820;
+
+    --rojo: #c0392b;
+    --azul: #1f6feb;
+
+    --sombra-suave: 0 4px 14px rgba(0, 0, 0, 0.08);
+    --sombra-media: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    --radio-pequeno: 8px;
+    --radio-medio: 14px;
+    --radio-grande: 22px;
+
+    --transicion: all 0.3s ease;
+}
+
+/* =========================
+   RESET BÁSICO
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--gris-fondo);
+    color: var(--gris-oscuro);
+    line-height: 1.6;
+    padding-bottom: 85px;
+}
+
+/* =========================
+   TEXTOS GENERALES
+========================= */
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--verde-oscuro);
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.45rem;
+    margin-bottom: 14px;
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.texto-suave {
+    color: var(--gris-medio);
+    font-size: 0.95rem;
+}
+
+.texto-destacado {
+    color: var(--verde-principal);
+    font-weight: 700;
+}
+
+.texto-alerta {
+    color: var(--rojo);
+    font-weight: 700;
+}
+
+/* =========================
+   HEADER GENERAL
+========================= */
+
+.header {
+    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-principal));
+    color: var(--blanco);
+    padding: 32px 20px 38px;
+    text-align: center;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    box-shadow: var(--sombra-media);
+}
+
+.header h1 {
+    color: var(--blanco);
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: rgba(255, 255, 255, 0.92);
+    max-width: 850px;
+    margin: 0 auto;
+    font-size: 1rem;
+}
+
+.header-contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* =========================
+   CONTENEDORES
+========================= */
+
+.contenedor {
+    width: 94%;
+    max-width: 1150px;
+    margin: 28px auto;
+}
+
+.seccion {
+    margin-bottom: 34px;
+}
+
+.seccion h2 {
+    margin-bottom: 18px;
+}
+
+/* =========================
+   HERO INICIO
+========================= */
+
+.hero {
+    background: var(--blanco);
+    border-radius: var(--radio-grande);
+    padding: 30px 24px;
+    margin-bottom: 28px;
+    box-shadow: var(--sombra-suave);
+    border-left: 7px solid var(--dorado);
+}
+
+.hero h2 {
+    font-size: 1.8rem;
+    color: var(--verde-oscuro);
+}
+
+.hero p {
+    color: var(--gris-medio);
+    max-width: 780px;
+}
+
+/* =========================
+   BUSCADORES
+========================= */
+
+.buscador-inicio,
+.buscador-local {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.buscador-inicio input,
+.buscador-local input,
+input,
+select,
+textarea {
+    width: 100%;
+    border: 1px solid var(--gris-claro);
+    border-radius: var(--radio-medio);
+    padding: 13px 15px;
+    font-size: 1rem;
+    background: var(--blanco);
+    color: var(--gris-oscuro);
+    outline: none;
+    transition: var(--transicion);
+}
+
+.buscador-inicio input:focus,
+.buscador-local input:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--verde-principal);
+    box-shadow: 0 0 0 3px rgba(11, 122, 59, 0.12);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+button,
+.botonPrincipal,
+.boton-menu {
+    border: none;
+    cursor: pointer;
+    transition: var(--transicion);
+    font-weight: 700;
+}
+
+.buscador-inicio button,
+.botonPrincipal {
+    background: var(--verde-principal);
+    color: var(--blanco);
+    padding: 13px 22px;
+    border-radius: var(--radio-medio);
+    font-size: 1rem;
+    box-shadow: var(--sombra-suave);
+}
+
+.buscador-inicio button:hover,
+.botonPrincipal:hover {
+    background: var(--verde-oscuro);
+    transform: translateY(-2px);
+}
+
+.boton-secundario {
+    background: var(--dorado);
+    color: var(--gris-oscuro);
+    padding: 12px 18px;
+    border-radius: var(--radio-medio);
+    font-weight: 700;
+}
+
+.boton-secundario:hover {
+    background: var(--dorado-oscuro);
+}
+
+/* =========================
+   MENÚ PRINCIPAL
+========================= */
+
+.grid-menu {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.boton-menu {
+    background: var(--blanco);
+    color: var(--verde-oscuro);
+    padding: 18px;
+    text-align: center;
+    border-radius: var(--radio-medio);
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--gris-claro);
+}
+
+.boton-menu:hover {
+    background: var(--verde-principal);
+    color: var(--blanco);
+    transform: translateY(-3px);
+}
+
+/* =========================
+   NAV INFERIOR
+========================= */
+
+.nav-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--blanco);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 11px 8px;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.nav-inferior a {
+    color: var(--verde-oscuro);
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 8px 10px;
+    border-radius: var(--radio-pequeno);
+    transition: var(--transicion);
+}
+
+.nav-inferior a:hover {
+    background: var(--verde-claro);
+    color: var(--verde-principal);
+}
+
+/* =========================
+   LISTAS
+========================= */
+
+ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+}
+
+li {
+    margin-bottom: 7px;
+}
+
+.lista-limpia {
+    list-style: none;
+    padding-left: 0;
+}
+
+.lista-limpia li {
+    background: var(--verde-suave);
+    padding: 11px 13px;
+    border-radius: var(--radio-pequeno);
+    margin-bottom: 8px;
+    border-left: 4px solid var(--verde-principal);
+}
+
+/* =========================
+   TABLAS
+========================= */
+
+.tabla-contenedor {
+    overflow-x: auto;
+    background: var(--blanco);
+    border-radius: var(--radio-medio);
+    box-shadow: var(--sombra-suave);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 620px;
+}
+
+th,
+td {
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--gris-claro);
+    text-align: left;
+}
+
+th {
+    background: var(--verde-principal);
+    color: var(--blanco);
+    font-weight: 700;
+}
+
+tr:hover {
+    background: var(--verde-suave);
+}
+
+/* =========================
+   ETIQUETAS Y BADGES
+========================= */
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.badge-verde {
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+}
+
+.badge-dorado {
+    background: var(--dorado-suave);
+    color: var(--dorado-oscuro);
+}
+
+.badge-rojo {
+    background: #fdecea;
+    color: var(--rojo);
+}
+
+.badge-azul {
+    background: #eaf2ff;
+    color: var(--azul);
+}
+
+/* =========================
+   BLOQUES DE INFORMACIÓN
+========================= */
+
+.bloque-info {
+    background: var(--verde-suave);
+    padding: 16px;
+    border-radius: var(--radio-medio);
+    border-left: 5px solid var(--verde-principal);
+    margin-bottom: 16px;
+}
+
+.bloque-alerta {
+    background: #fff4f2;
+    padding: 16px;
+    border-radius: var(--radio-medio);
+    border-left: 5px solid var(--rojo);
+    margin-bottom: 16px;
+}
+
+.bloque-dorado {
+    background: var(--dorado-suave);
+    padding: 16px;
+    border-radius: var(--radio-medio);
+    border-left: 5px solid var(--dorado);
+    margin-bottom: 16px;
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+select {
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--verde-principal) 50%),
+        linear-gradient(135deg, var(--verde-principal) 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) calc(1em + 3px),
+        calc(100% - 15px) calc(1em + 3px);
+    background-size:
+        5px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 7px;
+    color: var(--verde-oscuro);
+}
+
+.grupo-formulario {
+    margin-bottom: 16px;
+}
+
+/* =========================
+   ESTADOS VACÍOS
+========================= */
+
+.estado-vacio {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--gris-medio);
+    background: var(--verde-suave);
+    border-radius: var(--radio-medio);
+}
+
+.estado-vacio h3 {
+    margin-bottom: 8px;
+}
+
+/* =========================
+   FUENTES Y REFERENCIAS
+========================= */
+
+.fuente-plan {
+    font-size: 0.88rem;
+    color: var(--gris-medio);
+    border-top: 1px solid var(--gris-claro);
+    padding-top: 10px;
+    margin-top: 14px;
+}
+
+.fuente-plan strong {
+    color: var(--verde-oscuro);
+}
+
+/* =========================
+   UTILIDADES
+========================= */
+
+.oculto {
+    display: none !important;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.margen-superior {
+    margin-top: 20px;
+}
+
+.margen-inferior {
+    margin-bottom: 20px;
+}
+
+.flex {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.separador {
+    height: 1px;
+    background: var(--gris-claro);
+    margin: 18px 0;
+}
+
+/* =========================
+   IMPRESIÓN / PDF FUTURO
+========================= */
+
+@media print {
+
+    body {
+        background: var(--blanco);
+        padding-bottom: 0;
+    }
+
+    .nav-inferior,
+    button,
+    .botonPrincipal,
+    .boton-menu {
+        display: none !important;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+
+    .header {
+        box-shadow: none;
+        border-radius: 0;
+    }
+}

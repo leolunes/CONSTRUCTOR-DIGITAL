@@ -1,0 +1,61 @@
+/* =====================================
+   EXPORTADOR MGA WEB
+   ===================================== */
+
+.exportador-mga-card{
+  background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+  border:1px solid var(--border,#1f2937);
+  border-radius:18px;
+  padding:16px;
+  color:var(--text,#e5e7eb);
+}
+
+.exportador-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.exportador-head h2{
+  margin:0 0 6px 0;
+  font-size:18px;
+}
+
+.exportador-head p{
+  margin:0;
+  color:var(--muted,#9ca3af);
+  font-size:13px;
+}
+
+.exportador-bloque{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid var(--border,#1f2937);
+  border-radius:14px;
+  background:#0b1220;
+}
+
+.exportador-bloque-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.exportador-bloque textarea{
+  width:100%;
+  min-height:96px;
+  resize:vertical;
+  font-family:inherit;
+}
+
+.exportador-bloque .table{
+  min-width:900px;
+}
+
+@media(max-width:900px){
+  .exportador-head{flex-direction:column}
+}

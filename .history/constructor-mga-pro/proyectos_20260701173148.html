@@ -1,0 +1,261 @@
+ <!doctype html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Constructor MGA Pro | Banco de Proyectos</title>
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0f14"/>
+
+  <link rel="icon" href="assets/icon-192.svg" type="image/svg+xml">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/integracion-mga-presupuesto.css">
+
+</head>
+
+<body>
+
+<header class="top">
+
+  <div class="brand">
+
+    <div class="logo" aria-hidden="true">
+      <img
+        src="assets/icon-192.svg"
+        alt=""
+        style="width:26px;height:26px;border-radius:8px"
+      >
+    </div>
+
+    <div>
+      <div class="title">CONSTRUCTOR MGA PRO</div>
+      <div class="subtitle">
+        Formulación MGA + Presupuesto APU + Documentos Técnicos de Proyectos de Inversión Pública
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="nav">
+
+    <button class="navbtn" id="btnNew" type="button">
+      + Nuevo Proyecto Integral
+    </button>
+
+    <button class="navbtn" id="btnAsistenteInteligente" type="button">
+      🤖 Asistente Inteligente
+    </button>
+
+    <button class="navbtn" id="btnInstallBase" type="button">
+      📦 Base APU
+    </button>
+
+    <input id="fileBase" type="file" accept=".xlsx,.xls" hidden>
+
+    <button class="navbtn" id="btnExport" type="button">
+      💾 Exportar Backup
+    </button>
+
+    <label class="navbtn filelike">
+      📥 Importar Backup
+      <input id="fileImport" type="file" accept="application/json" hidden>
+    </label>
+
+    <label class="navbtn filelike">
+      📂 Importar Proyecto
+      <input id="fileImportProject" type="file" accept="application/json" hidden>
+    </label>
+
+    <button class="navbtn danger" id="btnReset" type="button">
+      Borrar Todo
+    </button>
+
+  </nav>
+
+</header>
+
+<main class="container">
+
+  <section class="grid kpis" id="kpis"></section>
+
+  <!-- NUEVO PANEL -->
+  <section class="card" id="panelSiguientePaso">
+
+    <div class="cardhead">
+
+      <div>
+
+        <h2>🚀 Mi Siguiente Paso</h2>
+
+        <div class="muted">
+          El Constructor MGA Pro le indicará siempre cuál es el siguiente paso recomendado para continuar la formulación del proyecto.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="contenidoSiguientePaso">
+
+      <div class="muted">
+        Cargando información...
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="mga-integrado-flujo" id="flujoMGAIntegrado">
+
+    <div class="mga-flujo-head">
+
+      <div>
+        <h3>Flujo Integral del Proyecto</h3>
+        <p>
+          Una sola ruta: idea, formulación MGA, presupuesto APU, riesgos, indicadores y documentos.
+        </p>
+      </div>
+
+      <span class="mga-flujo-badge">MGA + Presupuesto</span>
+
+    </div>
+
+    <div class="mga-flujo-grid">
+
+      <div class="mga-flujo-card">
+        <strong>1. Idea</strong>
+        <span>Asistente inteligente y datos básicos</span>
+      </div>
+
+      <div class="mga-flujo-card">
+        <strong>2. Diagnóstico</strong>
+        <span>Problema, causas, efectos y población</span>
+      </div>
+
+      <div class="mga-flujo-card">
+        <strong>3. Presupuesto / APU</strong>
+        <span>Cantidades, APUs, costos directos e indirectos</span>
+      </div>
+
+      <div class="mga-flujo-card">
+        <strong>4. MGA</strong>
+        <span>Cadena de valor, indicadores y riesgos</span>
+      </div>
+
+      <div class="mga-flujo-card">
+        <strong>5. Documentos</strong>
+        <span>PDF, especificaciones y soporte técnico</span>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="card">
+
+    <div class="cardhead">
+
+      <div>
+        <h2>Banco de Proyectos Integrales</h2>
+        <div class="muted">
+          Administre proyectos con formulación MGA, presupuesto APU, indicadores, riesgos y documentos técnicos.
+        </div>
+      </div>
+
+      <div class="row space">
+        <input
+          id="search"
+          class="search"
+          placeholder="Buscar proyecto, entidad, municipio o departamento..."
+        />
+      </div>
+
+    </div>
+
+    <div class="tablewrap">
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th>Proyecto</th>
+            <th>Entidad</th>
+            <th>Ubicación</th>
+            <th>Actualizado</th>
+            <th>Valor Total</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody id="lista"></tbody>
+
+      </table>
+
+    </div>
+
+    <div class="muted" id="empty" style="display:none">
+      Aún no existen proyectos registrados.
+    </div>
+
+  </section>
+
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script src="js/base-import.js"></script>
+<script src="js/app.js"></script>
+
+<script src="js/asistente/integracion-mga-presupuesto.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+
+  const btnAsistente=document.getElementById("btnAsistenteInteligente");
+  const panel=document.getElementById("contenidoSiguientePaso");
+
+  if(panel){
+
+    const filas=document.querySelectorAll("#lista tr");
+
+    if(filas.length===0){
+
+      panel.innerHTML=`
+      <h3>👋 Bienvenido</h3>
+      <p>No existen proyectos registrados.</p>
+      <p>El primer paso recomendado es crear un nuevo proyecto integral.</p>
+      <button class="navbtn" onclick="document.getElementById('btnNew').click()">
+      ➕ Nuevo Proyecto Integral
+      </button>`;
+
+    }else{
+
+      panel.innerHTML=`
+      <h3>📌 Continúe con su proyecto</h3>
+      <p>Seleccione un proyecto del Banco de Proyectos para continuar su formulación.</p>
+      <p><strong>Siguiente paso recomendado:</strong> abrir el proyecto y continuar con el diagnóstico o la formulación.</p>`;
+    }
+
+  }
+
+  if(btnAsistente){
+    btnAsistente.addEventListener("click",()=>{
+      alert("Próximamente el Asistente Inteligente iniciará la formulación automática del proyecto desde una idea.");
+    });
+  }
+
+});
+</script>
+
+</body>
+</html>

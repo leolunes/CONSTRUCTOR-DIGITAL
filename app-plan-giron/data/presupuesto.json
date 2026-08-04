@@ -1,0 +1,176 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "unidadMonetaria": "Millones de pesos colombianos",
+  "simbolo": "$",
+  "moneda": "COP",
+  "decimales": 0,
+
+  "totalesPorVigencia": {
+    "2024": "290.949",
+    "2025": "299.678",
+    "2026": "308.728",
+    "2027": "318.111",
+    "totalCuatrienio": "1.217.466"
+  },
+
+  "sectores": [
+
+    {
+      "ranking": 1,
+      "sectorId": "educacion",
+      "codigo": "22",
+      "sector": "Educación",
+      "valores": {
+        "2024": "120.249",
+        "2025": "123.843",
+        "2026": "127.531",
+        "2027": "131.314"
+      },
+      "totalCuatrienio": "502.937",
+      "participacionPorcentual": "41,31 %"
+    },
+
+    {
+      "ranking": 2,
+      "sectorId": "salud-proteccion-social",
+      "codigo": "19",
+      "sector": "Salud",
+      "valores": {
+        "2024": "109.248",
+        "2025": "112.505",
+        "2026": "115.859",
+        "2027": "119.313"
+      },
+      "totalCuatrienio": "456.925",
+      "participacionPorcentual": "37,53 %"
+    },
+
+    {
+      "ranking": 3,
+      "sectorId": "minas-energia",
+      "codigo": "21",
+      "sector": "Minas y Energía",
+      "valores": {
+        "2024": "14.000",
+        "2025": "14.420",
+        "2026": "14.853",
+        "2027": "15.298"
+      },
+      "totalCuatrienio": "58.571",
+      "participacionPorcentual": "4,81 %"
+    },
+
+    {
+      "ranking": 4,
+      "sectorId": "ambiente-desarrollo-sostenible",
+      "codigo": "32",
+      "sector": "Ambiente y Desarrollo Sostenible",
+      "valores": {
+        "2024": "12.054",
+        "2025": "11.707",
+        "2026": "12.679",
+        "2027": "13.216"
+      },
+      "totalCuatrienio": "49.656",
+      "participacionPorcentual": "4,08 %"
+    },
+
+    {
+      "ranking": 5,
+      "sectorId": "gobierno-territorial",
+      "codigo": "45",
+      "sector": "Gobierno Territorial",
+      "valores": {
+        "2024": "9.780",
+        "2025": "10.056",
+        "2026": "10.336",
+        "2027": "10.621"
+      },
+      "totalCuatrienio": "40.793",
+      "participacionPorcentual": "3,35 %"
+    },
+
+    {
+      "ranking": 6,
+      "sectorId": "inclusion-social-reconciliacion",
+      "codigo": "41",
+      "sector": "Inclusión Social y Reconciliación",
+      "valores": {
+        "2024": "7.752",
+        "2025": "8.095",
+        "2026": "8.426",
+        "2027": "8.713"
+      },
+      "totalCuatrienio": "32.986",
+      "participacionPorcentual": "2,71 %"
+    },
+
+    {
+      "ranking": 7,
+      "sectorId": "vivienda-ciudad-territorio",
+      "codigo": "40",
+      "sector": "Vivienda, Ciudad y Territorio",
+      "valores": {
+        "2024": "6.972",
+        "2025": "7.208",
+        "2026": "7.448",
+        "2027": "7.695"
+      },
+      "totalCuatrienio": "29.323",
+      "participacionPorcentual": "2,41 %"
+    },
+
+    {
+      "ranking": 8,
+      "sectorId": "transporte",
+      "codigo": "24",
+      "sector": "Transporte",
+      "valores": {
+        "2024": "3.784",
+        "2025": "3.838",
+        "2026": "3.891",
+        "2027": "3.946"
+      },
+      "totalCuatrienio": "15.459",
+      "participacionPorcentual": "1,27 %"
+    },
+
+    {
+      "ranking": 9,
+      "sectorId": "deporte-recreacion",
+      "codigo": "43",
+      "sector": "Deporte",
+      "valores": {
+        "2024": "2.096",
+        "2025": "2.159",
+        "2026": "2.224",
+        "2027": "2.290"
+      },
+      "totalCuatrienio": "8.769",
+      "participacionPorcentual": "0,72 %"
+    },
+
+    {
+      "ranking": 10,
+      "sectorId": "cultura",
+      "codigo": "33",
+      "sector": "Cultura",
+      "valores": {
+        "2024": "2.084",
+        "2025": "2.147",
+        "2026": "2.210",
+        "2027": "2.274"
+      },
+      "totalCuatrienio": "8.715",
+      "participacionPorcentual": "0,72 %"
+    }
+
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "tabla": "Plan Plurianual de Inversiones",
+    "unidad": "Millones de pesos colombianos"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Ejes estratégicos del Plan de Desarrollo Municipal de Girón 2024-2027. Este archivo permite organizar sectores, programas, metas, proyectos, presupuesto y consultas estratégicas por eje.",
+
+  "ejes": [
+    {
+      "id": 1,
+      "nombre": "Administración Afectiva y Efectiva al Servicio de los Ciudadanos",
+      "descripcion": "Eje orientado al fortalecimiento institucional, la gestión pública, la justicia, las TIC, la movilidad, la seguridad y el gobierno territorial.",
+      "sectoresRelacionados": [
+        "Justicia y del Derecho",
+        "Tecnologías de la Información y las Comunicaciones",
+        "Transporte",
+        "Gobierno Territorial"
+      ],
+      "usoApp": [
+        "Control político institucional.",
+        "Seguimiento a gestión pública.",
+        "Análisis de movilidad y gobierno digital.",
+        "Preguntas sobre eficiencia administrativa."
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Programas Sociales y Calidad de Vida para Todos",
+      "descripcion": "Eje orientado al bienestar social, salud, educación, inclusión social, reconciliación y atención a poblaciones vulnerables.",
+      "sectoresRelacionados": [
+        "Salud y Protección Social",
+        "Educación",
+        "Inclusión Social y Reconciliación"
+      ],
+      "usoApp": [
+        "Propuestas sociales.",
+        "Seguimiento a salud y educación.",
+        "Análisis poblacional.",
+        "Atención diferencial."
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Obras para Transformar a Girón",
+      "descripcion": "Eje orientado a infraestructura, equipamientos, vivienda, transporte, cultura, deporte y obras estratégicas para transformar el territorio.",
+      "sectoresRelacionados": [
+        "Salud y Protección Social",
+        "Minas y Energía",
+        "Educación",
+        "Transporte",
+        "Cultura",
+        "Comercio, Industria y Turismo",
+        "Vivienda, Ciudad y Territorio",
+        "Inclusión Social y Reconciliación",
+        "Deporte y Recreación",
+        "Gobierno Territorial"
+      ],
+      "usoApp": [
+        "Consulta de obras.",
+        "Análisis de inversión.",
+        "Seguimiento a infraestructura.",
+        "Preparación de recorridos territoriales."
+      ]
+    },
+    {
+      "id": 4,
+      "nombre": "Progreso, Ocio Productivo y Recreativo",
+      "descripcion": "Eje orientado al desarrollo rural, cultura, turismo, trabajo, innovación, deporte, recreación y aprovechamiento productivo del tiempo libre.",
+      "sectoresRelacionados": [
+        "Agricultura y Desarrollo Rural",
+        "Cultura",
+        "Comercio, Industria y Turismo",
+        "Trabajo",
+        "Ciencia, Tecnología e Innovación",
+        "Deporte y Recreación"
+      ],
+      "usoApp": [
+        "Propuestas de empleo.",
+        "Turismo y cultura.",
+        "Desarrollo rural.",
+        "Emprendimiento e innovación."
+      ]
+    },
+    {
+      "id": 5,
+      "nombre": "Sostenibilidad y Visión de Largo Plazo",
+      "descripcion": "Eje orientado a sostenibilidad ambiental, información estadística, vivienda, ciudad, territorio, gobierno y visión de desarrollo futuro.",
+      "sectoresRelacionados": [
+        "Información Estadística",
+        "Ambiente y Desarrollo Sostenible",
+        "Vivienda, Ciudad y Territorio",
+        "Gobierno Territorial"
+      ],
+      "usoApp": [
+        "Gestión ambiental.",
+        "Ordenamiento territorial.",
+        "Visión de largo plazo.",
+        "Datos para la toma de decisiones."
+      ]
+    }
+  ],
+
+  "consultasIA": [
+    "¿Cuáles son los ejes estratégicos del Plan de Desarrollo?",
+    "¿Qué sectores pertenecen a cada eje?",
+    "¿Qué eje tiene mayor inversión?",
+    "¿Qué eje debe priorizar un candidato?",
+    "¿Cómo se relacionan los ejes con las propuestas de campaña?"
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "seccion": "Componente Estratégico"
+  }
+}

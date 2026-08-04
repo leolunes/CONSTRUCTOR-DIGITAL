@@ -1,0 +1,145 @@
+/* =========================================================
+   GIRÓN PROPONE
+   Archivo: css/buttons.css
+   Descripción: Botones y acciones reutilizables.
+========================================================= */
+
+.btn,
+.btn-card,
+.action-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.6rem;
+    min-height:46px;
+    padding:0 22px;
+    border-radius:16px;
+    border:1px solid transparent;
+    font-weight:700;
+    font-size:.92rem;
+    cursor:pointer;
+    transition:all .25s ease;
+    text-decoration:none;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,var(--color-primary),var(--color-primary-dark));
+    color:#fff;
+    box-shadow:var(--shadow-sm);
+}
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-md);
+}
+
+.btn-secondary{
+    background:#fff;
+    color:var(--color-primary);
+    border-color:var(--color-border);
+}
+.btn-secondary:hover{
+    background:var(--color-primary-soft);
+}
+
+.btn-success{
+    background:var(--color-success);
+    color:#fff;
+}
+.btn-warning{
+    background:var(--color-warning);
+    color:#fff;
+}
+.btn-danger{
+    background:var(--color-danger);
+    color:#fff;
+}
+
+.btn-outline{
+    background:transparent;
+    color:var(--color-primary);
+    border-color:var(--color-primary);
+}
+.btn-outline:hover{
+    background:var(--color-primary);
+    color:#fff;
+}
+
+.btn-card{
+    background:var(--color-primary);
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+}
+
+.btn-card:hover{
+    background:var(--color-primary-dark);
+    transform:translateY(-2px);
+}
+
+.quick-action,
+.sector-action-button,
+.nav-item,
+.icon-button{
+    cursor:pointer;
+}
+
+.button-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.fab{
+    position:fixed;
+    right:28px;
+    bottom:28px;
+    width:62px;
+    height:62px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--color-primary),var(--color-secondary));
+    color:#fff;
+    font-size:1.5rem;
+    box-shadow:var(--shadow-lg);
+    z-index:40;
+}
+
+.fab:hover{
+    transform:scale(1.06);
+}
+
+.action-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:20px 0;
+}
+
+.button-icon{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:var(--color-primary-soft);
+}
+
+@media (max-width:768px){
+
+    .button-group,
+    .action-toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .btn,
+    .btn-card,
+    .action-btn{
+        width:100%;
+    }
+
+    .fab{
+        right:18px;
+        bottom:18px;
+    }
+}

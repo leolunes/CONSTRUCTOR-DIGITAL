@@ -1,0 +1,108 @@
+/* =====================================
+   INTEGRACION-MGA-PRESUPUESTO.CSS
+   CONSTRUCTOR MGA PRO
+   Ajuste visual de integración MGA + Presupuesto
+   ===================================== */
+
+.mga-integrado-flujo{
+    margin:18px auto;
+    padding:18px;
+    background:linear-gradient(180deg,#0f172a,#111827);
+    border:1px solid rgba(148,163,184,.25);
+    border-radius:18px;
+    color:#e5e7eb;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.mga-flujo-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:16px;
+}
+
+.mga-flujo-head h3{
+    margin:0 0 4px 0;
+    font-size:18px;
+    color:#ffffff;
+}
+
+.mga-flujo-head p{
+    margin:0;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.mga-flujo-badge{
+    display:inline-flex;
+    align-items:center;
+    padding:7px 12px;
+    border-radius:999px;
+    background:rgba(34,197,94,.12);
+    color:#22c55e;
+    border:1px solid rgba(34,197,94,.35);
+    font-size:12px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.mga-flujo-grid{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:10px;
+}
+
+.mga-flujo-card{
+    padding:14px;
+    border-radius:14px;
+    background:#0b1220;
+    border:1px solid rgba(148,163,184,.20);
+    min-height:84px;
+}
+
+.mga-flujo-card strong{
+    display:block;
+    color:#ffffff;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.mga-flujo-card span{
+    display:block;
+    color:#94a3b8;
+    font-size:12px;
+    line-height:1.35;
+}
+
+.btn-asistente-inteligente{
+    background:#2563eb !important;
+    color:#ffffff !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+    border-radius:10px !important;
+    padding:10px 14px !important;
+    font-weight:800 !important;
+    cursor:pointer !important;
+    box-shadow:0 6px 16px rgba(37,99,235,.25);
+}
+
+.btn-asistente-inteligente:hover{
+    background:#1d4ed8 !important;
+}
+
+@media(max-width:900px){
+    .mga-flujo-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:560px){
+    .mga-flujo-head{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .mga-flujo-grid{
+        grid-template-columns:1fr;
+    }
+}

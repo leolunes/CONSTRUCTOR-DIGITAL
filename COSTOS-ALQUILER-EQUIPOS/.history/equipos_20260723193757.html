@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Buscar equipos | Costos de alquiler</title>
+
+  <meta
+    name="description"
+    content="Buscador de equipos de construcción por nombre, código, familia, marca, modelo o referencia."
+  >
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <meta name="theme-color" content="#0f172a">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-brand">
+
+        <img
+          src="assets/images/logo.png"
+          alt="Logo Costos de Alquiler de Equipos"
+          class="sidebar-logo"
+        >
+
+        <div>
+          <strong>Costos de alquiler</strong>
+          <span>Equipos de construcción</span>
+        </div>
+
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación principal">
+
+        <a href="index.html">
+          Inicio
+        </a>
+
+        <a href="entradas.html">
+          Entradas
+        </a>
+
+        <a href="calculo.html">
+          Cálculo
+        </a>
+
+        <a href="resumen.html">
+          Resumen
+        </a>
+
+        <a href="catalogo-modelos.html">
+          Catálogo de modelos
+        </a>
+
+        <a href="equipos.html">
+          Buscar equipos
+        </a>
+
+      </nav>
+
+    </aside>
+
+    <div class="app-main">
+
+      <header class="topbar">
+
+        <button
+          type="button"
+          class="menu-button"
+          id="btnMenu"
+          aria-label="Abrir o cerrar menú"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <div class="topbar-title">
+          <span>Base de datos de equipos</span>
+          <strong>Buscar equipos</strong>
+        </div>
+
+        <a
+          href="catalogo-modelos.html"
+          class="button button-secondary"
+        >
+          Ver catálogo
+        </a>
+
+      </header>
+
+      <main class="page-content">
+
+        <section class="page-heading">
+
+          <div>
+            <p class="eyebrow">
+              Selección de equipos
+            </p>
+
+            <h1>
+              Buscador general
+            </h1>
+
+            <p>
+              Busca un equipo por nombre, código, referencia, familia,
+              marca, modelo o tipo de rodaje.
+            </p>
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <div>
+              <p class="eyebrow">
+                Búsqueda rápida
+              </p>
+
+              <h2>
+                Encuentra el equipo que necesitas
+              </h2>
+            </div>
+
+            <div
+              id="contadorResultados"
+              data-contador-resultados
+              class="results-counter"
+            >
+              0 equipos encontrados
+            </div>
+
+          </div>
+
+          <div class="search-toolbar">
+
+            <div class="search-field">
+
+              <label for="buscadorEquipos">
+                Buscar equipo
+              </label>
+
+              <div class="search-input-group">
+
+                <input
+                  type="search"
+                  id="buscadorEquipos"
+                  data-buscador-equipos
+                  placeholder="Ejemplo: motoniveladora, EQMTA0089, andamio..."
+                  autocomplete="off"
+                  spellcheck="false"
+                >
+
+                <button
+                  type="button"
+                  class="button button-secondary"
+                  id="btnLimpiarBusqueda"
+                  data-limpiar-buscador
+                >
+                  Limpiar
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <div>
+              <p class="eyebrow">
+                Resultados
+              </p>
+
+              <h2>
+                Equipos disponibles
+              </h2>
+            </div>
+
+          </div>
+
+          <div
+            id="resultadosBusqueda"
+            data-resultados-buscador
+            class="search-results-grid"
+            aria-live="polite"
+          >
+
+            <div class="search-empty">
+              <strong>Cargando equipos...</strong>
+              <p>
+                Espera un momento mientras se consulta la base de datos.
+              </p>
+            </div>
+
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+
+            <div>
+              <p class="eyebrow">
+                Cómo utilizar esta página
+              </p>
+
+              <h2>
+                Selección y consulta
+              </h2>
+            </div>
+
+          </div>
+
+          <div class="data-grid">
+
+            <article class="data-item">
+
+              <span>
+                1. Buscar
+              </span>
+
+              <strong>
+                Escribe el nombre, código o referencia del equipo.
+              </strong>
+
+            </article>
+
+            <article class="data-item">
+
+              <span>
+                2. Revisar
+              </span>
+
+              <strong>
+                Consulta la tarifa, unidad de alquiler y referencia.
+              </strong>
+
+            </article>
+
+            <article class="data-item">
+
+              <span>
+                3. Ver ficha
+              </span>
+
+              <strong>
+                Abre la información técnica y comercial completa.
+              </strong>
+
+            </article>
+
+            <article class="data-item">
+
+              <span>
+                4. Seleccionar
+              </span>
+
+              <strong>
+                Envía el equipo a Entradas para calcular su costo.
+              </strong>
+
+            </article>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <footer class="app-footer">
+
+        <span>
+          © <span id="footerYear"></span>
+          Costos de Alquiler de Equipos
+        </span>
+
+      </footer>
+
+    </div>
+
+  </div>
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/buscador.js"></script>
+
+</body>
+
+</html>

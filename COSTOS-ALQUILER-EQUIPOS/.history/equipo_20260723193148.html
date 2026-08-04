@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ficha del equipo | Costos de alquiler</title>
+
+  <meta
+    name="description"
+    content="Ficha técnica y comercial del equipo de construcción seleccionado."
+  >
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <meta name="theme-color" content="#0f172a">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-brand">
+        <img
+          src="assets/images/logo.png"
+          alt="Logo Costos de Alquiler de Equipos"
+          class="sidebar-logo"
+        >
+
+        <div>
+          <strong>Costos de alquiler</strong>
+          <span>Equipos de construcción</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación principal">
+
+        <a href="index.html">
+          Inicio
+        </a>
+
+        <a href="entradas.html">
+          Entradas
+        </a>
+
+        <a href="calculo.html">
+          Cálculo
+        </a>
+
+        <a href="resumen.html">
+          Resumen
+        </a>
+
+        <a href="catalogo-modelos.html">
+          Catálogo de modelos
+        </a>
+
+        <a href="equipos.html">
+          Buscar equipos
+        </a>
+
+      </nav>
+
+    </aside>
+
+    <div class="app-main">
+
+      <header class="topbar">
+
+        <button
+          type="button"
+          class="menu-button"
+          id="btnMenu"
+          aria-label="Abrir o cerrar menú"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <div class="topbar-title">
+          <span>Ficha técnica y comercial</span>
+          <strong id="topbarEquipoNombre">Equipo seleccionado</strong>
+        </div>
+
+        <a
+          href="catalogo-modelos.html"
+          class="button button-secondary"
+        >
+          Volver al catálogo
+        </a>
+
+      </header>
+
+      <main class="page-content">
+
+        <section
+          class="alert alert-error"
+          id="panelEquipoError"
+          hidden
+        >
+          <strong>No fue posible cargar el equipo.</strong>
+          <p id="mensajeEquipoError"></p>
+        </section>
+
+        <section class="equipment-profile">
+
+          <div class="equipment-profile-image">
+
+            <img
+              id="equipoImagen"
+              src=""
+              alt="Imagen del equipo"
+              loading="eager"
+            >
+
+            <div
+              id="equipoImagenFallback"
+              class="equipment-image-fallback"
+              hidden
+            >
+              Sin imagen disponible
+            </div>
+
+          </div>
+
+          <div class="equipment-profile-content">
+
+            <div class="equipment-profile-heading">
+
+              <div>
+                <p class="eyebrow" id="equipoFamilia">
+                  Familia del equipo
+                </p>
+
+                <h1 id="equipoNombre">
+                  Equipo
+                </h1>
+
+                <p id="equipoReferencia">
+                  Referencia del equipo
+                </p>
+              </div>
+
+              <div class="equipment-code">
+                <span>Código</span>
+                <strong id="equipoCodigo">—</strong>
+              </div>
+
+            </div>
+
+            <div class="equipment-tags">
+
+              <span id="equipoMarca">
+                Marca: —
+              </span>
+
+              <span id="equipoModelo">
+                Modelo: —
+              </span>
+
+              <span id="equipoRodaje">
+                Rodaje: —
+              </span>
+
+              <span id="equipoCombustible">
+                Combustible: —
+              </span>
+
+            </div>
+
+            <div class="equipment-actions">
+
+              <button
+                type="button"
+                class="button button-primary"
+                id="btnSeleccionarEquipo"
+              >
+                Seleccionar para calcular
+              </button>
+
+              <a
+                href="entradas.html"
+                class="button button-secondary"
+                id="btnEditarEntradas"
+              >
+                Ver entradas
+              </a>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <section class="summary-grid">
+
+          <article class="summary-card">
+            <span>Tarifa comercial</span>
+            <strong id="equipoTarifaComercial">$ 0</strong>
+            <small id="equipoUnidadAlquiler">Por unidad</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Costo directo</span>
+            <strong id="equipoCostoDirecto">$ 0</strong>
+            <small>Antes de utilidad</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Rendimiento</span>
+            <strong id="equipoRendimiento">0</strong>
+            <small id="equipoUnidadRendimiento">unidad/h</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Costo por unidad</span>
+            <strong id="equipoCostoUnidad">$ 0</strong>
+            <small id="equipoCostoUnidadTexto">Por unidad producida</small>
+          </article>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Información general</p>
+              <h2>Identificación del equipo</h2>
+            </div>
+          </div>
+
+          <div class="data-grid">
+
+            <div class="data-item">
+              <span>ID</span>
+              <strong id="detalleEquipoId">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Código del modelo</span>
+              <strong id="detalleEquipoCodigo">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Familia</span>
+              <strong id="detalleEquipoFamilia">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Marca</span>
+              <strong id="detalleEquipoMarca">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Modelo</span>
+              <strong id="detalleEquipoModelo">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Rodaje</span>
+              <strong id="detalleEquipoRodaje">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Combustible</span>
+              <strong id="detalleEquipoCombustible">—</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Unidad de alquiler</span>
+              <strong id="detalleEquipoUnidadAlquiler">—</strong>
+            </div>
+
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Parámetros económicos</p>
+              <h2>Datos base del cálculo</h2>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+
+            <table class="data-table">
+
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr>
+                  <td>Precio de adquisición</td>
+                  <td id="fichaPrecioAdquisicion">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Valor de rescate</td>
+                  <td id="fichaValorRescate">0 %</td>
+                </tr>
+
+                <tr>
+                  <td>Vida útil</td>
+                  <td id="fichaVidaUtil">0 h</td>
+                </tr>
+
+                <tr>
+                  <td>Horas de trabajo por año</td>
+                  <td id="fichaHorasAnio">0 h</td>
+                </tr>
+
+                <tr>
+                  <td>Tasa de interés</td>
+                  <td id="fichaTasaInteres">0 %</td>
+                </tr>
+
+                <tr>
+                  <td>Seguro anual</td>
+                  <td id="fichaSeguroAnual">0 %</td>
+                </tr>
+
+                <tr>
+                  <td>Mantenimiento fijo anual</td>
+                  <td id="fichaMantenimientoFijo">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Consumo de combustible</td>
+                  <td id="fichaConsumoCombustible">0 L/h</td>
+                </tr>
+
+                <tr>
+                  <td>Precio del combustible</td>
+                  <td id="fichaPrecioCombustible">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Factor de lubricantes</td>
+                  <td id="fichaFactorLubricantes">0 %</td>
+                </tr>
+
+                <tr>
+                  <td>Costo de rodaje</td>
+                  <td id="fichaCostoRodaje">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Vida del rodaje</td>
+                  <td id="fichaVidaRodaje">0 h</td>
+                </tr>
+
+                <tr>
+                  <td>Costo mensual del operador</td>
+                  <td id="fichaOperadorMes">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Horas mensuales del operador</td>
+                  <td id="fichaHorasOperador">0 h</td>
+                </tr>
+
+                <tr>
+                  <td>Margen de alquiler</td>
+                  <td id="fichaMargenAlquiler">0 %</td>
+                </tr>
+
+                <tr>
+                  <td>Movilización</td>
+                  <td id="fichaMovilizacion">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Desmovilización</td>
+                  <td id="fichaDesmovilizacion">$ 0</td>
+                </tr>
+
+                <tr>
+                  <td>Horas de amortización del transporte</td>
+                  <td id="fichaHorasAmortizacion">0 h</td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Resultados comerciales</p>
+              <h2>Resumen del equipo</h2>
+            </div>
+          </div>
+
+          <div class="data-grid">
+
+            <div class="data-item">
+              <span>Costo directo horario</span>
+              <strong id="fichaCostoDirecto">$ 0</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Alquiler equivalente</span>
+              <strong id="fichaAlquilerEquivalente">$ 0</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Costo por unidad</span>
+              <strong id="fichaCostoPorUnidad">$ 0</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Transporte equivalente</span>
+              <strong id="fichaTransporteEquivalente">$ 0</strong>
+            </div>
+
+            <div class="data-item">
+              <span>Costo comercial final</span>
+              <strong id="fichaCostoComercialFinal">$ 0</strong>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+      <footer class="app-footer">
+        <span>
+          © <span id="footerYear"></span>
+          Costos de Alquiler de Equipos
+        </span>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/equipo.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Glosario de términos, siglas y conceptos utilizados en el Plan de Desarrollo Municipal de Girón 2024-2027. Este archivo permite que la aplicación explique conceptos técnicos de planeación, presupuesto, gestión pública y desarrollo territorial.",
+
+  "terminos": [
+    {
+      "termino": "Plan de Desarrollo Municipal",
+      "sigla": "PDM",
+      "definicion": "Instrumento de planeación que orienta las acciones, programas, metas, proyectos e inversiones del gobierno municipal durante el periodo constitucional.",
+      "usoEnLaApp": "Permite explicar al usuario la estructura general del Plan de Desarrollo."
+    },
+    {
+      "termino": "Objetivos de Desarrollo Sostenible",
+      "sigla": "ODS",
+      "definicion": "Conjunto de objetivos globales adoptados para orientar el desarrollo sostenible, la reducción de desigualdades, la protección ambiental y el bienestar social.",
+      "usoEnLaApp": "Relaciona sectores, metas y proyectos del Plan con estándares internacionales de desarrollo."
+    },
+    {
+      "termino": "Plan Plurianual de Inversiones",
+      "sigla": "PPI",
+      "definicion": "Componente financiero del Plan de Desarrollo que distribuye los recursos de inversión por sectores, programas y vigencias.",
+      "usoEnLaApp": "Permite consultar presupuesto por sector y analizar prioridades de inversión."
+    },
+    {
+      "termino": "Meta de Resultado",
+      "sigla": "",
+      "definicion": "Meta orientada a medir cambios o mejoras en las condiciones de vida, desempeño institucional o situación de un sector.",
+      "usoEnLaApp": "Sirve para hacer seguimiento al impacto del Plan."
+    },
+    {
+      "termino": "Meta de Producto",
+      "sigla": "",
+      "definicion": "Meta asociada a bienes, servicios, acciones o entregables concretos que la administración debe ejecutar durante el periodo de gobierno.",
+      "usoEnLaApp": "Permite revisar qué entregables concretos debe cumplir cada sector."
+    },
+    {
+      "termino": "Indicador",
+      "sigla": "",
+      "definicion": "Medida cuantitativa o cualitativa que permite evaluar el avance, resultado o cumplimiento de una meta, programa o proyecto.",
+      "usoEnLaApp": "Alimenta el dashboard, el seguimiento y las alertas."
+    },
+    {
+      "termino": "Línea Base",
+      "sigla": "",
+      "definicion": "Valor inicial de un indicador antes de ejecutar las acciones del Plan de Desarrollo.",
+      "usoEnLaApp": "Permite comparar el estado inicial con el avance logrado."
+    },
+    {
+      "termino": "Programa",
+      "sigla": "",
+      "definicion": "Conjunto organizado de acciones, metas y proyectos orientados a resolver una problemática o fortalecer un sector.",
+      "usoEnLaApp": "Permite agrupar proyectos y metas por sector."
+    },
+    {
+      "termino": "Proyecto",
+      "sigla": "",
+      "definicion": "Intervención específica con actividades, recursos, responsables y resultados esperados.",
+      "usoEnLaApp": "Permite consultar acciones concretas del Plan."
+    },
+    {
+      "termino": "Sistema General de Participaciones",
+      "sigla": "SGP",
+      "definicion": "Recursos que la Nación transfiere a entidades territoriales para financiar servicios como educación, salud, agua potable y otros sectores.",
+      "usoEnLaApp": "Ayuda a entender fuentes de financiación municipal."
+    },
+    {
+      "termino": "Sistema General de Regalías",
+      "sigla": "SGR",
+      "definicion": "Sistema mediante el cual se distribuyen recursos provenientes de la explotación de recursos naturales no renovables.",
+      "usoEnLaApp": "Permite identificar posibles fuentes de financiación de proyectos."
+    },
+    {
+      "termino": "Ingresos Corrientes de Libre Destinación",
+      "sigla": "ICLD",
+      "definicion": "Recursos propios del municipio que pueden destinarse con mayor flexibilidad, de acuerdo con las normas fiscales.",
+      "usoEnLaApp": "Sirve para analizar capacidad fiscal y sostenibilidad financiera."
+    },
+    {
+      "termino": "Banco de Programas y Proyectos",
+      "sigla": "BPIN",
+      "definicion": "Sistema donde se registran, evalúan y viabilizan proyectos de inversión pública.",
+      "usoEnLaApp": "Permite explicar cómo se estructuran y priorizan proyectos públicos."
+    },
+    {
+      "termino": "Gestión Pública Orientada a Resultados",
+      "sigla": "",
+      "definicion": "Modelo de gestión que busca que la administración pública enfoque sus acciones en resultados medibles para la ciudadanía.",
+      "usoEnLaApp": "Sirve para analizar cumplimiento, eficiencia y seguimiento del Plan."
+    },
+    {
+      "termino": "Rendición de Cuentas",
+      "sigla": "",
+      "definicion": "Proceso mediante el cual la administración informa, explica y responde ante la ciudadanía sobre su gestión, resultados y uso de recursos públicos.",
+      "usoEnLaApp": "Alimenta módulos de seguimiento, control político e informes ciudadanos."
+    },
+    {
+      "termino": "Control Político",
+      "sigla": "",
+      "definicion": "Función del Concejo Municipal para solicitar explicaciones, evaluar gestión y vigilar el cumplimiento de programas, metas, presupuesto y proyectos.",
+      "usoEnLaApp": "Base para generar preguntas, debates y cuestionarios."
+    },
+    {
+      "termino": "Enfoque Diferencial",
+      "sigla": "",
+      "definicion": "Forma de planeación que reconoce condiciones particulares de grupos poblacionales para garantizar atención adecuada y equitativa.",
+      "usoEnLaApp": "Relaciona programas con mujeres, jóvenes, adultos mayores, víctimas, discapacidad y otros grupos."
+    },
+    {
+      "termino": "Enfoque Territorial",
+      "sigla": "",
+      "definicion": "Forma de planeación que reconoce diferencias entre zonas urbanas, rurales, comunas, corregimientos, barrios y veredas.",
+      "usoEnLaApp": "Permite consultas por territorio y priorización local."
+    },
+    {
+      "termino": "Gobierno Digital",
+      "sigla": "",
+      "definicion": "Uso de tecnologías de la información para mejorar trámites, servicios, transparencia, participación y gestión pública.",
+      "usoEnLaApp": "Apoya análisis de modernización institucional y TIC."
+    },
+    {
+      "termino": "Gestión del Riesgo",
+      "sigla": "",
+      "definicion": "Proceso de conocimiento, reducción y manejo de riesgos asociados a desastres, amenazas naturales, vulnerabilidad y cambio climático.",
+      "usoEnLaApp": "Relaciona ambiente, vivienda, territorio, infraestructura y seguridad comunitaria."
+    }
+  ],
+
+  "consultasIA": [
+    "¿Qué significa PDM?",
+    "Explíqueme qué es una meta de resultado.",
+    "¿Qué es el Plan Plurianual de Inversiones?",
+    "¿Qué significa SGP?",
+    "¿Qué es control político?",
+    "¿Qué es enfoque territorial?",
+    "¿Qué es gestión pública orientada a resultados?"
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "secciones": [
+      "Lista de siglas, acrónimos y abreviaturas",
+      "Fundamentos del Plan",
+      "Componente Financiero",
+      "Seguimiento y Evaluación"
+    ]
+  }
+}

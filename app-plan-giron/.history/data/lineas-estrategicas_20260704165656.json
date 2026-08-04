@@ -1,0 +1,94 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+  "descripcion": "Líneas estratégicas organizadas a partir de los ejes del Plan de Desarrollo Municipal de Girón 2024-2027.",
+
+  "lineasEstrategicas": [
+    {
+      "id": "LE-001",
+      "eje": 1,
+      "nombreEje": "Administración Afectiva y Efectiva al Servicio de los Ciudadanos",
+      "linea": "Fortalecimiento institucional y gestión pública eficiente",
+      "sectoresRelacionados": [
+        "Justicia y del Derecho",
+        "Tecnologías de la Información y las Comunicaciones",
+        "Transporte",
+        "Gobierno Territorial"
+      ],
+      "proposito": "Mejorar la capacidad administrativa, institucional, tecnológica y de atención al ciudadano."
+    },
+    {
+      "id": "LE-002",
+      "eje": 2,
+      "nombreEje": "Programas Sociales y Calidad de Vida para Todos",
+      "linea": "Bienestar social, salud, educación e inclusión",
+      "sectoresRelacionados": [
+        "Salud y Protección Social",
+        "Educación",
+        "Inclusión Social y Reconciliación"
+      ],
+      "proposito": "Fortalecer la calidad de vida, la atención social y el acceso a derechos fundamentales."
+    },
+    {
+      "id": "LE-003",
+      "eje": 3,
+      "nombreEje": "Obras para Transformar a Girón",
+      "linea": "Infraestructura, equipamientos y transformación territorial",
+      "sectoresRelacionados": [
+        "Salud y Protección Social",
+        "Minas y Energía",
+        "Educación",
+        "Transporte",
+        "Cultura",
+        "Comercio, Industria y Turismo",
+        "Vivienda, Ciudad y Territorio",
+        "Inclusión Social y Reconciliación",
+        "Deporte y Recreación",
+        "Gobierno Territorial"
+      ],
+      "proposito": "Impulsar obras físicas y equipamientos que mejoren el territorio y la calidad de vida."
+    },
+    {
+      "id": "LE-004",
+      "eje": 4,
+      "nombreEje": "Progreso, Ocio Productivo y Recreativo",
+      "linea": "Desarrollo económico, rural, cultural, turístico y recreativo",
+      "sectoresRelacionados": [
+        "Agricultura y Desarrollo Rural",
+        "Cultura",
+        "Comercio, Industria y Turismo",
+        "Trabajo",
+        "Ciencia, Tecnología e Innovación",
+        "Deporte y Recreación"
+      ],
+      "proposito": "Promover productividad, empleo, turismo, cultura, deporte, recreación e innovación."
+    },
+    {
+      "id": "LE-005",
+      "eje": 5,
+      "nombreEje": "Sostenibilidad y Visión de Largo Plazo",
+      "linea": "Sostenibilidad ambiental, ordenamiento y visión futura",
+      "sectoresRelacionados": [
+        "Información Estadística",
+        "Ambiente y Desarrollo Sostenible",
+        "Vivienda, Ciudad y Territorio",
+        "Gobierno Territorial"
+      ],
+      "proposito": "Consolidar un municipio sostenible, planificado, resiliente y con visión de largo plazo."
+    }
+  ],
+
+  "consultasIA": [
+    "¿Cuáles son las líneas estratégicas del Plan?",
+    "¿Qué sectores pertenecen a cada línea estratégica?",
+    "¿Qué línea estratégica se relaciona con salud?",
+    "¿Qué línea estratégica se relaciona con obras?",
+    "¿Qué línea puede usar un candidato para estructurar su programa de gobierno?"
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "seccion": "Componente Estratégico"
+  }
+}

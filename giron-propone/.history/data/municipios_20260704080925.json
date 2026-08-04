@@ -1,0 +1,283 @@
+{
+  "version": {
+    "estructura": "2.0.0",
+    "baseConocimiento": "2.0.0",
+    "ultimaActualizacion": "2026-07-04",
+    "estado": "DESARROLLO"
+  },
+
+  "configuracionGeneral": {
+
+    "municipioActivo": "giron",
+
+    "permitirMultiplesMunicipios": true,
+
+    "mostrarSoloMunicipioActivo": true,
+
+    "activarComparativos": true,
+
+    "activarGraficas": true,
+
+    "activarIA": true,
+
+    "activarDashboard": true,
+
+    "activarPDF": true,
+
+    "activarBancoProyectos": true,
+
+    "activarControlPolitico": true
+
+  },
+
+  "departamentos":[
+
+    {
+
+      "codigo":"68",
+
+      "nombre":"Santander",
+
+      "capital":"Bucaramanga",
+
+      "estado":"ACTIVO"
+
+    }
+
+  ],
+
+  "municipios":[
+
+    {
+
+      "id":"giron",
+
+      "nombre":"Girón",
+
+      "codigoDANE":"68307",
+
+      "departamento":"Santander",
+
+      "categoria":"Primera",
+
+      "estado":"ACTIVO",
+
+      "prioridad":1,
+
+      "tipo":"Municipio",
+
+      "color":"#1E88E5",
+
+      "icono":"🏛️",
+
+      "logo":"assets/municipios/giron.png",
+
+      "banner":"assets/fondos/giron.jpg",
+
+      "descripcion":"Centro de Inteligencia Territorial del Municipio de Girón.",
+
+      "baseConocimiento":"data/base-conocimiento/",
+
+      "datosMunicipio":"data/giron/",
+
+      "sectores":"data/sectores/",
+
+      "dashboard":"dashboard.html"
+
+    }
+
+  ],
+
+  "calidadDatos":{
+
+    "modelo":"Base de Conocimiento Territorial",
+
+    "politica":"Toda cifra debe tener fuente oficial.",
+
+    "permitirCamposPendientes":true,
+
+    "permitirNull":true,
+
+    "usarFuente":true,
+
+    "usarFechaActualizacion":true,
+
+    "usarResponsableActualizacion":true,
+
+    "usarInterpretacionIA":true
+
+  },
+
+  "fuentesPrioritarias":[
+
+    "DANE",
+
+    "TerriData",
+
+    "Departamento Nacional de Planeación",
+
+    "Alcaldía Municipal",
+
+    "SECOP",
+
+    "Plan de Desarrollo",
+
+    "Plan de Ordenamiento Territorial",
+
+    "Ministerios",
+
+    "Sistema General de Regalías",
+
+    "Gobernación de Santander",
+
+    "Contraloría",
+
+    "Procuraduría",
+
+    "Personería"
+
+  ],
+
+  "estructuraBaseConocimiento":[
+
+    "Identidad Municipal",
+
+    "Gobierno",
+
+    "Territorio",
+
+    "Población",
+
+    "Economía",
+
+    "Finanzas Públicas",
+
+    "Infraestructura",
+
+    "Desarrollo Social",
+
+    "Competitividad",
+
+    "Seguridad",
+
+    "Ambiente",
+
+    "Planeación",
+
+    "Banco de Proyectos",
+
+    "Indicadores",
+
+    "Comparativos",
+
+    "Oportunidades",
+
+    "Inteligencia Política"
+
+  ],
+
+  "sectores":[
+
+    "Infraestructura educativa",
+
+    "Infraestructura en salud",
+
+    "Infraestructura vial",
+
+    "Agua potable y saneamiento",
+
+    "Vivienda",
+
+    "Equipamientos públicos",
+
+    "Deporte y recreación",
+
+    "Cultura",
+
+    "Agricultura",
+
+    "Ambiente",
+
+    "TIC",
+
+    "Desarrollo social"
+
+  ],
+
+  "productosIA":[
+
+    "Diagnóstico",
+
+    "Interpretación",
+
+    "Resumen ejecutivo",
+
+    "Estrategia de campaña",
+
+    "Discurso",
+
+    "Control político",
+
+    "Proyecto",
+
+    "Respuesta para debate",
+
+    "Publicación para redes",
+
+    "Ficha PDF"
+
+  ],
+
+  "hojaRuta":[
+
+    {
+
+      "fase":1,
+
+      "nombre":"Base de Conocimiento"
+
+    },
+
+    {
+
+      "fase":2,
+
+      "nombre":"Centro de Inteligencia Girón"
+
+    },
+
+    {
+
+      "fase":3,
+
+      "nombre":"Sectores"
+
+    },
+
+    {
+
+      "fase":4,
+
+      "nombre":"Motor IA"
+
+    },
+
+    {
+
+      "fase":5,
+
+      "nombre":"Comparativos"
+
+    },
+
+    {
+
+      "fase":6,
+
+      "nombre":"Escalamiento a otros municipios"
+
+    }
+
+  ]
+
+}

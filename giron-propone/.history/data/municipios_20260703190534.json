@@ -1,0 +1,54 @@
+{
+  "municipio": {
+    "nombre": "Girón",
+    "departamento": "Santander",
+    "codigoDANE": "68307",
+    "categoria": "1",
+    "areaKm2": 475,
+    "cabecera": "Girón",
+    "gentilicio": "Gironés"
+  },
+  "perfil": {
+    "descripcion": "Municipio del área metropolitana de Bucaramanga con crecimiento urbano, desarrollo industrial, patrimonio histórico y expansión residencial.",
+    "vocacion": [
+      "Servicios",
+      "Industria",
+      "Comercio",
+      "Turismo",
+      "Construcción",
+      "Agricultura"
+    ]
+  },
+  "estadisticasBase": {
+    "poblacion": null,
+    "hogares": null,
+    "barrios": null,
+    "veredas": null,
+    "comunas": null,
+    "corregimientos": null,
+    "nota": "Los indicadores específicos serán alimentados y actualizados con fuentes oficiales."
+  },
+  "sectores": [
+    "Infraestructura educativa",
+    "Infraestructura en salud",
+    "Infraestructura vial",
+    "Agua potable y saneamiento",
+    "Vivienda",
+    "Equipamientos públicos",
+    "Deporte y recreación",
+    "Cultura",
+    "Agricultura",
+    "Ambiente",
+    "TIC",
+    "Desarrollo social"
+  ],
+  "fuentes": [
+    "DANE",
+    "Alcaldía de Girón",
+    "Plan de Desarrollo Municipal",
+    "POT",
+    "SECOP",
+    "TerriData",
+    "Departamento Nacional de Planeación"
+  ]
+}

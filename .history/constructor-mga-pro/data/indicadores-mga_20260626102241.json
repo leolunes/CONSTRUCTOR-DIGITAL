@@ -1,0 +1,42 @@
+[
+  {
+    "tipo": "producto",
+    "nombre": "Productos entregados",
+    "unidad": "Unidad",
+    "lineaBase": 0,
+    "meta": 1,
+    "fuente": "Acta de recibo o informe de supervisión"
+  },
+  {
+    "tipo": "resultado",
+    "nombre": "Población beneficiada",
+    "unidad": "Personas",
+    "lineaBase": 0,
+    "meta": 0,
+    "fuente": "Registro de beneficiarios"
+  },
+  {
+    "tipo": "gestion",
+    "nombre": "Avance físico del proyecto",
+    "unidad": "Porcentaje",
+    "lineaBase": 0,
+    "meta": 100,
+    "fuente": "Informe de avance"
+  },
+  {
+    "tipo": "gestion",
+    "nombre": "Avance financiero del proyecto",
+    "unidad": "Porcentaje",
+    "lineaBase": 0,
+    "meta": 100,
+    "fuente": "Informe financiero"
+  },
+  {
+    "tipo": "impacto",
+    "nombre": "Mejoramiento de condiciones de bienestar",
+    "unidad": "Porcentaje",
+    "lineaBase": 0,
+    "meta": 0,
+    "fuente": "Encuesta o medición posterior"
+  }
+]

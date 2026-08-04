@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5b21b6">
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <meta name="description" content="Resumen ejecutivo del costo horario y tarifa de alquiler.">
+  <title>Resumen | Costos de Alquiler de Equipos</title>
+</head>
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <img src="assets/images/logo.png" alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';">
+          <div class="brand-logo-fallback" id="logoFallback">CE</div>
+        </div>
+        <div class="brand-text">
+          <strong>COSTOS DE ALQUILER</strong>
+          <span>Equipo de Construcción</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navegación principal">
+        <a class="nav-item" href="index.html"><span class="nav-icon">⌂</span><span>Inicio</span></a>
+        <div class="nav-section-title">BASE DE DATOS</div>
+        <a class="nav-item" href="entradas.html"><span class="nav-icon">1</span><span>Entradas</span></a>
+        <a class="nav-item" href="calculo.html"><span class="nav-icon">2</span><span>Cálculo</span></a>
+        <a class="nav-item active" aria-current="page" href="resumen.html"><span class="nav-icon">3</span><span>Resumen</span></a>
+        <a class="nav-item" href="catalogo-modelos.html"><span class="nav-icon">4</span><span>Catálogo de modelos</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-card">
+          <div class="status-line">
+            <span class="status-dot success"></span>
+            <strong>Base disponible</strong>
+          </div>
+          <span>Flujo conectado con Entradas</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="btnMenu" type="button" aria-label="Abrir o cerrar menú" aria-expanded="false">☰</button>
+          <div><span class="topbar-eyebrow">SECCIÓN 3</span><h1>Resumen</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <a class="button button-secondary" href="calculo.html">Volver a Cálculo</a>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="section-card full">
+          <span class="section-kicker">RESULTADO DEL EQUIPO</span>
+          <h2 id="resumenNombreEquipo">—</h2>
+          <p id="resumenReferenciaEquipo" style="color:var(--color-text-soft);">
+            Resumen comercial y productivo.
+          </p>
+        </section>
+
+        <section class="summary-grid" style="margin-top:24px;">
+          <article class="summary-card">
+            <span>Costo directo</span>
+            <strong id="resCostoDirecto">$ 0</strong>
+            <small>COP/h</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Margen de utilidad</span>
+            <strong id="resMargen">$ 0</strong>
+            <small id="resMargenPorcentaje">0 %</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Tarifa comercial</span>
+            <strong id="resTarifaComercial">$ 0</strong>
+            <small>COP/h</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Transporte equivalente</span>
+            <strong id="resTransporte">$ 0</strong>
+            <small>COP/h</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Costo comercial final</span>
+            <strong id="resCostoFinal">$ 0</strong>
+            <small>COP/h</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Rendimiento</span>
+            <strong id="resRendimiento">0</strong>
+            <small id="resUnidadRendimiento">unidad/h</small>
+          </article>
+
+          <article class="summary-card">
+            <span>Costo por unidad</span>
+            <strong id="resCostoUnidad">$ 0</strong>
+            <small id="resCostoUnidadTexto">COP/unidad</small>
+          </article>
+        </section>
+
+        <section class="details-grid" style="margin-top:24px;">
+          <article class="detail-card">
+            <h3>Detalle comercial</h3>
+            <div class="data-list">
+              <div class="data-row"><span>Costo directo horario</span><strong id="detalleCostoDirecto">—</strong></div>
+              <div class="data-row"><span>Utilidad</span><strong id="detalleUtilidad">—</strong></div>
+              <div class="data-row"><span>Tarifa antes de transporte</span><strong id="detalleTarifa">—</strong></div>
+              <div class="data-row"><span>Movilización equivalente</span><strong id="detalleMovilizacion">—</strong></div>
+              <div class="data-row"><span>Tarifa final</span><strong id="detalleTarifaFinal">—</strong></div>
+            </div>
+          </article>
+
+          <article class="detail-card">
+            <h3>Producción</h3>
+            <div class="data-list">
+              <div class="data-row"><span>Rendimiento</span><strong id="detalleRendimiento">—</strong></div>
+              <div class="data-row"><span>Unidad</span><strong id="detalleUnidad">—</strong></div>
+              <div class="data-row"><span>Costo por unidad</span><strong id="detalleCostoUnidad">—</strong></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="section-card full" style="margin-top:24px;">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;">
+            <a class="button button-secondary" href="entradas.html">Modificar Entradas</a>
+            <a class="button button-secondary" href="calculo.html">Ver Cálculo</a>
+            <a class="button button-primary" href="catalogo-modelos.html">Cambiar Equipo</a>
+          </div>
+        </section>
+      </div>
+
+      <footer class="app-footer"><span>Costos de Alquiler Equipo de Construcción</span><span id="footerYear"></span></footer>
+    </main>
+  </div>
+  <script src="js/resumen.js" defer></script>
+</body>
+</html>

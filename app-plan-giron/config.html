@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Configuración - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Configuración</h1>
+
+<p>Ajustes generales de la aplicación.</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>⚙️ Información de la App</h2>
+
+<p><strong>Nombre:</strong> Asistente Estratégico Municipal Girón</p>
+<p><strong>Fuente:</strong> Plan de Desarrollo Municipal Girón 2024 - 2027</p>
+<p><strong>Uso:</strong> Consulta, propuestas, control político y seguimiento.</p>
+
+</section>
+
+<section class="card">
+
+<h2>🧹 Datos locales</h2>
+
+<p class="texto-suave">
+Puede limpiar búsquedas o información guardada temporalmente en este navegador.
+</p>
+
+<button class="botonPrincipal" onclick="limpiarDatosLocales()">
+Limpiar datos locales
+</button>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="buscador.html">Buscar</a>
+<a href="propuestas.html">Propuestas</a>
+
+</nav>
+
+<script>
+function limpiarDatosLocales() {
+    localStorage.removeItem("busquedaPlanGiron");
+    alert("Datos locales limpiados correctamente.");
+}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Diagnóstico estratégico consolidado del municipio de Girón construido a partir del Plan de Desarrollo Municipal 2024-2027. Este archivo integra fortalezas, debilidades, oportunidades y riesgos para apoyar el análisis estratégico, el control político y la formulación de propuestas.",
+
+  "fortalezas": [
+
+    "Ubicación estratégica dentro del Área Metropolitana de Bucaramanga.",
+
+    "Importante patrimonio histórico, arquitectónico y cultural.",
+
+    "Alta participación presupuestal en Educación y Salud.",
+
+    "Cobertura institucional en servicios sociales.",
+
+    "Potencial turístico reconocido a nivel regional y nacional.",
+
+    "Vocación agropecuaria del sector rural.",
+
+    "Diversidad ambiental y riqueza hídrica.",
+
+    "Capacidad institucional para formular y ejecutar proyectos.",
+
+    "Conectividad regional y metropolitana.",
+
+    "Existencia de instrumentos modernos de planificación territorial."
+
+  ],
+
+  "debilidades": [
+
+    "Crecimiento urbano acelerado que exige mayor capacidad institucional.",
+
+    "Déficit de espacio público efectivo.",
+
+    "Congestión en corredores viales principales.",
+
+    "Brechas urbano-rurales.",
+
+    "Necesidad de fortalecer la calidad educativa.",
+
+    "Presión sobre los recursos naturales.",
+
+    "Déficit habitacional.",
+
+    "Necesidad de fortalecer procesos de Gobierno Digital.",
+
+    "Dependencia de recursos externos para algunas inversiones.",
+
+    "Necesidad de mejorar el seguimiento a metas e indicadores."
+
+  ],
+
+  "oportunidades": [
+
+    "Mayor integración con el Área Metropolitana.",
+
+    "Fortalecimiento del turismo patrimonial.",
+
+    "Transformación digital de la administración pública.",
+
+    "Gestión de recursos nacionales e internacionales.",
+
+    "Impulso al emprendimiento y la innovación.",
+
+    "Modernización de la infraestructura urbana.",
+
+    "Desarrollo sostenible del territorio.",
+
+    "Fortalecimiento de la economía rural.",
+
+    "Mayor articulación institucional.",
+
+    "Implementación de proyectos ambientales estratégicos."
+
+  ],
+
+  "riesgos": [
+
+    "Cambio climático.",
+
+    "Eventos naturales asociados a la gestión del riesgo.",
+
+    "Incremento de la demanda de servicios públicos.",
+
+    "Expansión urbana desordenada.",
+
+    "Mayor congestión vial.",
+
+    "Disminución de recursos para inversión.",
+
+    "Incremento de desigualdades sociales.",
+
+    "Deterioro ambiental.",
+
+    "Incremento de enfermedades asociadas a estilos de vida.",
+
+    "Pérdida de competitividad económica."
+
+  ],
+
+  "prioridadesEstrategicas": [
+
+    {
+      "prioridad": 1,
+      "tema": "Educación",
+      "justificacion": "Es el sector con mayor participación presupuestal del Plan y representa la principal apuesta social del municipio."
+    },
+
+    {
+      "prioridad": 2,
+      "tema": "Salud",
+      "justificacion": "Concentra una parte importante de la inversión pública y tiene impacto directo sobre la calidad de vida."
+    },
+
+    {
+      "prioridad": 3,
+      "tema": "Infraestructura y Movilidad",
+      "justificacion": "El crecimiento urbano demanda nuevas obras y soluciones de movilidad."
+    },
+
+    {
+      "prioridad": 4,
+      "tema": "Ambiente",
+      "justificacion": "La protección de recursos naturales y la adaptación al cambio climático son estratégicas para el municipio."
+    },
+
+    {
+      "prioridad": 5,
+      "tema": "Fortalecimiento Institucional",
+      "justificacion": "La sostenibilidad del Plan depende de una administración moderna, eficiente y transparente."
+    }
+
+  ],
+
+  "preguntasClaveControlPolitico": [
+
+    "¿Cuáles metas presentan menor nivel de cumplimiento?",
+
+    "¿Qué sectores ejecutan menor porcentaje del presupuesto?",
+
+    "¿Qué proyectos estratégicos presentan retrasos?",
+
+    "¿Qué indicadores muestran deterioro?",
+
+    "¿Qué riesgos no cuentan con acciones suficientes de mitigación?",
+
+    "¿Qué programas requieren mayor inversión?"
+
+  ],
+
+  "orientacionParaCandidatos": [
+
+    "Construir propuestas basadas en evidencia.",
+
+    "Priorizar soluciones antes que promesas generales.",
+
+    "Relacionar cada propuesta con metas del Plan.",
+
+    "Fortalecer el enfoque territorial.",
+
+    "Presentar propuestas financieramente viables.",
+
+    "Promover continuidad de proyectos exitosos.",
+
+    "Impulsar innovación y transformación digital.",
+
+    "Fortalecer participación ciudadana."
+
+  ],
+
+  "consultasIA": [
+
+    "Realice un análisis DOFA del municipio.",
+
+    "¿Cuáles son las principales fortalezas de Girón?",
+
+    "¿Qué oportunidades tiene el municipio?",
+
+    "¿Cuáles son los mayores riesgos?",
+
+    "¿Qué debería priorizar el próximo alcalde?",
+
+    "¿Qué temas deberían ser prioridad para el Concejo Municipal?",
+
+    "¿Dónde debería concentrarse la inversión pública?"
+
+  ],
+
+  "usoDentroDeLaApp": [
+
+    "Asistente Inteligente.",
+
+    "Generador de diagnósticos.",
+
+    "Constructor de programas de gobierno.",
+
+    "Control político.",
+
+    "Debates.",
+
+    "Discursos.",
+
+    "Dashboard ejecutivo.",
+
+    "Planeación estratégica.",
+
+    "Análisis territorial."
+
+  ],
+
+  "fuente": {
+
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "componentes": [
+      "Diagnóstico General",
+      "Diagnósticos Sectoriales",
+      "Componente Estratégico",
+      "Plan Plurianual de Inversiones"
+    ]
+
+  }
+
+}

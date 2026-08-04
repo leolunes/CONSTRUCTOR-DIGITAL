@@ -1,0 +1,175 @@
+[
+  {
+    "id": "infraestructura-educativa",
+    "nombre": "Infraestructura educativa",
+    "icono": "🏫",
+    "archivo": "data/sectores/infraestructura-educativa.json",
+    "color": "#6d5dfc",
+    "descripcion": "Construcción de colegios, ampliación de aulas, restauración de instituciones educativas y comedores escolares.",
+    "tipologias": [
+      "Construcción de colegios",
+      "Ampliación de aulas",
+      "Restauración de instituciones educativas",
+      "Comedores escolares"
+    ]
+  },
+  {
+    "id": "infraestructura-salud",
+    "nombre": "Infraestructura en salud",
+    "icono": "🏥",
+    "archivo": "data/sectores/infraestructura-salud.json",
+    "color": "#00c2a8",
+    "descripcion": "Hospitales, centros de salud, puestos de salud, Centros Vida y Centros Día.",
+    "tipologias": [
+      "Hospitales",
+      "Centros de salud",
+      "Puestos de salud",
+      "Centros Vida",
+      "Centros Día"
+    ]
+  },
+  {
+    "id": "infraestructura-vial",
+    "nombre": "Infraestructura vial",
+    "icono": "🛣️",
+    "archivo": "data/sectores/infraestructura-vial.json",
+    "color": "#ffb84d",
+    "descripcion": "Pavimentación urbana, pavimentación rural, placa huella, puentes y vías terciarias.",
+    "tipologias": [
+      "Pavimentación urbana",
+      "Pavimentación rural",
+      "Placa huella",
+      "Puentes",
+      "Vías terciarias"
+    ]
+  },
+  {
+    "id": "agua-potable-saneamiento",
+    "nombre": "Agua potable y saneamiento",
+    "icono": "💧",
+    "archivo": "data/sectores/agua-potable-saneamiento.json",
+    "color": "#38bdf8",
+    "descripcion": "Acueductos, alcantarillados, PTAR, PTAP y redes hidráulicas.",
+    "tipologias": [
+      "Acueductos",
+      "Alcantarillados",
+      "PTAR",
+      "PTAP",
+      "Redes hidráulicas"
+    ]
+  },
+  {
+    "id": "vivienda",
+    "nombre": "Vivienda",
+    "icono": "🏘️",
+    "archivo": "data/sectores/vivienda.json",
+    "color": "#22c55e",
+    "descripcion": "Vivienda nueva, mejoramiento de vivienda y urbanismo.",
+    "tipologias": [
+      "Vivienda nueva",
+      "Mejoramiento de vivienda",
+      "Urbanismo"
+    ]
+  },
+  {
+    "id": "equipamientos-publicos",
+    "nombre": "Equipamientos públicos",
+    "icono": "🏛️",
+    "archivo": "data/sectores/equipamientos-publicos.json",
+    "color": "#8b5cf6",
+    "descripcion": "Centros comunitarios, casas de cultura, bibliotecas y centros administrativos.",
+    "tipologias": [
+      "Centros comunitarios",
+      "Casas de cultura",
+      "Bibliotecas",
+      "Centros administrativos"
+    ]
+  },
+  {
+    "id": "deporte-recreacion",
+    "nombre": "Deporte y recreación",
+    "icono": "⚽",
+    "archivo": "data/sectores/deporte-recreacion.json",
+    "color": "#f97316",
+    "descripcion": "Canchas, coliseos, polideportivos y parques recreativos.",
+    "tipologias": [
+      "Canchas",
+      "Coliseos",
+      "Polideportivos",
+      "Parques recreativos"
+    ]
+  },
+  {
+    "id": "cultura",
+    "nombre": "Cultura",
+    "icono": "🎭",
+    "archivo": "data/sectores/cultura.json",
+    "color": "#ec4899",
+    "descripcion": "Teatros, museos, casas de cultura y escuelas artísticas.",
+    "tipologias": [
+      "Teatros",
+      "Museos",
+      "Casas de cultura",
+      "Escuelas artísticas"
+    ]
+  },
+  {
+    "id": "agricultura",
+    "nombre": "Agricultura",
+    "icono": "🌾",
+    "archivo": "data/sectores/agricultura.json",
+    "color": "#84cc16",
+    "descripcion": "Distritos de riego, centros de acopio, maquinaria agrícola y asistencia técnica.",
+    "tipologias": [
+      "Distritos de riego",
+      "Centros de acopio",
+      "Maquinaria agrícola",
+      "Asistencia técnica"
+    ]
+  },
+  {
+    "id": "ambiente",
+    "nombre": "Ambiente",
+    "icono": "🌳",
+    "archivo": "data/sectores/ambiente.json",
+    "color": "#10b981",
+    "descripcion": "Reforestación, recuperación de cuencas, protección ambiental y gestión del riesgo.",
+    "tipologias": [
+      "Reforestación",
+      "Recuperación de cuencas",
+      "Protección ambiental",
+      "Gestión del riesgo"
+    ]
+  },
+  {
+    "id": "tic",
+    "nombre": "TIC",
+    "icono": "💻",
+    "archivo": "data/sectores/tic.json",
+    "color": "#0ea5e9",
+    "descripcion": "Conectividad, centros digitales, equipamiento tecnológico y transformación digital.",
+    "tipologias": [
+      "Conectividad",
+      "Centros digitales",
+      "Equipamiento tecnológico",
+      "Transformación digital"
+    ]
+  },
+  {
+    "id": "desarrollo-social",
+    "nombre": "Desarrollo social",
+    "icono": "🤝",
+    "archivo": "data/sectores/desarrollo-social.json",
+    "color": "#ef4444",
+    "descripcion": "Adulto mayor, primera infancia, juventud, mujer, discapacidad, víctimas y población vulnerable.",
+    "tipologias": [
+      "Adulto mayor",
+      "Primera infancia",
+      "Juventud",
+      "Mujer",
+      "Discapacidad",
+      "Víctimas",
+      "Población vulnerable"
+    ]
+  }
+]

@@ -1,0 +1,247 @@
+{
+  "id": "infraestructura-salud",
+  "nombre": "Infraestructura en salud",
+  "icono": "🏥",
+  "color": "#00c2a8",
+  "descripcion": "Hospitales, centros de salud, puestos de salud, Centros Vida y Centros Día.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de alimentar con fuente oficial vigente",
+  "situacionActual": {
+    "titulo": "Salud cercana, digna y oportuna para Girón",
+    "resumen": "Girón requiere fortalecer la infraestructura física y funcional de los servicios de salud, especialmente en sectores con crecimiento poblacional, población vulnerable, adultos mayores y comunidades que necesitan atención más cercana. La agenda de campaña debe enfocarse en centros de salud adecuados, puestos de atención fortalecidos, Centros Vida, Centros Día y una red institucional capaz de responder a la demanda del municipio.",
+    "enfoquePolitico": "La salud no puede depender solamente de la capacidad de traslado de una familia. El municipio necesita servicios más cercanos, infraestructura digna y atención oportuna para proteger la vida.",
+    "advertenciaDatos": "Las cifras deben verificarse y actualizarse con fuentes oficiales antes de usarse en debate, piezas publicitarias o documentos públicos."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Número de IPS públicas o sedes de atención disponibles",
+      "valor": null,
+      "unidad": "sedes",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Salud / REPS / Alcaldía de Girón"
+    },
+    {
+      "indicador": "Centros de salud en operación",
+      "valor": null,
+      "unidad": "centros",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Salud Municipal"
+    },
+    {
+      "indicador": "Puestos de salud rurales o periféricos",
+      "valor": null,
+      "unidad": "puestos",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Salud / Plan de Desarrollo"
+    },
+    {
+      "indicador": "Población afiliada al régimen subsidiado",
+      "valor": null,
+      "unidad": "personas",
+      "estado": "pendiente",
+      "fuenteSugerida": "ADRES / MinSalud / Secretaría de Salud"
+    },
+    {
+      "indicador": "Adultos mayores potencialmente beneficiarios de Centros Vida o Centros Día",
+      "valor": null,
+      "unidad": "personas",
+      "estado": "pendiente",
+      "fuenteSugerida": "SISBÉN / Secretaría de Desarrollo Social"
+    },
+    {
+      "indicador": "Infraestructura de salud que requiere mantenimiento o adecuación",
+      "valor": null,
+      "unidad": "sedes",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Infraestructura / Secretaría de Salud"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Servicios de salud distantes para algunas comunidades",
+      "descripcion": "Sectores rurales, periféricos o de expansión urbana pueden enfrentar mayores tiempos de traslado para acceder a atención básica.",
+      "impacto": "Alto",
+      "poblacionObjetivo": "Familias, adultos mayores, población rural y población vulnerable"
+    },
+    {
+      "titulo": "Necesidad de fortalecer centros y puestos de salud",
+      "descripcion": "La infraestructura existente puede requerir mantenimiento, dotación, adecuación o ampliación para responder a la demanda territorial.",
+      "impacto": "Alto",
+      "poblacionObjetivo": "Usuarios del sistema de salud"
+    },
+    {
+      "titulo": "Atención integral al adulto mayor",
+      "descripcion": "Los Centros Vida y Centros Día son esenciales para prevención, acompañamiento, alimentación, recreación y cuidado social del adulto mayor.",
+      "impacto": "Medio-Alto",
+      "poblacionObjetivo": "Adultos mayores y cuidadores"
+    },
+    {
+      "titulo": "Débil articulación entre salud preventiva e infraestructura social",
+      "descripcion": "La prevención requiere espacios adecuados para vacunación, promoción de la salud, salud mental, nutrición y atención comunitaria.",
+      "impacto": "Medio-Alto",
+      "poblacionObjetivo": "Niñez, mujeres, adultos mayores y población vulnerable"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Salud Cerca de la Gente",
+      "objetivo": "Impulsar una agenda de gestión y control político para fortalecer centros y puestos de salud en zonas urbanas, rurales y periféricas.",
+      "mensajeCentral": "La salud debe estar más cerca de los barrios, las veredas y las familias.",
+      "publicoObjetivo": [
+        "Adultos mayores",
+        "Madres cabeza de hogar",
+        "Familias rurales",
+        "Población vulnerable"
+      ],
+      "accionesTerritoriales": [
+        "Identificar sectores con mayores tiempos de traslado a servicios básicos.",
+        "Levantar un mapa ciudadano de necesidades en salud.",
+        "Priorizar adecuación de centros y puestos de salud.",
+        "Promover jornadas de salud preventiva en barrios y veredas.",
+        "Solicitar informes de funcionamiento de la red pública de atención."
+      ]
+    },
+    {
+      "nombre": "Adulto Mayor con Dignidad",
+      "objetivo": "Gestionar el fortalecimiento de Centros Vida y Centros Día como espacios de bienestar, prevención y acompañamiento social.",
+      "mensajeCentral": "Cuidar a nuestros adultos mayores es honrar la historia viva de Girón.",
+      "publicoObjetivo": [
+        "Adultos mayores",
+        "Familias cuidadoras",
+        "Líderes comunitarios",
+        "Organizaciones sociales"
+      ],
+      "accionesTerritoriales": [
+        "Identificar adultos mayores sin atención social suficiente.",
+        "Gestionar mantenimiento y dotación de Centros Vida.",
+        "Promover programas de alimentación, salud preventiva y recreación.",
+        "Realizar control político a la cobertura de programas sociales."
+      ]
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre infraestructura en salud",
+    "duracion": "3 minutos",
+    "texto": "Girón necesita una salud más cercana, más humana y más oportuna. No podemos permitir que una familia tenga que recorrer largas distancias o esperar demasiado para recibir atención básica. La infraestructura en salud no es un lujo: es una necesidad para proteger la vida, prevenir enfermedades y cuidar a quienes más lo necesitan.\n\nDesde el Concejo Municipal voy a promover una agenda de control político y gestión para fortalecer los centros de salud, los puestos de salud, los Centros Vida y los Centros Día. Nuestro municipio debe avanzar hacia una red de atención más cercana a los barrios, a las veredas, a los adultos mayores, a las mujeres, a los niños y a la población vulnerable.\n\nMi compromiso es trabajar para que la salud no sea solo una promesa de campaña, sino una gestión permanente. Girón necesita espacios dignos, dotados y bien mantenidos, donde la gente pueda recibir orientación, prevención y atención con respeto. Defender la salud es defender la vida de nuestras familias."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "🏥 Girón necesita salud más cercana. Desde el Concejo impulsaremos control político y gestión para fortalecer centros de salud, puestos de salud, Centros Vida y Centros Día.",
+    "facebook": "La salud no puede estar lejos de la gente. Girón necesita infraestructura digna, atención preventiva y espacios adecuados para adultos mayores, familias y población vulnerable. Nuestra propuesta es clara: salud cerca de los barrios y las veredas.",
+    "instagram": "🏥 Salud cerca de la gente.\n👵 Adulto mayor con dignidad.\n📍 Atención en barrios y veredas.\n🎯 Girón merece servicios de salud oportunos.",
+    "tiktok": "La salud no puede seguir siendo una carrera de obstáculos. Girón necesita centros y puestos de salud fortalecidos, y una atención más cercana para quienes más lo necesitan."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Mejoramiento de centros y puestos de salud",
+      "objetivo": "Intervenir infraestructura física priorizada para mejorar condiciones de atención.",
+      "componentes": [
+        "Cubiertas",
+        "Consultorios",
+        "Salas de espera",
+        "Baterías sanitarias",
+        "Accesibilidad",
+        "Dotación básica"
+      ],
+      "fuentesFinanciacion": [
+        "Recursos propios",
+        "Ministerio de Salud",
+        "Gobernación de Santander",
+        "SGR"
+      ]
+    },
+    {
+      "nombre": "Red de salud preventiva en barrios y veredas",
+      "objetivo": "Fortalecer espacios y jornadas de promoción y prevención en salud comunitaria.",
+      "componentes": [
+        "Jornadas de salud",
+        "Vacunación",
+        "Promoción de hábitos saludables",
+        "Salud mental",
+        "Nutrición"
+      ],
+      "fuentesFinanciacion": [
+        "Secretaría de Salud",
+        "EPS",
+        "IPS",
+        "Recursos municipales",
+        "Cooperación"
+      ]
+    },
+    {
+      "nombre": "Centros Vida y Centros Día dignos",
+      "objetivo": "Adecuar y dotar espacios de atención integral al adulto mayor.",
+      "componentes": [
+        "Comedor",
+        "Áreas de actividad física",
+        "Atención psicosocial",
+        "Salud preventiva",
+        "Recreación"
+      ],
+      "fuentesFinanciacion": [
+        "Estampilla adulto mayor",
+        "Recursos propios",
+        "Gobernación",
+        "Prosperidad Social"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Cuántos centros y puestos de salud operan actualmente en Girón?",
+    "¿Qué sedes de salud requieren mantenimiento, ampliación o dotación?",
+    "¿Cuál es la cobertura real de Centros Vida y Centros Día?",
+    "¿Qué presupuesto se ha ejecutado en infraestructura en salud durante los últimos años?",
+    "¿Qué sectores tienen mayores dificultades para acceder a servicios básicos de salud?"
+  ],
+  "controlPolitico": [
+    "Solicitar inventario actualizado de infraestructura pública en salud.",
+    "Requerir informe de mantenimiento, dotación y operación de centros de salud.",
+    "Hacer seguimiento a programas de atención al adulto mayor.",
+    "Revisar contratación en salud pública e infraestructura en SECOP.",
+    "Solicitar indicadores de acceso, cobertura y tiempos de atención por sector."
+  ],
+  "fuentesFinanciacion": [
+    "Recursos propios del municipio",
+    "Sistema General de Participaciones - Salud",
+    "Sistema General de Regalías",
+    "Ministerio de Salud y Protección Social",
+    "Gobernación de Santander",
+    "Estampilla para el bienestar del adulto mayor",
+    "Cooperación nacional e internacional"
+  ],
+  "normatividad": [
+    "Constitución Política de Colombia - derecho fundamental a la salud",
+    "Ley 100 de 1993 - Sistema de Seguridad Social Integral",
+    "Ley 1751 de 2015 - Ley Estatutaria de Salud",
+    "Ley 715 de 2001 - competencias territoriales",
+    "Normatividad aplicable a habilitación de servicios de salud",
+    "Plan de Desarrollo Municipal vigente"
+  ],
+  "ods": [
+    {
+      "numero": 3,
+      "nombre": "Salud y bienestar"
+    },
+    {
+      "numero": 10,
+      "nombre": "Reducción de las desigualdades"
+    },
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Infraestructura en Salud",
+    "subtitulo": "Salud cerca de la gente",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia de campaña",
+      "Discurso",
+      "Proyectos tipo",
+      "Fuentes de financiación"
+    ]
+  }
+}

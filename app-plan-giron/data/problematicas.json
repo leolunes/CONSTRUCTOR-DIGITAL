@@ -1,0 +1,254 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Banco de problemáticas identificadas en el diagnóstico del Plan de Desarrollo Municipal de Girón 2024-2027.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud y Protección Social",
+
+      "problematicas":[
+
+        "Persisten brechas en el acceso oportuno a algunos servicios de salud.",
+
+        "Necesidad de fortalecer las acciones de promoción y prevención.",
+
+        "Incremento de enfermedades asociadas a estilos de vida no saludables.",
+
+        "Necesidad de fortalecer la salud mental.",
+
+        "Mayor demanda de atención para población vulnerable."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "problematicas":[
+
+        "Persisten riesgos de deserción escolar.",
+
+        "Necesidad de fortalecer la calidad educativa.",
+
+        "Diferencias entre zonas urbanas y rurales.",
+
+        "Necesidad de fortalecer procesos tecnológicos y de innovación educativa.",
+
+        "Retos para mejorar el desempeño académico."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Agricultura y Desarrollo Rural",
+
+      "problematicas":[
+
+        "Baja competitividad de algunos productores rurales.",
+
+        "Necesidad de fortalecer asistencia técnica.",
+
+        "Limitaciones para comercialización de productos agrícolas.",
+
+        "Necesidad de mejorar infraestructura rural.",
+
+        "Vulnerabilidad frente al cambio climático."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Transporte",
+
+      "problematicas":[
+
+        "Congestión en corredores principales.",
+
+        "Necesidad de mejorar infraestructura vial.",
+
+        "Alta accidentalidad en algunos sectores.",
+
+        "Retos para fortalecer movilidad sostenible.",
+
+        "Incremento del parque automotor."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "problematicas":[
+
+        "Presión sobre los recursos naturales.",
+
+        "Necesidad de proteger fuentes hídricas.",
+
+        "Riesgos asociados al cambio climático.",
+
+        "Procesos de ocupación en zonas de riesgo.",
+
+        "Necesidad de fortalecer cultura ambiental."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "problematicas":[
+
+        "Déficit cualitativo y cuantitativo de vivienda.",
+
+        "Necesidad de fortalecer espacio público.",
+
+        "Cobertura desigual de algunos servicios públicos.",
+
+        "Expansión urbana con retos de planificación.",
+
+        "Necesidad de mejorar infraestructura urbana."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Inclusión Social y Reconciliación",
+
+      "problematicas":[
+
+        "Persisten brechas sociales en población vulnerable.",
+
+        "Necesidad de fortalecer programas para adulto mayor.",
+
+        "Retos para la inclusión de personas con discapacidad.",
+
+        "Necesidad de fortalecer programas para juventud.",
+
+        "Mayor articulación institucional para atención diferencial."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Comercio, Industria y Turismo",
+
+      "problematicas":[
+
+        "Necesidad de fortalecer competitividad empresarial.",
+
+        "Bajo aprovechamiento de algunas potencialidades turísticas.",
+
+        "Retos para formalización empresarial.",
+
+        "Necesidad de fortalecer emprendimientos.",
+
+        "Mayor promoción del patrimonio histórico."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Trabajo",
+
+      "problematicas":[
+
+        "Necesidad de generar mayores oportunidades laborales.",
+
+        "Fortalecer procesos de empleabilidad juvenil.",
+
+        "Impulsar procesos de formación para el trabajo.",
+
+        "Mayor apoyo al emprendimiento.",
+
+        "Reducir informalidad laboral."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno Territorial",
+
+      "problematicas":[
+
+        "Necesidad de fortalecer gestión institucional.",
+
+        "Mayor articulación entre dependencias.",
+
+        "Fortalecer participación ciudadana.",
+
+        "Mejorar seguimiento al Plan de Desarrollo.",
+
+        "Fortalecer procesos de Gobierno Digital."
+
+      ]
+
+    }
+
+  ],
+
+  "consultasIA":[
+
+    "¿Cuáles son las principales problemáticas del municipio?",
+
+    "¿Qué problemas identifica el Plan en salud?",
+
+    "¿Qué dificultades presenta la educación?",
+
+    "¿Cuáles son los mayores retos ambientales?",
+
+    "¿Qué problemáticas debería priorizar un candidato?",
+
+    "¿Qué sectores requieren mayor intervención?"
+
+  ],
+
+  "utilidadApp":[
+
+    "Generación automática de diagnósticos.",
+
+    "Construcción de propuestas de campaña.",
+
+    "Preparación de debates de control político.",
+
+    "Discursos sustentados en el Plan.",
+
+    "Comparación entre sectores.",
+
+    "Priorización de inversiones.",
+
+    "Apoyo al módulo de Inteligencia Artificial."
+
+  ],
+
+  "fuente":{
+
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "capitulo":"Diagnóstico General y Diagnósticos Sectoriales"
+
+  }
+
+}

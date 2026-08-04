@@ -1,0 +1,33 @@
+/* =====================================
+   MOTOR FORMULACIÓN AUTOMÁTICA MGA
+   ===================================== */
+
+.formulacion-auto-card{
+  background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+  border:1px solid var(--border,#1f2937);
+  border-radius:18px;
+  padding:16px;
+  color:var(--text,#e5e7eb);
+}
+
+.formulacion-auto-head h2{
+  margin:0 0 6px 0;
+  font-size:18px;
+}
+
+.formulacion-auto-head p{
+  margin:0;
+  color:var(--muted,#9ca3af);
+  font-size:13px;
+}
+
+.formulacion-auto-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.formulacion-auto-result{
+  margin-top:14px;
+}

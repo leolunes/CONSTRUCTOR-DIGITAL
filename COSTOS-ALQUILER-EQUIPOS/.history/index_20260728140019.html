@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Base técnica de equipos de construcción para consulta de costos horarios referenciales, parámetros económicos, rendimientos y fichas de equipo."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Base técnica de equipos de construcción
+  </title>
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css?v=20260727-tecnico"
+  >
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTO HORARIO
+          </strong>
+
+          <span>
+            Equipos de construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item active"
+          href="index.html"
+          aria-current="page"
+        >
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Base técnica
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          CONSULTA TÉCNICA
+        </div>
+
+        <a
+          class="nav-item"
+          href="#catalogoEquipos"
+        >
+          <span class="nav-icon">
+            ▦
+          </span>
+
+          <span>
+            Catálogo de equipos
+          </span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+
+            <span class="status-dot success"></span>
+
+            <strong>
+              Base técnica activa
+            </strong>
+
+          </div>
+
+          <span id="estadoCatalogo">
+            Cargando equipos registrados...
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span class="topbar-eyebrow">
+              BASE DE COSTO HORARIO
+            </span>
+
+            <h1>
+              Consulta técnica de equipos
+            </h1>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <div class="page-content">
+
+        <section class="catalog-hero">
+
+          <div>
+
+            <span class="section-kicker">
+              HERRAMIENTA PARA CONSULTORES Y CONSTRUCTORES
+            </span>
+
+            <h2>
+              Base técnica de equipos de construcción
+            </h2>
+
+            <p>
+              Consulte fichas técnicas, parámetros económicos, costos horarios
+              referenciales, rendimientos y datos de operación para apoyar la
+              elaboración de presupuestos, análisis de precios unitarios y
+              planeación de obras.
+            </p>
+
+          </div>
+
+          <div class="catalog-summary">
+
+            <div class="catalog-summary-item">
+
+              <span>
+                Equipos registrados
+              </span>
+
+              <strong id="totalEquipos">
+                0
+              </strong>
+
+            </div>
+
+            <div class="catalog-summary-item">
+
+              <span>
+                Estado de la información
+              </span>
+
+              <strong style="font-size:1.05rem;">
+                BASE ACTIVA
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <section
+          class="catalog-toolbar"
+          aria-label="Herramientas del catálogo"
+        >
+
+          <div class="catalog-search">
+
+            <label for="buscarEquipo">
+              Buscar equipo
+            </label>
+
+            <div class="catalog-search-control">
+
+              <span aria-hidden="true">
+                🔎
+              </span>
+
+              <input
+                id="buscarEquipo"
+                type="search"
+                placeholder="Buscar por nombre, código, referencia o unidad"
+                autocomplete="off"
+              >
+
+              <button
+                id="limpiarBusqueda"
+                type="button"
+                aria-label="Limpiar búsqueda"
+                title="Limpiar búsqueda"
+              >
+                ×
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="catalog-filter">
+
+            <label for="ordenEquipos">
+              Ordenar
+            </label>
+
+            <select id="ordenEquipos">
+
+              <option value="nombre">
+                Nombre
+              </option>
+
+              <option value="codigo">
+                Código
+              </option>
+
+              <option value="tarifa-menor">
+                Menor costo referencial
+              </option>
+
+              <option value="tarifa-mayor">
+                Mayor costo referencial
+              </option>
+
+            </select>
+
+          </div>
+
+        </section>
+
+        <section
+          class="catalog-results"
+          id="catalogoEquipos"
+          aria-labelledby="tituloCatalogo"
+        >
+
+          <div class="catalog-results-header">
+
+            <div>
+
+              <span class="section-kicker">
+                EQUIPOS REGISTRADOS
+              </span>
+
+              <h2 id="tituloCatalogo">
+                Catálogo técnico
+              </h2>
+
+            </div>
+
+            <span
+              class="catalog-result-count"
+              id="contadorResultados"
+            >
+              0 equipos
+            </span>
+
+          </div>
+
+          <div
+            class="catalog-grid"
+            id="gridEquipos"
+            aria-live="polite"
+          ></div>
+
+          <div
+            class="empty-state"
+            id="estadoSinResultados"
+            hidden
+          >
+
+            <span class="empty-state-icon">
+              🔍
+            </span>
+
+            <h3>
+              No se encontraron equipos
+            </h3>
+
+            <p>
+              Revise el texto de búsqueda o limpie el filtro para volver a
+              mostrar todos los registros de la base técnica.
+            </p>
+
+            <button
+              class="button button-secondary"
+              id="btnRestablecerCatalogo"
+              type="button"
+            >
+              Mostrar todos
+            </button>
+
+          </div>
+
+          <div
+            class="empty-state"
+            id="estadoErrorCatalogo"
+            hidden
+          >
+
+            <span class="empty-state-icon">
+              ⚠️
+            </span>
+
+            <h3>
+              No fue posible cargar la base técnica
+            </h3>
+
+            <p id="mensajeErrorCatalogo">
+              Revise que el archivo data/equipos-index.json esté disponible.
+            </p>
+
+          </div>
+
+        </section>
+
+      </div>
+
+      <footer class="app-footer">
+
+        <span>
+          Base técnica de costo horario de equipos de construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script
+    src="js/app.js?v=20260727-tecnico"
+    defer
+  ></script>
+
+</body>
+
+</html>

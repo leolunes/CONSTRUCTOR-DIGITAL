@@ -1,0 +1,296 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion":"Banco de riesgos territoriales, institucionales, sociales, ambientales y económicos identificados en el Plan de Desarrollo Municipal de Girón 2024-2027.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud y Protección Social",
+
+      "riesgos":[
+
+        "Incremento de enfermedades crónicas no transmisibles.",
+
+        "Emergencia de nuevos eventos epidemiológicos.",
+
+        "Sobrecarga de los servicios de salud.",
+
+        "Limitaciones presupuestales para ampliar cobertura.",
+
+        "Incremento de problemas de salud mental."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "riesgos":[
+
+        "Incremento de la deserción escolar.",
+
+        "Rezago en transformación digital.",
+
+        "Baja permanencia estudiantil.",
+
+        "Déficit de infraestructura educativa.",
+
+        "Desigualdad entre educación urbana y rural."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Agricultura y Desarrollo Rural",
+
+      "riesgos":[
+
+        "Cambio climático.",
+
+        "Disminución de productividad agrícola.",
+
+        "Pérdida de suelos productivos.",
+
+        "Variabilidad climática.",
+
+        "Disminución del relevo generacional campesino."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Transporte",
+
+      "riesgos":[
+
+        "Aumento del parque automotor.",
+
+        "Mayor congestión vial.",
+
+        "Incremento de accidentalidad.",
+
+        "Deterioro acelerado de la infraestructura vial.",
+
+        "Mayor presión sobre corredores metropolitanos."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "riesgos":[
+
+        "Eventos asociados al cambio climático.",
+
+        "Deforestación.",
+
+        "Contaminación de fuentes hídricas.",
+
+        "Ocupación de zonas de riesgo.",
+
+        "Pérdida de biodiversidad."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "riesgos":[
+
+        "Crecimiento urbano desordenado.",
+
+        "Déficit de espacio público.",
+
+        "Presión sobre servicios públicos.",
+
+        "Expansión hacia zonas ambientalmente sensibles.",
+
+        "Incremento del déficit habitacional."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Inclusión Social y Reconciliación",
+
+      "riesgos":[
+
+        "Incremento de brechas sociales.",
+
+        "Envejecimiento poblacional.",
+
+        "Mayor vulnerabilidad de algunos grupos poblacionales.",
+
+        "Limitaciones presupuestales para programas sociales.",
+
+        "Aumento de necesidades de atención diferencial."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Comercio, Industria y Turismo",
+
+      "riesgos":[
+
+        "Disminución del turismo.",
+
+        "Pérdida de competitividad empresarial.",
+
+        "Desaceleración económica.",
+
+        "Informalidad empresarial.",
+
+        "Disminución de inversión privada."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Trabajo",
+
+      "riesgos":[
+
+        "Incremento del desempleo.",
+
+        "Alta informalidad laboral.",
+
+        "Menor generación de empleo.",
+
+        "Migración de talento humano.",
+
+        "Reducción del emprendimiento."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno Territorial",
+
+      "riesgos":[
+
+        "Disminución de recursos de inversión.",
+
+        "Retrasos en ejecución de proyectos.",
+
+        "Cambios normativos.",
+
+        "Baja participación ciudadana.",
+
+        "Riesgos asociados a la sostenibilidad fiscal."
+
+      ]
+
+    }
+
+  ],
+
+  "riesgosTransversales":[
+
+    "Cambio climático.",
+
+    "Crecimiento acelerado de la población.",
+
+    "Presión sobre infraestructura urbana.",
+
+    "Limitaciones fiscales.",
+
+    "Incremento de la demanda de servicios públicos.",
+
+    "Mayor vulnerabilidad frente a desastres naturales.",
+
+    "Deterioro ambiental.",
+
+    "Incremento de desigualdades sociales.",
+
+    "Dependencia de recursos externos para inversión.",
+
+    "Mayor complejidad en la gestión pública."
+
+  ],
+
+  "gestionDelRiesgo":[
+
+    "Fortalecer la planificación territorial.",
+
+    "Actualizar permanentemente los instrumentos de gestión del riesgo.",
+
+    "Priorizar inversiones preventivas.",
+
+    "Fortalecer la resiliencia institucional.",
+
+    "Promover la participación comunitaria.",
+
+    "Articular acciones con organismos departamentales y nacionales.",
+
+    "Monitorear indicadores críticos del Plan de Desarrollo."
+
+  ],
+
+  "consultasIA":[
+
+    "¿Cuáles son los principales riesgos del municipio?",
+
+    "¿Qué riesgos identifica el Plan de Desarrollo?",
+
+    "¿Qué riesgos afectan el cumplimiento de las metas?",
+
+    "¿Qué riesgos ambientales enfrenta Girón?",
+
+    "¿Qué riesgos debe priorizar la próxima administración?",
+
+    "¿Qué acciones propone el Plan para reducir estos riesgos?"
+
+  ],
+
+  "utilidadApp":[
+
+    "Construcción automática del análisis DOFA.",
+
+    "Generación de mapas de riesgo.",
+
+    "Priorización de inversiones.",
+
+    "Preparación de debates de control político.",
+
+    "Planeación estratégica.",
+
+    "Apoyo al módulo de Inteligencia Artificial.",
+
+    "Construcción automática de diagnósticos municipales."
+
+  ],
+
+  "fuente":{
+
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "capitulo":"Diagnóstico Territorial, Gestión del Riesgo y Diagnósticos Sectoriales"
+
+  }
+
+}

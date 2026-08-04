@@ -1,0 +1,194 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Fichas ejecutivas de cada sector del Plan de Desarrollo Municipal. Este archivo consolida toda la información estratégica necesaria para consultas rápidas, inteligencia artificial, control político y formulación de propuestas.",
+
+  "sectores": [
+    {
+      "id": "22",
+      "nombre": "Educación",
+      "presupuesto": "502.937",
+      "participacion": "41,31 %",
+      "objetivoGeneral": "Garantizar el acceso, permanencia y calidad del servicio educativo mediante programas y proyectos orientados al desarrollo integral de la población.",
+      "principalesProblematicas": [
+        "Deserción escolar.",
+        "Brechas urbano-rurales.",
+        "Necesidad de fortalecer calidad educativa.",
+        "Retos en innovación y tecnología."
+      ],
+      "fortalezas": [
+        "Alta participación presupuestal.",
+        "Cobertura institucional.",
+        "Oferta educativa consolidada."
+      ],
+      "oportunidades": [
+        "Transformación digital.",
+        "Educación superior.",
+        "Innovación pedagógica."
+      ],
+      "riesgos": [
+        "Rezago tecnológico.",
+        "Deserción.",
+        "Déficit de infraestructura."
+      ],
+      "programas": "Ver programas.json",
+      "metas": "Ver metas.json",
+      "indicadores": "Ver indicadores.json",
+      "proyectos": "Ver proyectos.json",
+      "secretariaResponsable": "Secretaría de Educación",
+      "ods": [
+        "ODS 4",
+        "ODS 10"
+      ],
+      "preguntasControl": [
+        "¿Cuál es la cobertura educativa?",
+        "¿Cómo ha disminuido la deserción?",
+        "¿Cuál es el avance de las metas educativas?"
+      ],
+      "propuestasCampaña": [
+        "Fortalecer permanencia escolar.",
+        "Impulsar innovación educativa.",
+        "Modernizar infraestructura educativa."
+      ]
+    },
+    {
+      "id": "19",
+      "nombre": "Salud y Protección Social",
+      "presupuesto": "456.925",
+      "participacion": "37,53 %",
+      "objetivoGeneral": "Fortalecer las acciones de promoción, prevención y acceso a servicios de salud para toda la población.",
+      "principalesProblematicas": [
+        "Acceso desigual.",
+        "Mayor demanda de salud mental.",
+        "Necesidad de fortalecer promoción y prevención."
+      ],
+      "fortalezas": [
+        "Amplia cobertura.",
+        "Programas institucionales.",
+        "Alta inversión."
+      ],
+      "oportunidades": [
+        "Salud digital.",
+        "Fortalecer prevención.",
+        "Mayor articulación institucional."
+      ],
+      "riesgos": [
+        "Enfermedades crónicas.",
+        "Sobrecarga del sistema.",
+        "Emergencias epidemiológicas."
+      ],
+      "programas": "Ver programas.json",
+      "metas": "Ver metas.json",
+      "indicadores": "Ver indicadores.json",
+      "proyectos": "Ver proyectos.json",
+      "secretariaResponsable": "Secretaría Local de Salud",
+      "ods": [
+        "ODS 3",
+        "ODS 10"
+      ],
+      "preguntasControl": [
+        "¿Cómo ha mejorado la salud pública?",
+        "¿Qué programas tienen mayor ejecución?",
+        "¿Cuál es el avance de las metas?"
+      ],
+      "propuestasCampaña": [
+        "Fortalecer salud mental.",
+        "Incrementar promoción y prevención.",
+        "Brigadas rurales de salud."
+      ]
+    },
+    {
+      "id": "32",
+      "nombre": "Ambiente y Desarrollo Sostenible",
+      "presupuesto": "49.656",
+      "participacion": "4,08 %",
+      "objetivoGeneral": "Proteger los recursos naturales, fortalecer la sostenibilidad ambiental y la gestión del riesgo.",
+      "principalesProblematicas": [
+        "Presión sobre recursos naturales.",
+        "Cambio climático.",
+        "Ocupación de zonas de riesgo."
+      ],
+      "fortalezas": [
+        "Importantes recursos hídricos.",
+        "Áreas protegidas.",
+        "Alta biodiversidad."
+      ],
+      "oportunidades": [
+        "Economía circular.",
+        "Educación ambiental.",
+        "Restauración ecológica."
+      ],
+      "riesgos": [
+        "Deforestación.",
+        "Eventos climáticos extremos.",
+        "Contaminación hídrica."
+      ],
+      "secretariaResponsable": "Secretaría de Desarrollo Social",
+      "ods": [
+        "ODS 6",
+        "ODS 11",
+        "ODS 13",
+        "ODS 15"
+      ]
+    },
+    {
+      "id": "24",
+      "nombre": "Transporte",
+      "presupuesto": "15.459",
+      "participacion": "1,27 %",
+      "objetivoGeneral": "Fortalecer la movilidad segura, eficiente y sostenible del municipio.",
+      "principalesProblematicas": [
+        "Congestión.",
+        "Accidentalidad.",
+        "Infraestructura vial."
+      ],
+      "fortalezas": [
+        "Ubicación metropolitana.",
+        "Conectividad regional."
+      ],
+      "oportunidades": [
+        "Movilidad inteligente.",
+        "Nuevos corredores.",
+        "Seguridad vial."
+      ],
+      "riesgos": [
+        "Mayor parque automotor.",
+        "Deterioro vial."
+      ],
+      "secretariaResponsable": "Secretaría de Tránsito y Transporte",
+      "ods": [
+        "ODS 9",
+        "ODS 11"
+      ]
+    }
+  ],
+
+  "consultasIA": [
+    "Muéstreme la ficha completa del sector Salud.",
+    "¿Cuál es el presupuesto del sector Educación?",
+    "¿Qué riesgos tiene Ambiente?",
+    "¿Qué propuestas pueden formularse para Transporte?",
+    "¿Qué sector tiene mayor inversión?",
+    "¿Qué indicadores debo revisar como concejal?",
+    "¿Qué metas tiene este sector?",
+    "¿Qué programas desarrolla?"
+  ],
+
+  "utilidadApp": [
+    "Ficha Ejecutiva.",
+    "IA Municipal.",
+    "Control Político.",
+    "Dashboard.",
+    "Propuestas de Campaña.",
+    "Discursos.",
+    "Comparativos.",
+    "Resúmenes automáticos."
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "componentes": "Diagnóstico, Programas, Metas, Indicadores, Proyectos y Plan Plurianual de Inversiones."
+  }
+}

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Árbol de Objetivos | Constructor MGA Pro</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Árbol de Objetivos</div>
+      <div class="subtitle" id="objetivosSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnDiagnostico" href="#">Diagnóstico</a>
+    <a class="navbtn" id="btnArbolProblemas" href="#">Árbol de Problemas</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <button class="navbtn primary" id="btnGuardarObjetivosTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <div class="cardhead">
+      <div>
+        <h2>Construcción del árbol de objetivos</h2>
+        <p class="muted small">
+          El sistema toma el árbol de problemas y lo transforma en objetivo general, medios y fines.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="item">
+        <div class="name">Transformación lógica</div>
+        <div class="muted small">
+          El problema central se convierte en objetivo general. Las causas se convierten en medios. Los efectos se convierten en fines.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Editable</div>
+        <div class="muted small">
+          Las sugerencias automáticas son solo una base. Usted puede ajustarlas antes de guardar.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <form class="form" id="formArbolObjetivos">
+
+      <div class="cardhead">
+        <h2>Objetivo general</h2>
+        <p class="muted small">
+          Debe expresar la situación positiva que se busca alcanzar.
+        </p>
+      </div>
+
+      <textarea id="objetivoGeneral" rows="4" placeholder="Escriba el objetivo general..."></textarea>
+
+      <div class="row" style="margin-top:10px; gap:10px; flex-wrap:wrap">
+        <button class="btn" id="btnGenerarDesdeProblemas" type="button">Generar desde árbol de problemas</button>
+      </div>
+
+      <hr class="sep">
+
+      <div class="grid two">
+
+        <section>
+          <div class="cardhead">
+            <h2>Medios directos</h2>
+          </div>
+
+          <div id="mediosDirectosList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="medioDirectoInput" placeholder="Nuevo medio directo..." />
+            <button class="btn" id="btnAddMedioDirecto" type="button">Agregar</button>
+          </div>
+        </section>
+
+        <section>
+          <div class="cardhead">
+            <h2>Medios indirectos</h2>
+          </div>
+
+          <div id="mediosIndirectosList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="medioIndirectoInput" placeholder="Nuevo medio indirecto..." />
+            <button class="btn" id="btnAddMedioIndirecto" type="button">Agregar</button>
+          </div>
+        </section>
+
+      </div>
+
+      <hr class="sep">
+
+      <div class="grid two">
+
+        <section>
+          <div class="cardhead">
+            <h2>Fines directos</h2>
+          </div>
+
+          <div id="finesDirectosList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="finDirectoInput" placeholder="Nuevo fin directo..." />
+            <button class="btn" id="btnAddFinDirecto" type="button">Agregar</button>
+          </div>
+        </section>
+
+        <section>
+          <div class="cardhead">
+            <h2>Fines indirectos</h2>
+          </div>
+
+          <div id="finesIndirectosList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="finIndirectoInput" placeholder="Nuevo fin indirecto..." />
+            <button class="btn" id="btnAddFinIndirecto" type="button">Agregar</button>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" type="submit">Guardar árbol de objetivos</button>
+        <button class="btn" id="btnEnviarCadenaValor" type="button">Enviar objetivo a cadena de valor</button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Vista resumida del árbol</h2>
+      <p class="muted small">Resumen lógico de medios, objetivo general y fines.</p>
+    </div>
+
+    <div id="vistaArbolObjetivos"></div>
+  </section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+
+<!-- Motor IA -->
+<script src="js/asistente/motor-cadena-valor.js"></script>
+
+<script src="js/arbol-objetivos.js"></script>
+
+</body>
+</html>

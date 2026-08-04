@@ -1,0 +1,316 @@
+/* =========================================================
+   GIRÓN PROPONE
+   Archivo: css/layout.css
+   Descripción: Estructura general de la aplicación.
+========================================================= */
+
+/* =========================================================
+   1. CONTENEDOR PRINCIPAL
+========================================================= */
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* =========================================================
+   2. CONTENIDO PRINCIPAL
+========================================================= */
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition-normal), width var(--transition-normal);
+}
+
+/* =========================================================
+   3. BARRA SUPERIOR
+========================================================= */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 0 32px;
+    background: rgba(244, 247, 251, 0.84);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(230, 234, 242, 0.82);
+}
+
+.menu-toggle {
+    display: none;
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 16px;
+    background: var(--color-surface);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+    font-size: 1.25rem;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.menu-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.topbar-title {
+    flex: 1;
+}
+
+.topbar-title h2 {
+    margin: 0 0 4px;
+    font-size: 1.25rem;
+}
+
+.topbar-title p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-button {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 15px;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    font-size: 1.08rem;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.icon-button:hover {
+    transform: translateY(-2px);
+    background: var(--color-primary-soft);
+    box-shadow: var(--shadow-md);
+}
+
+/* =========================================================
+   4. ÁREA DE VISTAS
+========================================================= */
+.view-container {
+    width: 100%;
+    padding: 30px 32px 48px;
+}
+
+.dashboard-view {
+    max-width: 1480px;
+    margin: 0 auto;
+}
+
+/* =========================================================
+   5. CAPAS DINÁMICAS
+========================================================= */
+.view {
+    animation: fadeInUp 280ms ease both;
+}
+
+.view-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 22px;
+    margin-bottom: 24px;
+}
+
+.view-header h1,
+.view-header h2 {
+    margin-bottom: 8px;
+}
+
+.view-header p {
+    margin: 0;
+    max-width: 780px;
+}
+
+.view-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   6. GRID BASE PARA PÁGINAS INTERNAS
+========================================================= */
+.page-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 24px;
+    align-items: start;
+}
+
+.page-main {
+    min-width: 0;
+}
+
+.page-aside {
+    position: sticky;
+    top: calc(var(--topbar-height) + 24px);
+}
+
+/* =========================================================
+   7. BARRA DE HERRAMIENTAS
+========================================================= */
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 22px;
+    padding: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   8. MIGAS DE PAN
+========================================================= */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+}
+
+.breadcrumb span {
+    color: var(--color-light);
+}
+
+.breadcrumb strong {
+    color: var(--color-primary);
+}
+
+/* =========================================================
+   9. OVERLAY MÓVIL
+========================================================= */
+.mobile-overlay {
+    display: none;
+}
+
+body.menu-open .mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(15, 23, 42, 0.42);
+    backdrop-filter: blur(4px);
+}
+
+/* =========================================================
+   10. AJUSTES CUANDO EL SIDEBAR ESTÁ CONTRAÍDO
+========================================================= */
+body.sidebar-collapsed .main-content {
+    margin-left: 92px;
+    width: calc(100% - 92px);
+}
+
+/* =========================================================
+   11. LAYOUT DE IMPRESIÓN
+========================================================= */
+.print-area {
+    background: #ffffff;
+    color: #111827;
+}
+
+.print-area .document-view {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* =========================================================
+   12. RESPONSIVE BASE
+========================================================= */
+@media (max-width: 1180px) {
+    .page-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .page-aside {
+        position: static;
+    }
+}
+
+@media (max-width: 920px) {
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .menu-toggle {
+        display: grid;
+        place-items: center;
+    }
+
+    .view-container {
+        padding: 22px 18px 38px;
+    }
+
+    body.sidebar-collapsed .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .topbar {
+        height: 70px;
+        gap: 12px;
+    }
+
+    .topbar-title h2 {
+        font-size: 1rem;
+    }
+
+    .topbar-title p {
+        font-size: 0.78rem;
+    }
+
+    .topbar-actions {
+        display: none;
+    }
+
+    .view-container {
+        padding: 18px 14px 32px;
+    }
+
+    .section-heading,
+    .view-header,
+    .toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}

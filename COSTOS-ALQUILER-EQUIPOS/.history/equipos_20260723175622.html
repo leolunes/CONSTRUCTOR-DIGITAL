@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Catálogo de equipos de construcción con costos, tarifas de alquiler y rendimiento."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Catálogo de equipos | Costos de Alquiler
+  </title>
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- =====================================================
+         MENÚ LATERAL
+    ====================================================== -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTOS DE ALQUILER
+          </strong>
+
+          <span>
+            Equipo de Construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item"
+          href="index.html"
+        >
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Inicio
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          EQUIPOS
+        </div>
+
+        <a
+          class="nav-item active"
+          href="equipos.html"
+          aria-current="page"
+        >
+          <span class="nav-icon">
+            ▦
+          </span>
+
+          <span>
+            Todos los equipos
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="#buscadorEquipos"
+        >
+          <span class="nav-icon">
+            ⌕
+          </span>
+
+          <span>
+            Buscar equipo
+          </span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+
+            <span
+              class="status-dot"
+              id="statusDot"
+            ></span>
+
+            <strong id="statusTitle">
+              Cargando
+            </strong>
+
+          </div>
+
+          <span id="statusDescription">
+            Consultando el catálogo
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span class="topbar-eyebrow">
+              BASE MAESTRA DE EQUIPOS
+            </span>
+
+            <h1>
+              Catálogo de equipos
+            </h1>
+
+          </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <a
+            class="button button-secondary"
+            href="index.html"
+          >
+            Volver al inicio
+          </a>
+
+        </div>
+
+      </header>
+
+      <div class="page-content">
+
+        <!-- ===================================================
+             ENCABEZADO
+        ==================================================== -->
+
+        <section class="catalog-hero">
+
+          <div>
+
+            <span class="section-kicker">
+              CONSULTA TÉCNICA Y ECONÓMICA
+            </span>
+
+            <h2>
+              Encuentre el equipo que necesita
+            </h2>
+
+            <p>
+              Consulte la ficha técnica, el costo directo, la tarifa comercial,
+              el rendimiento y las condiciones de alquiler de cada equipo.
+            </p>
+
+          </div>
+
+          <div class="catalog-summary">
+
+            <div class="catalog-summary-item">
+
+              <span>
+                Equipos registrados
+              </span>
+
+              <strong id="totalEquipos">
+                0
+              </strong>
+
+            </div>
+
+            <div class="catalog-summary-item">
+
+              <span>
+                Familias disponibles
+              </span>
+
+              <strong id="totalFamilias">
+                0
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             BUSCADOR Y FILTROS
+        ==================================================== -->
+
+        <section
+          class="catalog-toolbar"
+          id="buscadorEquipos"
+        >
+
+          <div class="catalog-search">
+
+            <label for="inputBuscarEquipo">
+              Buscar equipo
+            </label>
+
+            <div class="catalog-search-control">
+
+              <span aria-hidden="true">
+                ⌕
+              </span>
+
+              <input
+                id="inputBuscarEquipo"
+                type="search"
+                placeholder="Escriba nombre, código, familia o referencia"
+                autocomplete="off"
+              >
+
+              <button
+                id="btnLimpiarBusqueda"
+                type="button"
+                aria-label="Limpiar búsqueda"
+                title="Limpiar búsqueda"
+              >
+                ×
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="catalog-filter">
+
+            <label for="selectFamilia">
+              Familia
+            </label>
+
+            <select id="selectFamilia">
+
+              <option value="">
+                Todas las familias
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="catalog-filter">
+
+            <label for="selectOrden">
+              Ordenar por
+            </label>
+
+            <select id="selectOrden">
+
+              <option value="nombre-asc">
+                Nombre: A–Z
+              </option>
+
+              <option value="nombre-desc">
+                Nombre: Z–A
+              </option>
+
+              <option value="tarifa-asc">
+                Tarifa: menor a mayor
+              </option>
+
+              <option value="tarifa-desc">
+                Tarifa: mayor a menor
+              </option>
+
+            </select>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             RESULTADOS
+        ==================================================== -->
+
+        <section class="catalog-results">
+
+          <div class="catalog-results-header">
+
+            <div>
+
+              <span class="section-kicker">
+                RESULTADOS
+              </span>
+
+              <h2 id="tituloResultados">
+                Todos los equipos
+              </h2>
+
+            </div>
+
+            <span
+              class="catalog-result-count"
+              id="cantidadResultados"
+            >
+              0 equipos
+            </span>
+
+          </div>
+
+          <div
+            class="catalog-grid"
+            id="listaEquipos"
+          ></div>
+
+          <!-- CARGA -->
+
+          <div
+            class="empty-state"
+            id="estadoCarga"
+          >
+
+            <div class="empty-state-icon">
+              ⌛
+            </div>
+
+            <strong>
+              Cargando catálogo
+            </strong>
+
+            <p>
+              Espere mientras se consulta la base de equipos.
+            </p>
+
+          </div>
+
+          <!-- SIN RESULTADOS -->
+
+          <div
+            class="empty-state"
+            id="estadoSinResultados"
+            hidden
+          >
+
+            <div class="empty-state-icon">
+              ⌕
+            </div>
+
+            <strong>
+              No se encontraron equipos
+            </strong>
+
+            <p>
+              Cambie el texto de búsqueda o seleccione otra familia.
+            </p>
+
+            <button
+              class="button button-primary"
+              id="btnRestablecerFiltros"
+              type="button"
+            >
+              Restablecer filtros
+            </button>
+
+          </div>
+
+          <!-- ERROR -->
+
+          <div
+            class="empty-state"
+            id="estadoError"
+            hidden
+          >
+
+            <div class="empty-state-icon">
+              ⚠
+            </div>
+
+            <strong>
+              No fue posible cargar el catálogo
+            </strong>
+
+            <p id="descripcionError">
+              Verifique el archivo data/equipos-index.json.
+            </p>
+
+          </div>
+
+        </section>
+
+      </div>
+
+      <footer class="app-footer">
+
+        <span>
+          Costos de Alquiler Equipo de Construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script
+    src="js/buscador.js"
+    defer
+  ></script>
+
+</body>
+
+</html>

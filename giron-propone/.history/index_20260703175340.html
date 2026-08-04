@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- =========================================================
+        GIRÓN PROPONE
+        Plataforma de Inteligencia Territorial y Programática
+        Archivo: index.html
+        Uso: copiar este contenido dentro de index.html
+    ========================================================== -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girón Propone | Inteligencia Territorial</title>
+
+    <!-- PWA -->
+    <meta name="theme-color" content="#6d5dfc">
+    <link rel="manifest" href="pwa/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico">
+
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="css/charts.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/print.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+        CONTENEDOR GENERAL
+    ========================================================== -->
+    <div class="app-shell">
+
+        <!-- =====================================================
+            SIDEBAR
+        ====================================================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+                <div class="brand-icon">GP</div>
+                <div>
+                    <h1>Girón Propone</h1>
+                    <p>Inteligencia Territorial</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="candidate-avatar">
+                    <img src="assets/avatar/usuario.png" alt="Foto del candidato">
+                </div>
+                <div>
+                    <strong id="nombreCandidato">Candidato al Concejo</strong>
+                    <span>Girón, Santander</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Menú principal">
+                <button class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span>Inicio</span>
+                </button>
+
+                <button class="nav-item" data-view="sectores">
+                    <span class="nav-icon">🧭</span>
+                    <span>Sectores</span>
+                </button>
+
+                <button class="nav-item" data-view="diagnostico">
+                    <span class="nav-icon">📍</span>
+                    <span>Diagnóstico</span>
+                </button>
+
+                <button class="nav-item" data-view="estadisticas">
+                    <span class="nav-icon">📊</span>
+                    <span>Estadísticas</span>
+                </button>
+
+                <button class="nav-item" data-view="estrategias">
+                    <span class="nav-icon">🎯</span>
+                    <span>Estrategias</span>
+                </button>
+
+                <button class="nav-item" data-view="discursos">
+                    <span class="nav-icon">🎤</span>
+                    <span>Discursos</span>
+                </button>
+
+                <button class="nav-item" data-view="redes">
+                    <span class="nav-icon">📱</span>
+                    <span>Redes sociales</span>
+                </button>
+
+                <button class="nav-item" data-view="proyectos">
+                    <span class="nav-icon">🏗️</span>
+                    <span>Proyectos</span>
+                </button>
+
+                <button class="nav-item" data-view="debate">
+                    <span class="nav-icon">💬</span>
+                    <span>Debate</span>
+                </button>
+
+                <button class="nav-item" data-view="control">
+                    <span class="nav-icon">🏛️</span>
+                    <span>Control político</span>
+                </button>
+
+                <button class="nav-item" data-view="financiacion">
+                    <span class="nav-icon">💰</span>
+                    <span>Financiación</span>
+                </button>
+
+                <button class="nav-item" data-view="pdf">
+                    <span class="nav-icon">📄</span>
+                    <span>Exportar PDF</span>
+                </button>
+
+                <button class="nav-item" data-view="configuracion">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Configuración</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Versión 1.0</p>
+                <small>Plataforma programática municipal</small>
+            </div>
+
+        </aside>
+
+        <!-- =====================================================
+            CONTENIDO PRINCIPAL
+        ====================================================== -->
+        <main class="main-content">
+
+            <!-- =================================================
+                HEADER SUPERIOR
+            ================================================== -->
+            <header class="topbar">
+
+                <button class="menu-toggle" id="btnMenu" aria-label="Abrir o cerrar menú">
+                    ☰
+                </button>
+
+                <div class="topbar-title">
+                    <h2 id="tituloVista">Centro de Inteligencia Territorial</h2>
+                    <p id="subtituloVista">Girón, Santander</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="icon-button" title="Notificaciones">🔔</button>
+                    <button class="icon-button" title="Modo visual">🌙</button>
+                </div>
+
+            </header>
+
+            <!-- =================================================
+                ÁREA DINÁMICA SPA
+            ================================================== -->
+            <section class="view-container" id="app">
+
+                <!-- =============================================
+                    DASHBOARD PRINCIPAL
+                ============================================== -->
+                <section class="dashboard-view">
+
+                    <!-- HERO / BANNER -->
+                    <div class="hero-card">
+
+                        <div class="hero-content">
+                            <span class="eyebrow">Municipio de Girón</span>
+                            <h2>Bienvenido al Centro de Inteligencia Territorial</h2>
+                            <p>
+                                Organice diagnósticos, estadísticas, estrategias, discursos,
+                                publicaciones y fichas PDF para una campaña programática seria,
+                                territorial y defendible.
+                            </p>
+
+                            <div class="hero-actions">
+                                <button class="btn btn-primary" data-view="sectores">
+                                    Ver sectores
+                                </button>
+                                <button class="btn btn-secondary" data-view="diagnostico">
+                                    Diagnóstico territorial
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="hero-image">
+                            <img src="assets/municipios/giron.jpg" alt="Imagen de Girón">
+                        </div>
+
+                    </div>
+
+                    <!-- INDICADORES RÁPIDOS -->
+                    <div class="stats-grid">
+
+                        <article class="stat-card">
+                            <div class="stat-icon">🧭</div>
+                            <div>
+                                <h3>12</h3>
+                                <p>Sectores programáticos</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div>
+                                <h3>72</h3>
+                                <p>Indicadores base</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div>
+                                <h3>36</h3>
+                                <p>Estrategias de campaña</p>
+                            </div>
+                        </article>
+
+                        <article class="stat-card">
+                            <div class="stat-icon">📄</div>
+                            <div>
+                                <h3>PDF</h3>
+                                <p>Fichas exportables</p>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- TÍTULO DE SECTORES -->
+                    <div class="section-heading">
+                        <div>
+                            <span class="eyebrow">Tipologías de inversión</span>
+                            <h2>Sectores de análisis municipal</h2>
+                        </div>
+                        <p>
+                            Seleccione una tipología para ver diagnóstico, estadísticas,
+                            estrategia de campaña, discurso, redes sociales y ficha PDF.
+                        </p>
+                    </div>
+
+                    <!-- GRID DE SECTORES -->
+                    <div class="sector-grid" id="contenedorSectores">
+
+                        <article class="sector-card" data-sector="infraestructura-educativa">
+                            <div class="sector-icon">🏫</div>
+                            <h3>Infraestructura educativa</h3>
+                            <p>Colegios, aulas, sedes educativas y comedores escolares.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="infraestructura-salud">
+                            <div class="sector-icon">🏥</div>
+                            <h3>Infraestructura en salud</h3>
+                            <p>Hospitales, centros de salud, puestos de salud y Centros Vida.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="infraestructura-vial">
+                            <div class="sector-icon">🛣️</div>
+                            <h3>Infraestructura vial</h3>
+                            <p>Pavimentación urbana, rural, placa huella, puentes y vías terciarias.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="agua-potable-saneamiento">
+                            <div class="sector-icon">💧</div>
+                            <h3>Agua potable y saneamiento</h3>
+                            <p>Acueductos, alcantarillados, PTAR, PTAP y redes hidráulicas.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="vivienda">
+                            <div class="sector-icon">🏘️</div>
+                            <h3>Vivienda</h3>
+                            <p>Vivienda nueva, mejoramientos, urbanismo y hábitat digno.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="equipamientos-publicos">
+                            <div class="sector-icon">🏛️</div>
+                            <h3>Equipamientos públicos</h3>
+                            <p>Centros comunitarios, bibliotecas, casas de cultura y sedes administrativas.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="deporte-recreacion">
+                            <div class="sector-icon">⚽</div>
+                            <h3>Deporte y recreación</h3>
+                            <p>Canchas, coliseos, polideportivos y parques recreativos.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="cultura">
+                            <div class="sector-icon">🎭</div>
+                            <h3>Cultura</h3>
+                            <p>Teatros, museos, casas de cultura y escuelas artísticas.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="agricultura">
+                            <div class="sector-icon">🌾</div>
+                            <h3>Agricultura</h3>
+                            <p>Distritos de riego, centros de acopio, maquinaria y asistencia técnica.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="ambiente">
+                            <div class="sector-icon">🌳</div>
+                            <h3>Ambiente</h3>
+                            <p>Reforestación, cuencas, protección ambiental y gestión del riesgo.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="tic">
+                            <div class="sector-icon">💻</div>
+                            <h3>TIC</h3>
+                            <p>Conectividad, centros digitales, tecnología y transformación digital.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                        <article class="sector-card" data-sector="desarrollo-social">
+                            <div class="sector-icon">🤝</div>
+                            <h3>Desarrollo social</h3>
+                            <p>Adulto mayor, infancia, juventud, mujer, discapacidad y víctimas.</p>
+                            <button class="btn-card">Abrir sector</button>
+                        </article>
+
+                    </div>
+
+                    <!-- PANEL DE ACCIONES RÁPIDAS -->
+                    <div class="quick-panel">
+
+                        <div class="section-heading compact">
+                            <div>
+                                <span class="eyebrow">Herramientas</span>
+                                <h2>Acciones rápidas</h2>
+                            </div>
+                        </div>
+
+                        <div class="quick-grid">
+
+                            <button class="quick-action" data-view="diagnostico">
+                                <span>📍</span>
+                                Ver diagnóstico
+                            </button>
+
+                            <button class="quick-action" data-view="estadisticas">
+                                <span>📊</span>
+                                Ver estadísticas
+                            </button>
+
+                            <button class="quick-action" data-view="estrategias">
+                                <span>🎯</span>
+                                Crear estrategia
+                            </button>
+
+                            <button class="quick-action" data-view="discursos">
+                                <span>🎤</span>
+                                Generar discurso
+                            </button>
+
+                            <button class="quick-action" data-view="redes">
+                                <span>📱</span>
+                                Publicación para redes
+                            </button>
+
+                            <button class="quick-action" data-view="pdf">
+                                <span>📄</span>
+                                Exportar ficha PDF
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- =========================================================
+        MODAL BASE
+    ========================================================== -->
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+        <div class="modal">
+            <button class="modal-close" id="btnCerrarModal">×</button>
+            <div id="modalContenido"></div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+        SCRIPTS
+    ========================================================== -->
+    <script src="libs/chart.min.js"></script>
+    <script src="libs/jspdf.umd.min.js"></script>
+    <script src="libs/html2canvas.min.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/utilidades.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/sectores.js"></script>
+    <script src="js/sector.js"></script>
+    <script src="js/diagnostico.js"></script>
+    <script src="js/estadisticas.js"></script>
+    <script src="js/estrategias.js"></script>
+    <script src="js/discursos.js"></script>
+    <script src="js/redes.js"></script>
+    <script src="js/proyectos.js"></script>
+    <script src="js/debate.js"></script>
+    <script src="js/control-politico.js"></script>
+    <script src="js/financiacion.js"></script>
+    <script src="js/pdf.js"></script>
+    <script src="js/graficas.js"></script>
+    <script src="js/buscador.js"></script>
+    <script src="js/filtros.js"></script>
+    <script src="js/exportar.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

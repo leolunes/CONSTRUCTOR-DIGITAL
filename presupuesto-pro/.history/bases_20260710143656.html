@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Bases APU | Presupuesto PRO</title>
+
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0f14"/>
+  <link rel="icon" href="assets/icon-192.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" href="proyectos.html" aria-label="Volver a proyectos">←</a>
+
+    <div class="logo" aria-hidden="true">
+      <img
+        src="assets/icon-192.svg"
+        alt=""
+        style="width:26px;height:26px;border-radius:8px"
+      >
+    </div>
+
+    <div>
+      <div class="title">BASES APU</div>
+      <div class="subtitle">
+        Administración de múltiples bases XLSX · IndexedDB
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" href="proyectos.html">Ir a proyectos</a>
+
+    <button
+      class="navbtn"
+      id="btnImportBase"
+      type="button"
+    >
+      Importar nueva Base APU
+    </button>
+
+    <input
+      id="fileBase"
+      type="file"
+      accept=".xlsx,.xls"
+      hidden
+    >
+
+    <button
+      class="navbtn"
+      id="btnRefreshBases"
+      type="button"
+    >
+      Actualizar listado
+    </button>
+
+    <button
+      class="navbtn danger"
+      id="btnDeleteAllBases"
+      type="button"
+    >
+      Eliminar todas
+    </button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section
+    class="grid kpis"
+    id="basesSummary"
+  ></section>
+
+  <section
+    id="baseMessage"
+    class="notice info"
+    style="display:none"
+  ></section>
+
+  <section class="card">
+    <div class="cardhead">
+      <h2>Bases APU instaladas</h2>
+
+      <p class="muted small">
+        Cada base se guarda de manera independiente.
+        Importar una nueva no elimina ni reemplaza las anteriores.
+      </p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1180px">
+        <thead>
+          <tr>
+            <th>Base APU</th>
+            <th style="text-align:right">Ítems</th>
+            <th style="text-align:right">Insumos</th>
+            <th style="text-align:right">Costos directos</th>
+            <th style="text-align:right">Subproductos</th>
+            <th>Importada</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody id="basesBody"></tbody>
+      </table>
+    </div>
+
+    <div
+      class="muted"
+      id="basesEmpty"
+      style="display:none; margin-top:12px"
+    >
+      No hay Bases APU instaladas.
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Cómo funciona</h2>
+    </div>
+
+    <div class="grid two">
+      <div class="item">
+        <div class="name">Importar varias bases</div>
+        <div class="muted small" style="margin-top:6px">
+          Todas deben conservar el mismo formato XLSX que la aplicación ya reconoce.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Seleccionar base activa</div>
+        <div class="muted small" style="margin-top:6px">
+          La base activa se utilizará de forma general mientras los proyectos todavía no tengan una base asignada.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Conservar cada base</div>
+        <div class="muted small" style="margin-top:6px">
+          Cada importación queda almacenada de manera independiente en IndexedDB.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Preparado para proyectos</div>
+        <div class="muted small" style="margin-top:6px">
+          En la siguiente etapa, cada proyecto quedará vinculado a la base seleccionada al momento de crearlo.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="js/ui.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script src="js/base-import.js"></script>
+<script src="js/bases.js"></script>
+
+</body>
+</html>

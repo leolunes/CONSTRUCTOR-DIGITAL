@@ -1,0 +1,205 @@
+/* =========================================================
+   GIRÓN PROPONE
+   Archivo: css/print.css
+   Descripción: Estilos para impresión y exportación PDF.
+========================================================= */
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 18mm;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        font-size: 12pt;
+    }
+
+    .sidebar,
+    .topbar,
+    .hero-actions,
+    .quick-panel,
+    .btn,
+    .btn-card,
+    .icon-button,
+    .menu-toggle,
+    .modal-backdrop,
+    .fab,
+    .action-toolbar,
+    .toolbar {
+        display: none !important;
+    }
+
+    .main-content {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    .view-container {
+        padding: 0 !important;
+    }
+
+    .dashboard-view {
+        max-width: 100% !important;
+    }
+
+    .hero-card,
+    .content-card,
+    .card,
+    .sector-card,
+    .stat-card,
+    .project-card,
+    .metric-card,
+    .message-card,
+    .chart-card,
+    .document-view {
+        box-shadow: none !important;
+        border: 1px solid #d1d5db !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .hero-card {
+        display: block !important;
+        min-height: auto !important;
+        padding: 20px !important;
+    }
+
+    .hero-image {
+        display: none !important;
+    }
+
+    .sector-grid,
+    .stats-grid,
+    .quick-grid,
+    .chart-grid,
+    .kpi-grid,
+    .indicator-grid {
+        display: block !important;
+    }
+
+    .sector-card,
+    .stat-card,
+    .project-card,
+    .metric-card,
+    .message-card,
+    .chart-card {
+        margin-bottom: 14px !important;
+    }
+
+    h1,
+    h2,
+    h3 {
+        color: #111827 !important;
+        page-break-after: avoid;
+    }
+
+    p {
+        color: #374151 !important;
+    }
+
+    .document-view {
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    .document-header {
+        border-bottom: 2px solid #111827 !important;
+    }
+
+    .document-meta {
+        color: #4b5563 !important;
+    }
+
+    .table-container {
+        box-shadow: none !important;
+        border: 1px solid #d1d5db !important;
+        overflow: visible !important;
+    }
+
+    .table {
+        min-width: 0 !important;
+        width: 100% !important;
+        font-size: 10pt;
+    }
+
+    .table th {
+        background: #111827 !important;
+        color: #ffffff !important;
+    }
+
+    .table td {
+        color: #374151 !important;
+    }
+
+    .badge,
+    .estado-bueno,
+    .estado-atencion,
+    .estado-critico {
+        border: 1px solid #d1d5db !important;
+        background: #ffffff !important;
+        color: #111827 !important;
+    }
+
+    a::after {
+        content: "";
+    }
+
+}
+
+/* =========================================================
+   CLASES PARA VISTA PREVIA DE PDF
+========================================================= */
+
+.pdf-preview {
+    max-width: 980px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.pdf-page {
+    padding: 44px;
+    background: #ffffff;
+    color: #111827;
+}
+
+.pdf-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 22px;
+    margin-bottom: 26px;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.pdf-header h1 {
+    margin-bottom: 8px;
+}
+
+.pdf-section {
+    margin-bottom: 28px;
+}
+
+.pdf-section h2 {
+    margin-bottom: 12px;
+    color: var(--color-primary-dark);
+}
+
+.pdf-footer {
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    text-align: center;
+}

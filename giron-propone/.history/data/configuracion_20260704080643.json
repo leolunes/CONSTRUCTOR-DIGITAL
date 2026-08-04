@@ -1,0 +1,175 @@
+{
+  "aplicacion": {
+    "nombre": "Centro de Inteligencia Territorial",
+    "nombreComercial": "Girón Propone",
+    "subtitulo": "Base de conocimiento, análisis territorial y estrategia programática para campañas y gestión pública",
+    "version": "2.0.0",
+    "estado": "desarrollo",
+    "autor": "Leonardo Luna",
+    "municipioBase": "Girón",
+    "departamentoBase": "Santander",
+    "pais": "Colombia",
+    "fechaEstructura": "2026-07-04"
+  },
+  "visionProducto": {
+    "descripcion": "La plataforma está diseñada para convertir información territorial en conocimiento político, técnico y programático. Su propósito es apoyar a candidatos, concejales, equipos programáticos y actores territoriales en la construcción de propuestas, discursos, proyectos, control político y estrategias de comunicación basadas en datos.",
+    "enfoque": "No es una aplicación de discursos genéricos. Es una base de inteligencia territorial que combina diagnóstico municipal, sectores de inversión, fuentes oficiales, oportunidades de gestión y herramientas políticas.",
+    "usuariosObjetivo": [
+      "Candidatos al Concejo Municipal",
+      "Concejales en ejercicio",
+      "Candidatos a Alcaldía",
+      "Equipos programáticos de campaña",
+      "Consultores políticos",
+      "Unidades de apoyo normativo",
+      "Veedurías ciudadanas",
+      "Periodistas locales",
+      "Organizaciones sociales",
+      "Universidades y centros de pensamiento"
+    ]
+  },
+  "arquitecturaDatos": {
+    "baseConocimiento": "data/base-conocimiento/",
+    "datosMunicipio": "data/giron/",
+    "sectores": "data/sectores/",
+    "descripcionBaseConocimiento": "Contiene el modelo general de inteligencia territorial aplicable a cualquier municipio.",
+    "descripcionDatosMunicipio": "Contiene información específica del Municipio de Girón.",
+    "descripcionSectores": "Contiene el análisis por tipologías de inversión y gestión pública."
+  },
+  "modulosPrincipales": [
+    {
+      "id": "dashboard",
+      "nombre": "Dashboard territorial",
+      "descripcion": "Vista principal con indicadores generales, alertas, sectores priorizados y acciones rápidas."
+    },
+    {
+      "id": "base-conocimiento",
+      "nombre": "Base de conocimiento",
+      "descripcion": "Modelo estructurado de identidad, territorio, población, economía, gobierno, planeación, riesgos, oportunidades e inteligencia política."
+    },
+    {
+      "id": "giron",
+      "nombre": "Centro de Inteligencia Municipal de Girón",
+      "descripcion": "Información específica del municipio, perfil municipal, indicadores, barrios, veredas, plan de desarrollo, presupuesto, SECOP y proyectos."
+    },
+    {
+      "id": "sectores",
+      "nombre": "Sectores programáticos",
+      "descripcion": "Doce tipologías de análisis con diagnóstico, estadísticas, proyectos, discursos, redes y control político."
+    },
+    {
+      "id": "estrategia",
+      "nombre": "Estrategia de campaña",
+      "descripcion": "Generación de mensajes, rutas territoriales, públicos objetivo, compromisos y narrativa política."
+    },
+    {
+      "id": "control-politico",
+      "nombre": "Control político",
+      "descripcion": "Preguntas, requerimientos, debates, derechos de petición y seguimiento a la gestión pública."
+    },
+    {
+      "id": "pdf",
+      "nombre": "Exportación PDF",
+      "descripcion": "Generación de fichas ejecutivas por municipio, sector, barrio, proyecto o estrategia."
+    }
+  ],
+  "botonesSector": [
+    {
+      "id": "diagnostico",
+      "texto": "Ver diagnóstico",
+      "descripcion": "Muestra situación actual, problemas y lectura territorial."
+    },
+    {
+      "id": "estadisticas",
+      "texto": "Ver estadísticas",
+      "descripcion": "Muestra indicadores, fuentes, estado y actualización."
+    },
+    {
+      "id": "estrategia",
+      "texto": "Crear estrategia de campaña",
+      "descripcion": "Genera una estrategia política basada en el diagnóstico."
+    },
+    {
+      "id": "discurso",
+      "texto": "Generar discurso",
+      "descripcion": "Crea discursos cortos, medios y extensos por público objetivo."
+    },
+    {
+      "id": "redes",
+      "texto": "Generar publicación para redes",
+      "descripcion": "Crea textos para WhatsApp, Facebook, Instagram, TikTok y X."
+    },
+    {
+      "id": "pdf",
+      "texto": "Exportar ficha PDF",
+      "descripcion": "Genera una ficha programática del sector seleccionado."
+    }
+  ],
+  "criteriosCalidadDatos": {
+    "usarFuentesOficiales": true,
+    "mostrarFuenteEnCadaIndicador": true,
+    "mostrarFechaActualizacion": true,
+    "permitirDatoPendiente": true,
+    "evitarCifrasNoVerificadas": true,
+    "usarNotasDeAdvertencia": true,
+    "criterio": "Toda cifra específica debe tener fuente, año y responsable de actualización. Si no existe dato verificado, el campo debe quedar como null o pendiente."
+  },
+  "fuentesOficialesPrioritarias": [
+    "DANE",
+    "TerriData - DNP",
+    "Alcaldía de Girón",
+    "Plan de Desarrollo Municipal",
+    "Plan de Ordenamiento Territorial",
+    "SECOP",
+    "SISBÉN",
+    "Ministerio de Educación Nacional",
+    "Ministerio de Salud y Protección Social",
+    "Ministerio de Vivienda, Ciudad y Territorio",
+    "Ministerio de Transporte",
+    "MinTIC",
+    "Ministerio de Ambiente",
+    "Ministerio del Deporte",
+    "Ministerio de las Culturas",
+    "Sistema General de Regalías",
+    "Gobernación de Santander",
+    "Contraloría General",
+    "Procuraduría General",
+    "Personería Municipal"
+  ],
+  "salidasInteligencia": [
+    "Resumen ejecutivo",
+    "Diagnóstico territorial",
+    "Lectura política",
+    "Mapa de problemas",
+    "Priorización de oportunidades",
+    "Banco de proyectos",
+    "Discurso de campaña",
+    "Respuesta para debate",
+    "Preguntas de control político",
+    "Publicaciones para redes",
+    "Ficha PDF",
+    "Guion para reunión comunitaria",
+    "Derecho de petición base",
+    "Propuesta de proyecto de acuerdo"
+  ],
+  "parametrosSistema": {
+    "modoDemo": true,
+    "permitirEdicionLocal": true,
+    "usarLocalStorage": true,
+    "exportarPDF": true,
+    "exportarExcel": false,
+    "activarPWA": true,
+    "activarGraficas": true,
+    "activarComparativos": true,
+    "activarModoOscuro": false,
+    "idioma": "es-CO",
+    "moneda": "COP"
+  },
+  "mensajesSistema": {
+    "datoPendiente": "Dato pendiente de actualización con fuente oficial.",
+    "datoNoDisponible": "No hay dato disponible en la base actual.",
+    "advertenciaUso": "Verifique fuente y fecha antes de usar este dato en debate público o pieza de campaña.",
+    "errorCarga": "No fue posible cargar la información solicitada.",
+    "pdfGenerado": "La ficha PDF fue generada correctamente.",
+    "contenidoCopiado": "Contenido copiado al portapapeles."
+  }
+}

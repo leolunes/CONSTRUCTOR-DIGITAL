@@ -1,0 +1,146 @@
+/* =========================================================
+   GIRÓN PROPONE
+   Archivo: css/charts.css
+   Descripción: Estilos para gráficas, indicadores y paneles.
+========================================================= */
+
+.chart-card{
+    background:#fff;
+    border:1px solid var(--color-border);
+    border-radius:var(--radius-lg);
+    padding:24px;
+    box-shadow:var(--shadow-sm);
+}
+
+.chart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:18px;
+}
+
+.chart-header h3{
+    margin:0 0 6px;
+}
+
+.chart-header p{
+    margin:0;
+    font-size:.88rem;
+}
+
+.chart-toolbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.chart-filter{
+    padding:8px 12px;
+    border:1px solid var(--color-border);
+    border-radius:999px;
+    background:#fff;
+    font-size:.8rem;
+    font-weight:700;
+}
+
+.chart-filter.active{
+    background:var(--color-primary);
+    color:#fff;
+    border-color:var(--color-primary);
+}
+
+.chart-wrapper{
+    position:relative;
+    width:100%;
+    min-height:360px;
+}
+
+.chart-wrapper canvas{
+    width:100%!important;
+    height:360px!important;
+}
+
+.chart-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:22px;
+}
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:18px;
+    margin-bottom:22px;
+}
+
+.kpi-card{
+    padding:18px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#fff,#fbfcff);
+    border:1px solid var(--color-border);
+    box-shadow:var(--shadow-sm);
+}
+
+.kpi-card .title{
+    display:block;
+    color:var(--color-muted);
+    font-size:.8rem;
+    margin-bottom:8px;
+}
+
+.kpi-card .value{
+    display:block;
+    font-size:2rem;
+    font-weight:900;
+    color:var(--color-text);
+    letter-spacing:-.05em;
+}
+
+.legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:18px;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:.82rem;
+    color:var(--color-muted);
+}
+
+.legend-color{
+    width:14px;
+    height:14px;
+    border-radius:4px;
+    background:var(--color-primary);
+}
+
+@media(max-width:1024px){
+    .chart-grid,
+    .kpi-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:640px){
+    .chart-grid,
+    .kpi-grid{
+        grid-template-columns:1fr;
+    }
+
+    .chart-wrapper{
+        min-height:280px;
+    }
+
+    .chart-wrapper canvas{
+        height:280px!important;
+    }
+
+    .chart-header{
+        flex-direction:column;
+    }
+}

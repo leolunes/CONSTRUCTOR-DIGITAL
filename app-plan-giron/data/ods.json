@@ -1,0 +1,254 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Relación de los Objetivos de Desarrollo Sostenible ODS con los sectores estratégicos del Plan de Desarrollo Municipal de Girón 2024-2027.",
+
+  "odsRelacionados": [
+    {
+      "id": "ODS-01",
+      "numero": 1,
+      "nombre": "Fin de la pobreza",
+      "sectoresRelacionados": [
+        "Inclusión Social y Reconciliación",
+        "Vivienda, Ciudad y Territorio",
+        "Trabajo",
+        "Agricultura y Desarrollo Rural"
+      ],
+      "aplicacionMunicipal": "Reducción de brechas sociales, atención a población vulnerable, vivienda digna y generación de oportunidades."
+    },
+    {
+      "id": "ODS-02",
+      "numero": 2,
+      "nombre": "Hambre cero",
+      "sectoresRelacionados": [
+        "Agricultura y Desarrollo Rural",
+        "Salud y Protección Social",
+        "Educación"
+      ],
+      "aplicacionMunicipal": "Seguridad alimentaria, producción rural, nutrición y programas de alimentación escolar."
+    },
+    {
+      "id": "ODS-03",
+      "numero": 3,
+      "nombre": "Salud y bienestar",
+      "sectoresRelacionados": [
+        "Salud y Protección Social",
+        "Deporte y Recreación",
+        "Inclusión Social y Reconciliación"
+      ],
+      "aplicacionMunicipal": "Promoción de la salud, prevención de enfermedades, salud pública, bienestar físico y mental."
+    },
+    {
+      "id": "ODS-04",
+      "numero": 4,
+      "nombre": "Educación de calidad",
+      "sectoresRelacionados": [
+        "Educación",
+        "Ciencia, Tecnología e Innovación",
+        "Trabajo"
+      ],
+      "aplicacionMunicipal": "Acceso, permanencia, calidad educativa, formación para el trabajo y oportunidades para jóvenes."
+    },
+    {
+      "id": "ODS-05",
+      "numero": 5,
+      "nombre": "Igualdad de género",
+      "sectoresRelacionados": [
+        "Inclusión Social y Reconciliación",
+        "Salud y Protección Social",
+        "Trabajo"
+      ],
+      "aplicacionMunicipal": "Equidad de género, protección de derechos de las mujeres, prevención de violencias y autonomía económica."
+    },
+    {
+      "id": "ODS-06",
+      "numero": 6,
+      "nombre": "Agua limpia y saneamiento",
+      "sectoresRelacionados": [
+        "Vivienda, Ciudad y Territorio",
+        "Ambiente y Desarrollo Sostenible"
+      ],
+      "aplicacionMunicipal": "Acueducto, alcantarillado, saneamiento básico, protección de fuentes hídricas y tratamiento de aguas residuales."
+    },
+    {
+      "id": "ODS-07",
+      "numero": 7,
+      "nombre": "Energía asequible y no contaminante",
+      "sectoresRelacionados": [
+        "Minas y Energía",
+        "Ambiente y Desarrollo Sostenible"
+      ],
+      "aplicacionMunicipal": "Energía eléctrica, alumbrado público, gas natural y transición energética."
+    },
+    {
+      "id": "ODS-08",
+      "numero": 8,
+      "nombre": "Trabajo decente y crecimiento económico",
+      "sectoresRelacionados": [
+        "Trabajo",
+        "Comercio, Industria y Turismo",
+        "Agricultura y Desarrollo Rural"
+      ],
+      "aplicacionMunicipal": "Empleo, emprendimiento, formalización, turismo, comercio, industria y productividad rural."
+    },
+    {
+      "id": "ODS-09",
+      "numero": 9,
+      "nombre": "Industria, innovación e infraestructura",
+      "sectoresRelacionados": [
+        "Ciencia, Tecnología e Innovación",
+        "Transporte",
+        "Comercio, Industria y Turismo",
+        "Tecnologías de la Información y las Comunicaciones"
+      ],
+      "aplicacionMunicipal": "Innovación, infraestructura vial, digitalización, conectividad y competitividad."
+    },
+    {
+      "id": "ODS-10",
+      "numero": 10,
+      "nombre": "Reducción de las desigualdades",
+      "sectoresRelacionados": [
+        "Inclusión Social y Reconciliación",
+        "Educación",
+        "Salud y Protección Social",
+        "Trabajo"
+      ],
+      "aplicacionMunicipal": "Atención diferencial, inclusión social, acceso a servicios y reducción de brechas."
+    },
+    {
+      "id": "ODS-11",
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles",
+      "sectoresRelacionados": [
+        "Vivienda, Ciudad y Territorio",
+        "Transporte",
+        "Ambiente y Desarrollo Sostenible",
+        "Cultura",
+        "Gobierno Territorial"
+      ],
+      "aplicacionMunicipal": "Ordenamiento territorial, vivienda, espacio público, movilidad, patrimonio cultural y gestión urbana."
+    },
+    {
+      "id": "ODS-12",
+      "numero": 12,
+      "nombre": "Producción y consumo responsables",
+      "sectoresRelacionados": [
+        "Ambiente y Desarrollo Sostenible",
+        "Comercio, Industria y Turismo",
+        "Agricultura y Desarrollo Rural"
+      ],
+      "aplicacionMunicipal": "Gestión de residuos, economía circular, producción sostenible y consumo responsable."
+    },
+    {
+      "id": "ODS-13",
+      "numero": 13,
+      "nombre": "Acción por el clima",
+      "sectoresRelacionados": [
+        "Ambiente y Desarrollo Sostenible",
+        "Agricultura y Desarrollo Rural",
+        "Vivienda, Ciudad y Territorio"
+      ],
+      "aplicacionMunicipal": "Gestión del riesgo, adaptación al cambio climático, protección ambiental y planificación territorial."
+    },
+    {
+      "id": "ODS-15",
+      "numero": 15,
+      "nombre": "Vida de ecosistemas terrestres",
+      "sectoresRelacionados": [
+        "Ambiente y Desarrollo Sostenible",
+        "Agricultura y Desarrollo Rural"
+      ],
+      "aplicacionMunicipal": "Protección de ecosistemas, biodiversidad, restauración, conservación de suelos y recursos naturales."
+    },
+    {
+      "id": "ODS-16",
+      "numero": 16,
+      "nombre": "Paz, justicia e instituciones sólidas",
+      "sectoresRelacionados": [
+        "Justicia y del Derecho",
+        "Gobierno Territorial",
+        "Inclusión Social y Reconciliación"
+      ],
+      "aplicacionMunicipal": "Acceso a justicia, convivencia, participación ciudadana, transparencia e institucionalidad."
+    },
+    {
+      "id": "ODS-17",
+      "numero": 17,
+      "nombre": "Alianzas para lograr los objetivos",
+      "sectoresRelacionados": [
+        "Gobierno Territorial",
+        "Comercio, Industria y Turismo",
+        "Ciencia, Tecnología e Innovación"
+      ],
+      "aplicacionMunicipal": "Articulación institucional, cooperación, alianzas público-privadas y gestión de recursos."
+    }
+  ],
+
+  "relacionPorSector": [
+    {
+      "sectorId": "salud-proteccion-social",
+      "sector": "Salud y Protección Social",
+      "ods": ["ODS-03", "ODS-05", "ODS-10"]
+    },
+    {
+      "sectorId": "educacion",
+      "sector": "Educación",
+      "ods": ["ODS-04", "ODS-10"]
+    },
+    {
+      "sectorId": "agricultura-desarrollo-rural",
+      "sector": "Agricultura y Desarrollo Rural",
+      "ods": ["ODS-02", "ODS-08", "ODS-12", "ODS-13", "ODS-15"]
+    },
+    {
+      "sectorId": "transporte",
+      "sector": "Transporte",
+      "ods": ["ODS-09", "ODS-11", "ODS-13"]
+    },
+    {
+      "sectorId": "ambiente-desarrollo-sostenible",
+      "sector": "Ambiente y Desarrollo Sostenible",
+      "ods": ["ODS-06", "ODS-11", "ODS-12", "ODS-13", "ODS-15"]
+    },
+    {
+      "sectorId": "vivienda-ciudad-territorio",
+      "sector": "Vivienda, Ciudad y Territorio",
+      "ods": ["ODS-01", "ODS-06", "ODS-11", "ODS-13"]
+    },
+    {
+      "sectorId": "inclusion-social-reconciliacion",
+      "sector": "Inclusión Social y Reconciliación",
+      "ods": ["ODS-01", "ODS-05", "ODS-10", "ODS-16"]
+    },
+    {
+      "sectorId": "trabajo",
+      "sector": "Trabajo",
+      "ods": ["ODS-01", "ODS-04", "ODS-08", "ODS-10"]
+    },
+    {
+      "sectorId": "comercio-industria-turismo",
+      "sector": "Comercio, Industria y Turismo",
+      "ods": ["ODS-08", "ODS-09", "ODS-11", "ODS-12", "ODS-17"]
+    },
+    {
+      "sectorId": "gobierno-territorial",
+      "sector": "Gobierno Territorial",
+      "ods": ["ODS-16", "ODS-17"]
+    }
+  ],
+
+  "consultasIA": [
+    "¿Qué ODS se relacionan con el Plan de Desarrollo de Girón?",
+    "¿Qué sectores aportan al ODS 11?",
+    "¿Cómo se relaciona el sector salud con los ODS?",
+    "¿Qué ODS debe priorizar un candidato a la Alcaldía?",
+    "¿Qué metas municipales pueden relacionarse con desarrollo sostenible?"
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "seccion": "Alineación con ODS, PND y otros instrumentos de planeación"
+  }
+}

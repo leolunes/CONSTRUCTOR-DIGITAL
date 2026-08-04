@@ -1,0 +1,302 @@
+{
+  "equipos": [
+    {
+      "id": "motoniveladora",
+      "nombreEquipo": "Motoniveladora",
+      "codigoModelo": "EQMTA0089",
+      "equipoReferencia": "Motoniveladora para conformación y perfilado de vías",
+      "imagen": "data/equipos/motoniveladora/imagen.jpg",
+      "rutaDatos": "data/equipos/motoniveladora/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 271305
+    },
+    {
+      "id": "montacargas",
+      "nombreEquipo": "Montacargas",
+      "codigoModelo": "EQIPOA0087",
+      "equipoReferencia": "Montacargas diésel para cargue, descargue y movilización de materiales",
+      "imagen": "data/equipos/montacargas/imagen.jpg",
+      "rutaDatos": "data/equipos/montacargas/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 117529
+    },
+    {
+      "id": "motobomba",
+      "nombreEquipo": "Motobomba",
+      "codigoModelo": "EQMOB0001",
+      "equipoReferencia": "Motobomba a gasolina de 2 pulgadas para bombeo y achique de agua",
+      "imagen": "data/equipos/motobomba/imagen.jpg",
+      "rutaDatos": "data/equipos/motobomba/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 84009
+    },
+    {
+      "id": "allanadora",
+      "nombreEquipo": "Allanadora",
+      "codigoModelo": "EQALL0001",
+      "equipoReferencia": "Allanadora de concreto de 36 pulgadas para acabado y pulido de superficies",
+      "imagen": "data/equipos/allanadora/imagen.jpg",
+      "rutaDatos": "data/equipos/allanadora/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 112610
+    },
+    {
+      "id": "andamio-certificado",
+      "nombreEquipo": "Andamio certificado",
+      "codigoModelo": "EQAND0001",
+      "equipoReferencia": "Andamio certificado modular para trabajos seguros en altura",
+      "imagen": "data/equipos/andamio-certificado/imagen.jpg",
+      "rutaDatos": "data/equipos/andamio-certificado/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 9138
+    },
+    {
+      "id": "andamio-colgante-30-60-m",
+      "nombreEquipo": "Andamio colgante 30-60 m de cable",
+      "codigoModelo": "EQAND0002",
+      "equipoReferencia": "Andamio colgante con plataforma suspendida y cable de 30 a 60 m",
+      "imagen": "data/equipos/andamio-colgante-30-60-m/imagen.jpg",
+      "rutaDatos": "data/equipos/andamio-colgante-30-60-m/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 7142
+    },
+    {
+      "id": "andamio-de-carga",
+      "nombreEquipo": "Andamio de carga",
+      "codigoModelo": "EQAND0003",
+      "equipoReferencia": "Andamio de carga reforzado para soporte temporal de materiales",
+      "imagen": "data/equipos/andamio-de-carga/imagen.jpg",
+      "rutaDatos": "data/equipos/andamio-de-carga/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 9838
+    },
+    {
+      "id": "antorcha-soplete-a-gas",
+      "nombreEquipo": "Antorcha soplete a gas",
+      "codigoModelo": "EQHER0001",
+      "equipoReferencia": "Antorcha soplete portátil a gas",
+      "imagen": "data/equipos/antorcha-soplete-a-gas/imagen.jpg",
+      "rutaDatos": "data/equipos/antorcha-soplete-a-gas/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 113816
+    },
+    {
+      "id": "aspiradora-industrial",
+      "nombreEquipo": "Aspiradora industrial",
+      "codigoModelo": "EQHER0002",
+      "equipoReferencia": "Aspiradora industrial para limpieza pesada en obra",
+      "imagen": "data/equipos/aspiradora-industrial/imagen.jpg",
+      "rutaDatos": "data/equipos/aspiradora-industrial/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 94276
+    },
+    {
+      "id": "balde-para-pluma-grua",
+      "nombreEquipo": "Balde para pluma grúa",
+      "codigoModelo": "EQHER0003",
+      "equipoReferencia": "Balde metálico para pluma grúa",
+      "imagen": "data/equipos/balde-para-pluma-grua/imagen.jpg",
+      "rutaDatos": "data/equipos/balde-para-pluma-grua/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 6120
+    },
+    {
+      "id": "bano-portatil-estandar",
+      "nombreEquipo": "Baño portátil estándar de polietileno de 1.20x1.20x2.35 m",
+      "codigoModelo": "EQBAN0001",
+      "equipoReferencia": "Baño portátil estándar de polietileno para instalaciones temporales de obra y eventos.",
+      "imagen": "data/equipos/bano-portatil-estandar/imagen.jpg",
+      "rutaDatos": "data/equipos/bano-portatil-estandar/datos.js",
+      "unidadAlquiler": "Mes",
+      "tarifaComercial": 489600,
+      "versionDatos": "2026-07-27"
+    },
+    {
+      "id": "barredora-mecanica-6m3",
+      "nombreEquipo": "Barredora mecánica de cepillo, 6 m3",
+      "codigoModelo": "EQBAR0001",
+      "equipoReferencia": "Barredora mecánica autopropulsada de cepillo con capacidad aproximada de 6 m³.",
+      "imagen": "data/equipos/barredora-mecanica-6m3/imagen.jpg",
+      "rutaDatos": "data/equipos/barredora-mecanica-6m3/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 183600,
+      "versionDatos": "2026-07-27"
+    },
+    {
+      "id": "barredora-sopladora",
+      "nombreEquipo": "Barredora sopladora",
+      "codigoModelo": "EQBAR0002",
+      "equipoReferencia": "Barredora sopladora para limpieza de superficies mediante cepillado y flujo de aire.",
+      "imagen": "data/equipos/barredora-sopladora/imagen.jpg",
+      "rutaDatos": "data/equipos/barredora-sopladora/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 56100,
+      "versionDatos": "2026-07-27"
+    },
+    {
+      "id": "bascula-500kg",
+      "nombreEquipo": "Báscula 500 kg",
+      "codigoModelo": "EQBAS0001",
+      "equipoReferencia": "Báscula portátil de plataforma con capacidad máxima de 500 kg.",
+      "imagen": "data/equipos/bascula-500kg/imagen.jpg",
+      "rutaDatos": "data/equipos/bascula-500kg/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 40800,
+      "versionDatos": "2026-07-27"
+    },
+    {
+      "id": "bomba-gato-tensionamiento",
+      "nombreEquipo": "Bomba para gato de tensionamiento",
+      "codigoModelo": "EQBOM0001",
+      "equipoReferencia": "Bomba hidráulica para accionar gatos de tensionamiento en trabajos de postensado y montaje.",
+      "imagen": "data/equipos/bomba-gato-tensionamiento/imagen.jpg",
+      "rutaDatos": "data/equipos/bomba-gato-tensionamiento/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 56100,
+      "versionDatos": "2026-07-27"
+    },
+    {
+      "id": "bomba-prueba-hidrostatica",
+      "nombreEquipo": "Bomba prueba hidrostática",
+      "codigoModelo": "EQBOM0002",
+      "equipoReferencia": "Bomba manual para realizar pruebas hidrostáticas de presión en tuberías y redes.",
+      "imagen": "data/equipos/bomba-prueba-hidrostatica/imagen.jpg",
+      "rutaDatos": "data/equipos/bomba-prueba-hidrostatica/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 56100,
+      "versionDatos": "2026-07-27"
+    },
+    {
+      "id": "brilladora-industrial-pisos",
+      "nombreEquipo": "Brilladora industrial para pisos",
+      "codigoModelo": "EQBRI0001",
+      "equipoReferencia": "Brilladora industrial monodisco para limpieza, pulido y abrillantado de pisos.",
+      "imagen": "data/equipos/brilladora-industrial-pisos/imagen.jpg",
+      "rutaDatos": "data/equipos/brilladora-industrial-pisos/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 35700,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "bulldozer-d6",
+      "nombreEquipo": "Bulldozer D6",
+      "codigoModelo": "EQBUL0006",
+      "equipoReferencia": "Bulldozer sobre orugas tipo D6 para corte, empuje, extendido y conformación de materiales.",
+      "imagen": "data/equipos/bulldozer-d6/imagen.jpg",
+      "rutaDatos": "data/equipos/bulldozer-d6/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 260100,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "cable-porta-electrodo-10m",
+      "nombreEquipo": "Cable para porta electrodo x 10 m",
+      "codigoModelo": "EQCAB0001",
+      "equipoReferencia": "Juego de cable para porta electrodo y masa de 10 m para equipos de soldadura eléctrica.",
+      "imagen": "data/equipos/cable-porta-electrodo-10m/imagen.jpg",
+      "rutaDatos": "data/equipos/cable-porta-electrodo-10m/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 12240,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camabaja",
+      "nombreEquipo": "Camabaja",
+      "codigoModelo": "EQCAM0001",
+      "equipoReferencia": "Camabaja de dos ejes para transporte y movilización de maquinaria pesada.",
+      "imagen": "data/equipos/camabaja/imagen.jpg",
+      "rutaDatos": "data/equipos/camabaja/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 244800,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camion-350",
+      "nombreEquipo": "Camión 350",
+      "codigoModelo": "EQCAM0350",
+      "equipoReferencia": "Camión tipo 350 para transporte de materiales, herramientas y equipos livianos.",
+      "imagen": "data/equipos/camion-350/imagen.jpg",
+      "rutaDatos": "data/equipos/camion-350/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 66300,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camion-grua-6-ton",
+      "nombreEquipo": "Camión grúa 6 Ton",
+      "codigoModelo": "EQCAMGR06",
+      "equipoReferencia": "Camión con grúa hidráulica de capacidad aproximada de 6 toneladas para cargue, descargue, izaje y transporte.",
+      "imagen": "data/equipos/camion-grua-6-ton/imagen.jpg",
+      "rutaDatos": "data/equipos/camion-grua-6-ton/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 160650,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camion-plataforma-10-ton",
+      "nombreEquipo": "Camión plataforma 10 Ton",
+      "codigoModelo": "EQCAMPL10",
+      "equipoReferencia": "Camión plataforma con capacidad aproximada de 10 toneladas para transporte de materiales y equipos.",
+      "imagen": "data/equipos/camion-plataforma-10-ton/imagen.jpg",
+      "rutaDatos": "data/equipos/camion-plataforma-10-ton/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 109650,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camion-slurry",
+      "nombreEquipo": "Camión slurry",
+      "codigoModelo": "EQSLU0001",
+      "equipoReferencia": "Camión especializado para preparación, transporte y aplicación de mezcla slurry seal.",
+      "imagen": "data/equipos/camion-slurry/imagen.jpg",
+      "rutaDatos": "data/equipos/camion-slurry/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 428400,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camioneta",
+      "nombreEquipo": "Camioneta",
+      "codigoModelo": "EQCAMT001",
+      "equipoReferencia": "Camioneta tipo estacas para transporte de personal, herramientas, materiales y apoyo logístico.",
+      "imagen": "data/equipos/camioneta/imagen.jpg",
+      "rutaDatos": "data/equipos/camioneta/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 42330,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "camioneta-300-estacas",
+      "nombreEquipo": "Camioneta 300 de estacas",
+      "codigoModelo": "EQCAM3002",
+      "equipoReferencia": "Camioneta tipo 300 con carrocería de estacas para transporte de materiales, herramientas e insumos.",
+      "imagen": "data/equipos/camioneta-300-estacas/imagen.jpg",
+      "rutaDatos": "data/equipos/camioneta-300-estacas/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 53550,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "canasta-elevacion",
+      "nombreEquipo": "Canasta de elevación",
+      "codigoModelo": "EQCAN0002",
+      "equipoReferencia": "Canasta metálica de elevación para izaje seguro de materiales y elementos mediante equipos de elevación.",
+      "imagen": "data/equipos/canasta-elevacion/imagen.jpg",
+      "rutaDatos": "data/equipos/canasta-elevacion/datos.js",
+      "unidadAlquiler": "Día",
+      "tarifaComercial": 2799,
+      "versionDatos": "2026-07-28-base-22"
+    },
+    {
+      "id": "cargador-con-operario",
+      "nombreEquipo": "Cargador con operario",
+      "codigoModelo": "EQCAR0002",
+      "equipoReferencia": "Cargador frontal sobre llantas con operario para cargue, acopio y manejo de materiales.",
+      "imagen": "data/equipos/cargador-con-operario/imagen.jpg",
+      "rutaDatos": "data/equipos/cargador-con-operario/datos.js",
+      "unidadAlquiler": "Hr",
+      "tarifaComercial": 252592,
+      "versionDatos": "2026-07-28-base-22"
+    }
+  ]
+}

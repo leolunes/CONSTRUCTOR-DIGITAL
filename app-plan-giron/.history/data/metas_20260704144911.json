@@ -1,0 +1,363 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Banco maestro de metas del Plan de Desarrollo Municipal. Durante la extracción inteligente se incorporarán las metas de producto y de resultado con sus líneas base, metas finales y responsables.",
+
+  "sectores": [
+
+    {
+      "sectorId": "salud-proteccion-social",
+      "sector": "Salud y Protección Social",
+
+      "metas": [
+
+        {
+          "id": "META-SAL-001",
+          "tipo": "Resultado",
+          "nombre": "Fortalecer la salud pública municipal",
+          "descripcion": "Incrementar las acciones de promoción, prevención y vigilancia en salud pública.",
+          "estado": "Pendiente de extracción",
+          "lineaBase": null,
+          "meta2027": null,
+          "unidad": "",
+          "secretaria": "Secretaría de Salud",
+          "paginaPlan": null
+        },
+
+        {
+          "id": "META-SAL-002",
+          "tipo": "Producto",
+          "nombre": "Mejorar cobertura de vacunación",
+          "descripcion": "Fortalecer las jornadas y estrategias de vacunación.",
+          "estado": "Pendiente de extracción",
+          "lineaBase": null,
+          "meta2027": null,
+          "unidad": "",
+          "secretaria": "Secretaría de Salud",
+          "paginaPlan": null
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"educacion",
+
+      "sector":"Educación",
+
+      "metas":[
+
+        {
+
+          "id":"META-EDU-001",
+
+          "tipo":"Resultado",
+
+          "nombre":"Incrementar la permanencia escolar",
+
+          "descripcion":"Reducir los índices de deserción educativa.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Educación",
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"META-EDU-002",
+
+          "tipo":"Producto",
+
+          "nombre":"Mejorar la calidad educativa",
+
+          "descripcion":"Fortalecer procesos académicos y resultados institucionales.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Educación",
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"transporte",
+
+      "sector":"Transporte",
+
+      "metas":[
+
+        {
+
+          "id":"META-MOV-001",
+
+          "tipo":"Resultado",
+
+          "nombre":"Fortalecer la movilidad segura",
+
+          "descripcion":"Reducir riesgos y mejorar la movilidad urbana.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Tránsito",
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"META-MOV-002",
+
+          "tipo":"Producto",
+
+          "nombre":"Mejorar infraestructura vial",
+
+          "descripcion":"Construcción, mantenimiento y recuperación de vías.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Infraestructura",
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"ambiente-desarrollo-sostenible",
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "metas":[
+
+        {
+
+          "id":"META-AMB-001",
+
+          "tipo":"Resultado",
+
+          "nombre":"Proteger ecosistemas estratégicos",
+
+          "descripcion":"Conservar recursos naturales y biodiversidad.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Ambiente",
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"META-AMB-002",
+
+          "tipo":"Producto",
+
+          "nombre":"Fortalecer gestión del riesgo",
+
+          "descripcion":"Implementar acciones de reducción del riesgo de desastres.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Ambiente",
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"vivienda-ciudad-territorio",
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "metas":[
+
+        {
+
+          "id":"META-VIV-001",
+
+          "tipo":"Resultado",
+
+          "nombre":"Reducir déficit habitacional",
+
+          "descripcion":"Mejorar las condiciones de vivienda del municipio.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Vivienda",
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sectorId":"gobierno-territorial",
+
+      "sector":"Gobierno Territorial",
+
+      "metas":[
+
+        {
+
+          "id":"META-GOB-001",
+
+          "tipo":"Resultado",
+
+          "nombre":"Fortalecer el desempeño institucional",
+
+          "descripcion":"Incrementar la eficiencia administrativa y la transparencia.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Despacho del Alcalde",
+
+          "paginaPlan":null
+
+        },
+
+        {
+
+          "id":"META-GOB-002",
+
+          "tipo":"Producto",
+
+          "nombre":"Fortalecer la participación ciudadana",
+
+          "descripcion":"Incrementar mecanismos de participación comunitaria.",
+
+          "estado":"Pendiente de extracción",
+
+          "lineaBase":null,
+
+          "meta2027":null,
+
+          "unidad":"",
+
+          "secretaria":"Secretaría de Gobierno",
+
+          "paginaPlan":null
+
+        }
+
+      ]
+
+    }
+
+  ],
+
+  "estructuraFutura": {
+
+    "cadaMetaTendra": [
+
+      "Código oficial",
+
+      "Meta de Producto",
+
+      "Meta de Resultado",
+
+      "Línea Base",
+
+      "Meta 2027",
+
+      "Unidad de Medida",
+
+      "Responsable",
+
+      "Programa",
+
+      "Proyecto",
+
+      "ODS relacionado",
+
+      "Presupuesto asociado",
+
+      "Indicadores asociados",
+
+      "Estado de cumplimiento",
+
+      "Página exacta del Plan",
+
+      "Observaciones",
+
+      "Fuente"
+
+    ]
+
+  },
+
+  "estadoBaseConocimiento":"Estructura creada. Durante la extracción inteligente del Plan se incorporarán todas las metas oficiales del documento."
+}

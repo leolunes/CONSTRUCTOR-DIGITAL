@@ -1,0 +1,444 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Inventario de indicadores estratégicos identificados en el Plan de Desarrollo Municipal.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud y Protección Social",
+
+      "indicadores":[
+
+        {
+          "id":"SAL001",
+          "nombre":"Cobertura de aseguramiento en salud",
+          "tipo":"Cobertura",
+          "unidad":"Porcentaje",
+          "estado":"Pendiente de extracción",
+          "descripcion":"Porcentaje de población afiliada al Sistema General de Seguridad Social en Salud."
+        },
+
+        {
+          "id":"SAL002",
+          "nombre":"Cobertura de vacunación",
+          "tipo":"Cobertura",
+          "unidad":"Porcentaje",
+          "estado":"Pendiente de extracción",
+          "descripcion":"Cobertura de esquemas de vacunación en la población objetivo."
+        },
+
+        {
+          "id":"SAL003",
+          "nombre":"Tasa de mortalidad",
+          "tipo":"Resultado",
+          "unidad":"Tasa",
+          "estado":"Pendiente de extracción"
+        },
+
+        {
+          "id":"SAL004",
+          "nombre":"Tasa de fecundidad",
+          "tipo":"Resultado",
+          "unidad":"Tasa",
+          "estado":"Pendiente de extracción"
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "indicadores":[
+
+        {
+
+          "id":"EDU001",
+
+          "nombre":"Cobertura educativa",
+
+          "tipo":"Cobertura",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"EDU002",
+
+          "nombre":"Cobertura neta",
+
+          "tipo":"Cobertura",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"EDU003",
+
+          "nombre":"Cobertura bruta",
+
+          "tipo":"Cobertura",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"EDU004",
+
+          "nombre":"Deserción escolar",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"EDU005",
+
+          "nombre":"Repitencia",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"EDU006",
+
+          "nombre":"Resultados Pruebas Saber",
+
+          "tipo":"Calidad",
+
+          "unidad":"Puntaje",
+
+          "estado":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Transporte",
+
+      "indicadores":[
+
+        {
+
+          "id":"MOV001",
+
+          "nombre":"Parque automotor",
+
+          "tipo":"Inventario",
+
+          "unidad":"Vehículos",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"MOV002",
+
+          "nombre":"Accidentalidad vial",
+
+          "tipo":"Resultado",
+
+          "unidad":"Casos",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"MOV003",
+
+          "nombre":"Víctimas fatales",
+
+          "tipo":"Resultado",
+
+          "unidad":"Personas",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"MOV004",
+
+          "nombre":"Lesionados en accidentes",
+
+          "tipo":"Resultado",
+
+          "unidad":"Personas",
+
+          "estado":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente",
+
+      "indicadores":[
+
+        {
+
+          "id":"AMB001",
+
+          "nombre":"Índice de Riesgo Municipal",
+
+          "tipo":"Índice",
+
+          "unidad":"Índice",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"AMB002",
+
+          "nombre":"Índice de Vulnerabilidad",
+
+          "tipo":"Índice",
+
+          "unidad":"Índice",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"AMB003",
+
+          "nombre":"Índice Territorial de Crecimiento Verde",
+
+          "tipo":"Índice",
+
+          "unidad":"Índice",
+
+          "estado":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Vivienda",
+
+      "indicadores":[
+
+        {
+
+          "id":"VIV001",
+
+          "nombre":"Déficit de vivienda",
+
+          "tipo":"Resultado",
+
+          "unidad":"Viviendas",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"VIV002",
+
+          "nombre":"Cobertura de acueducto",
+
+          "tipo":"Cobertura",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"VIV003",
+
+          "nombre":"Cobertura de alcantarillado",
+
+          "tipo":"Cobertura",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Trabajo",
+
+      "indicadores":[
+
+        {
+
+          "id":"TRA001",
+
+          "nombre":"Tasa de ocupación",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"TRA002",
+
+          "nombre":"Tasa de desempleo",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"TRA003",
+
+          "nombre":"Empresas creadas",
+
+          "tipo":"Resultado",
+
+          "unidad":"Empresas",
+
+          "estado":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno Territorial",
+
+      "indicadores":[
+
+        {
+
+          "id":"GOB001",
+
+          "nombre":"Índice de Desempeño Institucional",
+
+          "tipo":"Índice",
+
+          "unidad":"Índice",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"GOB002",
+
+          "nombre":"Índice de Competitividad",
+
+          "tipo":"Índice",
+
+          "unidad":"Índice",
+
+          "estado":"Pendiente de extracción"
+
+        },
+
+        {
+
+          "id":"GOB003",
+
+          "nombre":"Indicadores financieros",
+
+          "tipo":"Financiero",
+
+          "unidad":"Indicador",
+
+          "estado":"Pendiente de extracción"
+
+        }
+
+      ]
+
+    }
+
+  ],
+
+  "estadoBaseConocimiento":"Primera estructuración de indicadores. Durante la extracción inteligente del Plan se completarán valores, líneas base, metas, unidades, fórmulas y páginas de referencia.",
+
+  "utilidadApp":[
+
+    "Dashboard municipal.",
+
+    "Seguimiento al Plan.",
+
+    "Comparación entre sectores.",
+
+    "Control político.",
+
+    "Propuestas de campaña.",
+
+    "Análisis estadístico.",
+
+    "Informes automáticos.",
+
+    "Buscador inteligente."
+
+  ]
+
+}

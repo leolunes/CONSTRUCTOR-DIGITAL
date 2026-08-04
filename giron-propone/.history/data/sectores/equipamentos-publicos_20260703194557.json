@@ -1,0 +1,184 @@
+{
+  "id": "equipamientos-publicos",
+  "nombre": "Equipamientos públicos",
+  "icono": "🏛️",
+  "color": "#8b5cf6",
+  "descripcion": "Centros comunitarios, casas de cultura, bibliotecas y centros administrativos.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de actualización con fuentes oficiales",
+  "situacionActual": {
+    "titulo": "Equipamientos públicos al servicio de la comunidad",
+    "resumen": "Los equipamientos públicos fortalecen la participación ciudadana, el acceso a servicios y el desarrollo social. Girón requiere espacios modernos, accesibles y bien distribuidos.",
+    "enfoquePolitico": "Invertir en equipamientos públicos es acercar el Estado a la ciudadanía.",
+    "advertenciaDatos": "Las cifras deben validarse con fuentes oficiales antes de su uso."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Centros comunitarios",
+      "valor": null,
+      "unidad": "equipamientos",
+      "estado": "pendiente",
+      "fuente": "Alcaldía de Girón"
+    },
+    {
+      "indicador": "Casas de cultura",
+      "valor": null,
+      "unidad": "equipamientos",
+      "estado": "pendiente",
+      "fuente": "Secretaría de Cultura"
+    },
+    {
+      "indicador": "Bibliotecas públicas",
+      "valor": null,
+      "unidad": "bibliotecas",
+      "estado": "pendiente",
+      "fuente": "Red Nacional de Bibliotecas"
+    },
+    {
+      "indicador": "Centros administrativos",
+      "valor": null,
+      "unidad": "sedes",
+      "estado": "pendiente",
+      "fuente": "Municipio"
+    },
+    {
+      "indicador": "Equipamientos que requieren intervención",
+      "valor": null,
+      "unidad": "equipamientos",
+      "estado": "pendiente",
+      "fuente": "Secretaría de Infraestructura"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Infraestructura deteriorada",
+      "descripcion": "Algunos equipamientos requieren mantenimiento y modernización.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Cobertura desigual",
+      "descripcion": "Hay sectores con escaso acceso a espacios comunitarios.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Déficit de dotación",
+      "descripcion": "Se requieren mobiliario, tecnología y accesibilidad.",
+      "impacto": "Medio-Alto"
+    },
+    {
+      "titulo": "Uso limitado",
+      "descripcion": "Falta programación permanente para dinamizar estos espacios.",
+      "impacto": "Medio"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Espacios para la Comunidad",
+      "objetivo": "Fortalecer la red de equipamientos públicos mediante mantenimiento, dotación y ampliación.",
+      "mensajeCentral": "Los espacios públicos fortalecen la convivencia y la participación."
+    },
+    {
+      "nombre": "Barrios con Servicios",
+      "objetivo": "Acercar la oferta institucional mediante centros comunitarios funcionales.",
+      "mensajeCentral": "Cada barrio merece un lugar para encontrarse y crecer."
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre equipamientos públicos",
+    "duracion": "3 minutos",
+    "texto": "Una ciudad también se construye con espacios donde la comunidad pueda reunirse, aprender, participar y acceder a servicios. Desde el Concejo promoveremos la recuperación de centros comunitarios, bibliotecas, casas de cultura y sedes administrativas para acercar las oportunidades a todos los barrios y veredas de Girón."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "🏛️ Más espacios para la comunidad. Equipamientos públicos modernos y útiles para Girón.",
+    "facebook": "Los equipamientos públicos fortalecen la convivencia y acercan los servicios a la ciudadanía. Impulsaremos su recuperación y modernización.",
+    "instagram": "🏛️ Centros comunitarios. 📚 Bibliotecas. 🎭 Casas de cultura. Un mejor Girón para todos.",
+    "tiktok": "Los barrios necesitan espacios vivos donde la comunidad pueda reunirse y crecer."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Modernización de centros comunitarios",
+      "componentes": [
+        "Obras civiles",
+        "Dotación",
+        "Accesibilidad",
+        "Tecnología"
+      ],
+      "fuentes": [
+        "Municipio",
+        "SGR",
+        "Gobernación"
+      ]
+    },
+    {
+      "nombre": "Fortalecimiento de bibliotecas",
+      "componentes": [
+        "Libros",
+        "Equipos",
+        "Conectividad",
+        "Mobiliario"
+      ],
+      "fuentes": [
+        "Ministerio de Cultura",
+        "Municipio"
+      ]
+    },
+    {
+      "nombre": "Adecuación de sedes administrativas",
+      "componentes": [
+        "Remodelación",
+        "Digitalización",
+        "Accesibilidad"
+      ],
+      "fuentes": [
+        "Recursos propios",
+        "SGR"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Cuántos equipamientos requieren mantenimiento?",
+    "¿Qué barrios carecen de centros comunitarios?",
+    "¿Cuál es el plan de modernización de bibliotecas?"
+  ],
+  "controlPolitico": [
+    "Solicitar inventario de equipamientos públicos.",
+    "Revisar presupuesto de mantenimiento.",
+    "Verificar ejecución de proyectos en SECOP."
+  ],
+  "fuentesFinanciacion": [
+    "Recursos propios",
+    "Sistema General de Regalías",
+    "Ministerio de las Culturas",
+    "Gobernación de Santander",
+    "Findeter"
+  ],
+  "normatividad": [
+    "Ley 397 de 1997",
+    "Ley 388 de 1997",
+    "Plan de Desarrollo Municipal"
+  ],
+  "ods": [
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    },
+    {
+      "numero": 16,
+      "nombre": "Instituciones sólidas"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Equipamientos Públicos",
+    "subtitulo": "Espacios para la comunidad",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia",
+      "Discurso",
+      "Proyectos",
+      "Financiación"
+    ]
+  }
+}

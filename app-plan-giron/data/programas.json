@@ -1,0 +1,107 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Banco inicial de programas estratégicos asociados a los sectores del Plan de Desarrollo Municipal.",
+
+  "programas": [
+    {
+      "id": "PROG-SAL-001",
+      "sectorId": "salud-proteccion-social",
+      "sector": "Salud y Protección Social",
+      "nombre": "Salud pública y protección social",
+      "descripcion": "Acciones orientadas a fortalecer la promoción, prevención, aseguramiento y atención integral en salud.",
+      "eje": 2,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-EDU-001",
+      "sectorId": "educacion",
+      "sector": "Educación",
+      "nombre": "Acceso, permanencia y calidad educativa",
+      "descripcion": "Programa orientado al fortalecimiento de cobertura, permanencia escolar, calidad educativa y alimentación escolar.",
+      "eje": 2,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-TRA-001",
+      "sectorId": "transporte",
+      "sector": "Transporte",
+      "nombre": "Movilidad segura e infraestructura vial",
+      "descripcion": "Acciones para mejorar vías, transporte público, seguridad vial y movilidad sostenible.",
+      "eje": 1,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-AMB-001",
+      "sectorId": "ambiente-desarrollo-sostenible",
+      "sector": "Ambiente y Desarrollo Sostenible",
+      "nombre": "Sostenibilidad ambiental y gestión del riesgo",
+      "descripcion": "Programa orientado a proteger ecosistemas, fuentes hídricas, biodiversidad y reducir riesgos de desastre.",
+      "eje": 5,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-VIV-001",
+      "sectorId": "vivienda-ciudad-territorio",
+      "sector": "Vivienda, Ciudad y Territorio",
+      "nombre": "Vivienda, servicios públicos y espacio público",
+      "descripcion": "Acciones relacionadas con vivienda digna, acueducto, alcantarillado, residuos sólidos y espacio público.",
+      "eje": 5,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-INC-001",
+      "sectorId": "inclusion-social-reconciliacion",
+      "sector": "Inclusión Social y Reconciliación",
+      "nombre": "Atención integral a población vulnerable",
+      "descripcion": "Programa dirigido a mujeres, jóvenes, niñez, adulto mayor, víctimas, migrantes y personas con discapacidad.",
+      "eje": 2,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-CUL-001",
+      "sectorId": "cultura",
+      "sector": "Cultura",
+      "nombre": "Cultura, patrimonio e identidad gironesa",
+      "descripcion": "Acciones para fortalecer la oferta cultural, la formación artística, el patrimonio y la identidad local.",
+      "eje": 4,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-TUR-001",
+      "sectorId": "comercio-industria-turismo",
+      "sector": "Comercio, Industria y Turismo",
+      "nombre": "Desarrollo económico, comercio y turismo",
+      "descripcion": "Programa orientado a fortalecer comercio, industria, turismo, competitividad y tejido empresarial.",
+      "eje": 4,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-DEP-001",
+      "sectorId": "deporte-recreacion",
+      "sector": "Deporte y Recreación",
+      "nombre": "Deporte, recreación y uso productivo del tiempo libre",
+      "descripcion": "Acciones para promover actividad física, recreación, escuelas deportivas y escenarios deportivos.",
+      "eje": 4,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-RUR-001",
+      "sectorId": "agricultura-desarrollo-rural",
+      "sector": "Agricultura y Desarrollo Rural",
+      "nombre": "Desarrollo rural productivo",
+      "descripcion": "Programa orientado a fortalecer productores rurales, asistencia técnica, productividad y comercialización campesina.",
+      "eje": 4,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    },
+    {
+      "id": "PROG-GOB-001",
+      "sectorId": "gobierno-territorial",
+      "sector": "Gobierno Territorial",
+      "nombre": "Gobierno eficiente, participativo y transparente",
+      "descripcion": "Acciones para fortalecer gestión pública, participación ciudadana, finanzas, rendición de cuentas y desempeño institucional.",
+      "eje": 1,
+      "estadoExtraccion": "Pendiente de extracción detallada"
+    }
+  ]
+}

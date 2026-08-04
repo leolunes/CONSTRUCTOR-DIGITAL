@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Presupuesto - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>Presupuesto</h1>
+
+<p>Consulta de recursos, inversión y distribución financiera del Plan de Desarrollo.</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>💰 Presupuesto por Sector</h2>
+
+<select id="selectorSectorPresupuesto" onchange="cargarPresupuesto()">
+<option value="">Seleccione un sector</option>
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Detalle presupuestal</h2>
+
+<div id="contenedorPresupuesto">
+
+<p class="texto-suave">
+Seleccione un sector para consultar información presupuestal.
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="indicadores.html">Indicadores</a>
+<a href="seguimiento.html">Seguimiento</a>
+
+</nav>
+
+<script src="js/presupuesto.js"></script>
+
+</body>
+
+</html>

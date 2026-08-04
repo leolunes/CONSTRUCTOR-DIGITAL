@@ -1,0 +1,283 @@
+/* =====================================
+   COPILOTO-ORQUESTADOR.CSS
+   CONSTRUCTOR MGA PRO
+   Versión ajustada para tema oscuro y menú sticky
+   ===================================== */
+
+#panelCopilotoIntegral,
+#panelCopilotoOrquestador{
+    position:relative;
+    z-index:1;
+    scroll-margin-top:190px;
+}
+
+.copiloto-orquestador{
+    width:100%;
+    border:1px solid var(--border,#1f2937);
+    border-radius:18px;
+    background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+    overflow:hidden;
+    color:var(--text,#e5e7eb);
+    position:relative;
+    z-index:1;
+}
+
+.copiloto-head{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    align-items:flex-start;
+    padding:18px;
+    background:#0f172a;
+    color:#ffffff;
+    border-bottom:1px solid var(--border,#1f2937);
+}
+
+.copiloto-head h2{
+    margin:0 0 6px 0;
+    font-size:18px;
+    color:#ffffff;
+}
+
+.copiloto-head p{
+    margin:0;
+    color:#9ca3af;
+    font-size:13px;
+    line-height:1.45;
+}
+
+.copiloto-badge{
+    padding:7px 12px;
+    border-radius:999px;
+    background:rgba(37,99,235,.18);
+    border:1px solid rgba(96,165,250,.35);
+    color:#93c5fd;
+    font-weight:800;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.copiloto-form{
+    padding:18px;
+    background:var(--card2,#0b1220);
+    position:relative;
+    z-index:2;
+}
+
+.copiloto-form label{
+    display:block;
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:6px;
+    color:#d1d5db;
+}
+
+.copiloto-form textarea,
+.copiloto-form input{
+    width:100%;
+    box-sizing:border-box;
+    padding:11px 12px;
+    border:1px solid var(--border,#1f2937);
+    border-radius:12px;
+    font-size:14px;
+    outline:none;
+    background:#0b1220;
+    color:#e5e7eb;
+    position:relative;
+    z-index:3;
+    pointer-events:auto;
+    caret-color:#ffffff;
+}
+
+.copiloto-form textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.copiloto-form textarea::placeholder,
+.copiloto-form input::placeholder{
+    color:#6b7280;
+}
+
+.copiloto-form textarea:focus,
+.copiloto-form input:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,.18);
+}
+
+.copiloto-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+    margin-top:12px;
+}
+
+.copiloto-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:14px;
+}
+
+.copiloto-resultado{
+    padding:18px;
+    background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+    color:var(--text,#e5e7eb);
+}
+
+.copiloto-resumen{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.copiloto-resumen > div{
+    background:#0b1220;
+    border:1px solid var(--border,#1f2937);
+    border-radius:14px;
+    padding:12px;
+}
+
+.copiloto-resumen strong{
+    display:block;
+    font-size:12px;
+    color:#9ca3af;
+    margin-bottom:6px;
+}
+
+.copiloto-resumen span{
+    display:block;
+    font-weight:900;
+    color:#e5e7eb;
+}
+
+.copiloto-alert{
+    padding:12px;
+    border-radius:14px;
+    background:rgba(245,158,11,.10);
+    border:1px solid rgba(245,158,11,.35);
+    color:#fde68a;
+    margin-bottom:12px;
+}
+
+.copiloto-alert.error{
+    background:rgba(239,68,68,.10);
+    border-color:rgba(239,68,68,.35);
+    color:#fecaca;
+}
+
+.copiloto-section{
+    margin-top:16px;
+}
+
+.copiloto-section h3{
+    margin:0 0 8px 0;
+    font-size:16px;
+    color:#ffffff;
+}
+
+.copiloto-pasos{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+}
+
+.copiloto-paso{
+    padding:12px;
+    border-radius:14px;
+    border:1px solid var(--border,#1f2937);
+    background:#0b1220;
+}
+
+.copiloto-paso.ok{
+    border-color:rgba(34,197,94,.35);
+    background:rgba(34,197,94,.08);
+}
+
+.copiloto-paso.bad{
+    border-color:rgba(245,158,11,.35);
+    background:rgba(245,158,11,.08);
+}
+
+.copiloto-paso strong{
+    display:block;
+    margin-bottom:5px;
+    color:#ffffff;
+}
+
+.copiloto-paso span{
+    font-size:13px;
+    color:#9ca3af;
+}
+
+.copiloto-card{
+    padding:14px;
+    border:1px solid var(--border,#1f2937);
+    border-radius:14px;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+.copiloto-card div{
+    margin-bottom:7px;
+}
+
+.copiloto-card p{
+    margin:0 0 8px 0;
+    color:#d1d5db;
+}
+
+.copiloto-card ul{
+    margin-top:8px;
+}
+
+.copiloto-next{
+    margin-top:18px;
+    padding:14px;
+    border-radius:14px;
+    background:rgba(37,99,235,.12);
+    border:1px solid rgba(96,165,250,.35);
+}
+
+.copiloto-next strong{
+    display:block;
+    color:#bfdbfe;
+    margin-bottom:5px;
+}
+
+.copiloto-next span{
+    color:#dbeafe;
+}
+
+/* Evita que la cabecera sticky tape campos al hacer scroll automático */
+.top{
+    z-index:20;
+}
+
+.container{
+    position:relative;
+    z-index:1;
+}
+
+/* Asegura que ningún panel del copiloto bloquee escritura */
+.copiloto-orquestador *,
+#panelCopilotoIntegral *,
+#panelCopilotoOrquestador *{
+    pointer-events:auto;
+}
+
+@media(max-width:900px){
+    .copiloto-grid,
+    .copiloto-resumen{
+        grid-template-columns:1fr;
+    }
+
+    .copiloto-pasos{
+        grid-template-columns:1fr;
+    }
+
+    .copiloto-head{
+        flex-direction:column;
+    }
+}

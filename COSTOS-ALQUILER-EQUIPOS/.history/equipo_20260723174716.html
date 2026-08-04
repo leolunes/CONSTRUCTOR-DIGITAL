@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Ficha técnica, económica y comercial de equipos de construcción."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Ficha del equipo | Costos de Alquiler
+  </title>
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- =====================================================
+         MENÚ LATERAL
+    ====================================================== -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTOS DE ALQUILER
+          </strong>
+
+          <span>
+            Equipo de Construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item"
+          href="index.html"
+        >
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Inicio
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          EQUIPOS
+        </div>
+
+        <a
+          class="nav-item"
+          href="equipos.html"
+        >
+          <span class="nav-icon">
+            ▦
+          </span>
+
+          <span>
+            Todos los equipos
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="equipos.html?accion=buscar"
+        >
+          <span class="nav-icon">
+            ⌕
+          </span>
+
+          <span>
+            Buscar equipo
+          </span>
+        </a>
+
+        <a
+          class="nav-item active"
+          href="#"
+          aria-current="page"
+        >
+          <span class="nav-icon">
+            ⓘ
+          </span>
+
+          <span>
+            Ficha del equipo
+          </span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+
+            <span
+              class="status-dot"
+              id="statusDot"
+            ></span>
+
+            <strong id="statusTitle">
+              Cargando
+            </strong>
+
+          </div>
+
+          <span id="statusDescription">
+            Consultando la información del equipo
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+      <!-- ===================================================
+           BARRA SUPERIOR
+      ==================================================== -->
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span class="topbar-eyebrow">
+              FICHA TÉCNICA Y ECONÓMICA
+            </span>
+
+            <h1 id="tituloPagina">
+              Equipo de construcción
+            </h1>
+
+          </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <a
+            class="button button-secondary"
+            href="equipos.html"
+          >
+            Volver al catálogo
+          </a>
+
+          <button
+            class="button button-primary"
+            id="btnImprimirFicha"
+            type="button"
+          >
+            Imprimir ficha
+          </button>
+
+        </div>
+
+      </header>
+
+      <!-- ===================================================
+           CONTENIDO DE LA FICHA
+      ==================================================== -->
+
+      <div class="page-content">
+
+        <!-- ESTADO DE CARGA -->
+
+        <section
+          class="equipment-loading"
+          id="estadoCarga"
+        >
+
+          <div class="empty-state">
+
+            <div class="empty-state-icon">
+              ⌛
+            </div>
+
+            <strong>
+              Cargando información del equipo
+            </strong>
+
+            <p>
+              Espere mientras se consulta el archivo datos.js.
+            </p>
+
+          </div>
+
+        </section>
+
+        <!-- ERROR -->
+
+        <section
+          class="equipment-error"
+          id="estadoError"
+          hidden
+        >
+
+          <div class="empty-state">
+
+            <div class="empty-state-icon">
+              ⚠
+            </div>
+
+            <strong id="tituloError">
+              No fue posible cargar el equipo
+            </strong>
+
+            <p id="descripcionError">
+              Verifique la ruta del archivo datos.js.
+            </p>
+
+            <a
+              class="button button-primary"
+              href="equipos.html"
+            >
+              Regresar al catálogo
+            </a>
+
+          </div>
+
+        </section>
+
+        <!-- FICHA COMPLETA -->
+
+        <article
+          class="equipment-sheet"
+          id="fichaEquipo"
+          hidden
+        >
+
+          <!-- =================================================
+               ENCABEZADO PRINCIPAL
+          ================================================== -->
+
+          <section class="equipment-hero-card">
+
+            <div class="equipment-photo-panel">
+
+              <div class="equipment-photo-frame">
+
+                <img
+                  id="imagenEquipo"
+                  src=""
+                  alt="Imagen del equipo"
+                >
+
+                <div
+                  class="equipment-photo-fallback"
+                  id="imagenFallback"
+                  hidden
+                >
+                  🚜
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="equipment-main-info">
+
+              <div class="equipment-badges">
+
+                <span
+                  class="equipment-code-badge"
+                  id="codigoModelo"
+                >
+                  SIN CÓDIGO
+                </span>
+
+                <span
+                  class="equipment-status-badge"
+                  id="estadoEquipo"
+                >
+                  ACTIVO
+                </span>
+
+              </div>
+
+              <h2 id="nombreEquipo">
+                Nombre del equipo
+              </h2>
+
+              <p
+                class="equipment-reference"
+                id="equipoReferencia"
+              >
+                Equipo de referencia
+              </p>
+
+              <p
+                class="equipment-description"
+                id="descripcionGeneral"
+              >
+                Descripción general del equipo.
+              </p>
+
+              <div class="equipment-summary-grid">
+
+                <div class="equipment-summary-item">
+
+                  <span>
+                    Familia
+                  </span>
+
+                  <strong id="familiaEquipo">
+                    -
+                  </strong>
+
+                </div>
+
+                <div class="equipment-summary-item">
+
+                  <span>
+                    Rodaje
+                  </span>
+
+                  <strong id="rodajeEquipo">
+                    -
+                  </strong>
+
+                </div>
+
+                <div class="equipment-summary-item">
+
+                  <span>
+                    Combustible
+                  </span>
+
+                  <strong id="tipoCombustible">
+                    -
+                  </strong>
+
+                </div>
+
+                <div class="equipment-summary-item">
+
+                  <span>
+                    Unidad de alquiler
+                  </span>
+
+                  <strong id="unidadAlquiler">
+                    -
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <aside class="equipment-price-card">
+
+              <span class="equipment-price-label">
+                TARIFA COMERCIAL
+              </span>
+
+              <strong
+                class="equipment-price-value"
+                id="tarifaComercial"
+              >
+                $0
+              </strong>
+
+              <span
+                class="equipment-price-unit"
+                id="tarifaUnidad"
+              >
+                por hora
+              </span>
+
+              <div class="equipment-price-divider"></div>
+
+              <div class="equipment-price-row">
+
+                <span>
+                  Costo directo
+                </span>
+
+                <strong id="costoDirectoHora">
+                  $0
+                </strong>
+
+              </div>
+
+              <div class="equipment-price-row">
+
+                <span>
+                  Transporte equivalente
+                </span>
+
+                <strong id="transporteHora">
+                  $0
+                </strong>
+
+              </div>
+
+              <div class="equipment-price-row equipment-price-total">
+
+                <span>
+                  Costo comercial final
+                </span>
+
+                <strong id="costoComercialFinal">
+                  $0
+                </strong>
+
+              </div>
+
+            </aside>
+
+          </section>
+
+          <!-- =================================================
+               INDICADORES PRINCIPALES
+          ================================================== -->
+
+          <section class="equipment-kpi-grid">
+
+            <article class="equipment-kpi-card">
+
+              <span>
+                Precio de adquisición
+              </span>
+
+              <strong id="precioAdquisicion">
+                $0
+              </strong>
+
+              <small>
+                Valor base del equipo
+              </small>
+
+            </article>
+
+            <article class="equipment-kpi-card">
+
+              <span>
+                Consumo
+              </span>
+
+              <strong id="consumoCombustible">
+                0 L/h
+              </strong>
+
+              <small>
+                Consumo referencial
+              </small>
+
+            </article>
+
+            <article class="equipment-kpi-card">
+
+              <span>
+                Rendimiento
+              </span>
+
+              <strong id="rendimientoReferencial">
+                0
+              </strong>
+
+              <small id="unidadRendimiento">
+                Sin unidad
+              </small>
+
+            </article>
+
+            <article class="equipment-kpi-card">
+
+              <span>
+                Margen de alquiler
+              </span>
+
+              <strong id="margenAlquiler">
+                0 %
+              </strong>
+
+              <small>
+                Aplicado al costo directo
+              </small>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               NAVEGACIÓN INTERNA
+          ================================================== -->
+
+          <nav
+            class="equipment-tabs"
+            aria-label="Secciones de la ficha"
+          >
+
+            <button
+              class="equipment-tab active"
+              type="button"
+              data-target="seccionGeneral"
+            >
+              Información general
+            </button>
+
+            <button
+              class="equipment-tab"
+              type="button"
+              data-target="seccionCostos"
+            >
+              Costos
+            </button>
+
+            <button
+              class="equipment-tab"
+              type="button"
+              data-target="seccionRendimiento"
+            >
+              Rendimiento
+            </button>
+
+            <button
+              class="equipment-tab"
+              type="button"
+              data-target="seccionAplicaciones"
+            >
+              Aplicaciones
+            </button>
+
+            <button
+              class="equipment-tab"
+              type="button"
+              data-target="seccionObservaciones"
+            >
+              Observaciones
+            </button>
+
+          </nav>
+
+          <!-- =================================================
+               INFORMACIÓN GENERAL
+          ================================================== -->
+
+          <section
+            class="equipment-section"
+            id="seccionGeneral"
+          >
+
+            <div class="section-heading">
+
+              <div>
+
+                <span class="section-kicker">
+                  IDENTIFICACIÓN
+                </span>
+
+                <h2>
+                  Información general
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div class="equipment-two-columns">
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Identificación del equipo
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaIdentificacion"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Configuración operativa
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaConfiguracion"
+                ></div>
+
+              </article>
+
+            </div>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Especificaciones técnicas
+              </h3>
+
+              <div
+                class="responsive-table"
+                id="tablaEspecificaciones"
+              ></div>
+
+            </article>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Uso recomendado
+              </h3>
+
+              <p
+                class="equipment-long-text"
+                id="usoRecomendado"
+              >
+                Sin información disponible.
+              </p>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               COSTOS
+          ================================================== -->
+
+          <section
+            class="equipment-section"
+            id="seccionCostos"
+          >
+
+            <div class="section-heading">
+
+              <div>
+
+                <span class="section-kicker">
+                  ANÁLISIS ECONÓMICO
+                </span>
+
+                <h2>
+                  Estructura de costos
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div class="equipment-two-columns">
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Parámetros de propiedad
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaPropiedad"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Costos fijos por hora
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaCostosFijos"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Combustible y lubricantes
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaCombustible"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Operador y personal
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaOperador"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Rodaje y desgaste
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaRodajeDesgaste"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Transporte
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaTransporte"
+                ></div>
+
+              </article>
+
+            </div>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Resumen del costo directo
+              </h3>
+
+              <div
+                class="responsive-table"
+                id="tablaCostoDirecto"
+              ></div>
+
+            </article>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Condiciones comerciales
+              </h3>
+
+              <p
+                class="equipment-long-text"
+                id="condicionesComerciales"
+              >
+                Sin información disponible.
+              </p>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               RENDIMIENTO
+          ================================================== -->
+
+          <section
+            class="equipment-section"
+            id="seccionRendimiento"
+          >
+
+            <div class="section-heading">
+
+              <div>
+
+                <span class="section-kicker">
+                  PRODUCTIVIDAD
+                </span>
+
+                <h2>
+                  Rendimiento y producción
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div class="equipment-two-columns">
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Rendimiento referencial
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaRendimiento"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Costo por unidad de producción
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaProduccion"
+                ></div>
+
+              </article>
+
+            </div>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Condiciones de referencia
+              </h3>
+
+              <p
+                class="equipment-long-text"
+                id="condicionesRendimiento"
+              >
+                Sin información disponible.
+              </p>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               APLICACIONES
+          ================================================== -->
+
+          <section
+            class="equipment-section"
+            id="seccionAplicaciones"
+          >
+
+            <div class="section-heading">
+
+              <div>
+
+                <span class="section-kicker">
+                  UTILIZACIÓN
+                </span>
+
+                <h2>
+                  Aplicaciones del equipo
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div
+              class="equipment-card-grid"
+              id="listaAplicaciones"
+            ></div>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Accesorios y configuraciones compatibles
+              </h3>
+
+              <div
+                class="responsive-table"
+                id="tablaAccesorios"
+              ></div>
+
+            </article>
+
+            <article class="equipment-data-card">
+
+              <h3>
+                Seguridad y requisitos
+              </h3>
+
+              <div
+                class="equipment-data-list"
+                id="listaSeguridad"
+              ></div>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               OBSERVACIONES
+          ================================================== -->
+
+          <section
+            class="equipment-section"
+            id="seccionObservaciones"
+          >
+
+            <div class="section-heading">
+
+              <div>
+
+                <span class="section-kicker">
+                  INFORMACIÓN COMPLEMENTARIA
+                </span>
+
+                <h2>
+                  Observaciones y control
+                </h2>
+
+              </div>
+
+            </div>
+
+            <div class="equipment-two-columns">
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Observaciones
+                </h3>
+
+                <div
+                  class="equipment-observation-list"
+                  id="listaObservaciones"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Control del registro
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaControl"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Referencias de mercado
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaMercado"
+                ></div>
+
+              </article>
+
+              <article class="equipment-data-card">
+
+                <h3>
+                  Factores de ajuste
+                </h3>
+
+                <div
+                  class="equipment-data-list"
+                  id="listaFactores"
+                ></div>
+
+              </article>
+
+            </div>
+
+          </section>
+
+        </article>
+
+      </div>
+
+      <!-- ===================================================
+           PIE DE PÁGINA
+      ==================================================== -->
+
+      <footer class="app-footer">
+
+        <span>
+          Costos de Alquiler Equipo de Construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- =====================================================
+       MENSAJES
+  ====================================================== -->
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <!-- =====================================================
+       ARCHIVO DINÁMICO DEL EQUIPO
+       equipo.js creará e insertará la ruta correcta de datos.js
+  ====================================================== -->
+
+  <script
+    src="js/equipo.js"
+    defer
+  ></script>
+
+</body>
+
+</html>

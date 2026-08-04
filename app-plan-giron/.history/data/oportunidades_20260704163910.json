@@ -1,0 +1,276 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion":"Banco de oportunidades identificado a partir del Plan de Desarrollo Municipal de Girón 2024-2027. Estas oportunidades representan escenarios favorables para el crecimiento económico, social, institucional, ambiental y territorial del municipio.",
+
+  "sectores":[
+
+    {
+
+      "sector":"Salud y Protección Social",
+
+      "oportunidades":[
+
+        "Fortalecer la promoción y prevención en salud.",
+
+        "Implementar estrategias de salud digital.",
+
+        "Ampliar programas dirigidos a salud mental.",
+
+        "Incrementar la articulación con entidades del sector salud.",
+
+        "Gestionar nuevos recursos para programas de salud pública."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Educación",
+
+      "oportunidades":[
+
+        "Incorporar nuevas tecnologías en los procesos educativos.",
+
+        "Fortalecer la educación rural.",
+
+        "Impulsar alianzas con instituciones de educación superior.",
+
+        "Mejorar procesos de innovación educativa.",
+
+        "Ampliar programas de permanencia escolar."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Agricultura y Desarrollo Rural",
+
+      "oportunidades":[
+
+        "Fortalecer cadenas productivas agropecuarias.",
+
+        "Promover agricultura sostenible.",
+
+        "Gestionar recursos para infraestructura rural.",
+
+        "Impulsar procesos de transformación agroindustrial.",
+
+        "Fortalecer mercados campesinos."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Transporte",
+
+      "oportunidades":[
+
+        "Modernizar la infraestructura vial.",
+
+        "Promover movilidad sostenible.",
+
+        "Gestionar proyectos metropolitanos.",
+
+        "Implementar sistemas inteligentes de movilidad.",
+
+        "Fortalecer seguridad vial."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Ambiente y Desarrollo Sostenible",
+
+      "oportunidades":[
+
+        "Impulsar proyectos de conservación ambiental.",
+
+        "Fortalecer la protección de cuencas hidrográficas.",
+
+        "Promover educación ambiental.",
+
+        "Gestionar recursos para mitigación del cambio climático.",
+
+        "Desarrollar proyectos de economía circular."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Vivienda, Ciudad y Territorio",
+
+      "oportunidades":[
+
+        "Recuperar espacio público.",
+
+        "Fortalecer procesos de planificación urbana.",
+
+        "Gestionar proyectos de vivienda.",
+
+        "Ampliar cobertura de servicios públicos.",
+
+        "Desarrollar infraestructura urbana sostenible."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Inclusión Social y Reconciliación",
+
+      "oportunidades":[
+
+        "Fortalecer programas dirigidos a poblaciones vulnerables.",
+
+        "Ampliar procesos de participación ciudadana.",
+
+        "Promover inclusión social.",
+
+        "Fortalecer programas para juventud y adulto mayor.",
+
+        "Gestionar cooperación institucional."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Comercio, Industria y Turismo",
+
+      "oportunidades":[
+
+        "Posicionar a Girón como destino turístico.",
+
+        "Fortalecer el patrimonio histórico.",
+
+        "Impulsar el turismo cultural.",
+
+        "Promover el emprendimiento.",
+
+        "Atraer inversión privada."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Trabajo",
+
+      "oportunidades":[
+
+        "Fortalecer programas de empleo.",
+
+        "Impulsar emprendimientos.",
+
+        "Generar alianzas con el sector privado.",
+
+        "Promover formación para el trabajo.",
+
+        "Fortalecer economía local."
+
+      ]
+
+    },
+
+    {
+
+      "sector":"Gobierno Territorial",
+
+      "oportunidades":[
+
+        "Modernizar la administración municipal.",
+
+        "Fortalecer Gobierno Digital.",
+
+        "Incrementar transparencia institucional.",
+
+        "Gestionar recursos nacionales e internacionales.",
+
+        "Mejorar los sistemas de seguimiento del Plan."
+
+      ]
+
+    }
+
+  ],
+
+  "oportunidadesMunicipales":[
+
+    "Ubicación estratégica dentro del Área Metropolitana de Bucaramanga.",
+
+    "Reconocimiento nacional como municipio patrimonio.",
+
+    "Potencial de crecimiento turístico.",
+
+    "Fortalecimiento del desarrollo rural.",
+
+    "Mayor integración regional.",
+
+    "Acceso a fuentes de cofinanciación.",
+
+    "Implementación de transformación digital.",
+
+    "Aprovechamiento del crecimiento económico regional.",
+
+    "Fortalecimiento del tejido empresarial.",
+
+    "Desarrollo sostenible del territorio."
+
+  ],
+
+  "consultasIA":[
+
+    "¿Cuáles son las principales oportunidades de Girón?",
+
+    "¿Qué oportunidades identifica el Plan de Desarrollo?",
+
+    "¿Qué sectores tienen mayor potencial de crecimiento?",
+
+    "¿Qué oportunidades puede aprovechar un próximo alcalde?",
+
+    "¿Qué oportunidades pueden convertirse en proyectos estratégicos?"
+
+  ],
+
+  "utilidadApp":[
+
+    "Construcción automática del análisis DOFA.",
+
+    "Generación de propuestas de gobierno.",
+
+    "Preparación de campañas políticas.",
+
+    "Priorización de proyectos estratégicos.",
+
+    "Apoyo a la Inteligencia Artificial.",
+
+    "Generación automática de discursos.",
+
+    "Planeación del desarrollo municipal."
+
+  ],
+
+  "fuente":{
+
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "capitulo":"Diagnóstico General, Diagnósticos Sectoriales y Componente Estratégico"
+
+  }
+
+}

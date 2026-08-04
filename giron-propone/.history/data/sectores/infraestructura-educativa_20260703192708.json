@@ -1,0 +1,247 @@
+{
+  "id": "infraestructura-educativa",
+  "nombre": "Infraestructura educativa",
+  "icono": "🏫",
+  "color": "#6d5dfc",
+  "descripcion": "Construcción de colegios, ampliación de aulas, restauración de instituciones educativas y comedores escolares.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de alimentar con fuente oficial vigente",
+  "situacionActual": {
+    "titulo": "Educación con infraestructura digna para Girón",
+    "resumen": "Girón es un municipio con crecimiento urbano y expansión poblacional, lo que aumenta la presión sobre la infraestructura educativa existente. La campaña debe presentar una agenda que priorice sedes seguras, aulas suficientes, comedores escolares funcionales, mejoramiento de ambientes de aprendizaje y atención especial a instituciones urbanas y rurales.",
+    "enfoquePolitico": "La educación no se defiende solamente con discursos; se defiende garantizando espacios dignos donde los niños, niñas y jóvenes puedan aprender con seguridad, alimentación y oportunidades.",
+    "advertenciaDatos": "Las cifras deben verificarse y actualizarse con fuentes oficiales antes de usarse en debate, piezas publicitarias o documentos públicos."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Número de instituciones educativas oficiales",
+      "valor": null,
+      "unidad": "instituciones",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Educación / Alcaldía de Girón / Ministerio de Educación"
+    },
+    {
+      "indicador": "Número de sedes educativas urbanas",
+      "valor": null,
+      "unidad": "sedes",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Educación / SIMAT"
+    },
+    {
+      "indicador": "Número de sedes educativas rurales",
+      "valor": null,
+      "unidad": "sedes",
+      "estado": "pendiente",
+      "fuenteSugerida": "Secretaría de Educación / SIMAT"
+    },
+    {
+      "indicador": "Matrícula oficial",
+      "valor": null,
+      "unidad": "estudiantes",
+      "estado": "pendiente",
+      "fuenteSugerida": "SIMAT / Ministerio de Educación"
+    },
+    {
+      "indicador": "Sedes con necesidades de mantenimiento",
+      "valor": null,
+      "unidad": "sedes",
+      "estado": "pendiente",
+      "fuenteSugerida": "Plan de Desarrollo Municipal / Secretaría de Infraestructura"
+    },
+    {
+      "indicador": "Comedores escolares que requieren intervención",
+      "valor": null,
+      "unidad": "comedores",
+      "estado": "pendiente",
+      "fuenteSugerida": "PAE / Secretaría de Educación"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Deterioro de sedes educativas",
+      "descripcion": "Algunas sedes pueden presentar necesidades de mantenimiento, adecuación, cubiertas, baterías sanitarias, cerramientos, pintura, redes eléctricas o accesibilidad.",
+      "impacto": "Alto",
+      "poblacionObjetivo": "Estudiantes, docentes y familias"
+    },
+    {
+      "titulo": "Déficit o insuficiencia de aulas",
+      "descripcion": "El crecimiento poblacional puede generar presión sobre la capacidad instalada de colegios y sedes educativas.",
+      "impacto": "Alto",
+      "poblacionObjetivo": "Niños, niñas y jóvenes en edad escolar"
+    },
+    {
+      "titulo": "Necesidad de comedores escolares adecuados",
+      "descripcion": "La permanencia escolar se fortalece cuando los estudiantes cuentan con alimentación y espacios dignos para recibirla.",
+      "impacto": "Medio-Alto",
+      "poblacionObjetivo": "Estudiantes beneficiarios del PAE"
+    },
+    {
+      "titulo": "Brechas entre zona urbana y rural",
+      "descripcion": "Las sedes rurales requieren atención diferencial en infraestructura, conectividad, transporte y mantenimiento.",
+      "impacto": "Alto",
+      "poblacionObjetivo": "Comunidades rurales"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Aulas Dignas para Girón",
+      "objetivo": "Promover una agenda de control político y gestión para priorizar mantenimiento, ampliación y construcción de infraestructura educativa.",
+      "mensajeCentral": "Ningún niño de Girón debe estudiar en espacios deteriorados o insuficientes.",
+      "publicoObjetivo": [
+        "Padres de familia",
+        "Docentes",
+        "Estudiantes",
+        "Juntas de Acción Comunal"
+      ],
+      "accionesTerritoriales": [
+        "Visitar sedes educativas urbanas y rurales.",
+        "Levantar un mapa ciudadano de necesidades educativas.",
+        "Crear fichas por institución con problemas y posibles soluciones.",
+        "Proponer debates de control político sobre infraestructura educativa.",
+        "Gestionar recursos ante municipio, departamento y nación."
+      ]
+    },
+    {
+      "nombre": "Comedores para Aprender",
+      "objetivo": "Impulsar la adecuación de comedores escolares y espacios complementarios para fortalecer permanencia escolar.",
+      "mensajeCentral": "Un estudiante bien atendido aprende mejor y permanece en el sistema educativo.",
+      "publicoObjetivo": [
+        "Familias",
+        "Rectores",
+        "Asociaciones de padres",
+        "Comunidades vulnerables"
+      ],
+      "accionesTerritoriales": [
+        "Identificar instituciones sin comedor adecuado.",
+        "Priorizar sedes con mayor población vulnerable.",
+        "Promover seguimiento al PAE y a la infraestructura de apoyo.",
+        "Gestionar proyectos de adecuación y dotación."
+      ]
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre infraestructura educativa",
+    "duracion": "3 minutos",
+    "texto": "Girón no puede hablar de futuro si nuestros niños estudian en espacios deteriorados, insuficientes o sin las condiciones que merecen. La educación comienza en el aula, pero también necesita infraestructura digna, comedores escolares funcionando, baterías sanitarias adecuadas, sedes seguras y ambientes de aprendizaje que motiven a nuestros estudiantes.\n\nDesde el Concejo Municipal voy a impulsar una agenda seria de control político y gestión para que la inversión educativa llegue donde más se necesita: a los colegios, a las sedes rurales, a los comedores, a las aulas que requieren ampliación y a las instituciones que necesitan mantenimiento urgente.\n\nMi compromiso es claro: defender una educación con dignidad. Cada peso invertido en un colegio es una inversión en la seguridad, el aprendizaje y el futuro de Girón. No se trata solo de construir paredes; se trata de construir oportunidades para nuestros niños, jóvenes, familias y docentes."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "🏫 Girón necesita colegios dignos, aulas suficientes y comedores escolares adecuados. Mi compromiso será hacer control político y gestionar inversión para que la educación llegue con hechos a cada barrio y vereda.",
+    "facebook": "La educación se defiende con inversión real. Desde el Concejo impulsaremos una agenda para mejorar sedes educativas, ampliar aulas, fortalecer comedores escolares y priorizar las instituciones que más lo necesitan. Girón merece educación con dignidad.",
+    "instagram": "📚 Aulas dignas para Girón.\n🏫 Mejores colegios.\n🍽️ Comedores adecuados.\n👨‍👩‍👧 Familias tranquilas.\n🎯 Educación con hechos.",
+    "tiktok": "¿De qué sirve hablar de futuro si nuestros niños no tienen aulas dignas? Girón necesita inversión educativa seria: colegios seguros, comedores adecuados y sedes rurales atendidas."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Mejoramiento integral de sedes educativas",
+      "objetivo": "Intervenir infraestructura física priorizada en instituciones educativas oficiales.",
+      "componentes": [
+        "Cubiertas",
+        "Baterías sanitarias",
+        "Pintura",
+        "Redes eléctricas",
+        "Accesibilidad",
+        "Cerramientos"
+      ],
+      "fuentesFinanciacion": [
+        "SGP Educación",
+        "Recursos propios",
+        "Gobernación de Santander",
+        "Ministerio de Educación",
+        "SGR"
+      ]
+    },
+    {
+      "nombre": "Construcción y ampliación de aulas",
+      "objetivo": "Aumentar capacidad instalada en sectores con presión de matrícula.",
+      "componentes": [
+        "Aulas nuevas",
+        "Mobiliario",
+        "Ambientes complementarios",
+        "Conectividad"
+      ],
+      "fuentesFinanciacion": [
+        "Ministerio de Educación",
+        "FINDETER",
+        "SGR",
+        "Presupuesto municipal"
+      ]
+    },
+    {
+      "nombre": "Comedores escolares dignos",
+      "objetivo": "Adecuar y dotar espacios para alimentación escolar.",
+      "componentes": [
+        "Cocina",
+        "Comedor",
+        "Mesones",
+        "Ventilación",
+        "Equipos",
+        "Baterías sanitarias"
+      ],
+      "fuentesFinanciacion": [
+        "PAE",
+        "Recursos propios",
+        "Gobernación",
+        "Cooperación"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Cuántas sedes educativas requieren mantenimiento prioritario en Girón?",
+    "¿Qué presupuesto se ha destinado a infraestructura educativa en los últimos años?",
+    "¿Cuántos comedores escolares cumplen condiciones adecuadas?",
+    "¿Qué proyectos de ampliación o construcción educativa están formulados o pendientes?",
+    "¿Cómo se priorizan las sedes urbanas y rurales para inversión?"
+  ],
+  "controlPolitico": [
+    "Solicitar inventario actualizado del estado físico de las instituciones educativas.",
+    "Requerir informe de ejecución presupuestal en infraestructura educativa.",
+    "Hacer seguimiento a proyectos educativos incluidos en el Plan de Desarrollo.",
+    "Revisar contratación de mantenimiento escolar en SECOP.",
+    "Solicitar plan de intervención para sedes rurales."
+  ],
+  "fuentesFinanciacion": [
+    "Sistema General de Participaciones - Educación",
+    "Sistema General de Regalías",
+    "Recursos propios del municipio",
+    "Gobernación de Santander",
+    "Ministerio de Educación Nacional",
+    "FINDETER",
+    "Cooperación internacional"
+  ],
+  "normatividad": [
+    "Constitución Política de Colombia - derecho a la educación",
+    "Ley 115 de 1994 - Ley General de Educación",
+    "Ley 715 de 2001 - competencias y recursos del sector educación",
+    "Plan Nacional de Desarrollo vigente",
+    "Plan de Desarrollo Municipal vigente",
+    "Normas técnicas aplicables a infraestructura educativa"
+  ],
+  "ods": [
+    {
+      "numero": 4,
+      "nombre": "Educación de calidad"
+    },
+    {
+      "numero": 10,
+      "nombre": "Reducción de las desigualdades"
+    },
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Infraestructura Educativa",
+    "subtitulo": "Aulas dignas para Girón",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia de campaña",
+      "Discurso",
+      "Proyectos tipo",
+      "Fuentes de financiación"
+    ]
+  }
+}

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Entradas del equipo para el cálculo del costo horario y alquiler."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Entradas | Costos de Alquiler de Equipos
+  </title>
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- =====================================================
+         MENÚ LATERAL
+    ====================================================== -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTOS DE ALQUILER
+          </strong>
+
+          <span>
+            Equipo de Construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item"
+          href="index.html"
+        >
+          <span class="nav-icon">⌂</span>
+          <span>Inicio</span>
+        </a>
+
+        <div class="nav-section-title">
+          BASE DE DATOS
+        </div>
+
+        <a
+          class="nav-item active"
+          href="entradas.html"
+          aria-current="page"
+        >
+          <span class="nav-icon">1</span>
+          <span>Entradas</span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="calculo.html"
+        >
+          <span class="nav-icon">2</span>
+          <span>Cálculo</span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="resumen.html"
+        >
+          <span class="nav-icon">3</span>
+          <span>Resumen</span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="catalogo-modelos.html"
+        >
+          <span class="nav-icon">4</span>
+          <span>Catálogo de modelos</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+            <span class="status-dot" id="statusDot"></span>
+            <strong id="statusTitle">Cargando</strong>
+          </div>
+
+          <span id="statusDescription">
+            Consultando equipos disponibles
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+            <span class="topbar-eyebrow">SECCIÓN 1</span>
+            <h1>Entradas</h1>
+          </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <a
+            class="button button-secondary"
+            href="index.html"
+          >
+            Volver al inicio
+          </a>
+
+        </div>
+
+      </header>
+
+      <div class="page-content">
+
+        <!-- ===================================================
+             SELECCIÓN PRINCIPAL
+        ==================================================== -->
+
+        <section class="section-card full">
+
+          <div
+            style="
+              display:grid;
+              grid-template-columns:minmax(280px,1.2fr) minmax(180px,.6fr) minmax(180px,.6fr);
+              gap:18px;
+              align-items:end;
+            "
+          >
+
+            <div class="catalog-filter">
+
+              <label for="selectEquipo">
+                Seleccionar equipo
+              </label>
+
+              <select id="selectEquipo">
+
+                <option value="">
+                  Cargando equipos...
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="catalog-filter">
+
+              <label for="campoCodigo">
+                Código / modelo
+              </label>
+
+              <input
+                id="campoCodigo"
+                type="text"
+                readonly
+              >
+
+            </div>
+
+            <div class="catalog-filter">
+
+              <label for="campoFamilia">
+                Familia
+              </label>
+
+              <input
+                id="campoFamilia"
+                type="text"
+                readonly
+              >
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             RESUMEN VISUAL DEL EQUIPO
+        ==================================================== -->
+
+        <section
+          class="equipment-hero"
+          style="margin-top:24px;"
+        >
+
+          <div class="equipment-image">
+
+            <img
+              id="imagenEquipo"
+              src=""
+              alt="Imagen del equipo seleccionado"
+              hidden
+            >
+
+            <div
+              id="imagenFallback"
+              style="
+                height:100%;
+                min-height:340px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:5rem;
+              "
+            >
+              🚜
+            </div>
+
+          </div>
+
+          <div class="equipment-header">
+
+            <span class="section-kicker">
+              EQUIPO SELECCIONADO
+            </span>
+
+            <h2 id="datoNombre">
+              —
+            </h2>
+
+            <p id="datoReferencia">
+              Seleccione un equipo para cargar sus datos.
+            </p>
+
+            <div class="equipment-tags">
+
+              <span class="tag" id="datoRodaje">
+                Rodaje: —
+              </span>
+
+              <span class="tag" id="datoCombustible">
+                Combustible: —
+              </span>
+
+              <span class="tag" id="datoUnidadAlquiler">
+                Unidad: —
+              </span>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             TABLA TIPO EXCEL
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <div
+            style="
+              display:flex;
+              justify-content:space-between;
+              gap:18px;
+              align-items:end;
+              flex-wrap:wrap;
+              margin-bottom:18px;
+            "
+          >
+
+            <div>
+
+              <span class="section-kicker">
+                DATOS BASE
+              </span>
+
+              <h3 style="margin:6px 0 0;">
+                Parámetros de entrada
+              </h3>
+
+            </div>
+
+            <span style="color:var(--color-text-soft);">
+              Puede modificar los valores antes de continuar al cálculo.
+            </span>
+
+          </div>
+
+          <div class="table-responsive">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th style="width:28%;">Grupo</th>
+                  <th style="width:32%;">Parámetro</th>
+                  <th style="width:24%;">Valor</th>
+                  <th style="width:16%;">Unidad</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <!-- PROPIEDAD -->
+
+                <tr>
+                  <td rowspan="7"><strong>Propiedad y costos fijos</strong></td>
+                  <td>Precio de adquisición</td>
+                  <td><input id="precioAdquisicion" type="number" step="0.01"></td>
+                  <td>COP</td>
+                </tr>
+
+                <tr>
+                  <td>Valor de rescate</td>
+                  <td><input id="valorRescate" type="number" step="0.0001"></td>
+                  <td>%</td>
+                </tr>
+
+                <tr>
+                  <td>Vida útil</td>
+                  <td><input id="vidaUtilHoras" type="number" step="0.01"></td>
+                  <td>h</td>
+                </tr>
+
+                <tr>
+                  <td>Horas de trabajo por año</td>
+                  <td><input id="horasAnio" type="number" step="0.01"></td>
+                  <td>h/año</td>
+                </tr>
+
+                <tr>
+                  <td>Tasa de interés</td>
+                  <td><input id="tasaInteres" type="number" step="0.0001"></td>
+                  <td>%</td>
+                </tr>
+
+                <tr>
+                  <td>Seguro anual</td>
+                  <td><input id="seguroAnual" type="number" step="0.0001"></td>
+                  <td>%</td>
+                </tr>
+
+                <tr>
+                  <td>Mantenimiento fijo anual</td>
+                  <td><input id="mantenimientoFijoAnual" type="number" step="0.01"></td>
+                  <td>COP/año</td>
+                </tr>
+
+                <!-- COMBUSTIBLE -->
+
+                <tr>
+                  <td rowspan="2"><strong>Combustible</strong></td>
+                  <td>Consumo</td>
+                  <td><input id="consumoCombustible" type="number" step="0.0001"></td>
+                  <td>L/h</td>
+                </tr>
+
+                <tr>
+                  <td>Precio del combustible</td>
+                  <td><input id="precioCombustible" type="number" step="0.01"></td>
+                  <td>COP/L</td>
+                </tr>
+
+                <!-- LUBRICANTES -->
+
+                <tr>
+                  <td><strong>Lubricantes</strong></td>
+                  <td>Factor sobre combustible</td>
+                  <td><input id="factorLubricantes" type="number" step="0.0001"></td>
+                  <td>Factor</td>
+                </tr>
+
+                <!-- RODAJE -->
+
+                <tr>
+                  <td rowspan="2"><strong>Rodaje y desgaste</strong></td>
+                  <td>Costo del rodaje</td>
+                  <td><input id="costoRodaje" type="number" step="0.01"></td>
+                  <td>COP</td>
+                </tr>
+
+                <tr>
+                  <td>Vida del rodaje</td>
+                  <td><input id="vidaRodajeHoras" type="number" step="0.01"></td>
+                  <td>h</td>
+                </tr>
+
+                <!-- OPERADOR -->
+
+                <tr>
+                  <td rowspan="2"><strong>Operador</strong></td>
+                  <td>Costo mensual</td>
+                  <td><input id="operadorMes" type="number" step="0.01"></td>
+                  <td>COP/mes</td>
+                </tr>
+
+                <tr>
+                  <td>Horas mensuales</td>
+                  <td><input id="horasOperadorMes" type="number" step="0.01"></td>
+                  <td>h/mes</td>
+                </tr>
+
+                <!-- PRODUCCIÓN -->
+
+                <tr>
+                  <td rowspan="3"><strong>Producción</strong></td>
+                  <td>Margen de alquiler</td>
+                  <td><input id="margenAlquiler" type="number" step="0.0001"></td>
+                  <td>%</td>
+                </tr>
+
+                <tr>
+                  <td>Rendimiento</td>
+                  <td><input id="rendimiento" type="number" step="0.01"></td>
+                  <td id="unidadRendimientoTexto">—</td>
+                </tr>
+
+                <tr>
+                  <td>Unidad de rendimiento</td>
+                  <td><input id="unidadRendimiento" type="text"></td>
+                  <td>Texto</td>
+                </tr>
+
+                <!-- TRANSPORTE -->
+
+                <tr>
+                  <td rowspan="3"><strong>Transporte</strong></td>
+                  <td>Movilización</td>
+                  <td><input id="movilizacion" type="number" step="0.01"></td>
+                  <td>COP</td>
+                </tr>
+
+                <tr>
+                  <td>Desmovilización</td>
+                  <td><input id="desmovilizacion" type="number" step="0.01"></td>
+                  <td>COP</td>
+                </tr>
+
+                <tr>
+                  <td>Horas de amortización</td>
+                  <td><input id="horasAmortizacion" type="number" step="0.01"></td>
+                  <td>h</td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             ACCIONES
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <div
+            style="
+              display:flex;
+              flex-wrap:wrap;
+              gap:12px;
+              justify-content:flex-end;
+            "
+          >
+
+            <button
+              class="button button-secondary"
+              id="btnRestablecer"
+              type="button"
+            >
+              Restablecer datos
+            </button>
+
+            <button
+              class="button button-primary"
+              id="btnGuardarEntradas"
+              type="button"
+            >
+              Guardar entradas
+            </button>
+
+            <a
+              class="button button-primary"
+              href="calculo.html"
+            >
+              Continuar a Cálculo
+            </a>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             ERROR
+        ==================================================== -->
+
+        <div
+          class="error-panel"
+          id="panelError"
+          hidden
+          style="margin-top:24px;"
+        >
+
+          <strong>
+            No fue posible cargar las entradas.
+          </strong>
+
+          <p id="mensajeError"></p>
+
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+
+        <span>
+          Costos de Alquiler Equipo de Construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script
+    src="js/entradas.js"
+    defer
+  ></script>
+
+</body>
+
+</html>

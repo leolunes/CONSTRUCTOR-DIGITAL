@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Propuestas - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+<h1>Propuestas de Campaña</h1>
+<p>Ideas programáticas construidas a partir del diagnóstico del Plan de Desarrollo.</p>
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>Seleccione un sector</h2>
+
+<select id="selectorSector" onchange="cargarPropuestas()">
+<option value="">Seleccione un sector</option>
+</select>
+
+</section>
+
+<section class="card">
+
+<h2>Propuestas sugeridas</h2>
+
+<div id="contenedorPropuestas">
+<p class="texto-suave">Seleccione un sector para ver propuestas.</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Consulta Inteligente</h2>
+
+<textarea
+id="preguntaPropuestasIA"
+placeholder="Ejemplo: ¿Qué debería proponer un candidato para educación?">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaPropuestasIA','respuestaPropuestasIA')">
+Consultar IA
+</button>
+
+<div id="respuestaPropuestasIA"></div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="buscador.html">Buscar</a>
+<a href="control-politico.html">Control</a>
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ia.js"></script>
+
+<script>
+function cargarSelectPropuestas() {
+    const select = document.getElementById("selectorSector");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!select || !base.sectores || !base.sectores.sectores) return;
+
+    base.sectores.sectores.forEach(sector => {
+        const option = document.createElement("option");
+        option.value = sector.id;
+        option.textContent = sector.nombre;
+        select.appendChild(option);
+    });
+}
+
+function cargarPropuestas() {
+    const sectorId = document.getElementById("selectorSector").value;
+    const contenedor = document.getElementById("contenedorPropuestas");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!sectorId) {
+        contenedor.innerHTML = "<p class='texto-suave'>Seleccione un sector para ver propuestas.</p>";
+        return;
+    }
+
+    const bloque = base.propuestas.propuestas.find(item => item.sectorId === sectorId);
+
+    if (!bloque) {
+        contenedor.innerHTML = "<p class='texto-suave'>No hay propuestas registradas para este sector.</p>";
+        return;
+    }
+
+    contenedor.innerHTML = bloque.ideas.map(idea => `
+        <div class="propuesta">
+            <h4>Propuesta</h4>
+            <p>${idea}</p>
+        </div>
+    `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cargarSelectPropuestas, 700);
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Indicadores | Constructor MGA Pro</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Indicadores</div>
+      <div class="subtitle" id="indicadoresSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <a class="navbtn" id="btnRiesgos" href="#">Riesgos</a>
+    <a class="navbtn" id="btnCronograma" href="#">Cronograma</a>
+    <button class="navbtn primary" id="btnGuardarIndicadoresTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+<section class="card">
+  <div class="cardhead">
+    <div>
+      <h2>Indicadores del proyecto</h2>
+      <p class="muted small">
+        Genere indicadores desde la Cadena de Valor o registre indicadores manuales de producto, resultado, gestión e impacto.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid two">
+    <div class="item">
+      <div class="name">Indicadores de producto</div>
+      <div class="muted small">Se pueden generar automáticamente desde los productos de la Cadena de Valor.</div>
+    </div>
+
+    <div class="item">
+      <div class="name">Indicadores de gestión</div>
+      <div class="muted small">Permiten medir avance físico, financiero y cumplimiento de actividades.</div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+    <button class="btn primary" id="btnSugerirIndicadores" type="button">Generar desde Cadena de Valor</button>
+    <button class="btn" id="btnIndicadoresGestion" type="button">Agregar indicadores de gestión</button>
+  </div>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <form class="form" id="formIndicador">
+
+    <div class="cardhead">
+      <h2>Agregar indicador</h2>
+    </div>
+
+    <div class="grid two">
+      <div>
+        <label>Tipo de indicador</label>
+        <select id="tipoIndicador">
+          <option value="producto">Producto</option>
+          <option value="resultado">Resultado</option>
+          <option value="gestion">Gestión</option>
+          <option value="impacto">Impacto</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Nombre del indicador</label>
+        <input id="nombreIndicador" placeholder="Ej: Infraestructura construida">
+      </div>
+    </div>
+
+    <label style="margin-top:10px">Descripción</label>
+    <textarea id="descripcionIndicador" rows="3" placeholder="Explique qué mide el indicador..."></textarea>
+
+    <div class="grid two" style="margin-top:10px">
+      <div>
+        <label>Unidad de medida</label>
+        <input id="unidadIndicador" placeholder="Ej: Unidad, porcentaje, beneficiarios">
+      </div>
+
+      <div>
+        <label>Fuente de verificación</label>
+        <input id="fuenteIndicador" placeholder="Ej: Acta de recibo, informe de supervisión, registro administrativo">
+      </div>
+    </div>
+
+    <div class="grid two" style="margin-top:10px">
+      <div>
+        <label>Línea base</label>
+        <input id="lineaBaseIndicador" inputmode="decimal" placeholder="Ej: 0">
+      </div>
+
+      <div>
+        <label>Meta</label>
+        <input id="metaIndicador" inputmode="decimal" placeholder="Ej: 1">
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+      <button class="btn primary" type="submit">Agregar indicador</button>
+      <button class="btn" id="btnLimpiarIndicadores" type="button">Limpiar indicadores</button>
+    </div>
+
+  </form>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Indicadores registrados</h2>
+    <p class="muted small">Listado consolidado por tipo.</p>
+  </div>
+
+  <div class="tablewrap">
+    <table class="table" style="min-width:1120px">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Indicador</th>
+          <th>Unidad</th>
+          <th>Línea base</th>
+          <th>Meta</th>
+          <th>Fuente</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="indicadoresBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card" style="margin-top:14px">
+  <div class="cardhead">
+    <h2>Resumen de indicadores</h2>
+  </div>
+
+  <div id="resumenIndicadores"></div>
+</section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/indicadores.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Entradas para el cálculo del costo horario y alquiler de equipos de construcción."
+  >
+
+  <meta
+    name="theme-color"
+    content="#5b21b6"
+  >
+
+  <title>
+    Entradas | Costos de Alquiler de Equipos
+  </title>
+
+  <link
+    rel="manifest"
+    href="pwa/manifest.webmanifest"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- =====================================================
+         MENÚ LATERAL
+    ====================================================== -->
+
+    <aside
+      class="sidebar"
+      id="sidebar"
+    >
+
+      <div class="sidebar-brand">
+
+        <div class="brand-logo">
+
+          <img
+            src="assets/images/logo.png"
+            alt="Logo de la aplicación"
+            onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+          >
+
+          <div
+            class="brand-logo-fallback"
+            id="logoFallback"
+          >
+            CE
+          </div>
+
+        </div>
+
+        <div class="brand-text">
+
+          <strong>
+            COSTOS DE ALQUILER
+          </strong>
+
+          <span>
+            Equipo de Construcción
+          </span>
+
+        </div>
+
+      </div>
+
+      <nav
+        class="sidebar-nav"
+        aria-label="Navegación principal"
+      >
+
+        <a
+          class="nav-item"
+          href="index.html"
+        >
+          <span class="nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Inicio
+          </span>
+        </a>
+
+        <div class="nav-section-title">
+          BASE DE DATOS
+        </div>
+
+        <a
+          class="nav-item active"
+          href="entradas.html"
+          aria-current="page"
+        >
+          <span class="nav-icon">
+            1
+          </span>
+
+          <span>
+            Entradas
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="calculo.html"
+        >
+          <span class="nav-icon">
+            2
+          </span>
+
+          <span>
+            Cálculo
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="resumen.html"
+        >
+          <span class="nav-icon">
+            3
+          </span>
+
+          <span>
+            Resumen
+          </span>
+        </a>
+
+        <a
+          class="nav-item"
+          href="catalogo-modelos.html"
+        >
+          <span class="nav-icon">
+            4
+          </span>
+
+          <span>
+            Catálogo de modelos
+          </span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="status-card">
+
+          <div class="status-line">
+
+            <span
+              class="status-dot"
+              id="statusDot"
+            ></span>
+
+            <strong id="statusTitle">
+              Cargando
+            </strong>
+
+          </div>
+
+          <span id="statusDescription">
+            Consultando equipos disponibles
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button
+            class="menu-toggle"
+            id="btnMenu"
+            type="button"
+            aria-label="Abrir o cerrar menú"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+
+          <div>
+
+            <span class="topbar-eyebrow">
+              SECCIÓN 1
+            </span>
+
+            <h1>
+              Entradas
+            </h1>
+
+          </div>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <a
+            class="button button-secondary"
+            href="index.html"
+          >
+            Volver al inicio
+          </a>
+
+        </div>
+
+      </header>
+
+      <div class="page-content">
+
+        <!-- ===================================================
+             ENCABEZADO
+        ==================================================== -->
+
+        <section class="section-card full">
+
+          <span class="section-kicker">
+            PARÁMETROS DE ENTRADA
+          </span>
+
+          <h2>
+            Seleccione el equipo y revise sus datos base
+          </h2>
+
+          <p style="color:var(--color-text-soft); line-height:1.7;">
+            Los valores de esta sección corresponden a la información utilizada
+            para calcular el costo horario, la tarifa comercial y el costo por
+            unidad de producción.
+          </p>
+
+        </section>
+
+        <!-- ===================================================
+             SELECCIÓN DEL EQUIPO
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <div class="catalog-toolbar" style="margin-top:0; box-shadow:none;">
+
+            <div class="catalog-filter">
+
+              <label for="selectEquipo">
+                Equipo
+              </label>
+
+              <select id="selectEquipo">
+
+                <option value="">
+                  Cargando equipos...
+                </option>
+
+              </select>
+
+            </div>
+
+            <div class="catalog-filter">
+
+              <label for="campoCodigo">
+                Código / modelo
+              </label>
+
+              <input
+                id="campoCodigo"
+                type="text"
+                readonly
+                placeholder="Código del equipo"
+                style="min-height:46px; padding:0 12px; border:1px solid var(--color-border); border-radius:11px; background:var(--color-surface-soft);"
+              >
+
+            </div>
+
+            <div class="catalog-filter">
+
+              <label for="campoFamilia">
+                Familia
+              </label>
+
+              <input
+                id="campoFamilia"
+                type="text"
+                readonly
+                placeholder="Familia del equipo"
+                style="min-height:46px; padding:0 12px; border:1px solid var(--color-border); border-radius:11px; background:var(--color-surface-soft);"
+              >
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             IDENTIFICACIÓN
+        ==================================================== -->
+
+        <section class="details-grid">
+
+          <article class="detail-card">
+
+            <h3>
+              Identificación del equipo
+            </h3>
+
+            <div class="data-list">
+
+              <div class="data-row">
+                <span>Nombre</span>
+                <strong id="datoNombre">—</strong>
+              </div>
+
+              <div class="data-row">
+                <span>Referencia</span>
+                <strong id="datoReferencia">—</strong>
+              </div>
+
+              <div class="data-row">
+                <span>Rodaje</span>
+                <strong id="datoRodaje">—</strong>
+              </div>
+
+              <div class="data-row">
+                <span>Combustible</span>
+                <strong id="datoCombustible">—</strong>
+              </div>
+
+              <div class="data-row">
+                <span>Unidad de alquiler</span>
+                <strong id="datoUnidadAlquiler">—</strong>
+              </div>
+
+            </div>
+
+          </article>
+
+          <article class="detail-card">
+
+            <h3>
+              Imagen del equipo
+            </h3>
+
+            <div
+              class="equipment-image"
+              style="min-height:260px;"
+            >
+
+              <img
+                id="imagenEquipo"
+                src=""
+                alt="Imagen del equipo seleccionado"
+                hidden
+              >
+
+              <div
+                id="imagenFallback"
+                style="height:100%; min-height:260px; display:flex; align-items:center; justify-content:center; font-size:4rem;"
+              >
+                🚜
+              </div>
+
+            </div>
+
+          </article>
+
+        </section>
+
+        <!-- ===================================================
+             PROPIEDAD Y COSTOS FIJOS
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <h3>
+            Propiedad y costos fijos
+          </h3>
+
+          <div class="details-grid">
+
+            <div class="catalog-filter">
+              <label for="precioAdquisicion">Precio de adquisición (COP)</label>
+              <input id="precioAdquisicion" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="valorRescate">Valor de rescate (%)</label>
+              <input id="valorRescate" type="number" step="0.0001">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="vidaUtilHoras">Vida útil (horas)</label>
+              <input id="vidaUtilHoras" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="horasAnio">Horas de trabajo por año</label>
+              <input id="horasAnio" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="tasaInteres">Tasa de interés (%)</label>
+              <input id="tasaInteres" type="number" step="0.0001">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="seguroAnual">Seguro anual (%)</label>
+              <input id="seguroAnual" type="number" step="0.0001">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="mantenimientoFijoAnual">Mantenimiento fijo anual (COP)</label>
+              <input id="mantenimientoFijoAnual" type="number" step="0.01">
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             OPERACIÓN
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <h3>
+            Costos de operación
+          </h3>
+
+          <div class="details-grid">
+
+            <div class="catalog-filter">
+              <label for="consumoCombustible">Consumo de combustible (L/h)</label>
+              <input id="consumoCombustible" type="number" step="0.0001">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="precioCombustible">Precio del combustible (COP/L)</label>
+              <input id="precioCombustible" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="factorLubricantes">Factor de lubricantes</label>
+              <input id="factorLubricantes" type="number" step="0.0001">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="costoRodaje">Costo de rodaje (COP)</label>
+              <input id="costoRodaje" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="vidaRodajeHoras">Vida del rodaje (horas)</label>
+              <input id="vidaRodajeHoras" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="operadorMes">Costo operador mensual (COP)</label>
+              <input id="operadorMes" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="horasOperadorMes">Horas del operador al mes</label>
+              <input id="horasOperadorMes" type="number" step="0.01">
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             COMERCIAL Y PRODUCCIÓN
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <h3>
+            Parámetros comerciales y de producción
+          </h3>
+
+          <div class="details-grid">
+
+            <div class="catalog-filter">
+              <label for="margenAlquiler">Margen de alquiler (%)</label>
+              <input id="margenAlquiler" type="number" step="0.0001">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="rendimiento">Rendimiento</label>
+              <input id="rendimiento" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="unidadRendimiento">Unidad de rendimiento</label>
+              <input id="unidadRendimiento" type="text">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="movilizacion">Movilización (COP)</label>
+              <input id="movilizacion" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="desmovilizacion">Desmovilización (COP)</label>
+              <input id="desmovilizacion" type="number" step="0.01">
+            </div>
+
+            <div class="catalog-filter">
+              <label for="horasAmortizacion">Horas de amortización</label>
+              <input id="horasAmortizacion" type="number" step="0.01">
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             ACCIONES
+        ==================================================== -->
+
+        <section
+          class="section-card full"
+          style="margin-top:24px;"
+        >
+
+          <div
+            style="display:flex; flex-wrap:wrap; gap:12px; justify-content:flex-end;"
+          >
+
+            <button
+              class="button button-secondary"
+              id="btnRestablecer"
+              type="button"
+            >
+              Restablecer datos
+            </button>
+
+            <button
+              class="button button-primary"
+              id="btnGuardarEntradas"
+              type="button"
+            >
+              Guardar entradas
+            </button>
+
+            <a
+              class="button button-primary"
+              href="calculo.html"
+            >
+              Continuar a Cálculo
+            </a>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================
+             ESTADOS
+        ==================================================== -->
+
+        <div
+          class="error-panel"
+          id="panelError"
+          hidden
+          style="margin-top:24px;"
+        >
+
+          <strong>
+            No fue posible cargar las entradas.
+          </strong>
+
+          <p id="mensajeError"></p>
+
+        </div>
+
+      </div>
+
+      <footer class="app-footer">
+
+        <span>
+          Costos de Alquiler Equipo de Construcción
+        </span>
+
+        <span id="footerYear"></span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+  <div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <script
+    src="js/entradas.js"
+    defer
+  ></script>
+
+</body>
+
+</html>

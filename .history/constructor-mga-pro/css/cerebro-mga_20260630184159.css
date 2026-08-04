@@ -1,0 +1,43 @@
+/* =====================================
+   CEREBRO MGA
+   ===================================== */
+
+.cerebro-mga-card{
+  background:linear-gradient(180deg, rgba(17,24,39,.98), rgba(11,18,32,.98));
+  border:1px solid var(--border,#1f2937);
+  border-radius:18px;
+  padding:16px;
+  color:var(--text,#e5e7eb);
+}
+
+.cerebro-head{
+  margin-bottom:12px;
+}
+
+.cerebro-head h2{
+  margin:0 0 6px 0;
+  font-size:18px;
+}
+
+.cerebro-head p{
+  margin:0;
+  color:var(--muted,#9ca3af);
+  font-size:13px;
+}
+
+#txtIdeaCerebroMGA{
+  width:100%;
+  min-height:115px;
+  margin-top:8px;
+}
+
+.cerebro-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.cerebro-result{
+  margin-top:14px;
+}

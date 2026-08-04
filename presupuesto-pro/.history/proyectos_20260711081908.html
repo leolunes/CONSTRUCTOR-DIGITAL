@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Presupuesto PRO | Proyectos</title>
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <meta name="theme-color" content="#5b21b6"/>
+  <link rel="icon" href="assets/icon-192.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <img src="assets/icon-192.svg" alt="" style="width:30px;height:30px;border-radius:10px">
+    </div>
+    <div>
+      <div class="title">PRESUPUESTO PRO</div>
+      <div class="subtitle">Gestión inteligente de presupuestos y análisis de precios unitarios</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <button class="navbtn" id="btnNew" type="button">+ Nuevo proyecto</button>
+    <a class="navbtn" href="bases.html">Bases APU</a>
+    <button class="navbtn" id="btnInstallBase" type="button">Importar Base APU</button>
+    <input id="fileBase" type="file" accept=".xlsx,.xls" hidden>
+    <button class="navbtn" id="btnExport" type="button">Exportar backup</button>
+    <label class="navbtn filelike">Importar backup<input id="fileImport" type="file" accept="application/json" hidden></label>
+    <label class="navbtn filelike">Importar proyecto<input id="fileImportProject" type="file" accept="application/json" hidden></label>
+    <button class="navbtn danger" id="btnReset" type="button">Borrar todo</button>
+  </nav>
+</header>
+<main class="container">
+  <section class="hero">
+    <article class="hero-main">
+      <span class="hero-kicker">Presupuestos profesionales, simples y seguros</span>
+      <h1>Construya presupuestos de obra con mayor claridad y control</h1>
+      <p>Administre múltiples Bases APU, cree proyectos independientes y conserve toda la información de cada presupuesto sin afectar los demás.</p>
+      <div class="hero-actions">
+        <button class="btn primary" id="btnNewHero" type="button">+ Crear nuevo proyecto</button>
+        <a class="btn" href="bases.html">Administrar Bases APU</a>
+      </div>
+    </article>
+    <aside class="hero-side">
+      <div class="eyebrow">Trabajo organizado</div>
+      <h2>Una base distinta para cada proyecto</h2>
+      <p>Seleccione la Base APU que necesita al crear el proyecto y mantenga presupuestos totalmente independientes.</p>
+      <a class="btn" href="bases.html">Ver bases instaladas</a>
+    </aside>
+  </section>
+
+  <section class="grid kpis" id="kpis"></section>
+
+  <section class="feature-grid">
+    <article class="feature-card"><div class="feature-icon">📁</div><h3>Proyectos independientes</h3><p>Cada proyecto conserva su propia configuración, documentos y Base APU.</p></article>
+    <article class="feature-card"><div class="feature-icon">🧾</div><h3>Múltiples Bases APU</h3><p>Importe y administre diferentes bases sin reemplazar las anteriores.</p></article>
+    <article class="feature-card"><div class="feature-icon">📊</div><h3>Informes profesionales</h3><p>Genere presupuestos, APUs, resúmenes y documentos en PDF y Excel.</p></article>
+    <article class="feature-card"><div class="feature-icon">🔒</div><h3>Trabajo offline</h3><p>La información se conserva localmente mediante LocalStorage e IndexedDB.</p></article>
+  </section>
+
+  <section class="card" style="margin-top:18px">
+    <div class="cardhead">
+      <div class="row space">
+        <div>
+          <h2>Mis proyectos</h2>
+          <p class="muted small">Consulte, abra o elimine los proyectos guardados en este dispositivo.</p>
+        </div>
+        <a class="btn" href="bases.html">Ver Bases APU</a>
+      </div>
+      <div class="row space" style="margin-top:12px">
+        <input id="search" class="search" placeholder="Buscar por nombre, entidad, ubicación o Base APU…" />
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Proyecto</th><th>Entidad</th><th>Ubicación</th><th>Base APU</th><th>Actualizado</th><th>Total</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="lista"></tbody>
+      </table>
+    </div>
+    <div class="muted" id="empty" style="display:none;margin-top:12px">No hay proyectos para mostrar.</div>
+  </section>
+</main>
+<script src="js/db.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calc.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/base-import.js"></script>
+<script src="js/app.js"></script>
+<script>
+  document.getElementById("btnNewHero")?.addEventListener("click", function(){
+    document.getElementById("btnNew")?.click();
+  });
+</script>
+</body>
+</html>

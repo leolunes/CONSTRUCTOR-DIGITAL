@@ -1,0 +1,266 @@
+{
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "periodo": "2024-2027",
+
+  "descripcion": "Inventario de veredas y centros poblados rurales mencionados en el Plan de Desarrollo Municipal de Girón 2024-2027.",
+
+  "corregimiento": {
+    "nombre": "Sector Rural del Municipio de Girón",
+    "descripcion": "El Plan reconoce el territorio rural como un componente estratégico para el desarrollo agrícola, ambiental, turístico y de conservación del municipio."
+  },
+
+  "veredas": [
+
+    {
+      "id": "VER-001",
+      "nombre": "Acapulco",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Desarrollo Rural",
+        "Vías",
+        "Producción Agropecuaria"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Transporte"
+      ]
+    },
+
+    {
+      "id": "VER-002",
+      "nombre": "Altos de Andina",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Producción Agropecuaria",
+        "Ambiente"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Ambiente y Desarrollo Sostenible"
+      ]
+    },
+
+    {
+      "id": "VER-003",
+      "nombre": "Barro Blanco",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Producción Rural",
+        "Conectividad"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Transporte"
+      ]
+    },
+
+    {
+      "id": "VER-004",
+      "nombre": "Bocas",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Agua",
+        "Medio Ambiente"
+      ],
+      "sectoresPlan": [
+        "Ambiente y Desarrollo Sostenible"
+      ]
+    },
+
+    {
+      "id": "VER-005",
+      "nombre": "Carrizal",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Desarrollo Rural",
+        "Producción Agropecuaria"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural"
+      ]
+    },
+
+    {
+      "id": "VER-006",
+      "nombre": "Chocoita",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Agricultura",
+        "Ambiente"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Ambiente y Desarrollo Sostenible"
+      ]
+    },
+
+    {
+      "id": "VER-007",
+      "nombre": "El Cedro",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Bosque",
+        "Conservación"
+      ],
+      "sectoresPlan": [
+        "Ambiente y Desarrollo Sostenible"
+      ]
+    },
+
+    {
+      "id": "VER-008",
+      "nombre": "El Corregidor",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Producción Rural",
+        "Infraestructura"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Transporte"
+      ]
+    },
+
+    {
+      "id": "VER-009",
+      "nombre": "El Pantano",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Ambiente",
+        "Recursos Hídricos"
+      ],
+      "sectoresPlan": [
+        "Ambiente y Desarrollo Sostenible"
+      ]
+    },
+
+    {
+      "id": "VER-010",
+      "nombre": "El Palenque",
+      "categoria": "Centro Poblado Rural",
+      "temasRelacionados": [
+        "Servicios",
+        "Equipamientos",
+        "Desarrollo Rural"
+      ],
+      "sectoresPlan": [
+        "Vivienda, Ciudad y Territorio",
+        "Agricultura y Desarrollo Rural"
+      ]
+    },
+
+    {
+      "id": "VER-011",
+      "nombre": "Motoso",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Agricultura",
+        "Turismo Rural"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Comercio, Industria y Turismo"
+      ]
+    },
+
+    {
+      "id": "VER-012",
+      "nombre": "Palogordo",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Producción Agropecuaria",
+        "Movilidad Rural"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Transporte"
+      ]
+    },
+
+    {
+      "id": "VER-013",
+      "nombre": "Peñas",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Ambiente",
+        "Conservación"
+      ],
+      "sectoresPlan": [
+        "Ambiente y Desarrollo Sostenible"
+      ]
+    },
+
+    {
+      "id": "VER-014",
+      "nombre": "Quebrada Grande",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Recurso Hídrico",
+        "Producción Rural"
+      ],
+      "sectoresPlan": [
+        "Ambiente y Desarrollo Sostenible",
+        "Agricultura y Desarrollo Rural"
+      ]
+    },
+
+    {
+      "id": "VER-015",
+      "nombre": "Rio Frío",
+      "categoria": "Vereda",
+      "temasRelacionados": [
+        "Producción Agropecuaria",
+        "Turismo"
+      ],
+      "sectoresPlan": [
+        "Agricultura y Desarrollo Rural",
+        "Comercio, Industria y Turismo"
+      ]
+    }
+  ],
+
+  "analisisTerritorial": {
+
+    "vocacionPredominante": [
+      "Producción agropecuaria",
+      "Protección ambiental",
+      "Conservación de recursos hídricos",
+      "Turismo rural",
+      "Desarrollo sostenible"
+    ],
+
+    "sectoresConMayorRelacion": [
+      "Agricultura y Desarrollo Rural",
+      "Ambiente y Desarrollo Sostenible",
+      "Transporte",
+      "Comercio, Industria y Turismo"
+    ]
+
+  },
+
+  "consultasIA": [
+
+    "¿Qué veredas tiene Girón?",
+
+    "¿Qué proyectos rurales contempla el Plan?",
+
+    "¿Qué veredas tienen vocación agrícola?",
+
+    "¿Qué programas benefician el sector rural?",
+
+    "¿Qué inversiones contempla el Plan para la zona rural?",
+
+    "¿Qué propuestas puede formular un candidato para fortalecer el campo gironés?"
+
+  ],
+
+  "fuente": {
+    "documento": "Plan de Desarrollo Municipal Girón 2024-2027",
+    "capitulo": "Diagnóstico Territorial y Sector Rural",
+    "paginasReferencia": [
+      "Diagnóstico territorial rural",
+      "Caracterización del territorio rural"
+    ]
+  }
+}

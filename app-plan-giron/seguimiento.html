@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Seguimiento - Plan Girón</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+<h1>Seguimiento de Metas</h1>
+<p>Consulta de metas, indicadores y alertas del Plan de Desarrollo.</p>
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+<h2>Seleccione un sector</h2>
+
+<select id="selectorSectorSeguimiento" onchange="cargarSeguimiento()">
+<option value="">Seleccione un sector</option>
+</select>
+</section>
+
+<section class="card">
+<h2>Metas del sector</h2>
+<div id="contenedorSeguimiento">
+<p class="texto-suave">Seleccione un sector para consultar metas.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>Alertas de seguimiento</h2>
+<div id="contenedorAlertas">
+<p class="texto-suave">Alertas estratégicas del Plan.</p>
+</div>
+</section>
+
+<section class="card">
+<h2>Consulta Inteligente</h2>
+
+<textarea
+id="preguntaSeguimientoIA"
+placeholder="Ejemplo: ¿Qué metas debería vigilar un concejal?">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaSeguimientoIA','respuestaSeguimientoIA')">
+Consultar IA
+</button>
+
+<div id="respuestaSeguimientoIA"></div>
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+<a href="index.html">Inicio</a>
+<a href="sectores.html">Sectores</a>
+<a href="presupuesto.html">Presupuesto</a>
+<a href="comparador.html">Comparador</a>
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ia.js"></script>
+
+<script>
+function cargarSelectSeguimiento() {
+    const select = document.getElementById("selectorSectorSeguimiento");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!select || !base.sectores || !base.sectores.sectores) return;
+
+    base.sectores.sectores.forEach(sector => {
+        const option = document.createElement("option");
+        option.value = sector.id;
+        option.textContent = sector.nombre;
+        select.appendChild(option);
+    });
+
+    cargarAlertas();
+}
+
+function cargarSeguimiento() {
+    const sectorId = document.getElementById("selectorSectorSeguimiento").value;
+    const contenedor = document.getElementById("contenedorSeguimiento");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!sectorId) {
+        contenedor.innerHTML = "<p class='texto-suave'>Seleccione un sector para consultar metas.</p>";
+        return;
+    }
+
+    if (!base.metas || !base.metas.sectores) {
+        contenedor.innerHTML = "<p class='texto-suave'>No hay metas cargadas.</p>";
+        return;
+    }
+
+    const bloque = base.metas.sectores.find(item => item.sectorId === sectorId);
+
+    if (!bloque || !bloque.metas || bloque.metas.length === 0) {
+        contenedor.innerHTML = "<p class='texto-suave'>No hay metas registradas para este sector.</p>";
+        return;
+    }
+
+    contenedor.innerHTML = bloque.metas.map(meta => `
+        <div class="meta">
+            <h4>${meta.nombre}</h4>
+            <p>${meta.descripcion || ""}</p>
+            <p><strong>Tipo:</strong> ${meta.tipo || "Meta"}</p>
+            <span class="estado-meta estado-programada">${meta.estado || "Programada"}</span>
+        </div>
+    `).join("");
+}
+
+function cargarAlertas() {
+    const contenedor = document.getElementById("contenedorAlertas");
+    const base = window.BASE_CONOCIMIENTO || {};
+
+    if (!contenedor || !base.alertas || !base.alertas.alertas) return;
+
+    contenedor.innerHTML = base.alertas.alertas.map(alerta => `
+        <div class="alerta-estrategica">
+            <h4>${alerta.titulo}</h4>
+            <p>${alerta.descripcion}</p>
+            <p><strong>Nivel:</strong> ${alerta.nivel}</p>
+            <p><strong>Categoría:</strong> ${alerta.categoria}</p>
+        </div>
+    `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(cargarSelectSeguimiento, 700);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+{
+  "id": "deporte-recreacion",
+  "nombre": "Deporte y recreación",
+  "icono": "⚽",
+  "color": "#f97316",
+  "descripcion": "Canchas, coliseos, polideportivos, parques recreativos y espacios para la actividad física.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de actualización con fuentes oficiales",
+  "situacionActual": {
+    "titulo": "Más deporte, más salud y más oportunidades",
+    "resumen": "El fortalecimiento de la infraestructura deportiva y recreativa contribuye a la salud, la convivencia y la prevención de problemáticas sociales, especialmente entre niños y jóvenes.",
+    "enfoquePolitico": "Invertir en escenarios deportivos es invertir en bienestar, integración y seguridad ciudadana.",
+    "advertenciaDatos": "Los indicadores deben actualizarse con información oficial antes de su uso."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Canchas deportivas",
+      "valor": null,
+      "unidad": "escenarios",
+      "estado": "pendiente",
+      "fuente": "INDER / Alcaldía"
+    },
+    {
+      "indicador": "Polideportivos",
+      "valor": null,
+      "unidad": "escenarios",
+      "estado": "pendiente",
+      "fuente": "Secretaría de Deportes"
+    },
+    {
+      "indicador": "Coliseos",
+      "valor": null,
+      "unidad": "escenarios",
+      "estado": "pendiente",
+      "fuente": "Municipio"
+    },
+    {
+      "indicador": "Parques recreativos",
+      "valor": null,
+      "unidad": "parques",
+      "estado": "pendiente",
+      "fuente": "Planeación Municipal"
+    },
+    {
+      "indicador": "Escenarios que requieren mantenimiento",
+      "valor": null,
+      "unidad": "escenarios",
+      "estado": "pendiente",
+      "fuente": "Infraestructura"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Escenarios deteriorados",
+      "descripcion": "Muchos espacios deportivos requieren mantenimiento y modernización.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Cobertura insuficiente",
+      "descripcion": "Algunos barrios y veredas carecen de escenarios adecuados.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Déficit de iluminación",
+      "descripcion": "La falta de iluminación limita el uso seguro de los escenarios.",
+      "impacto": "Medio-Alto"
+    },
+    {
+      "titulo": "Falta de programación",
+      "descripcion": "Se requieren más actividades deportivas y recreativas permanentes.",
+      "impacto": "Medio"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Girón Activo",
+      "objetivo": "Recuperar y ampliar los escenarios deportivos del municipio.",
+      "mensajeCentral": "Cada barrio merece un espacio digno para el deporte."
+    },
+    {
+      "nombre": "Recreación para Todos",
+      "objetivo": "Promover actividades deportivas y recreativas permanentes.",
+      "mensajeCentral": "El deporte une, previene y transforma comunidades."
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre deporte y recreación",
+    "duracion": "3 minutos",
+    "texto": "El deporte no solo forma atletas; forma ciudadanos. Desde el Concejo impulsaremos la recuperación de canchas, polideportivos, coliseos y parques recreativos para que niños, jóvenes, adultos y personas mayores tengan espacios seguros donde practicar deporte, compartir en familia y fortalecer la convivencia."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "⚽ Más escenarios deportivos para Girón. El deporte también construye futuro.",
+    "facebook": "Recuperar escenarios deportivos significa ofrecer oportunidades a nuestros niños y jóvenes. Trabajaremos por un Girón más activo.",
+    "instagram": "⚽🏀🎾 Más deporte. Más salud. Más comunidad.",
+    "tiktok": "Cada cancha recuperada es una oportunidad menos para la violencia y una oportunidad más para nuestros jóvenes."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Mejoramiento de escenarios deportivos",
+      "componentes": [
+        "Cubiertas",
+        "Iluminación",
+        "Graderías",
+        "Cerramientos",
+        "Pisos"
+      ],
+      "fuentes": [
+        "Municipio",
+        "Ministerio del Deporte",
+        "SGR"
+      ]
+    },
+    {
+      "nombre": "Construcción de parques recreativos",
+      "componentes": [
+        "Juegos",
+        "Senderos",
+        "Gimnasios al aire libre"
+      ],
+      "fuentes": [
+        "Municipio",
+        "Gobernación"
+      ]
+    },
+    {
+      "nombre": "Dotación deportiva",
+      "componentes": [
+        "Implementos",
+        "Mobiliario",
+        "Señalización"
+      ],
+      "fuentes": [
+        "Recursos propios",
+        "Patrocinios"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Cuántos escenarios deportivos requieren intervención?",
+    "¿Qué presupuesto se destina al mantenimiento deportivo?",
+    "¿Qué barrios carecen de parques o canchas?"
+  ],
+  "controlPolitico": [
+    "Solicitar inventario actualizado de escenarios deportivos.",
+    "Revisar ejecución presupuestal del sector deporte.",
+    "Verificar contratos de mantenimiento y construcción."
+  ],
+  "fuentesFinanciacion": [
+    "Ministerio del Deporte",
+    "Recursos propios",
+    "Sistema General de Regalías",
+    "Gobernación de Santander"
+  ],
+  "normatividad": [
+    "Ley 181 de 1995",
+    "Ley 2023 de 2020",
+    "Plan de Desarrollo Municipal"
+  ],
+  "ods": [
+    {
+      "numero": 3,
+      "nombre": "Salud y bienestar"
+    },
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Deporte y Recreación",
+    "subtitulo": "Girón Activo",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia",
+      "Discurso",
+      "Proyectos",
+      "Financiación"
+    ]
+  }
+}

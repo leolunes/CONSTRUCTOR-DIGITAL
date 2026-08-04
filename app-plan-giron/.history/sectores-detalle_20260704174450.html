@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ficha Sectorial</title>
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1 id="tituloSector">
+Sector
+</h1>
+
+<p id="descripcionSector">
+Cargando información...
+</p>
+
+</header>
+
+<main class="contenedor">
+
+<section class="card">
+
+<h2>Resumen Ejecutivo</h2>
+
+<div id="resumenSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Presupuesto</h2>
+
+<div id="presupuestoSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Problemáticas</h2>
+
+<div id="problematicasSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Fortalezas</h2>
+
+<div id="fortalezasSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Debilidades</h2>
+
+<div id="debilidadesSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Oportunidades</h2>
+
+<div id="oportunidadesSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Riesgos</h2>
+
+<div id="riesgosSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Programas</h2>
+
+<div id="programasSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Proyectos</h2>
+
+<div id="proyectosSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Metas</h2>
+
+<div id="metasSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Indicadores</h2>
+
+<div id="indicadoresSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>ODS Relacionados</h2>
+
+<div id="odsSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Preguntas de Control Político</h2>
+
+<div id="controlSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Propuestas para Candidatos</h2>
+
+<div id="propuestasSector"></div>
+
+</section>
+
+<section class="card">
+
+<h2>Consultar a la IA sobre este Sector</h2>
+
+<textarea
+id="preguntaIA"
+placeholder="Ejemplo: ¿Qué debería proponer un candidato para este sector?">
+</textarea>
+
+<br><br>
+
+<button
+class="botonPrincipal"
+onclick="consultarIA('preguntaIA','respuestaIA')">
+
+Consultar
+
+</button>
+
+<div id="respuestaIA"></div>
+
+</section>
+
+</main>
+
+<nav class="nav-inferior">
+
+<a href="index.html">Inicio</a>
+
+<a href="sectores.html">Sectores</a>
+
+<a href="buscador.html">Buscar</a>
+
+<a href="propuestas.html">Propuestas</a>
+
+</nav>
+
+<script src="js/data-loader.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ia.js"></script>
+<script src="js/app.js"></script>
+<script src="js/sector-detalle.js"></script>
+
+</body>
+
+</html>

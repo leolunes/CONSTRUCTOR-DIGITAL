@@ -1,0 +1,378 @@
+{
+  "municipio":"Girón",
+  "departamento":"Santander",
+  "periodo":"2024-2027",
+
+  "descripcion":"Banco de indicadores estratégicos del municipio construidos a partir del Plan de Desarrollo. Estos indicadores servirán para el tablero de control, seguimiento del Plan, Inteligencia Artificial y análisis político.",
+
+  "categorias":[
+
+    {
+
+      "nombre":"Salud",
+
+      "indicadores":[
+
+        {
+
+          "id":"SAL-001",
+
+          "nombre":"Cobertura del aseguramiento en salud",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje",
+
+          "objetivo":"Garantizar acceso a los servicios de salud."
+
+        },
+
+        {
+
+          "id":"SAL-002",
+
+          "nombre":"Cobertura de vacunación",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"SAL-003",
+
+          "nombre":"Mortalidad infantil",
+
+          "tipo":"Impacto",
+
+          "unidad":"Tasa"
+
+        },
+
+        {
+
+          "id":"SAL-004",
+
+          "nombre":"Cobertura en promoción y prevención",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "nombre":"Educación",
+
+      "indicadores":[
+
+        {
+
+          "id":"EDU-001",
+
+          "nombre":"Cobertura educativa",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"EDU-002",
+
+          "nombre":"Deserción escolar",
+
+          "tipo":"Impacto",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"EDU-003",
+
+          "nombre":"Calidad educativa",
+
+          "tipo":"Resultado",
+
+          "unidad":"Índice"
+
+        },
+
+        {
+
+          "id":"EDU-004",
+
+          "nombre":"Permanencia escolar",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "nombre":"Finanzas Públicas",
+
+      "indicadores":[
+
+        {
+
+          "id":"FIN-001",
+
+          "nombre":"Ejecución presupuestal",
+
+          "tipo":"Gestión",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"FIN-002",
+
+          "nombre":"Inversión por habitante",
+
+          "tipo":"Resultado",
+
+          "unidad":"Pesos"
+
+        },
+
+        {
+
+          "id":"FIN-003",
+
+          "nombre":"Participación por sectores",
+
+          "tipo":"Gestión",
+
+          "unidad":"Porcentaje"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "nombre":"Movilidad",
+
+      "indicadores":[
+
+        {
+
+          "id":"MOV-001",
+
+          "nombre":"Accidentalidad vial",
+
+          "tipo":"Impacto",
+
+          "unidad":"Casos"
+
+        },
+
+        {
+
+          "id":"MOV-002",
+
+          "nombre":"Kilómetros intervenidos",
+
+          "tipo":"Producto",
+
+          "unidad":"Kilómetros"
+
+        },
+
+        {
+
+          "id":"MOV-003",
+
+          "nombre":"Estado de la red vial",
+
+          "tipo":"Resultado",
+
+          "unidad":"Porcentaje"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "nombre":"Ambiente",
+
+      "indicadores":[
+
+        {
+
+          "id":"AMB-001",
+
+          "nombre":"Áreas protegidas",
+
+          "tipo":"Resultado",
+
+          "unidad":"Hectáreas"
+
+        },
+
+        {
+
+          "id":"AMB-002",
+
+          "nombre":"Calidad del agua",
+
+          "tipo":"Resultado",
+
+          "unidad":"Índice"
+
+        },
+
+        {
+
+          "id":"AMB-003",
+
+          "nombre":"Gestión del riesgo",
+
+          "tipo":"Resultado",
+
+          "unidad":"Índice"
+
+        }
+
+      ]
+
+    },
+
+    {
+
+      "nombre":"Gobierno",
+
+      "indicadores":[
+
+        {
+
+          "id":"GOB-001",
+
+          "nombre":"Cumplimiento del Plan de Desarrollo",
+
+          "tipo":"Gestión",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"GOB-002",
+
+          "nombre":"Cumplimiento de metas",
+
+          "tipo":"Gestión",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"GOB-003",
+
+          "nombre":"Cumplimiento de indicadores",
+
+          "tipo":"Gestión",
+
+          "unidad":"Porcentaje"
+
+        },
+
+        {
+
+          "id":"GOB-004",
+
+          "nombre":"Cumplimiento de proyectos",
+
+          "tipo":"Gestión",
+
+          "unidad":"Porcentaje"
+
+        }
+
+      ]
+
+    }
+
+  ],
+
+  "semaforizacion":{
+
+    "verde":"Cumplimiento superior al 80%.",
+
+    "amarillo":"Cumplimiento entre 60% y 79%.",
+
+    "rojo":"Cumplimiento inferior al 60%."
+
+  },
+
+  "consultasIA":[
+
+    "¿Cuáles son los indicadores más importantes del municipio?",
+
+    "¿Qué indicadores debería revisar un concejal?",
+
+    "¿Qué indicadores muestran el desempeño del alcalde?",
+
+    "¿Qué indicadores deben mejorar?",
+
+    "¿Cómo va el cumplimiento del Plan de Desarrollo?"
+
+  ],
+
+  "utilidadApp":[
+
+    "Dashboard Ejecutivo.",
+
+    "Semáforos automáticos.",
+
+    "Alertas de incumplimiento.",
+
+    "Gráficas.",
+
+    "Control político.",
+
+    "Rendición de cuentas.",
+
+    "Inteligencia Artificial.",
+
+    "Análisis comparativos."
+
+  ],
+
+  "fuente":{
+
+    "documento":"Plan de Desarrollo Municipal Girón 2024-2027",
+
+    "capitulo":"Indicadores, Metas y Sistema de Seguimiento"
+
+  }
+
+}

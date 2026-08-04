@@ -1,0 +1,225 @@
+/* ==========================================================
+   APP PLAN GIRÓN 2024 - 2027
+   Diseño adaptable para celular, tablet y escritorio
+   ========================================================== */
+
+/* =========================
+   TABLET GRANDE
+========================= */
+
+@media (max-width: 1100px) {
+
+    .contenedor {
+        width: 94%;
+    }
+
+    .grid-resumen {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-sectores {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-estadisticas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================
+   TABLET PEQUEÑA
+========================= */
+
+@media (max-width: 820px) {
+
+    h1 {
+        font-size: 1.65rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    .header {
+        padding: 28px 16px 32px;
+        border-bottom-left-radius: 22px;
+        border-bottom-right-radius: 22px;
+    }
+
+    .header h1 {
+        font-size: 1.65rem;
+    }
+
+    .hero {
+        padding: 24px 18px;
+    }
+
+    .hero h2 {
+        font-size: 1.45rem;
+    }
+
+    .grid-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .detalle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .comparador-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .poblacion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .encabezado-seccion {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding-bottom: 90px;
+    }
+
+    .contenedor {
+        width: 92%;
+        margin: 22px auto;
+    }
+
+    .header {
+        padding: 24px 14px 30px;
+    }
+
+    .header h1 {
+        font-size: 1.42rem;
+    }
+
+    .header p {
+        font-size: 0.92rem;
+    }
+
+    .hero {
+        padding: 22px 16px;
+        border-radius: 18px;
+    }
+
+    .hero h2 {
+        font-size: 1.25rem;
+    }
+
+    .buscador-inicio,
+    .buscador-local {
+        flex-direction: column;
+    }
+
+    .buscador-inicio button,
+    .botonPrincipal {
+        width: 100%;
+    }
+
+    .grid-resumen,
+    .grid-menu,
+    .grid-sectores,
+    .dashboard,
+    .grid-estadisticas,
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .poblacion-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card,
+    .card-sector,
+    .comparador-columna,
+    .dashboard-card {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .card-sector {
+        min-height: auto;
+    }
+
+    .eje span {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    .eje h3 {
+        padding-right: 0;
+    }
+
+    .presupuesto-card .valor {
+        font-size: 1.55rem;
+    }
+
+    .presupuesto-lista li {
+        flex-direction: column;
+    }
+
+    .nav-inferior {
+        padding: 9px 4px;
+    }
+
+    .nav-inferior a {
+        font-size: 0.75rem;
+        padding: 7px 6px;
+    }
+
+    table {
+        min-width: 520px;
+    }
+}
+
+/* =========================
+   CELULAR PEQUEÑO
+========================= */
+
+@media (max-width: 390px) {
+
+    .header h1 {
+        font-size: 1.25rem;
+    }
+
+    .header p {
+        font-size: 0.86rem;
+    }
+
+    .hero h2 {
+        font-size: 1.15rem;
+    }
+
+    .card h2 {
+        font-size: 1.12rem;
+    }
+
+    .nav-inferior a {
+        font-size: 0.68rem;
+    }
+}

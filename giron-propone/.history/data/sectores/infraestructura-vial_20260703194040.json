@@ -1,0 +1,184 @@
+{
+  "id": "infraestructura-vial",
+  "nombre": "Infraestructura vial",
+  "icono": "🛣️",
+  "color": "#ffb84d",
+  "descripcion": "Pavimentación urbana y rural, placa huella, puentes y vías terciarias.",
+  "municipio": "Girón",
+  "departamento": "Santander",
+  "ultimaActualizacion": "Pendiente de actualizar con información oficial",
+  "situacionActual": {
+    "titulo": "Movilidad segura y competitiva para Girón",
+    "resumen": "El crecimiento urbano y la expansión hacia nuevos sectores exigen una red vial en mejores condiciones. La conectividad urbana y rural influye directamente en la economía, la seguridad, el turismo y la calidad de vida.",
+    "enfoquePolitico": "La infraestructura vial debe planificarse con criterios técnicos, priorizando los sectores con mayor impacto social y económico.",
+    "advertenciaDatos": "Las cifras deben ser verificadas con fuentes oficiales antes de su utilización."
+  },
+  "estadisticas": [
+    {
+      "indicador": "Kilómetros de vías urbanas pavimentadas",
+      "valor": null,
+      "unidad": "km",
+      "estado": "pendiente",
+      "fuente": "Alcaldía de Girón"
+    },
+    {
+      "indicador": "Kilómetros de vías terciarias",
+      "valor": null,
+      "unidad": "km",
+      "estado": "pendiente",
+      "fuente": "INVÍAS / Municipio"
+    },
+    {
+      "indicador": "Puentes que requieren intervención",
+      "valor": null,
+      "unidad": "puentes",
+      "estado": "pendiente",
+      "fuente": "Secretaría de Infraestructura"
+    },
+    {
+      "indicador": "Sectores con déficit de pavimento",
+      "valor": null,
+      "unidad": "sectores",
+      "estado": "pendiente",
+      "fuente": "Plan de Desarrollo"
+    },
+    {
+      "indicador": "Placas huella requeridas",
+      "valor": null,
+      "unidad": "proyectos",
+      "estado": "pendiente",
+      "fuente": "Banco de Proyectos"
+    }
+  ],
+  "problemas": [
+    {
+      "titulo": "Deterioro de la malla vial",
+      "descripcion": "Calles y carreras con desgaste que afectan la movilidad.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Déficit de vías rurales",
+      "descripcion": "Veredas con dificultades de acceso durante temporadas de lluvia.",
+      "impacto": "Alto"
+    },
+    {
+      "titulo": "Insuficiencia de puentes y obras de drenaje",
+      "descripcion": "Infraestructura que limita la conectividad.",
+      "impacto": "Medio-Alto"
+    },
+    {
+      "titulo": "Congestión urbana",
+      "descripcion": "Crecimiento urbano sin mejoras proporcionales en la red vial.",
+      "impacto": "Alto"
+    }
+  ],
+  "estrategiasCampaña": [
+    {
+      "nombre": "Girón se mueve mejor",
+      "objetivo": "Priorizar inversiones en pavimentación, mantenimiento y movilidad.",
+      "mensajeCentral": "Mejores vías significan mejor calidad de vida y desarrollo económico."
+    },
+    {
+      "nombre": "Conectividad rural",
+      "objetivo": "Impulsar placa huella, puentes y mantenimiento de vías terciarias.",
+      "mensajeCentral": "Las veredas también merecen vías seguras y transitables."
+    }
+  ],
+  "discurso": {
+    "titulo": "Discurso sobre infraestructura vial",
+    "duracion": "3 minutos",
+    "texto": "Girón necesita vías que conecten oportunidades. Desde el Concejo promoveré una agenda de control político y gestión para priorizar la pavimentación, el mantenimiento de la malla vial, la construcción de placa huella y el fortalecimiento de la conectividad rural. Una buena vía mejora la seguridad, impulsa el comercio, facilita el acceso a la educación y la salud, y genera desarrollo para todo el municipio."
+  },
+  "publicacionesRedes": {
+    "whatsapp": "🛣️ Girón merece mejores vías. Trabajaremos por pavimentación, mantenimiento y conectividad urbana y rural.",
+    "facebook": "La movilidad también es calidad de vida. Nuestra propuesta es impulsar una agenda seria para mejorar la infraestructura vial de Girón.",
+    "instagram": "🚧 Más pavimento. 🌉 Más puentes. 🚜 Más vías rurales. #GirónSeMueve",
+    "tiktok": "Las buenas vías no son un lujo, son desarrollo. Trabajemos por un Girón mejor conectado."
+  },
+  "proyectosTipo": [
+    {
+      "nombre": "Pavimentación urbana",
+      "componentes": [
+        "Pavimento",
+        "Andenes",
+        "Señalización",
+        "Drenajes"
+      ],
+      "fuentes": [
+        "Municipio",
+        "SGR",
+        "Gobernación"
+      ]
+    },
+    {
+      "nombre": "Programa de placa huella",
+      "componentes": [
+        "Placa huella",
+        "Alcantarillas",
+        "Obras de drenaje"
+      ],
+      "fuentes": [
+        "INVÍAS",
+        "SGR",
+        "Municipio"
+      ]
+    },
+    {
+      "nombre": "Rehabilitación de puentes",
+      "componentes": [
+        "Estructura",
+        "Barandas",
+        "Accesos"
+      ],
+      "fuentes": [
+        "INVÍAS",
+        "Gobernación"
+      ]
+    }
+  ],
+  "preguntasDebate": [
+    "¿Qué porcentaje de la malla vial requiere intervención?",
+    "¿Qué proyectos de pavimentación están priorizados?",
+    "¿Cuál es el estado de las vías rurales?"
+  ],
+  "controlPolitico": [
+    "Solicitar inventario de la malla vial.",
+    "Revisar ejecución presupuestal de infraestructura vial.",
+    "Verificar contratos publicados en SECOP."
+  ],
+  "fuentesFinanciacion": [
+    "Recursos propios",
+    "SGR",
+    "INVÍAS",
+    "Ministerio de Transporte",
+    "Gobernación de Santander"
+  ],
+  "normatividad": [
+    "Ley 105 de 1993",
+    "Ley 1682 de 2013",
+    "Plan de Desarrollo Municipal"
+  ],
+  "ods": [
+    {
+      "numero": 9,
+      "nombre": "Industria, innovación e infraestructura"
+    },
+    {
+      "numero": 11,
+      "nombre": "Ciudades y comunidades sostenibles"
+    }
+  ],
+  "pdf": {
+    "titulo": "Ficha Programática - Infraestructura Vial",
+    "subtitulo": "Girón se mueve mejor",
+    "secciones": [
+      "Situación actual",
+      "Estadísticas",
+      "Problemas",
+      "Estrategia",
+      "Discurso",
+      "Proyectos",
+      "Financiación"
+    ]
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "descripcion": "Banco de propuestas de campaña formuladas a partir de los sectores y necesidades identificadas en el Plan de Desarrollo Municipal.",
+
+  "propuestas": [
+    {
+      "sectorId": "salud-proteccion-social",
+      "sector": "Salud",
+      "ideas": [
+        "Implementar brigadas de salud preventiva en barrios y veredas.",
+        "Fortalecer programas de vacunación y promoción de hábitos saludables.",
+        "Crear una estrategia de atención integral para adultos mayores y población vulnerable.",
+        "Impulsar un observatorio municipal de salud pública."
+      ]
+    },
+    {
+      "sectorId": "educacion",
+      "sector": "Educación",
+      "ideas": [
+        "Fortalecer la permanencia escolar con acompañamiento familiar y comunitario.",
+        "Crear un programa de apoyo académico para mejorar resultados educativos.",
+        "Impulsar becas, estímulos y orientación vocacional para jóvenes.",
+        "Fortalecer la alimentación escolar y el transporte escolar donde aplique."
+      ]
+    },
+    {
+      "sectorId": "transporte",
+      "sector": "Transporte",
+      "ideas": [
+        "Diseñar un plan de movilidad segura para puntos críticos del municipio.",
+        "Mejorar vías urbanas y rurales priorizando sectores con mayor necesidad.",
+        "Promover cultura vial para reducir accidentalidad.",
+        "Impulsar rutas escolares y peatonales seguras."
+      ]
+    },
+    {
+      "sectorId": "ambiente-desarrollo-sostenible",
+      "sector": "Ambiente y Desarrollo Sostenible",
+      "ideas": [
+        "Crear el programa Girón Verde y Resiliente.",
+        "Proteger microcuencas y ecosistemas estratégicos.",
+        "Fortalecer la educación ambiental comunitaria.",
+        "Implementar acciones preventivas en zonas de riesgo."
+      ]
+    },
+    {
+      "sectorId": "vivienda-ciudad-territorio",
+      "sector": "Vivienda, Ciudad y Territorio",
+      "ideas": [
+        "Crear un banco municipal de mejoramiento de vivienda.",
+        "Priorizar saneamiento básico en sectores vulnerables.",
+        "Recuperar parques y zonas verdes comunitarias.",
+        "Gestionar vivienda digna para familias de menores ingresos."
+      ]
+    },
+    {
+      "sectorId": "inclusion-social-reconciliacion",
+      "sector": "Inclusión Social y Reconciliación",
+      "ideas": [
+        "Crear una ruta integral de atención al adulto mayor.",
+        "Fortalecer programas para mujeres, familias y juventudes.",
+        "Implementar un programa de cuidado al cuidador.",
+        "Mejorar la atención a personas con discapacidad, víctimas y población migrante."
+      ]
+    },
+    {
+      "sectorId": "comercio-industria-turismo",
+      "sector": "Comercio, Industria y Turismo",
+      "ideas": [
+        "Impulsar la marca turística Girón Monumento Vivo.",
+        "Fortalecer el turismo histórico, cultural y gastronómico.",
+        "Apoyar al comercio local con formación, promoción y digitalización.",
+        "Crear rutas turísticas articuladas con patrimonio, cultura y emprendimiento."
+      ]
+    },
+    {
+      "sectorId": "trabajo",
+      "sector": "Trabajo",
+      "ideas": [
+        "Crear una ruta joven al primer empleo.",
+        "Fortalecer emprendimientos locales con formación y acompañamiento.",
+        "Gestionar alianzas con empresas para empleabilidad.",
+        "Promover formalización laboral y empresarial."
+      ]
+    },
+    {
+      "sectorId": "deporte-recreacion",
+      "sector": "Deporte y Recreación",
+      "ideas": [
+        "Crear escuelas deportivas por barrios y veredas.",
+        "Implementar juegos interbarrios e interveredales.",
+        "Mejorar escenarios deportivos comunitarios.",
+        "Usar el deporte como estrategia de prevención social."
+      ]
+    },
+    {
+      "sectorId": "gobierno-territorial",
+      "sector": "Gobierno Territorial",
+      "ideas": [
+        "Implementar un tablero ciudadano de seguimiento al Plan de Desarrollo.",
+        "Fortalecer la rendición de cuentas por sectores.",
+        "Crear una escuela de liderazgo comunal.",
+        "Modernizar trámites municipales mediante herramientas digitales."
+      ]
+    }
+  ]
+}

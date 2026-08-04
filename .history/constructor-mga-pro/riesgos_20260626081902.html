@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Riesgos | Constructor MGA Pro</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Matriz de Riesgos</div>
+      <div class="subtitle" id="riesgosSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <a class="navbtn" id="btnIndicadores" href="#">Indicadores</a>
+    <a class="navbtn" id="btnCronograma" href="#">Cronograma</a>
+    <button class="navbtn primary" id="btnGuardarRiesgosTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <div class="cardhead">
+      <div>
+        <h2>Identificación y gestión de riesgos</h2>
+        <p class="muted small">
+          Registre riesgos técnicos, financieros, jurídicos, ambientales, sociales, prediales, administrativos y operativos.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="item">
+        <div class="name">Probabilidad</div>
+        <div class="muted small">Baja, media o alta según la posibilidad de ocurrencia.</div>
+      </div>
+
+      <div class="item">
+        <div class="name">Impacto</div>
+        <div class="muted small">Bajo, medio o alto según el efecto sobre costo, tiempo, alcance o calidad.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <form class="form" id="formRiesgo">
+
+      <div class="cardhead">
+        <h2>Agregar riesgo</h2>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Tipo de riesgo</label>
+          <select id="tipoRiesgo">
+            <option value="Técnico">Técnico</option>
+            <option value="Financiero">Financiero</option>
+            <option value="Jurídico">Jurídico</option>
+            <option value="Ambiental">Ambiental</option>
+            <option value="Social">Social</option>
+            <option value="Predial">Predial</option>
+            <option value="Administrativo">Administrativo</option>
+            <option value="Operativo">Operativo</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Responsable</label>
+          <input id="responsableRiesgo" placeholder="Ej: Entidad ejecutora, contratista, interventoría">
+        </div>
+      </div>
+
+      <label style="margin-top:10px">Descripción del riesgo</label>
+      <textarea id="descripcionRiesgo" rows="4" placeholder="Describa el riesgo identificado..."></textarea>
+
+      <div class="grid two" style="margin-top:10px">
+        <div>
+          <label>Probabilidad</label>
+          <select id="probabilidadRiesgo">
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Impacto</label>
+          <select id="impactoRiesgo">
+            <option value="Bajo">Bajo</option>
+            <option value="Medio">Medio</option>
+            <option value="Alto">Alto</option>
+          </select>
+        </div>
+      </div>
+
+      <label style="margin-top:10px">Medida de mitigación</label>
+      <textarea id="mitigacionRiesgo" rows="4" placeholder="Describa la acción para prevenir, reducir o atender el riesgo..."></textarea>
+
+      <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" type="submit">Agregar riesgo</button>
+        <button class="btn" id="btnSugerirRiesgos" type="button">Sugerir riesgos tipo</button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Matriz de riesgos registrada</h2>
+      <p class="muted small">El nivel se calcula automáticamente según probabilidad e impacto.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="table" style="min-width:1120px">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Probabilidad</th>
+            <th>Impacto</th>
+            <th>Nivel</th>
+            <th>Mitigación</th>
+            <th>Responsable</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="riesgosBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/riesgos.js"></script>
+
+</body>
+</html>

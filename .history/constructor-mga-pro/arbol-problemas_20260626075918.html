@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Árbol de Problemas | Constructor MGA Pro</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="top">
+  <div class="brand">
+    <a class="back" id="btnVolverProyecto" href="proyectos.html">←</a>
+    <div>
+      <div class="title">Árbol de Problemas</div>
+      <div class="subtitle" id="arbolSub">Constructor MGA Pro</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a class="navbtn" id="btnProyecto" href="#">Proyecto</a>
+    <a class="navbtn" id="btnDiagnostico" href="#">Diagnóstico</a>
+    <a class="navbtn" id="btnArbolObjetivos" href="#">Árbol de Objetivos</a>
+    <a class="navbtn" id="btnCadenaValor" href="#">Cadena de Valor</a>
+    <button class="navbtn primary" id="btnGuardarArbolTop" type="button">Guardar</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="card">
+    <div class="cardhead">
+      <div>
+        <h2>Construcción del árbol de problemas</h2>
+        <p class="muted small">
+          Organice el problema central, sus causas y sus efectos. Esta estructura será la base para formular los objetivos del proyecto.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="item">
+        <div class="name">Problema central</div>
+        <div class="muted small">
+          Debe expresar una situación negativa existente, no la falta de una obra o actividad.
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="name">Relación lógica</div>
+        <div class="muted small">
+          Las causas explican por qué ocurre el problema. Los efectos muestran qué consecuencias genera.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <form class="form" id="formArbolProblemas">
+
+      <div class="cardhead">
+        <h2>Problema central</h2>
+        <p class="muted small">
+          Este campo se trae automáticamente desde Diagnóstico, pero puede ajustarse aquí.
+        </p>
+      </div>
+
+      <textarea id="problemaCentral" rows="4" placeholder="Escriba el problema central..."></textarea>
+
+      <hr class="sep">
+
+      <div class="grid two">
+
+        <section>
+          <div class="cardhead">
+            <h2>Causas directas</h2>
+          </div>
+
+          <div id="causasDirectasList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="causaDirectaInput" placeholder="Nueva causa directa..." />
+            <button class="btn" id="btnAddCausaDirecta" type="button">Agregar</button>
+          </div>
+        </section>
+
+        <section>
+          <div class="cardhead">
+            <h2>Causas indirectas</h2>
+          </div>
+
+          <div id="causasIndirectasList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="causaIndirectaInput" placeholder="Nueva causa indirecta..." />
+            <button class="btn" id="btnAddCausaIndirecta" type="button">Agregar</button>
+          </div>
+        </section>
+
+      </div>
+
+      <hr class="sep">
+
+      <div class="grid two">
+
+        <section>
+          <div class="cardhead">
+            <h2>Efectos directos</h2>
+          </div>
+
+          <div id="efectosDirectosList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="efectoDirectoInput" placeholder="Nuevo efecto directo..." />
+            <button class="btn" id="btnAddEfectoDirecto" type="button">Agregar</button>
+          </div>
+        </section>
+
+        <section>
+          <div class="cardhead">
+            <h2>Efectos indirectos</h2>
+          </div>
+
+          <div id="efectosIndirectosList"></div>
+
+          <div class="row" style="margin-top:10px; gap:10px">
+            <input id="efectoIndirectoInput" placeholder="Nuevo efecto indirecto..." />
+            <button class="btn" id="btnAddEfectoIndirecto" type="button">Agregar</button>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="row" style="margin-top:14px; gap:10px; flex-wrap:wrap">
+        <button class="btn primary" type="submit">Guardar árbol de problemas</button>
+        <button class="btn" id="btnSugerirObjetivos" type="button">Enviar base al árbol de objetivos</button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <div class="cardhead">
+      <h2>Vista resumida del árbol</h2>
+      <p class="muted small">
+        Resumen lógico de causas, problema central y efectos.
+      </p>
+    </div>
+
+    <div id="vistaArbolProblemas"></div>
+  </section>
+
+</main>
+
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/mga.js"></script>
+<script src="js/arbol-problemas.js"></script>
+
+</body>
+</html>

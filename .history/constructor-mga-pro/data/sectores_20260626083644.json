@@ -1,0 +1,52 @@
+[
+  {
+    "codigo": "SALUD",
+    "nombre": "Salud y protección social",
+    "descripcion": "Promoción, prevención, atención, infraestructura y bienestar en salud."
+  },
+  {
+    "codigo": "EDUCACION",
+    "nombre": "Educación",
+    "descripcion": "Infraestructura educativa, permanencia, calidad y cobertura."
+  },
+  {
+    "codigo": "TRANSPORTE",
+    "nombre": "Transporte",
+    "descripcion": "Vías, movilidad, infraestructura de transporte y conectividad."
+  },
+  {
+    "codigo": "AGUA",
+    "nombre": "Agua potable y saneamiento básico",
+    "descripcion": "Acueducto, alcantarillado, aseo y tratamiento."
+  },
+  {
+    "codigo": "DEPORTE",
+    "nombre": "Deporte y recreación",
+    "descripcion": "Escenarios deportivos, recreación, actividad física y aprovechamiento del tiempo libre."
+  },
+  {
+    "codigo": "CULTURA",
+    "nombre": "Cultura",
+    "descripcion": "Infraestructura cultural, patrimonio, formación y promoción cultural."
+  },
+  {
+    "codigo": "AMBIENTE",
+    "nombre": "Ambiente y desarrollo sostenible",
+    "descripcion": "Protección ambiental, conservación, restauración y gestión del riesgo ambiental."
+  },
+  {
+    "codigo": "DESARROLLO_SOCIAL",
+    "nombre": "Inclusión social y reconciliación",
+    "descripcion": "Programas sociales, atención poblacional, bienestar y desarrollo comunitario."
+  },
+  {
+    "codigo": "VIVIENDA",
+    "nombre": "Vivienda, ciudad y territorio",
+    "descripcion": "Mejoramiento de vivienda, espacio público, equipamientos y desarrollo urbano."
+  },
+  {
+    "codigo": "TIC",
+    "nombre": "Tecnologías de la información y las comunicaciones",
+    "descripcion": "Conectividad, transformación digital, sistemas de información y apropiación TIC."
+  }
+]

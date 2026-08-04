@@ -1,0 +1,144 @@
+{
+  "municipio": "Girón",
+  "periodo": "2024-2027",
+  "fuente": "Plan de Desarrollo Municipal Girón 2024-2027 Más Campo para el Progreso",
+
+  "sectores": [
+    {
+      "id": "informacion-estadistica",
+      "nombre": "Información Estadística",
+      "icono": "📊",
+      "ejePrincipal": 5,
+      "descripcion": "Gestión de información estadística, catastro multipropósito y datos para la toma de decisiones públicas.",
+      "usoApp": "Permite consultar datos base del municipio para análisis, propuestas y seguimiento."
+    },
+    {
+      "id": "justicia-derecho",
+      "nombre": "Justicia y del Derecho",
+      "icono": "⚖️",
+      "ejePrincipal": 1,
+      "descripcion": "Acceso a justicia, casas de justicia, conciliación extrajudicial, sistema penitenciario y convivencia.",
+      "usoApp": "Útil para control político, seguridad ciudadana y fortalecimiento institucional."
+    },
+    {
+      "id": "agricultura-desarrollo-rural",
+      "nombre": "Agricultura y Desarrollo Rural",
+      "icono": "🌾",
+      "ejePrincipal": 4,
+      "descripcion": "Frontera agrícola, vocación productiva, aptitudes de cultivo, producción pecuaria e irrigación.",
+      "usoApp": "Base para propuestas rurales, apoyo campesino y desarrollo productivo."
+    },
+    {
+      "id": "salud-proteccion-social",
+      "nombre": "Salud y Protección Social",
+      "icono": "🏥",
+      "ejePrincipal": 2,
+      "descripcion": "Aseguramiento, vacunación, salud pública, mortalidad, fecundidad y desempeño en salud.",
+      "usoApp": "Permite formular propuestas de salud preventiva, atención primaria y población vulnerable."
+    },
+    {
+      "id": "minas-energia",
+      "nombre": "Minas y Energía",
+      "icono": "💡",
+      "ejePrincipal": 3,
+      "descripcion": "Energía eléctrica, alumbrado público, gas natural domiciliario y transición energética.",
+      "usoApp": "Útil para analizar cobertura energética, alumbrado y sostenibilidad."
+    },
+    {
+      "id": "educacion",
+      "nombre": "Educación",
+      "icono": "🎓",
+      "ejePrincipal": 2,
+      "descripcion": "Cobertura educativa, permanencia, calidad, pruebas Saber, educación superior y alimentación escolar.",
+      "usoApp": "Base para propuestas de permanencia escolar, calidad educativa y oportunidades juveniles."
+    },
+    {
+      "id": "tic",
+      "nombre": "Tecnologías de la Información y las Comunicaciones",
+      "icono": "💻",
+      "ejePrincipal": 1,
+      "descripcion": "Penetración de internet, gobierno digital, conectividad y modernización tecnológica.",
+      "usoApp": "Apoya propuestas de ciudad digital, trámites en línea y acceso a conectividad."
+    },
+    {
+      "id": "transporte",
+      "nombre": "Transporte",
+      "icono": "🚗",
+      "ejePrincipal": 1,
+      "descripcion": "Infraestructura vial, transporte público, bicicleta, parque automotor y seguridad vial.",
+      "usoApp": "Permite formular propuestas sobre movilidad, vías, accidentalidad y transporte."
+    },
+    {
+      "id": "ambiente-desarrollo-sostenible",
+      "nombre": "Ambiente y Desarrollo Sostenible",
+      "icono": "🌱",
+      "ejePrincipal": 5,
+      "descripcion": "Ecosistemas estratégicos, sistemas de agua, biodiversidad, riesgo de desastres y sostenibilidad.",
+      "usoApp": "Base para propuestas ambientales, protección hídrica y gestión del riesgo."
+    },
+    {
+      "id": "cultura",
+      "nombre": "Cultura",
+      "icono": "🎭",
+      "ejePrincipal": 4,
+      "descripcion": "Infraestructura cultural, servicios artísticos, patrimonio, promoción cultural y circuitos culturales.",
+      "usoApp": "Útil para propuestas culturales, patrimonio e identidad gironesa."
+    },
+    {
+      "id": "comercio-industria-turismo",
+      "nombre": "Comercio, Industria y Turismo",
+      "icono": "🏨",
+      "ejePrincipal": 4,
+      "descripcion": "Economía municipal, tejido empresarial, industria, comercio, competitividad y turismo.",
+      "usoApp": "Permite construir propuestas de desarrollo económico, empleo y turismo."
+    },
+    {
+      "id": "trabajo",
+      "nombre": "Trabajo",
+      "icono": "💼",
+      "ejePrincipal": 4,
+      "descripcion": "Formación para el trabajo, empleo, formalización laboral, ocupación, emprendimiento y trabajo infantil.",
+      "usoApp": "Base para propuestas de empleabilidad, emprendimiento y formalización."
+    },
+    {
+      "id": "ciencia-tecnologia-innovacion",
+      "nombre": "Ciencia, Tecnología e Innovación",
+      "icono": "🔬",
+      "ejePrincipal": 4,
+      "descripcion": "Investigación, innovación, ciencia, tecnología y capacidades productivas del territorio.",
+      "usoApp": "Apoya propuestas de innovación, emprendimiento tecnológico y competitividad."
+    },
+    {
+      "id": "vivienda-ciudad-territorio",
+      "nombre": "Vivienda, Ciudad y Territorio",
+      "icono": "🏘️",
+      "ejePrincipal": 5,
+      "descripcion": "Vivienda, déficit habitacional, servicios públicos, acueducto, alcantarillado, residuos y espacio público.",
+      "usoApp": "Base para propuestas de vivienda digna, servicios públicos y urbanismo."
+    },
+    {
+      "id": "inclusion-social-reconciliacion",
+      "nombre": "Inclusión Social y Reconciliación",
+      "icono": "👥",
+      "ejePrincipal": 2,
+      "descripcion": "Mujeres, juventudes, niñez, adulto mayor, víctimas, discapacidad, migrantes y población vulnerable.",
+      "usoApp": "Permite construir propuestas sociales con enfoque diferencial."
+    },
+    {
+      "id": "deporte-recreacion",
+      "nombre": "Deporte y Recreación",
+      "icono": "⚽",
+      "ejePrincipal": 4,
+      "descripcion": "Actividad física, recreación, escenarios deportivos y participación ciudadana.",
+      "usoApp": "Útil para propuestas de deporte comunitario, prevención y uso del tiempo libre."
+    },
+    {
+      "id": "gobierno-territorial",
+      "nombre": "Gobierno Territorial",
+      "icono": "🏛️",
+      "ejePrincipal": 1,
+      "descripcion": "Participación ciudadana, gestión municipal, finanzas, seguridad, desempeño institucional y rendición de cuentas.",
+      "usoApp": "Base para control político, transparencia, gestión pública y seguimiento al Plan."
+    }
+  ]
+}
