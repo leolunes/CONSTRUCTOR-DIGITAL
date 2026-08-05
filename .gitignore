@@ -1,0 +1,45 @@
+# ===========================
+# CONSTRUCTOR DIGITAL
+# ===========================
+
+# Archivos ZIP
+*.zip
+
+# Historial de VS Code
+.history/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configuración temporal de VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Node
+node_modules/
+
+# Copias de seguridad
+backup/
+respaldo/
+# Archivos comprimidos
+*.rar
+*.7z
+
+# Copias de Windows
+*.bak
+
+# Archivos de Visual Studio Code
+*.code-workspace
+
+# Cache
+.cache/
+
+# Archivos de GitHub Pages
+.github/
