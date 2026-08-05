@@ -51,3 +51,10 @@ IMPORTANTE
 - No cambie js/app-center.js para agregar productos.
 - No cree otro archivo de catálogo.
 - Mantenga exactamente el nombre real de la carpeta, incluidas mayúsculas y minúsculas.
+
+FASE 2.1 — FICHA PROFESIONAL DE PRODUCTO
+- Se agregó productos/bitacora-de-obra.html.
+- La tarjeta de Bitácora abre primero su ficha profesional.
+- Desde la ficha se accede a ../../BITACORA-DE-OBRA/.
+- La información comercial se administra desde data/productos.js.
+- product-detail.js y product-detail.css quedan como plantilla reutilizable.

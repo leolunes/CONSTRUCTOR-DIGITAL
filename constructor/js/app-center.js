@@ -33,8 +33,10 @@
       ? `<ul class="features">${product.caracteristicas.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : '';
     const platforms = Array.isArray(product.plataformas)
       ? `<div class="platforms">${product.plataformas.map(x => `<span class="platform">${escapeHtml(x)}</span>`).join('')}</div>` : '';
+    const destination = product.rutaFicha || product.ruta;
+    const actionLabel = product.rutaFicha ? 'Ver producto' : 'Abrir aplicación';
     const action = available
-      ? `<a class="open-app" href="${escapeHtml(product.ruta)}">Abrir aplicación</a>`
+      ? `<a class="open-app" href="${escapeHtml(destination)}">${actionLabel}</a>`
       : `<span class="unavailable">${escapeHtml(product.estado)}</span>`;
 
     return `<article class="product-card${product.destacado ? ' featured' : ''}">

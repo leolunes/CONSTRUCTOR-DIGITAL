@@ -12,10 +12,13 @@ window.CONSTRUCTOR_DIGITAL_PRODUCTOS = [
     "categoria": "Gestión de obra",
     "estado": "Disponible",
     "descripcion": "Gestión diaria de obras, contratistas, folios, fotografías, anexos, firmas e informes profesionales.",
+    "descripcionLarga": "Bitácora de Obra es una solución profesional para registrar, organizar y presentar la información diaria de proyectos de construcción. Permite llevar el control documental de cada obra desde campo u oficina, conservar evidencias y generar informes con una presentación uniforme.",
     "ruta": "../BITACORA-DE-OBRA/",
+    "rutaFicha": "./productos/bitacora-de-obra.html",
     "icono": "📘",
     "destacado": true,
     "version": "v1.73",
+    "fechaActualizacion": "Agosto de 2026",
     "plataformas": [
       "Windows",
       "Android",
@@ -24,10 +27,46 @@ window.CONSTRUCTOR_DIGITAL_PRODUCTOS = [
       "PWA"
     ],
     "caracteristicas": [
-      "Folios e historial",
-      "PDF y Word",
-      "Fotografías y anexos"
-    ]
+      "Gestión de obras y contratistas",
+      "Folios diarios e historial",
+      "Múltiples actividades por folio",
+      "Fotografías y anexos",
+      "Firmas digitales",
+      "Exportación PDF y Word",
+      "Informe consolidado",
+      "Impresión y exportación ZIP",
+      "Configuración general y por obra",
+      "Actualización automática de la PWA"
+    ],
+    "beneficios": [
+      "Centraliza la información técnica y documental de la obra.",
+      "Reduce el uso de formatos dispersos y registros en papel.",
+      "Facilita la trazabilidad de actividades, fotografías, anexos y firmas.",
+      "Genera informes profesionales para contratistas, interventorías y entidades.",
+      "Permite trabajar desde computador, celular o tableta."
+    ],
+    "historial": [
+      {
+        "version": "v1.73",
+        "cambios": [
+          "Actualización confiable mediante version.json.",
+          "Optimización para iPhone con herramientas plegables.",
+          "Mejoras en Word, PDF e informe consolidado.",
+          "Compatibilidad probada en Windows, Android, iPhone e iPad."
+        ]
+      }
+    ],
+    "proximasMejoras": [
+      "Sistema de licencias y control de acceso.",
+      "Usuarios y permisos por empresa.",
+      "Sincronización y respaldo en la nube.",
+      "Panel administrativo empresarial."
+    ],
+    "documentacion": {
+      "manual": "",
+      "video": "",
+      "soporte": "https://wa.me/573153584839?text=Hola%2C%20deseo%20informaci%C3%B3n%20sobre%20Bit%C3%A1cora%20de%20Obra."
+    }
   },
   {
     "id": "presupuesto-pro",
