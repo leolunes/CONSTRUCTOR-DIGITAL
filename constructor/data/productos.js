@@ -1,3 +1,9 @@
+/*
+ * CATÁLOGO ÚNICO DE APLICACIONES — CONSTRUCTOR DIGITAL
+ * Para agregar una aplicación, copie un objeto existente y ajuste sus datos.
+ * No modifique index.html para crear tarjetas: se generan automáticamente.
+ */
+
 window.CONSTRUCTOR_DIGITAL_PRODUCTOS = [
   {
     "id": "bitacora-de-obra",

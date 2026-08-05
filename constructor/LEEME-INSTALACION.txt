@@ -1,15 +1,53 @@
-CARPETA CONSTRUCTOR AJUSTADA
+CONSTRUCTOR DIGITAL — PORTAL DE INGENIERÍA CON CATÁLOGO ÚNICO
 
-Reemplace únicamente la carpeta constructor dentro de CONSTRUCTOR-DIGITAL.
+Esta carpeta funciona directamente desde:
+https://leolunes.github.io/CONSTRUCTOR-DIGITAL/constructor/
 
-Rutas configuradas:
-- ../BITACORA-DE-OBRA/
-- ../presupuesto-pro/
+CATÁLOGO OFICIAL
+El único archivo que debe editarse para agregar, retirar o actualizar aplicaciones es:
 
-Luego ejecute:
-git add constructor
-git commit -m "Integrar Presupuesto Pro en portal de Ingeniería"
+data/productos.js
+
+No es necesario modificar index.html ni js/app-center.js.
+
+CÓMO AGREGAR UNA NUEVA APLICACIÓN
+1. Copie la carpeta de la aplicación en la raíz de CONSTRUCTOR-DIGITAL.
+2. Abra constructor/data/productos.js.
+3. Copie uno de los objetos existentes dentro del arreglo.
+4. Ajuste como mínimo:
+   - id
+   - nombre
+   - division: "ingenieria"
+   - categoria
+   - estado
+   - descripcion
+   - ruta
+   - icono
+   - destacado
+   - version
+   - plataformas
+   - caracteristicas
+5. Guarde y publique solamente los archivos modificados.
+
+EJEMPLO DE RUTA
+Si la nueva carpeta está en:
+CONSTRUCTOR-DIGITAL/mi-nueva-app/
+
+La ruta desde el portal debe ser:
+../mi-nueva-app/
+
+ESTADOS ADMITIDOS
+- Disponible
+- En desarrollo
+- Próximamente
+
+PUBLICACIÓN RECOMENDADA
+git add constructor/data/productos.js
+git commit -m "Agregar nueva aplicación al portal"
 git push origin main
 
-Pruebe:
-https://leolunes.github.io/CONSTRUCTOR-DIGITAL/constructor/?v=500
+IMPORTANTE
+- No edite las tarjetas en index.html: se generan automáticamente.
+- No cambie js/app-center.js para agregar productos.
+- No cree otro archivo de catálogo.
+- Mantenga exactamente el nombre real de la carpeta, incluidas mayúsculas y minúsculas.
