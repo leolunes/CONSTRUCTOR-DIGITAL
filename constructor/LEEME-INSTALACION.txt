@@ -1,22 +1,15 @@
-PORTAL CORPORATIVO DEFINITIVO - CONSTRUCTOR DIGITAL
+CARPETA CONSTRUCTOR AJUSTADA
 
-Este paquete reemplaza únicamente el antiguo index.html del portal "Ministerio Digital".
+Reemplace únicamente la carpeta constructor dentro de CONSTRUCTOR-DIGITAL.
 
-COPIAR A LA RAÍZ DE CONSTRUCTOR-DIGITAL:
-- index.html
-- css/constructor-digital.css
-- js/constructor-digital.js
-- assets/logo-constructor-digital.png
+Rutas configuradas:
+- ../BITACORA-DE-OBRA/
+- ../presupuesto-pro/
 
-No modifique ni reemplace la carpeta BITACORA-DE-OBRA.
+Luego ejecute:
+git add constructor
+git commit -m "Integrar Presupuesto Pro en portal de Ingeniería"
+git push origin main
 
-Después ejecute:
-git add .
-git commit -m "Crear portal corporativo definitivo Constructor Digital"
-git push
-
-Portal:
-https://leolunes.github.io/CONSTRUCTOR-DIGITAL/
-
-Bitácora:
-https://leolunes.github.io/CONSTRUCTOR-DIGITAL/BITACORA-DE-OBRA/
+Pruebe:
+https://leolunes.github.io/CONSTRUCTOR-DIGITAL/constructor/?v=500
