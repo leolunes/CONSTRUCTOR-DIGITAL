@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#062a52" />
+  <title>Matriz Maestra de Gestión Territorial para Girón</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css?v=1.1.1" />
+</head>
+<body>
+  <header class="brand-header">
+    <div class="party-brand"><div class="party-mark">CD</div><div><strong>CENTRO<br>DEMOCRÁTICO</strong><small>Mano firme<br>Corazón grande</small></div></div>
+    <div class="giron-brand"><div class="crest">♛</div><div><strong>GIRÓN</strong><span>Santander</span><small>Monumento Nacional</small></div></div>
+    <div class="system-brand"><span>MATRIZ MAESTRA DE</span><strong>GESTIÓN TERRITORIAL</strong><em>para Girón</em><small>Escuchar • Conocer • Priorizar • Gestionar • Hacer seguimiento</small></div>
+    <div class="people-brand">
+      <div class="person-card jhonatan"><img src="assets/jhonatan-pineda.png" alt="Jhonatan Pineda"><div><strong>JHONATAN PINEDA</strong><span>Representante a la Cámara<br>por Santander</span></div></div>
+      <div class="person-card ivan"><img class="ivan-photo" src="assets/ivan-ortiz-foto.png" alt="Iván Ortiz"><img class="ivan-logo" src="assets/ivan-ortiz-logo.png" alt="Iván Ortiz"><div><strong>IVÁN ORTIZ</strong><span>Candidato al Concejo<br>2028 - 2031</span><small>@ivanortiz.c</small></div></div>
+    </div>
+    <div class="datetime"><span id="liveDate"></span><span id="liveTime"></span></div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="nav-btn active" data-view="dashboard">⌂ <span>Tablero</span></button>
+      <button class="nav-btn" data-view="needs">◆ <span>Necesidades</span></button>
+      <button class="nav-btn" data-view="leaders">♟ <span>Líderes / JAC / Ediles</span></button>
+      <button class="nav-btn" data-view="projects">▣ <span>Proyectos e iniciativas</span></button>
+      <button class="nav-btn" data-view="actions">✓ <span>Gestión y seguimiento</span></button>
+      <button class="nav-btn" data-view="community">▤ <span>Formulario comunitario</span></button>
+      <button class="nav-btn" data-view="reports">▥ <span>Reportes y estadísticas</span></button>
+      <button class="nav-btn" data-view="reports">◈ <span>Mapa territorial</span></button>
+      <button class="nav-btn" data-view="actions">▦ <span>Agenda de acciones</span></button>
+      <button class="nav-btn" data-view="settings">▰ <span>Documentos</span></button>
+      <button class="nav-btn" data-view="settings">⚙ <span>Configuración</span></button>
+      <div class="side-spacer"></div>
+      <div class="giron-dream"><div class="church">♜</div><span>Construyendo juntos</span><em>el Girón</em><strong>que soñamos</strong></div>
+      <div class="side-actions"><button id="installBtn" class="ghost hidden">Instalar app</button><button id="backupBtn" class="ghost">Exportar respaldo</button></div>
+    </aside>
+
+    <main class="main">
+      <section class="view active" id="view-dashboard">
+        <div id="kpis" class="kpi-grid"></div>
+        <div class="dashboard-panels">
+          <div class="card sector-card"><h3>Necesidades por sector</h3><div class="sector-body"><div class="donut"><span>Sin datos<br>aún</span></div><div id="sectorList"></div></div><div class="total-line">Total <strong id="totalNeeds">0</strong> necesidades</div></div>
+          <div class="card"><h3>Prioridad territorial</h3><div id="priorityBars" class="bars"></div><div class="community-callout"><b>♟</b><div><strong>Tu comunidad es nuestra prioridad.</strong><span>Juntos identificamos, gestionamos y hacemos realidad los proyectos que Girón necesita.</span></div></div></div>
+          <div class="card"><h3>Estado de las necesidades</h3><div id="statusBars" class="bars"></div></div>
+        </div>
+        <div class="dashboard-lower">
+          <div class="card upcoming-card"><div><h3>Próximas acciones</h3><div id="upcoming"></div></div><button class="dark-btn" onclick="showView('actions')">Ver agenda completa</button></div>
+          <div class="card quick-card"><div><h3>Registro rápido de necesidad</h3><p>Reporta una necesidad de tu comunidad de forma rápida y sencilla.</p></div><button class="red-btn" data-open-modal="needModal">＋ Nueva necesidad</button></div>
+        </div>
+        <div class="quick-links">
+          <button onclick="showView('leaders')">♟ <span><b>Líderes / JAC / Ediles</b><small>Ver y gestionar líderes</small></span></button>
+          <button onclick="showView('projects')">📁 <span><b>Proyectos e iniciativas</b><small>Ver proyectos registrados</small></span></button>
+          <button onclick="showView('actions')">✓ <span><b>Gestión y seguimiento</b><small>Ver seguimientos</small></span></button>
+          <button onclick="showView('community')">▤ <span><b>Formulario comunitario</b><small>Diligenciar formulario</small></span></button>
+          <button onclick="showView('reports')">▥ <span><b>Reportes y estadísticas</b><small>Ver reportes</small></span></button>
+          <button onclick="showView('reports')">⌖ <span><b>Mapa territorial</b><small>Ver mapa de Girón</small></span></button>
+        </div>
+        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.1.1</span></footer>
+      </section>
+      <section class="view" id="view-needs">
+        <div class="section-title"><div><h2>Necesidades del territorio</h2><p>Registro, verificación, priorización y trazabilidad.</p></div><button class="primary" data-open-modal="needModal">+ Registrar necesidad</button></div>
+        <div class="toolbar">
+          <input id="needSearch" placeholder="Buscar por código, barrio, vereda, necesidad..." />
+          <select id="needStatusFilter"><option value="">Todos los estados</option></select>
+          <select id="needPriorityFilter"><option value="">Todas las prioridades</option></select>
+        </div>
+        <div id="needsTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-leaders">
+        <div class="section-title"><div><h2>Líderes, JAC y ediles</h2><p>Trazabilidad de quién reporta y qué comunidades representa.</p></div><button class="primary" data-open-modal="leaderModal">+ Nuevo contacto</button></div>
+        <div id="leadersTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-projects">
+        <div class="section-title"><div><h2>Proyectos e iniciativas</h2><p>Vincule necesidades con proyectos existentes o en estructuración.</p></div><button class="primary" data-open-modal="projectModal">+ Nuevo proyecto</button></div>
+        <div id="projectsTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-actions">
+        <div class="section-title"><div><h2>Gestión y seguimiento</h2><p>Necesidad + responsable + próxima acción + fecha = gestión.</p></div><button class="primary" data-open-modal="actionModal">+ Registrar gestión</button></div>
+        <div id="actionsTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-community">
+        <div class="section-title"><div><h2>Formulario comunitario</h2><p>Versión sencilla para presidentes de JAC, ediles y líderes.</p></div></div>
+        <form id="communityForm" class="card form-grid">
+          <h3 class="span-2">¿Qué necesita su comunidad?</h3>
+          <label>Barrio / Vereda / Sector<input name="territory" required></label>
+          <label>Comuna / Corregimiento<input name="zone"></label>
+          <label>Nombre del líder<input name="reporter" required></label>
+          <label>Calidad<select name="role"><option>Presidente(a) JAC</option><option>Edil</option><option>Líder comunitario</option><option>Organización social</option><option>Otro</option></select></label>
+          <label>Teléfono<input name="phone"></label>
+          <label>Sector<select name="sector" id="communitySector"></select></label>
+          <label class="span-2">Necesidad o problema<textarea name="title" required></textarea></label>
+          <label class="span-2">Ubicación específica<input name="location"></label>
+          <label>¿Desde hace cuánto existe?<input name="age"></label>
+          <label>¿A quiénes afecta?<input name="affected"></label>
+          <label class="span-2">¿Por qué considera importante solucionarlo?<textarea name="importance"></textarea></label>
+          <label class="span-2">¿Existe proyecto, estudio, diseño o radicado relacionado?<textarea name="existingProject"></textarea></label>
+          <label class="span-2">Gestiones previas / respuestas recibidas<textarea name="previous"></textarea></label>
+          <label>Prioridad percibida<select name="priority"><option>Urgente</option><option>Alta</option><option selected>Media</option><option>Baja</option></select></label>
+          <label>Teléfono de contacto<input name="contactPhone"></label>
+          <div class="span-2 note">El registro de una necesidad no constituye compromiso de ejecución, financiación o solución. Su finalidad es organizar información territorial para análisis y gestión.</div>
+          <div class="span-2 form-actions"><button class="primary" type="submit">Guardar en la Matriz</button><button type="reset" class="secondary">Limpiar</button></div>
+        </form>
+      </section>
+
+      <section class="view" id="view-reports">
+        <div class="section-title"><div><h2>Reportes y fichas</h2><p>Genere información ejecutiva para reuniones y seguimiento territorial.</p></div></div>
+        <div class="grid-3">
+          <div class="card report-card"><h3>Diagnóstico de Girón</h3><p>Resumen de necesidades, prioridades, sectores y estados.</p><button class="primary" id="printDiagnosis">Generar / imprimir</button></div>
+          <div class="card report-card"><h3>Ficha por barrio/vereda</h3><select id="territoryReport"></select><button class="primary" id="printTerritory">Generar ficha</button></div>
+          <div class="card report-card"><h3>Datos completos</h3><p>Exporte la base para auditoría o migración.</p><button class="primary" id="exportCsv">Exportar necesidades CSV</button></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="section-title"><div><h2>Configuración y respaldo</h2><p>Los datos se guardan localmente en este dispositivo.</p></div></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Respaldo completo</h3>
+            <p>Exporte periódicamente un archivo JSON. Puede restaurarlo en otro equipo o navegador.</p>
+            <div class="button-row"><button class="primary" id="exportJson">Exportar JSON</button><label class="file-button">Importar JSON<input type="file" id="importJson" accept="application/json"></label></div>
+          </div>
+          <div class="card">
+            <h3>Datos de la organización</h3>
+            <label>Nombre del sistema<input id="orgName"></label>
+            <label>Responsable / equipo<input id="orgTeam"></label>
+            <button class="primary" id="saveSettings">Guardar configuración</button>
+          </div>
+        </div>
+        <div class="card danger-zone"><h3>Zona de mantenimiento</h3><button class="danger" id="clearData">Borrar todos los datos locales</button></div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+
+  <!-- Modal Necesidad -->
+  <div class="modal" id="needModal"><div class="modal-card"><div class="modal-head"><h3>Registrar necesidad</h3><button data-close>×</button></div><form id="needForm" class="form-grid">
+    <label>Territorio<input name="territory" required placeholder="Barrio, vereda o sector"></label>
+    <label>Zona / Comuna / Corregimiento<input name="zone"></label>
+    <label class="span-2">Necesidad<input name="title" required></label>
+    <label>Sector<select name="sector" id="needSector"></select></label>
+    <label>Prioridad<select name="priority" id="needPriority"></select></label>
+    <label>Estado<select name="status" id="needStatus"></select></label>
+    <label>Nivel de madurez<select name="maturity" id="needMaturity"></select></label>
+    <label>Reportado por<select name="leaderId" id="needLeader"></select></label>
+    <label>Entidad competente<input name="competentEntity"></label>
+    <label class="span-2">Ubicación / referencia<input name="location"></label>
+    <label class="span-2">Descripción<textarea name="description"></textarea></label>
+    <label>Afectados / beneficiarios<input name="affected"></label>
+    <label>Antigüedad del problema<input name="age"></label>
+    <label class="span-2">Evidencias / documentos / radicados<textarea name="evidence"></textarea></label>
+    <label class="span-2">Próxima acción<input name="nextAction"></label>
+    <label>Responsable<input name="responsible"></label>
+    <label>Fecha de seguimiento<input type="date" name="followUp"></label>
+    <input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary" type="submit">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Modal líder -->
+  <div class="modal" id="leaderModal"><div class="modal-card"><div class="modal-head"><h3>Registrar líder / contacto</h3><button data-close>×</button></div><form id="leaderForm" class="form-grid">
+    <label>Nombre<input name="name" required></label><label>Calidad<select name="role"><option>Presidente(a) JAC</option><option>Edil</option><option>Líder comunitario</option><option>Organización social</option><option>Otro</option></select></label>
+    <label>Comunidad / organización<input name="organization"></label><label>Territorio<input name="territory"></label>
+    <label>Teléfono<input name="phone"></label><label>Correo<input type="email" name="email"></label>
+    <label class="span-2">Notas<textarea name="notes"></textarea></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Modal proyecto -->
+  <div class="modal" id="projectModal"><div class="modal-card"><div class="modal-head"><h3>Registrar proyecto</h3><button data-close>×</button></div><form id="projectForm" class="form-grid">
+    <label class="span-2">Nombre del proyecto<input name="name" required></label><label>Territorio<input name="territory"></label><label>Sector<select name="sector" id="projectSector"></select></label>
+    <label>Entidad formuladora<input name="formulator"></label><label>Entidad nacional / competente<input name="entity"></label>
+    <label>Radicado<input name="radicado"></label><label>Fecha radicación<input type="date" name="radicadoDate"></label>
+    <label>Valor total<input type="number" min="0" step="1000" name="value"></label><label>Financiación requerida<input type="number" min="0" step="1000" name="funding"></label>
+    <label>Estado<select name="status"><option>En estructuración</option><option>Proyecto estructurado</option><option>Radicado</option><option>En evaluación</option><option>Viable</option><option>Viable - buscando financiación</option><option>Financiado</option><option>En ejecución</option><option>Ejecutado</option><option>Archivado</option></select></label>
+    <label>Necesidad vinculada<select name="needId" id="projectNeed"></select></label>
+    <label class="span-2">Observaciones / requisitos pendientes<textarea name="notes"></textarea></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Modal gestión -->
+  <div class="modal" id="actionModal"><div class="modal-card"><div class="modal-head"><h3>Registrar gestión</h3><button data-close>×</button></div><form id="actionForm" class="form-grid">
+    <label>Necesidad<select name="needId" id="actionNeed"></select></label><label>Proyecto<select name="projectId" id="actionProject"></select></label>
+    <label>Fecha<input type="date" name="date" required></label><label>Tipo<select name="type"><option>Visita técnica</option><option>Reunión comunitaria</option><option>Mesa técnica</option><option>Oficio / radicado</option><option>Seguimiento</option><option>Gestión ante entidad</option><option>Subsanación</option><option>Otro</option></select></label>
+    <label class="span-2">Actuación realizada<textarea name="description" required></textarea></label><label>Responsable<input name="responsible"></label><label>Próxima fecha<input type="date" name="nextDate"></label>
+    <label class="span-2">Próxima acción<input name="nextAction"></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <script src="app.js?v=1.1.1"></script>
+</body>
+</html>
