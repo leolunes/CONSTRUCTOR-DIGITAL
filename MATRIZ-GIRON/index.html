@@ -8,7 +8,7 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-  <link rel="stylesheet" href="styles.css?v=1.1.1" />
+  <link rel="stylesheet" href="styles.css?v=1.3.1" />
 </head>
 <body>
   <header class="brand-header">
@@ -33,6 +33,7 @@
       <button class="nav-btn" data-view="reports">▥ <span>Reportes y estadísticas</span></button>
       <button class="nav-btn" data-view="reports">◈ <span>Mapa territorial</span></button>
       <button class="nav-btn" data-view="actions">▦ <span>Agenda de acciones</span></button>
+      <button class="nav-btn" type="button" id="petitionCenterNav">📄 <span>Derechos de petición</span></button>
       <button class="nav-btn" data-view="settings">▰ <span>Documentos</span></button>
       <button class="nav-btn" data-view="settings">⚙ <span>Configuración</span></button>
       <div class="side-spacer"></div>
@@ -59,8 +60,9 @@
           <button onclick="showView('community')">▤ <span><b>Formulario comunitario</b><small>Diligenciar formulario</small></span></button>
           <button onclick="showView('reports')">▥ <span><b>Reportes y estadísticas</b><small>Ver reportes</small></span></button>
           <button onclick="showView('reports')">⌖ <span><b>Mapa territorial</b><small>Ver mapa de Girón</small></span></button>
+          <button type="button" id="petitionCenterQuick">📄 <span><b>Derechos de petición</b><small>Generar y firmar PDF</small></span></button>
         </div>
-        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.1.1</span></footer>
+        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.3.1</span></footer>
       </section>
       <section class="view" id="view-needs">
         <div class="section-title"><div><h2>Necesidades del territorio</h2><p>Registro, verificación, priorización y trazabilidad.</p></div><button class="primary" data-open-modal="needModal">+ Registrar necesidad</button></div>
@@ -157,10 +159,49 @@
     <label>Afectados / beneficiarios<input name="affected"></label>
     <label>Antigüedad del problema<input name="age"></label>
     <label class="span-2">Evidencias / documentos / radicados<textarea name="evidence"></textarea></label>
+
+    <section class="span-2 photo-followup-panel" id="photoFollowupPanel">
+      <div class="photo-panel-head">
+        <div><h4>📷 Seguimiento fotográfico</h4><p>Documente visualmente la necesidad: <strong>ANTES → SEGUIMIENTO → DESPUÉS</strong>.</p></div>
+        <span>Compresión automática</span>
+      </div>
+
+      <div class="photo-phase">
+        <div class="photo-phase-title"><strong>1. ANTES · Evidencia inicial</strong><small>Estado de la necesidad al momento de identificarla.</small></div>
+        <input type="text" id="photoBeforeNote" placeholder="Descripción opcional. Ej.: Estado inicial de la vía">
+        <div class="photo-buttons">
+          <label class="photo-button">📷 Tomar foto<input class="photo-input" type="file" accept="image/*" capture="environment" data-phase="before"></label>
+          <label class="photo-button secondary-photo">🖼️ Galería<input class="photo-input" type="file" accept="image/*" multiple data-phase="before"></label>
+        </div>
+        <div class="photo-gallery" id="beforeGallery"><div class="photo-empty">Aún no hay fotografías iniciales.</div></div>
+      </div>
+
+      <div class="photo-phase">
+        <div class="photo-phase-title"><strong>2. SEGUIMIENTO · Evolución</strong><small>Visitas, intervenciones o avances.</small></div>
+        <div class="photo-meta-grid"><input type="date" id="photoFollowDate"><input type="text" id="photoFollowNote" placeholder="Ej.: Visita técnica / obra en ejecución"></div>
+        <div class="photo-buttons">
+          <label class="photo-button">📷 Tomar foto<input class="photo-input" type="file" accept="image/*" capture="environment" data-phase="followup"></label>
+          <label class="photo-button secondary-photo">🖼️ Galería<input class="photo-input" type="file" accept="image/*" multiple data-phase="followup"></label>
+        </div>
+        <div class="photo-gallery" id="followupGallery"><div class="photo-empty">Aún no hay fotografías de seguimiento.</div></div>
+      </div>
+
+      <div class="photo-phase">
+        <div class="photo-phase-title"><strong>3. DESPUÉS · Resultado final</strong><small>Resultado cuando la necesidad haya sido atendida.</small></div>
+        <input type="text" id="photoAfterNote" placeholder="Descripción opcional. Ej.: Intervención terminada">
+        <div class="photo-buttons">
+          <label class="photo-button">📷 Tomar foto<input class="photo-input" type="file" accept="image/*" capture="environment" data-phase="after"></label>
+          <label class="photo-button secondary-photo">🖼️ Galería<input class="photo-input" type="file" accept="image/*" multiple data-phase="after"></label>
+        </div>
+        <div class="photo-gallery" id="afterGallery"><div class="photo-empty">Aún no hay fotografías finales.</div></div>
+      </div>
+      <div class="photo-warning" id="photoSolvedWarning">Al marcar una necesidad como <strong>Solucionada</strong>, procure registrar evidencia del <strong>DESPUÉS</strong>.</div>
+    </section>
+
     <label class="span-2">Próxima acción<input name="nextAction"></label>
     <label>Responsable<input name="responsible"></label>
     <label>Fecha de seguimiento<input type="date" name="followUp"></label>
-    <input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary" type="submit">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+    <input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary" type="submit">Guardar</button><button class="petition-need-action" id="needPetitionBtn" type="button">📄 Generar Derecho de Petición</button><button class="secondary" type="button" data-close>Cancelar</button></div>
   </form></div></div>
 
   <!-- Modal líder -->
@@ -190,6 +231,46 @@
     <label class="span-2">Próxima acción<input name="nextAction"></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
   </form></div></div>
 
+  <!-- Centro de Derechos de Petición -->
+  <div class="modal" id="petitionCenterModal"><div class="modal-card petition-center-card">
+    <div class="modal-head"><div><h3>Derechos de Petición</h3><p class="petition-subtitle">Seleccione una necesidad registrada para preparar, firmar y generar su PDF.</p></div><button type="button" data-petition-center-close>×</button></div>
+    <div class="petition-center-help"><strong>Flujo:</strong> Necesidad registrada → Revisar datos → Firmar → Generar PDF firmado.</div>
+    <div id="petitionCenterList" class="petition-center-list"></div>
+    <div class="form-actions"><button class="secondary" type="button" data-petition-center-close>Cerrar</button></div>
+  </div></div>
+
+  <!-- Modal Derecho de Petición -->
+  <div class="modal" id="petitionModal"><div class="modal-card petition-modal-card">
+    <div class="modal-head"><div><h3>Generar Derecho de Petición</h3><p class="petition-subtitle" id="petitionNeedSummary"></p></div><button type="button" data-petition-close>×</button></div>
+    <form id="petitionForm" class="form-grid petition-form">
+      <input type="hidden" name="needId">
+      <label>Entidad destinataria<input name="entity" required placeholder="Ej.: Alcaldía de Girón"></label>
+      <label>Dependencia / funcionario<input name="recipient" placeholder="Ej.: Secretaría de Infraestructura"></label>
+      <label>Nombre del peticionario<input name="petitionerName" required></label>
+      <label>Cédula / identificación<input name="petitionerId" required></label>
+      <label>Dirección para notificaciones<input name="address"></label>
+      <label>Teléfono<input name="phone"></label>
+      <label class="span-2">Correo electrónico<input type="email" name="email" required></label>
+      <label class="span-2">Asunto<input name="subject" required></label>
+      <label class="span-2">Hechos<textarea name="facts" class="petition-textarea" required></textarea></label>
+      <label class="span-2">Peticiones concretas<textarea name="requests" class="petition-textarea" required></textarea></label>
+      <label class="span-2">Anexos / evidencias<textarea name="attachments" placeholder="Ej.: Fotografías del sector; copia de radicado anterior..."></textarea></label>
+      <div class="span-2 petition-sign-box">
+        <div class="petition-sign-head"><div><strong>Firma del peticionario</strong><small>Firme con el dedo, lápiz digital o mouse.</small></div><button type="button" class="secondary petition-clear-sign">Limpiar firma</button></div>
+        <canvas id="petitionSignature" width="760" height="190" aria-label="Área para firma"></canvas>
+        <p class="petition-legal-note">La firma capturada es una <strong>firma manuscrita electrónica insertada en el PDF</strong>. No corresponde por sí sola a una firma digital criptográfica certificada.</p>
+      </div>
+      <div class="span-2 petition-track-grid">
+        <label>Número de radicado (opcional)<input name="radicado"></label>
+        <label>Fecha de radicación (opcional)<input type="date" name="radicadoDate"></label>
+      </div>
+      <div class="span-2 petition-preview-note">El documento se generará en PDF con fundamento general en el artículo 23 de la Constitución Política y la Ley 1755 de 2015. Revise los datos antes de firmar y generar.</div>
+      <div class="span-2 form-actions petition-actions"><button class="primary" type="submit">📄 Generar PDF firmado</button><button class="secondary" type="button" data-petition-close>Cancelar</button></div>
+    </form>
+  </div></div>
+
   <script src="app.js?v=1.1.1"></script>
+  <script src="photos.js?v=1.2.1"></script>
+  <script src="petition.js?v=1.3.1"></script>
 </body>
 </html>

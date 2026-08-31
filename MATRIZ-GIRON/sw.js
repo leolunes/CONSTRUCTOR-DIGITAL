@@ -1,9 +1,11 @@
-const CACHE='matriz-giron-v1.1.1';
+const CACHE='matriz-giron-v1.3.1';
 const ASSETS=[
   './',
   './index.html',
-  './styles.css?v=1.1.1',
+  './styles.css?v=1.3.1',
   './app.js?v=1.1.1',
+  './photos.js?v=1.2.1',
+  './petition.js?v=1.3.1',
   './manifest.json',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
@@ -21,7 +23,7 @@ self.addEventListener('activate',e=>e.waitUntil(
 self.addEventListener('fetch',e=>{
   if(e.request.method!=='GET') return;
   const url=new URL(e.request.url);
-  const isCore=url.pathname.endsWith('/') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/styles.css') || url.pathname.endsWith('/app.js');
+  const isCore=url.pathname.endsWith('/') || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/styles.css') || url.pathname.endsWith('/app.js') || url.pathname.endsWith('/photos.js') || url.pathname.endsWith('/petition.js');
   if(isCore){
     e.respondWith(
       fetch(e.request,{cache:'no-store'}).then(resp=>{
