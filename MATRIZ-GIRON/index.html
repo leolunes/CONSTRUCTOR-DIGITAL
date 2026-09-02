@@ -8,7 +8,7 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-  <link rel="stylesheet" href="styles.css?v=1.3.1" />
+  <link rel="stylesheet" href="styles.css?v=1.3.3" />
 </head>
 <body>
   <header class="brand-header">
@@ -62,7 +62,7 @@
           <button onclick="showView('reports')">⌖ <span><b>Mapa territorial</b><small>Ver mapa de Girón</small></span></button>
           <button type="button" id="petitionCenterQuick">📄 <span><b>Derechos de petición</b><small>Generar y firmar PDF</small></span></button>
         </div>
-        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.3.1</span></footer>
+        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.3.3</span></footer>
       </section>
       <section class="view" id="view-needs">
         <div class="section-title"><div><h2>Necesidades del territorio</h2><p>Registro, verificación, priorización y trazabilidad.</p></div><button class="primary" data-open-modal="needModal">+ Registrar necesidad</button></div>
@@ -236,7 +236,16 @@
     <div class="modal-head"><div><h3>Derechos de Petición</h3><p class="petition-subtitle">Seleccione una necesidad registrada para preparar, firmar y generar su PDF.</p></div><button type="button" data-petition-center-close>×</button></div>
     <div class="petition-center-help"><strong>Flujo:</strong> Necesidad registrada → Revisar datos → Firmar → Generar PDF firmado.</div>
     <div id="petitionCenterList" class="petition-center-list"></div>
-    <div class="form-actions"><button class="secondary" type="button" data-petition-center-close>Cerrar</button></div>
+    <div class="form-actions petition-center-actions"><button class="petition-archive-open" id="openPetitionArchive" type="button">🗃️ Archivo de PDFs <span id="petitionArchiveCount">0</span></button><button class="secondary" type="button" data-petition-center-close>Cerrar</button></div>
+  </div></div>
+
+  <!-- Archivo documental de Derechos de Petición -->
+  <div class="modal" id="petitionArchiveModal"><div class="modal-card petition-archive-card">
+    <div class="modal-head"><div><h3>Archivo de Derechos de Petición</h3><p class="petition-subtitle">Los PDFs generados quedan guardados en este dispositivo y vinculados a su necesidad.</p></div><button type="button" data-petition-archive-close>×</button></div>
+    <div class="petition-archive-toolbar"><input id="petitionArchiveSearch" type="search" placeholder="Buscar por necesidad, destinatario, entidad o radicado..."><span id="petitionArchiveSummary">0 documentos</span></div>
+    <div class="petition-center-help"><strong>Base documental:</strong> cada PDF se almacena automáticamente al generarlo. Puede abrirlo, descargarlo, compartirlo nuevamente o eliminarlo del archivo.</div>
+    <div id="petitionArchiveList" class="petition-archive-list"></div>
+    <div class="form-actions"><button class="secondary" type="button" data-petition-archive-close>Cerrar</button></div>
   </div></div>
 
   <!-- Modal Derecho de Petición -->
@@ -244,12 +253,17 @@
     <div class="modal-head"><div><h3>Generar Derecho de Petición</h3><p class="petition-subtitle" id="petitionNeedSummary"></p></div><button type="button" data-petition-close>×</button></div>
     <form id="petitionForm" class="form-grid petition-form">
       <input type="hidden" name="needId">
-      <label>Entidad destinataria<input name="entity" required placeholder="Ej.: Alcaldía de Girón"></label>
-      <label>Dependencia / funcionario<input name="recipient" placeholder="Ej.: Secretaría de Infraestructura"></label>
+      <div class="span-2 petition-form-section">Datos de la persona destinataria</div>
+      <label>Nombre de la persona destinataria<input name="recipientName" required placeholder="Ej.: Juan Pérez Gómez"></label>
+      <label>Cargo / dependencia<input name="recipientRole" placeholder="Ej.: Coordinador de Redes"></label>
+      <label>Entidad donde trabaja<input name="entity" required placeholder="Ej.: Acueducto Metropolitano de Bucaramanga"></label>
+      <label>Correo de la persona destinataria<input type="email" name="recipientEmail" placeholder="Ej.: funcionario@entidad.gov.co"></label>
+      <label class="span-2">Celular / WhatsApp de la persona destinataria<input name="recipientPhone" inputmode="tel" placeholder="Ej.: 300 000 0000"></label>
+      <div class="span-2 petition-form-section">Datos de quien presenta la petición</div>
       <label>Nombre del peticionario<input name="petitionerName" required></label>
       <label>Cédula / identificación<input name="petitionerId" required></label>
       <label>Dirección para notificaciones<input name="address"></label>
-      <label>Teléfono<input name="phone"></label>
+      <label>Teléfono<input name="phone" inputmode="tel"></label>
       <label class="span-2">Correo electrónico<input type="email" name="email" required></label>
       <label class="span-2">Asunto<input name="subject" required></label>
       <label class="span-2">Hechos<textarea name="facts" class="petition-textarea" required></textarea></label>
@@ -265,12 +279,12 @@
         <label>Fecha de radicación (opcional)<input type="date" name="radicadoDate"></label>
       </div>
       <div class="span-2 petition-preview-note">El documento se generará en PDF con fundamento general en el artículo 23 de la Constitución Política y la Ley 1755 de 2015. Revise los datos antes de firmar y generar.</div>
-      <div class="span-2 form-actions petition-actions"><button class="primary" type="submit">📄 Generar PDF firmado</button><button class="secondary" type="button" data-petition-close>Cancelar</button></div>
+      <div class="span-2 form-actions petition-actions"><button class="primary" type="submit">📄 Generar PDF firmado</button><button class="petition-whatsapp" type="button" id="sharePetitionWhatsApp">🟢 Compartir PDF por WhatsApp</button><button class="secondary" type="button" data-petition-close>Cancelar</button></div>
     </form>
   </div></div>
 
   <script src="app.js?v=1.1.1"></script>
   <script src="photos.js?v=1.2.1"></script>
-  <script src="petition.js?v=1.3.1"></script>
+  <script src="petition.js?v=1.3.4"></script>
 </body>
 </html>
