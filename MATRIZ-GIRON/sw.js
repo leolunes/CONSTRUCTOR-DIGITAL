@@ -1,11 +1,11 @@
-const CACHE='matriz-giron-v1.3.1';
+const CACHE='matriz-giron-v1.3.4';
 const ASSETS=[
   './',
   './index.html',
-  './styles.css?v=1.3.1',
+  './styles.css?v=1.3.4',
   './app.js?v=1.1.1',
   './photos.js?v=1.2.1',
-  './petition.js?v=1.3.1',
+  './petition.js?v=1.3.4',
   './manifest.json',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',

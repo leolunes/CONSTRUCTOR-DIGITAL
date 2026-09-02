@@ -1,7 +1,7 @@
 {
-  "version": "1.3.1",
-  "date": "2026-08-31",
-  "notes": "Derecho de Peticion PDF por necesidad con firma manuscrita electronica y trazabilidad",
-  "name": "Matriz Girón v1.3.1",
-  "updated": "2026-08-31"
+  "version": "1.3.4",
+  "date": "2026-09-01",
+  "notes": "Archivo documental: los Derechos de Petición PDF se guardan automáticamente en IndexedDB, vinculados a cada necesidad, con consulta, descarga, WhatsApp y eliminación.",
+  "name": "Matriz Girón v1.3.4",
+  "updated": "2026-09-01"
 }
