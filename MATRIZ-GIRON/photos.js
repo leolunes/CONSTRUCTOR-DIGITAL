@@ -55,6 +55,22 @@
     const clear=document.getElementById('clearData');if(clear)clear.onclick=async()=>{if(confirm('¿Seguro que desea borrar todos los datos locales y sus fotografías? Esta acción no se puede deshacer.')){db=blankDB();await clearPhotos();saveDB();toast('Datos y fotografías borrados')}};
   }
 
+  function initCommunityPhotos(){
+    const form=document.getElementById('communityForm'),gallery=document.getElementById('communityPhotoGallery');if(!form||!gallery)return;
+    let communityPending=[];
+    const renderCommunity=()=>{gallery.innerHTML=communityPending.map(p=>`<div class="photo-thumb"><button type="button" class="photo-remove" data-community-remove="${escapeHtml(p.id)}">×</button><img src="${p.url}" alt="Imagen de la necesidad"><div class="photo-thumb-info"><strong>${escapeHtml(p.date)} · por guardar</strong>${escapeHtml(p.note||'Evidencia inicial')}</div></div>`).join('')||'<div class="photo-empty">Aún no hay imágenes de la necesidad.</div>'};
+    const clearCommunity=()=>{communityPending.forEach(p=>p.url&&URL.revokeObjectURL(p.url));communityPending=[];const n=document.getElementById('communityPhotoNote');if(n)n.value='';renderCommunity()};
+    document.querySelectorAll('.community-photo-input').forEach(input=>input.addEventListener('change',async e=>{const files=[...(e.currentTarget.files||[])];if(!files.length)return;const note=document.getElementById('communityPhotoNote')?.value||'';try{for(const f of files){if(!f.type.startsWith('image/'))continue;const blob=await compress(f);communityPending.push({id:id(),date:new Date().toISOString().slice(0,10),note,blob,url:URL.createObjectURL(blob),created:new Date().toISOString()})}renderCommunity()}catch(err){alert('No fue posible procesar la imagen: '+err.message)}finally{e.currentTarget.value=''}}));
+    gallery.addEventListener('click',e=>{const b=e.target.closest('[data-community-remove]');if(!b)return;const i=communityPending.findIndex(p=>p.id===b.dataset.communityRemove);if(i>=0){const [p]=communityPending.splice(i,1);p.url&&URL.revokeObjectURL(p.url);renderCommunity()}});
+    window.addEventListener('community-need-saved',e=>{const needId=e.detail?.needId;if(!needId||!communityPending.length){clearCommunity();return}const items=communityPending.slice();Promise.all(items.map(p=>putPhoto({id:p.id,needId,phase:'before',date:p.date,note:p.note||'Evidencia desde formulario comunitario',blob:p.blob,created:p.created}))).then(()=>{clearCommunity();toast(`Formulario guardado · ${items.length} imagen(es) asociada(s)`) }).catch(err=>alert('El formulario se guardó, pero no fue posible guardar las imágenes: '+err.message))});
+    form.addEventListener('reset',()=>setTimeout(clearCommunity,0));
+  }
+
+  function initCommunityLeaderLink(){
+    const sel=document.getElementById('communityLeader'),form=document.getElementById('communityForm');if(!sel||!form)return;
+    sel.addEventListener('change',()=>{const l=db.leaders.find(x=>x.id===sel.value);if(!l)return;form.elements.role.value=l.role||'';form.elements.territory.value=l.territory||'';form.elements.phone.value=l.whatsapp||l.phone||'';form.elements.contactPhone.value=l.whatsapp||l.phone||''});
+  }
+
   // app.js se carga inmediatamente antes. Su init() ya terminó al llegar aquí.
-  try{initPhotos()}catch(err){console.error('Módulo fotográfico:',err)}
+  try{initPhotos();initCommunityPhotos();initCommunityLeaderLink()}catch(err){console.error('Módulo fotográfico:',err)}
 })();

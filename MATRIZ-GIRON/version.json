@@ -1,7 +1,5 @@
 {
-  "version": "1.3.4",
-  "date": "2026-09-01",
-  "notes": "Archivo documental: los Derechos de Petición PDF se guardan automáticamente en IndexedDB, vinculados a cada necesidad, con consulta, descarga, WhatsApp y eliminación.",
-  "name": "Matriz Girón v1.3.4",
-  "updated": "2026-09-01"
+  "version": "1.3.37",
+  "build": "2026-10-01",
+  "notes": "Derechos de Petición incorpora una acción visible para crear un documento nuevo: selector de necesidad + botón Nuevo Derecho de Petición, manteniendo separado el Archivo de PDFs y conservando el diseño responsive. app.js permanece intacto."
 }
