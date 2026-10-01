@@ -163,6 +163,7 @@
     form.reset();
     lastGenerated = null;
     form.elements.needId.value = n.id;
+    if(form.elements.vereda) form.elements.vereda.value = clean(n.vereda) || 'Sin vereda asignada';
     form.elements.recipientName.value = '';
     form.elements.recipientRole.value = '';
     form.elements.entity.value = clean(n.competentEntity);
@@ -190,9 +191,16 @@
 
   const centerModal = document.getElementById('petitionCenterModal');
   const centerList = document.getElementById('petitionCenterList');
+  const newNeedSelect = document.getElementById('petitionNewNeedSelect');
+  const newPetitionBtn = document.getElementById('newPetitionBtn');
   function renderPetitionCenter(){
     if(!centerList) return;
     const needs = Array.isArray(db.needs) ? db.needs : [];
+    if(newNeedSelect){
+      newNeedSelect.innerHTML='<option value="">Seleccione una necesidad...</option>'+needs.map(n=>`<option value="${escLocal(n.id)}">${escLocal(n.code)} · ${escLocal(n.title||'Necesidad')}</option>`).join('');
+      newNeedSelect.disabled=!needs.length;
+    }
+    if(newPetitionBtn) newPetitionBtn.disabled=!needs.length;
     if(!needs.length){
       centerList.innerHTML = '<div class="petition-center-empty"><strong>Aún no hay necesidades registradas.</strong><br>Primero registre una necesidad. Después podrá generar y firmar su Derecho de Petición desde este mismo módulo.</div>';
       return;
@@ -204,6 +212,12 @@
     centerList.querySelectorAll('[data-petition-need]').forEach(b=>b.addEventListener('click',()=>{ centerModal?.classList.remove('open'); openPetition(b.dataset.petitionNeed); }));
   }
   function openPetitionCenter(){ renderPetitionCenter(); refreshArchiveCount(); centerModal?.classList.add('open'); }
+  newPetitionBtn?.addEventListener('click',()=>{
+    const needId=newNeedSelect?.value;
+    if(!needId){ alert('Seleccione primero la necesidad sobre la cual desea crear el nuevo Derecho de Petición.'); newNeedSelect?.focus(); return; }
+    centerModal?.classList.remove('open');
+    openPetition(needId);
+  });
   window.openPetitionCenter = openPetitionCenter;
   document.getElementById('petitionCenterNav')?.addEventListener('click',openPetitionCenter);
   document.getElementById('petitionCenterQuick')?.addEventListener('click',openPetitionCenter);
@@ -222,7 +236,7 @@
   }
   function archiveMatches(r,q){
     if(!q)return true;
-    const hay=[r.needCode,r.needTitle,r.territory,r.entity,r.recipientName,r.recipientEmail,r.recipientPhone,r.petitionerName,r.subject,r.radicado,r.filename].map(clean).join(' ').toLowerCase();
+    const hay=[r.needCode,r.needTitle,r.territory,r.vereda,r.entity,r.recipientName,r.recipientEmail,r.recipientPhone,r.petitionerName,r.subject,r.radicado,r.filename].map(clean).join(' ').toLowerCase();
     return hay.includes(q.toLowerCase());
   }
   function renderArchiveList(){
@@ -231,7 +245,7 @@
     const rows=archiveCache.filter(r=>archiveMatches(r,q));
     if(archiveSummary)archiveSummary.textContent=`${rows.length} documento${rows.length===1?'':'s'}`;
     if(!rows.length){archiveList.innerHTML='<div class="petition-center-empty"><strong>No hay PDFs guardados que coincidan.</strong><br>Cuando genere un Derecho de Petición, el PDF quedará archivado automáticamente aquí.</div>';return;}
-    archiveList.innerHTML=rows.map(r=>`<article class="petition-archive-item"><div class="petition-archive-main"><div class="petition-archive-icon">PDF</div><div><strong>${escLocal(r.needCode||'SIN-CÓDIGO')} · ${escLocal(r.needTitle||'Derecho de Petición')}</strong><small><b>Generado:</b> ${escLocal(formatGeneratedAt(r.generatedAt))}</small><small><b>Destinatario:</b> ${escLocal(r.recipientName||'Sin nombre')} · ${escLocal(r.entity||'Sin entidad')}</small><small><b>Peticionario:</b> ${escLocal(r.petitionerName||'')}</small>${r.radicado?`<small><b>Radicado:</b> ${escLocal(r.radicado)}${r.radicadoDate?' · '+escLocal(formatDate(r.radicadoDate)):''}</small>`:''}<small class="petition-archive-file">${escLocal(r.filename||'documento.pdf')}</small></div></div><div class="petition-archive-buttons"><button type="button" data-doc-view="${escLocal(r.id)}">👁️ Ver</button><button type="button" data-doc-download="${escLocal(r.id)}">⬇️ Descargar</button><button type="button" class="petition-whatsapp" data-doc-share="${escLocal(r.id)}">🟢 WhatsApp</button><button type="button" class="danger" data-doc-delete="${escLocal(r.id)}">🗑️ Eliminar</button></div></article>`).join('');
+    archiveList.innerHTML=rows.map(r=>`<article class="petition-archive-item"><div class="petition-archive-main"><div class="petition-archive-icon">PDF</div><div><strong>${escLocal(r.needCode||'SIN-CÓDIGO')} · ${escLocal(r.needTitle||'Derecho de Petición')}</strong><small><b>Generado:</b> ${escLocal(formatGeneratedAt(r.generatedAt))}</small><small><b>Destinatario:</b> ${escLocal(r.recipientName||'Sin nombre')} · ${escLocal(r.entity||'Sin entidad')}</small>${r.vereda?`<small><b>Vereda:</b> ${escLocal(r.vereda)}</small>`:''}<small><b>Peticionario:</b> ${escLocal(r.petitionerName||'')}</small>${r.radicado?`<small><b>Radicado:</b> ${escLocal(r.radicado)}${r.radicadoDate?' · '+escLocal(formatDate(r.radicadoDate)):''}</small>`:''}<small class="petition-archive-file">${escLocal(r.filename||'documento.pdf')}</small></div></div><div class="petition-archive-buttons"><button type="button" data-doc-view="${escLocal(r.id)}">👁️ Ver</button><button type="button" data-doc-download="${escLocal(r.id)}">⬇️ Descargar</button><button type="button" class="petition-whatsapp" data-doc-share="${escLocal(r.id)}">🟢 WhatsApp</button><button type="button" class="danger" data-doc-delete="${escLocal(r.id)}">🗑️ Eliminar</button></div></article>`).join('');
     archiveList.querySelectorAll('[data-doc-view]').forEach(b=>b.addEventListener('click',()=>viewArchivedPDF(b.dataset.docView)));
     archiveList.querySelectorAll('[data-doc-download]').forEach(b=>b.addEventListener('click',()=>downloadArchivedPDF(b.dataset.docDownload)));
     archiveList.querySelectorAll('[data-doc-share]').forEach(b=>b.addEventListener('click',()=>shareArchivedPDF(b.dataset.docShare)));
@@ -347,7 +361,7 @@
     if(recent?.fingerprint===fingerprint && (Date.now()-new Date(recent.generatedAt).getTime())<120000) return;
     n.petitions.push({
       id:uidLocal(),generatedAt:data.generatedAt,entity:clean(fd.entity),recipientName:clean(fd.recipientName),recipientRole:clean(fd.recipientRole),recipientEmail:clean(fd.recipientEmail),recipientPhone:clean(fd.recipientPhone),
-      petitionerName:clean(fd.petitionerName),petitionerId:clean(fd.petitionerId),subject:clean(fd.subject),radicado:clean(fd.radicado),radicadoDate:clean(fd.radicadoDate),status:fd.radicado?'Radicado':'Generado',fingerprint
+      petitionerName:clean(fd.petitionerName),petitionerId:clean(fd.petitionerId),subject:clean(fd.subject),radicado:clean(fd.radicado),radicadoDate:clean(fd.radicadoDate),vereda:clean(n.vereda),status:fd.radicado?'Radicado':'Generado',fingerprint
     });
     saveDB();
     try{ toast('Derecho de Petición generado y guardado en la trazabilidad'); }catch(_){ }
@@ -356,7 +370,7 @@
   async function archiveGeneratedPDF({blob,filename,data}){
     const fd=data, n=data.need;
     const record={
-      id:uidLocal(),type:'derecho_peticion',needId:n.id,needCode:clean(n.code),needTitle:clean(n.title),territory:clean(n.territory),sector:clean(n.sector),
+      id:uidLocal(),type:'derecho_peticion',needId:n.id,needCode:clean(n.code),needTitle:clean(n.title),territory:clean(n.territory),vereda:clean(n.vereda),sector:clean(n.sector),
       generatedAt:data.generatedAt,filename,blob,
       entity:clean(fd.entity),recipientName:clean(fd.recipientName),recipientRole:clean(fd.recipientRole),recipientEmail:clean(fd.recipientEmail),recipientPhone:clean(fd.recipientPhone),
       petitionerName:clean(fd.petitionerName),petitionerId:clean(fd.petitionerId),subject:clean(fd.subject),radicado:clean(fd.radicado),radicadoDate:clean(fd.radicadoDate),
@@ -422,6 +436,7 @@
     const W=1240,H=1754,M=118,BOTTOM=116;
     const pages=[]; let c,ctx,y;
     const ivanPhoto=await loadImage('assets/ivan-ortiz-foto.png').catch(()=>null);
+    const ivanBrand=await loadImage('assets/ivan-ortiz-marca.png').catch(()=>null);
     const evidencePhotos=await getNeedPhotos(d.need?.id).catch(()=>[]);
     const phaseOrder={before:0,followup:1,after:2};
     evidencePhotos.sort((a,b)=>(phaseOrder[a.phase]??9)-(phaseOrder[b.phase]??9)||String(a.date||'').localeCompare(String(b.date||''))||String(a.created||'').localeCompare(String(b.created||'')));
@@ -436,9 +451,9 @@
         const sw=ivanPhoto.width,sh=ivanPhoto.height,s=Math.min(sw,sh);ctx.drawImage(ivanPhoto,(sw-s)/2,(sh-s)/2,s,s,cx-r,cy-r,r*2,r*2);ctx.restore();
         ctx.strokeStyle='#f2c21a';ctx.lineWidth=4;ctx.beginPath();ctx.arc(cx,cy,r+3,0,Math.PI*2);ctx.stroke();
       }
-      ctx.textAlign='left';ctx.fillStyle='#fff';ctx.font='700 30px Arial, sans-serif';ctx.fillText('IVÁN ORTIZ',M+120,68);
-      ctx.font='400 18px Arial, sans-serif';ctx.fillStyle='#d8e7f6';ctx.fillText('Gestión Territorial para Girón',M+120,98);
-      ctx.font='700 14px Arial, sans-serif';ctx.fillStyle='#f2c21a';ctx.fillText('MATRIZ MAESTRA DE GESTIÓN TERRITORIAL',M+120,123);
+      ctx.textAlign='left';if(ivanBrand){const bw=360,bh=bw*(ivanBrand.height/ivanBrand.width);ctx.drawImage(ivanBrand,M+120,36,bw,bh);}
+      ctx.font='400 18px Arial, sans-serif';ctx.fillStyle='#d8e7f6';ctx.fillText('Gestión Territorial para Girón',M+120,118);
+      ctx.font='700 14px Arial, sans-serif';ctx.fillStyle='#f2c21a';ctx.fillText('MATRIZ MAESTRA DE GESTIÓN TERRITORIAL',M+120,143);
       ctx.textAlign='right';ctx.font='400 15px Arial, sans-serif';ctx.fillStyle='#d8e7f6';ctx.fillText('Documento generado desde la Matriz Territorial',W-M,92);
       ctx.textAlign='left';
     }

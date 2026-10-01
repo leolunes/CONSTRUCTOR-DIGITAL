@@ -8,19 +8,25 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-  <link rel="stylesheet" href="styles.css?v=1.3.3" />
+  <link rel="stylesheet" href="styles.css?v=1.3.36" />
 </head>
 <body>
   <header class="brand-header">
-    <div class="party-brand"><div class="party-mark">CD</div><div><strong>CENTRO<br>DEMOCRÁTICO</strong><small>Mano firme<br>Corazón grande</small></div></div>
+    <div class="party-brand"><img class="party-logo-real" src="assets/centro-democratico-logo.png" alt="Centro Democrático"></div>
     <div class="giron-brand"><div class="crest">♛</div><div><strong>GIRÓN</strong><span>Santander</span><small>Monumento Nacional</small></div></div>
     <div class="system-brand"><span>MATRIZ MAESTRA DE</span><strong>GESTIÓN TERRITORIAL</strong><em>para Girón</em><small>Escuchar • Conocer • Priorizar • Gestionar • Hacer seguimiento</small></div>
     <div class="people-brand">
       <div class="person-card jhonatan"><img src="assets/jhonatan-pineda.png" alt="Jhonatan Pineda"><div><strong>JHONATAN PINEDA</strong><span>Representante a la Cámara<br>por Santander</span></div></div>
-      <div class="person-card ivan"><img class="ivan-photo" src="assets/ivan-ortiz-foto.png" alt="Iván Ortiz"><img class="ivan-logo" src="assets/ivan-ortiz-logo.png" alt="Iván Ortiz"><div><strong>IVÁN ORTIZ</strong><span>Candidato al Concejo<br>2028 - 2031</span><small>@ivanortiz.c</small></div></div>
+      <div class="person-card ivan"><img class="ivan-photo" src="assets/ivan-ortiz-foto.png" alt="Iván Ortiz"><div class="ivan-brand-copy"><img class="ivan-brandmark" src="assets/ivan-ortiz-marca.png" alt="Iván Ortiz @ivanortiz.c"><span>Candidato al Concejo<br>2028 - 2031</span></div></div>
     </div>
     <div class="datetime"><span id="liveDate"></span><span id="liveTime"></span></div>
   </header>
+
+  <div class="mobile-topbar" id="mobileTopbar">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <div class="mobile-topbar-title"><strong>Matriz Territorial · Girón</strong><small>Menú de trabajo</small></div>
+  </div>
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true"></div>
 
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
@@ -30,9 +36,14 @@
       <button class="nav-btn" data-view="projects">▣ <span>Proyectos e iniciativas</span></button>
       <button class="nav-btn" data-view="actions">✓ <span>Gestión y seguimiento</span></button>
       <button class="nav-btn" data-view="community">▤ <span>Formulario comunitario</span></button>
-      <button class="nav-btn" data-view="reports">▥ <span>Reportes y estadísticas</span></button>
-      <button class="nav-btn" data-view="reports">◈ <span>Mapa territorial</span></button>
-      <button class="nav-btn" data-view="actions">▦ <span>Agenda de acciones</span></button>
+      <button class="nav-btn" data-view="reports">▥ <span>Inteligencia territorial</span></button>
+      <button class="nav-btn" data-view="map">◈ <span>Mapa territorial</span></button>
+      <button class="nav-btn" data-view="positioning">🌟 <span>Posicionamiento territorial</span></button>
+      <button class="nav-btn" data-view="position">📣 <span>Mi posición</span></button>
+      <button class="nav-btn" data-view="stories">🏢 <span>Contando tu historia</span></button>
+      <button class="nav-btn" data-view="agenda">📅 <span>Agenda de gestión</span></button>
+      <button class="nav-btn" data-view="dossier">🧭 <span>Expediente 360°</span></button>
+      <button class="nav-btn" data-view="communications">📲 <span>Comunicaciones WhatsApp</span></button>
       <button class="nav-btn" type="button" id="petitionCenterNav">📄 <span>Derechos de petición</span></button>
       <button class="nav-btn" data-view="settings">▰ <span>Documentos</span></button>
       <button class="nav-btn" data-view="settings">⚙ <span>Configuración</span></button>
@@ -58,11 +69,15 @@
           <button onclick="showView('projects')">📁 <span><b>Proyectos e iniciativas</b><small>Ver proyectos registrados</small></span></button>
           <button onclick="showView('actions')">✓ <span><b>Gestión y seguimiento</b><small>Ver seguimientos</small></span></button>
           <button onclick="showView('community')">▤ <span><b>Formulario comunitario</b><small>Diligenciar formulario</small></span></button>
-          <button onclick="showView('reports')">▥ <span><b>Reportes y estadísticas</b><small>Ver reportes</small></span></button>
-          <button onclick="showView('reports')">⌖ <span><b>Mapa territorial</b><small>Ver mapa de Girón</small></span></button>
+          <button onclick="showView('reports')">▥ <span><b>Inteligencia territorial</b><small>Analizar gestión</small></span></button>
+          <button onclick="showView('map')">⌖ <span><b>Mapa territorial</b><small>Ver mapa interactivo de Girón</small></span></button>
+          <button onclick="showView('positioning')">🌟 <span><b>Posicionamiento territorial</b><small>Escuchar, gestionar, demostrar y dar a conocer</small></span></button>
+          <button onclick="showView('stories')">🏢 <span><b>Contando tu historia</b><small>Empresas que generan progreso</small></span></button>
+          <button onclick="showView('agenda')">📅 <span><b>Agenda de gestión</b><small>Compromisos, vencimientos y próximos pasos</small></span></button>
+          <button onclick="showView('dossier')">🧭 <span><b>Expediente 360°</b><small>Historia completa por contacto o territorio</small></span></button>
           <button type="button" id="petitionCenterQuick">📄 <span><b>Derechos de petición</b><small>Generar y firmar PDF</small></span></button>
         </div>
-        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.3.3</span></footer>
+        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.3.24</span></footer>
       </section>
       <section class="view" id="view-needs">
         <div class="section-title"><div><h2>Necesidades del territorio</h2><p>Registro, verificación, priorización y trazabilidad.</p></div><button class="primary" data-open-modal="needModal">+ Registrar necesidad</button></div>
@@ -76,7 +91,28 @@
 
       <section class="view" id="view-leaders">
         <div class="section-title"><div><h2>Líderes, JAC y ediles</h2><p>Trazabilidad de quién reporta y qué comunidades representa.</p></div><button class="primary" data-open-modal="leaderModal">+ Nuevo contacto</button></div>
+        <div class="contacts-toolbar">
+          <div class="contacts-authorized-count"><span>Contactos autorizados para comunicaciones</span><strong id="authorizedContactsCount">0</strong></div>
+          <button class="primary" type="button" id="contactsPdfBtn">📄 Generar PDF de contactos autorizados</button>
+        </div>
+        <div id="birthdayPanel" class="birthday-panel"></div>
         <div id="leadersTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-communications">
+        <div class="section-title"><div><h2>📲 Centro de Comunicaciones WhatsApp</h2><p>Prepare una comunicación y recorra, uno por uno, los contactos que autorizaron recibir información.</p></div></div>
+        <div class="card wa-center-card">
+          <div class="wa-center-grid">
+            <label>Sector<select id="waSectorFilter"><option value="">Todos los sectores</option></select></label>
+            <label>Barrio<select id="waBarrioFilter"><option value="">Todos los barrios</option></select></label>
+            <label>Líder<select id="waLeaderSearch"><option value="">Todos los líderes</option></select></label>
+          </div>
+          <label class="wa-message-label">Información a compartir<textarea id="waBulkMessage" rows="7" placeholder="Escriba o pegue aquí la información que desea compartir. Revísela antes de iniciar."></textarea></label>
+          <div class="wa-center-actions"><button class="primary" type="button" id="waPrepareQueue">Preparar cola</button><button class="secondary" type="button" id="waResetQueue">Reiniciar cola</button></div>
+          <p class="wa-privacy-note">Solo se incluyen contactos con autorización registrada y número de WhatsApp. La app no envía mensajes automáticamente: abre WhatsApp con el texto preparado para que usted revise y pulse Enviar.</p>
+        </div>
+        <div id="waQueueSummary" class="wa-queue-summary"></div>
+        <div id="waQueueList" class="wa-queue-list"></div>
       </section>
 
       <section class="view" id="view-projects">
@@ -89,15 +125,48 @@
         <div id="actionsTable" class="table-wrap"></div>
       </section>
 
+      <section class="view" id="view-agenda">
+        <div class="section-title"><div><h2>📅 Agenda de gestión y compromisos</h2><p>Lo que debemos hacer, lo que está próximo y lo que no puede quedar olvidado.</p></div><button class="primary" type="button" id="newCommitmentBtn">+ Nuevo compromiso</button></div>
+        <div id="agendaKpis" class="agenda-kpis"></div>
+        <div class="card agenda-card"><div class="agenda-toolbar"><div><h3>Agenda operativa</h3><small>Integra próximas gestiones y compromisos adquiridos.</small></div><select id="agendaFilter"><option value="all">Todos los pendientes</option><option value="overdue">Vencidos</option><option value="week">Próximos 7 días</option><option value="commit">Compromisos</option><option value="action">Gestiones programadas</option></select></div><div id="agendaList"></div></div>
+        <div class="card agenda-card"><div class="agenda-toolbar"><div><h3>🤝 Memoria de compromisos</h3><small>Qué acordamos → qué gestionamos → qué cumplimos.</small></div></div><div id="commitmentsTable" class="table-wrap"></div></div>
+      </section>
+
+
+      <section class="view" id="view-dossier">
+        <div class="section-title"><div><h2>🧭 Expediente Territorial 360°</h2><p>Una sola vista para comprender la historia completa de una persona o de un territorio.</p></div><button class="primary" type="button" id="dossierPrintBtn">🖨️ Imprimir expediente</button></div>
+        <div class="card dossier-selector">
+          <div class="dossier-mode">
+            <button type="button" class="dossier-mode-btn active" data-dossier-mode="contact">👤 Por contacto</button>
+            <button type="button" class="dossier-mode-btn" data-dossier-mode="territory">🏘️ Por territorio</button>
+          </div>
+          <div class="dossier-picker">
+            <label id="dossierContactLabel">Contacto<select id="dossierContactSelect"><option value="">Seleccione un contacto</option></select></label>
+            <label id="dossierTerritoryLabel" class="hidden">Territorio<select id="dossierTerritorySelect"><option value="">Seleccione un territorio</option></select></label>
+          </div>
+        </div>
+        <div id="dossierEmpty" class="card dossier-empty"><strong>Seleccione un contacto o territorio.</strong><span>La Matriz reunirá necesidades, proyectos, gestiones, compromisos, empresas y Derechos de Petición vinculados.</span></div>
+        <div id="dossierContent" class="hidden">
+          <div id="dossierHero" class="dossier-hero"></div>
+          <div id="dossierKpis" class="dossier-kpis"></div>
+          <div class="dossier-grid">
+            <div class="card dossier-panel"><div class="dossier-panel-head"><h3>🕘 Línea de tiempo</h3><small>Historia cronológica de la gestión.</small></div><div id="dossierTimeline" class="dossier-timeline"></div></div>
+            <div class="card dossier-panel"><div class="dossier-panel-head"><h3>📌 Estado actual</h3><small>Lo que está abierto, cumplido o requiere seguimiento.</small></div><div id="dossierStatus"></div></div>
+          </div>
+          <div class="card dossier-panel"><div class="dossier-panel-head"><h3>🔗 Relaciones del expediente</h3><small>Todos los registros conectados con esta persona o territorio.</small></div><div id="dossierRelations"></div></div>
+        </div>
+      </section>
+
       <section class="view" id="view-community">
         <div class="section-title"><div><h2>Formulario comunitario</h2><p>Versión sencilla para presidentes de JAC, ediles y líderes.</p></div></div>
         <form id="communityForm" class="card form-grid">
           <h3 class="span-2">¿Qué necesita su comunidad?</h3>
           <label>Barrio / Vereda / Sector<input name="territory" required></label>
+          <label>Vereda<select name="vereda" id="communityVereda"><option value="">Sin asignar / no aplica</option></select></label>
           <label>Comuna / Corregimiento<input name="zone"></label>
-          <label>Nombre del líder<input name="reporter" required></label>
-          <label>Calidad<select name="role"><option>Presidente(a) JAC</option><option>Edil</option><option>Líder comunitario</option><option>Organización social</option><option>Otro</option></select></label>
-          <label>Teléfono<input name="phone"></label>
+          <label>Líder / JAC / Edil<select name="leaderId" id="communityLeader" required><option value="">Seleccione un líder registrado</option></select></label>
+          <label>Calidad<input name="role" id="communityRole" readonly></label>
+          <label>Teléfono / WhatsApp<input name="phone" id="communityPhone" readonly></label>
           <label>Sector<select name="sector" id="communitySector"></select></label>
           <label class="span-2">Necesidad o problema<textarea name="title" required></textarea></label>
           <label class="span-2">Ubicación específica<input name="location"></label>
@@ -108,18 +177,176 @@
           <label class="span-2">Gestiones previas / respuestas recibidas<textarea name="previous"></textarea></label>
           <label>Prioridad percibida<select name="priority"><option>Urgente</option><option>Alta</option><option selected>Media</option><option>Baja</option></select></label>
           <label>Teléfono de contacto<input name="contactPhone"></label>
+          <section class="span-2 community-photo-panel" id="communityPhotoPanel">
+            <div class="community-photo-head"><div><strong>📷 Imágenes de la necesidad de la comunidad</strong><small>Registre evidencia visual del estado actual. Estas fotografías quedarán asociadas como evidencia inicial de la necesidad.</small></div><span>Compresión automática</span></div>
+            <label class="community-photo-note">Descripción opcional de las imágenes<input type="text" id="communityPhotoNote" placeholder="Ej.: Estado actual de la vía, fuga de agua, luminaria dañada"></label>
+            <div class="community-photo-actions">
+              <label class="photo-button">📷 Tomar foto<input class="community-photo-input" type="file" accept="image/*" capture="environment"></label>
+              <label class="photo-button secondary-photo">🖼️ Galería<input class="community-photo-input" type="file" accept="image/*" multiple></label>
+            </div>
+            <div class="photo-gallery" id="communityPhotoGallery"><div class="photo-empty">Aún no hay imágenes de la necesidad.</div></div>
+          </section>
           <div class="span-2 note">El registro de una necesidad no constituye compromiso de ejecución, financiación o solución. Su finalidad es organizar información territorial para análisis y gestión.</div>
           <div class="span-2 form-actions"><button class="primary" type="submit">Guardar en la Matriz</button><button type="reset" class="secondary">Limpiar</button></div>
         </form>
       </section>
 
-      <section class="view" id="view-reports">
-        <div class="section-title"><div><h2>Reportes y fichas</h2><p>Genere información ejecutiva para reuniones y seguimiento territorial.</p></div></div>
-        <div class="grid-3">
-          <div class="card report-card"><h3>Diagnóstico de Girón</h3><p>Resumen de necesidades, prioridades, sectores y estados.</p><button class="primary" id="printDiagnosis">Generar / imprimir</button></div>
-          <div class="card report-card"><h3>Ficha por barrio/vereda</h3><select id="territoryReport"></select><button class="primary" id="printTerritory">Generar ficha</button></div>
-          <div class="card report-card"><h3>Datos completos</h3><p>Exporte la base para auditoría o migración.</p><button class="primary" id="exportCsv">Exportar necesidades CSV</button></div>
+      <section class="view" id="view-map">
+        <div class="section-title"><div><h2>🗺️ Mapa territorial interactivo de Girón</h2><p>Toque o haga clic sobre una zona para consultar la información territorial asociada en la Matriz.</p></div></div>
+        <div class="map-communications-summary">
+          <div><span>Contactos autorizados en todo Girón</span><strong id="mapGlobalAuthorized">0</strong></div>
+          <div><span>Contactos autorizados en zona seleccionada</span><strong id="mapSelectedAuthorized">—</strong></div>
+          <div><span>Registros sin vereda asignada</span><strong id="mapUnassignedCount">0</strong></div>
+          <small>Los contadores incluyen únicamente contactos con “¿Autoriza recibir comunicaciones?” = Sí.</small>
         </div>
+        <div class="map-layout">
+          <div class="card territorial-map-card">
+            <div class="map-toolbar"><strong>Mapa geográfico de Girón</strong><span>Mapa base incorporado del documento suministrado · áreas táctiles de consulta</span></div>
+            <div class="territorial-map-stage" id="territorialMapStage">
+              <img src="assets/mapa-giron-territorial.png" alt="Mapa geográfico de Girón" class="territorial-map-image">
+              <div id="territorialHotspots" class="territorial-hotspots"></div>
+              <div class="map-global-total-card" aria-live="polite">
+                <span>Total municipio</span>
+                <strong id="mapGlobalAuthorizedOverlay">0</strong>
+                <small>Contactos autorizados</small>
+              </div>
+            </div>
+            <div class="map-help">👆 Seleccione GIRÓN o una vereda. La consulta no modifica ni duplica la información almacenada.</div>
+          </div>
+          <aside class="card territory-data-panel" id="territoryDataPanel">
+            <div class="territory-empty"><div class="territory-empty-icon">⌖</div><h3>Seleccione un territorio</h3><p>Aquí aparecerán contactos autorizados, necesidades, gestiones, proyectos y Derechos de Petición asociados.</p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-positioning">
+        <div class="section-title"><div><h2>🌟 Centro de Posicionamiento Territorial</h2><p>Conocer el territorio, escuchar sus comunidades, organizar la gestión, demostrar resultados y comunicar lo realizado.</p></div></div>
+        <div id="footprintKpis" class="positioning-kpis"></div>
+        <div class="positioning-grid">
+          <div class="card positioning-pillar"><span class="pillar-icon">👂</span><h3>Escuchar</h3><p>Necesidades, comunidades, empresas y actores del territorio.</p><button type="button" data-pos-view="needs">Ver necesidades</button></div>
+          <div class="card positioning-pillar"><span class="pillar-icon">🤝</span><h3>Gestionar</h3><p>Seguimientos, compromisos, proyectos y derechos de petición.</p><button type="button" data-pos-view="actions">Ver gestión</button></div>
+          <div class="card positioning-pillar"><span class="pillar-icon">✅</span><h3>Demostrar</h3><p>Resultados, necesidades solucionadas y memoria verificable de gestión.</p><button type="button" data-pos-filter="results">Ver resultados</button></div>
+          <div class="card positioning-pillar"><span class="pillar-icon">📣</span><h3>Dar a conocer</h3><p>Convierta la gestión documentada en información pública clara y verificable.</p><button type="button" data-pos-filter="stories">Ver historias</button></div>
+        </div>
+        <div class="card positioning-hub">
+          <div class="positioning-head"><div><h3>📣 Centro de Posicionamiento Territorial</h3><small>La información acumulada por la Matriz alimenta diferentes historias públicas. Revise siempre el contenido y las autorizaciones antes de difundir.</small></div></div>
+          <div class="positioning-channels">
+            <button type="button" class="positioning-channel" data-pos-filter="stories"><span>🏘️</span><b>Historias del territorio</b><small>Una comunidad, una necesidad y lo que se está haciendo.</small></button>
+            <button type="button" class="positioning-channel" data-pos-filter="results"><span>✅</span><b>Gestión que produce resultados</b><small>Problema → gestión → resultado → evidencia.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="stories"><span>🏢</span><b>Contando tu historia</b><small>Empresas y emprendimientos que generan progreso.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="leaders"><span>👥</span><b>Gente que construye Girón</b><small>Organizaciones y personas que aportan al municipio.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="map"><span>📍</span><b>Conociendo mi territorio</b><small>Veredas, barrios, problemáticas y oportunidades.</small></button>
+            <button type="button" class="positioning-channel" data-pos-proposal><span>💡</span><b>Girón puede hacerlo mejor</b><small>Documente observaciones y propuestas públicas sobre el territorio.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="intelligence"><span>📊</span><b>Lo que estamos aprendiendo de Girón</b><small>Información agregada sin exponer datos privados.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="position"><span>📣</span><b>Mi posición</b><small>Posturas públicas sobre asuntos de interés general.</small></button>
+          </div>
+        </div>
+        <div class="card positioning-proposal hidden" id="positioningProposal">
+          <div class="positioning-head"><div><h3>💡 Girón puede hacerlo mejor</h3><small>Banco privado de observaciones y propuestas. El contenido queda editable y no se publica automáticamente.</small></div><button type="button" class="secondary" id="positioningProposalClose">Cerrar</button></div>
+          <div class="positioning-proposal-grid">
+            <label>Título<input id="proposalTitle" placeholder="Ej.: Recuperación del espacio público"></label>
+            <label>Territorio<input id="proposalTerritory" placeholder="Vereda, barrio o sector"></label>
+            <label class="span-2">Situación observada<textarea id="proposalObservation" rows="3" placeholder="Describa hechos verificables y el contexto observado."></textarea></label>
+            <label class="span-2">Propuesta<textarea id="proposalIdea" rows="4" placeholder="Describa una alternativa concreta, responsable y verificable."></textarea></label>
+          </div>
+          <div class="positioning-actions"><button type="button" class="primary" id="positioningProposalSave">💾 Guardar propuesta</button><button type="button" class="secondary" id="positioningProposalCopy">📋 Copiar borrador</button></div>
+          <div id="positioningProposalList" class="positioning-proposal-list"></div>
+        </div>
+        <div class="card footprint-card"><div class="positioning-head"><div><h3>📍 Huella territorial</h3><small>Mide actividad y presencia de gestión registrada, no preferencias electorales.</small></div><select id="positioningTerritory"><option value="">Todos los territorios</option></select></div><div id="territoryFootprint"></div></div>
+        <div class="card positioning-content"><div class="positioning-head"><div><h3>📣 Historias de gestión</h3><small>Seleccione una necesidad para preparar un resumen factual a partir de los datos ya registrados.</small></div><select id="positioningStatus"><option value="all">Todas</option><option value="results">Con resultado / solucionadas</option><option value="active">En gestión</option></select></div><div id="positioningStories"></div></div>
+        <div class="card positioning-draft hidden" id="positioningDraft"><div class="positioning-head"><div><h3>Vista previa informativa</h3><small>Revise y edite el texto antes de publicarlo.</small></div><button type="button" class="secondary" id="positioningCloseDraft">Cerrar</button></div><textarea id="positioningDraftText" rows="10"></textarea><div class="positioning-actions"><button type="button" class="primary" id="positioningCopy">📋 Copiar texto</button><button type="button" class="secondary" id="positioningGoPosition">📣 Abrir Mi posición</button></div></div>
+      </section>
+
+      <section class="view" id="view-position">
+        <div class="section-title"><div><h2>📣 Mi posición</h2><p>Convierta una noticia relevante en una pieza clara de opinión para compartir y conservar.</p></div></div>
+        <div class="position-grid">
+          <form id="positionForm" class="card position-form">
+            <h3>Crear nueva comunicación</h3>
+            <label>Título de la noticia o tema<input name="title" required maxlength="110" placeholder="Ej.: Nueva inversión para las vías de Girón"></label>
+            <div class="position-two">
+              <label>Ámbito<select name="scope"><option>Girón</option><option>Santander</option><option>Colombia</option></select></label>
+              <label>Fecha de la noticia<input name="newsDate" type="date"></label>
+            </div>
+            <div class="position-sources-box">
+              <div class="position-sources-head"><div><b>📰 Fuentes de información</b><small>Abra una fuente en otra pestaña, consulte la noticia y conserve el enlace utilizado.</small></div></div>
+              <div class="position-source-links">
+                <a href="https://www.vanguardia.com/" target="_blank" rel="noopener">Vanguardia</a>
+                <a href="https://www.eltiempo.com/" target="_blank" rel="noopener">El Tiempo</a>
+                <a href="https://www.elespectador.com/" target="_blank" rel="noopener">El Espectador</a>
+                <a href="https://www.presidencia.gov.co/" target="_blank" rel="noopener">Presidencia</a>
+                <a href="https://santander.gov.co/" target="_blank" rel="noopener">Gobernación</a>
+                <a href="https://www.giron-santander.gov.co/" target="_blank" rel="noopener">Alcaldía de Girón</a>
+              </div>
+            </div>
+            <div class="position-two">
+              <label>Medio / fuente<input name="source" placeholder="Ej.: Vanguardia, Gobernación de Santander"></label>
+              <label>URL de la noticia<input name="sourceUrl" type="url" placeholder="https://..."></label>
+            </div>
+            <label>Resumen del hecho<textarea name="summary" required maxlength="850" placeholder="Describa brevemente qué ocurrió, sin mezclarlo con la opinión."></textarea></label>
+            <div class="position-draft-tools"><button type="button" class="secondary" id="positionDraft">✨ Generar borrador informativo</button><small>La app estructura un borrador a partir del resumen. Revíselo y ajústelo antes de publicar.</small></div>
+            <label>Mi posición<textarea name="opinion" required maxlength="900" placeholder="Puede escribirla directamente o generar un borrador informativo a partir del resumen."></textarea></label>
+            <label>Mensaje final / propuesta<textarea name="proposal" maxlength="360" placeholder="Ej.: Seguiremos haciendo gestión y seguimiento para que esta necesidad tenga respuesta."></textarea></label>
+            <label>Fotografía opcional<input id="positionImage" type="file" accept="image/*"></label>
+            <div class="position-format-row"><span>Formato</span><label><input type="radio" name="format" value="square" checked> Publicación 1080×1080</label><label><input type="radio" name="format" value="story"> Historia 1080×1920</label></div>
+            <div class="form-actions"><button class="primary" type="submit">🎨 Generar tarjeta</button><button class="secondary" type="reset" id="positionClear">Limpiar</button></div>
+          </form>
+          <div class="card position-preview-card">
+            <div class="position-preview-head"><h3>Vista previa</h3><small>La tarjeta diferencia la referencia informativa de “Mi posición”.</small></div>
+            <div class="position-canvas-wrap"><canvas id="positionCanvas" width="1080" height="1080"></canvas></div>
+            <div class="position-actions">
+              <button class="primary" id="positionShare" type="button">📤 Compartir tarjeta</button>
+              <button class="secondary" id="positionDownload" type="button">⬇ Guardar imagen</button>
+              <button class="position-wa" id="positionContacts" type="button">🟢 Contactos autorizados</button>
+            </div>
+          </div>
+        </div>
+        <div class="card position-archive-card"><div class="position-archive-head"><div><h3>🗂️ Archivo de comunicaciones</h3><p>Histórico de tarjetas generadas desde la Matriz.</p></div><strong id="positionArchiveCount">0</strong></div><div id="positionArchive"></div></div>
+        <div class="card position-contacts-card hidden" id="positionContactsPanel"><div class="position-archive-head"><div><h3>Contactos autorizados</h3><p>Seleccione un contacto para abrir WhatsApp con el mensaje preparado. La app no realiza envíos automáticos.</p></div><button type="button" class="secondary" id="positionContactsClose">Cerrar</button></div><div class="position-contact-filter"><label>Filtrar por vereda<select id="positionVeredaFilter"><option value="">Todas</option></select></label></div><div id="positionContactsList"></div></div>
+      </section>
+
+      <section class="view" id="view-stories">
+        <div class="section-title"><div><h2>🏢 Contando tu historia</h2><p>Empresas y emprendimientos que generan progreso, empleo y oportunidades para Girón.</p></div><button class="primary" type="button" id="businessNewBtn">+ Registrar empresa</button></div>
+        <div id="businessKpis" class="business-kpis"></div>
+        <div class="card business-directory-tools">
+          <div><h3>Directorio empresarial</h3><p>Conozca quiénes producen, emplean, sirven y construyen futuro en el municipio.</p></div>
+          <div class="business-filter-grid"><input id="businessSearch" type="search" placeholder="Buscar empresa, sector, barrio o vereda..."><select id="businessSectorFilter"><option value="">Todos los sectores</option></select><select id="businessTerritoryFilter"><option value="">Todos los territorios</option></select></div>
+        </div>
+        <div id="businessDirectory" class="business-directory"></div>
+        <div class="card business-purpose-note"><strong>Mapa de capacidades productivas de Girón</strong><span>Las empresas con autorización de difusión también se relacionan con el Mapa Territorial, para mostrar capacidades económicas junto con las necesidades y gestiones de cada zona.</span></div>
+      </section>
+
+      <section class="view" id="view-reports">
+        <div class="section-title"><div><h2>📊 Inteligencia territorial</h2><p>Diagnóstico, seguimiento y resultados construidos con la información real de la Matriz.</p></div></div>
+        <div id="intelKpis" class="intel-kpis"></div>
+        <div id="businessIntel"></div>
+        <div class="intel-grid">
+          <div class="card intel-card">
+            <h3>📊 Diagnóstico territorial de Girón</h3>
+            <p>Necesidades por sector, prioridad y estado.</p>
+            <div id="intelDiagnosis"></div>
+            <button class="primary" id="intelDiagnosisPdf">Generar diagnóstico / imprimir</button>
+          </div>
+          <div class="card intel-card">
+            <h3>🗺️ Análisis por barrio / vereda</h3>
+            <p>Seleccione un territorio para conocer necesidades, líderes, proyectos y gestiones.</p>
+            <select id="intelTerritorySelect"></select>
+            <div id="intelTerritory"></div>
+            <button class="primary" id="intelTerritoryPdf">Generar ficha territorial</button>
+          </div>
+        </div>
+        <div class="card intel-card intel-wide">
+          <h3>📈 Gestión y resultados</h3>
+          <p>Ruta de avance de las necesidades registradas.</p>
+          <div id="intelManagement"></div>
+        </div>
+        <div class="card intel-card intel-wide">
+          <h3>📄 Informes ejecutivos</h3>
+          <div class="intel-actions">
+            <button class="primary" id="intelManagementPdf">Generar Informe de Gestión</button>
+            <button class="primary" id="exportCsv">Exportar necesidades CSV</button>
+          </div>
+        </div>
+        <div style="display:none"><select id="territoryReport"></select><button id="printDiagnosis"></button><button id="printTerritory"></button></div>
       </section>
 
       <section class="view" id="view-settings">
@@ -146,6 +373,7 @@
   <!-- Modal Necesidad -->
   <div class="modal" id="needModal"><div class="modal-card"><div class="modal-head"><h3>Registrar necesidad</h3><button data-close>×</button></div><form id="needForm" class="form-grid">
     <label>Territorio<input name="territory" required placeholder="Barrio, vereda o sector"></label>
+    <label>Vereda<select name="vereda" id="needVereda"><option value="">Sin asignar / no aplica</option></select></label>
     <label>Zona / Comuna / Corregimiento<input name="zone"></label>
     <label class="span-2">Necesidad<input name="title" required></label>
     <label>Sector<select name="sector" id="needSector"></select></label>
@@ -206,15 +434,18 @@
 
   <!-- Modal líder -->
   <div class="modal" id="leaderModal"><div class="modal-card"><div class="modal-head"><h3>Registrar líder / contacto</h3><button data-close>×</button></div><form id="leaderForm" class="form-grid">
-    <label>Nombre<input name="name" required></label><label>Calidad<select name="role"><option>Presidente(a) JAC</option><option>Edil</option><option>Líder comunitario</option><option>Organización social</option><option>Otro</option></select></label>
-    <label>Comunidad / organización<input name="organization"></label><label>Territorio<input name="territory"></label>
-    <label>Teléfono<input name="phone"></label><label>Correo<input type="email" name="email"></label>
-    <label class="span-2">Notas<textarea name="notes"></textarea></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+    <label>Nombre<input name="name" required></label><label>Número de cédula<input name="cedula" inputmode="numeric" autocomplete="off" placeholder="Ej. 1098765432"></label>
+    <label>Calidad<input name="role" id="communityRole" readonly></label><label>Comunidad / organización<input name="organization"></label>
+    <label>Territorio<input name="territory"></label>
+    <label>Vereda<select name="vereda" id="leaderVereda"><option value="">Sin asignar / no aplica</option></select></label><label>Teléfono<input name="phone"></label>
+    <label>WhatsApp<input name="whatsapp" inputmode="tel" placeholder="Ej. 3001234567"></label><label>Correo<input type="email" name="email"></label>
+    <label>🎂 Fecha de nacimiento<input type="date" name="birthDate"></label><label>¿Autoriza recibir comunicaciones?<select name="communicationsConsent"><option value="Pendiente">Pendiente</option><option value="Sí">Sí</option><option value="No">No</option></select></label><label>Fecha de última comunicación<input type="date" name="lastCommunication"></label>
+    <label>Canal preferido<select name="preferredChannel"><option value="WhatsApp">WhatsApp</option><option value="Teléfono">Teléfono</option><option value="Correo">Correo</option><option value="Presencial">Presencial</option><option value="Otro">Otro</option></select></label><label class="span-2">Notas<textarea name="notes"></textarea></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
   </form></div></div>
 
   <!-- Modal proyecto -->
   <div class="modal" id="projectModal"><div class="modal-card"><div class="modal-head"><h3>Registrar proyecto</h3><button data-close>×</button></div><form id="projectForm" class="form-grid">
-    <label class="span-2">Nombre del proyecto<input name="name" required></label><label>Territorio<input name="territory"></label><label>Sector<select name="sector" id="projectSector"></select></label>
+    <label class="span-2">Nombre del proyecto<input name="name" required></label><label>Territorio<input name="territory"></label><label>Vereda<select name="vereda" id="projectVereda"><option value="">Sin asignar / no aplica</option></select></label><label>Sector<select name="sector" id="projectSector"></select></label>
     <label>Entidad formuladora<input name="formulator"></label><label>Entidad nacional / competente<input name="entity"></label>
     <label>Radicado<input name="radicado"></label><label>Fecha radicación<input type="date" name="radicadoDate"></label>
     <label>Valor total<input type="number" min="0" step="1000" name="value"></label><label>Financiación requerida<input type="number" min="0" step="1000" name="funding"></label>
@@ -226,6 +457,7 @@
   <!-- Modal gestión -->
   <div class="modal" id="actionModal"><div class="modal-card"><div class="modal-head"><h3>Registrar gestión</h3><button data-close>×</button></div><form id="actionForm" class="form-grid">
     <label>Necesidad<select name="needId" id="actionNeed"></select></label><label>Proyecto<select name="projectId" id="actionProject"></select></label>
+    <label>Vereda<select name="vereda" id="actionVereda"><option value="">Sin asignar / no aplica</option></select></label>
     <label>Fecha<input type="date" name="date" required></label><label>Tipo<select name="type"><option>Visita técnica</option><option>Reunión comunitaria</option><option>Mesa técnica</option><option>Oficio / radicado</option><option>Seguimiento</option><option>Gestión ante entidad</option><option>Subsanación</option><option>Otro</option></select></label>
     <label class="span-2">Actuación realizada<textarea name="description" required></textarea></label><label>Responsable<input name="responsible"></label><label>Próxima fecha<input type="date" name="nextDate"></label>
     <label class="span-2">Próxima acción<input name="nextAction"></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
@@ -234,7 +466,9 @@
   <!-- Centro de Derechos de Petición -->
   <div class="modal" id="petitionCenterModal"><div class="modal-card petition-center-card">
     <div class="modal-head"><div><h3>Derechos de Petición</h3><p class="petition-subtitle">Seleccione una necesidad registrada para preparar, firmar y generar su PDF.</p></div><button type="button" data-petition-center-close>×</button></div>
-    <div class="petition-center-help"><strong>Flujo:</strong> Necesidad registrada → Revisar datos → Firmar → Generar PDF firmado.</div>
+    <div class="petition-center-help"><strong>Nuevo Derecho de Petición:</strong> seleccione una necesidad registrada y pulse <strong>Crear nuevo</strong>. Los documentos ya generados continúan disponibles en el Archivo de PDFs.</div>
+    <div class="petition-new-row"><select id="petitionNewNeedSelect" aria-label="Necesidad para nuevo Derecho de Petición"><option value="">Seleccione una necesidad...</option></select><button class="primary" id="newPetitionBtn" type="button">＋ Nuevo Derecho de Petición</button></div>
+    <div class="petition-center-label"><strong>Necesidades registradas</strong><small>También puede generar el documento directamente desde cualquiera de estas necesidades.</small></div>
     <div id="petitionCenterList" class="petition-center-list"></div>
     <div class="form-actions petition-center-actions"><button class="petition-archive-open" id="openPetitionArchive" type="button">🗃️ Archivo de PDFs <span id="petitionArchiveCount">0</span></button><button class="secondary" type="button" data-petition-center-close>Cerrar</button></div>
   </div></div>
@@ -253,6 +487,7 @@
     <div class="modal-head"><div><h3>Generar Derecho de Petición</h3><p class="petition-subtitle" id="petitionNeedSummary"></p></div><button type="button" data-petition-close>×</button></div>
     <form id="petitionForm" class="form-grid petition-form">
       <input type="hidden" name="needId">
+      <label class="span-2">Vereda vinculada<input name="vereda" id="petitionVereda" readonly placeholder="Sin vereda asignada"></label>
       <div class="span-2 petition-form-section">Datos de la persona destinataria</div>
       <label>Nombre de la persona destinataria<input name="recipientName" required placeholder="Ej.: Juan Pérez Gómez"></label>
       <label>Cargo / dependencia<input name="recipientRole" placeholder="Ej.: Coordinador de Redes"></label>
@@ -283,8 +518,30 @@
     </form>
   </div></div>
 
-  <script src="app.js?v=1.1.1"></script>
-  <script src="photos.js?v=1.2.1"></script>
-  <script src="petition.js?v=1.3.4"></script>
+
+  <!-- Modal cumpleaños -->
+  <div class="modal" id="birthdayModal"><div class="modal-card birthday-modal-card">
+    <div class="modal-head"><div><h3>🎂 Felicitación de cumpleaños</h3><p class="petition-subtitle" id="birthdayPersonSummary"></p></div><button type="button" id="birthdayClose">×</button></div>
+    <div class="birthday-preview"><canvas id="birthdayCardCanvas" width="1080" height="1080"></canvas></div>
+    <p class="birthday-note">La tarjeta se prepara para contactos con autorización registrada para recibir comunicaciones. Revise el mensaje antes de compartirlo.</p>
+    <div class="birthday-modal-actions"><button class="primary" type="button" id="birthdayShare">💌 Compartir tarjeta</button><button class="birthday-wa" type="button" id="birthdayWhatsApp">🟢 Felicitar por WhatsApp</button><button class="secondary" type="button" id="birthdayDownload">⬇ Guardar tarjeta</button></div>
+  </div></div>
+
+  <script src="app.js?v=1.3.8"></script>
+  <script src="photos.js?v=1.3.8"></script>
+  <script src="petition.js?v=1.3.37"></script>
+  <script src="contacts.js?v=1.3.16"></script>
+  <script src="birthdays.js?v=1.3.20"></script>
+  <script src="territory-link.js?v=1.3.13"></script>
+  <script src="intelligence.js?v=1.3.8"></script>
+  <script src="map.js?v=1.3.28"></script>
+  <script src="position.js?v=1.3.20"></script>
+  <script src="stories.js?v=1.3.34"></script>
+  <script src="agenda.js?v=1.3.22"></script>
+  <script src="dossier.js?v=1.3.23"></script>
+  <script src="positioning.js?v=1.3.25"></script>
+  <script src="territorial-db.js?v=1.3.32"></script>
+  <script src="communications.js?v=1.3.32"></script>
+  <script src="responsive.js?v=1.3.36"></script>
 </body>
 </html>
