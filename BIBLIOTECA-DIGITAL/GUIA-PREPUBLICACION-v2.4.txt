@@ -1,0 +1,14 @@
+BIBLIOTECA DIGITAL — PREPUBLICACIÓN v2.4
+
+ARQUITECTURA PÚBLICA
+- data/videos.json: catálogo de videos visibles para todos.
+- assets/public-videos/: MP4 públicos.
+- data/resources.json: catálogo de recursos visibles para todos.
+- assets/public-resources/: PDF públicos.
+- Los archivos que se cargan desde Administración siguen siendo borradores locales de prueba.
+- Un visitante NO recibe esos borradores locales.
+- Progreso, notas, colección y recorrido del lector continúan en su propio navegador.
+
+PUBLICACIÓN
+Para que un video o recurso sea público en GitHub Pages debe formar parte de estas carpetas/catálogos del sitio.
+Esto evita confundir una carga local del administrador con una publicación global.

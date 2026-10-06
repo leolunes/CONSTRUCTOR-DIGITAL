@@ -1,0 +1,1 @@
+Los PDF públicos se alojan aquí. Después registre su ruta en data/resources.json.

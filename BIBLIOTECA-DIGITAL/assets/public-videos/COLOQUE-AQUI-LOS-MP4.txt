@@ -1,0 +1,1 @@
+Los MP4 públicos se alojan aquí. Después registre su ruta en data/videos.json.
