@@ -1,0 +1,23 @@
+BIBLIOTECA DIGITAL v2.4.4 — RECURSOS PDF PÚBLICOS
+
+La app ya puede mostrar PDFs públicos en cualquier dispositivo.
+
+PARA PUBLICAR UN PDF:
+1. Copie el PDF dentro de: assets/public-resources/
+2. Abra: data/resources.json
+3. Agregue una ficha con esta estructura:
+
+{
+  "id": "recurso-001",
+  "titulo": "Título del recurso",
+  "categoria": "Guía",
+  "descripcion": "Descripción breve",
+  "libro": "",
+  "fecha": "",
+  "destacado": true,
+  "url": "assets/public-resources/archivo.pdf",
+  "nombre": "archivo.pdf"
+}
+
+Los recursos cargados desde el botón Administrador siguen siendo LOCALES para pruebas.
+Publicar globalmente requiere incorporar el PDF y su ficha al repositorio/GitHub.

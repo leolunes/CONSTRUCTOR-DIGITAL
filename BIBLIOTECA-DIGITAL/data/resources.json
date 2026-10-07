@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": "presupuesto-familiar-corazon-001",
+    "titulo": "El presupuesto familiar comienza en el corazón",
+    "categoria": "Enseñanza bíblica",
+    "descripcion": "Una enseñanza sobre contentamiento, capacidad financiera y sabiduría para administrar el hogar antes de comprometer los recursos.",
+    "libro": "",
+    "fecha": "",
+    "destacado": true,
+    "url": "assets/public-resources/el-presupuesto-familiar-comienza-en-el-corazon.pdf",
+    "nombre": "el-presupuesto-familiar-comienza-en-el-corazon.pdf"
+  }
+]
