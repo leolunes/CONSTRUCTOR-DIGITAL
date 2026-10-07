@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "casa-modelo-publico-001",
+    "titulo": "Casa Modelo",
+    "categoria": "Mensaje especial",
+    "duracion": "",
+    "descripcion": "Video del ministerio.",
+    "libro": "",
+    "capitulo": "",
+    "referencia": "",
+    "fecha": "",
+    "destacado": true,
+    "url": "assets/public-videos/video-005.mp4",
+    "miniatura": "assets/video-placeholder.svg"
+  }
+]
