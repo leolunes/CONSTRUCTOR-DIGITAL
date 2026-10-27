@@ -1,4 +1,4 @@
-const CACHE='matriz-giron-v1.4.19-binarios-ios-1';
+const CACHE='matriz-giron-v1.4.20-paginacion-pdf-1';
 const ASSETS=[
   './',
   './index.html',
@@ -7,7 +7,7 @@ const ASSETS=[
   './app.js?v=1.4.17',
   './leader-network-v1412.js?v=1.4.12',
   './photos.js?v=1.4.19',
-  './petition.js?v=1.4.19',
+  './petition.js?v=1.4.20',
   './contacts.js?v=1.3.16',
   './card-mass-share.js?v=1.4.11',
   './birthdays.js?v=1.4.08',

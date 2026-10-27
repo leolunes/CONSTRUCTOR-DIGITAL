@@ -724,7 +724,10 @@
   }
 
   async function buildPetitionPDF(d){
-    const W=1240,H=1754,M=118,BOTTOM=116;
+    // Área segura de impresión A4: ningún texto ni fotografía invade el pie.
+    // La paginación se calcula por bloques, nunca cortando un numeral a medias.
+    const W=1240,H=1754,M=118,BOTTOM=140,TOP=225;
+    const CONTENT_HEIGHT=H-BOTTOM-TOP;
     const pages=[]; let c,ctx,y;
     const ivanPhoto=await loadImage('assets/ivan-ortiz-foto.png').catch(()=>null);
     const ivanBrand=await loadImage('assets/ivan-ortiz-marca.png').catch(()=>null);
@@ -749,13 +752,23 @@
       ctx.textAlign='left';
     }
     function newPage(){
-      c=document.createElement('canvas');c.width=W;c.height=H;ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);pages.push(c);drawHeader();y=225;
+      c=document.createElement('canvas');c.width=W;c.height=H;ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);pages.push(c);drawHeader();y=TOP;
     }
     function font(size=23,bold=false,italic=false,color='#192431'){ctx.font=`${italic?'italic ':''}${bold?'700 ':'400 '}${size}px Arial, sans-serif`;ctx.fillStyle=color;}
-    function ensure(h){if(y+h>H-BOTTOM)newPage();}
+    function ensure(h){if(y+h>H-BOTTOM&&y>TOP+1)newPage();}
     function rule(){ensure(28);ctx.strokeStyle='#c6d6e6';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(M,y);ctx.lineTo(W-M,y);ctx.stroke();y+=24;}
     function wrapWords(text,maxW,size,bold=false,italic=false){
-      font(size,bold,italic);const words=clean(text).split(/\s+/).filter(Boolean),lines=[];let line='';
+      font(size,bold,italic);const words=[],lines=[];let line='';
+      // Correos, radicados y palabras largas tampoco deben salirse del margen.
+      for(const token of clean(text).split(/\s+/).filter(Boolean)){
+        if(ctx.measureText(token).width<=maxW){words.push(token);continue;}
+        let chunk='';
+        for(const character of token){
+          if(chunk&&ctx.measureText(chunk+character).width>maxW){words.push(chunk);chunk='';}
+          chunk+=character;
+        }
+        if(chunk)words.push(chunk);
+      }
       if(!words.length)return [''];
       words.forEach(w=>{const test=line?line+' '+w:w;if(line&&ctx.measureText(test).width>maxW){lines.push(line);line=w;}else line=test;});if(line)lines.push(line);return lines;
     }
@@ -769,6 +782,9 @@
       const paras=String(text||'').split(/\n+/);const maxW=W-2*M-indent;const lh=Math.round(size*1.60);
       paras.forEach((par,pi)=>{
         const lines=wrapWords(par,maxW,size,bold,italic);
+        const blockH=lines.length*lh+6;
+        // Cada hecho o petición numerada permanece completo en una hoja, si cabe.
+        if(blockH<=CONTENT_HEIGHT)ensure(blockH);
         lines.forEach((L,li)=>{ensure(lh+4);font(size,bold,italic,color);drawJustifiedLine(L,M+indent,y,maxW,size,bold,italic,!justify||li===lines.length-1);y+=lh;});
         if(pi<paras.length-1)y+=Math.round(lh*.30);
       });y+=gap;
@@ -776,21 +792,52 @@
     function centerText(text,size,bold=false,color='#073763',gap=12){
       ensure(size*2.4);font(size,bold,false,color);ctx.textAlign='center';ctx.fillText(text,W/2,y);ctx.textAlign='left';y+=Math.round(size*1.45)+gap;
     }
-    function sectionTitle(t){ensure(56);font(24,true,false,'#073763');ctx.fillText(t,M,y);y+=37;ctx.strokeStyle='#d8e4ef';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(M,y);ctx.lineTo(W-M,y);ctx.stroke();y+=18;}
+    function sectionTitle(t,minFollowing=106){
+      // No deja títulos huérfanos al final de una página.
+      ensure(66+Math.min(minFollowing,CONTENT_HEIGHT-66));
+      font(24,true,false,'#073763');ctx.fillText(t,M,y);y+=37;ctx.strokeStyle='#d8e4ef';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(M,y);ctx.lineTo(W-M,y);ctx.stroke();y+=28;
+    }
+    function firstParagraphHeight(text,size=21){
+      const first=String(text||'').split(/\n+/)[0]||'';
+      return Math.min(CONTENT_HEIGHT-100,wrapWords(first,W-2*M,size).length*Math.round(size*1.60)+24);
+    }
     function labelValue(label,value){
-      if(!clean(value))return;ensure(42);font(20,true,false,'#073763');ctx.fillText(label,M,y);const labelW=ctx.measureText(label).width+12;font(20,false,false,'#192431');ctx.fillText(clean(value),M+labelW,y);y+=33;
+      if(!clean(value))return;
+      font(20,true,false,'#073763');const labelW=ctx.measureText(label).width+12;
+      const availableW=W-2*M-labelW;
+      const lines=wrapWords(value,Math.max(180,availableW),20);
+      ensure(lines.length*33+8);
+      font(20,true,false,'#073763');ctx.fillText(label,M,y);
+      lines.forEach((line,i)=>{font(20,false,false,'#192431');ctx.fillText(line,M+labelW,y);y+=33;});
+    }
+    function labelHeight(label,value){
+      if(!clean(value))return 0;
+      font(20,true);const labelW=ctx.measureText(label).width+12;
+      return wrapWords(value,Math.max(180,W-2*M-labelW),20).length*33;
     }
     function recipientBlock(){
-      ensure(210);font(20,true,false,'#073763');ctx.fillText('DESTINATARIO',M,y);y+=34;
-      ctx.fillStyle='#f5f9fd';ctx.strokeStyle='#d7e3ef';ctx.lineWidth=1.5;const boxY=y-14;const startY=y;const lines=[];
-      if(clean(d.recipientName))lines.push(['Señor(a):',clean(d.recipientName)]);
-      if(clean(d.recipientRole))lines.push(['Cargo / dependencia:',clean(d.recipientRole)]);
-      lines.push(['Entidad:',clean(d.entity)]);
-      if(clean(d.recipientEmail))lines.push(['Correo:',clean(d.recipientEmail)]);
-      if(clean(d.recipientPhone))lines.push(['Celular / WhatsApp:',clean(d.recipientPhone)]);
-      const boxH=lines.length*31+26;ctx.fillRect(M,boxY,W-2*M,boxH);ctx.strokeRect(M,boxY,W-2*M,boxH);
-      lines.forEach(([lab,val])=>{font(18,true,false,'#073763');ctx.fillText(lab,M+18,y);const lw=ctx.measureText(lab).width+10;font(18,false,false,'#192431');ctx.fillText(val,M+18+lw,y);y+=31;});
-      y=startY+boxH+18;
+      const fields=[];
+      if(clean(d.recipientName))fields.push(['Señor(a):',clean(d.recipientName)]);
+      if(clean(d.recipientRole))fields.push(['Cargo / dependencia:',clean(d.recipientRole)]);
+      fields.push(['Entidad:',clean(d.entity)]);
+      if(clean(d.recipientEmail))fields.push(['Correo:',clean(d.recipientEmail)]);
+      if(clean(d.recipientPhone))fields.push(['Celular / WhatsApp:',clean(d.recipientPhone)]);
+      const rows=fields.map(([label,value])=>{
+        font(18,true);const labelW=ctx.measureText(label).width+10;
+        return {label,labelW,lines:wrapWords(value,W-2*M-40-labelW,18)};
+      });
+      const boxH=22+rows.reduce((sum,row)=>sum+row.lines.length*29+3,0)+14;
+      ensure(34+boxH+18);
+      font(20,true,false,'#073763');ctx.fillText('DESTINATARIO',M,y);y+=34;
+      const boxY=y-22;
+      ctx.fillStyle='#f5f9fd';ctx.strokeStyle='#d7e3ef';ctx.lineWidth=1.5;
+      ctx.fillRect(M,boxY,W-2*M,boxH);ctx.strokeRect(M,boxY,W-2*M,boxH);
+      rows.forEach(row=>{
+        font(18,true,false,'#073763');ctx.fillText(row.label,M+18,y);
+        row.lines.forEach(line=>{font(18,false,false,'#192431');ctx.fillText(line,M+18+row.labelW,y);y+=29;});
+        y+=3;
+      });
+      y=boxY+boxH+32;
     }
 
     function phaseLabel(phase){return phase==='before'?'ANTES · Evidencia inicial':phase==='followup'?'SEGUIMIENTO · Evolución':'DESPUÉS · Resultado final';}
@@ -801,37 +848,42 @@
       let number=0;
       for(const ph of photos){
         if(!ph?.blob)continue;
-        if(ph.phase!==currentPhase){
-          currentPhase=ph.phase;
-          ensure(60);
-          font(19,true,false,phaseColor(ph.phase));
-          ctx.fillText(phaseLabel(ph.phase),M,y);y+=34;
-        }
         const image=await loadBlobImage(ph.blob).catch(()=>null); if(!image)continue;
         number++;
-        const maxW=W-2*M-36,maxH=500;
-        const scale=Math.min(maxW/image.naturalWidth,maxH/image.naturalHeight,1.25);
-        const iw=Math.round(image.naturalWidth*scale),ih=Math.round(image.naturalHeight*scale);
+        const maxW=W-2*M-36;
         const note=clean(ph.note);
         const noteLines=note?wrapWords(note,maxW-20,17,false,false):[];
-        const captionH=54+(noteLines.length?noteLines.length*25:0);
-        const cardH=ih+captionH+34;
-        ensure(cardH+22);
-        const bx=M,by=y-8,bw=W-2*M,bh=cardH;
+        // Las notas excepcionalmente largas continúan fuera de la tarjeta,
+        // pero nunca se pierden ni fuerzan fotografías fuera de la hoja.
+        const maxCardLines=Math.max(1,Math.floor((CONTENT_HEIGHT-440)/25));
+        const cardLines=noteLines.slice(0,maxCardLines),extraLines=noteLines.slice(maxCardLines);
+        const maxH=Math.max(120,Math.min(490,CONTENT_HEIGHT-195-cardLines.length*25));
+        const scale=Math.min(maxW/image.naturalWidth,maxH/image.naturalHeight,1.25);
+        const iw=Math.round(image.naturalWidth*scale),ih=Math.round(image.naturalHeight*scale);
+        const cardH=ih+108+Math.max(cardLines.length,1)*25;
+        const phaseChanged=ph.phase!==currentPhase;
+        ensure(cardH+26+(phaseChanged?42:0));
+        if(phaseChanged){
+          currentPhase=ph.phase;
+          font(19,true,false,phaseColor(ph.phase));
+          ctx.fillText(phaseLabel(ph.phase),M,y);y+=36;
+        }
+        const bx=M,by=y,bw=W-2*M,bh=cardH;
         ctx.fillStyle='#f8fbfe';ctx.strokeStyle='#d6e2ee';ctx.lineWidth=1.5;ctx.fillRect(bx,by,bw,bh);ctx.strokeRect(bx,by,bw,bh);
-        const ix=M+(bw-iw)/2,iy=y+10;
+        const ix=M+(bw-iw)/2,iy=by+17;
         ctx.fillStyle='#fff';ctx.fillRect(ix,iy,iw,ih);ctx.drawImage(image,ix,iy,iw,ih);
-        y=iy+ih+30;
+        y=iy+ih+34;
         font(18,true,false,'#073763');ctx.fillText(`Evidencia fotográfica ${number}`,M+18,y);
         const dateText=clean(ph.date)?`Fecha: ${formatDate(ph.date)}`:'';
         if(dateText){font(16,false,false,'#66788b');ctx.textAlign='right';ctx.fillText(dateText,W-M-18,y);ctx.textAlign='left';}
         y+=30;
-        if(noteLines.length){
-          noteLines.forEach(line=>{font(17,false,false,'#34495e');ctx.fillText(line,M+18,y);y+=25;});
+        if(cardLines.length){
+          cardLines.forEach(line=>{font(17,false,false,'#34495e');ctx.fillText(line,M+18,y);y+=25;});
         }else{
           font(16,false,true,'#7a8897');ctx.fillText('Sin descripción adicional.',M+18,y);y+=25;
         }
-        y=by+bh+22;
+        y=by+bh+55;
+        if(extraLines.length)paragraph('Descripción de la fotografía (continuación):\n'+extraLines.join(' '),{size:17,justify:false,gap:18});
       }
     }
 
@@ -845,8 +897,8 @@
     labelValue('Asunto:',d.subject);
     y+=5;
     paragraph(isGeneralRequest?`Yo, ${clean(d.petitionerName)}, identificado(a) con ${clean(d.petitionerId)}, presento respetuosamente ante su entidad la siguiente solicitud:`:`Yo, ${clean(d.petitionerName)}, identificado(a) con ${clean(d.petitionerId)}, actuando en nombre propio y en ejercicio del derecho fundamental de petición consagrado en el artículo 23 de la Constitución Política y desarrollado por la Ley 1755 de 2015, presento respetuosamente la siguiente solicitud:`,{size:21,gap:22,justify:true});
-    sectionTitle(isGeneralRequest?'I. ANTECEDENTES':'I. HECHOS'); paragraph(d.facts,{size:21,gap:24,justify:true});
-    sectionTitle(isGeneralRequest?'II. SOLICITUDES':'II. PETICIONES'); paragraph(d.requests,{size:21,gap:24,justify:true});
+    sectionTitle(isGeneralRequest?'I. ANTECEDENTES':'I. HECHOS',firstParagraphHeight(d.facts)); paragraph(d.facts,{size:21,gap:24,justify:true});
+    sectionTitle(isGeneralRequest?'II. SOLICITUDES':'II. PETICIONES',firstParagraphHeight(d.requests)); paragraph(d.requests,{size:21,gap:24,justify:true});
     if(!isGeneralRequest){sectionTitle('III. FUNDAMENTO');
       paragraph('La presente petición se formula con fundamento en el artículo 23 de la Constitución Política y en las disposiciones aplicables de la Ley 1755 de 2015. Solicito que la respuesta sea clara, de fondo, congruente con lo solicitado y comunicada dentro de los términos legales correspondientes.',{size:21,gap:24,justify:true});}
     if(clean(d.attachments)||evidencePhotos.length){
@@ -857,18 +909,33 @@
         await drawPhotoEvidence(evidencePhotos);
       }
     }
-    sectionTitle('V. NOTIFICACIONES');
-    labelValue('Dirección:',d.address);labelValue('Teléfono:',d.phone);labelValue('Correo electrónico:',d.email);y+=12;
-    if(clean(d.radicado)||clean(d.radicadoDate)){sectionTitle('VI. DATOS DE RADICACIÓN');labelValue('Radicado:',d.radicado);labelValue('Fecha de radicación:',formatDate(d.radicadoDate));y+=10;}
-    ensure(d.signatureKind==='ivan-escaneada'?360:315);paragraph('Cordialmente,',{size:21,justify:false,gap:8});
-    const sig=await loadImage(d.signature);const sigScale=Math.min(330/sig.naturalWidth,175/sig.naturalHeight);
+    // Notificaciones y firma forman el cierre del mismo escrito; evitar una
+    // página casi vacía donde aparezca únicamente la firma.
+    const sig=await loadImage(d.signature);
+    const sigScale=Math.min(330/sig.naturalWidth,175/sig.naturalHeight);
     const sigW=Math.round(sig.naturalWidth*sigScale),sigH=Math.round(sig.naturalHeight*sigScale);
+    const signatureNote=d.signatureKind==='ivan-escaneada'?'Firma escaneada de Iván Ortiz incorporada con autorización declarada':'Firma manuscrita electrónica incorporada al PDF';
+    const internalReference=`Referencia interna: ${clean(d.need.code)} · ${clean(d.need.territory)} · ${clean(d.need.title)}`;
+    const closingHeight=34+8+sigH+4+
+      wrapWords(clean(d.petitionerName),W-2*M,21,true).length*34+
+      wrapWords(`C.C. ${clean(d.petitionerId)}`,W-2*M,19).length*30+2+
+      wrapWords(signatureNote,W-2*M,15,false,true).length*24+12+24+
+      wrapWords(internalReference,W-2*M,14,false,true).length*22+20;
+    const notificationHeight=labelHeight('Dirección:',d.address)+labelHeight('Teléfono:',d.phone)+labelHeight('Correo electrónico:',d.email)+12;
+    const hasRadicado=Boolean(clean(d.radicado)||clean(d.radicadoDate));
+    const radicadoHeight=hasRadicado?65+labelHeight('Radicado:',d.radicado)+labelHeight('Fecha de radicación:',formatDate(d.radicadoDate))+10:0;
+    sectionTitle('V. NOTIFICACIONES',notificationHeight+radicadoHeight+closingHeight);
+    labelValue('Dirección:',d.address);labelValue('Teléfono:',d.phone);labelValue('Correo electrónico:',d.email);y+=12;
+    if(hasRadicado){sectionTitle('VI. DATOS DE RADICACIÓN');labelValue('Radicado:',d.radicado);labelValue('Fecha de radicación:',formatDate(d.radicadoDate));y+=10;}
+    // Firma, aclaración, cédula y referencia final deben terminar juntas.
+    ensure(Math.min(CONTENT_HEIGHT-1,closingHeight));
+    paragraph('Cordialmente,',{size:21,justify:false,gap:8});
     ctx.drawImage(sig,M,y,sigW,sigH);y+=sigH+4;
     paragraph(clean(d.petitionerName),{size:21,bold:true,justify:false,gap:0});
     paragraph(`C.C. ${clean(d.petitionerId)}`,{size:19,justify:false,gap:2});
-    paragraph(d.signatureKind==='ivan-escaneada'?'Firma escaneada de Iván Ortiz incorporada con autorización declarada':'Firma manuscrita electrónica incorporada al PDF',{size:15,italic:true,color:'#66788b',justify:false,gap:12});
+    paragraph(signatureNote,{size:15,italic:true,color:'#66788b',justify:false,gap:12});
     rule();
-    paragraph(`Referencia interna: ${clean(d.need.code)} · ${clean(d.need.territory)} · ${clean(d.need.title)}`,{size:14,italic:true,color:'#66788b',justify:false,gap:0});
+    paragraph(internalReference,{size:14,italic:true,color:'#66788b',justify:false,gap:0});
 
     /* Pie de página posterior para conocer el total de páginas. */
     pages.forEach((page,i)=>{

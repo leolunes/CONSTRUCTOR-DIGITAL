@@ -1,5 +1,5 @@
 {
-  "version": "1.4.19",
+  "version": "1.4.20",
   "build": "2026-10-27",
-  "notes": "Guardado portable de PDF, fotografías y otros binarios en IndexedDB para iPhone/iPad, evitando BlobURLs are not yet supported; lectura compatible con documentos anteriores e importación integral sin borrar registros."
+  "notes": "Corrección de paginación del Derecho de Petición: numerales y apartados completos, fotografías sin superposición, datos largos con ajuste de línea, notificaciones y firma agrupadas. Conserva guardado portable de PDF e importación integral de v1.4.19."
 }
