@@ -863,3 +863,16 @@
 .portable-backup-sig{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;margin:12px 0;color:#29445d}.portable-backup-sig input{width:18px;height:18px}.portable-backup-status{margin-top:12px;font-size:12px;padding:10px;border:1px solid #cbddeb;border-radius:8px;background:#f1f7fc;color:#1c405f;overflow-wrap:anywhere}.portable-error{color:#a32626;border-color:#ebbbbb;background:#fff1f1}.portable-backup-preview{margin-top:12px;padding:14px;border:1px solid #c6ddec;background:#f8fbfe;border-radius:9px;overflow-wrap:anywhere}.portable-backup-preview[hidden]{display:none!important}.portable-backup-preview strong{color:#073763}.portable-backup-preview p{font-size:12px;line-height:1.5}.portable-backup-preview .button-row{margin-top:10px}.portable-backup-note{display:block;margin-top:12px;line-height:1.5;color:#5b7389}.portable-backup-preview button:disabled{opacity:.5}
 
 #portableBackupReload[hidden]{display:none!important}
+
+
+/* v1.4.18 — visor PDF local, compatible con iPhone/iPad en la medida de las capacidades de Safari */
+.matriz-pdf-overlay[hidden]{display:none!important}
+.matriz-pdf-overlay{position:fixed;inset:0;z-index:10000;background:rgba(4,20,37,.82);padding:12px;display:flex;align-items:stretch;justify-content:center;overflow:auto}
+.matriz-pdf-shell{width:min(1150px,100%);background:#fff;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.matriz-pdf-header{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #dbe5f0;padding:4px 4px 9px}
+.matriz-pdf-header strong,.matriz-pdf-header small{display:block}.matriz-pdf-header strong{font-size:17px;color:#073763}.matriz-pdf-header small{font-size:11px;color:#66798a;margin-top:4px;word-break:break-word}
+.matriz-pdf-actions{display:flex;flex-wrap:wrap;gap:8px}.matriz-pdf-actions button,.matriz-pdf-actions a{font-size:13px;min-height:42px;text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.matriz-pdf-frame{border:1px solid #ccd8e5;background:#f2f6fa;width:100%;flex:1;min-height:min(62vh,680px);border-radius:9px}
+.matriz-pdf-hint{font-size:12px;line-height:1.5;margin:0;background:#edf5fc;padding:10px;border-radius:7px;color:#284761}
+.matriz-pdf-status{font-size:12px;color:#4a6070;margin:0;min-height:18px}.matriz-pdf-status.error{color:#a11919}.matriz-pdf-active{overflow:hidden}
+@media(max-width:700px){.matriz-pdf-overlay{padding:4px}.matriz-pdf-shell{border-radius:8px;padding:9px;gap:8px}.matriz-pdf-header strong{font-size:14px}.matriz-pdf-header button{white-space:nowrap}.matriz-pdf-actions button,.matriz-pdf-actions a{flex:1 1 145px;font-size:12px;padding:8px}.matriz-pdf-frame{min-height:52vh}.matriz-pdf-hint{font-size:11px}}

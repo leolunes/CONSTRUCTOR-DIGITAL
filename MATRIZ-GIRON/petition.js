@@ -363,11 +363,20 @@
     catch(err){console.error(err);alert('No fue posible abrir el archivo de PDFs: '+err.message);}
   }
   async function viewArchivedPDF(id){
-    const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);if(!r?.blob)return;
-    const url=URL.createObjectURL(r.blob);window.open(url,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(url),60000);
+    try{
+      const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);
+      if(!r?.blob){alert('El documento aparece en el archivo pero no se encontró su PDF. Compruebe el contenido del respaldo integral original.');return}
+      if(window.GironPdfPortable)window.GironPdfPortable.open(r.blob,r.filename||'Derecho-de-Peticion.pdf');
+      else {const url=URL.createObjectURL(r.blob);window.open(url,'_blank');setTimeout(()=>URL.revokeObjectURL(url),120000)}
+    }catch(err){alert('Error al recuperar el PDF: '+err.message)}
   }
   async function downloadArchivedPDF(id){
-    const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);if(!r?.blob)return;downloadPDF(r.blob,r.filename||'Derecho-de-Peticion.pdf');
+    try{
+      const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);
+      if(!r?.blob){alert('No se encontró el PDF en el archivo local. Conserve y compruebe el JSON original.');return}
+      if(window.GironPdfPortable?.isAppleMobile())window.GironPdfPortable.open(r.blob,r.filename||'Derecho-de-Peticion.pdf');
+      else downloadPDF(r.blob,r.filename||'Derecho-de-Peticion.pdf');
+    }catch(err){alert('Error al recuperar el PDF: '+err.message)}
   }
   async function removeArchivedPDF(id){
     const r=archiveCache.find(x=>x.id===id);if(!confirm(`¿Eliminar del archivo el PDF ${r?.filename||''}?\n\nEsta acción no elimina la necesidad ni su trazabilidad.`))return;

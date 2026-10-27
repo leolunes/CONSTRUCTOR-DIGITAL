@@ -238,7 +238,15 @@ $('#representativeConfirmSent')?.addEventListener('click',()=>{
  $('#representativeSendStatus').innerHTML=`<strong>Estado:</strong> 🟢 Enviado a ${esc(email)} · ${new Date(a[i].sentAt).toLocaleString('es-CO')}`;
  renderRecent();renderArchive();
 });
-async function openDoc(id){const m=metas().find(x=>x.id===id),b=await getPdf(id);if(!m||!b)return;window.open(URL.createObjectURL(b),'_blank')}
+async function openDoc(id){
+ try{
+  const m=metas().find(x=>x.id===id),b=await getPdf(id);
+  if(!m){alert('No se encontró la ficha del documento en el archivo.');return}
+  if(!b){alert('La ficha está recuperada, pero no se encontró su archivo PDF. Verifique el respaldo integral original.');return}
+  if(window.GironPdfPortable)window.GironPdfPortable.open(b,m.filename||'Documento-Representante.pdf');
+  else window.open(URL.createObjectURL(b),'_blank');
+ }catch(err){alert('No fue posible recuperar este PDF: '+err.message)}
+}
 async function removeDoc(id){if(!confirm('¿Eliminar este documento del archivo local?'))return;saveMetas(metas().filter(x=>x.id!==id));await delPdf(id);renderArchive();renderRecent()}
 
 
@@ -257,7 +265,7 @@ function row(m){
  const status=assigned?`<span class="rep-status assigned">🟢 Consecutivo asignado</span><div class="rep-consecutive">${esc(m.consecutive)}</div>`:`<span class="rep-status pending">🟡 Pendiente de consecutivo</span>`;
  return `<div class="rep-doc-row"><div><strong>${esc(m.recipientName)}</strong><small>${esc(m.recipientRole)} · ${esc(m.entity)}</small>${status}</div><div><strong>${esc(m.subject)}</strong><small>${esc(m.date)}</small><small class="rep-send-row-status">${esc(sendStatusText(m))}</small></div><div class="rep-doc-actions"><button data-open="${m.id}">Abrir</button><button data-consecutive="${m.id}">✏️ ${assigned?'Editar':'Registrar'} consecutivo</button><button data-share="${m.id}">📤 Enviar</button><button data-download="${m.id}">⬇ PDF</button><button data-delete="${m.id}">🗑</button></div></div>`
 }
-function bindRows(scope){scope.querySelectorAll('[data-consecutive]').forEach(b=>b.onclick=()=>registerConsecutive(b.dataset.consecutive));scope.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openDoc(b.dataset.open));scope.querySelectorAll('[data-share]').forEach(b=>b.onclick=()=>openSend(b.dataset.share));scope.querySelectorAll('[data-download]').forEach(b=>b.onclick=async()=>{const m=metas().find(x=>x.id===b.dataset.download),p=await getPdf(b.dataset.download);if(m&&p)download(p,m.filename)});scope.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>removeDoc(b.dataset.delete))}
+function bindRows(scope){scope.querySelectorAll('[data-consecutive]').forEach(b=>b.onclick=()=>registerConsecutive(b.dataset.consecutive));scope.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openDoc(b.dataset.open));scope.querySelectorAll('[data-share]').forEach(b=>b.onclick=()=>openSend(b.dataset.share));scope.querySelectorAll('[data-download]').forEach(b=>b.onclick=async()=>{try{const m=metas().find(x=>x.id===b.dataset.download),p=await getPdf(b.dataset.download);if(!p){alert('No se encontró el PDF archivado. Verifique el respaldo integral original.');return}if(window.GironPdfPortable?.isAppleMobile())window.GironPdfPortable.open(p,m?.filename||'Documento-Representante.pdf');else download(p,m?.filename||'Documento-Representante.pdf')}catch(err){alert('Error al recuperar el PDF: '+err.message)}});scope.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>removeDoc(b.dataset.delete))}
 function renderRecent(){const a=metas();$('#representativeArchiveCount').textContent=a.length;const el=$('#representativeRecent');el.innerHTML=a.length?'<h4>Documentos recientes</h4>'+a.slice(0,4).map(row).join(''):'<div class="rep-empty">Aún no hay documentos preparados para el Representante.</div>';bindRows(el)}
 function fillArchiveFilters(all){
  const rec=$('#representativeArchiveRecipient'),ent=$('#representativeArchiveEntity');
