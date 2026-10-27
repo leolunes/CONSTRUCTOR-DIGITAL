@@ -19,23 +19,23 @@ function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
 async function img(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src})}
 async function draw(data){
   const c=$('positionCanvas'); if(!c)return;
-  const story=data.format==='story';
+  const story=data.format==='story', template=clean(data.positionTemplate||'1');
   c.width=1080; c.height=story?1920:1080;
   const ctx=c.getContext('2d'), W=c.width, H=c.height;
-  ctx.fillStyle='#f8fafc'; ctx.fillRect(0,0,W,H);
+  const themes={1:{bg:'#f8fafc',head:'#063b6f',accent:'#f5b400'},2:{bg:'#fffaf2',head:'#6b243d',accent:'#e3a72f'},3:{bg:'#f1f5f2',head:'#21483d',accent:'#c69c6d'},4:{bg:'#f5f0e8',head:'#26344a',accent:'#d16b45'}},T=themes[template]||themes[1]; ctx.fillStyle=T.bg; ctx.fillRect(0,0,W,H);
   const headerH=story?245:176, footerH=story?108:82;
-  ctx.fillStyle='#063b6f'; ctx.fillRect(0,0,W,headerH);
+  ctx.fillStyle=T.head; ctx.fillRect(0,0,W,headerH);
 
   let portrait=null,brand=null; try{portrait=await img('assets/ivan-ortiz-foto.png')}catch{}; try{brand=await img('assets/ivan-ortiz-marca.png')}catch{};
   const portraitR=story?76:62, portraitCY=story?122:88;
   if(portrait){
     ctx.save(); ctx.beginPath(); ctx.arc(W-120,portraitCY,portraitR-4,0,Math.PI*2); ctx.clip();
     ctx.drawImage(portrait,W-120-(portraitR-4),portraitCY-(portraitR-4),(portraitR-4)*2,(portraitR-4)*2); ctx.restore();
-    ctx.strokeStyle='#f5b400';ctx.lineWidth=7;ctx.beginPath();ctx.arc(W-120,portraitCY,portraitR,0,Math.PI*2);ctx.stroke();
+    ctx.strokeStyle=T.accent;ctx.lineWidth=7;ctx.beginPath();ctx.arc(W-120,portraitCY,portraitR,0,Math.PI*2);ctx.stroke();
   }
   if(brand){const bw=story?510:430,bh=bw*(brand.height/brand.width);ctx.drawImage(brand,58,story?36:22,bw,bh);}
   ctx.fillStyle='#fff';ctx.font=`${story?20:18}px Arial`;ctx.fillText('MI POSICIÓN · '+clean(data.scope).toUpperCase(),62,story?158:124);
-  ctx.fillStyle='#f5b400';ctx.font=`italic ${story?22:19}px Georgia`;ctx.fillText('Escuchar · Conocer · Proponer',62,story?200:152);
+  ctx.fillStyle=T.accent;ctx.font=`italic ${story?22:19}px Georgia`;ctx.fillText('Escuchar · Conocer · Proponer',62,story?200:152);
   ctx.textAlign='right';ctx.fillStyle='#fff';ctx.font=`italic ${story?26:20}px Georgia`;ctx.fillText('Por un Girón con más oportunidades',W-220,story?205:150);ctx.textAlign='left';
 
   const pad=64, maxW=W-pad*2, foot=H-footerH;
@@ -58,7 +58,7 @@ async function draw(data){
 
   const blocks=[
     {label:'EL HECHO',text:clean(data.summary),bg:'#eef4fa',lc:'#0b5b9b'},
-    {label:'MI POSICIÓN',text:clean(data.opinion),bg:'#fff4d9',lc:'#8b5b00'},
+    {label:template==='2'?'LO QUE PIENSO':template==='3'?'MI MIRADA':'MI POSICIÓN',text:clean(data.cardText||data.opinion),bg:template==='2'?'#f9e8ee':template==='3'?'#e5f0ea':template==='4'?'#f6e9df':'#fff4d9',lc:T.head},
     {label:'PROPUESTA / MENSAJE FINAL',text:clean(data.proposal),bg:'#eaf7ef',lc:'#167044'}
   ].filter(b=>b.text);
 
@@ -99,13 +99,23 @@ async function draw(data){
   });
   if(scaleY<1)ctx.restore();
 
-  ctx.fillStyle='#063b6f';ctx.fillRect(0,foot,W,footerH);if(brand){const fw=story?420:330,fh=fw*(brand.height/brand.width);ctx.drawImage(brand,pad,foot+(footerH-fh)/2,fw,fh);}ctx.fillStyle='#fff';ctx.textAlign='right';ctx.font=`${story?18:15}px Arial`;ctx.fillText('Construyendo juntos el Girón que soñamos',W-pad,foot+(story?66:52));ctx.textAlign='left';ctx.fillStyle='#f5b400';ctx.fillRect(W-250,foot,250,7);
+  ctx.fillStyle=T.head;ctx.fillRect(0,foot,W,footerH);if(brand){const fw=story?420:330,fh=fw*(brand.height/brand.width);ctx.drawImage(brand,pad,foot+(footerH-fh)/2,fw,fh);}ctx.fillStyle='#fff';ctx.textAlign='right';ctx.font=`${story?18:15}px Arial`;ctx.fillText('Construyendo juntos el Girón que soñamos',W-pad,foot+(story?66:52));ctx.textAlign='left';ctx.fillStyle=T.accent;ctx.fillRect(W-250,foot,250,7);
   current={...data,generated:new Date().toISOString()};
 }
 function dataFromForm(){const f=$('positionForm'),o=Object.fromEntries(new FormData(f));return {...o,photo:photoData}}
 function message(d){return `📣 *${clean(d.title)}*\n\n${clean(d.summary)}\n\n*Mi posición:* ${clean(d.opinion)}${clean(d.proposal)?'\n\n'+clean(d.proposal):''}${clean(d.sourceUrl)?'\n\nFuente: '+clean(d.sourceUrl):''}\n\nIván Ortiz`}
 function canvasBlob(){return new Promise(r=>$('positionCanvas').toBlob(r,'image/png',.96))}
-async function share(){if(!current){alert('Primero genere una tarjeta.');return}const blob=await canvasBlob(),file=new File([blob],`MI-POSICION-${Date.now()}.png`,{type:'image/png'});try{if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:current.title,text:message(current),files:[file]});return}}catch(e){if(e.name==='AbortError')return}download();alert('La tarjeta fue guardada como imagen. Puede publicarla o adjuntarla en la red social que prefiera.')}
+async function share(){
+ if(!current){alert('Primero genere una tarjeta.');return}
+ const blob=await canvasBlob(); if(!blob){alert('No fue posible preparar la tarjeta.');return}
+ const file=new File([blob],`MI-POSICION-${Date.now()}.png`,{type:'image/png'});
+ try{
+   if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
+     await navigator.share({title:current.title,text:message(current),files:[file]});return;
+   }
+ }catch(e){if(e?.name==='AbortError')return}
+ await download();
+}
 async function download(){
   if(!current){alert('Primero genere una tarjeta.');return}
   const c=$('positionCanvas');
@@ -154,7 +164,13 @@ function generateDraft(){
 function init(){const f=$('positionForm');if(!f)return;draw({title:'SU VOZ FRENTE A LOS TEMAS QUE IMPORTAN',scope:'Girón',summary:'Aquí aparecerá un resumen claro del hecho o noticia.',opinion:'Aquí aparecerá la posición de Iván Ortiz.',proposal:'Una propuesta concreta para seguir construyendo juntos.',format:'square',photo:''});renderArchive();
  $('positionImage').addEventListener('change',e=>{const file=e.target.files[0];if(!file){photoData='';return}const r=new FileReader();r.onload=()=>photoData=r.result;r.readAsDataURL(file)});
  f.addEventListener('submit',async e=>{e.preventDefault();await draw(dataFromForm());archiveCurrent();if(typeof toast==='function')toast('Tarjeta generada y archivada')});
- $('positionDraft').onclick=generateDraft;$('positionShare').onclick=share;$('positionDownload').onclick=download;$('positionContacts').onclick=()=>{if(!current){alert('Primero genere una tarjeta.');return}$('positionContactsPanel').classList.remove('hidden');renderContacts();$('positionContactsPanel').scrollIntoView({behavior:'smooth'})};$('positionContactsClose').onclick=()=>$('positionContactsPanel').classList.add('hidden');$('positionVeredaFilter').onchange=renderContacts;
+ $('positionRestoreText')?.addEventListener('click',()=>{const f=$('positionForm');f.elements.cardText.value=f.elements.opinion.value; if(current)draw(dataFromForm())});
+ document.querySelectorAll('input[name="positionTemplate"]').forEach(r=>r.addEventListener('change',()=>{if(current)draw(dataFromForm())}));
+ $('positionForm')?.elements?.cardText?.addEventListener('input',()=>{if(current){clearTimeout(window.__posTextTimer);window.__posTextTimer=setTimeout(()=>draw(dataFromForm()),180)}});
+ $('positionDraft').onclick=generateDraft;
+ $('positionShare').onclick=()=>window.positionShareDirect();
+ $('positionDownload').onclick=download;
+ $('positionContacts').onclick=()=>window.positionWhatsAppDirect();$('positionContactsClose').onclick=()=>$('positionContactsPanel').classList.add('hidden');$('positionVeredaFilter').onchange=renderContacts;
  $('positionArchive').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.posLoad)loadArchive(b.dataset.posLoad);if(b.dataset.posDel&&confirm('¿Eliminar esta comunicación del archivo?')){archive=archive.filter(x=>x.id!==b.dataset.posDel);persist()}});
  $('positionContactsList').addEventListener('click',e=>{const b=e.target.closest('[data-pos-wa]');if(b)openWA(b.dataset.posWa)});
  $('positionClear').addEventListener('click',()=>{setTimeout(()=>{photoData='';$('positionImage').value=''},0)});

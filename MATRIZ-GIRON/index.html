@@ -8,16 +8,16 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-  <link rel="stylesheet" href="styles.css?v=1.3.36" />
+  <link rel="stylesheet" href="styles.css?v=1.4.17" />
 </head>
 <body>
   <header class="brand-header">
-    <div class="party-brand"><img class="party-logo-real" src="assets/centro-democratico-logo.png" alt="Centro Democrático"></div>
-    <div class="giron-brand"><div class="crest">♛</div><div><strong>GIRÓN</strong><span>Santander</span><small>Monumento Nacional</small></div></div>
+    <div class="people-brand ivan-only-brand">
+      <div class="person-card ivan ivan-main"><img class="ivan-photo" src="assets/ivan-ortiz-foto.png" alt="Iván Ortiz"><div class="ivan-brand-copy"><div class="ivan-name"><strong>IVÁN</strong><b>ORTIZ</b></div><span>Liderazgo y Gestión Territorial</span><small>Girón</small></div></div>
+    </div>
     <div class="system-brand"><span>MATRIZ MAESTRA DE</span><strong>GESTIÓN TERRITORIAL</strong><em>para Girón</em><small>Escuchar • Conocer • Priorizar • Gestionar • Hacer seguimiento</small></div>
-    <div class="people-brand">
-      <div class="person-card jhonatan"><img src="assets/jhonatan-pineda.png" alt="Jhonatan Pineda"><div><strong>JHONATAN PINEDA</strong><span>Representante a la Cámara<br>por Santander</span></div></div>
-      <div class="person-card ivan"><img class="ivan-photo" src="assets/ivan-ortiz-foto.png" alt="Iván Ortiz"><div class="ivan-brand-copy"><img class="ivan-brandmark" src="assets/ivan-ortiz-marca.png" alt="Iván Ortiz @ivanortiz.c"><span>Candidato al Concejo<br>2028 - 2031</span></div></div>
+    <div class="giron-brand giron-panoramic-brand" aria-label="Girón, Santander, Monumento Nacional">
+      <img class="giron-panoramic-image" src="assets/giron-panoramica-opcion2.jpg" alt="Panorámica de Girón">
     </div>
     <div class="datetime"><span id="liveDate"></span><span id="liveTime"></span></div>
   </header>
@@ -32,7 +32,7 @@
     <aside class="sidebar" id="sidebar">
       <button class="nav-btn active" data-view="dashboard">⌂ <span>Tablero</span></button>
       <button class="nav-btn" data-view="needs">◆ <span>Necesidades</span></button>
-      <button class="nav-btn" data-view="leaders">♟ <span>Líderes / JAC / Ediles</span></button>
+      <button class="nav-btn" data-view="leaders">♟ <span>Líderes y simpatizantes</span></button>
       <button class="nav-btn" data-view="projects">▣ <span>Proyectos e iniciativas</span></button>
       <button class="nav-btn" data-view="actions">✓ <span>Gestión y seguimiento</span></button>
       <button class="nav-btn" data-view="community">▤ <span>Formulario comunitario</span></button>
@@ -45,6 +45,8 @@
       <button class="nav-btn" data-view="dossier">🧭 <span>Expediente 360°</span></button>
       <button class="nav-btn" data-view="communications">📲 <span>Comunicaciones WhatsApp</span></button>
       <button class="nav-btn" type="button" id="petitionCenterNav">📄 <span>Derechos de petición</span></button>
+      <button class="nav-btn" type="button" id="representativeDocsNav">🏛️ <span>Gestión Representante</span></button>
+      <button class="nav-btn" data-view="directory">🏢 <span>Directorio institucional</span></button>
       <button class="nav-btn" data-view="settings">▰ <span>Documentos</span></button>
       <button class="nav-btn" data-view="settings">⚙ <span>Configuración</span></button>
       <div class="side-spacer"></div>
@@ -60,12 +62,13 @@
           <div class="card"><h3>Prioridad territorial</h3><div id="priorityBars" class="bars"></div><div class="community-callout"><b>♟</b><div><strong>Tu comunidad es nuestra prioridad.</strong><span>Juntos identificamos, gestionamos y hacemos realidad los proyectos que Girón necesita.</span></div></div></div>
           <div class="card"><h3>Estado de las necesidades</h3><div id="statusBars" class="bars"></div></div>
         </div>
+        <div id="birthdayDashboardPanel" class="birthday-dashboard-card"></div>
         <div class="dashboard-lower">
           <div class="card upcoming-card"><div><h3>Próximas acciones</h3><div id="upcoming"></div></div><button class="dark-btn" onclick="showView('actions')">Ver agenda completa</button></div>
           <div class="card quick-card"><div><h3>Registro rápido de necesidad</h3><p>Reporta una necesidad de tu comunidad de forma rápida y sencilla.</p></div><button class="red-btn" data-open-modal="needModal">＋ Nueva necesidad</button></div>
         </div>
         <div class="quick-links">
-          <button onclick="showView('leaders')">♟ <span><b>Líderes / JAC / Ediles</b><small>Ver y gestionar líderes</small></span></button>
+          <button onclick="showView('leaders')">♟ <span><b>Líderes y simpatizantes</b><small>Ver y gestionar líderes</small></span></button>
           <button onclick="showView('projects')">📁 <span><b>Proyectos e iniciativas</b><small>Ver proyectos registrados</small></span></button>
           <button onclick="showView('actions')">✓ <span><b>Gestión y seguimiento</b><small>Ver seguimientos</small></span></button>
           <button onclick="showView('community')">▤ <span><b>Formulario comunitario</b><small>Diligenciar formulario</small></span></button>
@@ -76,8 +79,10 @@
           <button onclick="showView('agenda')">📅 <span><b>Agenda de gestión</b><small>Compromisos, vencimientos y próximos pasos</small></span></button>
           <button onclick="showView('dossier')">🧭 <span><b>Expediente 360°</b><small>Historia completa por contacto o territorio</small></span></button>
           <button type="button" id="petitionCenterQuick">📄 <span><b>Derechos de petición</b><small>Generar y firmar PDF</small></span></button>
+          <button type="button" id="representativeDocsQuick">🏛️ <span><b>Gestión Representante</b><small>Preparar solicitudes y guardar PDF</small></span></button>
+          <button type="button" onclick="showView('directory')">🏢 <span><b>Directorio institucional</b><small>Municipal · Departamental · Nacional</small></span></button>
         </div>
-        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.3.24</span></footer>
+        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Matriz Maestra de Gestión Territorial para Girón</span><span>Versión 1.4.17 · respaldo integral · GitHub Pages</span></footer>
       </section>
       <section class="view" id="view-needs">
         <div class="section-title"><div><h2>Necesidades del territorio</h2><p>Registro, verificación, priorización y trazabilidad.</p></div><button class="primary" data-open-modal="needModal">+ Registrar necesidad</button></div>
@@ -90,25 +95,74 @@
       </section>
 
       <section class="view" id="view-leaders">
-        <div class="section-title"><div><h2>Líderes, JAC y ediles</h2><p>Trazabilidad de quién reporta y qué comunidades representa.</p></div><button class="primary" data-open-modal="leaderModal">+ Nuevo contacto</button></div>
+        <div class="section-title"><div><h2>Líderes y simpatizantes</h2><p>Organice la red territorial por líderes y consulte los simpatizantes vinculados a cada uno.</p></div><div class="leaders-head-actions"><button class="magic-search-btn" type="button" onclick="openContactFinder()">🔎 BUSCAR PERSONA</button><button class="primary" data-open-modal="leaderModal">+ Nuevo contacto</button></div></div>
+        <div class="network-summary" id="networkSummary"><div class="summary-card" onclick="openNetworkSummary('leaders')"><span>Líderes <b>▼</b></span><strong id="leadersCount">0</strong></div><div class="summary-card" onclick="openNetworkSummary('supporters')"><span>Simpatizantes <b>▼</b></span><strong id="supportersCount">0</strong></div><div class="summary-card" onclick="openNetworkSummary('total')"><span>Total red <b>▼</b></span><strong id="networkTotalCount">0</strong></div><div class="summary-card" onclick="openNetworkSummary('unclassified')"><span>Por clasificar <b>▼</b></span><strong id="unclassifiedCount">0</strong></div></div>
         <div class="contacts-toolbar">
-          <div class="contacts-authorized-count"><span>Contactos autorizados para comunicaciones</span><strong id="authorizedContactsCount">0</strong></div>
+          <button type="button" class="contacts-authorized-count authorized-summary-btn" onclick="openNetworkSummary('authorized')"><span>Contactos autorizados para comunicaciones <b>▼</b></span><strong id="authorizedContactsCount">0</strong></button>
           <button class="primary" type="button" id="contactsPdfBtn">📄 Generar PDF de contactos autorizados</button>
         </div>
         <div id="birthdayPanel" class="birthday-panel"></div>
+        <section id="leaderRosterPanel" class="leader-roster" aria-label="Simpatizantes por líder"></section>
         <div id="leadersTable" class="table-wrap"></div>
+      </section>
+
+
+      <section class="view" id="view-directory">
+        <div class="section-title directory-title">
+          <div><h2>🏢 Directorio Institucional</h2><p>Identifique entidades, conozca qué puede consultar y prepare mejor su ruta de gestión.</p></div>
+          <button class="primary" type="button" id="directoryGuideBtn">🔎 Orientador de entidad</button>
+        </div>
+
+        <div class="directory-levels">
+          <button type="button" class="directory-level active" data-directory-level="municipal"><b>🏘️ Municipal</b><span>Girón</span></button>
+          <button type="button" class="directory-level" data-directory-level="departamental"><b>🏢 Departamental</b><span>Santander</span></button>
+          <button type="button" class="directory-level" data-directory-level="municipios"><b>🏛️ Municipios</b><span>87 de Santander</span></button>
+          <button type="button" class="directory-level" data-directory-level="nacional"><b>🇨🇴 Nacional</b><span>Gobierno Nacional</span></button>
+        </div>
+
+        <div class="card directory-search-card">
+          <div class="directory-search-row">
+            <input id="directorySearch" type="search" placeholder="Buscar por entidad o tema: vivienda, vías, salud, educación...">
+            <button type="button" class="secondary" id="directoryClear">Limpiar</button>
+          </div>
+          <div class="directory-source-actions">
+            <span id="directoryLevelDescription">Dependencias y entidades del nivel municipal.</span>
+            <button type="button" class="directory-source-btn" id="directorySourceGalleryBtn">🖼️ Ver toda la información del directorio</button>
+            <a id="directoryOriginalLink" class="directory-source-btn" href="assets/directorios/DIRECTORIO-MUNICIPAL-GIRON.docx" target="_blank" rel="noopener">📚 Consultar directorio original</a>
+          </div>
+        </div>
+
+        <div id="directoryResults" class="directory-grid"></div>
+
+        <div class="card directory-note">
+          <strong>💡 Ruta recomendada de trabajo</strong>
+          <span>Necesidad → identificar entidades relacionadas → revisar qué puede consultarse → definir la información requerida → generar Derecho de Petición → hacer seguimiento.</span>
+          <small>La orientación ayuda a organizar la investigación. La competencia definitiva debe verificarse antes de radicar una solicitud.</small>
+        </div>
       </section>
 
       <section class="view" id="view-communications">
         <div class="section-title"><div><h2>📲 Centro de Comunicaciones WhatsApp</h2><p>Prepare una comunicación y recorra, uno por uno, los contactos que autorizaron recibir información.</p></div></div>
         <div class="card wa-center-card">
+          <div class="wa-audience-buttons">
+            <button type="button" class="secondary active" data-wa-audience="all">👥 Todos <span class="wa-audience-count">0</span></button>
+            <button type="button" class="secondary" data-wa-audience="Líder">🧭 Líderes <span class="wa-audience-count">0</span></button>
+            <button type="button" class="secondary" data-wa-audience="Simpatizante">🤝 Simpatizantes <span class="wa-audience-count">0</span></button>
+          </div>
+          <p class="wa-audience-help">Pulse un grupo para desplegar abajo todos sus contactos autorizados. Luego marque ☑️ las personas que desea incluir en el lote.</p>
           <div class="wa-center-grid">
             <label>Sector<select id="waSectorFilter"><option value="">Todos los sectores</option></select></label>
             <label>Barrio<select id="waBarrioFilter"><option value="">Todos los barrios</option></select></label>
-            <label>Líder<select id="waLeaderSearch"><option value="">Todos los líderes</option></select></label>
+            <label>Contacto<select id="waLeaderSearch"><option value="">Todos los contactos</option></select></label>
           </div>
+          <div class="wa-selection-tools">
+            <div><strong>☑️ Selección de destinatarios</strong><small id="waSelectionCount">0 seleccionados · máximo 20 por lote</small></div>
+            <button class="secondary" type="button" id="waSelectVisible">Seleccionar visibles</button>
+            <button class="secondary" type="button" id="waClearSelection">Quitar selección</button>
+          </div>
+          <div id="waRecipientPicker" class="wa-recipient-picker"></div>
           <label class="wa-message-label">Información a compartir<textarea id="waBulkMessage" rows="7" placeholder="Escriba o pegue aquí la información que desea compartir. Revísela antes de iniciar."></textarea></label>
-          <div class="wa-center-actions"><button class="primary" type="button" id="waPrepareQueue">Preparar cola</button><button class="secondary" type="button" id="waResetQueue">Reiniciar cola</button></div>
+          <div class="wa-center-actions"><button class="primary" type="button" id="waPrepareQueue">📲 Preparar lote (máx. 20)</button><button class="secondary" type="button" id="waResetQueue">Reiniciar cola</button></div>
           <p class="wa-privacy-note">Solo se incluyen contactos con autorización registrada y número de WhatsApp. La app no envía mensajes automáticamente: abre WhatsApp con el texto preparado para que usted revise y pulse Enviar.</p>
         </div>
         <div id="waQueueSummary" class="wa-queue-summary"></div>
@@ -192,30 +246,71 @@
       </section>
 
       <section class="view" id="view-map">
-        <div class="section-title"><div><h2>🗺️ Mapa territorial interactivo de Girón</h2><p>Toque o haga clic sobre una zona para consultar la información territorial asociada en la Matriz.</p></div></div>
-        <div class="map-communications-summary">
-          <div><span>Contactos autorizados en todo Girón</span><strong id="mapGlobalAuthorized">0</strong></div>
-          <div><span>Contactos autorizados en zona seleccionada</span><strong id="mapSelectedAuthorized">—</strong></div>
-          <div><span>Registros sin vereda asignada</span><strong id="mapUnassignedCount">0</strong></div>
-          <small>Los contadores incluyen únicamente contactos con “¿Autoriza recibir comunicaciones?” = Sí.</small>
+        <div class="section-title"><div><h2>🗺️ Mapa territorial interactivo de Girón</h2><p>Consulte el mapa general del municipio y el plano urbano de barrios de Girón desde un mismo módulo.</p></div></div>
+        <div class="map-tabs" role="tablist" aria-label="Vistas del mapa territorial">
+          <button type="button" class="map-tab-btn active" data-map-tab="general" aria-selected="true">Mapa general</button>
+          <button type="button" class="map-tab-btn" data-map-tab="urbano" aria-selected="false">Girón urbano · barrios</button>
         </div>
-        <div class="map-layout">
-          <div class="card territorial-map-card">
-            <div class="map-toolbar"><strong>Mapa geográfico de Girón</strong><span>Mapa base incorporado del documento suministrado · áreas táctiles de consulta</span></div>
-            <div class="territorial-map-stage" id="territorialMapStage">
-              <img src="assets/mapa-giron-territorial.png" alt="Mapa geográfico de Girón" class="territorial-map-image">
-              <div id="territorialHotspots" class="territorial-hotspots"></div>
-              <div class="map-global-total-card" aria-live="polite">
-                <span>Total municipio</span>
-                <strong id="mapGlobalAuthorizedOverlay">0</strong>
-                <small>Contactos autorizados</small>
+
+        <div class="map-tab-panel active" id="mapTabGeneral">
+          <div class="map-communications-summary">
+            <div><span>Contactos autorizados en todo Girón</span><strong id="mapGlobalAuthorized">0</strong></div>
+            <div><span>Contactos autorizados en zona seleccionada</span><strong id="mapSelectedAuthorized">—</strong></div>
+            <div><span>Registros sin vereda asignada</span><strong id="mapUnassignedCount">0</strong></div>
+            <small>Los contadores incluyen únicamente contactos con “¿Autoriza recibir comunicaciones?” = Sí.</small>
+          </div>
+          <div class="map-layout">
+            <div class="card territorial-map-card">
+              <div class="map-toolbar"><strong>Mapa geográfico de Girón</strong><span>Mapa base incorporado del documento suministrado · áreas táctiles de consulta</span></div>
+              <div class="territorial-map-stage" id="territorialMapStage">
+                <img src="assets/mapa-giron-territorial.png" alt="Mapa geográfico de Girón" class="territorial-map-image">
+                <div id="territorialHotspots" class="territorial-hotspots"></div>
+                <div class="map-global-total-card" aria-live="polite">
+                  <span>Total municipio</span>
+                  <strong id="mapGlobalAuthorizedOverlay">0</strong>
+                  <small>Contactos autorizados</small>
+                </div>
+              </div>
+              <div class="map-help">👆 Seleccione GIRÓN o una vereda. La consulta no modifica ni duplica la información almacenada.</div>
+            </div>
+            <aside class="card territory-data-panel" id="territoryDataPanel">
+              <div class="territory-empty"><div class="territory-empty-icon">⌖</div><h3>Seleccione un territorio</h3><p>Aquí aparecerán contactos autorizados, necesidades, gestiones, proyectos y Derechos de Petición asociados.</p></div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="map-tab-panel" id="mapTabUrbano">
+          <div class="card urban-map-card">
+            <div class="map-toolbar urban-toolbar"><strong>Plano básico urbano de Girón</strong><span>Consulta visual de los barrios que conforman Girón urbano</span></div>
+            <div class="urban-map-actions">
+              <a class="primary urban-map-link" href="assets/Plano%20Basico%20Urbano%20Giron.pdf" target="_blank" rel="noopener">📄 Abrir PDF original</a>
+              <button class="secondary" type="button" id="urbanMapZoomBtn">🔎 Ampliar plano</button>
+            </div>
+            <div class="urban-map-pin-tools">
+              <span id="urbanMapPinStatus" aria-live="polite">Seleccione un barrio para señalarlo en el mapa.</span>
+              <button type="button" class="secondary" id="urbanMapPlacePin" disabled>📍 Ubicar este barrio en el plano</button>
+              <button type="button" class="secondary" id="urbanMapResetPin" hidden>↩ Volver al rótulo original</button>
+            </div>
+            <div class="urban-map-stage" id="urbanMapStage">
+              <div class="urban-map-sheet" id="urbanMapSheet">
+                <img src="assets/plano-basico-urbano-giron.jpg" alt="Plano básico urbano de Girón con barrios" class="urban-map-image" id="urbanMapImage">
+                <button type="button" class="urban-map-marker" id="urbanMapPin" hidden aria-label="Abrir información del barrio"><span>📍</span></button>
+                <div class="urban-map-popup" id="urbanMapPopover" hidden></div>
               </div>
             </div>
-            <div class="map-help">👆 Seleccione GIRÓN o una vereda. La consulta no modifica ni duplica la información almacenada.</div>
+            <div class="map-help">Plano Básico Urbano: referencia cartográfica de noviembre de 2010. La consulta por barrio utiliza los nombres almacenados en la Matriz; no asigna coordenadas ni límites automáticamente.</div>
           </div>
-          <aside class="card territory-data-panel" id="territoryDataPanel">
-            <div class="territory-empty"><div class="territory-empty-icon">⌖</div><h3>Seleccione un territorio</h3><p>Aquí aparecerán contactos autorizados, necesidades, gestiones, proyectos y Derechos de Petición asociados.</p></div>
-          </aside>
+          <div class="card urban-registry-card">
+            <div class="urban-registry-head"><div><h3>🏘️ Barrios urbanos y registros asociados</h3><p>Busque un barrio y consulte necesidades, líderes y simpatizantes de su base actual.</p></div><span class="urban-version">Consultas v1.4.15</span></div>
+            <div class="urban-stats" id="urbanGlobalStats"></div>
+            <div class="urban-barrio-controls"><label>Seleccione un barrio<select id="urbanBarrioSelect"><option value="">Seleccione un barrio...</option></select></label><label>Buscar en la lista<input id="urbanBarrioSearch" type="search" placeholder="Escriba el nombre del barrio"></label></div>
+            <div class="urban-barrio-list-head"><strong>Barrios del plano y registrados</strong><small id="urbanBarrioListCount"></small></div>
+            <div class="urban-barrio-list" id="urbanBarrioList"></div>
+            <div class="urban-barrio-selection"><strong id="urbanSelectedName">Seleccione un barrio</strong><button type="button" class="primary" id="urbanNewNeed" disabled>+ Registrar necesidad en este barrio</button></div>
+            <div id="urbanBarrioDetails"></div>
+            <div class="urban-missing" id="urbanMissing"></div>
+            <datalist id="urbanBarrioSuggestions"></datalist>
+          </div>
         </div>
       </section>
 
@@ -287,6 +382,7 @@
             <label>Mi posición<textarea name="opinion" required maxlength="900" placeholder="Puede escribirla directamente o generar un borrador informativo a partir del resumen."></textarea></label>
             <label>Mensaje final / propuesta<textarea name="proposal" maxlength="360" placeholder="Ej.: Seguiremos haciendo gestión y seguimiento para que esta necesidad tenga respuesta."></textarea></label>
             <label>Fotografía opcional<input id="positionImage" type="file" accept="image/*"></label>
+            <div class="card-studio-box"><strong>🎨 Diseño de tarjeta</strong><div class="card-template-options" data-template-group="position"><label><input type="radio" name="positionTemplate" value="1" checked> Diseño 1</label><label><input type="radio" name="positionTemplate" value="2"> Diseño 2</label><label><input type="radio" name="positionTemplate" value="3"> Diseño 3</label><label><input type="radio" name="positionTemplate" value="4"> Diseño 4</label></div><label>✏️ Texto personalizado de la tarjeta <textarea name="cardText" rows="4" maxlength="1000" placeholder="Opcional. Si lo deja vacío, se utilizará el texto de Mi posición."></textarea></label><button class="secondary" type="button" id="positionRestoreText">↩ Restaurar texto sugerido</button></div>
             <div class="position-format-row"><span>Formato</span><label><input type="radio" name="format" value="square" checked> Publicación 1080×1080</label><label><input type="radio" name="format" value="story"> Historia 1080×1920</label></div>
             <div class="form-actions"><button class="primary" type="submit">🎨 Generar tarjeta</button><button class="secondary" type="reset" id="positionClear">Limpiar</button></div>
           </form>
@@ -294,9 +390,9 @@
             <div class="position-preview-head"><h3>Vista previa</h3><small>La tarjeta diferencia la referencia informativa de “Mi posición”.</small></div>
             <div class="position-canvas-wrap"><canvas id="positionCanvas" width="1080" height="1080"></canvas></div>
             <div class="position-actions">
-              <button class="primary" id="positionShare" type="button">📤 Compartir tarjeta</button>
+              <button class="primary" id="positionShare" type="button" onclick="event.stopImmediatePropagation();positionShareDirect();">📤 Compartir tarjeta</button>
               <button class="secondary" id="positionDownload" type="button">⬇ Guardar imagen</button>
-              <button class="position-wa" id="positionContacts" type="button">🟢 Contactos autorizados</button>
+              <button class="position-wa" id="positionContacts" type="button" onclick="event.stopImmediatePropagation();positionWhatsAppDirect();">👥 Enviar por WhatsApp</button>
             </div>
           </div>
         </div>
@@ -353,9 +449,14 @@
         <div class="section-title"><div><h2>Configuración y respaldo</h2><p>Los datos se guardan localmente en este dispositivo.</p></div></div>
         <div class="grid-2">
           <div class="card">
-            <h3>Respaldo completo</h3>
-            <p>Exporte periódicamente un archivo JSON. Puede restaurarlo en otro equipo o navegador.</p>
-            <div class="button-row"><button class="primary" id="exportJson">Exportar JSON</button><label class="file-button">Importar JSON<input type="file" id="importJson" accept="application/json"></label></div>
+            <h3>Respaldo integral · v1.4.17</h3>
+            <p>Exporte registros, PDF archivados y fotografías en un solo JSON privado. Para cambiar de dispositivo, impórtelo por <strong>fusión: nunca se borran los datos existentes</strong>. No lo suba a GitHub.</p>
+            <label class="portable-backup-sig"><input type="checkbox" id="backupIncludeSignature"> Incluir firma escaneada privada en la exportación (solo con autorización)</label>
+            <div class="button-row"><button class="primary" id="exportJson">⬇ Exportar respaldo integral</button><label class="file-button">📂 Seleccionar JSON para importar<input type="file" id="importJson" accept="application/json,.json"></label></div>
+            <div class="portable-backup-status" id="portableBackupStatus" role="status">Respaldo integral listo.</div>
+            <div class="portable-backup-preview" id="portableBackupPreview" hidden><strong>Vista previa del archivo seleccionado</strong><div id="portableBackupFile"></div><p id="portableBackupDetails"></p><p><strong>Importación segura:</strong> suma registros faltantes, conserva los actuales. Los documentos con el mismo ID nunca se reemplazan.</p><div class="button-row"><button class="primary" type="button" id="portableBackupImport">✓ Fusionar respaldo</button><button class="secondary" type="button" id="portableBackupCancel">Cancelar</button></div></div>
+            <button type="button" id="portableBackupReload" class="secondary" hidden>↻ Recargar aplicación para mostrar datos restaurados</button>
+            <small class="portable-backup-note">El respaldo puede contener información personal, PDF y fotografías. Consérvelo fuera de carpetas públicas. Los archivos generados únicamente para descargar y no archivados en la app no pueden recuperarse con el respaldo.</small>
           </div>
           <div class="card">
             <h3>Datos de la organización</h3>
@@ -371,17 +472,30 @@
   <div id="toast" class="toast"></div>
 
   <!-- Modal Necesidad -->
-  <div class="modal" id="needModal"><div class="modal-card"><div class="modal-head"><h3>Registrar necesidad</h3><button data-close>×</button></div><form id="needForm" class="form-grid">
-    <label>Territorio<input name="territory" required placeholder="Barrio, vereda o sector"></label>
-    <label>Vereda<select name="vereda" id="needVereda"><option value="">Sin asignar / no aplica</option></select></label>
-    <label>Zona / Comuna / Corregimiento<input name="zone"></label>
+  <div class="modal" id="needModal"><div class="modal-card"><div class="modal-head"><h3>Registrar necesidad <small style="font-size:10px;color:#68809a">Territorio v1.4.16</small></h3><button data-close>×</button></div><form id="needForm" class="form-grid">
+    <section class="span-2 need-geo-box" id="needGeoBox">
+      <div class="need-geo-head"><div><strong>📍 Ubicación territorial vinculada</strong><p>Use los mismos nombres de barrios, sectores territoriales y veredas de las bases y de los mapas.</p></div><span>Sincronizado · v1.4.16</span></div>
+      <div class="need-geo-grid">
+        <label>Área de la necesidad<select id="needGeoType"><option value="urban">Girón urbano · barrio</option><option value="rural">Girón rural · vereda</option><option value="pending">Ubicación por identificar</option></select></label>
+        <label id="needGeoSectorLabel">Sector territorial de la base<select id="needGeoSector"><option value="">Todos / no identificado</option></select></label>
+        <label id="needGeoBarrioLabel">Barrio urbano (base + plano + registros)<select id="needGeoBarrio"><option value="">Seleccione un barrio...</option></select></label>
+        <label id="needGeoCustomLabel" hidden>Nombre de barrio nuevo<input id="needGeoCustom" placeholder="Barrio no incluido en la base" autocomplete="off"></label>
+      </div>
+      <div class="need-geo-actions"><button type="button" id="needGeoFindPeople" class="secondary">👥 Buscar reportantes de este barrio</button><button type="button" id="needGeoOpenMap" class="secondary">🗺️ Ver barrio en el mapa</button></div>
+      <div class="need-geo-status" id="needGeoStatus" aria-live="polite">Seleccione el barrio de la necesidad.</div>
+    </section>
+    <label id="needTerritoryLabel">Territorio registrado en la Matriz<input name="territory" id="needTerritory" required readonly placeholder="Se completará al escoger el barrio o vereda"></label>
+    <label id="needVeredaLabel">Vereda<select name="vereda" id="needVereda"><option value="">Sin asignar / no aplica</option></select></label>
+    <input type="hidden" name="barrio" id="needBarrioUrbano">
+    <input type="hidden" name="sectorTerritorial" id="needSectorTerritorial">
+    <label class="span-2">Zona / Comuna / Corregimiento (opcional)<input name="zone" placeholder="Solo si aplica; no reemplaza el barrio o la vereda"></label>
     <label class="span-2">Necesidad<input name="title" required></label>
-    <label>Sector<select name="sector" id="needSector"></select></label>
+    <label>Área temática de la necesidad<select name="sector" id="needSector"></select></label>
     <label>Prioridad<select name="priority" id="needPriority"></select></label>
     <label>Estado<select name="status" id="needStatus"></select></label>
     <label>Nivel de madurez<select name="maturity" id="needMaturity"></select></label>
-    <label>Reportado por<select name="leaderId" id="needLeader"></select></label>
-    <label>Entidad competente<input name="competentEntity"></label>
+    <label>Reportado por (líder o participante)<select name="leaderId" id="needLeader"></select></label>
+    <label>Entidad competente<input name="competentEntity" list="needEntityOptions" placeholder="Escriba o seleccione del Directorio institucional"><datalist id="needEntityOptions"></datalist></label>
     <label class="span-2">Ubicación / referencia<input name="location"></label>
     <label class="span-2">Descripción<textarea name="description"></textarea></label>
     <label>Afectados / beneficiarios<input name="affected"></label>
@@ -433,9 +547,11 @@
   </form></div></div>
 
   <!-- Modal líder -->
-  <div class="modal" id="leaderModal"><div class="modal-card"><div class="modal-head"><h3>Registrar líder / contacto</h3><button data-close>×</button></div><form id="leaderForm" class="form-grid">
+  <div class="modal" id="contactFinderModal"><div class="modal-card contact-finder-card"><div class="modal-head"><div><h3>🔎 Buscar persona</h3><small>Encuentre rápidamente un líder o simpatizante.</small></div><button type="button" onclick="closeContactFinder()">×</button></div><div class="contact-finder-body"><div class="contact-search-box"><span>🔎</span><input id="contactFinderInput" type="search" autocomplete="off" placeholder="Escriba nombre, WhatsApp o territorio..." oninput="renderContactFinder(this.value)" /></div><div class="contact-finder-hint">Puede escribir solo una parte del nombre. Ejemplo: <strong>Miguel</strong>.</div><div id="contactFinderResults" class="contact-finder-results"></div></div></div></div>
+  <div class="modal" id="leaderModal"><div class="modal-card"><div class="modal-head"><h3>Registrar líder / simpatizante</h3><button data-close>×</button></div><form id="leaderForm" class="form-grid">
     <label>Nombre<input name="name" required></label><label>Número de cédula<input name="cedula" inputmode="numeric" autocomplete="off" placeholder="Ej. 1098765432"></label>
-    <label>Calidad<input name="role" id="communityRole" readonly></label><label>Comunidad / organización<input name="organization"></label>
+    <div class="span-2 contact-quick-type"><strong>Clasificación rápida del contacto</strong><div class="contact-quick-buttons"><button type="button" data-leader-type="Líder">🧭 Líder</button><button type="button" data-leader-type="Simpatizante">🤝 Simpatizante</button><button type="button" data-leader-type="Participante">👤 Participante</button></div><small>Seleccione la condición informada por la persona. También puede cambiarla después desde los listados.</small></div>
+    <label>Tipo de contacto<select name="contactType" id="contactType" required><option value="">Seleccione...</option><option value="Líder">Líder</option><option value="Simpatizante">Simpatizante</option><option value="Participante">Participante comunitario</option></select></label><label id="parentLeaderField" class="hidden">Líder que tiene a cargo este simpatizante<select name="parentLeaderId" id="parentLeaderId"><option value="">Sin líder asociado</option></select></label><label>Calidad / rol<input name="role" placeholder="Opcional"></label><label>Comunidad / organización<input name="organization"></label>
     <label>Territorio<input name="territory"></label>
     <label>Vereda<select name="vereda" id="leaderVereda"><option value="">Sin asignar / no aplica</option></select></label><label>Teléfono<input name="phone"></label>
     <label>WhatsApp<input name="whatsapp" inputmode="tel" placeholder="Ej. 3001234567"></label><label>Correo<input type="email" name="email"></label>
@@ -467,7 +583,7 @@
   <div class="modal" id="petitionCenterModal"><div class="modal-card petition-center-card">
     <div class="modal-head"><div><h3>Derechos de Petición</h3><p class="petition-subtitle">Seleccione una necesidad registrada para preparar, firmar y generar su PDF.</p></div><button type="button" data-petition-center-close>×</button></div>
     <div class="petition-center-help"><strong>Nuevo Derecho de Petición:</strong> seleccione una necesidad registrada y pulse <strong>Crear nuevo</strong>. Los documentos ya generados continúan disponibles en el Archivo de PDFs.</div>
-    <div class="petition-new-row"><select id="petitionNewNeedSelect" aria-label="Necesidad para nuevo Derecho de Petición"><option value="">Seleccione una necesidad...</option></select><button class="primary" id="newPetitionBtn" type="button">＋ Nuevo Derecho de Petición</button></div>
+    <div class="petition-new-row"><select id="petitionNewNeedSelect" aria-label="Necesidad para nuevo Derecho de Petición"><option value="">Seleccione una necesidad...</option></select><button class="primary" id="newPetitionBtn" type="button">＋ Nuevo Derecho de Petición</button><button class="primary batch-main-btn" id="newPetitionBatchBtn" type="button">☑️ Generar para varios destinatarios</button><button class="secondary" id="newIvanFreeRequestBtn" type="button">✍️ Solicitud de Iván Ortiz (sin necesidad registrada)</button></div>
     <div class="petition-center-label"><strong>Necesidades registradas</strong><small>También puede generar el documento directamente desde cualquiera de estas necesidades.</small></div>
     <div id="petitionCenterList" class="petition-center-list"></div>
     <div class="form-actions petition-center-actions"><button class="petition-archive-open" id="openPetitionArchive" type="button">🗃️ Archivo de PDFs <span id="petitionArchiveCount">0</span></button><button class="secondary" type="button" data-petition-center-close>Cerrar</button></div>
@@ -476,25 +592,61 @@
   <!-- Archivo documental de Derechos de Petición -->
   <div class="modal" id="petitionArchiveModal"><div class="modal-card petition-archive-card">
     <div class="modal-head"><div><h3>Archivo de Derechos de Petición</h3><p class="petition-subtitle">Los PDFs generados quedan guardados en este dispositivo y vinculados a su necesidad.</p></div><button type="button" data-petition-archive-close>×</button></div>
-    <div class="petition-archive-toolbar"><input id="petitionArchiveSearch" type="search" placeholder="Buscar por necesidad, destinatario, entidad o radicado..."><span id="petitionArchiveSummary">0 documentos</span></div>
-    <div class="petition-center-help"><strong>Base documental:</strong> cada PDF se almacena automáticamente al generarlo. Puede abrirlo, descargarlo, compartirlo nuevamente o eliminarlo del archivo.</div>
+    <div class="petition-archive-filters">
+      <div class="petition-filter-main"><label>🔎 Buscar documento<input id="petitionArchiveSearch" type="search" placeholder="Necesidad, destinatario, entidad, asunto o radicado..."></label><span id="petitionArchiveSummary">0 documentos</span></div>
+      <div class="petition-filter-grid">
+        <label>Destinatario<select id="petitionArchiveRecipient"><option value="">Todos los destinatarios</option></select></label>
+        <label>Entidad<select id="petitionArchiveEntity"><option value="">Todas las entidades</option></select></label>
+        <label>Estado<select id="petitionArchiveStatus"><option value="">Todos</option><option value="pending">Pendiente de radicado</option><option value="assigned">Radicado registrado</option><option value="prepared">Preparado para enviar</option><option value="sent">Enviado confirmado</option></select></label>
+        <label>Desde<input id="petitionArchiveFrom" type="date"></label>
+        <label>Hasta<input id="petitionArchiveTo" type="date"></label>
+        <button class="secondary" id="petitionArchiveClear" type="button">↺ Limpiar filtros</button>
+      </div>
+    </div>
+    <div class="petition-center-help"><strong>Archivo documental:</strong> abra el documento, registre o edite el radicado, prepare su envío por correo, confirme el envío real, descargue el PDF o elimínelo del archivo.</div>
     <div id="petitionArchiveList" class="petition-archive-list"></div>
     <div class="form-actions"><button class="secondary" type="button" data-petition-archive-close>Cerrar</button></div>
   </div></div>
 
+  <!-- Envío trazable de Derechos de Petición -->
+  <div class="modal" id="petitionSendModal"><div class="modal-card petition-send-card">
+    <div class="modal-head"><div><h3>📤 Preparar envío del Derecho de Petición</h3><p class="petition-subtitle">Defina el correo de destino. La aplicación prepara el mensaje; el envío real se realiza desde su correo.</p></div><button type="button" data-petition-send-close>×</button></div>
+    <div class="rep-send-warning"><strong>Importante:</strong> pulsar “Preparar correo” no significa que el documento haya sido enviado. El PDF se descarga para adjuntarlo y su aplicación de correo se abre con destinatario, asunto y mensaje preparados.</div>
+    <div class="form-grid">
+      <label class="span-2">Documento<input id="petitionSendDocument" readonly></label>
+      <label class="span-2">Correo del destinatario<input id="petitionSendEmail" type="email" placeholder="correo@entidad.gov.co"></label>
+      <label class="span-2">Asunto<input id="petitionSendSubject"></label>
+      <label class="span-2">Mensaje<textarea id="petitionSendMessage" rows="5"></textarea></label>
+    </div>
+    <div class="rep-send-status" id="petitionSendStatus"></div>
+    <div class="form-actions">
+      <button class="primary" type="button" id="petitionPrepareEmail">📎 Preparar correo + PDF</button>
+      <button class="secondary" type="button" id="petitionConfirmSent">✓ Confirmar que ya lo envié</button>
+      <button class="secondary" type="button" data-petition-send-close>Cancelar</button>
+    </div>
+  </div></div>
+
   <!-- Modal Derecho de Petición -->
   <div class="modal" id="petitionModal"><div class="modal-card petition-modal-card">
-    <div class="modal-head"><div><h3>Generar Derecho de Petición</h3><p class="petition-subtitle" id="petitionNeedSummary"></p></div><button type="button" data-petition-close>×</button></div>
+    <div class="modal-head"><div><h3>Generar documento</h3><p class="petition-subtitle" id="petitionNeedSummary"></p></div><button type="button" data-petition-close>×</button></div>
     <form id="petitionForm" class="form-grid petition-form">
       <input type="hidden" name="needId">
       <label class="span-2">Vereda vinculada<input name="vereda" id="petitionVereda" readonly placeholder="Sin vereda asignada"></label>
+      <div class="span-2 batch-recipient-panel">
+        <div><strong>📚 Destinatarios desde el Directorio Institucional</strong><small>Seleccione una o varias entidades. Se generará un PDF independiente para cada destinatario.</small></div>
+        <button type="button" class="secondary" data-batch-open="petition">☑️ Seleccionar varios destinatarios</button>
+        <span class="batch-count" id="petitionBatchCount">Sin selección múltiple</span>
+      </div>
       <div class="span-2 petition-form-section">Datos de la persona destinataria</div>
       <label>Nombre de la persona destinataria<input name="recipientName" required placeholder="Ej.: Juan Pérez Gómez"></label>
       <label>Cargo / dependencia<input name="recipientRole" placeholder="Ej.: Coordinador de Redes"></label>
       <label>Entidad donde trabaja<input name="entity" required placeholder="Ej.: Acueducto Metropolitano de Bucaramanga"></label>
       <label>Correo de la persona destinataria<input type="email" name="recipientEmail" placeholder="Ej.: funcionario@entidad.gov.co"></label>
       <label class="span-2">Celular / WhatsApp de la persona destinataria<input name="recipientPhone" inputmode="tel" placeholder="Ej.: 300 000 0000"></label>
-      <div class="span-2 petition-form-section">Datos de quien presenta la petición</div>
+      <div class="span-2 petition-form-section">Tipo de documento y firmante</div>
+      <label class="span-2">Tipo de documento<select name="documentType" id="petitionDocumentType"><option value="peticion">Derecho de petición</option><option value="solicitud">Solicitud formal</option></select></label>
+      <label class="span-2">¿Quién presenta y firma este documento?<select name="signerMode" id="petitionSignerMode"><option value="personal">Peticionario / solicitante (firma propia en pantalla o cargada)</option><option value="ivan">Iván Ortiz — firma escaneada autorizada</option></select></label>
+      <div class="span-2 petition-form-section">Datos de quien presenta el documento</div>
       <label>Nombre del peticionario<input name="petitionerName" required></label>
       <label>Cédula / identificación<input name="petitionerId" required></label>
       <label>Dirección para notificaciones<input name="address"></label>
@@ -504,8 +656,22 @@
       <label class="span-2">Hechos<textarea name="facts" class="petition-textarea" required></textarea></label>
       <label class="span-2">Peticiones concretas<textarea name="requests" class="petition-textarea" required></textarea></label>
       <label class="span-2">Anexos / evidencias<textarea name="attachments" placeholder="Ej.: Fotografías del sector; copia de radicado anterior..."></textarea></label>
-      <div class="span-2 petition-sign-box">
-        <div class="petition-sign-head"><div><strong>Firma del peticionario</strong><small>Firme con el dedo, lápiz digital o mouse.</small></div><button type="button" class="secondary petition-clear-sign">Limpiar firma</button></div>
+      <div class="span-2 petition-ivan-sign" id="petitionIvanSignPanel" hidden>
+        <strong>✍️ Firma escaneada de Iván Ortiz</strong>
+        <p>La firma se guarda <strong>solo en este navegador/dispositivo</strong>. Regístrela una vez usando la imagen entregada por su titular. No se incluye en los archivos públicos de la aplicación.</p>
+        <div class="petition-ivan-actions"><label class="secondary petition-upload-sign">📁 Registrar / actualizar firma de Iván Ortiz<input id="ivanSignatureFile" type="file" accept="image/png,image/jpeg,image/webp"></label><button type="button" class="secondary" id="ivanSignatureRemove">Eliminar firma registrada</button></div>
+        <div id="ivanSignatureStatus" class="petition-ivan-status" role="status">Consultando firma local...</div>
+        <img id="ivanSignaturePreview" class="petition-ivan-preview" alt="Vista previa de la firma escaneada registrada" hidden>
+        <label class="petition-ivan-consent"><input type="checkbox" id="ivanSignatureAuthorized"> Confirmo que Iván Ortiz autorizó el uso de su firma para este documento específico.</label>
+        <small>La imagen constituye una firma escaneada insertada en el PDF; no es una firma digital criptográfica certificada.</small>
+      </div>
+      <div class="span-2 petition-sign-box" id="petitionPersonalSignPanel">
+        <div class="petition-sign-head"><div><strong>Firma del peticionario</strong><small>Firme en pantalla o cargue una imagen de una firma escaneada.</small></div><button type="button" class="secondary petition-clear-sign">Limpiar firma</button></div>
+        <div class="petition-sign-options">
+          <span class="petition-sign-option active" id="petitionScreenSignLabel">✍️ Firma en pantalla</span>
+          <label class="secondary petition-upload-sign">🖼️ Cargar firma escaneada<input id="petitionSignatureUpload" type="file" accept="image/png,image/jpeg,image/webp"></label>
+          <span id="petitionSignatureFileName" class="petition-sign-file"></span>
+        </div>
         <canvas id="petitionSignature" width="760" height="190" aria-label="Área para firma"></canvas>
         <p class="petition-legal-note">La firma capturada es una <strong>firma manuscrita electrónica insertada en el PDF</strong>. No corresponde por sí sola a una firma digital criptográfica certificada.</p>
       </div>
@@ -513,35 +679,229 @@
         <label>Número de radicado (opcional)<input name="radicado"></label>
         <label>Fecha de radicación (opcional)<input type="date" name="radicadoDate"></label>
       </div>
-      <div class="span-2 petition-preview-note">El documento se generará en PDF con fundamento general en el artículo 23 de la Constitución Política y la Ley 1755 de 2015. Revise los datos antes de firmar y generar.</div>
+      <div class="span-2 petition-preview-note">Para derechos de petición se aplica el artículo 23 de la Constitución Política y la Ley 1755 de 2015. Para solicitudes generales, revise su contenido y destinatario. La firma escaneada solo se incluirá cuando seleccione a Iván Ortiz y confirme expresamente su autorización.</div>
       <div class="span-2 form-actions petition-actions"><button class="primary" type="submit">📄 Generar PDF firmado</button><button class="petition-whatsapp" type="button" id="sharePetitionWhatsApp">🟢 Compartir PDF por WhatsApp</button><button class="secondary" type="button" data-petition-close>Cancelar</button></div>
     </form>
   </div></div>
 
 
+
+  <!-- Gestión documental del Representante -->
+  <div class="modal" id="representativeDocsModal"><div class="modal-card representative-center-card">
+    <div class="modal-head"><div><h3>🏛️ Gestión documental del Representante</h3><p class="petition-subtitle">Prepare y archive documentos para revisión y trámite institucional del Representante.</p></div><button type="button" data-rep-close>×</button></div>
+    <div class="rep-info"><strong>Modelo base:</strong> Solicitud de Informe a Congresista – Art. 258 de la Ley 5ª de 1992, con la presentación institucional del documento de referencia suministrado.</div>
+    <div class="rep-center-actions">
+      <button class="primary" id="newRepresentativeDoc" type="button">＋ Nuevo documento</button>
+      <button class="primary batch-main-btn" id="newRepresentativeBatchDoc" type="button">☑️ Nuevo documento para varios destinatarios</button>
+      <button class="secondary" id="openRepresentativeArchive" type="button">🗃️ Archivo <span id="representativeArchiveCount">0</span></button>
+    </div>
+    <div id="representativeRecent" class="rep-recent"></div>
+    <div class="form-actions"><button class="secondary" type="button" data-rep-close>Cerrar</button></div>
+  </div></div>
+
+  <div class="modal" id="representativeFormModal"><div class="modal-card representative-form-card">
+    <div class="modal-head"><div><h3>Nuevo documento del Representante <small style="font-size:10px;color:#6b7f91">PDF v1.4.08</small></h3><p class="petition-subtitle">Revise todos los datos antes de generar el PDF.</p></div><button type="button" data-rep-form-close>×</button></div>
+    <form id="representativeForm" class="form-grid">
+      <label class="span-2">Tipo de documento
+        <select name="docType">
+          <option>Solicitud de Informe a Congresista – Art. 258 de la Ley 5ª de 1992</option>
+        </select>
+      </label>
+      <label>Ciudad<input name="city" value="Bogotá D.C." required></label>
+      <label>Fecha<input name="date" type="date" required></label>
+      <div class="span-2 batch-recipient-panel">
+        <div><strong>📚 Destinatarios desde el Directorio Institucional</strong><small>Seleccione varias entidades y genere un documento individual para cada una.</small></div>
+        <button type="button" class="secondary" data-batch-open="representative">☑️ Seleccionar varios destinatarios</button>
+        <span class="batch-count" id="representativeBatchCount">Sin selección múltiple</span>
+      </div>
+      <div class="span-2 petition-form-section" id="representativeSingleRecipientTitle">Destinatario</div>
+      <div class="span-2" id="representativeBatchRecipientCards"></div>
+      <label class="rep-single-recipient">Tratamiento<input name="treatment" value="Dr." required></label>
+      <label class="rep-single-recipient">Nombre<input name="recipientName" placeholder="Nombre completo" required></label>
+      <label class="rep-single-recipient">Cargo<input name="recipientRole" placeholder="Ministro(a), Director(a)..." required></label>
+      <label class="rep-single-recipient">Entidad<input name="entity" placeholder="Entidad pública" required></label>
+      <label class="span-2">Asunto<input name="subject" value="Solicitud de Informe a Congresista – Art. 258 de la Ley 5ª de 1992" required></label>
+      <div class="span-2 petition-form-section">Contenido</div>
+      <label class="span-2">Solicitud / información requerida<textarea name="requestText" class="petition-textarea" rows="8" placeholder="Describa de manera detallada la información que se solicita..." required></textarea></label>
+      <label class="span-2">Texto adicional / observaciones<textarea name="extraText" class="petition-textarea" rows="4" placeholder="Opcional"></textarea></label>
+      <label class="span-2">Correo para notificaciones<input name="notificationEmail" type="email" value="jonathan.pineda@camara.gov.co" required></label>
+      <div class="span-2 rep-photo-section">
+        <div class="petition-form-section">📷 Registro fotográfico (opcional)</div>
+        <p class="rep-photo-help">Puede anexar fotografías cuando sean necesarias. Se agregarán al final del PDF como páginas de registro fotográfico.</p>
+        <label class="rep-photo-picker">➕ Seleccionar fotografías<input id="representativePhotos" type="file" accept="image/*" multiple></label>
+        <div id="representativePhotoGallery" class="rep-photo-gallery"><div class="rep-photo-empty">Sin fotografías seleccionadas.</div></div>
+      </div>
+      <div class="span-2 rep-preview-note">El PDF conservará el encabezado institucional del modelo suministrado y el bloque de cierre de <strong>JONATHAN EDUARDO PINEDA LÓPEZ</strong>.</div>
+      <div class="span-2 form-actions">
+        <button class="primary" type="submit">📄 Generar y guardar PDF</button>
+        <button class="secondary" type="button" id="saveRepresentativeDraft">💾 Guardar borrador</button>
+        <button class="secondary" type="button" id="previewRepresentativeDoc">👁 Vista previa</button>
+        <button class="secondary" type="button" data-rep-form-close>Cancelar</button>
+      </div>
+    </form>
+  </div></div>
+
+  <div class="modal" id="representativeArchiveModal"><div class="modal-card representative-archive-card">
+    <div class="modal-head"><div><h3>🗃️ Archivo del Representante</h3><p class="petition-subtitle">Documentos preparados desde esta aplicación.</p></div><button type="button" data-rep-archive-close>×</button></div>
+    <div class="rep-archive-filters">
+      <div class="rep-filter-main"><label>🔎 Buscar documento<input id="representativeArchiveSearch" type="search" placeholder="Nombre, entidad o asunto..."></label><span id="representativeArchiveSummary">0 documentos</span></div>
+      <div class="rep-filter-grid">
+        <label>Destinatario<select id="representativeArchiveRecipient"><option value="">Todos los destinatarios</option></select></label>
+        <label>Entidad<select id="representativeArchiveEntity"><option value="">Todas las entidades</option></select></label>
+        <label>Estado<select id="representativeArchiveStatus"><option value="">Todos</option><option value="pending">Pendiente de consecutivo</option><option value="assigned">Consecutivo asignado</option></select></label>
+        <label>Desde<input id="representativeArchiveFrom" type="date"></label>
+        <label>Hasta<input id="representativeArchiveTo" type="date"></label>
+        <button class="secondary" id="representativeArchiveClear" type="button">↺ Limpiar filtros</button>
+      </div>
+    </div>
+    <div id="representativeArchiveList" class="petition-archive-list"></div>
+    <div class="form-actions"><button class="secondary" type="button" data-rep-archive-close>Cerrar</button></div>
+  </div></div>
+
+  <div class="modal" id="representativeSendModal"><div class="modal-card representative-send-card">
+    <div class="modal-head"><div><h3>📤 Preparar envío del documento</h3><p class="petition-subtitle">Defina el correo de destino. La aplicación prepara el mensaje; el envío real se realiza desde su correo.</p></div><button type="button" data-rep-send-close>×</button></div>
+    <div class="rep-send-warning"><strong>Importante:</strong> pulsar “Preparar correo” no significa que el documento haya sido enviado. El PDF se descarga para adjuntarlo y su aplicación de correo se abre con el destinatario, asunto y mensaje preparados.</div>
+    <div class="form-grid">
+      <label class="span-2">Documento<input id="representativeSendDocument" readonly></label>
+      <label class="span-2">Correo del destinatario<input id="representativeSendEmail" type="email" placeholder="correo@ejemplo.com"></label>
+      <label class="span-2 rep-send-save"><input id="representativeSendSaveDefault" type="checkbox"> Guardar este correo como correo habitual del Representante</label>
+      <label class="span-2">Asunto<input id="representativeSendSubject"></label>
+      <label class="span-2">Mensaje<textarea id="representativeSendMessage" rows="5"></textarea></label>
+    </div>
+    <div class="rep-send-status" id="representativeSendStatus"></div>
+    <div class="form-actions">
+      <button class="primary" type="button" id="representativePrepareEmail">📎 Preparar correo + PDF</button>
+      <button class="secondary" type="button" id="representativeConfirmSent">✓ Confirmar que ya lo envié</button>
+      <button class="secondary" type="button" data-rep-send-close>Cancelar</button>
+    </div>
+  </div></div>
+
+  <div class="modal" id="directoryEntityModal"><div class="modal-card directory-modal-card">
+    <div class="modal-head"><div><h3 id="directoryEntityName">Entidad</h3><p class="petition-subtitle" id="directoryEntityLevel"></p></div><button type="button" data-directory-entity-close>×</button></div>
+    <div id="directoryEntityBody"></div>
+    <div class="form-actions directory-modal-actions">
+      <button class="primary" type="button" id="directoryPetitionBtn">📄 Ir a Derechos de Petición</button>
+      <button class="secondary" type="button" data-directory-entity-close>Cerrar</button>
+    </div>
+  </div></div>
+
+
+  <div class="modal" id="directorySourceModal"><div class="modal-card directory-source-modal-card">
+    <div class="modal-head"><div><h3 id="directorySourceTitle">📚 Directorio institucional completo</h3><p class="petition-subtitle" id="directorySourceSubtitle">Fuente documental suministrada.</p></div><button type="button" data-directory-source-close>×</button></div>
+    <div class="directory-source-help">Aquí se muestran las páginas del archivo original para conservar <strong>toda la información suministrada</strong>. Use la ficha estructurada de cada entidad para abrir enlaces, escribir al correo institucional o llevar los datos al Derecho de Petición.</div>
+    <div id="directorySourcePages" class="directory-source-pages"></div>
+    <div class="form-actions"><a id="directorySourceDownload" class="secondary directory-source-download" target="_blank" rel="noopener">📚 Abrir archivo original</a><button class="secondary" type="button" data-directory-source-close>Cerrar</button></div>
+  </div></div>
+  <div class="modal" id="directoryGuideModal"><div class="modal-card directory-guide-card">
+    <div class="modal-head"><div><h3>🔎 Orientador de entidad</h3><p class="petition-subtitle">Describa qué necesita investigar y consulte entidades relacionadas.</p></div><button type="button" data-directory-guide-close>×</button></div>
+    <label class="directory-guide-label">¿Qué necesita investigar?
+      <textarea id="directoryGuideText" rows="5" placeholder="Ejemplo: Quiero saber si existe un proyecto para mejorar una vía rural de Girón."></textarea>
+    </label>
+    <div class="form-actions"><button class="primary" type="button" id="directoryGuideSearch">🔎 Buscar entidades relacionadas</button><button class="secondary" type="button" data-directory-guide-close>Cerrar</button></div>
+    <div id="directoryGuideResults" class="directory-guide-results"></div>
+  </div></div>
+
+  <!-- Distribución selectiva de tarjetas por WhatsApp -->
+  <div class="modal" id="cardMassShareModal"><div class="modal-card card-mass-share-card">
+    <div class="modal-head"><div><h3 id="cardMassShareTitle">📲 Enviar tarjeta por WhatsApp</h3><p class="petition-subtitle">Seleccione destinatarios autorizados. Máximo 20 por lote.</p></div><button type="button" id="cardMassShareClose">×</button></div>
+    <div class="wa-audience-buttons card-share-audiences">
+      <button type="button" class="secondary active" data-card-audience="all">👥 Todos <span class="wa-audience-count">0</span></button>
+      <button type="button" class="secondary" data-card-audience="Líder">🧭 Líderes <span class="wa-audience-count">0</span></button>
+      <button type="button" class="secondary" data-card-audience="Simpatizante">🤝 Simpatizantes <span class="wa-audience-count">0</span></button>
+    </div>
+    <div class="card-share-tools"><button type="button" class="secondary" id="cardShareSelectVisible">Seleccionar visibles</button><button type="button" class="secondary" id="cardShareClear">Quitar selección</button><strong id="cardShareCount">0 seleccionados · máximo 20</strong></div>
+    <div id="cardShareRecipients" class="wa-recipient-picker"></div>
+    <label>Mensaje que acompañará la tarjeta<textarea id="cardShareMessage" rows="4"></textarea></label>
+    <div class="card-share-image-note"><strong>🖼️ Tarjeta preparada</strong><span>Guarde o comparta la imagen y adjúntela en WhatsApp. La app prepara cada conversación y controla el lote.</span></div>
+    <div class="form-actions"><button type="button" class="secondary" id="cardShareImage">📤 Compartir / guardar tarjeta</button><button type="button" class="primary" id="cardSharePrepare">📲 Preparar lote</button></div>
+    <div id="cardShareQueue" class="card-share-queue"></div>
+  </div></div>
+
   <!-- Modal cumpleaños -->
   <div class="modal" id="birthdayModal"><div class="modal-card birthday-modal-card">
     <div class="modal-head"><div><h3>🎂 Felicitación de cumpleaños</h3><p class="petition-subtitle" id="birthdayPersonSummary"></p></div><button type="button" id="birthdayClose">×</button></div>
+    <div class="card-studio-box"><strong>🎨 Seleccione diseño</strong><div class="card-template-options" id="birthdayTemplates"><label><input type="radio" name="birthdayTemplate" value="1" checked> Diseño 1</label><label><input type="radio" name="birthdayTemplate" value="2"> Diseño 2</label><label><input type="radio" name="birthdayTemplate" value="3"> Diseño 3</label><label><input type="radio" name="birthdayTemplate" value="4"> Diseño 4</label></div><label>✏️ Texto de la tarjeta<textarea id="birthdayCardText" rows="4"></textarea></label><button type="button" class="secondary" id="birthdayRestoreText">↩ Restaurar texto sugerido</button></div>
     <div class="birthday-preview"><canvas id="birthdayCardCanvas" width="1080" height="1080"></canvas></div>
     <p class="birthday-note">La tarjeta se prepara para contactos con autorización registrada para recibir comunicaciones. Revise el mensaje antes de compartirlo.</p>
-    <div class="birthday-modal-actions"><button class="primary" type="button" id="birthdayShare">💌 Compartir tarjeta</button><button class="birthday-wa" type="button" id="birthdayWhatsApp">🟢 Felicitar por WhatsApp</button><button class="secondary" type="button" id="birthdayDownload">⬇ Guardar tarjeta</button></div>
+    <div class="birthday-modal-actions"><button class="primary" type="button" id="birthdayShare">💌 Compartir tarjeta</button><button class="birthday-wa" type="button" id="birthdayWhatsApp">🟢 Felicitar por WhatsApp</button><button class="secondary" type="button" id="birthdayMassWhatsApp">👥 Enviar a varios</button><button class="secondary" type="button" id="birthdayDownload">⬇ Guardar tarjeta</button></div>
   </div></div>
 
-  <script src="app.js?v=1.3.8"></script>
+  <!-- Consulta rápida de consolidados -->
+  <div class="modal" id="networkSummaryModal"><div class="modal-card network-summary-modal-card">
+    <div class="modal-head"><div><h3 id="networkSummaryTitle">Consulta de red</h3><p class="petition-subtitle" id="networkSummarySubtitle"></p></div><button type="button" onclick="closeNetworkSummary()">×</button></div>
+    <div id="networkSummaryList" class="network-summary-list"></div>
+  </div></div>
+
+
+  <!-- Selector múltiple de destinatarios del Directorio Institucional -->
+  <div class="modal" id="batchRecipientModal"><div class="modal-card batch-recipient-card">
+    <div class="modal-head"><div><h3>☑️ Seleccionar destinatarios</h3><p class="petition-subtitle">Puede combinar entidades de cualquiera de los cuatro niveles del Directorio Institucional.</p></div><button type="button" data-batch-close>×</button></div>
+    <div class="batch-tabs">
+      <button type="button" data-batch-level="municipal" class="active">🏘️ Municipal</button>
+      <button type="button" data-batch-level="departamental">🏢 Departamental</button>
+      <button type="button" data-batch-level="municipios">🏛️ 87 Municipios</button>
+      <button type="button" data-batch-level="nacional">🇨🇴 Nacional</button>
+    </div>
+    <div class="batch-tools"><input id="batchRecipientSearch" placeholder="🔎 Buscar entidad, correo, municipio..."><button type="button" class="secondary" id="batchSelectVisible">Seleccionar visibles</button><button type="button" class="secondary" id="batchClear">Limpiar</button></div>
+    <div class="batch-summary"><strong id="batchRecipientCount">0 destinatarios seleccionados</strong><span>Se generará un documento individual por cada selección.</span></div>
+    <div id="batchRecipientList" class="batch-recipient-list"></div>
+    <div class="form-actions"><button type="button" class="primary" id="batchApply">✓ Usar selección</button><button type="button" class="secondary" data-batch-close>Cancelar</button></div>
+  </div></div>
+
+
+  <!-- Vista de simpatizantes de cada líder y asignación múltiple de contactos ya existentes -->
+  <div class="modal" id="leaderNetworkModal"><div class="modal-card leader-network-modal-card">
+    <div class="modal-head"><div><h3 id="leaderNetworkTitle">Simpatizantes por líder</h3><small id="leaderNetworkSubtitle">Seleccione los contactos relacionados.</small></div><button type="button" onclick="closeLeaderNetwork()" aria-label="Cerrar">×</button></div>
+    <div class="leader-network-tabs"><button type="button" id="leaderNetworkViewBtn" onclick="switchLeaderNetworkMode('view')">👥 Ver simpatizantes</button><button type="button" id="leaderNetworkAssignBtn" onclick="switchLeaderNetworkMode('assign')">＋ Vincular existentes</button></div>
+    <label class="leader-network-search-label">Buscar contacto<input type="search" id="leaderNetworkSearch" placeholder="Nombre, sector, barrio o WhatsApp" oninput="renderLeaderNetworkModal()"></label>
+    <div id="leaderNetworkList" class="leader-network-list"></div>
+    <div id="leaderNetworkAssignTools" class="leader-network-assign-tools hidden"><span id="leaderNetworkAssignCount">0 seleccionados</span><button type="button" class="primary" onclick="saveLeaderNetworkLinks()">✓ Guardar vinculaciones</button></div>
+    <div class="leader-network-bottom"><button type="button" class="secondary" onclick="openNewSupporterUnderLeader()">＋ Registrar simpatizante nuevo</button><button type="button" class="secondary" onclick="closeLeaderNetwork()">Cerrar</button></div>
+  </div></div>
+
+  <!-- Clasificación individual de contactos ya registrados, disponible desde todos los consolidados -->
+  <div class="modal" id="contactClassificationModal"><div class="modal-card contact-classification-modal-card">
+    <div class="modal-head"><div><h3>🧭 Clasificar contacto</h3><p class="petition-subtitle">Seleccione Líder o Simpatizante y guarde su elección.</p></div><button type="button" onclick="closeContactClassification()" aria-label="Cerrar">×</button></div>
+    <div class="classification-person"><strong id="classifyContactName">Contacto</strong><span id="classifyContactTerritory"></span></div>
+    <input type="hidden" id="classifyContactId">
+    <div class="classification-options">
+      <button type="button" data-classification-choice="Líder" onclick="setContactClassificationChoice('Líder')">🧭 <b>Líder</b><small>Persona que coordina o representa una comunidad</small></button>
+      <button type="button" data-classification-choice="Simpatizante" onclick="setContactClassificationChoice('Simpatizante')">🤝 <b>Simpatizante</b><small>Contacto registrado bajo esta condición</small></button>
+    </div>
+    <label id="classifyParentField" class="classification-parent hidden">Líder que tiene a cargo este simpatizante
+      <select id="classifyParentLeader"><option value="">Sin líder asociado</option></select>
+      <small>Seleccione un líder para contarlo en su red. Si no lo tiene identificado, quedará en «Sin líder asignado».</small>
+    </label>
+    <p class="classification-save-note">Solo se modifica la clasificación y, si lo selecciona, el líder relacionado. Los demás datos y la autorización de comunicaciones se conservan.</p>
+    <div class="form-actions"><button class="primary" type="button" onclick="saveContactClassification()">✓ Guardar clasificación</button><button class="secondary" type="button" onclick="closeContactClassification()">Cancelar</button></div>
+  </div></div>
+  <div class="modal" id="urbanMapModal" aria-hidden="true"><div class="modal-card urban-map-modal-card"><div class="modal-head"><h3>Plano básico urbano de Girón</h3><button data-close>×</button></div><div class="urban-map-modal-body"><div class="urban-map-sheet" id="urbanZoomSheet"><img src="assets/plano-basico-urbano-giron.jpg" alt="Plano básico urbano ampliado de Girón" class="urban-map-modal-image"><button type="button" class="urban-map-marker" id="urbanZoomPin" hidden aria-label="Abrir información del barrio"><span>📍</span></button><div class="urban-map-popup" id="urbanZoomPopover" hidden></div></div></div><div class="urban-map-modal-actions"><a class="primary urban-map-link" href="assets/Plano%20Basico%20Urbano%20Giron.pdf" target="_blank" rel="noopener">📄 Abrir PDF original</a></div></div></div>
+
+  <script src="app.js?v=1.4.17"></script>
+  <script src="leader-network-v1412.js?v=1.4.12"></script>
   <script src="photos.js?v=1.3.8"></script>
-  <script src="petition.js?v=1.3.37"></script>
+  <script src="petition.js?v=1.4.09"></script>
   <script src="contacts.js?v=1.3.16"></script>
-  <script src="birthdays.js?v=1.3.20"></script>
+  <script src="card-mass-share.js?v=1.4.11"></script>
+  <script src="birthdays.js?v=1.4.06"></script>
   <script src="territory-link.js?v=1.3.13"></script>
   <script src="intelligence.js?v=1.3.8"></script>
-  <script src="map.js?v=1.3.28"></script>
-  <script src="position.js?v=1.3.20"></script>
-  <script src="stories.js?v=1.3.34"></script>
+  <script src="map.js?v=1.4.14"></script>
+  <script src="direct-card-actions.js?v=1.4.06"></script>
+  <script src="position.js?v=1.4.06"></script>
+  <script src="stories.js?v=1.4.06"></script>
   <script src="agenda.js?v=1.3.22"></script>
   <script src="dossier.js?v=1.3.23"></script>
   <script src="positioning.js?v=1.3.25"></script>
-  <script src="territorial-db.js?v=1.3.32"></script>
-  <script src="communications.js?v=1.3.32"></script>
+  <script src="territorial-db.js?v=1.4.16-publica-1"></script>
+  <script src="need-contacts-v1410.js?v=1.4.10"></script>
+  <script src="communications.js?v=1.4.11"></script>
   <script src="responsive.js?v=1.3.36"></script>
+  <script src="representative-docs-v1407.js"></script>
+  <script src="institutional-directory.js?v=1.4.06"></script>
+  <script src="batch-recipients.js?v=1.4.06"></script>
+  <script src="urban-neighborhoods-v1414.js?v=1.4.16"></script>
+  <script src="need-territory-v1416.js?v=1.4.16"></script>
+  <script src="respaldo-integral-v1417.js?v=1.4.17"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "version": "1.3.37",
-  "build": "2026-10-01",
-  "notes": "Derechos de Petición incorpora una acción visible para crear un documento nuevo: selector de necesidad + botón Nuevo Derecho de Petición, manteniendo separado el Archivo de PDFs y conservando el diseño responsive. app.js permanece intacto."
+  "version": "1.4.17",
+  "build": "2026-10-27",
+  "notes": "Respaldo JSON integral para archivos PDF/fotografías y datos del navegador, fusión sin borrar registros, opción de firma privada autorizada. Edición pública sin contactos precargados."
 }

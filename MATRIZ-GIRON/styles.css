@@ -163,3 +163,703 @@
 
 /* v1.3.37 - Nuevo Derecho de Petición */
 .petition-new-row{display:grid;grid-template-columns:minmax(240px,1fr) auto;gap:10px;align-items:center;margin:10px 0 12px}.petition-new-row select{min-height:40px;border:1px solid #cbd9e8;border-radius:7px;padding:7px 10px;background:#fff;color:#17324d}.petition-center-label{display:flex;flex-direction:column;gap:2px;margin:8px 0 6px;color:#17324d}.petition-center-label small{color:#66788a}@media(max-width:700px){.petition-new-row{grid-template-columns:1fr}.petition-new-row .primary{width:100%;min-height:44px}}
+
+/* ===== IDENTIDAD IVÁN ORTIZ · v1.3.38 ===== */
+.brand-header{grid-template-columns:235px 1fr 390px;gap:28px}
+.ivan-only-brand{justify-content:flex-end}
+.ivan-main{border-left:1px solid rgba(255,255,255,.35);padding-left:24px;gap:14px}
+.ivan-main .ivan-photo{width:92px;height:92px;border:3px solid #ffc400}
+.ivan-main .ivan-brand-copy{min-width:210px}
+.ivan-main .ivan-brandmark{width:210px!important;max-height:52px!important}
+.ivan-main .ivan-brand-copy span{display:block;color:#fff!important;font-size:13px;font-weight:800;line-height:1.25;margin-top:5px}
+.ivan-main .ivan-brand-copy small{display:block;color:#ffd21c;font-size:11px;font-weight:800;margin-top:3px}
+@media(max-width:1100px){
+  .brand-header{grid-template-columns:150px 1fr 250px;gap:12px}
+  .giron-brand{display:flex}
+  .giron-brand .crest{font-size:34px}.giron-brand strong{font-size:25px}.giron-brand span{font-size:11px}.giron-brand small{font-size:8px}
+  .ivan-main{padding-left:10px;gap:8px}.ivan-main .ivan-photo{width:58px;height:58px}.ivan-main .ivan-brand-copy{min-width:150px}.ivan-main .ivan-brandmark{width:150px!important;max-height:36px!important}.ivan-main .ivan-brand-copy span{font-size:9px}.ivan-main .ivan-brand-copy small{font-size:9px}
+}
+@media(max-width:700px){
+  .brand-header{display:grid!important;grid-template-columns:1fr auto!important;justify-content:initial;padding:10px 12px!important;gap:8px}
+  .giron-brand{display:none!important}.system-brand{width:auto!important;align-items:flex-start;text-align:left}.system-brand>span{font-size:9px}.system-brand>strong{font-size:17px}.system-brand>em{font-size:17px}.system-brand>small{font-size:7px}
+  .people-brand.ivan-only-brand{display:flex!important;width:auto!important}.ivan-main{border-left:0;padding-left:0}.ivan-main .ivan-photo{width:48px;height:48px}.ivan-main .ivan-brand-copy{display:none}
+}
+
+
+/* ===== MARCA PERSONAL IVÁN ORTIZ · v1.3.39 ===== */
+.ivan-main{position:relative;padding:9px 18px 9px 25px;border-left:1px solid rgba(255,255,255,.30);border-radius:0 14px 14px 0;background:linear-gradient(90deg,rgba(255,255,255,.025),rgba(255,196,0,.055));}
+.ivan-main:after{content:"";position:absolute;left:126px;right:18px;bottom:8px;height:2px;border-radius:999px;background:linear-gradient(90deg,#ffc400,rgba(255,196,0,0));opacity:.8}
+.ivan-main .ivan-photo{width:104px;height:104px;border:3px solid #ffc400;box-shadow:0 0 0 5px rgba(255,196,0,.10),0 8px 20px rgba(0,0,0,.30)}
+.ivan-main .ivan-brand-copy{min-width:230px;padding-bottom:8px}
+.ivan-name{display:flex;align-items:baseline;gap:9px;line-height:.88;white-space:nowrap;text-shadow:0 3px 10px rgba(0,0,0,.35)}
+.ivan-name strong,.ivan-name b{display:inline!important;margin:0!important;letter-spacing:.035em;font-weight:950}
+.ivan-name strong{font-size:28px!important;color:#fff!important}
+.ivan-name b{font-size:34px;color:#ffc400}
+.ivan-main .ivan-brand-copy span{margin-top:9px;font-size:13px;letter-spacing:.015em}
+.ivan-main .ivan-brand-copy small{margin-top:4px;font-family:Georgia,serif;font-size:13px;font-style:italic;color:#ffc400}
+@media(max-width:1100px){
+  .ivan-main{padding:6px 8px 6px 10px}.ivan-main:after{left:74px;right:8px;bottom:5px}.ivan-main .ivan-photo{width:64px;height:64px}.ivan-main .ivan-brand-copy{min-width:168px;padding-bottom:5px}.ivan-name{gap:6px}.ivan-name strong{font-size:18px!important}.ivan-name b{font-size:22px}.ivan-main .ivan-brand-copy span{font-size:9px;margin-top:6px}.ivan-main .ivan-brand-copy small{font-size:9px}
+}
+@media(max-width:700px){
+  .ivan-main{background:transparent;padding:0}.ivan-main:after{display:none}.ivan-main .ivan-photo{width:52px;height:52px}.ivan-main .ivan-brand-copy{display:none}
+}
+
+/* ===== CABECERA PREMIUM IVÁN ORTIZ · v1.3.40 ===== */
+.brand-header{
+  min-height:210px;
+  grid-template-columns:300px minmax(520px,1fr) 560px;
+  gap:24px;
+  padding:18px 28px 48px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 105%,rgba(27,112,177,.42),transparent 32%),
+    radial-gradient(circle at 88% 10%,rgba(20,96,163,.38),transparent 30%),
+    linear-gradient(105deg,#031d3b 0%,#063b70 49%,#032449 100%);
+  border-bottom:3px solid #dca900;
+}
+.brand-header:before{content:"";position:absolute;left:-4%;bottom:28px;width:38%;height:42px;border-top:5px solid #dca900;border-radius:50%;transform:rotate(4deg);opacity:.95;pointer-events:none}
+.brand-header:after{content:"";position:absolute;right:486px;top:-80px;width:170px;height:330px;border-left:11px solid #e6b400;border-radius:50%;transform:rotate(12deg);opacity:.9;pointer-events:none}
+.giron-brand{position:relative;z-index:2;align-items:center}.giron-brand .crest{font-size:64px;color:#f6c32d;text-shadow:0 4px 16px rgba(0,0,0,.35)}.giron-brand strong{font-size:44px;letter-spacing:.025em;text-shadow:0 3px 12px rgba(0,0,0,.4)}.giron-brand span{font-size:17px;margin-top:5px}.giron-brand small{font-size:13px;margin-top:2px;color:#e5edf7}
+.system-brand{position:relative;z-index:2}.system-brand>span{font-size:25px;letter-spacing:.025em}.system-brand>strong{font-size:45px;text-shadow:0 3px 12px rgba(0,0,0,.28)}.system-brand>em{font-size:42px;position:relative}.system-brand>em:before,.system-brand>em:after{content:"";display:inline-block;width:92px;height:2px;background:#e9b600;vertical-align:middle;margin:0 18px 8px}.system-brand>small{font-size:15px;letter-spacing:.01em}
+.ivan-only-brand{position:relative;z-index:3;justify-content:flex-end;align-self:stretch}
+.ivan-main{width:100%;height:100%;justify-content:flex-start;gap:18px;padding:10px 14px 10px 20px;border-left:0;border-radius:18px;background:linear-gradient(100deg,rgba(0,27,56,.18),rgba(255,255,255,.055));box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.ivan-main:before{content:"";position:absolute;inset:8px 8px 8px 4px;border-radius:18px;border-right:1px solid rgba(245,190,30,.26);pointer-events:none}.ivan-main:after{left:198px;right:28px;bottom:25px;height:3px;background:linear-gradient(90deg,#f4c52d 0 60%,rgba(244,197,45,0));box-shadow:0 0 12px rgba(244,197,45,.28)}
+.ivan-main .ivan-photo{flex:0 0 auto;width:156px;height:156px;object-fit:cover;border:5px solid #f3bd22;box-shadow:0 0 0 7px rgba(4,42,82,.95),0 0 0 9px rgba(243,189,34,.28),0 12px 30px rgba(0,0,0,.4)}
+.ivan-main .ivan-brand-copy{min-width:310px;padding:2px 0 22px;align-self:center}.ivan-name{display:block;line-height:.76;white-space:normal;text-transform:uppercase}.ivan-name strong,.ivan-name b{display:block!important;letter-spacing:.02em;text-shadow:0 5px 15px rgba(0,0,0,.45)}.ivan-name strong{font-size:47px!important;color:#fff!important}.ivan-name b{font-size:58px;color:#f7c52b;margin-top:8px!important}.ivan-main .ivan-brand-copy span{margin-top:17px;font-size:16px;line-height:1.1;font-weight:900;color:#fff!important;white-space:nowrap}.ivan-main .ivan-brand-copy small{margin-top:7px;font-size:22px;font-weight:700;color:#f5c52d;font-family:Georgia,serif;font-style:italic}.datetime{z-index:5;right:26px;bottom:7px;background:rgba(2,21,43,.82);border:1px solid rgba(231,181,26,.65);box-shadow:0 3px 12px rgba(0,0,0,.22)}.datetime span{padding:8px 15px;font-size:12px}
+@media(max-width:1350px){
+ .brand-header{min-height:168px;grid-template-columns:210px minmax(400px,1fr) 430px;padding:14px 20px 38px;gap:15px}.brand-header:after{right:375px}.giron-brand .crest{font-size:46px}.giron-brand strong{font-size:32px}.giron-brand span{font-size:12px}.giron-brand small{font-size:9px}.system-brand>span{font-size:18px}.system-brand>strong{font-size:33px}.system-brand>em{font-size:31px}.system-brand>em:before,.system-brand>em:after{width:50px;margin:0 10px 6px}.system-brand>small{font-size:10px;margin-top:10px}.ivan-main .ivan-photo{width:112px;height:112px}.ivan-main .ivan-brand-copy{min-width:250px;padding-bottom:15px}.ivan-name strong{font-size:33px!important}.ivan-name b{font-size:41px}.ivan-main .ivan-brand-copy span{font-size:11px;margin-top:12px}.ivan-main .ivan-brand-copy small{font-size:15px}.ivan-main:after{left:150px;bottom:18px}
+}
+@media(max-width:1100px){
+ .brand-header{min-height:140px;grid-template-columns:145px 1fr 315px;gap:9px;padding:10px 14px 26px}.brand-header:after{display:none}.brand-header:before{bottom:16px}.giron-brand{display:flex}.giron-brand .crest{font-size:34px}.giron-brand strong{font-size:24px}.giron-brand span{font-size:10px}.giron-brand small{font-size:7px}.system-brand>span{font-size:13px}.system-brand>strong{font-size:24px}.system-brand>em{font-size:23px}.system-brand>em:before,.system-brand>em:after{display:none}.system-brand>small{font-size:8px;margin-top:7px}.ivan-main{padding:6px 8px;gap:10px}.ivan-main .ivan-photo{width:82px;height:82px;border-width:3px}.ivan-main .ivan-brand-copy{min-width:190px;padding-bottom:8px}.ivan-name strong{font-size:24px!important}.ivan-name b{font-size:30px}.ivan-main .ivan-brand-copy span{font-size:8px;margin-top:8px}.ivan-main .ivan-brand-copy small{font-size:11px}.ivan-main:after{left:108px;bottom:12px}.datetime{display:none}
+}
+@media(max-width:700px){
+ .brand-header{min-height:108px!important;display:grid!important;grid-template-columns:1fr 72px!important;padding:10px 12px 12px!important;border-bottom-width:2px}.brand-header:before,.brand-header:after{display:none}.giron-brand{display:none!important}.system-brand{align-items:flex-start;text-align:left}.system-brand>span{font-size:9px}.system-brand>strong{font-size:17px}.system-brand>em{font-size:18px}.system-brand>small{font-size:7px;line-height:1.25}.people-brand.ivan-only-brand{display:flex!important}.ivan-main{display:flex;width:auto;height:auto;background:transparent;box-shadow:none;padding:0}.ivan-main:before,.ivan-main:after{display:none}.ivan-main .ivan-photo{width:62px;height:62px;border-width:3px;box-shadow:0 0 0 3px rgba(4,42,82,.95),0 0 0 4px rgba(243,189,34,.25)}.ivan-main .ivan-brand-copy{display:none}
+}
+
+/* ===== Red Líderes → Simpatizantes · v1.3.41 ===== */
+.network-summary{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px;margin:0 0 12px}.network-summary>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 15px;border:1px solid #d9e5f1;border-radius:12px;background:linear-gradient(135deg,#f8fbff,#eef5fc);color:#15395d;font-weight:800}.network-summary strong{display:grid;place-items:center;min-width:38px;height:32px;padding:0 9px;border-radius:999px;background:#073763;color:#fff;font-size:17px}.leader-network-row td{background:#fff}.leader-network-row:hover td{background:#f7fbff}.network-toggle,.supporter-count{border:0;cursor:pointer;font-weight:900}.network-toggle{width:25px;height:25px;border-radius:50%;background:#e8f1fb;color:#073763;font-size:17px;line-height:1}.supporter-count{min-width:38px;padding:6px 10px;border-radius:999px;background:#0b5cad;color:#fff}.supporters-detail>td{padding:0 12px 12px!important;background:#f5f9fd!important}.supporters-box{border-left:4px solid #dca900;border-radius:10px;background:#fff;padding:12px;box-shadow:0 3px 12px #082c4f14}.supporters-title{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:2px 4px 10px;color:#073763}.supporters-title span{background:#fff5cc;color:#765900;border-radius:999px;padding:5px 10px;font-weight:800}.supporter-row td{background:#fbfdff!important}.network-empty{text-align:center!important;color:#718096;padding:18px!important}.unclassified-box{margin-top:16px;padding:14px;border:1px dashed #d1a71b;border-radius:12px;background:#fffdf5}.unclassified-box h3{margin:0 0 4px;color:#073763}.unclassified-box h3 span{display:inline-grid;place-items:center;min-width:30px;height:26px;border-radius:999px;background:#dca900;color:#08294a;font-size:14px}.unclassified-box p{margin:0 0 10px;color:#66788c}@media(max-width:800px){.network-summary{grid-template-columns:1fr 1fr}.supporters-box{padding:8px}.network-summary>div{padding:10px}}
+
+
+/* ===== Buscador mágico de personas · v1.3.42 ===== */
+.leaders-head-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}.magic-search-btn{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;font-weight:950;letter-spacing:.02em;color:#082b4d;background:linear-gradient(135deg,#ffd84a,#e7ad00);box-shadow:0 5px 14px rgba(130,91,0,.22);transition:.18s transform,.18s box-shadow}.magic-search-btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(130,91,0,.3)}.contact-finder-card{width:min(720px,94vw);max-height:82vh}.contact-finder-card .modal-head small{display:block;margin-top:3px;color:#6c7f92;font-weight:600}.contact-finder-body{padding:16px}.contact-search-box{display:flex;align-items:center;gap:10px;border:2px solid #0b5cad;border-radius:13px;background:#fff;padding:4px 12px;box-shadow:0 4px 14px rgba(6,54,99,.1)}.contact-search-box span{font-size:20px}.contact-search-box input{width:100%;border:0!important;outline:0!important;box-shadow:none!important;padding:12px 4px!important;font-size:17px;font-weight:700;color:#123b61}.contact-finder-hint{padding:9px 4px 12px;color:#66788c;font-size:12px}.contact-finder-results{display:grid;gap:8px;max-height:50vh;overflow:auto;padding:2px}.finder-result{width:100%;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:11px;text-align:left;border:1px solid #d9e5f1;border-radius:12px;background:#fff;padding:10px 12px;cursor:pointer;color:#173c60;transition:.15s}.finder-result:hover{border-color:#d6a700;background:#fffdf4;transform:translateY(-1px);box-shadow:0 4px 12px rgba(6,54,99,.1)}.finder-avatar{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#073763;color:#fff;font-size:18px;font-weight:950;border:3px solid #e4b20b}.finder-copy{min-width:0;display:grid;gap:2px}.finder-copy strong{font-size:14px;color:#073763}.finder-copy small{white-space:normal;color:#66788c}.finder-copy small b{color:#9b7400}.finder-go{font-weight:900;color:#0b5cad;white-space:nowrap}.finder-empty{display:grid;gap:5px;text-align:center;padding:30px 12px;color:#6d7e90}.finder-empty strong{color:#15395d;font-size:16px}.contact-found td{animation:contactFound 2.6s ease}@keyframes contactFound{0%,100%{background:inherit}12%,70%{background:#fff2a8!important;box-shadow:inset 0 0 0 2px #e1aa00}}@media(max-width:700px){.leaders-head-actions{width:100%;justify-content:stretch}.leaders-head-actions button{flex:1}.finder-result{grid-template-columns:38px 1fr}.finder-go{display:none}.contact-finder-card{width:96vw}.contact-search-box input{font-size:15px}}
+
+/* v1.3.45 · consolidados desplegables */
+.network-summary .summary-card{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;user-select:none}.network-summary .summary-card:hover{transform:translateY(-1px);box-shadow:0 5px 14px #07376320;border-color:#9bbbd8}.network-summary .summary-card span b,.authorized-summary-btn span b{font-size:10px;margin-left:5px;color:#0b5cad}.authorized-summary-btn{font:inherit;border:0;background:transparent;padding:0;cursor:pointer;text-align:left}.authorized-summary-btn:hover span{text-decoration:underline}.network-summary-modal-card{width:min(920px,94vw);max-height:82vh}.network-summary-list{overflow:auto;max-height:64vh;margin-top:8px}.summary-consult-table{width:100%;border-collapse:collapse;font-size:14px}.summary-consult-table th{position:sticky;top:0;background:#edf4fb;color:#15395d;text-align:left;padding:10px;border-bottom:1px solid #d6e2ee;z-index:1}.summary-consult-table td{padding:10px;border-bottom:1px solid #e6edf4;color:#334e68}.summary-consult-table tr:hover td{background:#f8fbff}.summary-role{display:inline-block;padding:4px 8px;border-radius:999px;background:#e8f1fb;color:#073763;font-weight:800;font-size:12px}.summary-empty{padding:28px;text-align:center;color:#718096}.summary-person-btn{border:0;background:none;color:#073763;font-weight:800;cursor:pointer;padding:0;text-align:left}.summary-person-btn:hover{text-decoration:underline}@media(max-width:700px){.summary-consult-table{font-size:12px}.summary-consult-table th,.summary-consult-table td{padding:8px 6px}.network-summary-modal-card{width:96vw}}
+
+/* v1.3.46 — Cabecera: Iván Ortiz protagonista central, Girón compacto y Matriz a la derecha */
+@media (min-width:1101px){
+  .brand-header{grid-template-columns:250px minmax(520px,1.25fr) minmax(560px,1fr)!important;gap:24px!important;min-height:220px!important;padding:14px 26px 42px!important;overflow:hidden}
+  .giron-brand{transform:scale(.82);transform-origin:left center;justify-self:start;opacity:.96}
+  .ivan-only-brand{grid-column:2;justify-content:center!important;align-self:stretch;width:100%}
+  .ivan-main{justify-content:center!important;width:100%!important;max-width:690px;height:100%;gap:24px!important;padding:8px 18px!important;background:radial-gradient(circle at 43% 48%,rgba(18,93,158,.34),rgba(0,25,52,.08) 66%)!important;box-shadow:none!important;border-radius:28px!important}
+  .ivan-main:before{display:none!important}.ivan-main:after{left:300px!important;right:40px!important;bottom:23px!important}
+  .ivan-main .ivan-photo{width:184px!important;height:184px!important;border:5px solid #f3bd22!important;box-shadow:0 0 0 7px rgba(4,42,82,.96),0 0 0 10px rgba(243,189,34,.28),0 14px 32px rgba(0,0,0,.42)!important}
+  .ivan-main .ivan-brand-copy{min-width:330px!important;padding:0 0 20px!important}
+  .ivan-name strong{font-size:52px!important}.ivan-name b{font-size:64px!important;margin-top:10px!important}
+  .ivan-main .ivan-brand-copy span{font-size:18px!important;margin-top:18px!important}.ivan-main .ivan-brand-copy small{font-size:25px!important;margin-top:8px!important}
+  .system-brand{grid-column:3;align-items:center!important;text-align:center!important;justify-self:stretch}
+  .system-brand>span{font-size:23px!important}.system-brand>strong{font-size:41px!important}.system-brand>em{font-size:39px!important}.system-brand>small{font-size:13px!important}
+  .brand-header:after{right:33%!important;top:-70px!important;height:350px!important}
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header{grid-template-columns:180px minmax(430px,1.15fr) minmax(430px,1fr)!important;gap:14px!important;min-height:184px!important;padding:12px 18px 38px!important}
+  .giron-brand{transform:scale(.68)}.ivan-main{gap:15px!important}.ivan-main .ivan-photo{width:138px!important;height:138px!important}.ivan-main .ivan-brand-copy{min-width:260px!important}.ivan-name strong{font-size:38px!important}.ivan-name b{font-size:47px!important}.ivan-main .ivan-brand-copy span{font-size:13px!important}.ivan-main .ivan-brand-copy small{font-size:18px!important}.system-brand>span{font-size:17px!important}.system-brand>strong{font-size:31px!important}.system-brand>em{font-size:29px!important}.system-brand>small{font-size:9px!important}.ivan-main:after{left:215px!important}
+}
+
+
+/* v1.3.47 — Cabecera: Iván izquierda, Matriz centro y Girón derecha */
+@media (min-width:1101px){
+  .brand-header{
+    grid-template-columns:minmax(500px,1.08fr) minmax(560px,1.18fr) 250px!important;
+    gap:22px!important;
+  }
+  .ivan-only-brand{
+    grid-column:1!important;
+    justify-content:flex-start!important;
+  }
+  .ivan-main{
+    max-width:680px!important;
+    justify-content:flex-start!important;
+  }
+  .system-brand{
+    grid-column:2!important;
+    justify-self:stretch!important;
+  }
+  .giron-brand{
+    grid-column:3!important;
+    justify-self:end!important;
+    transform:scale(.82)!important;
+    transform-origin:right center!important;
+    text-align:left;
+  }
+  .brand-header:after{
+    right:250px!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header{
+    grid-template-columns:minmax(410px,1.08fr) minmax(430px,1.12fr) 180px!important;
+    gap:14px!important;
+  }
+  .giron-brand{
+    transform:scale(.68)!important;
+    transform-origin:right center!important;
+  }
+  .brand-header:after{
+    right:180px!important;
+  }
+}
+
+
+/* v1.3.48 — Matriz Maestra central más grande y centrada */
+@media (min-width:1101px){
+  .brand-header .system-brand{
+    align-self:center!important;
+    justify-self:center!important;
+    width:100%!important;
+    max-width:760px!important;
+    text-align:center!important;
+    padding:8px 18px 12px!important;
+    transform:none!important;
+  }
+  .brand-header .system-brand span{
+    font-size:18px!important;
+    line-height:1!important;
+    letter-spacing:.7px!important;
+  }
+  .brand-header .system-brand strong{
+    font-size:36px!important;
+    line-height:1.02!important;
+    letter-spacing:.4px!important;
+  }
+  .brand-header .system-brand em{
+    font-size:30px!important;
+    line-height:1.05!important;
+    margin-top:2px!important;
+  }
+  .brand-header .system-brand small{
+    font-size:10px!important;
+    line-height:1.15!important;
+    margin-top:7px!important;
+    letter-spacing:.15px!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .system-brand{
+    max-width:610px!important;
+    padding-left:8px!important;
+    padding-right:8px!important;
+  }
+  .brand-header .system-brand span{font-size:15px!important;}
+  .brand-header .system-brand strong{font-size:30px!important;}
+  .brand-header .system-brand em{font-size:25px!important;}
+  .brand-header .system-brand small{font-size:8px!important;}
+}
+
+
+/* v1.3.49 — Corrección real: Matriz centrada respecto a toda la cabecera y claramente ampliada */
+@media (min-width:1101px){
+  .brand-header{position:relative!important;}
+  .brand-header .system-brand{
+    position:absolute!important;
+    z-index:6!important;
+    left:50%!important;
+    top:50%!important;
+    transform:translate(-50%,-50%)!important;
+    width:min(760px,42vw)!important;
+    max-width:none!important;
+    padding:0!important;
+    margin:0!important;
+    align-items:center!important;
+    text-align:center!important;
+  }
+  .brand-header .system-brand>span{
+    font-size:24px!important;
+    line-height:1!important;
+    letter-spacing:.8px!important;
+  }
+  .brand-header .system-brand>strong{
+    font-size:52px!important;
+    line-height:.98!important;
+    letter-spacing:.2px!important;
+    text-shadow:0 3px 12px rgba(0,0,0,.28)!important;
+  }
+  .brand-header .system-brand>em{
+    font-size:43px!important;
+    line-height:1!important;
+    margin-top:4px!important;
+  }
+  .brand-header .system-brand>em:before,
+  .brand-header .system-brand>em:after{
+    width:70px!important;
+    margin:0 13px 7px!important;
+  }
+  .brand-header .system-brand>small{
+    font-size:13px!important;
+    line-height:1.15!important;
+    margin-top:9px!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .system-brand{width:min(620px,40vw)!important;}
+  .brand-header .system-brand>span{font-size:19px!important;}
+  .brand-header .system-brand>strong{font-size:42px!important;}
+  .brand-header .system-brand>em{font-size:35px!important;}
+  .brand-header .system-brand>em:before,
+  .brand-header .system-brand>em:after{width:48px!important;margin:0 9px 6px!important;}
+  .brand-header .system-brand>small{font-size:10px!important;}
+}
+
+
+/* v1.3.50 — Mantiene tamaño de Matriz y corrige únicamente su posición hacia la izquierda */
+@media (min-width:1501px){
+  .brand-header .system-brand{
+    left:43%!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .system-brand{
+    left:44%!important;
+  }
+}
+
+
+/* v1.3.51 — Segundo ajuste horizontal: Matriz más hacia la izquierda */
+@media (min-width:1501px){
+  .brand-header .system-brand{
+    left:37%!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .system-brand{
+    left:39%!important;
+  }
+}
+
+
+/* v1.3.52 — Afinación final: Matriz un poco más hacia la izquierda */
+@media (min-width:1501px){
+  .brand-header .system-brand{
+    left:34%!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .system-brand{
+    left:36%!important;
+  }
+}
+
+
+/* v1.3.53 — Matriz desplazada todavía más hacia la izquierda */
+@media (min-width:1501px){
+  .brand-header .system-brand{
+    left:30%!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .system-brand{
+    left:32%!important;
+  }
+}
+
+
+/* v1.3.54 — Tres módulos equilibrados: módulo 2 exactamente en la columna central */
+@media (min-width:1101px){
+  .brand-header{
+    display:grid!important;
+    grid-template-columns:1fr 1fr 1fr!important;
+    align-items:center!important;
+    gap:0!important;
+  }
+
+  .brand-header .ivan-only-brand{
+    grid-column:1!important;
+    justify-self:start!important;
+    align-self:center!important;
+  }
+
+  .brand-header .system-brand{
+    grid-column:2!important;
+    position:static!important;
+    left:auto!important;
+    top:auto!important;
+    transform:none!important;
+    justify-self:center!important;
+    align-self:center!important;
+    width:100%!important;
+    max-width:620px!important;
+    margin:0 auto!important;
+    padding:0 10px!important;
+    text-align:center!important;
+  }
+
+  .brand-header .giron-brand{
+    grid-column:3!important;
+    justify-self:end!important;
+    align-self:center!important;
+  }
+
+  .brand-header .datetime{
+    position:absolute!important;
+    right:12px!important;
+    bottom:8px!important;
+  }
+}
+
+
+/* v1.3.57 — Opción 2 aprobada: panorámica de Girón en el módulo 3 */
+@media (min-width:1101px){
+  .brand-header .giron-panoramic-brand{
+    grid-column:3!important;
+    position:relative!important;
+    justify-self:stretch!important;
+    align-self:stretch!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:118px!important;
+    transform:none!important;
+    overflow:hidden!important;
+    padding:0!important;
+    margin:0!important;
+    border-radius:44% 0 0 44%!important;
+    border-left:3px solid #f5bf18!important;
+    background:#063c69!important;
+  }
+  .brand-header .giron-panoramic-image{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+    display:block!important;
+  }
+  .brand-header .giron-panoramic-brand:after{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    background:linear-gradient(90deg,rgba(4,55,94,.08) 0%,rgba(3,45,78,.03) 60%,rgba(3,45,78,.16) 100%)!important;
+    pointer-events:none!important;
+  }
+  .brand-header .datetime{
+    z-index:12!important;
+    right:12px!important;
+    bottom:7px!important;
+  }
+}
+@media (min-width:1101px) and (max-width:1500px){
+  .brand-header .giron-panoramic-brand{
+    min-height:105px!important;
+  }
+}
+
+/* v1.3.58 — Gestión documental del Representante */
+.representative-center-card{max-width:820px}
+.representative-form-card{max-width:920px}
+.representative-archive-card{max-width:980px}
+.rep-info,.rep-preview-note{background:#f5f9fd;border:1px solid #d8e4ef;border-left:4px solid #d7aa18;border-radius:8px;padding:12px 14px;color:#26394d;font-size:13px;line-height:1.45}
+.rep-center-actions{display:flex;gap:10px;align-items:center;margin:14px 0}
+.rep-recent{display:grid;gap:8px;margin-top:8px}
+.rep-doc-row{display:grid;grid-template-columns:1.3fr 1fr auto;gap:10px;align-items:center;border:1px solid #dbe5ef;border-radius:8px;padding:10px;background:#fff}
+.rep-doc-row strong{display:block;color:#073763}.rep-doc-row small{color:#66788b}
+.rep-doc-actions{display:flex;gap:6px;flex-wrap:wrap}.rep-doc-actions button{font-size:11px;padding:6px 8px}
+.rep-empty{padding:18px;text-align:center;color:#6d7c8d;background:#f8fafc;border-radius:8px}
+@media(max-width:700px){.rep-doc-row{grid-template-columns:1fr}.rep-center-actions{flex-wrap:wrap}}
+
+/* v1.3.59 — Consecutivo oficial posterior */
+.rep-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;border-radius:999px;padding:4px 8px;margin-top:4px}
+.rep-status.pending{background:#fff4c7;color:#755700;border:1px solid #ecd26b}
+.rep-status.assigned{background:#dff5e7;color:#176438;border:1px solid #9dd7b2}
+.rep-consecutive{font-size:11px;font-weight:800;color:#073763;margin-top:4px}
+
+/* Directorio institucional · v1.3.67 */
+.directory-title{align-items:center}.directory-levels{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.directory-level{border:1px solid #c9d7e7;background:#fff;border-radius:12px;padding:14px;text-align:left;cursor:pointer;color:#0a315b}
+.directory-level b,.directory-level span{display:block}.directory-level b{font-size:15px}.directory-level span{font-size:12px;margin-top:3px;color:#60758b}
+.directory-level.active{background:#0a3b6b;color:#fff;border-color:#0a3b6b;box-shadow:0 5px 14px rgba(5,45,84,.18)}
+.directory-level.active span{color:#dce9f5}.directory-search-card{padding:12px 14px;margin-bottom:12px}.directory-search-row{display:flex;gap:8px}
+.directory-search-row input{flex:1}.directory-source-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;font-size:12px;color:#5e7185}
+.directory-source-btn{background:#f5f8fb;border:1px solid #d4dfeb;border-radius:8px;padding:8px 11px;text-decoration:none;color:#0a3b6b;font-weight:700}
+.directory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.directory-card{background:#fff;border:1px solid #d8e2ec;border-radius:13px;padding:14px;box-shadow:0 3px 10px rgba(7,42,76,.06);display:flex;flex-direction:column;min-height:220px}
+.directory-card-level{font-size:10px;font-weight:800;color:#b77b00;letter-spacing:.5px}.directory-card h3{font-size:15px;color:#0a315b;margin:7px 0}.directory-card p{font-size:12px;line-height:1.45;color:#4e6277;flex:1}
+.directory-tags{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0}.directory-tags span{font-size:9px;background:#eef4f9;color:#34536f;border-radius:999px;padding:3px 6px}.directory-card button{width:100%}
+.directory-note{margin-top:14px;padding:14px;display:flex;flex-direction:column;gap:5px}.directory-note strong{color:#0a315b}.directory-note span{font-size:12px}.directory-note small{color:#6c7c8b}
+.directory-modal-card,.directory-guide-card{max-width:720px}.directory-detail-block{background:#f7f9fc;border:1px solid #e0e7ef;border-radius:10px;padding:12px;margin-bottom:10px}.directory-detail-block h4{margin:0 0 6px;color:#0a3b6b}.directory-detail-block p,.directory-detail-block li{font-size:13px;line-height:1.5}.directory-web-link{display:inline-block;margin:4px 0 10px;color:#0a3b6b;font-weight:700}
+.directory-guide-label{display:block;font-weight:700;color:#193b5d}.directory-guide-label textarea{width:100%;margin-top:6px}.directory-guide-results{display:grid;gap:8px;margin-top:12px}.directory-guide-results button{text-align:left;background:#f7f9fc;border:1px solid #d9e3ed;border-radius:9px;padding:10px;cursor:pointer}.directory-guide-results b,.directory-guide-results span{display:block}.directory-guide-results b{color:#0a3b6b}.directory-guide-results span{font-size:11px;color:#617488;margin-top:3px}.directory-empty{grid-column:1/-1;padding:22px}.directory-empty span{display:block;color:#718091;margin-top:4px}
+@media(max-width:900px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.directory-source-actions{align-items:flex-start;flex-direction:column}}
+@media(max-width:620px){.directory-levels,.directory-grid{grid-template-columns:1fr}.directory-search-row{flex-direction:column}}
+/* Archivo del Representante · filtros v1.3.68 */
+.rep-archive-filters{background:#f7f9fc;border:1px solid #d7e2ed;border-radius:12px;padding:12px;margin-bottom:12px}.rep-filter-main{display:flex;align-items:end;gap:12px;margin-bottom:10px}.rep-filter-main label{flex:1;font-weight:700;color:#153b60}.rep-filter-main input{width:100%;margin-top:5px}.rep-filter-main span{white-space:nowrap;font-size:12px;font-weight:800;color:#0a3b6b;padding:9px 11px;background:#fff;border:1px solid #d8e2ec;border-radius:8px}.rep-filter-grid{display:grid;grid-template-columns:1.35fr 1.35fr 1.1fr 1fr 1fr auto;gap:8px;align-items:end}.rep-filter-grid label{font-size:11px;font-weight:700;color:#49647e}.rep-filter-grid select,.rep-filter-grid input{width:100%;margin-top:4px}.rep-filter-grid button{height:36px;white-space:nowrap}@media(max-width:900px){.rep-filter-grid{grid-template-columns:repeat(2,1fr)}.rep-filter-main{align-items:stretch;flex-direction:column}}@media(max-width:560px){.rep-filter-grid{grid-template-columns:1fr}}
+/* Gestión de envío documental del Representante · v1.3.69 */
+.representative-send-card{max-width:720px}.rep-send-warning{background:#fff8df;border:1px solid #e7c14d;border-left:4px solid #d9a900;border-radius:9px;padding:11px 13px;margin-bottom:14px;color:#4b3d0a;font-size:12px;line-height:1.45}.rep-send-save{display:flex!important;align-items:center;gap:8px;font-weight:600}.rep-send-save input{width:auto!important}.rep-send-status{background:#f4f8fb;border:1px solid #d7e2ec;border-radius:9px;padding:10px 12px;margin:10px 0;font-size:12px;color:#284760}.rep-send-row-status{margin-top:5px!important;font-weight:700;color:#5c7184}
+
+/* Derechos de Petición · gestión documental equivalente v1.3.70 */
+.petition-archive-filters{border:1px solid #d7e2ed;border-radius:11px;background:#f8fbfe;padding:12px;margin-bottom:10px}
+.petition-filter-main{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}.petition-filter-main label{font-size:11px;font-weight:800;color:#173a5e}.petition-filter-main input{display:block;width:100%;margin-top:5px}
+.petition-filter-main span{font-size:12px;font-weight:800;color:#607287;white-space:nowrap;padding-bottom:9px}
+.petition-filter-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) auto;gap:8px;align-items:end;margin-top:9px}.petition-filter-grid label{font-size:10px;font-weight:800;color:#536b82}.petition-filter-grid select,.petition-filter-grid input{display:block;width:100%;margin-top:4px}
+.petition-doc-status-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:6px}.petition-doc-status{display:inline-block;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:900}.petition-doc-status.pending{background:#fff1bd;color:#795800}.petition-doc-status.assigned{background:#dff5e8;color:#12613a}.petition-send-row-status{font-size:10px!important;font-weight:800;color:#536b82!important}
+.petition-send-card{width:min(760px,94vw)}
+@media(max-width:900px){.petition-filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.petition-filter-main{grid-template-columns:1fr}.petition-filter-main span{padding-bottom:0}}
+@media(max-width:600px){.petition-filter-grid{grid-template-columns:1fr}}
+
+/* Directorio institucional completo v1.3.71 */
+.directory-source-actions{flex-wrap:wrap}.directory-source-actions .directory-source-btn{font:inherit;cursor:pointer}.directory-card-contact{display:block;color:#587086;font-size:10px;margin:2px 0}.directory-contact-block p{margin:6px 0}.directory-contact-block a{color:#075b9c;font-weight:700}.directory-action-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.directory-action-btn{border:1px solid #cbd9e7;border-radius:8px;padding:9px 11px;background:#f6f9fc;color:#0a3b6b;text-decoration:none;font-weight:800;font-size:12px;cursor:pointer}.directory-action-btn.primary{background:#075b96;color:#fff;border-color:#075b96}.directory-source-modal-card{width:min(1120px,96vw);max-width:1120px;height:min(90vh,900px);display:flex;flex-direction:column}.directory-source-help{background:#f3f8fd;border-left:4px solid #e5ad00;border-radius:8px;padding:10px 12px;margin-bottom:10px;color:#496176;font-size:12px}.directory-source-pages{overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:3px}.directory-source-pages figure{margin:0;border:1px solid #d7e2ec;border-radius:10px;background:#fff;overflow:hidden}.directory-source-pages figcaption{padding:7px 10px;background:#f4f8fb;color:#0a3b6b;font-size:11px;font-weight:900}.directory-source-pages img{display:block;width:100%;height:auto}.directory-source-download{display:inline-flex;align-items:center;text-decoration:none}@media(max-width:700px){.directory-source-pages{grid-template-columns:1fr}}
+
+/* Directorio municipal normalizado v1.3.72 */
+.directory-not-available{color:#7b8794;font-style:italic;font-weight:500}
+
+
+/* Selección múltiple de destinatarios · v1.3.82 */
+.batch-recipient-panel{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border:1px solid #d6e0ea;border-radius:12px;background:#f7fbff}
+.batch-recipient-panel>div{display:flex;flex-direction:column;gap:3px;flex:1;min-width:230px}.batch-recipient-panel small{color:#657789}
+.batch-count{font-weight:800;color:#0b5cad;background:#eaf4ff;border-radius:999px;padding:6px 10px}
+.batch-recipient-card{max-width:900px!important}.batch-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.batch-tabs button{border:1px solid #cbd8e6;background:#fff;border-radius:9px;padding:10px;font-weight:800}.batch-tabs button.active{background:#073763;color:#fff}
+.batch-tools{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin-bottom:10px}.batch-tools input{min-width:0}
+.batch-summary{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#eef6ff;padding:9px 12px;border-radius:9px;margin-bottom:8px}.batch-summary span{font-size:12px;color:#657789}
+.batch-recipient-list{max-height:390px;overflow:auto;border:1px solid #d9e2ec;border-radius:10px;background:#fff}
+.batch-recipient-row{display:flex!important;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:1px solid #edf1f5;cursor:pointer}.batch-recipient-row:last-child{border-bottom:0}
+.batch-recipient-row input{width:18px;height:18px;margin-top:2px;flex:none}.batch-recipient-row span{display:flex;flex-direction:column;gap:2px}.batch-recipient-row small{color:#66798b}
+.batch-empty{padding:24px;text-align:center;color:#657789}
+@media(max-width:760px){.batch-tabs{grid-template-columns:1fr 1fr}.batch-tools{grid-template-columns:1fr}.batch-summary{align-items:flex-start;flex-direction:column}}
+/* v1.3.83: acceso visible a generación múltiple */
+.batch-main-btn{background:#0b5cad!important;color:#fff!important;border:2px solid #f2c21a!important;box-shadow:0 4px 12px rgba(7,55,99,.18);font-weight:800!important}
+.petition-new-row{flex-wrap:wrap}.petition-new-row .batch-main-btn{min-width:260px}
+.rep-center-actions{flex-wrap:wrap}.rep-center-actions .batch-main-btn{min-width:300px}
+
+/* Registro fotográfico Gestión Representante · v1.3.84 */
+.rep-photo-section{border:1px solid #d8e2ec;border-radius:12px;padding:12px;background:#f8fbfe}
+.rep-photo-help{margin:7px 0 10px;color:#657789;font-size:13px}
+.rep-photo-picker{display:inline-flex!important;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;background:#fff;border:1px solid #b9cadb;font-weight:800;cursor:pointer;width:auto!important}
+.rep-photo-picker input{display:none}.rep-photo-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.rep-photo-thumb{position:relative;border:1px solid #d9e2ec;border-radius:9px;overflow:hidden;background:#fff}.rep-photo-thumb img{width:100%;height:120px;object-fit:cover;display:block}
+.rep-photo-thumb span{display:block;padding:6px;font-size:12px;font-weight:700}.rep-photo-thumb button{position:absolute;right:5px;top:5px;width:27px;height:27px;border:0;border-radius:50%;background:#fff;color:#b42318;font-size:20px;line-height:1;box-shadow:0 1px 5px #0003}
+.rep-photo-empty{grid-column:1/-1;padding:14px;text-align:center;color:#748596;background:#fff;border-radius:8px}
+@media(max-width:760px){.rep-photo-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Firma escaneada en Derecho de Petición · v1.3.86 */
+.petition-sign-options{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:9px 0}
+.petition-sign-option{font-size:13px;font-weight:800;color:#42576b}
+.petition-upload-sign{display:inline-flex!important;align-items:center;cursor:pointer;width:auto!important}
+.petition-upload-sign input{display:none}
+.petition-sign-file{font-size:12px;font-weight:700;color:#176b3a;background:#edf9f1;border-radius:999px;padding:5px 9px}
+
+/* Centro WhatsApp selectivo · v1.3.87 */
+.wa-audience-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.wa-audience-buttons button.active{background:#073763;color:#fff;border-color:#073763}
+.wa-selection-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 8px;padding:10px 12px;background:#f2f7fc;border:1px solid #d8e3ee;border-radius:10px}.wa-selection-tools>div{display:flex;flex-direction:column;gap:2px;flex:1}.wa-selection-tools small{color:#607487}
+.wa-recipient-picker{max-height:280px;overflow:auto;border:1px solid #d9e3ed;border-radius:10px;background:#fff;margin-bottom:12px}.wa-pick-row{display:flex!important;align-items:flex-start;gap:10px;padding:9px 12px;border-bottom:1px solid #edf1f5;cursor:pointer}.wa-pick-row:last-child{border-bottom:0}.wa-pick-row input{width:18px;height:18px;flex:none;margin-top:2px}.wa-pick-row span{display:flex;flex-direction:column;gap:2px}.wa-pick-row small{color:#657789}.wa-empty-picker{padding:18px;text-align:center;color:#657789}
+@media(max-width:760px){.wa-selection-tools{align-items:stretch}.wa-selection-tools button{width:100%}}
+
+/* Corrección selector WhatsApp · v1.3.89 */
+.wa-audience-count{display:inline-flex;min-width:22px;height:22px;padding:0 6px;align-items:center;justify-content:center;border-radius:999px;background:#e8f1fb;color:#073763;font-size:12px;font-weight:900;margin-left:4px}
+.wa-audience-buttons button.active .wa-audience-count{background:#fff;color:#073763}
+.wa-audience-help{margin:-3px 0 10px;color:#5f7285;font-size:12px}
+
+/* Distribución selectiva de tarjetas WhatsApp · v1.3.90 */
+.card-mass-share-card{max-width:920px!important}.card-share-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}.card-share-tools strong{margin-left:auto;color:#0b5cad}
+.card-share-image-note{display:flex;flex-direction:column;gap:3px;margin:12px 0;padding:10px 12px;border-radius:10px;background:#f3f8fd;border:1px solid #d7e4ef}.card-share-image-note span{font-size:12px;color:#627589}
+.card-share-queue{margin-top:14px}.card-share-queue-head{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:#eef6ff;border-radius:9px;margin-bottom:8px}.card-share-queue-head span{font-size:12px;color:#607487}
+@media(max-width:760px){.card-share-tools{align-items:stretch}.card-share-tools button{width:100%}.card-share-tools strong{margin-left:0}.card-share-queue-head{flex-direction:column}}
+
+/* Corrección funcional del selector de tarjetas · v1.3.91 */
+#cardMassShareModal{z-index:10050!important}
+#cardMassShareModal.open{display:flex!important;visibility:visible!important;opacity:1!important}
+#cardMassShareModal .card-mass-share-card{position:relative;z-index:10051}
+
+/* Asistente de cumpleaños · v1.3.96 */
+.birthday-item.birthday-done{opacity:.72;background:#eef8f0}.birthday-actions{display:flex;gap:6px;flex-wrap:wrap}.birthday-actions button{white-space:nowrap}
+.birthday-reminder-card{max-width:900px!important}.birthday-reminder-summary{display:flex;flex-direction:column;gap:4px;padding:12px 14px;background:#fff8df;border:1px solid #f0d77a;border-radius:10px;margin-bottom:10px}.birthday-reminder-summary span{font-size:12px;color:#6c6040}
+.birthday-reminder-list{max-height:55vh;overflow:auto}.birthday-reminder-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 8px;border-bottom:1px solid #e6edf4}.birthday-reminder-row>div:first-child{display:flex;flex-direction:column;gap:3px}.birthday-reminder-row small{color:#687b8d}.birthday-reminder-row>div:last-child{display:flex;gap:6px;flex-wrap:wrap}.birthday-reminder-row.done{opacity:.65;background:#f0f8f2}
+@media(max-width:760px){.birthday-reminder-row{align-items:stretch;flex-direction:column}.birthday-reminder-row>div:last-child button{flex:1}}
+/* Estudio de Tarjetas · v1.3.97 */
+.card-studio-box{margin:12px 0;padding:12px;border:1px solid #d8e3ee;border-radius:12px;background:#f7fafc;display:flex;flex-direction:column;gap:9px}.card-template-options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.card-template-options label{display:flex!important;align-items:center;justify-content:center;gap:6px;padding:10px 8px;border:1px solid #cbd8e5;border-radius:9px;background:#fff;font-weight:800;cursor:pointer}.card-template-options input{width:auto!important}.card-studio-box textarea{width:100%;resize:vertical}.card-studio-box>.secondary{align-self:flex-start}@media(max-width:720px){.card-template-options{grid-template-columns:repeat(2,1fr)}}
+/* Cumpleaños visible en tablero principal · v1.3.98 */
+.birthday-dashboard-card{background:#fff;border-radius:12px;padding:16px 18px;margin:0 0 12px;box-shadow:0 5px 16px rgba(0,0,0,.12);border-left:6px solid #ffbf00}.birthday-dashboard-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.birthday-dashboard-head h3{margin:0;color:#062a52}.birthday-dashboard-head p{margin:5px 0 0;color:#62738a;font-size:13px}.birthday-dashboard-head button{border:0;border-radius:8px;background:#062f5d;color:#fff;padding:9px 13px;font-weight:800;cursor:pointer}.birthday-dashboard-list{margin-top:10px}.birthday-dashboard-person{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 6px;border-top:1px solid #edf1f5}.birthday-dashboard-person.today{background:#fff8df;border-radius:8px;padding:10px}.birthday-dashboard-person.done{opacity:.62}.birthday-dashboard-person>div:first-child{display:flex;flex-direction:column;gap:3px}.birthday-dashboard-person small{color:#62738a}.birthday-dashboard-person>div:last-child{display:flex;gap:6px;flex-wrap:wrap}.birthday-dashboard-person button{border:0;border-radius:7px;padding:7px 9px;cursor:pointer;font-weight:700}@media(max-width:760px){.birthday-dashboard-head,.birthday-dashboard-person{align-items:stretch;flex-direction:column}.birthday-dashboard-person>div:last-child button{flex:1}}
+
+/* Estudio de tarjetas visible · v1.3.99 */
+#birthdayModal .birthday-modal-card{max-height:94vh;overflow-y:auto}
+#birthdayModal .card-studio-box,#positionForm .card-studio-box,#businessCardModal .card-studio-box{display:block!important;visibility:visible!important;opacity:1!important;background:#f7fbff;border:2px solid #9dc8eb;border-radius:12px;padding:12px;margin:10px 0 14px}
+.card-template-options{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:9px 0 12px}
+.card-template-options label{display:flex!important;align-items:center;justify-content:center;gap:6px;padding:9px 6px;border:1px solid #b8c9d8;border-radius:9px;background:#fff;cursor:pointer;font-weight:700}
+.card-studio-box textarea{display:block!important;width:100%;min-height:88px;margin-top:6px}
+@media(max-width:700px){.card-template-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Destinatarios individuales · Gestión Representante v1.4.02 */
+.rep-batch-help{padding:10px 12px;margin-bottom:10px;background:#eef7ff;border:1px solid #b9d9f4;border-radius:9px;color:#38566e;font-size:12px}
+.rep-batch-cards{display:grid;gap:12px}.rep-batch-card{border:1px solid #bdd2e5;border-radius:10px;padding:12px;background:#f9fcff}
+.rep-batch-card-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-bottom:8px;margin-bottom:9px;border-bottom:1px solid #dbe8f2}.rep-batch-card-head strong{color:#07588e}.rep-batch-card-head span{font-weight:700}
+.rep-batch-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rep-batch-grid label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700}.rep-batch-grid .span-2{grid-column:1/-1}
+@media(max-width:700px){.rep-batch-grid{grid-template-columns:1fr}.rep-batch-grid .span-2{grid-column:auto}.rep-batch-card-head{align-items:flex-start;flex-direction:column}}
+
+/* v1.4.09 · Selección de firma autorizada para Iván Ortiz */
+.petition-ivan-sign{padding:14px;border:1px solid #b8d1e7;background:#f4f9ff;border-radius:10px;display:flex;flex-direction:column;gap:9px}
+.petition-ivan-sign[hidden],.petition-sign-box[hidden],.petition-ivan-preview[hidden]{display:none!important}
+.petition-ivan-sign>strong{color:#073763;font-size:14px}
+.petition-ivan-sign p{margin:0;font-size:12px;line-height:1.5;color:#40546c}
+.petition-ivan-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.petition-ivan-status{font-size:12px;color:#354e65;font-weight:650}
+.petition-ivan-preview{max-width:310px;max-height:180px;object-fit:contain;align-self:flex-start;background:white;border:1px dashed #a5b8c8;border-radius:8px;padding:8px}
+.petition-ivan-consent{display:flex!important;flex-direction:row!important;align-items:flex-start!important;gap:9px;font-weight:650!important;font-size:12px!important;background:#fff;border:1px solid #d0dce5;border-radius:8px;padding:10px}
+.petition-ivan-consent input{width:18px;height:18px;margin:0;flex-shrink:0}
+.petition-ivan-sign small{color:#617287;font-size:11px}
+
+/* v1.4.10 · Reportante / vínculo vivo con directorio */
+.need-people-picker{border-color:#aac9e3;background:#f7fbff;padding:14px;margin-bottom:8px}
+.need-people-head strong{color:#143b63;font-size:14px}
+.need-people-head p{margin:4px 0 12px;font-size:12px;color:#49637e;line-height:1.5}
+.need-people-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr) auto;align-items:end}
+.need-people-row label,.need-people-new-grid label{display:flex;flex-direction:column;gap:4px;min-width:0;font-size:11px;font-weight:600;color:#34516d}
+.need-people-row select{width:100%;min-width:0}
+.need-people-row button{white-space:nowrap;min-height:40px}
+.need-people-tools,.need-people-new-actions{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:12px}
+.need-people-tools small{margin:0;font-size:11px;color:#526d85}
+.need-people-new{border:1px solid #c3d8e8;border-radius:12px;padding:12px;margin-top:12px;background:#fff}
+.need-people-new[hidden]{display:none}
+.need-people-new>strong{display:block;font-size:12px;color:#153c65;margin-bottom:10px}
+.need-people-new-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.need-people-new-grid input,.need-people-new-grid select{width:100%;min-width:0}
+.need-people-new-actions span{font-size:11px;color:#536a7e;flex:1 1 210px}
+.need-people-selected{background:#eaf5ed;border-left:3px solid #438a61;border-radius:5px;padding:9px 11px;margin-top:11px;font-size:12px;color:#22543d}
+.need-people-selected[hidden]{display:none}
+@media(max-width:850px){.need-people-row{grid-template-columns:1fr 1fr}.need-people-row button{grid-column:1/-1}.need-people-new-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.need-people-row,.need-people-new-grid{grid-template-columns:1fr}.need-people-row button{grid-column:auto;width:100%}}
+/* Mantener selector y alta rápida dentro del ancho del modal en móviles. */
+#needForm{min-width:0}
+#needPeoplePicker{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere}
+#needPeoplePicker .need-people-row,#needPeoplePicker .need-people-new-grid{min-width:0;max-width:100%}
+#needPeoplePicker .need-people-row{grid-template-columns:repeat(3,minmax(0,1fr)) auto}
+#needPeoplePicker .need-people-new-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#needPeoplePicker select,#needPeoplePicker input{min-width:0;max-width:100%;width:100%}
+@media(max-width:760px){
+ #needPeoplePicker .need-people-row,#needPeoplePicker .need-people-new-grid{grid-template-columns:minmax(0,1fr)}
+ #needPeoplePicker .need-people-row button{grid-column:auto;width:100%;white-space:normal}
+ #needPeoplePicker .need-people-tools{align-items:flex-start}
+ #needPeoplePicker .need-people-new-actions button{width:100%;white-space:normal}
+}
+@media(max-width:760px){#needForm{grid-template-columns:minmax(0,1fr)!important}}
+
+/* v1.4.11: clasificación visible y accesible de contactos existentes */
+.summary-consult-table{min-width:800px;table-layout:auto}
+.summary-consult-table th:nth-child(2),.summary-consult-table td:nth-child(2){min-width:188px}
+.summary-condition-cell{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.summary-classification-actions{display:flex;gap:4px;flex-wrap:nowrap}
+.summary-classification-actions button,.contact-classify-link{font-size:10px;font-weight:800;line-height:1.2;white-space:nowrap;border:1px solid #ccdce9;border-radius:7px;background:#f0f6fc;color:#12436c;cursor:pointer;padding:5px 7px}
+.summary-classification-actions button.selected{color:#fff;background:#0b548d;border-color:#0b548d}
+.summary-classification-actions button:hover,.contact-classify-link:hover{background:#dceefa}
+.summary-classification-actions button.selected:hover{background:#0a4779}
+.contact-classification-modal-card{width:min(540px,96vw)}
+#contactClassificationModal{z-index:72}
+.classification-person{margin:14px 0;padding:13px;border-radius:10px;background:#f0f6ff;border:1px solid #d4e3f3}
+.classification-person strong,.classification-person span{display:block}
+.classification-person span{color:#557086;font-size:12px;margin-top:5px}
+.classification-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.classification-options button{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;border:2px solid #d5e1ed;border-radius:10px;background:#fff;padding:13px;cursor:pointer;color:#0a3b65;font-size:16px}
+.classification-options button small{font-size:11px;color:#54697e;line-height:1.35}
+.classification-options button.active{border-color:#075d9a;background:#e9f4ff;box-shadow:0 0 0 2px #075d9a15}
+.classification-parent{display:flex;flex-direction:column;gap:7px;font-weight:700;font-size:13px;margin:12px 0}
+.classification-parent small{font-weight:400;color:#587086;font-size:11px}
+.classification-save-note{font-size:11px;color:#586d7e;line-height:1.5;margin:14px 0}
+.contact-quick-type{background:#f4f9fe;padding:12px;border:1px solid #d6e6f4;border-radius:10px}
+.contact-quick-type strong{display:block;font-size:13px;color:#103d67}
+.contact-quick-buttons{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0}
+.contact-quick-buttons button{border:1px solid #adc7df;border-radius:8px;background:#fff;padding:10px 13px;color:#10416a;font-weight:800;cursor:pointer}
+.contact-quick-buttons button.active{background:#0b548d;color:#fff;border-color:#0b548d}
+.contact-quick-type small{font-size:11px;color:#667d90}
+@media(max-width:560px){.classification-options{grid-template-columns:1fr}.contact-quick-buttons button{flex:1 1 auto}.network-summary-modal-card{width:98vw}}
+
+
+/* v1.4.12 · Vista directa de simpatizantes por líder */
+.leader-roster{margin:16px 0 18px;background:#f7fafc;border:1px solid #d4e3f0;border-radius:14px;padding:16px}
+.leader-roster-header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:12px}
+.leader-roster-header h3{color:#083967;margin:0 0 4px;font-size:19px}
+.leader-roster-header p{margin:0;color:#637992;font-size:12px;max-width:620px;line-height:1.5}
+.leader-roster-header label{display:grid;gap:6px;color:#476783;font-size:12px;font-weight:800;min-width:240px}
+.leader-roster-header input{border:1px solid #c5d8e8;border-radius:9px;padding:9px 11px;background:#fff;min-height:37px}
+.leader-roster-pending{background:#fff9e8;border:1px solid #edd69c;color:#6d521b;padding:9px 12px;border-radius:9px;font-size:12px;margin-bottom:12px}
+.leader-roster-pending strong{font-size:17px;color:#744e00}
+.leader-roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:11px}
+.leader-roster-card{background:#fff;border:1px solid #d4e2f0;border-radius:12px;padding:13px;box-shadow:0 3px 12px #0c396509;min-width:0}
+.leader-roster-card[hidden]{display:none!important}
+.leader-roster-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.leader-roster-person{display:grid;gap:4px;min-width:0}
+.leader-roster-person strong{font-size:14px;color:#082f58;overflow-wrap:anywhere}
+.leader-roster-person small{color:#64788c;font-size:11px}
+.leader-roster-count{border-radius:9px;background:#e9f4ff;min-width:84px;text-align:center;padding:5px 8px;color:#084a85}
+.leader-roster-count strong{display:block;font-size:24px;line-height:1.2}
+.leader-roster-count small{font-size:10px;font-weight:750}
+.leader-roster-names{font-size:12px;color:#5e7082;min-height:35px;margin:11px 0;line-height:1.5}
+.leader-roster-actions{display:flex;gap:7px;flex-wrap:wrap}
+.leader-roster-actions button{flex:1 1 auto;cursor:pointer;border:1px solid #bcd4e9;border-radius:8px;padding:8px 10px;color:#0a497f;font-size:12px;font-weight:800;background:#f1f7fd}
+.leader-roster-actions button:last-child{background:#074b85;color:white;border-color:#074b85}
+.leader-roster-empty{font-size:13px;color:#617c93;padding:16px 12px;text-align:center}
+.leader-network-modal-card{width:min(760px,96vw);max-width:760px;max-height:90vh;overflow:auto}
+.leader-network-modal-card .modal-head small{font-size:12px;color:#6b8093}
+.leader-network-tabs{display:flex;gap:8px;margin:13px 0}
+.leader-network-tabs button{padding:10px 11px;background:#ecf3fa;color:#184b77;border:1px solid #c7d9e9;border-radius:8px;font-weight:800;cursor:pointer}
+.leader-network-tabs button.active{background:#0b538c;color:#fff;border-color:#0b538c}
+.leader-network-search-label{display:grid;gap:6px;color:#526e86;font-size:12px;font-weight:750;margin-bottom:10px}
+.leader-network-search-label input{padding:11px;border:1px solid #cbdbe8;border-radius:9px;background:#fff}
+.leader-network-list{max-height:46vh;overflow-y:auto;display:grid;gap:7px;align-content:start}
+.leader-network-person,.leader-network-available{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #dce7f2;border-radius:9px;background:#fbfdff;padding:10px 12px;color:#183d5e}
+.leader-network-person>div,.leader-network-available span{display:grid;gap:4px;min-width:0}
+.leader-network-person strong,.leader-network-available strong{font-size:13px;overflow-wrap:anywhere}
+.leader-network-person small,.leader-network-available small{font-size:11px;color:#648096;overflow-wrap:anywhere}
+.leader-network-person button{padding:7px 8px;white-space:nowrap;font-size:11px}
+.leader-network-available{justify-content:flex-start;cursor:pointer}
+.leader-network-available input{width:19px;height:19px;flex-shrink:0;accent-color:#0b538c}
+.leader-network-tip{font-size:12px;color:#60798e;background:#edf5fd;border-radius:8px;padding:11px;margin:0}
+.leader-network-assign-tools{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0;padding-top:12px;border-top:1px solid #dbe7f2}
+.leader-network-assign-tools span{font-size:13px;color:#516b85;font-weight:800}
+.leader-network-bottom{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:14px}
+.link-orphan-btn{margin-right:5px}
+@media(max-width:700px){.leader-roster-header{flex-direction:column}.leader-roster-header label{width:100%;min-width:0}.leader-roster{padding:11px}.leader-roster-grid{grid-template-columns:1fr}.leader-network-tabs button{font-size:11px;flex:1}.leader-network-bottom button{flex:1}.leader-network-person{align-items:flex-start;flex-direction:column}}
+
+
+/* v1.4.13 — mapa general + plano urbano de barrios */
+.map-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}.map-tab-btn{border:1px solid #c9d9e6;background:#f4f8fb;color:#073763;border-radius:999px;padding:10px 16px;font-weight:800;cursor:pointer;box-shadow:0 1px 2px #0000000a}.map-tab-btn.active{background:#073763;color:#fff;border-color:#073763}.map-tab-panel{display:none}.map-tab-panel.active{display:block}.urban-map-card{padding:12px}.urban-toolbar{margin-bottom:8px}.urban-map-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.urban-map-link{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.urban-map-stage{border:1px solid #d8e2ec;border-radius:12px;background:#fff;padding:10px;overflow:auto;max-height:75vh}.urban-map-image{display:block;max-width:100%;height:auto;margin:0 auto;border-radius:8px;box-shadow:0 2px 10px #0b1f3314}.urban-map-modal-card{width:min(1120px,96vw)}.urban-map-modal-body{max-height:78vh;overflow:auto;padding:4px}.urban-map-modal-image{display:block;max-width:100%;height:auto;margin:0 auto}.urban-map-modal-actions{display:flex;justify-content:flex-end;padding-top:10px}
+@media(max-width:900px){.map-tabs{gap:8px}.map-tab-btn{flex:1 1 180px;text-align:center}.urban-map-stage{max-height:55vh;padding:8px}}
+
+/* v1.4.14 · Barrio urbano: consulta de datos existentes sin georreferenciación automática */
+.urban-registry-card{margin-top:13px;padding:16px}.urban-registry-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.urban-registry-head h3{margin:0 0 5px;font-size:18px}.urban-registry-head p{margin:0;color:#667a8d;font-size:12px}.urban-version{white-space:nowrap;font-size:11px;border:1px solid #cfe0ed;background:#eff7fd;border-radius:30px;padding:5px 9px;color:#28547a}
+.urban-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0}.urban-stats>div{background:#f3f8fd;border:1px solid #dae7f2;border-radius:9px;padding:11px}.urban-stats strong,.urban-detail-kpis strong{font-weight:900;color:#073763;display:block;font-size:26px}.urban-stats span{color:#667a8d;font-size:11px}
+.urban-barrio-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}.urban-barrio-controls label{font-size:12px;font-weight:700;display:flex;flex-direction:column;gap:6px}.urban-barrio-controls select,.urban-barrio-controls input{width:100%;min-width:0}.urban-barrio-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:16px 0 8px;color:#113856;font-size:13px}.urban-barrio-list-head small{color:#75879a}.urban-barrio-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:7px;max-height:225px;overflow:auto;padding:4px;border:1px solid #dde8f2;border-radius:9px}.urban-barrio-chip{border:1px solid #ccdce9;background:#f4f9fd;color:#073763;padding:9px;cursor:pointer;border-radius:8px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:4px}.urban-barrio-chip span{font-size:12px;font-weight:750}.urban-barrio-chip small{font-size:10px;color:#546f86}.urban-barrio-chip.empty{background:#fafafa;border-color:#e3e9ee}.urban-barrio-chip.selected{background:#073763;color:white;border-color:#073763}.urban-barrio-chip.selected small{color:#daefff}.urban-barrio-chip:hover{border-color:#1576bd}
+.urban-barrio-selection{margin:17px 0 10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}.urban-barrio-selection strong{font-size:15px}.urban-barrio-selection button:disabled{opacity:.45;cursor:not-allowed}.urban-detail-head{border-bottom:1px solid #dbe5ed;padding-bottom:9px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.urban-detail-head h3{font-size:17px;margin:0}.urban-detail-head span{font-size:10px;color:#6a7f91}.urban-detail-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.urban-detail-kpis>div{border-radius:10px;border:1px solid #d8e6f0;background:#f3f8fc;padding:9px;text-align:center}.urban-detail-kpis small{color:#587087;font-size:11px}
+.urban-detail-section,.urban-other{margin:10px 0;border:1px solid #dbe4ed;border-radius:9px;padding:10px}.urban-detail-section>summary,.urban-other>summary{font-size:13px;font-weight:800;color:#073763;cursor:pointer}.urban-entry{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #edf1f5;padding:9px 1px}.urban-entry:first-of-type{margin-top:8px}.urban-entry>div{min-width:0}.urban-entry strong,.urban-entry small{display:block}.urban-entry strong{font-size:12px;color:#153b59}.urban-entry small{font-size:10px;color:#6b7b8a;margin-top:3px}.urban-entry .urban-inferred{color:#9d5b04}.urban-entry button{font-size:11px;white-space:nowrap}.urban-muted,.urban-empty p{color:#718397;font-size:12px}.urban-empty{text-align:center;background:#f8fbfe;border:1px dashed #ccdce8;border-radius:9px;padding:26px 12px}.urban-empty strong{color:#1c4566}.urban-source-notice,.urban-missing{font-size:11px;color:#576f83;border-radius:8px;padding:10px 12px;background:#f3f7fb;margin:10px 0}.urban-missing{background:#fff9e7}
+@media(max-width:760px){.urban-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.urban-barrio-controls{grid-template-columns:1fr}.urban-barrio-list{grid-template-columns:repeat(2,minmax(0,1fr))}.urban-registry-head{display:block}.urban-version{display:inline-block;margin-top:8px}.urban-entry{align-items:flex-start;flex-direction:column}.urban-entry button{width:100%}.urban-barrio-selection button{width:100%}}
+
+/* 1.4.15 — señal de barrio sobre rótulo del PDF y pestañas informativas */
+.urban-map-pin-tools{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:5px 0 12px;padding:10px 12px;border-radius:9px;background:#eff6fc;border:1px solid #d7e7f5}.urban-map-pin-tools span{flex:1 1 260px;color:#244969;font-size:12px}.urban-map-pin-tools button{font-size:11px}
+.urban-map-sheet{width:100%;position:relative;line-height:0;background:#fff}.urban-map-sheet img{display:block;width:100%;max-width:100%;height:auto}.urban-map-marker{position:absolute;transform:translate(-50%,-100%);border:2px solid #fff;border-radius:50% 50% 50% 0;background:#cb2538;box-shadow:0 1px 3px #071d3c80;min-width:39px;min-height:39px;color:#fff;cursor:pointer;z-index:8;display:grid;place-items:center;line-height:1;padding:5px;rotate:-45deg}.urban-map-marker span{display:block;rotate:45deg;font-size:22px}.urban-map-marker:hover,.urban-map-marker:focus{outline:3px solid #f6c04e;outline-offset:2px;background:#092f55}.urban-map-sheet.urban-pin-placing{cursor:crosshair}.urban-map-sheet.urban-pin-placing img{cursor:crosshair}
+.urban-map-popup{position:absolute;z-index:10;background:#fff;color:#183f5c;border:2px solid #116ea8;border-radius:12px;box-shadow:0 8px 23px #0c27466a;line-height:1.4;text-align:left;font-size:12px;max-height:340px;display:flex;flex-direction:column;overflow:hidden}.urban-map-popup-head{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;background:#edf6fc;gap:8px}.urban-map-popup-head strong{color:#0b395d;font-size:12px}.urban-map-popup-head button{border:0;background:transparent;font-size:22px;cursor:pointer;color:#123e61;line-height:1}.urban-map-popup-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-bottom:1px solid #dbe7f0}.urban-map-popup-tabs button{padding:8px 3px;border:0;border-bottom:3px solid transparent;font-size:10px;background:#fafcfd;color:#164060;cursor:pointer}.urban-map-popup-tabs button.active{border-bottom-color:#176fb1;color:#063b67;font-weight:800;background:#e8f3fc}.urban-map-popup-tabs b{display:block;font-size:13px}.urban-map-popup-content{overflow-y:auto;padding:3px 10px;min-height:60px}.urban-map-popup-empty{color:#6e7d8a;font-size:11px}.urban-map-popup-row{display:flex;align-items:center;gap:8px;justify-content:space-between;border-bottom:1px solid #eef2f5;padding:7px 0}.urban-map-popup-row div{min-width:0}.urban-map-popup-row b,.urban-map-popup-row small{display:block}.urban-map-popup-row b{font-size:11px;color:#143c59;overflow-wrap:anywhere}.urban-map-popup-row small{font-size:10px;color:#687987}.urban-map-popup-row button{border:1px solid #a7cde6;border-radius:6px;background:#eff7fc;color:#075586;cursor:pointer;font-size:11px;padding:6px 8px}.urban-map-popup-footer{padding:8px 9px;border-top:1px solid #e3ebf2}.urban-map-popup-footer button{width:100%;padding:7px;border-radius:6px;background:#073763;color:white;border:0;font-size:11px;cursor:pointer}
+.urban-map-marker[hidden],.urban-map-popup[hidden],#urbanMapResetPin[hidden]{display:none!important}
+@media(max-width:760px){.urban-map-popup{max-height:300px}.urban-map-popup-head{padding:6px 8px}.urban-map-popup-tabs button{font-size:9px}.urban-map-pin-tools button{flex:1 1 auto}}
+
+
+/* v1.4.16 · Territorio de necesidades armonizado con bases y mapas. */
+#needModal .modal-card{max-width:900px;min-width:0}
+#needForm.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#needForm.form-grid>*{min-width:0}
+#needForm.form-grid label{min-width:0}
+#needForm.form-grid input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),#needForm.form-grid select,#needForm.form-grid textarea{width:100%;max-width:100%;min-width:0}
+#needForm .need-geo-box{border:1px solid #b5cfe5;border-radius:12px;background:#f1f7fc;padding:14px;display:block}
+#needForm .need-geo-head{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:10px}
+#needForm .need-geo-head strong{font-size:15px;color:#093e6d}
+#needForm .need-geo-head p{font-size:12px;line-height:1.45;color:#4e6881;margin:4px 0}
+#needForm .need-geo-head span{background:#e1f0fc;color:#22567d;white-space:nowrap;border-radius:12px;font-size:10px;font-weight:700;padding:5px 7px}
+#needForm .need-geo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#needForm .need-geo-grid [hidden]{display:none!important}
+#needForm .need-geo-actions{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}
+#needForm .need-geo-actions button{font-size:12px;padding:9px 12px}
+#needForm .need-geo-actions [hidden]{display:none!important}
+#needForm .need-geo-status{padding:10px 11px;background:#fff;border-left:3px solid #0b6dad;color:#28516e;border-radius:7px;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+#needForm .need-geo-status.warning{border-left-color:#c77f05;background:#fff7e5;color:#754c13}
+#needForm .need-geo-status.error{border-left-color:#bd2638;background:#fff0f0;color:#87303b}
+#needForm #needTerritory[readonly]{background:#edf4f8;color:#23475f}
+#needForm #needVeredaLabel[hidden]{display:none!important}
+@media(max-width:700px){#needForm.form-grid{grid-template-columns:minmax(0,1fr)}#needForm .need-geo-grid{grid-template-columns:minmax(0,1fr)}#needForm .need-geo-head{flex-wrap:wrap}#needModal .modal-card{width:100%}#needForm .need-people-row{grid-template-columns:minmax(0,1fr)}#needForm .need-people-new-grid{grid-template-columns:minmax(0,1fr)} }
+
+/* Respaldo integral v1.4.17 */
+.portable-backup-sig{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;margin:12px 0;color:#29445d}.portable-backup-sig input{width:18px;height:18px}.portable-backup-status{margin-top:12px;font-size:12px;padding:10px;border:1px solid #cbddeb;border-radius:8px;background:#f1f7fc;color:#1c405f;overflow-wrap:anywhere}.portable-error{color:#a32626;border-color:#ebbbbb;background:#fff1f1}.portable-backup-preview{margin-top:12px;padding:14px;border:1px solid #c6ddec;background:#f8fbfe;border-radius:9px;overflow-wrap:anywhere}.portable-backup-preview[hidden]{display:none!important}.portable-backup-preview strong{color:#073763}.portable-backup-preview p{font-size:12px;line-height:1.5}.portable-backup-preview .button-row{margin-top:10px}.portable-backup-note{display:block;margin-top:12px;line-height:1.5;color:#5b7389}.portable-backup-preview button:disabled{opacity:.5}
+
+#portableBackupReload[hidden]{display:none!important}

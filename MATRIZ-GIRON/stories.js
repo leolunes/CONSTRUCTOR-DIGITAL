@@ -70,7 +70,7 @@
         </form>
       </div></div>
       <div class="modal" id="businessDetailModal"><div class="modal-card business-detail-modal"><div class="modal-head"><h3>Contando tu historia</h3><button type="button" data-business-detail-close>×</button></div><div id="businessDetailBody"></div></div></div>
-      <div class="modal" id="businessCardModal"><div class="modal-card business-card-modal"><div class="modal-head"><div><h3>🎨 Tarjeta · Contando tu historia</h3><p class="petition-subtitle">Lista para guardar o compartir.</p></div><button type="button" data-business-card-close>×</button></div><div class="business-card-preview"><canvas id="businessCardCanvas" width="1080" height="1080"></canvas></div><div class="business-card-actions"><button class="primary" id="businessCardShare" type="button">📤 Compartir</button><button class="secondary" id="businessCardDownload" type="button">⬇ Guardar imagen</button><button class="business-wa" id="businessCardContacts" type="button">🟢 Contactos autorizados</button></div></div></div>
+      <div class="modal" id="businessCardModal"><div class="modal-card business-card-modal"><div class="modal-head"><div><h3>🎨 Tarjeta · Contando tu historia</h3><p class="petition-subtitle">Lista para guardar o compartir.</p></div><button type="button" data-business-card-close>×</button></div><div class="card-studio-box"><strong>🎨 Seleccione diseño</strong><div class="card-template-options" id="businessTemplates"><label><input type="radio" name="businessTemplate" value="1" checked> Diseño 1</label><label><input type="radio" name="businessTemplate" value="2"> Diseño 2</label><label><input type="radio" name="businessTemplate" value="3"> Diseño 3</label><label><input type="radio" name="businessTemplate" value="4"> Diseño 4</label></div><label>✏️ Texto principal de la tarjeta<textarea id="businessCardText" rows="4"></textarea></label><button type="button" class="secondary" id="businessRestoreText">↩ Restaurar texto sugerido</button></div><div class="business-card-preview"><canvas id="businessCardCanvas" width="1080" height="1080"></canvas></div><div class="business-card-actions"><button class="primary" id="businessCardShare" type="button">📤 Compartir</button><button class="secondary" id="businessCardDownload" type="button">⬇ Guardar imagen</button><button class="business-wa" id="businessCardContacts" type="button">🟢 Contactos autorizados</button></div></div></div>
       <div class="modal" id="businessContactsModal"><div class="modal-card business-contacts-modal"><div class="modal-head"><div><h3>Contactos autorizados</h3><p class="petition-subtitle">Seleccione individualmente a quién desea compartir esta historia.</p></div><button type="button" data-business-contacts-close>×</button></div><div class="business-contact-filter"><label>Vereda<select id="businessContactsVereda"><option value="">Todas</option></select></label></div><div id="businessContactsList"></div></div></div>
     `);
   }
@@ -156,14 +156,12 @@
   }
   function roundedImage(ctx,img,x,y,w,h,r=24){ctx.save();ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.clip();fitImage(ctx,img,x,y,w,h,false);ctx.restore()}
   async function buildCard(id){
-    const b=businesses().find(x=>x.id===id);if(!b)return;currentCardBusiness=b;
-    const c=$('businessCardCanvas'),x=c.getContext('2d'),W=1080,H=1080;x.clearRect(0,0,W,H);
+    const b=businesses().find(x=>x.id===id);if(!b)return;currentCardBusiness=b; const bt=$('businessCardText');if(bt&&!bt.dataset.edited)bt.value=clean(b.contribution||b.story||b.products);
+    const c=$('businessCardCanvas'),x=c.getContext('2d'),W=1080,H=1080;x.clearRect(0,0,W,H); const template=document.querySelector('input[name="businessTemplate"]:checked')?.value||'1'; const themes={1:['#f7f8f5','#062a52','#f0c21a'],2:['#fff8f0','#6b243d','#e0a02b'],3:['#f0f5f1','#21483d','#c69c6d'],4:['#f3f0ea','#26344a','#d16b45']},BT=themes[template];
     const media=await cardMedia(id);let ivan=null;try{ivan=await loadImage('assets/ivan-ortiz-foto.png')}catch{}
 
     // Tarjeta limpia: usa exclusivamente la información realmente diligenciada.
-    x.fillStyle='#f7f8f5';x.fillRect(0,0,W,H);
-    x.fillStyle='#062a52';x.fillRect(0,0,390,H);
-    x.fillStyle='#f0c21a';x.fillRect(390,0,8,H);
+    x.fillStyle=BT[0];x.fillRect(0,0,W,H); x.fillStyle=BT[1];x.fillRect(0,0,template==='2'?430:390,H); x.fillStyle=BT[2];x.fillRect(template==='2'?430:390,0,8,H);
 
     // Marca de la serie e Iván Ortiz, sin referencias electorales.
     x.fillStyle='#fff';x.font='italic 700 50px Georgia';x.fillText('Contando',46,74);x.fillText('tu historia',46,126);
@@ -188,7 +186,7 @@
     if(clean(b.sector)){x.fillStyle='#6b7785';x.font='21px Arial';x.fillText(clean(b.sector),nameX,infoY);infoY+=34}
 
     // Solo se dibujan bloques que contienen datos. No hay textos de relleno ni inferencias.
-    const texts=[clean(b.contribution),clean(b.story),clean(b.products)].filter(Boolean);
+    const custom=clean($('businessCardText')?.value); const texts=[custom||clean(b.contribution),clean(b.story),clean(b.products)].filter(Boolean);
     let y=Math.max(675,infoY+30);
     if(texts.length){
       x.fillStyle='#17324d';x.font='italic 700 31px Georgia';
@@ -239,6 +237,9 @@
     $('businessNewBtn')?.addEventListener('click',()=>{resetBusinessForm();openModalEl('businessModal')});
     document.querySelectorAll('[data-business-close]').forEach(b=>b.addEventListener('click',()=>{closeModalEl('businessModal');clearPending()}));
     document.querySelectorAll('[data-business-detail-close]').forEach(b=>b.addEventListener('click',()=>closeModalEl('businessDetailModal')));
+    document.querySelectorAll('input[name="businessTemplate"]').forEach(r=>r.addEventListener('change',()=>{if(currentCardBusiness)buildCard(currentCardBusiness.id)}));
+    $('businessCardText')?.addEventListener('input',()=>{const t=$('businessCardText');t.dataset.edited='1';clearTimeout(window.__bizTextTimer);window.__bizTextTimer=setTimeout(()=>{if(currentCardBusiness)buildCard(currentCardBusiness.id)},180)});
+    $('businessRestoreText')?.addEventListener('click',()=>{if(!currentCardBusiness)return;const t=$('businessCardText');t.value=clean(currentCardBusiness.contribution||currentCardBusiness.story||currentCardBusiness.products);delete t.dataset.edited;buildCard(currentCardBusiness.id)});
     document.querySelectorAll('[data-business-card-close]').forEach(b=>b.addEventListener('click',()=>closeModalEl('businessCardModal')));
     document.querySelectorAll('[data-business-contacts-close]').forEach(b=>b.addEventListener('click',()=>closeModalEl('businessContactsModal')));
     $('businessLogoInput')?.addEventListener('change',async e=>{try{await onMediaFiles('logo',e.target.files)}catch(err){alert(err.message)}e.target.value=''});
@@ -251,7 +252,16 @@
     document.body.addEventListener('click',e=>{const v=e.target.closest('[data-business-view]');if(v&&!e.target.closest('#view-stories'))renderDetail(v.dataset.businessView);const c=e.target.closest('[data-business-card]');if(c&&!e.target.closest('#view-stories'))buildCard(c.dataset.businessCard);const open=e.target.closest('[data-open-stories]');if(open&&typeof showView==='function')showView('stories');const wa=e.target.closest('[data-business-contact-wa]');if(wa)openContactWa(wa.dataset.businessContactWa)});
     $('businessCardShare')?.addEventListener('click',()=>shareCard().catch(err=>alert('No fue posible compartir: '+err.message)));
     $('businessCardDownload')?.addEventListener('click',()=>downloadCard().catch(err=>alert('No fue posible guardar: '+err.message)));
-    $('businessCardContacts')?.addEventListener('click',()=>{renderContactShare();openModalEl('businessContactsModal')});
+    $('businessCardContacts')?.addEventListener('click',()=>{
+      if(!currentCardBusiness){alert('Primero genere la tarjeta de la empresa o emprendimiento.');return}
+      if(typeof window.openCardMassWhatsAppShare!=='function'){alert('No se cargó el selector de WhatsApp. Recargue la aplicación.');return}
+      window.openCardMassWhatsAppShare({
+        title:`Enviar tarjeta · ${clean(currentCardBusiness.name)}`,
+        message:`Hola {nombre}. Quiero compartir contigo esta empresa/emprendimiento de Girón: ${clean(currentCardBusiness.name)}.\n\n${clean(currentCardBusiness.description||currentCardBusiness.story||'')}\n\nIván Ortiz`,
+        filename:`CONTANDO-TU-HISTORIA-${clean(currentCardBusiness.name).replace(/[^A-Za-z0-9]+/g,'-')}.png`,
+        blob:canvasBlob
+      });
+    });
     $('businessContactsVereda')?.addEventListener('change',renderContactShare);
     $('businessDirectory')?.addEventListener('click',e=>{const del=e.target.closest('[data-business-delete]');if(del)deleteBusiness(del.dataset.businessDelete)});
     document.querySelectorAll('[data-view="stories"]').forEach(b=>b.addEventListener('click',()=>setTimeout(renderAllBusiness,0)));

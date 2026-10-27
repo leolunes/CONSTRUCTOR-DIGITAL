@@ -1,5 +1,5 @@
 /* ============================================================
-   Derecho de Petición por necesidad · v1.3.4
+   Derecho de Petición por necesidad · v1.3.70
    Módulo aislado: no modifica el motor base app.js.
    PDF institucional con fotografía de Iván Ortiz, texto justificado,
    datos completos del destinatario, firma manuscrita electrónica,
@@ -14,6 +14,22 @@
   if (!modal || !form || !signCanvas) return;
 
   let signatureHasInk = false;
+  let uploadedSignatureName = '';
+  const signatureUpload = document.getElementById('petitionSignatureUpload');
+  const signatureFileName = document.getElementById('petitionSignatureFileName');
+  const signerModeControl = document.getElementById('petitionSignerMode');
+  const docTypeControl = document.getElementById('petitionDocumentType');
+  const ivanPanel = document.getElementById('petitionIvanSignPanel');
+  const personalPanel = document.getElementById('petitionPersonalSignPanel');
+  const ivanFile = document.getElementById('ivanSignatureFile');
+  const ivanRemove = document.getElementById('ivanSignatureRemove');
+  const ivanPreview = document.getElementById('ivanSignaturePreview');
+  const ivanStatus = document.getElementById('ivanSignatureStatus');
+  const ivanConsent = document.getElementById('ivanSignatureAuthorized');
+  const GENERAL_ID='__solicitud_libre_ivan_v1__';
+  const GENERAL_NEED={id:GENERAL_ID,code:'SOLICITUD-LIBRE',title:'Solicitud general de Iván Ortiz',territory:'Santander',sector:'Gestión territorial'};
+  let authorizedSignature=null;
+  let manualPetitionerName='';
   let drawing = false;
   let last = null;
   let lastGenerated = null;
@@ -133,7 +149,7 @@
     });
   }
 
-  function getNeed(id){ return db.needs.find(n => n.id === id); }
+  function getNeed(id){ return id===GENERAL_ID ? GENERAL_NEED : db.needs.find(n => n.id === id); }
   function getLeader(need){ return need?.leaderId ? db.leaders.find(l => l.id === need.leaderId) : null; }
 
   function defaultFacts(n){
@@ -157,37 +173,63 @@
     ].join('\n\n');
   }
 
-  function openPetition(needId){
+  function openPetition(needId, signerChoice="personal"){
     const n = getNeed(needId); if (!n) return;
+    if(window.clearBatchRecipients) window.clearBatchRecipients('petition');
     const l = getLeader(n);
     form.reset();
     lastGenerated = null;
     form.elements.needId.value = n.id;
-    if(form.elements.vereda) form.elements.vereda.value = clean(n.vereda) || 'Sin vereda asignada';
+    if(form.elements.vereda) form.elements.vereda.value = n.id===GENERAL_ID ? 'Solicitud sin necesidad registrada' : (clean(n.vereda) || 'Sin vereda asignada');
     form.elements.recipientName.value = '';
     form.elements.recipientRole.value = '';
     form.elements.entity.value = clean(n.competentEntity);
     form.elements.recipientEmail.value = '';
     form.elements.recipientPhone.value = '';
+    const institutionPrefill = window.__petitionInstitutionPrefill || null;
+    if(institutionPrefill){
+      form.elements.entity.value = clean(institutionPrefill.entity) || form.elements.entity.value;
+      form.elements.recipientName.value = clean(institutionPrefill.recipientName);
+      form.elements.recipientRole.value = clean(institutionPrefill.recipientRole);
+      form.elements.recipientEmail.value = clean(institutionPrefill.email);
+      form.elements.recipientPhone.value = clean(institutionPrefill.phone);
+      window.__petitionInstitutionPrefill = null;
+    }
     form.elements.petitionerName.value = clean(l?.name);
     form.elements.petitionerId.value = '';
     form.elements.address.value = '';
     form.elements.phone.value = clean(l?.phone);
     form.elements.email.value = clean(l?.email);
-    form.elements.subject.value = `Derecho de petición - ${clean(n.title) || n.code}`;
-    form.elements.facts.value = defaultFacts(n);
-    form.elements.requests.value = defaultRequests(n);
+    form.elements.subject.value = n.id===GENERAL_ID ? '' : `Derecho de petición - ${clean(n.title) || n.code}`;
+    form.elements.facts.value = n.id===GENERAL_ID ? '' : defaultFacts(n);
+    form.elements.requests.value = n.id===GENERAL_ID ? '' : defaultRequests(n);
     form.elements.attachments.value = clean(n.evidence);
     form.elements.radicado.value = '';
     form.elements.radicadoDate.value = '';
-    document.getElementById('petitionNeedSummary').textContent = `${n.code} · ${n.territory || 'Sin territorio'} · ${n.title || 'Necesidad'}`;
+    document.getElementById('petitionNeedSummary').textContent = n.id===GENERAL_ID ? 'Solicitud sin necesidad registrada · Iván Ortiz' : `${n.code} · ${n.territory || 'Sin territorio'} · ${n.title || 'Necesidad'}`;
+    docTypeControl.value=n.id===GENERAL_ID ? 'solicitud' : 'peticion';
+    manualPetitionerName=clean(form.elements.petitionerName.value);
+    signerModeControl.value=signerChoice;
     clearSignature();
+    if(ivanConsent)ivanConsent.checked=false;
     modal.classList.add('open');
+    updateSignerMode(false);
     setTimeout(resizeSignatureCanvas, 80);
+    if(signerChoice==='ivan')refreshAuthorizedSignature();
   }
 
   function closePetition(){ modal.classList.remove('open'); }
+  document.getElementById('newIvanFreeRequestBtn')?.addEventListener('click',()=>{
+    centerModal?.classList.remove('open');
+    openPetition(GENERAL_ID,'ivan');
+  });
   window.openPetitionForNeed = openPetition;
+  window.setPetitionInstitution = data => { window.__petitionInstitutionPrefill = data || null; };
+  const updatePetitionBatchCount=()=>{
+    const rows=window.__batchRecipients?.petition||[],el=document.getElementById('petitionBatchCount');
+    if(el)el.textContent=rows.length?`${rows.length} destinatario${rows.length===1?'':'s'} seleccionado${rows.length===1?'':'s'}`:'Sin selección múltiple';
+  };
+  window.addEventListener('batch-recipients-changed',e=>{if(e.detail?.mode==='petition')updatePetitionBatchCount()});
 
   const centerModal = document.getElementById('petitionCenterModal');
   const centerList = document.getElementById('petitionCenterList');
@@ -202,7 +244,7 @@
     }
     if(newPetitionBtn) newPetitionBtn.disabled=!needs.length;
     if(!needs.length){
-      centerList.innerHTML = '<div class="petition-center-empty"><strong>Aún no hay necesidades registradas.</strong><br>Primero registre una necesidad. Después podrá generar y firmar su Derecho de Petición desde este mismo módulo.</div>';
+      centerList.innerHTML = '<div class="petition-center-empty"><strong>Aún no hay necesidades registradas.</strong><br>También puede preparar una solicitud libre de Iván Ortiz con el botón superior.</div>';
       return;
     }
     centerList.innerHTML = needs.map(n=>{
@@ -218,6 +260,13 @@
     centerModal?.classList.remove('open');
     openPetition(needId);
   });
+  document.getElementById('newPetitionBatchBtn')?.addEventListener('click',()=>{
+    const needId=newNeedSelect?.value;
+    if(!needId){ alert('Seleccione primero la necesidad sobre la cual desea crear los Derechos de Petición.'); newNeedSelect?.focus(); return; }
+    centerModal?.classList.remove('open');
+    openPetition(needId);
+    setTimeout(()=>document.querySelector('[data-batch-open=\"petition\"]')?.click(),120);
+  });
   window.openPetitionCenter = openPetitionCenter;
   document.getElementById('petitionCenterNav')?.addEventListener('click',openPetitionCenter);
   document.getElementById('petitionCenterQuick')?.addEventListener('click',openPetitionCenter);
@@ -229,28 +278,86 @@
   const archiveSearch=document.getElementById('petitionArchiveSearch');
   const archiveSummary=document.getElementById('petitionArchiveSummary');
   const archiveCount=document.getElementById('petitionArchiveCount');
-  let archiveCache=[];
+  const archiveRecipient=document.getElementById('petitionArchiveRecipient');
+  const archiveEntity=document.getElementById('petitionArchiveEntity');
+  const archiveStatus=document.getElementById('petitionArchiveStatus');
+  const archiveFrom=document.getElementById('petitionArchiveFrom');
+  const archiveTo=document.getElementById('petitionArchiveTo');
+  const archiveClear=document.getElementById('petitionArchiveClear');
+  const petitionSendModal=document.getElementById('petitionSendModal');
+  let archiveCache=[], petitionSendDocId=null;
   const formatGeneratedAt=v=>{try{return new Intl.DateTimeFormat('es-CO',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v))}catch(_){return clean(v)}};
   async function refreshArchiveCount(){
     try{const n=await countPDFRecords();if(archiveCount)archiveCount.textContent=n;}catch(_){ }
   }
+  function petitionSendStatusText(r){
+    if(r.sentAt&&r.sentTo)return `🟢 Enviado · ${r.sentTo} · ${new Date(r.sentAt).toLocaleString('es-CO')}`;
+    if(r.sendPreparedAt&&r.sendPreparedTo)return `🟠 Preparado para enviar · ${r.sendPreparedTo}`;
+    return '⚪ No enviado';
+  }
+  function fillPetitionArchiveFilters(){
+    const rv=archiveRecipient?.value||'', ev=archiveEntity?.value||'';
+    const recipients=[...new Set(archiveCache.map(r=>clean(r.recipientName)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+    const entities=[...new Set(archiveCache.map(r=>clean(r.entity)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+    if(archiveRecipient){archiveRecipient.innerHTML='<option value="">Todos los destinatarios</option>'+recipients.map(v=>`<option value="${escLocal(v)}">${escLocal(v)}</option>`).join('');archiveRecipient.value=recipients.includes(rv)?rv:''}
+    if(archiveEntity){archiveEntity.innerHTML='<option value="">Todas las entidades</option>'+entities.map(v=>`<option value="${escLocal(v)}">${escLocal(v)}</option>`).join('');archiveEntity.value=entities.includes(ev)?ev:''}
+  }
   function archiveMatches(r,q){
-    if(!q)return true;
-    const hay=[r.needCode,r.needTitle,r.territory,r.vereda,r.entity,r.recipientName,r.recipientEmail,r.recipientPhone,r.petitionerName,r.subject,r.radicado,r.filename].map(clean).join(' ').toLowerCase();
-    return hay.includes(q.toLowerCase());
+    if(q){
+      const hay=[r.needCode,r.needTitle,r.territory,r.vereda,r.entity,r.recipientName,r.recipientEmail,r.recipientPhone,r.petitionerName,r.subject,r.radicado,r.filename].map(clean).join(' ').toLowerCase();
+      if(!hay.includes(q.toLowerCase()))return false;
+    }
+    const recipient=clean(archiveRecipient?.value),entity=clean(archiveEntity?.value),status=clean(archiveStatus?.value),from=clean(archiveFrom?.value),to=clean(archiveTo?.value);
+    if(recipient&&clean(r.recipientName)!==recipient)return false;
+    if(entity&&clean(r.entity)!==entity)return false;
+    if(status==='pending'&&clean(r.radicado))return false;
+    if(status==='assigned'&&!clean(r.radicado))return false;
+    if(status==='prepared'&&!(r.sendPreparedAt&&r.sendPreparedTo)||status==='prepared'&&(r.sentAt&&r.sentTo))return false;
+    if(status==='sent'&&!(r.sentAt&&r.sentTo))return false;
+    const date=clean(r.generatedAt).slice(0,10);
+    if(from&&date<from)return false;
+    if(to&&date>to)return false;
+    return true;
   }
   function renderArchiveList(){
     if(!archiveList)return;
+    fillPetitionArchiveFilters();
     const q=clean(archiveSearch?.value);
     const rows=archiveCache.filter(r=>archiveMatches(r,q));
-    if(archiveSummary)archiveSummary.textContent=`${rows.length} documento${rows.length===1?'':'s'}`;
-    if(!rows.length){archiveList.innerHTML='<div class="petition-center-empty"><strong>No hay PDFs guardados que coincidan.</strong><br>Cuando genere un Derecho de Petición, el PDF quedará archivado automáticamente aquí.</div>';return;}
-    archiveList.innerHTML=rows.map(r=>`<article class="petition-archive-item"><div class="petition-archive-main"><div class="petition-archive-icon">PDF</div><div><strong>${escLocal(r.needCode||'SIN-CÓDIGO')} · ${escLocal(r.needTitle||'Derecho de Petición')}</strong><small><b>Generado:</b> ${escLocal(formatGeneratedAt(r.generatedAt))}</small><small><b>Destinatario:</b> ${escLocal(r.recipientName||'Sin nombre')} · ${escLocal(r.entity||'Sin entidad')}</small>${r.vereda?`<small><b>Vereda:</b> ${escLocal(r.vereda)}</small>`:''}<small><b>Peticionario:</b> ${escLocal(r.petitionerName||'')}</small>${r.radicado?`<small><b>Radicado:</b> ${escLocal(r.radicado)}${r.radicadoDate?' · '+escLocal(formatDate(r.radicadoDate)):''}</small>`:''}<small class="petition-archive-file">${escLocal(r.filename||'documento.pdf')}</small></div></div><div class="petition-archive-buttons"><button type="button" data-doc-view="${escLocal(r.id)}">👁️ Ver</button><button type="button" data-doc-download="${escLocal(r.id)}">⬇️ Descargar</button><button type="button" class="petition-whatsapp" data-doc-share="${escLocal(r.id)}">🟢 WhatsApp</button><button type="button" class="danger" data-doc-delete="${escLocal(r.id)}">🗑️ Eliminar</button></div></article>`).join('');
+    if(archiveSummary)archiveSummary.textContent=`${rows.length} de ${archiveCache.length} documento${archiveCache.length===1?'':'s'}`;
+    if(!rows.length){archiveList.innerHTML='<div class="petition-center-empty"><strong>No hay documentos que coincidan con los filtros.</strong><br>Puede limpiar los filtros o generar un nuevo Derecho de Petición.</div>';return;}
+    archiveList.innerHTML=rows.map(r=>{
+      const rad=clean(r.radicado);
+      const radStatus=rad?`<span class="petition-doc-status assigned">🟢 Radicado: ${escLocal(rad)}</span>`:`<span class="petition-doc-status pending">🟡 Pendiente de radicado</span>`;
+      return `<article class="petition-archive-item"><div class="petition-archive-main"><div class="petition-archive-icon">PDF</div><div><strong>${r.type==='solicitud'?'Solicitud':'Derecho de petición'} · ${escLocal(r.needCode||'SIN-CÓDIGO')} · ${escLocal(r.needTitle||'Documento')}</strong><small><b>Generado:</b> ${escLocal(formatGeneratedAt(r.generatedAt))}</small><small><b>Destinatario:</b> ${escLocal(r.recipientName||'Sin nombre')} · ${escLocal(r.entity||'Sin entidad')}</small><small><b>Asunto:</b> ${escLocal(r.subject||'')}</small>${r.vereda?`<small><b>Vereda:</b> ${escLocal(r.vereda)}</small>`:''}<div class="petition-doc-status-row">${radStatus}<span class="petition-send-row-status">${escLocal(petitionSendStatusText(r))}</span></div><small class="petition-archive-file">${escLocal(r.filename||'documento.pdf')}</small></div></div><div class="petition-archive-buttons"><button type="button" data-doc-view="${escLocal(r.id)}">Abrir</button><button type="button" data-doc-radicado="${escLocal(r.id)}">✏️ ${rad?'Editar':'Registrar'} radicado</button><button type="button" data-doc-email="${escLocal(r.id)}">📤 Enviar</button><button type="button" data-doc-download="${escLocal(r.id)}">⬇ PDF</button><button type="button" class="danger" data-doc-delete="${escLocal(r.id)}">🗑</button></div></article>`;
+    }).join('');
     archiveList.querySelectorAll('[data-doc-view]').forEach(b=>b.addEventListener('click',()=>viewArchivedPDF(b.dataset.docView)));
+    archiveList.querySelectorAll('[data-doc-radicado]').forEach(b=>b.addEventListener('click',()=>registerPetitionRadicado(b.dataset.docRadicado)));
+    archiveList.querySelectorAll('[data-doc-email]').forEach(b=>b.addEventListener('click',()=>openPetitionSend(b.dataset.docEmail)));
     archiveList.querySelectorAll('[data-doc-download]').forEach(b=>b.addEventListener('click',()=>downloadArchivedPDF(b.dataset.docDownload)));
-    archiveList.querySelectorAll('[data-doc-share]').forEach(b=>b.addEventListener('click',()=>shareArchivedPDF(b.dataset.docShare)));
     archiveList.querySelectorAll('[data-doc-delete]').forEach(b=>b.addEventListener('click',()=>removeArchivedPDF(b.dataset.docDelete)));
   }
+  async function registerPetitionRadicado(id){
+    const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);if(!r)return;
+    const value=prompt('Digite el número de radicado asignado por la entidad:',clean(r.radicado));
+    if(value===null)return;
+    r.radicado=clean(value);
+    r.radicadoDate=r.radicado?(clean(r.radicadoDate)||todayISO()):'';
+    r.radicadoRegisteredAt=r.radicado?new Date().toISOString():'';
+    await savePDFRecord(r);
+    archiveCache=await getPDFRecords();renderArchiveList();
+  }
+  function openPetitionSend(id){
+    const r=archiveCache.find(x=>x.id===id);if(!r||!petitionSendModal)return;
+    petitionSendDocId=id;
+    document.getElementById('petitionSendDocument').value=r.filename||r.subject||'Derecho de Petición';
+    document.getElementById('petitionSendEmail').value=clean(r.sendPreparedTo||r.sentTo||r.recipientEmail);
+    document.getElementById('petitionSendSubject').value=`${r.type==='solicitud'?'Solicitud':'Derecho de Petición'}: ${clean(r.subject||r.needTitle)}`;
+    document.getElementById('petitionSendMessage').value=`Cordial saludo.\n\nAdjunto ${r.type==='solicitud'?'solicitud formal':'derecho de petición'} para su trámite y respuesta.\n\nAsunto: ${clean(r.subject||r.needTitle)}.\n\nAgradezco confirmar recibido.`;
+    document.getElementById('petitionSendStatus').innerHTML=`<strong>Estado actual:</strong> ${escLocal(petitionSendStatusText(r))}`;
+    petitionSendModal.classList.add('open');
+  }
+  function closePetitionSend(){petitionSendModal?.classList.remove('open');petitionSendDocId=null}
   async function openPetitionArchive(){
     try{archiveCache=await getPDFRecords();renderArchiveList();archiveModal?.classList.add('open');refreshArchiveCount();}
     catch(err){console.error(err);alert('No fue posible abrir el archivo de PDFs: '+err.message);}
@@ -262,27 +369,41 @@
   async function downloadArchivedPDF(id){
     const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);if(!r?.blob)return;downloadPDF(r.blob,r.filename||'Derecho-de-Peticion.pdf');
   }
-  async function shareArchivedPDF(id){
-    const r=archiveCache.find(x=>x.id===id)||await getPDFRecord(id);if(!r?.blob)return;
-    const file=new File([r.blob],r.filename||'Derecho-de-Peticion.pdf',{type:'application/pdf'});
-    const text=`Derecho de Petición: ${clean(r.subject||r.needTitle)}. Documento firmado en PDF.`;
-    try{
-      if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:'Derecho de Petición',text,files:[file]});return;}
-      downloadPDF(r.blob,r.filename||file.name);
-      const digits=clean(r.recipientPhone).replace(/\D/g,'');
-      const url=digits?`https://wa.me/${digits}?text=${encodeURIComponent(text+' El PDF se descargó en el dispositivo; adjúntelo a este chat.')}`:`https://wa.me/?text=${encodeURIComponent(text+' El PDF se descargó en el dispositivo; adjúntelo al chat de WhatsApp.')}`;
-      window.open(url,'_blank','noopener');
-    }catch(err){if(err?.name!=='AbortError')alert('No fue posible compartir el PDF: '+err.message);}
-  }
   async function removeArchivedPDF(id){
     const r=archiveCache.find(x=>x.id===id);if(!confirm(`¿Eliminar del archivo el PDF ${r?.filename||''}?\n\nEsta acción no elimina la necesidad ni su trazabilidad.`))return;
     await deletePDFRecord(id);archiveCache=archiveCache.filter(x=>x.id!==id);renderArchiveList();refreshArchiveCount();
   }
+  document.querySelectorAll('[data-petition-send-close]').forEach(b=>b.addEventListener('click',closePetitionSend));
+  petitionSendModal?.addEventListener('click',e=>{if(e.target===petitionSendModal)closePetitionSend()});
+  document.getElementById('petitionPrepareEmail')?.addEventListener('click',async()=>{
+    const r=archiveCache.find(x=>x.id===petitionSendDocId)||await getPDFRecord(petitionSendDocId);if(!r?.blob)return;
+    const email=clean(document.getElementById('petitionSendEmail')?.value);
+    if(!email||!/^\S+@\S+\.\S+$/.test(email)){alert('Digite un correo electrónico válido.');return}
+    downloadPDF(r.blob,r.filename||'Derecho-de-Peticion.pdf');
+    r.sendPreparedAt=new Date().toISOString();r.sendPreparedTo=email;await savePDFRecord(r);
+    archiveCache=await getPDFRecords();renderArchiveList();
+    document.getElementById('petitionSendStatus').innerHTML=`<strong>Estado:</strong> 🟠 Preparado para enviar a ${escLocal(email)}. El PDF fue descargado; adjúntelo en el correo que se abrirá. <strong>Aún no se registra como enviado.</strong>`;
+    const subject=clean(document.getElementById('petitionSendSubject')?.value),body=clean(document.getElementById('petitionSendMessage')?.value);
+    setTimeout(()=>{window.location.href=`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`},250);
+  });
+  document.getElementById('petitionConfirmSent')?.addEventListener('click',async()=>{
+    const r=archiveCache.find(x=>x.id===petitionSendDocId)||await getPDFRecord(petitionSendDocId);if(!r)return;
+    const email=clean(document.getElementById('petitionSendEmail')?.value);
+    if(!email||!/^\S+@\S+\.\S+$/.test(email)){alert('Digite el correo al que realmente envió el documento.');return}
+    if(!confirm(`¿Confirma que usted ya envió este Derecho de Petición a ${email}?`))return;
+    r.sentAt=new Date().toISOString();r.sentTo=email;await savePDFRecord(r);
+    archiveCache=await getPDFRecords();renderArchiveList();
+    document.getElementById('petitionSendStatus').innerHTML=`<strong>Estado:</strong> 🟢 Enviado a ${escLocal(email)} · ${new Date(r.sentAt).toLocaleString('es-CO')}`;
+  });
   window.openPetitionArchive=openPetitionArchive;
   document.getElementById('openPetitionArchive')?.addEventListener('click',()=>{centerModal?.classList.remove('open');openPetitionArchive();});
   document.querySelectorAll('[data-petition-archive-close]').forEach(b=>b.addEventListener('click',()=>archiveModal?.classList.remove('open')));
   archiveModal?.addEventListener('click',e=>{if(e.target===archiveModal)archiveModal.classList.remove('open')});
-  archiveSearch?.addEventListener('input',renderArchiveList);
+  [archiveSearch,archiveRecipient,archiveEntity,archiveStatus,archiveFrom,archiveTo].forEach(el=>el?.addEventListener(el===archiveSearch?'input':'change',renderArchiveList));
+  archiveClear?.addEventListener('click',()=>{
+    if(archiveSearch)archiveSearch.value='';if(archiveRecipient)archiveRecipient.value='';if(archiveEntity)archiveEntity.value='';
+    if(archiveStatus)archiveStatus.value='';if(archiveFrom)archiveFrom.value='';if(archiveTo)archiveTo.value='';renderArchiveList();
+  });
   refreshArchiveCount();
 
 
@@ -297,6 +418,86 @@
   modal.addEventListener('click', e => { if(e.target === modal) closePetition(); });
   document.querySelector('.petition-clear-sign')?.addEventListener('click', clearSignature);
   form.addEventListener('input',()=>{ lastGenerated=null; });
+  // Firma Iván: almacenamiento exclusivamente local en IndexedDB, nunca en assets públicos.
+  const IVAN_SIG_DB='matriz_giron_private_signatures_v1', IVAN_SIG_STORE='signatures';
+  function openPrivateSignatureDB(){
+    return new Promise((resolve,reject)=>{
+      const r=indexedDB.open(IVAN_SIG_DB,1);
+      r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(IVAN_SIG_STORE))r.result.createObjectStore(IVAN_SIG_STORE,{keyPath:'id'});};
+      r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);
+    });
+  }
+  async function signatureRecord(operation,record=null){
+    const d=await openPrivateSignatureDB();
+    return new Promise((resolve,reject)=>{
+      const tx=d.transaction(IVAN_SIG_STORE,operation==='get'?'readonly':'readwrite');
+      const st=tx.objectStore(IVAN_SIG_STORE);
+      const req=operation==='get'?st.get('ivan-ortiz'):operation==='put'?st.put(record):st.delete('ivan-ortiz');
+      let result=null;
+      req.onsuccess=()=>{result=req.result;};
+      tx.oncomplete=()=>{d.close();resolve(result);};
+      tx.onerror=()=>{const e=tx.error;d.close();reject(e);};
+    });
+  }
+  function showIvanSignatureState(){
+    if(ivanPreview){
+      if(authorizedSignature?.dataUrl){ivanPreview.src=authorizedSignature.dataUrl;ivanPreview.hidden=false;}
+      else{ivanPreview.hidden=true;ivanPreview.removeAttribute('src');}
+    }
+    if(ivanStatus)ivanStatus.textContent=authorizedSignature
+      ? `✓ Firma registrada en este navegador: ${authorizedSignature.fileName||'Imagen escaneada'} · lista para documentos autorizados.`
+      : 'No hay firma de Iván Ortiz guardada en este navegador. Pulse «Registrar / actualizar» y seleccione la imagen escaneada.';
+    lastGenerated=null;
+  }
+  async function refreshAuthorizedSignature(){
+    if(ivanStatus)ivanStatus.textContent='Consultando firma local...';
+    try{authorizedSignature=await signatureRecord('get')||null;showIvanSignatureState();}
+    catch(err){console.error(err);if(ivanStatus)ivanStatus.textContent='No se puede acceder al almacenamiento local de firmas: '+err.message;}
+  }
+  function updateSignerMode(fromChoice=true){
+    const isIvan=signerModeControl?.value==='ivan';
+    if(isIvan){
+      if(fromChoice)manualPetitionerName=clean(form.elements.petitionerName.value);
+      form.elements.petitionerName.value='IVÁN ORTIZ';
+    }else if(fromChoice){form.elements.petitionerName.value=manualPetitionerName;}
+    form.elements.petitionerName.readOnly=isIvan;
+    if(ivanPanel)ivanPanel.hidden=!isIvan;
+    if(personalPanel)personalPanel.hidden=isIvan;
+    if(ivanConsent)ivanConsent.checked=false;
+    clearSignature();
+    lastGenerated=null;
+    if(isIvan)refreshAuthorizedSignature();
+  }
+  signerModeControl?.addEventListener('change',()=>updateSignerMode(true));
+  docTypeControl?.addEventListener('change',()=>{
+    lastGenerated=null;
+    const v=clean(form.elements.subject.value);
+    if(docTypeControl.value==='solicitud' && v.startsWith('Derecho de petición - ')) form.elements.subject.value='Solicitud - '+v.slice('Derecho de petición - '.length);
+    else if(docTypeControl.value==='peticion' && v.startsWith('Solicitud - ')) form.elements.subject.value='Derecho de petición - '+v.slice('Solicitud - '.length);
+  });
+  function fileToDataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result||''));r.onerror=()=>reject(r.error||new Error('Archivo no leído'));r.readAsDataURL(file);});}
+  ivanFile?.addEventListener('change',async()=>{
+    const file=ivanFile.files?.[0];if(!file)return;
+    try{
+      if(!/^image\/(png|jpeg|webp)$/i.test(file.type))throw Error('Seleccione una imagen JPG, PNG o WEBP.');
+      if(file.size>5*1024*1024)throw Error('La imagen de la firma supera 5 MB.');
+      const dataUrl=await fileToDataUrl(file);
+      await loadImage(dataUrl); // Valida que es realmente una imagen legible.
+      const rec={id:'ivan-ortiz',dataUrl,fileName:file.name,savedAt:new Date().toISOString()};
+      await signatureRecord('put',rec);
+      authorizedSignature=rec;
+      showIvanSignatureState();
+      if(ivanConsent)ivanConsent.checked=false;
+    }catch(err){alert('No fue posible registrar la firma: '+err.message);}
+    finally{ivanFile.value='';}
+  });
+  ivanRemove?.addEventListener('click',async()=>{
+    if(!confirm('¿Eliminar de este navegador la firma escaneada guardada de Iván Ortiz? No elimina los PDF existentes.'))return;
+    try{await signatureRecord('delete');authorizedSignature=null;showIvanSignatureState();if(ivanConsent)ivanConsent.checked=false;}
+    catch(err){alert('No se pudo eliminar: '+err.message);}
+  });
+  refreshAuthorizedSignature();
+
 
   function resizeSignatureCanvas(){
     const rect = signCanvas.getBoundingClientRect();
@@ -318,10 +519,43 @@
     const ctx=signCanvas.getContext('2d');
     ctx.fillStyle='#fff'; ctx.fillRect(0,0,signCanvas.width,signCanvas.height);
     ctx.strokeStyle='#0b2344'; ctx.lineWidth=3*Math.min(window.devicePixelRatio||1,2); ctx.lineCap='round'; ctx.lineJoin='round';
-    signatureHasInk=false; drawing=false; last=null; lastGenerated=null;
+    signatureHasInk=false; uploadedSignatureName=''; drawing=false; last=null; lastGenerated=null;
+    if(signatureUpload) signatureUpload.value='';
+    if(signatureFileName) signatureFileName.textContent='';
   }
-  function pointerPos(e){ const r=signCanvas.getBoundingClientRect(); return {x:(e.clientX-r.left)*(signCanvas.width/r.width), y:(e.clientY-r.top)*(signCanvas.height/r.height)}; }
-  signCanvas.addEventListener('pointerdown',e=>{ e.preventDefault(); drawing=true; last=pointerPos(e); signCanvas.setPointerCapture?.(e.pointerId); });
+  function loadSignatureImage(file){
+    return new Promise((resolve,reject)=>{
+      const reader=new FileReader();
+      reader.onload=()=>{
+        const img=new Image();
+        img.onload=()=>resolve(img);
+        img.onerror=()=>reject(new Error('No fue posible leer la imagen de la firma.'));
+        img.src=reader.result;
+      };
+      reader.onerror=()=>reject(new Error('No fue posible cargar el archivo seleccionado.'));
+      reader.readAsDataURL(file);
+    });
+  }
+  signatureUpload?.addEventListener('change',async()=>{
+    const file=signatureUpload.files?.[0]; if(!file)return;
+    if(!/^image\/(png|jpeg|webp)$/i.test(file.type)){alert('Seleccione una imagen PNG, JPG, JPEG o WEBP.');signatureUpload.value='';return}
+    try{
+      const img=await loadSignatureImage(file);
+      const ctx=signCanvas.getContext('2d');
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,signCanvas.width,signCanvas.height);
+      const pad=18,maxW=signCanvas.width-pad*2,maxH=signCanvas.height-pad*2;
+      const scale=Math.min(maxW/img.width,maxH/img.height);
+      const w=img.width*scale,h=img.height*scale;
+      ctx.drawImage(img,(signCanvas.width-w)/2,(signCanvas.height-h)/2,w,h);
+      signatureHasInk=true;uploadedSignatureName=file.name;lastGenerated=null;
+      if(signatureFileName)signatureFileName.textContent=`Firma cargada: ${file.name}`;
+    }catch(err){console.error(err);alert(err.message||'No fue posible cargar la firma escaneada.')}
+  });
+    function pointerPos(e){ const r=signCanvas.getBoundingClientRect(); return {x:(e.clientX-r.left)*(signCanvas.width/r.width), y:(e.clientY-r.top)*(signCanvas.height/r.height)}; }
+  signCanvas.addEventListener('pointerdown',e=>{ e.preventDefault();
+    if(uploadedSignatureName){const ctx=signCanvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,signCanvas.width,signCanvas.height);uploadedSignatureName='';if(signatureUpload)signatureUpload.value='';if(signatureFileName)signatureFileName.textContent='';signatureHasInk=false;}
+    drawing=true; last=pointerPos(e); signCanvas.setPointerCapture?.(e.pointerId);
+  });
   signCanvas.addEventListener('pointermove',e=>{ if(!drawing)return; e.preventDefault(); const p=pointerPos(e),ctx=signCanvas.getContext('2d'); ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;signatureHasInk=true;lastGenerated=null; });
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>signCanvas.addEventListener(ev,e=>{ if(drawing){e.preventDefault();drawing=false;last=null;} }));
 
@@ -345,16 +579,20 @@
 
   function collectData(){
     if(!form.reportValidity()) return null;
-    if(!signatureHasInk){ alert('Por favor firme en el recuadro antes de generar o compartir el PDF.'); return null; }
+    const isIvan=signerModeControl?.value==='ivan';
+    if(isIvan && !authorizedSignature?.dataUrl){alert('Primero registre la firma escaneada de Iván Ortiz en este navegador.');return null;}
+    if(isIvan && !ivanConsent?.checked){alert('Confirme la autorización de Iván Ortiz para usar su firma en este documento.');return null;}
+    if(!isIvan && !signatureHasInk){alert('Firme en el recuadro o cargue su firma antes de generar el PDF.');return null;}
     const fd=Object.fromEntries(new FormData(form).entries());
     const n=getNeed(fd.needId); if(!n) return null;
     if(!clean(fd.entity)){ alert('Indique la entidad donde trabaja la persona destinataria.'); return null; }
     if(!clean(fd.recipientName)){ alert('Indique el nombre de la persona destinataria.'); return null; }
-    return {fd,n,signature:signCanvas.toDataURL('image/png')};
+    return {fd,n,signature:isIvan?authorizedSignature.dataUrl:signCanvas.toDataURL('image/png'), signatureKind:isIvan?'ivan-escaneada':'personal'};
   }
 
   function tracePetition(data){
     const {fd,n}=data;
+    if(n?.id===GENERAL_ID)return;
     n.petitions = Array.isArray(n.petitions) ? n.petitions : [];
     const fingerprint = [clean(fd.entity),clean(fd.recipientName),clean(fd.petitionerName),clean(fd.subject),clean(fd.radicado),clean(fd.radicadoDate)].join('|');
     const recent=n.petitions[n.petitions.length-1];
@@ -370,7 +608,7 @@
   async function archiveGeneratedPDF({blob,filename,data}){
     const fd=data, n=data.need;
     const record={
-      id:uidLocal(),type:'derecho_peticion',needId:n.id,needCode:clean(n.code),needTitle:clean(n.title),territory:clean(n.territory),vereda:clean(n.vereda),sector:clean(n.sector),
+      id:uidLocal(),type:fd.documentType==='solicitud'?'solicitud':'derecho_peticion',signatureKind:data.signatureKind||'personal',needId:n.id,needCode:clean(n.code),needTitle:clean(n.title),territory:clean(n.territory),vereda:clean(n.vereda),sector:clean(n.sector),
       generatedAt:data.generatedAt,filename,blob,
       entity:clean(fd.entity),recipientName:clean(fd.recipientName),recipientRole:clean(fd.recipientRole),recipientEmail:clean(fd.recipientEmail),recipientPhone:clean(fd.recipientPhone),
       petitionerName:clean(fd.petitionerName),petitionerId:clean(fd.petitionerId),subject:clean(fd.subject),radicado:clean(fd.radicado),radicadoDate:clean(fd.radicadoDate),
@@ -383,12 +621,12 @@
 
   async function getOrBuildPDF(){
     const collected=collectData(); if(!collected) return null;
-    const snapshot=JSON.stringify(collected.fd)+'|'+signatureHasInk;
+    const snapshot=JSON.stringify(collected.fd)+'|'+collected.signature;
     if(lastGenerated?.snapshot===snapshot) return lastGenerated;
-    const data={...collected.fd,need:collected.n,signature:collected.signature,generatedAt:new Date().toISOString()};
+    const data={...collected.fd,need:collected.n,signature:collected.signature,signatureKind:collected.signatureKind,generatedAt:new Date().toISOString()};
     const blob=await buildPetitionPDF(data);
     const safe=(collected.n.code||'NECESIDAD').replace(/[^A-Za-z0-9_-]+/g,'-');
-    const filename=`DERECHO-PETICION-${safe}-${todayISO()}.pdf`;
+    const filename=`${collected.fd.documentType==='solicitud'?'SOLICITUD':'DERECHO-PETICION'}-${safe}-${todayISO()}.pdf`;
     const archiveId=await archiveGeneratedPDF({blob,filename,data});
     lastGenerated={snapshot,blob,filename,data,archiveId};
     tracePetition({fd:collected.fd,n:collected.n,generatedAt:data.generatedAt});
@@ -398,11 +636,36 @@
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const submit=form.querySelector('button[type="submit"]'); const old=submit.textContent; submit.disabled=true; submit.textContent='Generando PDF...';
+    const submit=form.querySelector('button[type="submit"]'); const old=submit.textContent;
+    const batch=window.__batchRecipients?.petition||[];
+    submit.disabled=true; submit.textContent=batch.length?`Generando ${batch.length} PDF...`:'Generando PDF...';
     try{
-      const result=await getOrBuildPDF(); if(!result)return;
-      downloadPDF(result.blob,result.filename);
-      try{ toast('PDF generado correctamente'); }catch(_){ }
+      if(!batch.length){
+        const result=await getOrBuildPDF(); if(!result)return;
+        downloadPDF(result.blob,result.filename);
+        try{ toast('PDF generado correctamente'); }catch(_){ }
+      }else{
+        const collected=collectData();if(!collected)return;
+        const base=Object.fromEntries(new FormData(form).entries());
+        const n=getNeed(base.needId); if(!n)return;
+        const signature=collected.signature;
+        let made=0;
+        for(const r of batch){
+          const fd={...base,entity:r.entity,recipientName:r.recipientName||r.entity,recipientRole:r.recipientRole||'Funcionario competente',recipientEmail:r.email||'',recipientPhone:r.phone||''};
+          const data={...fd,need:n,signature,signatureKind:collected.signatureKind,generatedAt:new Date().toISOString()};
+          const blob=await buildPetitionPDF(data);
+          const safeNeed=(n.code||'NECESIDAD').replace(/[^A-Za-z0-9_-]+/g,'-');
+          const safeEntity=clean(r.entity).replace(/[^A-Za-z0-9áéíóúñÁÉÍÓÚÑ_-]+/g,'-').slice(0,55);
+          const filename=`${fd.documentType==='solicitud'?'SOLICITUD':'DERECHO-PETICION'}-${safeNeed}-${safeEntity}-${todayISO()}.pdf`;
+          await archiveGeneratedPDF({blob,filename,data});
+          tracePetition({fd,n,generatedAt:data.generatedAt});
+          downloadPDF(blob,filename);made++;
+          await new Promise(resolve=>setTimeout(resolve,120));
+        }
+        lastGenerated=null;
+        alert(`Lote generado correctamente: ${made} Derechos de Petición individuales. Cada documento quedó archivado con su propio destinatario.`);
+        try{toast(`${made} Derechos de Petición generados`)}catch(_){}
+      }
     }catch(err){ console.error(err); alert('No fue posible generar el PDF: '+err.message); }
     finally{submit.disabled=false;submit.textContent=old;}
   });
@@ -412,7 +675,7 @@
     try{
       const result=await getOrBuildPDF(); if(!result)return;
       const file=new File([result.blob],result.filename,{type:'application/pdf'});
-      const text=`Derecho de Petición: ${clean(result.data.subject)}. Documento firmado en PDF.`;
+      const text=`${result.data.documentType==='solicitud'?'Solicitud':'Derecho de Petición'}: ${clean(result.data.subject)}. Documento firmado en PDF.`;
       if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
         await navigator.share({title:'Derecho de Petición',text,files:[file]});
         try{ toast('PDF compartido'); }catch(_){ }
@@ -453,8 +716,8 @@
       }
       ctx.textAlign='left';if(ivanBrand){const bw=360,bh=bw*(ivanBrand.height/ivanBrand.width);ctx.drawImage(ivanBrand,M+120,36,bw,bh);}
       ctx.font='400 18px Arial, sans-serif';ctx.fillStyle='#d8e7f6';ctx.fillText('Gestión Territorial para Girón',M+120,118);
-      ctx.font='700 14px Arial, sans-serif';ctx.fillStyle='#f2c21a';ctx.fillText('MATRIZ MAESTRA DE GESTIÓN TERRITORIAL',M+120,143);
-      ctx.textAlign='right';ctx.font='400 15px Arial, sans-serif';ctx.fillStyle='#d8e7f6';ctx.fillText('Documento generado desde la Matriz Territorial',W-M,92);
+      
+      ctx.textAlign='right';
       ctx.textAlign='left';
     }
     function newPage(){
@@ -545,18 +808,19 @@
     }
 
     newPage();
-    centerText('DERECHO DE PETICIÓN',34,true,'#073763',2);
-    centerText('Artículo 23 de la Constitución Política · Ley 1755 de 2015',17,false,'#66788b',20);
+    const isGeneralRequest=d.documentType==='solicitud';
+    centerText(isGeneralRequest?'SOLICITUD FORMAL':'DERECHO DE PETICIÓN',34,true,'#073763',2);
+    centerText(isGeneralRequest?'Gestión y solicitud ciudadana':'Artículo 23 de la Constitución Política · Ley 1755 de 2015',17,false,'#66788b',20);
     rule();
     paragraph(`Girón, Santander, ${currentLongDate()}`,{size:20,justify:false,gap:18});
     recipientBlock();
     labelValue('Asunto:',d.subject);
     y+=5;
-    paragraph(`Yo, ${clean(d.petitionerName)}, identificado(a) con ${clean(d.petitionerId)}, actuando en nombre propio y en ejercicio del derecho fundamental de petición consagrado en el artículo 23 de la Constitución Política y desarrollado por la Ley 1755 de 2015, presento respetuosamente la siguiente solicitud:`,{size:21,gap:22,justify:true});
-    sectionTitle('I. HECHOS'); paragraph(d.facts,{size:21,gap:24,justify:true});
-    sectionTitle('II. PETICIONES'); paragraph(d.requests,{size:21,gap:24,justify:true});
-    sectionTitle('III. FUNDAMENTO');
-    paragraph('La presente petición se formula con fundamento en el artículo 23 de la Constitución Política y en las disposiciones aplicables de la Ley 1755 de 2015. Solicito que la respuesta sea clara, de fondo, congruente con lo solicitado y comunicada dentro de los términos legales correspondientes.',{size:21,gap:24,justify:true});
+    paragraph(isGeneralRequest?`Yo, ${clean(d.petitionerName)}, identificado(a) con ${clean(d.petitionerId)}, presento respetuosamente ante su entidad la siguiente solicitud:`:`Yo, ${clean(d.petitionerName)}, identificado(a) con ${clean(d.petitionerId)}, actuando en nombre propio y en ejercicio del derecho fundamental de petición consagrado en el artículo 23 de la Constitución Política y desarrollado por la Ley 1755 de 2015, presento respetuosamente la siguiente solicitud:`,{size:21,gap:22,justify:true});
+    sectionTitle(isGeneralRequest?'I. ANTECEDENTES':'I. HECHOS'); paragraph(d.facts,{size:21,gap:24,justify:true});
+    sectionTitle(isGeneralRequest?'II. SOLICITUDES':'II. PETICIONES'); paragraph(d.requests,{size:21,gap:24,justify:true});
+    if(!isGeneralRequest){sectionTitle('III. FUNDAMENTO');
+      paragraph('La presente petición se formula con fundamento en el artículo 23 de la Constitución Política y en las disposiciones aplicables de la Ley 1755 de 2015. Solicito que la respuesta sea clara, de fondo, congruente con lo solicitado y comunicada dentro de los términos legales correspondientes.',{size:21,gap:24,justify:true});}
     if(clean(d.attachments)||evidencePhotos.length){
       sectionTitle('IV. ANEXOS / EVIDENCIAS');
       if(clean(d.attachments))paragraph(d.attachments,{size:21,gap:18,justify:true});
@@ -568,11 +832,13 @@
     sectionTitle('V. NOTIFICACIONES');
     labelValue('Dirección:',d.address);labelValue('Teléfono:',d.phone);labelValue('Correo electrónico:',d.email);y+=12;
     if(clean(d.radicado)||clean(d.radicadoDate)){sectionTitle('VI. DATOS DE RADICACIÓN');labelValue('Radicado:',d.radicado);labelValue('Fecha de radicación:',formatDate(d.radicadoDate));y+=10;}
-    ensure(315);paragraph('Cordialmente,',{size:21,justify:false,gap:8});
-    const sig=await loadImage(d.signature);const sigW=320,sigH=105;ctx.drawImage(sig,M,y,sigW,sigH);y+=sigH+4;
+    ensure(d.signatureKind==='ivan-escaneada'?360:315);paragraph('Cordialmente,',{size:21,justify:false,gap:8});
+    const sig=await loadImage(d.signature);const sigScale=Math.min(330/sig.naturalWidth,175/sig.naturalHeight);
+    const sigW=Math.round(sig.naturalWidth*sigScale),sigH=Math.round(sig.naturalHeight*sigScale);
+    ctx.drawImage(sig,M,y,sigW,sigH);y+=sigH+4;
     paragraph(clean(d.petitionerName),{size:21,bold:true,justify:false,gap:0});
     paragraph(`C.C. ${clean(d.petitionerId)}`,{size:19,justify:false,gap:2});
-    paragraph('Firma manuscrita electrónica capturada en pantalla',{size:15,italic:true,color:'#66788b',justify:false,gap:12});
+    paragraph(d.signatureKind==='ivan-escaneada'?'Firma escaneada de Iván Ortiz incorporada con autorización declarada':'Firma manuscrita electrónica incorporada al PDF',{size:15,italic:true,color:'#66788b',justify:false,gap:12});
     rule();
     paragraph(`Referencia interna: ${clean(d.need.code)} · ${clean(d.need.territory)} · ${clean(d.need.title)}`,{size:14,italic:true,color:'#66788b',justify:false,gap:0});
 

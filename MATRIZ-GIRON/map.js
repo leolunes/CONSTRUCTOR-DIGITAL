@@ -1,4 +1,4 @@
-/* v1.3.28 - Mapa territorial: amplía la ficha visible de líderes con sector, barrio y puesto de votación. Módulo aislado: no modifica app.js. */
+/* v1.4.14 - Mapa territorial: mantiene el mapa general e incorpora una vista adicional con el plano urbano de barrios de Girón. */
 (()=>{
   'use strict';
   const areas=[
@@ -71,6 +71,22 @@
     document.getElementById('mapOpenNeeds')?.addEventListener('click',()=>window.showView?.('needs'));
     document.getElementById('mapOpenIntel')?.addEventListener('click',()=>{window.showView?.('reports');setTimeout(()=>{const s=document.getElementById('intelTerritorySelect');if(s){const opt=[...s.options].find(o=>territoryMatch(o.value,area));if(opt){s.value=opt.value;s.dispatchEvent(new Event('change'))}}},80)});
   }
-  function init(){renderHotspots();const lt=document.getElementById('leadersTable');if(lt)new MutationObserver(()=>{renderHotspots();if(selected){const b=[...document.querySelectorAll('.map-hotspot')].find(x=>x.dataset.mapArea===selected);selectArea(selected,b)}}).observe(lt,{childList:true,subtree:true});window.addEventListener('storage',()=>{renderHotspots();if(selected){const b=[...document.querySelectorAll('.map-hotspot')].find(x=>x.dataset.mapArea===selected);selectArea(selected,b)}})}
+
+  function initMapTabs(){
+    const buttons=[...document.querySelectorAll('.map-tab-btn')];
+    const panels={general:document.getElementById('mapTabGeneral'),urbano:document.getElementById('mapTabUrbano')};
+    if(!buttons.length)return;
+    const activate=tab=>{
+      buttons.forEach(btn=>{const on=btn.dataset.mapTab===tab;btn.classList.toggle('active',on);btn.setAttribute('aria-selected',on?'true':'false');});
+      Object.entries(panels).forEach(([key,panel])=>panel&&panel.classList.toggle('active',key===tab));
+    };
+    buttons.forEach(btn=>btn.addEventListener('click',()=>activate(btn.dataset.mapTab)));
+    activate('general');
+    const zoomBtn=document.getElementById('urbanMapZoomBtn');
+    const modal=document.getElementById('urbanMapModal');
+    if(zoomBtn&&modal){zoomBtn.addEventListener('click',()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false')})}
+  }
+
+  function init(){initMapTabs();renderHotspots();const lt=document.getElementById('leadersTable');if(lt)new MutationObserver(()=>{renderHotspots();if(selected){const b=[...document.querySelectorAll('.map-hotspot')].find(x=>x.dataset.mapArea===selected);selectArea(selected,b)}}).observe(lt,{childList:true,subtree:true});window.addEventListener('storage',()=>{renderHotspots();if(selected){const b=[...document.querySelectorAll('.map-hotspot')].find(x=>x.dataset.mapArea===selected);selectArea(selected,b)}})}
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
 })();

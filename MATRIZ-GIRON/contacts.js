@@ -58,6 +58,7 @@
     if(f.elements.id)f.elements.id.value='';
     if(f.elements.communicationsConsent)f.elements.communicationsConsent.value='Pendiente';
     if(f.elements.preferredChannel)f.elements.preferredChannel.value='WhatsApp';
+    if(typeof toggleParentLeaderField==='function')toggleParentLeaderField();
     setTimeout(fillLeaderVeredas,0);
   });
 

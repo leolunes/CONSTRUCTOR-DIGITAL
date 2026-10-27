@@ -1,0 +1,20 @@
+MATRIZ MAESTRA GIRÓN — PUBLICACIÓN GITHUB PAGES v1.4.16
+
+Esta edición conserva las 279 referencias de base territorial (sectores/barrios)
+pero elimina del archivo JavaScript público los 151 nombres y sus datos de
+identificación/contacto precargados.
+
+IMPORTANTE: al publicarse en un repositorio público, cualquier archivo que
+forme parte de la carpeta MATRIZ-GIRON puede ser leído por cualquier visitante.
+
+Los datos creados/guardados en el navegador NO viajan con estos archivos.
+Para llevar contactos o necesidades del origen local a la dirección GitHub Pages:
+1. Exportar un respaldo JSON en la app de origen (ojo: NO incluye todos los PDF/fotos).
+2. Abrir el sitio GitHub Pages con el mismo perfil de navegador y usar Importar JSON.
+3. Usar mecanismos separados para transferir PDF y fotografías archivados.
+
+Los respaldos completos con datos personales NUNCA se deben subir al repositorio
+público ni a la carpeta MATRIZ-GIRON.
+
+NOTA: Si versiones anteriores del repositorio ya incluyeron datos personales,
+este reemplazo no elimina automáticamente esos datos del historial de Git.
