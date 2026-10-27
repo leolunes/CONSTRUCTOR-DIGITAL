@@ -65,10 +65,11 @@
     });
   }
   async function savePDFRecord(record){
+    const safeRecord=await window.MatrizBinaryStore.pack(record);
     const d=await openDocDB();
     return new Promise((resolve,reject)=>{
       const tx=d.transaction(DOC_STORE,'readwrite');
-      tx.objectStore(DOC_STORE).put(record);
+      tx.objectStore(DOC_STORE).put(safeRecord);
       tx.oncomplete=()=>{d.close();resolve(record)};
       tx.onerror=()=>{const e=tx.error;d.close();reject(e)};
     });
@@ -78,7 +79,7 @@
     return new Promise((resolve,reject)=>{
       const tx=d.transaction(DOC_STORE,'readonly');
       const r=tx.objectStore(DOC_STORE).getAll();
-      r.onsuccess=()=>resolve((r.result||[]).sort((a,b)=>String(b.generatedAt||'').localeCompare(String(a.generatedAt||''))));
+      r.onsuccess=()=>resolve((r.result||[]).map(window.MatrizBinaryStore.unpack).sort((a,b)=>String(b.generatedAt||'').localeCompare(String(a.generatedAt||''))));
       r.onerror=()=>reject(r.error);
       tx.oncomplete=()=>d.close();
     });
@@ -88,7 +89,7 @@
     return new Promise((resolve,reject)=>{
       const tx=d.transaction(DOC_STORE,'readonly');
       const r=tx.objectStore(DOC_STORE).get(id);
-      r.onsuccess=()=>resolve(r.result||null);
+      r.onsuccess=()=>resolve(r.result?window.MatrizBinaryStore.unpack(r.result):null);
       r.onerror=()=>reject(r.error);
       tx.oncomplete=()=>d.close();
     });
@@ -135,7 +136,7 @@
       const tx=d.transaction(PHOTO_STORE,'readonly');
       const idx=tx.objectStore(PHOTO_STORE).index('needId');
       const r=idx.getAll(needId);
-      r.onsuccess=()=>resolve(r.result||[]);
+      r.onsuccess=()=>resolve((r.result||[]).map(window.MatrizBinaryStore.unpack));
       r.onerror=()=>reject(r.error);
       tx.oncomplete=()=>d.close();
     });
@@ -631,15 +632,22 @@
   async function getOrBuildPDF(){
     const collected=collectData(); if(!collected) return null;
     const snapshot=JSON.stringify(collected.fd)+'|'+collected.signature;
-    if(lastGenerated?.snapshot===snapshot) return lastGenerated;
+    if(lastGenerated?.snapshot===snapshot && lastGenerated.archiveId) return lastGenerated;
     const data={...collected.fd,need:collected.n,signature:collected.signature,signatureKind:collected.signatureKind,generatedAt:new Date().toISOString()};
     const blob=await buildPetitionPDF(data);
     const safe=(collected.n.code||'NECESIDAD').replace(/[^A-Za-z0-9_-]+/g,'-');
     const filename=`${collected.fd.documentType==='solicitud'?'SOLICITUD':'DERECHO-PETICION'}-${safe}-${todayISO()}.pdf`;
-    const archiveId=await archiveGeneratedPDF({blob,filename,data});
+    let archiveId=null;
+    try{archiveId=await archiveGeneratedPDF({blob,filename,data})}
+    catch(err){
+      console.error('PDF generado, pero el archivo local no lo pudo almacenar:',err);
+      alert('El PDF se generó, pero NO quedó archivado en la Matriz. Se abrirá para que lo guarde en Archivos. Conserve esa copia. Detalle: '+err.message);
+    }
     lastGenerated={snapshot,blob,filename,data,archiveId};
-    tracePetition({fd:collected.fd,n:collected.n,generatedAt:data.generatedAt});
-    try{ toast('PDF generado y guardado en el Archivo de Derechos de Petición'); }catch(_){ }
+    if(archiveId){
+      tracePetition({fd:collected.fd,n:collected.n,generatedAt:data.generatedAt});
+      try{ toast('PDF generado y guardado en el Archivo de Derechos de Petición'); }catch(_){ }
+    }
     return lastGenerated;
   }
 
@@ -658,7 +666,7 @@
         const base=Object.fromEntries(new FormData(form).entries());
         const n=getNeed(base.needId); if(!n)return;
         const signature=collected.signature;
-        let made=0;
+        let made=0,archiveFailures=0;
         for(const r of batch){
           const fd={...base,entity:r.entity,recipientName:r.recipientName||r.entity,recipientRole:r.recipientRole||'Funcionario competente',recipientEmail:r.email||'',recipientPhone:r.phone||''};
           const data={...fd,need:n,signature,signatureKind:collected.signatureKind,generatedAt:new Date().toISOString()};
@@ -666,13 +674,20 @@
           const safeNeed=(n.code||'NECESIDAD').replace(/[^A-Za-z0-9_-]+/g,'-');
           const safeEntity=clean(r.entity).replace(/[^A-Za-z0-9áéíóúñÁÉÍÓÚÑ_-]+/g,'-').slice(0,55);
           const filename=`${fd.documentType==='solicitud'?'SOLICITUD':'DERECHO-PETICION'}-${safeNeed}-${safeEntity}-${todayISO()}.pdf`;
-          await archiveGeneratedPDF({blob,filename,data});
-          tracePetition({fd,n,generatedAt:data.generatedAt});
-          downloadPDF(blob,filename);made++;
+          let failedToArchive=false;
+          try{
+            await archiveGeneratedPDF({blob,filename,data});
+            tracePetition({fd,n,generatedAt:data.generatedAt});
+          }catch(err){archiveFailures++;failedToArchive=true;console.error('PDF sin archivar:',err)}
+          if(!window.GironPdfPortable?.isAppleMobile()||failedToArchive)downloadPDF(blob,filename);
+          made++;
+          if(failedToArchive&&window.GironPdfPortable?.isAppleMobile())break;
           await new Promise(resolve=>setTimeout(resolve,120));
         }
         lastGenerated=null;
-        alert(`Lote generado correctamente: ${made} Derechos de Petición individuales. Cada documento quedó archivado con su propio destinatario.`);
+        alert(archiveFailures
+          ?`Se generaron ${made} PDF, pero ${archiveFailures} NO pudieron archivarse. Guarde esos documentos desde el visor y conserve su respaldo.`
+          :`Lote generado correctamente: ${made} Derechos de Petición individuales. Cada documento quedó archivado con su propio destinatario.`);
         try{toast(`${made} Derechos de Petición generados`)}catch(_){}
       }
     }catch(err){ console.error(err); alert('No fue posible generar el PDF: '+err.message); }
@@ -701,7 +716,11 @@
   });
 
   function downloadPDF(blob,name){
-    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500);
+    if(window.GironPdfPortable?.isAppleMobile()){
+      window.GironPdfPortable.open(blob,name);
+      return;
+    }
+    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),120000);
   }
 
   async function buildPetitionPDF(d){

@@ -130,7 +130,13 @@ function mergeStored(current,incoming){
 }
 async function ensureDb(name,definitions){return openDB(name,definitions)}
 async function importStore(db,name,source){
-  const data=[];for(const entry of source.entries||[])data.push({key:decode(entry.key),value:decode(entry.value)});
+  // Preparar todos los binarios antes de abrir la transacción. En WebKit,
+  // guardar Blob directamente puede lanzar «BlobURLs are not yet supported».
+  // ArrayBuffer sí admite la clonación estructurada de IndexedDB.
+  const data=[];
+  for(const entry of source.entries||[]){
+    data.push({key:decode(entry.key),value:await window.MatrizBinaryStore.pack(decode(entry.value))});
+  }
   return new Promise((resolve,reject)=>{
     const tx=db.transaction(name,'readwrite'),store=tx.objectStore(name);let imported=0,kept=0;
     for(const row of data){

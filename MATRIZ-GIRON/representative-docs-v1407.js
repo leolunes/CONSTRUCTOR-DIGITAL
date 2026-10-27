@@ -50,8 +50,8 @@ const metas=()=>{try{return JSON.parse(localStorage.getItem(META_KEY)||'[]')}cat
 const saveMetas=a=>localStorage.setItem(META_KEY,JSON.stringify(a));
 
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open(DB,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE))r.result.createObjectStore(STORE,{keyPath:'id'})};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
-async function putPdf(id,blob){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put({id,blob});tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
-async function getPdf(id){const db=await openDB();return new Promise((res,rej)=>{const q=db.transaction(STORE).objectStore(STORE).get(id);q.onsuccess=()=>res(q.result?.blob||null);q.onerror=()=>rej(q.error)})}
+async function putPdf(id,blob){const record=await window.MatrizBinaryStore.pack({id,blob});const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(record);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
+async function getPdf(id){const db=await openDB();return new Promise((res,rej)=>{const q=db.transaction(STORE).objectStore(STORE).get(id);q.onsuccess=()=>res(q.result?window.MatrizBinaryStore.unpack(q.result).blob:null);q.onerror=()=>rej(q.error)})}
 async function delPdf(id){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(id);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
 
 function show(m){m.classList.add('show');m.classList.add('open');m.setAttribute('aria-hidden','false')}
@@ -201,7 +201,7 @@ form.addEventListener('submit',async e=>{
  finally{btn.disabled=false;btn.textContent=old}
 });
 
-function download(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1200)}
+function download(blob,name){if(window.GironPdfPortable?.isAppleMobile()){window.GironPdfPortable.open(blob,name);return}const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),120000)}
 function sendStatusText(m){
  if(m.sentAt&&m.sentTo)return `🟢 Enviado · ${m.sentTo} · ${new Date(m.sentAt).toLocaleString('es-CO')}`;
  if(m.sendPreparedAt&&m.sendPreparedTo)return `🟠 Preparado para enviar · ${m.sendPreparedTo}`;
