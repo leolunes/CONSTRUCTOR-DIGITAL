@@ -1,0 +1,37 @@
+NUESTRA FLORIDABLANCA 1.0.28
+Corrección del Archivo de Derechos de Petición
+
+Los PDF antiguos creados por la aplicación se archivaban como páginas de imagen.
+El texto completo de Hechos y Peticiones no siempre se guardaba por separado;
+por eso no se puede convertir de forma fiable ese archivo en un formulario editable.
+
+NUEVAS OPCIONES EN EL ARCHIVO:
+
+A) Rehacer con diseño nuevo
+   - Abre el formulario con los datos disponibles.
+   - Muestra al lado una vista del PDF anterior, solo para consulta.
+   - Es necesario revisar Hechos y Peticiones y completar los campos faltantes.
+   - Para el PDF nuevo se requiere una firma y una autorización nuevas.
+   - No se heredan radicado ni estado de envío.
+   - El PDF anterior permanece intacto.
+
+B) Crear copia visual renovada
+   - Funciona con documentos antiguos creados por la app y almacenados como
+     páginas JPEG dentro del PDF.
+   - Conserva todos los elementos visibles del original como imagen y los
+     presenta con un encabezado/marco actualizados, sin editar el texto.
+   - Genera y archiva una copia de consulta, no un nuevo documento firmado.
+   - No sustituye al original ni debe presentarse como un nuevo documento radicado.
+   - Si un PDF no está en ese formato, use el flujo A.
+
+C) Abrir original
+   - Muestra el PDF exactamente como se guardó.
+
+INSTALACIÓN
+1. Exporte un respaldo integral antes de cambiar de versión.
+2. Descomprima la carpeta completa y ejecútela desde Go Live.
+3. Actualice la pestaña con Ctrl+F5.
+4. Abra Derechos de Petición > Archivo de PDF.
+
+Los documentos nuevos de esta versión siguen guardando los campos del formulario
+para permitir su futura reedición. No se conserva la firma en esos borradores.

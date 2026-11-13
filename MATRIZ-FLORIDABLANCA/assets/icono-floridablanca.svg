@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Matriz Floridablanca">
+  <defs><linearGradient id="leaf" x2="1" y2="1"><stop stop-color="#087e52"/><stop offset="1" stop-color="#023d2a"/></linearGradient></defs>
+  <rect width="512" height="512" rx="104" fill="url(#leaf)"/>
+  <circle cx="256" cy="202" r="141" fill="none" stroke="#eec34f" stroke-width="7"/>
+  <circle cx="256" cy="202" r="105" fill="none" stroke="#eec34f" stroke-width="5"/>
+  <circle cx="256" cy="202" r="55" fill="none" stroke="#eec34f" stroke-width="12"/>
+  <circle cx="256" cy="202" r="31" fill="none" stroke="#eec34f" stroke-width="11"/>
+  <circle cx="256" cy="202" r="10" fill="#eec34f"/>
+  <g stroke="#eec34f" stroke-width="8" stroke-linecap="round">
+    <path d="M256 75v72M256 257v72M129 202h72M311 202h72M166 112l51 51M295 241l51 51M346 112l-51 51M217 241l-51 51"/>
+  </g>
+  <path d="M113 381h286" stroke="#eec34f" stroke-width="3" opacity=".75"/>
+  <text x="256" y="426" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="44" font-weight="900">MATRIZ</text>
+  <text x="256" y="470" text-anchor="middle" fill="#f6d884" font-family="Arial, sans-serif" font-size="29" font-weight="700">FLORIDABLANCA</text>
+</svg>

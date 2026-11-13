@@ -1,0 +1,44 @@
+MATRIZ FLORIDABLANCA v1.0.24 · NUESTRA FLORIDABLANCA
+
+Identidad: Marco Andrés Silva López · Floridablanca, nuestra casa.
+
+Actualización visual y editorial respecto a v1.0.23:
+- Encabezado y título de la aplicación: Nuestra Floridablanca.
+- Nombre de Marco y mensaje: Floridablanca, nuestra casa.
+- Cumpleaños (cuatro estilos): subtítulos cercanos y despedida «Con cariño».
+  Se conserva exactamente el formato vertical de la v1.0.23.
+- Comentarios: Marco Andrés comparte; sus imágenes y PDF conservan datos, fotografía
+  y marca de agua, con firma e identidad editorial cercana.
+- Derechos de petición: encabezado neutro y jurídico, sin publicidad electoral.
+- Listado de contactos en PDF: cabecera verde y nombre Nuestra Floridablanca.
+
+No se modificaron las claves del almacenamiento (localStorage / IndexedDB), los
+mapas, las ubicaciones, los líderes ni los registros; esta entrega modifica el
+aspecto y las leyendas de los documentos futuros, no los archivos ya generados.
+
+Antes de instalar, exporte un respaldo integral. Reemplace la carpeta completa,
+abra con Go Live y recargue con Ctrl+F5; los PDF antiguos no cambian.
+
+VERSIÓN 1.0.25 — DERECHO DE PETICIÓN: FIRMA EN PANTALLA Y DATOS DEL DIRECTORIO
+
+- En «¿Quién presenta y firma este documento?» está la opción:
+  «Marco Andrés Silva López — firmar ahora en pantalla (táctil)».
+  Abre un recuadro para firmar con dedo, lápiz táctil o mouse.
+  El modo requiere confirmar la autorización para el documento específico.
+  La firma capturada NO se registra como firma reutilizable; se incorpora al PDF
+  generado, que sí puede permanecer archivado en la Matriz.
+- La opción anterior «usar firma escaneada autorizada» continúa disponible,
+  con su confirmación independiente de consentimiento.
+- Es una firma manuscrita electrónica representada en PDF; no equivale por
+  sí misma a una firma digital criptográfica certificada.
+- Al seleccionar una entidad del Directorio Institucional para generar un
+  documento, se trasladan a la ficha los campos disponibles: entidad, nombre
+  de contacto (si existe), cargo genérico cuando no haya detalle, correo,
+  teléfono y dirección física. Los datos faltantes se anuncian sin inventarse.
+  Si el directorio no indica una persona concreta, se usa «A quien corresponda».
+- Al seleccionar varios destinatarios dentro del formulario, el primer
+  destinatario aparece como referencia, pero cada PDF del lote emplea el
+  destinatario correspondiente.
+- El directorio se proporciona como archivo de referencia; antes del envío
+  verifique vigencia, competencia, destinatario, dirección y correo.
+- No cambia las claves de almacenamiento ni elimina PDFs archivados.

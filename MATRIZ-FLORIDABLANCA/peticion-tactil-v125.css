@@ -1,0 +1,15 @@
+/* v1.0.25 · Petición: firma táctil de Marco y directorio institucional autocompletado */
+.petition-prefill-status{font-size:12px;line-height:1.55;background:#e9f6eb;border:1px solid #b9d9c2;border-left:4px solid #08764d;border-radius:8px;padding:10px 12px;color:#154b34}
+.petition-prefill-status[hidden],.petition-touch-consent[hidden],.petition-upload-sign[hidden]{display:none!important}
+.petition-touch-consent{margin-top:12px!important;border-color:#adcbb5!important;background:#eef9f0!important;color:#124b31}
+#petitionSignature{touch-action:none;cursor:crosshair;overscroll-behavior:contain}
+#petitionPersonalSignPanel{border-color:#b0d2b6;background:#f5faf5}
+#petitionPersonalSignPanel .petition-sign-head strong{color:#075638}
+@media(max-width:700px){#petitionSignature{height:180px}}
+
+/* v1.0.27: versiones del archivo con firma nueva, sin alterar el PDF original */
+.petition-archive-buttons .petition-remake-btn{background:#e8f4ea!important;color:#075638!important;border:1px solid #b7d5bf!important;}
+.petition-archive-buttons .petition-remake-btn:hover{background:#d6ecdb!important;}
+.petition-archive-rebuild-note{background:#f7fbec;border:1px solid #cddcaf;border-left:5px solid #c59b36;border-radius:10px;padding:13px 16px;color:#24533b;display:flex;flex-direction:column;gap:5px;font-size:13px;line-height:1.45;}
+.petition-archive-rebuild-note strong{font-size:15px;}
+.petition-remake-label{color:#16653e!important;font-weight:700;}

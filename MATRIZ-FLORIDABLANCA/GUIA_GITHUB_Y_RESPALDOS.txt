@@ -1,0 +1,57 @@
+NUESTRA FLORIDABLANCA — EDICIÓN GITHUB PAGES Y RESPALDOS MANUALES — v1.1.0
+
+ESTA ENTREGA ES EL PROGRAMA; NO CONTIENE LOS DATOS PRIVADOS DE SU NAVEGADOR.
+Todos los archivos de la aplicación están listos para publicar en la raíz de un repositorio de GitHub Pages.
+La publicación NO se ha realizado desde este paquete.
+
+A. ANTES DE PUBLICAR
+1. Abra su versión que ya tiene datos en el computador (Go Live, sin limpiar el navegador).
+2. Configuración > Centro de respaldos > Exportar respaldo integral.
+3. Compruebe que el JSON quedó descargado y guarde una segunda copia en un lugar privado.
+4. Deje sin marcar «Incluir firma escaneada privada» a menos que Marco haya autorizado expresamente la transferencia de esa firma.
+5. No cargue jamás ese JSON en el repositorio, ni públicamente en mensajes, ni en carpetas accesibles por terceros.
+
+B. PUBLICAR EN GITHUB PAGES
+1. Cree o elija un repositorio para NUESTRA-FLORIDABLANCA en su cuenta de GitHub.
+2. Descomprima este ZIP y suba el CONTENIDO (index.html y carpetas assets/, etc.) a la RAÍZ del repositorio, no el ZIP ni el JSON privado.
+3. Compruebe que index.html queda en la raíz del repositorio.
+4. En el repositorio, vaya a Settings > Pages > Build and deployment > Deploy from a branch.
+5. Escoja main y /(root), y guarde. Abra la dirección que GitHub Pages indique cuando termine de publicar.
+6. Verifique que cargan la foto, los mapas y los módulos desde esa dirección.
+Nota: publicar el programa en GitHub Pages NO crea un servidor privado ni una base de datos central.
+
+C. PASAR LOS EJEMPLOS Y REGISTROS EXISTENTES
+1. Use en el PC la URL publicada por GitHub Pages.
+2. En la nueva URL: Configuración > Seleccionar JSON para importar.
+3. Elija el JSON exportado en A. Revise el resumen; pulse Fusionar respaldo y Recargar aplicación.
+4. Compare cantidades de contactos, necesidades, PDF archivados y fotografías con la aplicación anterior.
+5. Para iPhone y iPad, comparta el JSON por un canal privado (por ejemplo, AirDrop o Archivos).
+6. Abra la MISMA URL de GitHub Pages en Safari > Configuración > Seleccionar JSON > Fusionar > Recargar.
+7. También puede usar Compartir > Agregar a pantalla de inicio.
+
+D. CADA VEZ QUE MARCO TENGA UNA NUEVA VERSIÓN
+1. Marco exporta un JSON antes del cambio.
+2. Se actualizan los archivos del programa en GitHub, manteniendo EXACTAMENTE la misma URL del repositorio.
+3. Marco vuelve a abrir la aplicación y verifica sus registros. Si necesita transferir datos a otro dispositivo, importa el JSON desde allí.
+4. Los respaldos son PRIVADOS: Nunca subir a GitHub los JSON, cédulas, listas de simpatizantes, fotografías o PDF de documentos personales.
+
+E. LÍMITES IMPORTANTES
+- GitHub Pages publica solamente código e imágenes públicas del programa.
+- Los datos se conservan por NAVEGADOR y por DIRECCIÓN WEB; no se sincronizan automáticamente.
+- La importación actual es una FUSIÓN: añade ID faltantes y conserva registros existentes. Si edita el MISMO registro en dos dispositivos, la importación no reemplaza automáticamente el registro existente; debe evitar editar los mismos registros en varios dispositivos a la vez.
+- Recomendación: designe un dispositivo MAESTRO para crear y editar; traslade respaldos a los demás. Exporte un JSON actualizado regularmente.
+- En iPhone/iPad, el navegador puede eliminar datos locales bajo determinadas condiciones; no use el almacenamiento del dispositivo como único respaldo.
+- Las firmas no se exportan por defecto desde la base privada de firmas. Los PDF ya archivados pueden contener una firma; trate el JSON como confidencial.
+- Archivos PDF e imágenes que solo fueron descargados pero NO archivados dentro de la aplicación no se incluyen en el JSON.
+- No se ha realizado una importación real con los datos de su computador desde este entorno, porque esos datos permanecen en su navegador.
+
+F. PRUEBA DE ENTREGA
+[ ] Aplicación abre en PC desde GitHub Pages
+[ ] Aplicación abre en iPhone y iPad desde la misma URL
+[ ] Exporté JSON privado desde la aplicación con datos
+[ ] Importé en URL de GitHub Pages y comparé cantidades
+[ ] PDF guardados se abren en el visor
+[ ] Fotos archivadas aparecen
+[ ] Hice nuevo respaldo después de la importación
+
+NUESTRA FLORIDABLANCA · Marco Andrés Silva López · Floridablanca, nuestra casa

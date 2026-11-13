@@ -1,0 +1,25 @@
+NUESTRA FLORIDABLANCA — v1.0.35
+CORRECCIÓN: ABRIR PDF GUARDADO
+
+Se ha sustituido la vista que dependía exclusivamente del visor PDF incrustado.
+Ahora los PDF generados por la Matriz se leen como páginas directamente en la aplicación,
+con su información original y su firma visibles, sin alterar el archivo.
+
+Opciones del visor:
+- Ver páginas aquí (por defecto)
+- Visor del navegador (alternativa)
+- Descargar original
+- Compartir
+- Abrir en otra pestaña
+- Cerrar y volver al archivo
+
+Si el formato de PDF no contiene páginas JPEG reconocibles, se muestra un aviso
+explicativo con los botones de descarga y apertura alternativos, en vez de una pantalla blanca.
+
+NO se modifican las bases de datos, las claves, los PDF archivados, las firmas,
+ni los demás módulos de la aplicación. Las mejoras afectan solo la visualización.
+
+INSTALACIÓN: haga primero un respaldo integral y extraiga este ZIP completo.
+Mantenga el mismo navegador y la misma dirección 127.0.0.1:5501 (o la que usaba)
+para conservar el acceso a sus registros locales. Abra index.html con Go Live y
+actualice con Ctrl+F5. No borre los datos del navegador.

@@ -1,0 +1,12 @@
+NUESTRA FLORIDABLANCA - v1.0.31
+AJUSTE EXCLUSIVO: PDF de derechos de petición y recuperación de archivo.
+
+* Plantilla nueva: foto real de Marco Andrés junto al nombre, titular y subtítulo centrados, destinatario de fondo verde claro, secciones tituladas, firma propia del solicitante, pie verde y dorado con símbolo de hojas y frase "Floridablanca, nuestra casa".
+* Un PDF ya guardado es un archivo terminado. Los PDF antiguos guardados como imágenes no contienen campos editables para cambiar su tipografía automáticamente.
+* Archivo de derechos de petición: use "Aplicar diseño aprobado". Se recuperan los datos que existan, se abre el PDF original para consulta, se completa lo que falte y se firma de nuevo para generar y archivar la versión editable. El original no se modifica ni se borra.
+* Las antiguas "copias visuales" se conservan archivadas; ya no se ofrece crear otras copias visuales como sustituto del rediseño verdadero.
+* El documento nuevo no hereda números de radicado ni estados de enviado.
+* Antes de instalar: exporte respaldo integral de la versión actual. No borre el almacenamiento del navegador y mantenga el mismo origen de Go Live.
+* Resto de módulos y claves de almacenamiento: sin modificaciones.
+
+VALIDACION: prueba de dibujo de solicitud breve A4 de una página y derecho de petición extenso de tres páginas; prueba PDF de muestra y render en PDF; revisión de sintaxis. La integración real en el navegador del usuario queda por comprobar.

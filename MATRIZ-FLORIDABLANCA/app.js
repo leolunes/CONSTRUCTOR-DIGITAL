@@ -1,0 +1,213 @@
+const APP_KEY='matriz_floridablanca_v1';
+const sectors=['Infraestructura y vías','Agua y saneamiento','Vivienda','Servicios públicos','Salud','Educación','Deporte y recreación','Seguridad','Ambiente y gestión del riesgo','Desarrollo rural','Desarrollo social','Cultura','Empleo y emprendimiento','Turismo','Movilidad y transporte','Otro'];
+const priorities=['Urgente','Alta','Media','Baja'];
+const statuses=['Pendiente de verificar','Verificada','Requiere visita técnica','Información insuficiente','Existe proyecto relacionado','En gestión','Solucionada'];
+const maturity=['Nivel 1 - Necesidad identificada','Nivel 2 - Necesidad verificada','Nivel 3 - Alternativa de solución identificada','Nivel 4 - En estructuración','Nivel 5 - Proyecto estructurado','Nivel 6 - Proyecto radicado','Nivel 7 - En evaluación','Nivel 8 - Viable','Nivel 9 - Financiado','Nivel 10 - En ejecución','Nivel 11 - Ejecutado','Nivel 12 - Impacto verificado'];
+let deferredPrompt=null;
+let db=loadDB();
+
+function blankDB(){return {needs:[],leaders:[],projects:[],actions:[],settings:{orgName:'Nuestra Floridablanca',orgTeam:''}}}
+function loadDB(){try{
+  const result={...blankDB(),...JSON.parse(localStorage.getItem(APP_KEY)||'{}')};
+  // Solo actualizamos la etiqueta heredada del clon; no alteramos nombres personalizados.
+  if(result.settings?.orgName==='Matriz Maestra de Gestión Territorial para Floridablanca'){
+    result.settings={...result.settings,orgName:'Nuestra Floridablanca'};
+  }
+  return result;
+}catch(e){return blankDB()}}
+function saveDB(){localStorage.setItem(APP_KEY,JSON.stringify(db));renderAll();window.dispatchEvent(new CustomEvent('matriz:contacts-updated'))}
+function uid(prefix){return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,6)}`}
+function needCode(){const year=new Date().getFullYear();const n=(db.needs.length+1).toString().padStart(4,'0');return `FLORIDABLANCA-${year}-${n}`}
+function money(v){return new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(Number(v||0))}
+function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function tag(text){const t=(text||'').toLowerCase();let c='gray';if(t.includes('urgente')||t.includes('detenido'))c='red';else if(t.includes('alta')||t.includes('ajuste')||t.includes('visita'))c='orange';else if(t.includes('media')||t.includes('evaluación')||t.includes('pendiente'))c='yellow';else if(t.includes('solucion')||t.includes('viable')||t.includes('financiado')||t.includes('verificada'))c='green';else if(t.includes('gestión')||t.includes('proyecto'))c='blue';return `<span class="tag ${c}">${esc(text)}</span>`}
+function fillSelect(id,arr,blank){const el=document.getElementById(id);if(!el)return;el.innerHTML=(blank?`<option value="">${blank}</option>`:'')+arr.map(x=>`<option>${esc(x)}</option>`).join('')}
+
+function init(){
+  fillSelect('needSector',sectors);fillSelect('projectSector',sectors);fillSelect('campaignCommitmentSector',sectors);fillSelect('communitySector',sectors);
+  fillSelect('needPriority',priorities);fillSelect('needStatus',statuses);fillSelect('needMaturity',maturity);
+  fillSelect('needStatusFilter',statuses,'Todos los estados');fillSelect('needPriorityFilter',priorities,'Todas las prioridades');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
+  document.querySelectorAll('[data-open-modal]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.openModal==='campaignCommitmentModal'){const form=document.getElementById('campaignCommitmentForm');form.reset();form.elements.id.value='';}openModal(b.dataset.openModal)}));
+  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeModals));
+  document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModals()}));
+  const contactType=document.getElementById('contactType');if(contactType)contactType.addEventListener('change',toggleParentLeaderField);document.querySelectorAll('[data-leader-type]').forEach(b=>b.addEventListener('click',()=>{if(contactType){contactType.value=b.dataset.leaderType;toggleParentLeaderField()}}));toggleParentLeaderField();
+  bindForms();bindButtons();renderAll();registerSW();
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').classList.remove('hidden')});
+  document.getElementById('installBtn').addEventListener('click',async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;document.getElementById('installBtn').classList.add('hidden')});
+}
+function showView(v){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(`view-${v}`).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function openModal(id){refreshRefs();document.getElementById(id).classList.add('open')}
+function closeModals(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('open'))}
+
+function bindForms(){
+ document.getElementById('needForm').addEventListener('submit',e=>{e.preventDefault();const o=Object.fromEntries(new FormData(e.target));if(o.id){const i=db.needs.findIndex(x=>x.id===o.id);db.needs[i]={...db.needs[i],...o}}else db.needs.push({...o,id:uid('N'),code:needCode(),created:new Date().toISOString()});e.target.reset();closeModals();saveDB();toast('Necesidad guardada')});
+ document.getElementById('leaderForm').addEventListener('submit',e=>{
+  e.preventDefault();const o=Object.fromEntries(new FormData(e.target));
+  if(o.role==='__otro__'){o.role=(o.roleOther||'').trim();if(!o.role){toast('Escriba la calidad o rol en Otro');return}}
+  delete o.roleOther;
+  if(o.barrio&&!o.vereda&&(!o.municipio||o.municipio==='Floridablanca'))o.vereda='FLORIDABLANCA - ÁREA URBANA';
+  if(o.barrio&&!o.territory)o.territory=o.barrio;
+  if(!o.contactType){toast('Seleccione Líder, Simpatizante o Participante');return}
+  const existing=o.id?db.leaders.find(x=>x.id===o.id):null;
+  if(existing?.contactType==='Líder'&&o.contactType!=='Líder'&&db.leaders.some(x=>x.contactType==='Simpatizante'&&x.parentLeaderId===existing.id)){
+   toast('Reasigne primero los simpatizantes de este líder');return;
+  }
+  if(o.contactType==='Simpatizante'){
+   const linked=db.leaders.some(x=>x.contactType==='Líder'&&x.id===o.parentLeaderId&&x.id!==o.id);
+   if(!linked){toast('Cada simpatizante debe tener un líder responsable registrado');return}
+  }else o.parentLeaderId='';
+  if(o.id){const i=db.leaders.findIndex(x=>x.id===o.id);if(i<0){toast('No se encontró el contacto');return}db.leaders[i]={...db.leaders[i],...o}}
+  else db.leaders.push({...o,id:uid('L'),created:new Date().toISOString()});
+  e.target.reset();toggleParentLeaderField();closeModals();saveDB();toast('Contacto guardado');
+ });
+ document.getElementById('projectForm').addEventListener('submit',e=>{e.preventDefault();const o=Object.fromEntries(new FormData(e.target));if(o.id){const i=db.projects.findIndex(x=>x.id===o.id);db.projects[i]={...db.projects[i],...o}}else db.projects.push({...o,id:uid('P'),created:new Date().toISOString()});e.target.reset();closeModals();saveDB();toast('Proyecto guardado')});
+ document.getElementById('campaignCommitmentForm').addEventListener('submit',e=>{
+  e.preventDefault();const form=e.target,o=Object.fromEntries(new FormData(form));
+  const record={...o,recordType:'futureCommitment',condition:'Condicionado a resultar elegido y a la viabilidad legal, técnica y presupuestal'};
+  if(o.id){
+   const i=db.projects.findIndex(p=>p.id===o.id&&p.recordType==='futureCommitment');
+   if(i<0){toast('No se encontró el compromiso futuro');return}
+   db.projects[i]={...db.projects[i],...record};
+  }else db.projects.push({...record,id:uid('P'),created:new Date().toISOString()});
+  form.reset();form.elements.id.value='';closeModals();saveDB();toast('Compromiso futuro guardado · condicionado a resultar elegido');
+ });
+ document.getElementById('actionForm').addEventListener('submit',e=>{e.preventDefault();const o=Object.fromEntries(new FormData(e.target));if(o.id){const i=db.actions.findIndex(x=>x.id===o.id);db.actions[i]={...db.actions[i],...o}}else db.actions.push({...o,id:uid('A'),created:new Date().toISOString()});const n=db.needs.find(x=>x.id===o.needId);if(n){n.nextAction=o.nextAction||n.nextAction;n.responsible=o.responsible||n.responsible;n.followUp=o.nextDate||n.followUp;n.status=n.status==='Solucionada'?n.status:'En gestión'}e.target.reset();closeModals();saveDB();toast('Gestión registrada')});
+ document.getElementById('communityForm').addEventListener('submit',e=>{e.preventDefault();const o=Object.fromEntries(new FormData(e.target));const leader=db.leaders.find(l=>l.id===o.leaderId);if(!leader){toast('Seleccione un líder / JAC / Edil registrado');return}const need={id:uid('N'),code:needCode(),territory:o.territory,zone:o.zone,comuna:o.comuna||'',vereda:o.vereda||'',title:o.title,sector:o.sector,priority:o.priority,status:'Pendiente de verificar',maturity:maturity[0],leaderId:leader.id,competentEntity:'',location:o.location,description:`Importancia: ${o.importance||''}\nProyecto existente: ${o.existingProject||''}\nGestiones previas: ${o.previous||''}`,affected:o.affected,age:o.age,evidence:'Fotografías registradas desde formulario comunitario',nextAction:'Verificar necesidad y definir entidad competente',responsible:'',followUp:'',created:new Date().toISOString()};db.needs.push(need);window.dispatchEvent(new CustomEvent('community-need-saved',{detail:{needId:need.id}}));e.target.reset();saveDB();toast('Información comunitaria incorporada a la Matriz')});
+}
+function bindButtons(){
+ document.getElementById('needSearch').addEventListener('input',renderNeeds);document.getElementById('needStatusFilter').addEventListener('change',renderNeeds);document.getElementById('needPriorityFilter').addEventListener('change',renderNeeds);
+ document.getElementById('backupBtn').onclick=exportJSON;document.getElementById('exportJson').onclick=exportJSON;document.getElementById('importJson').addEventListener('change',importJSON);document.getElementById('exportCsv').onclick=exportCSV;
+ document.getElementById('printDiagnosis').onclick=()=>printReport('diagnosis');document.getElementById('printTerritory').onclick=()=>printReport('territory');
+ document.getElementById('saveSettings').onclick=()=>{db.settings.orgName=document.getElementById('orgName').value;db.settings.orgTeam=document.getElementById('orgTeam').value;saveDB();toast('Configuración guardada')};
+ document.getElementById('clearData').onclick=()=>{if(confirm('¿Seguro que desea borrar todos los datos locales? Esta acción no se puede deshacer.')){db=blankDB();saveDB();toast('Datos borrados')}};
+}
+function refreshRefs(){
+ const networkLeaders=db.leaders.filter(l=>l.contactType==='Líder');
+ const needReporter=document.getElementById('needLeader');
+ const currentReporter=needReporter?.value||'';
+ const allPeople=[...db.leaders].filter(l=>l?.id&&l?.name).sort((a,b)=>String(a.name).localeCompare(String(b.name),'es'));
+ const leaderOpts='<option value="">Sin asignar / no informado</option>'+allPeople.map(l=>`<option value="${esc(l.id)}">${esc(l.name)} · ${esc(l.contactType||l.role||'Contacto')} · ${esc(l.barrio||l.territory||'Sin barrio')}</option>`).join('');
+ if(needReporter){needReporter.innerHTML=leaderOpts;needReporter.value=currentReporter;}
+ const communityLeader=document.getElementById('communityLeader');if(communityLeader){const current=communityLeader.value;communityLeader.innerHTML='<option value="">Seleccione un líder registrado</option>'+networkLeaders.map(l=>`<option value="${l.id}">${esc(l.name)} · ${esc(l.role||'')} · ${esc(l.territory||'')}</option>`).join('');communityLeader.value=current;}
+ const parentLeader=document.getElementById('parentLeaderId');if(parentLeader){const current=parentLeader.value;parentLeader.innerHTML='<option value="">Seleccione un líder</option>'+networkLeaders.map(l=>`<option value="${l.id}">${esc(l.name)} · ${esc(l.territory||'')}</option>`).join('');parentLeader.value=current;}
+ const needOpts='<option value="">Sin vincular</option>'+db.needs.map(n=>`<option value="${n.id}">${esc(n.code)} · ${esc(n.title)}</option>`).join('');document.getElementById('projectNeed').innerHTML=needOpts;document.getElementById('campaignCommitmentNeed').innerHTML=needOpts;document.getElementById('actionNeed').innerHTML=needOpts;
+ const projectOpts='<option value="">Sin vincular</option>'+db.projects.map(p=>`<option value="${p.id}">${p.recordType==='futureCommitment'?'Compromiso futuro: ':'Proyecto previo: '}${esc(p.name)}</option>`).join('');document.getElementById('actionProject').innerHTML=projectOpts;
+ const terr=[...new Set(db.needs.map(n=>n.territory).filter(Boolean))].sort();document.getElementById('territoryReport').innerHTML=terr.map(t=>`<option>${esc(t)}</option>`).join('')||'<option>Sin datos</option>';
+}
+function renderAll(){renderDashboard();renderNeeds();renderLeaders();renderProjects();renderActions();refreshRefs();document.getElementById('orgName').value=db.settings.orgName||'';document.getElementById('orgTeam').value=db.settings.orgTeam||''}
+function renderDashboard(){
+ const n=db.needs.length, verified=db.needs.filter(x=>x.status==='Verificada'||x.status==='En gestión'||x.status==='Solucionada').length, urgent=db.needs.filter(x=>x.priority==='Urgente').length, futureCommitments=db.projects.filter(x=>x.recordType==='futureCommitment').length, solved=db.needs.filter(x=>x.status==='Solucionada').length, territories=new Set(db.needs.map(x=>x.territory).filter(Boolean)).size;
+ const inManagement=db.needs.filter(x=>x.status==='En gestión').length; const overdue=db.needs.filter(x=>x.followUp && x.followUp < new Date().toISOString().slice(0,10) && x.status!=='Solucionada').length; const kpiData=[['♟','Necesidades\nregistradas',n],['✓','Verificadas',verified],['▤','En gestión',inManagement],['📁','Compromisos\nfuturos',futureCommitments],['✓','Solucionadas',solved],['●','Acciones\nvencidas',overdue]]; document.getElementById('kpis').innerHTML=kpiData.map(([i,l,v])=>`<div class="kpi"><div class="ico">${i}</div><div><div class="n">${v}</div><div class="l">${l.replace('\n','<br>')}</div></div><div class="kpi-link">Ver todas</div></div>`).join(''); const total=document.getElementById('totalNeeds'); if(total) total.textContent=n;
+ renderBars('statusBars',statuses,db.needs,'status');renderBars('priorityBars',priorities,db.needs,'priority');
+ const counts={};db.needs.forEach(x=>counts[x.sector]=(counts[x.sector]||0)+1);document.getElementById('sectorList').innerHTML=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>`<div class="list-row"><span>${esc(k||'Sin sector')}</span><strong>${v}</strong></div>`).join('')||'<p class="muted">Aún no hay información registrada.</p>';
+ const up=db.needs.filter(x=>x.followUp||x.nextAction).sort((a,b)=>(a.followUp||'9999').localeCompare(b.followUp||'9999')).slice(0,7);document.getElementById('upcoming').innerHTML=up.map(x=>`<div class="list-row"><div><strong>${esc(x.code)}</strong> · ${esc(x.title)}<div class="muted">${esc(x.nextAction||'Sin próxima acción')}</div></div><span>${esc(x.followUp||'—')}</span></div>`).join('')||'<p class="muted">No hay seguimientos programados.</p>';
+}
+function renderBars(id,values,data,key){const max=Math.max(1,...values.map(v=>data.filter(x=>x[key]===v).length));document.getElementById(id).innerHTML=values.map(v=>{const c=data.filter(x=>x[key]===v).length;return `<div class="bar-row"><span>${esc(v)}</span><div class="bar-track"><div class="bar-fill" style="width:${c/max*100}%"></div></div><strong>${c}</strong></div>`}).join('')}
+function renderNeeds(){const q=(document.getElementById('needSearch')?.value||'').toLowerCase(),sf=document.getElementById('needStatusFilter')?.value||'',pf=document.getElementById('needPriorityFilter')?.value||'';const rows=db.needs.filter(n=>(!q||[n.code,n.territory,n.title,n.sector].join(' ').toLowerCase().includes(q))&&(!sf||n.status===sf)&&(!pf||n.priority===pf));document.getElementById('needsTable').innerHTML=`<table><thead><tr><th>Código</th><th>Territorio</th><th>Necesidad</th><th>Sector</th><th>Prioridad</th><th>Estado</th><th>Próxima acción</th><th>Seguimiento</th><th></th></tr></thead><tbody>${rows.map(n=>`<tr><td><strong>${esc(n.code)}</strong></td><td>${esc(n.territory)}</td><td>${esc(n.title)}</td><td>${esc(n.sector)}</td><td>${tag(n.priority)}</td><td>${tag(n.status)}</td><td>${esc(n.nextAction||'—')}</td><td>${esc(n.followUp||'—')}</td><td><button class="icon-btn" onclick="editNeed('${n.id}')">✏️</button><button class="icon-btn" onclick="deleteItem('needs','${n.id}')">🗑️</button></td></tr>`).join('')||'<tr><td colspan="9">Sin registros.</td></tr>'}</tbody></table>`}
+function contactActions(l){return `<button type="button" class="contact-classify-link" onclick="openContactClassification('${esc(l.id)}')">${l.contactType==='Líder'||l.contactType==='Simpatizante'?'Cambiar':'✓ Clasificar'}</button><button class="icon-btn" onclick="editLeader('${l.id}')">✏️</button><button class="icon-btn" onclick="deleteItem('leaders','${l.id}')">🗑️</button>`}
+function supporterRow(l){const consent=l.communicationsConsent||'Pendiente',wa=l.whatsapp||l.phone||'',waBtn=(consent==='Sí'&&wa)?`<button class="icon-btn wa-contact-btn" title="Abrir WhatsApp" onclick="openLeaderWhatsApp('${l.id}')">🟢</button>`:'';return `<tr class="supporter-row" id="contact-row-${l.id}"><td><strong>${esc(l.name)}</strong></td><td>${esc(l.role||'Simpatizante')}</td><td>${esc(l.organization||'—')}</td><td>${esc(l.territory||'—')}</td><td>${esc(wa||'—')} ${waBtn}</td><td>${tag(consent)}</td><td>${esc(l.lastCommunication||'—')}</td><td>${contactActions(l)}</td></tr>`}
+function renderLeaders(){
+ const leaders=db.leaders.filter(l=>l.contactType==='Líder'), supporters=db.leaders.filter(l=>l.contactType==='Simpatizante'), unclassified=db.leaders.filter(l=>!l.contactType||l.contactType==='Participante');
+ const rows=leaders.map(l=>{const consent=l.communicationsConsent||'Pendiente',wa=l.whatsapp||l.phone||'',waBtn=(consent==='Sí'&&wa)?`<button class="icon-btn wa-contact-btn" title="Abrir WhatsApp" onclick="openLeaderWhatsApp('${l.id}')">🟢</button>`:'', children=supporters.filter(x=>x.parentLeaderId===l.id), childRows=children.map(supporterRow).join('')||'<tr class="supporter-row"><td colspan="8" class="network-empty">Este líder todavía no tiene simpatizantes vinculados.</td></tr>';return `<tr class="leader-network-row" id="contact-row-${l.id}"><td><button class="network-toggle" onclick="toggleSupporters('${l.id}')" title="Ver simpatizantes">▸</button> <strong>${esc(l.name)}</strong></td><td>${esc(l.role||'Líder')}</td><td>${esc(l.organization||'—')}</td><td>${esc(l.territory||'—')}</td><td>${esc(wa||'—')} ${waBtn}</td><td>${tag(consent)}</td><td><button class="supporter-count" onclick="toggleSupporters('${l.id}')">${children.length}</button></td><td>${contactActions(l)}</td></tr><tr id="supporters-${l.id}" class="supporters-detail hidden"><td colspan="8"><div class="supporters-box"><div class="supporters-title"><strong>Simpatizantes de ${esc(l.name)}</strong><span>${children.length} registrado${children.length===1?'':'s'}</span></div><div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Calidad / rol</th><th>Organización</th><th>Territorio</th><th>WhatsApp</th><th>Comunicaciones</th><th>Último contacto</th><th></th></tr></thead><tbody>${childRows}</tbody></table></div></div></td></tr>`}).join('');
+ const orphan=supporters.filter(x=>!leaders.some(l=>l.id===x.parentLeaderId));
+ const pending=[...unclassified,...orphan];
+ document.getElementById('leadersTable').innerHTML=`<table><thead><tr><th>Nombre</th><th>Calidad / rol</th><th>Organización</th><th>Territorio</th><th>WhatsApp</th><th>Comunicaciones</th><th>Simpatizantes</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="8" class="network-empty">Aún no hay líderes clasificados. Registre primero un líder para vincular simpatizantes.</td></tr>'}</tbody></table>${pending.length?`<div class="unclassified-box"><h3>Participantes, contactos por clasificar y vínculos anteriores pendientes <span>${pending.length}</span></h3><p>Los participantes no cuentan como simpatizantes aportados por un líder. Los simpatizantes históricos sin líder todavía pueden vincularse aquí sin borrar sus fichas.</p><div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Clasificación</th><th>Territorio</th><th>WhatsApp</th><th></th></tr></thead><tbody>${pending.map(l=>`<tr id="contact-row-${l.id}"><td><strong>${esc(l.name)}</strong></td><td>${esc(contactTypeLabel(l))} · ${esc(l.role||'Sin rol')}</td><td>${esc(l.territory||'—')}</td><td>${esc(l.whatsapp||l.phone||'—')}</td><td>${l.contactType==='Simpatizante'?`<button type="button" class="contact-classify-link link-orphan-btn" onclick="openContactClassification('${esc(l.id)}','Simpatizante')">🔗 Elegir líder</button>`:''}${contactActions(l)}</td></tr>`).join('')}</tbody></table></div></div>`:''}`;
+ if(typeof window.renderLeaderRosterPanel==='function')window.renderLeaderRosterPanel(leaders,supporters);
+ const c=document.getElementById('authorizedContactsCount');if(c)c.textContent=db.leaders.filter(l=>l.communicationsConsent==='Sí').length;
+ const lc=document.getElementById('leadersCount'),sc=document.getElementById('supportersCount'),tc=document.getElementById('networkTotalCount'),uc=document.getElementById('unclassifiedCount');if(lc)lc.textContent=leaders.length;if(sc)sc.textContent=supporters.length;if(tc)tc.textContent=leaders.length+supporters.length;if(uc)uc.textContent=unclassified.length;
+}
+window.toggleSupporters=id=>{const row=document.getElementById(`supporters-${id}`);if(!row)return;row.classList.toggle('hidden');const btn=row.previousElementSibling?.querySelector('.network-toggle');if(btn)btn.textContent=row.classList.contains('hidden')?'▸':'▾'};
+function toggleParentLeaderField(){const type=document.getElementById('contactType'),field=document.getElementById('parentLeaderField'),sel=document.getElementById('parentLeaderId');if(!type||!field)return;const show=type.value==='Simpatizante';field.classList.toggle('hidden',!show);if(sel){sel.required=show;sel.setCustomValidity('');}const help=document.getElementById('contactTypeHelp');if(help){help.textContent=type.value==='Líder'?'Líder: organiza su grupo y aporta simpatizantes. Puede consultar su cantidad y nombres.':type.value==='Simpatizante'?'Simpatizante: debe quedar vinculado obligatoriamente a un líder registrado. Su aporte se cuenta para ese líder.':type.value==='Participante'?'Participante: persona que asistió o se vinculó a una actividad, pero NO se contabiliza como simpatizante de un líder.':'Seleccione la condición que corresponda. No se infiere ninguna vinculación automáticamente.';}document.querySelectorAll('[data-leader-type]').forEach(b=>{const active=b.dataset.leaderType===type.value;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))})}
+
+function contactTypeLabel(l){return l.contactType==='Líder'?'Líder':l.contactType==='Simpatizante'?'Simpatizante':l.contactType==='Participante'?'Participante':'Por clasificar'}
+window.openContactFinder=()=>{const m=document.getElementById('contactFinderModal'),i=document.getElementById('contactFinderInput');if(!m)return;m.classList.add('open');if(i){i.value='';setTimeout(()=>i.focus(),80)}renderContactFinder('')};
+window.closeContactFinder=()=>{document.getElementById('contactFinderModal')?.classList.remove('open')};
+window.renderContactFinder=(value='')=>{const box=document.getElementById('contactFinderResults');if(!box)return;const q=String(value||'').trim().toLowerCase();if(!q){box.innerHTML='<div class="finder-empty"><strong>Escriba para buscar.</strong><span>La búsqueda revisa nombre, WhatsApp, teléfono y territorio.</span></div>';return}const matches=db.leaders.filter(l=>[l.name,l.whatsapp,l.phone,l.territory,l.organization].join(' ').toLowerCase().includes(q)).slice(0,40);box.innerHTML=matches.map(l=>{const parent=l.contactType==='Simpatizante'?db.leaders.find(x=>x.id===l.parentLeaderId):null;return `<button type="button" class="finder-result" onclick="selectContactFromFinder('${l.id}')"><span class="finder-avatar">${esc((l.name||'?').trim().charAt(0).toUpperCase())}</span><span class="finder-copy"><strong>${esc(l.name||'Sin nombre')}</strong><small><b>${esc(contactTypeLabel(l))}</b> · ${esc(l.territory||'Sin territorio')}${parent?` · Líder: ${esc(parent.name)}`:''}</small><small>WhatsApp: ${esc(l.whatsapp||l.phone||'—')}</small></span><span class="finder-go">Ver →</span></button>`}).join('')||'<div class="finder-empty"><strong>No encontré coincidencias.</strong><span>Pruebe con otra parte del nombre, teléfono o territorio.</span></div>'};
+window.selectContactFromFinder=id=>{const l=db.leaders.find(x=>x.id===id);if(!l)return;closeContactFinder();showView('leaders');renderLeaders();setTimeout(()=>{if(l.contactType==='Simpatizante'&&l.parentLeaderId){const detail=document.getElementById(`supporters-${l.parentLeaderId}`);if(detail?.classList.contains('hidden'))toggleSupporters(l.parentLeaderId)}setTimeout(()=>{const row=document.getElementById(`contact-row-${id}`);if(row){row.scrollIntoView({behavior:'smooth',block:'center'});row.classList.add('contact-found');setTimeout(()=>row.classList.remove('contact-found'),2600)}},80)},80)};
+
+function renderProjects(){
+ const future=db.projects.filter(p=>p.recordType==='futureCommitment'),legacy=db.projects.filter(p=>p.recordType!=='futureCommitment');
+ const futureRows=future.map(p=>{const n=db.needs.find(x=>x.id===p.needId);return `<tr><td><strong>${esc(p.name)}</strong><small class="future-condition">Si resulta elegido · Sujeto a viabilidad</small></td><td>${esc(p.territory||'—')}</td><td>${esc(p.sector||'—')}</td><td>${tag(p.status)}</td><td>${esc(p.timeframe||'Por definir')}</td><td>${esc(n?.code||'—')}</td><td><button class="icon-btn" title="Editar compromiso futuro" onclick="editCampaignCommitment('${p.id}')">✏️</button><button class="icon-btn" title="Eliminar registro" onclick="deleteItem('projects','${p.id}')">🗑️</button></td></tr><tr class="future-scope-row"><td colspan="7"><b>Alcance propuesto:</b> ${esc(p.scope||p.notes||'Sin detalle')} <span class="muted">${p.value?`· Costo preliminar no aprobado: ${money(p.value)}`:''}</span></td></tr>`}).join('');
+ const legacyRows=legacy.map(p=>`<tr><td>${esc(p.name||'Proyecto previo')}</td><td>${esc(p.territory||'—')}</td><td>${tag(p.status||'Sin estado')}</td><td>${esc(p.radicado||'—')}</td><td><button class="icon-btn" title="Editar registro histórico" onclick="editProject('${p.id}')">✏️</button></td></tr>`).join('');
+ document.getElementById('projectsTable').innerHTML=`<table><thead><tr><th>Compromiso futuro</th><th>Territorio</th><th>Área</th><th>Preparación</th><th>Horizonte</th><th>Necesidad vinculada</th><th></th></tr></thead><tbody>${futureRows||'<tr><td colspan="7">Aún no hay compromisos para un eventual mandato. Los nuevos registros quedarán expresamente condicionados a resultar elegido.</td></tr>'}</tbody></table>${legacy.length?`<details class="legacy-projects"><summary>Archivo de proyectos registrados en versiones anteriores (${legacy.length})</summary><p>Estos registros se conservan tal como fueron guardados; <strong>no se convierten automáticamente en compromisos de campaña</strong> ni se suman al contador de compromisos futuros.</p><table><thead><tr><th>Registro anterior</th><th>Territorio</th><th>Estado histórico</th><th>Radicado</th><th></th></tr></thead><tbody>${legacyRows}</tbody></table></details>`:''}`;
+}
+function renderActions(){document.getElementById('actionsTable').innerHTML=`<table><thead><tr><th>Fecha</th><th>Necesidad</th><th>Proyecto</th><th>Tipo</th><th>Actuación</th><th>Responsable</th><th>Próxima acción</th><th>Próxima fecha</th><th></th></tr></thead><tbody>${db.actions.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(a=>{const n=db.needs.find(x=>x.id===a.needId),p=db.projects.find(x=>x.id===a.projectId);return `<tr><td>${esc(a.date)}</td><td>${esc(n?.code||'—')}</td><td>${esc(p?.name||'—')}</td><td>${esc(a.type)}</td><td>${esc(a.description)}</td><td>${esc(a.responsible||'—')}</td><td>${esc(a.nextAction||'—')}</td><td>${esc(a.nextDate||'—')}</td><td><button class="icon-btn" onclick="deleteItem('actions','${a.id}')">🗑️</button></td></tr>`}).join('')||'<tr><td colspan="9">Sin registros.</td></tr>'}</tbody></table>`}
+
+window.editNeed=id=>{const n=db.needs.find(x=>x.id===id);openModal('needModal');const f=document.getElementById('needForm');Object.entries(n).forEach(([k,v])=>{if(f.elements[k])f.elements[k].value=v??''})}
+window.editLeader=id=>{const n=db.leaders.find(x=>x.id===id);openModal('leaderModal');const f=document.getElementById('leaderForm');Object.entries(n).forEach(([k,v])=>{if(f.elements[k])f.elements[k].value=v??''});toggleParentLeaderField()}
+window.editCampaignCommitment=id=>{const n=db.projects.find(x=>x.id===id&&x.recordType==='futureCommitment');if(!n)return;openModal('campaignCommitmentModal');const f=document.getElementById('campaignCommitmentForm');f.reset();Object.entries(n).forEach(([k,v])=>{if(f.elements[k])f.elements[k].value=v??''})}
+window.editProject=id=>{const n=db.projects.find(x=>x.id===id);if(!n)return;if(n.recordType==='futureCommitment'){editCampaignCommitment(id);return}openModal('projectModal');const f=document.getElementById('projectForm');Object.entries(n).forEach(([k,v])=>{if(f.elements[k])f.elements[k].value=v??''})}
+window.deleteItem=(col,id)=>{if(col==='leaders'&&db.leaders.some(x=>x.contactType==='Simpatizante'&&x.parentLeaderId===id)){toast('Reasigne primero los simpatizantes antes de eliminar al líder');return}if(confirm('¿Eliminar este registro?')){db[col]=db[col].filter(x=>x.id!==id);saveDB();toast('Registro eliminado')}}
+
+function exportJSON(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});downloadBlob(blob,`MATRIZ-FLORIDABLANCA-RESPALDO-${new Date().toISOString().slice(0,10)}.json`)}
+function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const obj=JSON.parse(r.result);if(!obj.needs||!obj.leaders)throw new Error('Formato inválido');db={...blankDB(),...obj};saveDB();toast('Respaldo restaurado')}catch(err){alert('No fue posible importar el archivo: '+err.message)}};r.readAsText(f);e.target.value=''}
+function exportCSV(){const cols=['code','territory','zone','title','sector','priority','status','maturity','competentEntity','location','affected','age','nextAction','responsible','followUp'];const q=v=>`"${String(v??'').replaceAll('"','""')}"`;const csv='\ufeff'+cols.join(';')+'\n'+db.needs.map(n=>cols.map(c=>q(n[c])).join(';')).join('\n');downloadBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}),`NECESIDADES-FLORIDABLANCA-${new Date().toISOString().slice(0,10)}.csv`)}
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function printReport(type){let title='Diagnóstico Territorial de Floridablanca';let items=db.needs;if(type==='territory'){const t=document.getElementById('territoryReport').value;title=`Ficha Territorial · ${t}`;items=db.needs.filter(n=>n.territory===t)}const html=`<html><head><title>${esc(title)}</title><style>body{font-family:Arial;padding:32px;color:#183025}h1{color:#0f5132}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ddd;padding:8px;text-align:left;font-size:12px}.summary{display:flex;gap:18px;margin:18px 0}.box{border:1px solid #ddd;padding:12px;border-radius:8px}</style></head><body><h1>${esc(title)}</h1><p>Nuestra Floridablanca · Archivo de trabajo</p><div class="summary"><div class="box"><b>Necesidades:</b> ${items.length}</div><div class="box"><b>Urgentes:</b> ${items.filter(x=>x.priority==='Urgente').length}</div><div class="box"><b>En gestión:</b> ${items.filter(x=>x.status==='En gestión').length}</div><div class="box"><b>Solucionadas:</b> ${items.filter(x=>x.status==='Solucionada').length}</div></div><table><tr><th>Código</th><th>Territorio</th><th>Necesidad</th><th>Sector</th><th>Prioridad</th><th>Estado</th><th>Próxima acción</th></tr>${items.map(n=>`<tr><td>${esc(n.code)}</td><td>${esc(n.territory)}</td><td>${esc(n.title)}</td><td>${esc(n.sector)}</td><td>${esc(n.priority)}</td><td>${esc(n.status)}</td><td>${esc(n.nextAction||'')}</td></tr>`).join('')}</table><script>window.print()<\/script></body></html>`;const w=window.open('','_blank');w.document.write(html);w.document.close()}
+async function registerSW(){if('serviceWorker' in navigator){try{const reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await reg.update()}catch(e){console.warn(e)}}}
+init();
+
+function updateClock(){const d=new Date();const date=document.getElementById('liveDate'),time=document.getElementById('liveTime');if(date)date.textContent='▣ '+new Intl.DateTimeFormat('es-CO',{day:'numeric',month:'long',year:'numeric'}).format(d);if(time)time.textContent='◷ '+new Intl.DateTimeFormat('es-CO',{hour:'numeric',minute:'2-digit'}).format(d)} updateClock(); setInterval(updateClock,30000);
+
+// v1.3.45 · consulta desplegable de consolidados de la red
+window.openNetworkSummary=(kind)=>{
+ const modal=document.getElementById('networkSummaryModal'), title=document.getElementById('networkSummaryTitle'), sub=document.getElementById('networkSummarySubtitle'), box=document.getElementById('networkSummaryList'); if(!modal||!box)return;
+ const leaders=db.leaders.filter(l=>l.contactType==='Líder'), supporters=db.leaders.filter(l=>l.contactType==='Simpatizante'), unclassified=db.leaders.filter(l=>!l.contactType||l.contactType==='Participante'), authorized=db.leaders.filter(l=>l.communicationsConsent==='Sí');
+ let list=[], label='Consulta', note='';
+ if(kind==='leaders'){list=leaders;label='Líderes';note='Listado completo de líderes registrados en la red territorial.'}
+ if(kind==='supporters'){list=supporters;label='Simpatizantes';note='Listado completo. Los registros históricos sin líder asociado se muestran como pendientes de vinculación.'}
+ if(kind==='total'){list=[...leaders,...supporters];label='Total de la red';note='Líderes y simpatizantes actualmente clasificados.'}
+ if(kind==='unclassified'){list=unclassified;label='Participantes y por clasificar';note='Participante significa que hay un registro de actividad o relación, pero aún no se ha vinculado como simpatizante de un líder.'}
+ if(kind==='authorized'){list=authorized;label='Contactos autorizados para comunicaciones';note='Personas con autorización registrada para recibir comunicaciones.'}
+ title.textContent=`${label} · ${list.length}`; sub.textContent=note;
+ const rows=list.map(l=>{const parent=l.contactType==='Simpatizante'?leaders.find(x=>x.id===l.parentLeaderId):null;const extra=kind==='leaders'?`${supporters.filter(x=>x.parentLeaderId===l.id).length} simpatizante(s)`:parent?.name||'—';const action=`<div class="summary-classification-actions"><button type="button" class="classify-leader ${l.contactType==='Líder'?'selected':''}" onclick="openContactClassification('${esc(l.id)}','Líder')" title="Clasificar como Líder">🧭 Líder</button><button type="button" class="classify-supporter ${l.contactType==='Simpatizante'?'selected':''}" onclick="openContactClassification('${esc(l.id)}','Simpatizante')" title="Clasificar como Simpatizante">🤝 Simpatizante</button></div>`;return `<tr><td><button class="summary-person-btn" onclick="openPersonFromSummary('${esc(l.id)}')">${esc(l.name||'Sin nombre')}</button></td><td><div class="summary-condition-cell"><span class="summary-role">${esc(contactTypeLabel(l))}</span>${action}</div></td><td>${esc(l.territory||'—')}</td><td>${esc(l.whatsapp||l.phone||'—')}</td><td>${esc(extra)}</td></tr>`}).join('');
+ const lastHead=kind==='leaders'?'Simpatizantes':kind==='supporters'?'Líder asociado':'Referencia';box.dataset.summaryKind=kind;window.__networkSummaryKind=kind;box.innerHTML=list.length?`<div class="table-wrap"><table class="summary-consult-table"><thead><tr><th>Nombre</th><th>Condición / clasificar</th><th>Territorio</th><th>WhatsApp</th><th>${lastHead}</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<div class="summary-empty">No hay registros en este consolidado.</div>';
+ modal.classList.add('open');
+};
+window.closeNetworkSummary=()=>document.getElementById('networkSummaryModal')?.classList.remove('open');
+window.openPersonFromSummary=(id)=>{closeNetworkSummary();selectContactFromFinder(id)};
+
+
+// v1.4.11 — clasificación manual de contactos existentes, sin reimportarlos.
+let classificationChoice='';
+window.openContactClassification=(id,preselect='')=>{
+ const person=db.leaders.find(l=>String(l.id)===String(id));if(!person){toast('Contacto no encontrado');return;}
+ document.getElementById('classifyContactId').value=person.id;
+ document.getElementById('classifyContactName').textContent=person.name||'Contacto sin nombre';
+ document.getElementById('classifyContactTerritory').textContent=[person.barrio||person.territory,person.whatsapp||person.phone].filter(Boolean).join(' · ')||'Registro existente';
+ const leaderSelect=document.getElementById('classifyParentLeader');
+ leaderSelect.innerHTML='<option value="">Seleccione un líder responsable...</option>'+db.leaders.filter(l=>l.contactType==='Líder'&&l.id!==person.id).sort((a,b)=>String(a.name).localeCompare(String(b.name),'es')).map(l=>`<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('');
+ const oldParent=person.parentLeaderId||'';
+ leaderSelect.value=[...leaderSelect.options].some(x=>x.value===oldParent)?oldParent:'';
+ setContactClassificationChoice(preselect||person.contactType||'');
+ document.getElementById('contactClassificationModal').classList.add('open');
+};
+window.setContactClassificationChoice=(type)=>{
+ classificationChoice=type==='Líder'||type==='Simpatizante'?type:'';
+ document.querySelectorAll('[data-classification-choice]').forEach(b=>{const active=b.dataset.classificationChoice===classificationChoice;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ document.getElementById('classifyParentField').classList.toggle('hidden',classificationChoice!=='Simpatizante');
+ document.getElementById('classifyParentLeader').required=classificationChoice==='Simpatizante';
+};
+window.closeContactClassification=()=>document.getElementById('contactClassificationModal')?.classList.remove('open');
+window.saveContactClassification=()=>{
+ const id=document.getElementById('classifyContactId').value,person=db.leaders.find(l=>String(l.id)===String(id));
+ if(!person){toast('No se encontró el contacto');return;}
+ if(!['Líder','Simpatizante'].includes(classificationChoice)){toast('Seleccione Líder o Simpatizante');return;}
+ const previous=person.contactType;
+ if(previous==='Líder'&&classificationChoice!=='Líder'){
+   const linked=db.leaders.filter(l=>l.contactType==='Simpatizante'&&l.parentLeaderId===person.id);
+   if(linked.length){toast(`Reasigne primero los ${linked.length} simpatizantes de este líder`);return}
+ }
+ const parentId=classificationChoice==='Simpatizante'?document.getElementById('classifyParentLeader').value:'';
+ if(classificationChoice==='Simpatizante'&&!db.leaders.some(l=>l.id===parentId&&l.contactType==='Líder'&&l.id!==person.id)){toast('Elija un líder responsable para este simpatizante');return}
+ person.contactType=classificationChoice;
+ person.parentLeaderId=parentId;
+ person.classifiedAt=new Date().toISOString();
+ // No modifica cédula, teléfono, dirección, autorización ni demás datos.
+ const summary=document.getElementById('networkSummaryList'),kind=window.__networkSummaryKind,scroll=summary?.scrollTop||0;
+ closeContactClassification();saveDB();
+ if(document.getElementById('networkSummaryModal')?.classList.contains('open')&&kind){openNetworkSummary(kind);document.getElementById('networkSummaryList').scrollTop=scroll;}
+ toast(`Contacto clasificado como ${classificationChoice}`);
+};

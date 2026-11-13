@@ -1,0 +1,29 @@
+/* Formularios y aportes por líder · extensión de la identidad Verde Guane */
+#leaderModal .modal-card{max-width:790px}
+#leaderModal .form-grid{gap:12px}
+#leaderModal .form-grid label{min-width:0;line-height:1.4}
+#leaderModal .form-grid label select{width:100%;min-width:0;min-height:38px;background:#fff;color:#224633;border:1px solid #bed3c3;border-radius:8px;padding:7px 9px}
+#leaderModal .form-grid input,#leaderModal .form-grid textarea{border-color:#bed3c3}
+#leaderModal .form-grid label select:focus-visible,#leaderModal .form-grid input:focus-visible{outline:2px solid #419a6c;outline-offset:1px}
+#leaderModal .contact-quick-type{background:#f0f9f1;border:1px solid #c7e2cb}
+#leaderModal .contact-quick-type strong{color:#135e42}
+#leaderModal #contactTypeHelp{display:block;font-size:12px;line-height:1.5;color:#3d6651;padding:4px 2px 0}
+#leaderModal #parentLeaderField:not(.hidden){background:#fff9e8;border:1px solid #efd998;border-radius:9px;padding:9px}
+#leaderModal #parentLeaderField small{display:block;font-size:11px;line-height:1.5;color:#765c1c;margin-top:6px}
+#leaderModal .category-subtitle{display:block;font-size:11px;font-weight:700;color:#3b6850;margin:6px 0 4px}
+#leaderModal .category-hint{display:block;font-size:11px;line-height:1.4;color:#667c6c;margin:5px 0 6px}
+#leaderModal #roleOtherField:not(.hidden){background:#fffbeb;padding:9px;border-left:3px solid #d4a72d;border-radius:7px}
+#leaderRosterPanel.leader-roster{background:#f2f9f2;border-color:#cbe3d0}
+#leaderRosterPanel .leader-roster-header h3{color:#145b42}
+#leaderRosterPanel .leader-roster-person strong{color:#145b42}
+#leaderRosterPanel .leader-roster-count{background:#e0f3e7;color:#0b5a3b}
+#leaderRosterPanel .leader-roster-card{border-color:#d5e9db}
+#leaderRosterPanel .leader-roster-actions button{border-color:#b8d6c0;color:#11573c;background:#f1f9f2}
+#leaderRosterPanel .leader-roster-actions button:last-child{background:#176846;border-color:#176846;color:#fff}
+#leaderRosterPanel .leader-roster-actions .roster-new-supporter{flex-basis:100%;font-weight:750}
+#leaderRosterPanel .leader-roster-pending{background:#fff9e8;color:#775a18;border-color:#edd69c}
+.leader-contributions-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 12px}
+.leader-contributions-stats>div{background:#fff;border:1px solid #d2e7d6;border-radius:9px;display:flex;align-items:center;gap:12px;padding:10px 13px}
+.leader-contributions-stats strong{font-size:23px;color:#106a46;min-width:30px}
+.leader-contributions-stats span{font-size:11px;color:#4e6958;line-height:1.35}
+@media(max-width:680px){.leader-contributions-stats{grid-template-columns:1fr 1fr 1fr;gap:5px}.leader-contributions-stats>div{display:block;text-align:center;padding:7px 4px}.leader-contributions-stats span{display:block;font-size:10px}.leader-contributions-stats strong{font-size:19px}}

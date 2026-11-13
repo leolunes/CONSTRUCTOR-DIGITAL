@@ -1,0 +1,15 @@
+NUESTRA FLORIDABLANCA — v1.0.32
+
+CORRECCIÓN EN EL ARCHIVO DE DERECHOS DE PETICIÓN
+
+ANTES: «Aplicar diseño aprobado» mostraba primero el PDF viejo, lo que podía dar la impresión de que el rediseño no funcionó.
+
+AHORA: «CREAR NUEVO PDF con el diseño aprobado» abre el editor y muestra de inmediato una VISTA PREVIA DEL NUEVO DISEÑO, claramente marcada como BORRADOR SIN FIRMA.
+
+Si el documento original guardaba el formulario completo, se recuperan sus datos. Si solo guardaba el PDF convertido en imagen, no es posible reconstruir automáticamente su texto: se deberán completar los apartados pendientes copiándolos del PDF original. El original se consulta desde «Abrir PDF antiguo aparte» o desde la sección desplegable.
+
+PROCEDIMIENTO: seleccione el documento -> CREAR NUEVO PDF -> complete los campos faltantes -> Actualizar vista -> firme nuevamente con autorización -> Generar PDF NUEVO firmado y archivarlo.
+
+El PDF original conserva sus datos, firma, fecha y radicación. El nuevo documento queda archivado por separado, sin heredar radicado ni estado de envío. El listado ofrece un botón para abrir la versión rediseñada una vez haya sido creada.
+
+IMPORTANTE: no borre los datos del navegador, y exporte un respaldo integral antes de instalar. Mantenga el mismo origen de Go Live para conservar el acceso a IndexedDB.

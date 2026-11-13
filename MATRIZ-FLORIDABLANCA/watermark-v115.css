@@ -1,0 +1,16 @@
+
+/* v1.0.15 · marca de agua Marco Andrés */
+.main{position:relative;isolation:isolate;background:linear-gradient(180deg,#eef3ea 0%,#f7f5ed 100%) !important;overflow:hidden}
+.main::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(ellipse at center, rgba(255,255,255,.72) 0%, rgba(255,255,255,.90) 58%, rgba(255,255,255,.98) 100%),
+  url('assets/marco-andres-silva-lopez.jpeg') center 260px / min(44vw,540px) auto no-repeat;
+  opacity:.16;filter:grayscale(.1) saturate(.85);}
+.main::after{content:"";position:absolute;inset:auto 0 0 0;height:180px;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(247,245,237,0) 0%,rgba(247,245,237,.88) 55%,rgba(247,245,237,.98) 100%)}
+.main>*{position:relative;z-index:1}
+.card,.section-title,.toolbar,.table-wrap,.quick-links button,.birthday-dashboard-card{background-color:rgba(255,255,255,.94)}
+@media (max-width: 960px){
+  .main::before{background:
+    radial-gradient(ellipse at center, rgba(255,255,255,.78) 0%, rgba(255,255,255,.92) 58%, rgba(255,255,255,.98) 100%),
+    url('assets/marco-andres-silva-lopez.jpeg') center 180px / 340px auto no-repeat;opacity:.12}
+}
+@media print{.main::before,.main::after{display:none!important}.main{background:#fff!important}}

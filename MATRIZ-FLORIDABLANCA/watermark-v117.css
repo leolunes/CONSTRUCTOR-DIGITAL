@@ -1,0 +1,81 @@
+/* MATRIZ FLORIDABLANCA · v1.0.19 */
+body.florida-guane .main{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:linear-gradient(155deg,#f3f6ef 0%,#faf8f1 62%,#f3f5ee 100%)!important;
+}
+body.florida-guane .main::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-image:url('assets/marca-agua-marco-palacio-v116.png')!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  background-position:center bottom!important;
+  opacity:.28!important;
+  filter:grayscale(.10) saturate(.88)!important;
+}
+body.florida-guane .main::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:linear-gradient(to bottom, rgba(250,249,244,.96) 0%, rgba(250,249,244,.78) 18%, rgba(250,249,244,.34) 44%, rgba(250,249,244,.12) 64%, rgba(250,249,244,.30) 82%, rgba(250,249,244,.72) 100%)!important;
+}
+body.florida-guane .main > *{position:relative;z-index:1!important;}
+body.florida-guane .main .card,
+body.florida-guane .main .section-title,
+body.florida-guane .main .toolbar,
+body.florida-guane .main .table-wrap,
+body.florida-guane .main .quick-links button,
+body.florida-guane .main .birthday-dashboard-card,
+body.florida-guane .main .summary-card,
+body.florida-guane .main .position-preview-card,
+body.florida-guane .main .position-form{background-color:rgba(255,255,255,.965)!important;}
+
+body.florida-guane .brand-header .ivan-only-brand{z-index:7!important;}
+body.florida-guane .brand-header .ivan-main{gap:13px!important;align-items:center!important;}
+body.florida-guane .brand-header .ivan-main .ivan-photo{width:112px!important;height:112px!important;flex:0 0 auto;}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy{gap:1px!important;}
+body.florida-guane .brand-header .ivan-name strong{font-size:32px!important;line-height:1.04!important;}
+body.florida-guane .brand-header .ivan-name b{font-size:39px!important;line-height:1.06!important;}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy span{font-size:12px!important;}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy small{font-size:15px!important;}
+@media (min-width:1680px){
+ body.florida-guane .brand-header .ivan-main .ivan-photo{width:128px!important;height:128px!important;}
+ body.florida-guane .brand-header .ivan-name strong{font-size:39px!important;}
+ body.florida-guane .brand-header .ivan-name b{font-size:48px!important;}
+ body.florida-guane .brand-header{grid-template-columns:minmax(440px,32%) minmax(420px,1fr) minmax(280px,20%)!important;}
+}
+@media (min-width:1101px) and (max-width:1679px){
+ body.florida-guane .brand-header{grid-template-columns:minmax(325px,32%) minmax(360px,1fr) minmax(205px,20%)!important;}
+ body.florida-guane .brand-header .ivan-name strong{font-size:29px!important;}
+ body.florida-guane .brand-header .ivan-name b{font-size:35px!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-photo{width:98px!important;height:98px!important;}
+}
+@media (min-width:701px) and (max-width:1100px){
+ body.florida-guane .brand-header{grid-template-columns:minmax(260px,39%) 1fr!important;}
+ body.florida-guane .brand-header .ivan-name strong{font-size:21px!important;}
+ body.florida-guane .brand-header .ivan-name b{font-size:25px!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-photo{width:76px!important;height:76px!important;}
+ body.florida-guane .main::before{background-size:cover!important;opacity:.22!important;}
+}
+@media (max-width:700px){
+ body.florida-guane .brand-header{grid-template-columns:1fr!important;gap:3px!important;}
+ body.florida-guane .brand-header .ivan-only-brand{grid-column:1!important;grid-row:1!important;justify-self:start!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-brand-copy{display:flex!important;}
+ body.florida-guane .brand-header .ivan-name strong{font-size:21px!important;}
+ body.florida-guane .brand-header .ivan-name b{font-size:25px!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-brand-copy span{font-size:10px!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-brand-copy small{font-size:11px!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-photo{width:68px!important;height:68px!important;}
+ body.florida-guane .brand-header .system-brand{grid-column:1!important;grid-row:2!important;text-align:center!important;align-items:center!important;}
+ body.florida-guane .brand-header .system-brand>strong{font-size:19px!important;}
+ body.florida-guane .brand-header .system-brand>em{font-size:20px!important;}
+ body.florida-guane .main::before{background-size:cover!important;background-position:center bottom!important;opacity:.18!important;}
+}
+@media print{body.florida-guane .main::before,body.florida-guane .main::after{display:none!important;}}

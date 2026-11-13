@@ -1,0 +1,39 @@
+/* Recuperación de derechos antiguos · 1.0.28 */
+.petition-rebuild-info{padding:16px 18px;border:1px solid #c7dfc9;border-left:5px solid #deb343;background:#f5faf3;border-radius:12px;color:#153d2c;}
+.petition-rebuild-info strong{font-size:17px}
+.petition-rebuild-info p{font-size:13px;line-height:1.55;margin:8px 0 12px}
+.petition-rebuild-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.petition-rebuild-buttons button{font-size:12px;cursor:pointer}
+.petition-rebuild-workspace{display:flex;flex-direction:column;gap:12px;margin:10px 0 16px}
+.petition-rebuild-preview{border:1px solid #d6e4d6;background:white;border-radius:12px;padding:10px;}
+.petition-rebuild-preview-title{font-size:13px;font-weight:800;color:#074a32;margin:0 0 8px}
+.petition-rebuild-preview iframe{display:block;width:100%;height:min(64vh,680px);border:0;background:#f3f3f3;border-radius:6px}
+.petition-rebuild-preview-note{font-size:11px;color:#5e7466;margin:8px 0 2px}
+.petition-rebuild-preview.petition-rebuild-hidden{display:none}
+.petition-rebuild-mode .petition-modal-card{width:min(1160px,98vw)}
+.petition-rebuild-mode .petition-form textarea[name="facts"],.petition-rebuild-mode .petition-form textarea[name="requests"]{min-height:170px}
+.petition-archive-buttons .petition-visual-copy-btn{background:#fdf0c9;color:#5a490e;border:1px solid #e8c75f}
+@media(min-width:1000px){
+  .petition-rebuild-mode .petition-modal-card{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start;gap:16px}
+  .petition-rebuild-mode .petition-modal-card>.modal-head{grid-column:1/-1}
+  .petition-rebuild-mode .petition-rebuild-workspace{grid-column:2;grid-row:2;position:sticky;top:12px;max-height:calc(100vh - 110px);overflow:auto;margin:0}
+  .petition-rebuild-mode .petition-form{grid-column:1;grid-row:2;min-width:0}
+  .petition-rebuild-mode .petition-rebuild-preview iframe{height:min(50vh,590px)}
+}
+@media(max-width:650px){.petition-rebuild-preview iframe{height:55vh}}
+
+/* v1.0.32: La nueva plantilla es la vista principal y el original se consulta aparte. */
+.petition-rebuild-preview-title{font-size:14px;color:#075638;margin-bottom:6px}
+.petition-rebuild-preview{border:2px solid #acd4b4;background:#fff}
+.petition-rebuild-info{background:#f0faf2;border-color:#acd4b4}
+.petition-rebuild-ready{color:#075638;font-weight:600}
+.petition-rebuild-missing{background:#fff7e7;border:1px solid #ead38a;padding:10px;border-radius:8px;color:#755016}
+.petition-rebuild-old{border:1px dashed #a6b6ab;background:#fafaf7;padding:9px 10px;border-radius:9px}
+.petition-rebuild-old summary{font-weight:700;cursor:pointer;color:#466250;font-size:13px}
+.petition-rebuild-old iframe{display:block;width:100%;min-height:440px;height:min(62vh,600px);border:0;margin-top:10px;background:#f2f2f2}
+.petition-newest-btn{background:#e6f7e7!important;color:#075638!important;border:1px solid #92c39c!important;font-weight:700}
+.petition-rebuild-mode .petition-form button[type=submit]{font-size:14px;font-weight:800;background:#075638;color:#fff}
+@media(min-width:1000px){
+  .petition-rebuild-mode .petition-rebuild-workspace{max-height:calc(100vh - 115px)}
+  .petition-rebuild-mode .petition-rebuild-preview iframe{height:min(52vh,660px)}
+}

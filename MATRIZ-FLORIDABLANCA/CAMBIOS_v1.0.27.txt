@@ -1,0 +1,24 @@
+NUESTRA FLORIDABLANCA — v1.0.27
+Archivo de Derechos de Petición: actualizar presentación sin modificar documentos anteriores.
+
+¿POR QUÉ UN PDF ANTIGUO SE VE IGUAL?
+El archivo de PDFs conserva cada documento tal como se generó. Abrir o descargar el original no cambia su diseño.
+
+CÓMO OBTENER EL DISEÑO NUEVO
+1) Derechos de petición > Archivo de PDFs.
+2) Busque el documento anterior.
+3) Pulse «Rehacer con diseño nuevo».
+4) Revise la información recuperada. En documentos antiguos los hechos y peticiones pueden no haberse guardado fuera del PDF; recópielos del original.
+5) Firme nuevamente y autorice expresamente el documento nuevo.
+6) Genere el nuevo PDF: se guardará como un registro separado.
+
+SEGURIDAD E HISTÓRICO
+- El documento original y su radicado/envío permanecen intactos.
+- La nueva versión no hereda radicados ni estados de envío del documento antiguo.
+- La firma manuscrita o escaneada no se almacena dentro del borrador del formulario para reutilizarla: se solicita autorización por documento.
+- A partir de esta versión se guardan los campos del formulario con cada nuevo PDF, excepto la firma, para poder recuperar el texto en revisiones posteriores.
+- Los archivos PDF anteriores que solo guardaron la imagen de las páginas no permiten recuperar automáticamente hechos y peticiones exactos desde el archivo local.
+
+INSTALACIÓN
+Exporte un respaldo integral antes de reemplazar la carpeta y abra con Go Live.
+Evite borrar los datos del navegador, ya que los documentos guardados residen allí.

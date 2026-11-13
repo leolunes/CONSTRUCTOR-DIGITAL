@@ -1,0 +1,57 @@
+/* Floridablanca v1.1.2 — marca de agua del tablero, centrada y estable.
+   Se aplica directamente sobre la vista del tablero para evitar que desaparezca
+   detrás del fondo principal. */
+body.florida-guane .main {
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:linear-gradient(145deg,#f2f6ee 0%,#faf8f1 62%,#f4f7f1 100%)!important;
+}
+/* Desactivar intentos anteriores sobre el contenedor principal. */
+body.florida-guane .main::before,
+body.florida-guane .main::after { display:none!important; content:none!important; }
+
+body.florida-guane #view-dashboard.active {
+  position:relative!important;
+  isolation:isolate!important;
+}
+body.florida-guane #view-dashboard.active::before {
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background-image:url('assets/marca-agua-marco-palacio-v131.png')!important;
+  background-repeat:no-repeat!important;
+  background-size:95% auto!important;
+  background-position:center 60%!important;
+  opacity:.17!important;
+}
+body.florida-guane #view-dashboard.active > * {
+  position:relative!important;
+  z-index:1!important;
+}
+@media (max-width:1200px) {
+  body.florida-guane #view-dashboard.active::before {
+    background-size:108% auto!important;
+    background-position:center 61%!important;
+    opacity:.15!important;
+  }
+}
+@media (max-width:820px) {
+  body.florida-guane #view-dashboard.active::before {
+    background-size:138% auto!important;
+    background-position:center 62%!important;
+    opacity:.12!important;
+  }
+}
+@media (max-width:640px) {
+  body.florida-guane #view-dashboard.active::before {
+    background-size:180% auto!important;
+    background-position:center 63%!important;
+    opacity:.09!important;
+  }
+}
+@media print {
+  body.florida-guane #view-dashboard.active::before { display:none!important; }
+}

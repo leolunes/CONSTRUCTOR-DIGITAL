@@ -1,0 +1,68 @@
+/* NUESTRA FLORIDABLANCA 1.1.7 — marca de agua completa centrada, sin invadir las tarjetas. */
+body.florida-guane #view-dashboard.active {
+  position: relative !important;
+  isolation: isolate !important;
+  background: transparent !important;
+}
+body.florida-guane #view-dashboard.active::before,
+body.florida-guane #view-dashboard.active::after {
+  content: none !important;
+  display: none !important;
+}
+/* Una sola imagen completa, centrada sobre todo el tablero. */
+body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+  display: block !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 52% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 92% !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  z-index: 0 !important;
+  opacity: .24 !important;
+  filter: saturate(.86) contrast(1.02) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+body.florida-guane #view-dashboard.active > :not(#dashboardWatermark) {
+  position: relative !important;
+  z-index: 1 !important;
+}
+/* Las tarjetas siguen claras y limpias; solo dejan insinuar la marca de agua. */
+body.florida-guane #view-dashboard.active .kpi,
+body.florida-guane #view-dashboard.active .dashboard-panels .card,
+body.florida-guane #view-dashboard.active .birthday-dashboard-card,
+body.florida-guane #view-dashboard.active .dashboard-lower .card,
+body.florida-guane #view-dashboard.active .quick-links button,
+body.florida-guane #view-dashboard.active .dashboard-section,
+body.florida-guane #view-dashboard.active .quick-actions,
+body.florida-guane #view-dashboard.active .chart-card {
+  background-color: rgba(255,255,255,.92) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05) !important;
+}
+@media (max-width: 1100px) {
+  body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+    width: 98% !important;
+    top: 53% !important;
+    opacity: .22 !important;
+  }
+}
+@media (max-width: 850px) {
+  body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+    width: 112% !important;
+    top: 54% !important;
+    opacity: .18 !important;
+  }
+}
+@media (max-width: 600px) {
+  body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+    width: 138% !important;
+    top: 55% !important;
+    opacity: .14 !important;
+  }
+}
+@media print { body.florida-guane #view-dashboard.active > img#dashboardWatermark { display:none!important; } }

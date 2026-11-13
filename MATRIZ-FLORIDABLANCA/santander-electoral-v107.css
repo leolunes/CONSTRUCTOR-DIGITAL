@@ -1,0 +1,59 @@
+/* Santander electoral — extends the approved Guane green identity. */
+#view-map .map-tab-btn.active{background:#12684a;border-color:#12684a;color:#fff}
+#mapTabSantander{--sd-green:#116b4d;--sd-forest:#0b4b38;--sd-gold:#e8b735;--sd-tint:#eff8f1;color:#173e30}
+.santander-contacts-summary{background:#fff;border:1px solid #dce9de;border-radius:13px;padding:16px;margin:12px 0 17px;box-shadow:0 3px 12px #134f2e0a;color:#173e30}
+.santander-section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.santander-section-heading h3,.santander-map-intro h3{font-size:1.05rem;color:#13583e;margin:0 0 4px}
+.santander-section-heading p,.santander-map-intro p{margin:0;font-size:.83rem;color:#657d6d;line-height:1.4}
+.santander-source-tag{font-size:.75rem;background:#f5f6e6;color:#6b5911;border:1px solid #e8d787;border-radius:50px;padding:5px 10px;white-space:nowrap}
+.santander-summary-numbers,.santander-map-stats,.santander-detail-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.santander-kpi{background:#eff8f1;border:1px solid #d3e9d8;border-radius:10px;padding:10px;display:flex;flex-direction:column;min-width:0}
+.santander-kpi strong{font-size:1.32rem;color:#116b4d;line-height:1.2}
+.santander-kpi span{font-size:.7rem;color:#667b6b;line-height:1.3;margin-top:3px}
+.santander-filter-row,.santander-map-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:10px;margin:13px 0}
+.santander-filter-row label,.santander-map-controls label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.73rem;color:#3a5749}
+.santander-filter-row input,.santander-filter-row select,.santander-map-controls input,.santander-map-controls select{width:100%;min-width:0;min-height:38px;background:#fff;border:1px solid #cad9ce;border-radius:8px;padding:7px 9px;font:inherit;font-weight:500;color:#203e2f}
+.santander-map-controls{grid-template-columns:minmax(150px,1fr) minmax(140px,1fr) auto auto;align-items:end;background:#fff;border:1px solid #d7e7db;padding:12px;border-radius:12px}
+.santander-map-controls button{min-height:38px;white-space:normal;font-size:.74rem}
+.santander-result-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px}
+.santander-result-grid>div{border:1px solid #dce9de;border-radius:9px;min-width:0;padding:10px;background:#fbfdfb}
+.santander-result-grid h4{font-size:.78rem;margin:0 0 8px;color:#125d44}
+.santander-count-list,.santander-site-list,.santander-people-list{max-height:265px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.santander-count-list>div,.santander-count-list>button,.santander-site-list>div{padding:8px 9px;border:1px solid #e3eee5;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:10px;width:100%;font-size:.75rem;color:#233e2f}
+.santander-count-list>button{cursor:pointer}.santander-count-list>button:hover,.santander-city-chip:hover{border-color:#49a67d;background:#f0fbf3}
+.santander-count-list b,.santander-site-list b{background:#e2f4e7;color:#125d44;padding:3px 7px;border-radius:8px;flex-shrink:0}
+.santander-count-list small,.santander-site-list small{display:block;color:#788b7d;font-size:.68rem;margin-top:3px}
+.santander-help,.santander-map-note{font-size:.72rem;line-height:1.5;color:#6b796e;margin:10px 0 0}
+.santander-contact-detail{margin-top:10px;padding:10px;border:1px solid #dce9de;border-radius:10px}
+.santander-contact-detail summary,.santander-detail-group summary{cursor:pointer;color:#155d43;font-weight:700;font-size:.78rem}
+.santander-contact-detail[open] summary,.santander-detail-group[open] summary{margin-bottom:8px}
+.santander-person{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px;border:1px solid #dce9de;border-radius:9px;background:#fff}
+.santander-person strong{display:block;font-size:.78rem}.santander-person small{display:block;font-size:.69rem;color:#667c6b;margin-top:3px}
+.santander-person button{flex-shrink:0;font-size:.7rem}
+.santander-map-intro{background:#fff;border:1px solid #d9e6dd;padding:13px 15px;border-radius:12px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.santander-map-intro .santander-map-stats{min-width:420px}
+.santander-map-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(290px,.82fr);gap:12px;align-items:start}
+.santander-map-card,.santander-map-detail{border:1px solid #d6e8d8!important;border-radius:12px!important;padding:11px!important;min-width:0}
+.santander-map-stage{position:relative;width:100%;background:#ffffe8;border-radius:8px;overflow:hidden;border:1px solid #dae7d7}
+.santander-map-image{display:block;width:100%;height:auto}
+.santander-map-markers{position:absolute;inset:0;pointer-events:none}
+.santander-map-dot{position:absolute;transform:translate(-50%,-50%);width:11px;height:11px;min-height:0;padding:0;border:2px solid #fff;border-radius:50%;background:#18865e;box-shadow:0 1px 5px #0006;pointer-events:auto;cursor:pointer;transition:transform .15s,background .15s}
+.santander-map-dot:hover{transform:translate(-50%,-50%) scale(1.7);z-index:3}
+.santander-map-dot.selected{width:20px;height:20px;background:#d69900;border:3px solid #fff;box-shadow:0 0 0 3px #14563d,0 2px 8px #0008;z-index:2}
+.santander-map-detail{max-height:750px;overflow:auto}
+.santander-empty{text-align:center;padding:36px 16px;color:#6a7c70}.santander-empty h3{color:#135a42}.santander-empty p{font-size:.8rem}
+.santander-detail-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.santander-detail-title span{font-size:.73rem}.santander-detail-title h3{margin:3px 0 0;color:#145b43}
+.santander-detail-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.santander-detail-group{padding:10px 0;border-bottom:1px solid #e0eee4}
+.santander-municipios-directory{margin:12px 0;padding:14px!important}
+.santander-municipio-chips{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;max-height:260px;overflow:auto}
+.santander-city-chip{display:flex;align-items:center;justify-content:space-between;gap:5px;border:1px solid #d8e6db;border-radius:7px;background:#fff;color:#254c36;text-align:left;padding:9px 8px;min-height:40px;cursor:pointer;font-size:.73rem}
+.santander-city-chip b{background:#eef7e8;color:#17704b;padding:3px 6px;border-radius:6px}
+.santander-city-chip.selected{background:#edf9ee;border-color:#178053;box-shadow:inset 3px 0 #d3a32a;font-weight:700}
+.santander-form-divider{border-radius:8px;background:#edf8ee;border-left:4px solid #d2a329;padding:10px 12px;display:flex;flex-direction:column;gap:4px;color:#185b40}
+.santander-form-divider small{font-weight:400;color:#657d6d;font-size:.74rem}
+.santander-polling-field span{display:block;margin-top:6px;font-size:.72rem;font-weight:700}
+.santander-polling-field select{width:100%;margin-top:4px}.santander-polling-field small{display:block;color:#617965;font-size:.7rem;margin:5px 0}
+@media(max-width:1250px){.santander-municipio-chips{grid-template-columns:repeat(3,minmax(0,1fr))}.santander-map-intro .santander-map-stats{min-width:330px}}
+@media(max-width:950px){.santander-map-layout{grid-template-columns:1fr}.santander-map-intro{flex-direction:column;align-items:stretch}.santander-map-intro .santander-map-stats{min-width:0}.santander-map-controls{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.santander-filter-row,.santander-result-grid{grid-template-columns:1fr}.santander-summary-numbers,.santander-map-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.santander-map-controls{grid-template-columns:1fr 1fr}.santander-municipio-chips{grid-template-columns:repeat(2,minmax(0,1fr))}.santander-map-detail{max-height:none}}

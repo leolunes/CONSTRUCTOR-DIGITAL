@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#075b3d" />
+  <title>Nuestra Floridablanca · Marco Andrés Silva López</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/icono-floridablanca.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/marco-andres-silva-lopez.jpeg" />
+  <link rel="stylesheet" href="styles.css?v=1.0.35" />
+  <link rel="stylesheet" href="floridablanca-guane-v106.css?v=1.0.6" />
+  <link rel="stylesheet" href="santander-electoral-v107.css?v=1.0.7" />
+  <link rel="stylesheet" href="contact-categories-v108.css?v=1.0.8" />
+  <link rel="stylesheet" href="future-commitments-v109.css?v=1.0.9" />
+  <link rel="stylesheet" href="watermark-v116.css?v=1.0.16" />
+  <link rel="stylesheet" href="watermark-v117.css?v=1.0.19" />
+  <link rel="stylesheet" href="watermark-v120.css?v=1.0.20" />
+  <link rel="stylesheet" href="identidad-cercana-v124.css?v=1.0.24" />
+  <link rel="stylesheet" href="peticion-tactil-v125.css?v=1.0.27" />
+  <link rel="stylesheet" href="petition-recovery-v128.css?v=1.0.32" />
+  <link rel="stylesheet" href="dashboard-watermark-v118.css?v=1.1.8" />
+</head>
+<body class="florida-guane">
+  <header class="brand-header">
+    <div class="people-brand ivan-only-brand">
+      <div class="person-card ivan ivan-main"><img class="ivan-photo" src="assets/marco-andres-silva-lopez.jpeg" alt="Marco Andrés Silva López"><div class="ivan-brand-copy"><div class="ivan-name"><strong>MARCO ANDRÉS</strong><b>SILVA LÓPEZ</b></div><span>Floridablanca, nuestra casa</span><small>Escuchar · Compartir · Acompañar</small></div></div>
+    </div>
+    <div class="guane-sun-mark" aria-hidden="true">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" focusable="false">
+        <circle cx="60" cy="60" r="58" fill="none" stroke="currentColor" stroke-width="1" opacity=".42"/>
+        <circle cx="60" cy="60" r="43" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".65"/>
+        <circle cx="60" cy="60" r="20" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="60" cy="60" r="11" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="60" cy="60" r="4" fill="currentColor"/>
+        <g stroke="currentColor" stroke-linecap="round" stroke-width="3">
+          <path d="M60 11v26M60 83v26M11 60h26M83 60h26M26 26l19 19M75 75l19 19M94 26 75 45M45 75 26 94"/>
+          <path d="M42 14 51 39M78 14 69 39M42 106 51 81M78 106 69 81M14 42 39 51M14 78 39 69M106 42 81 51M106 78 81 69" stroke-width="1.8" opacity=".85"/>
+        </g>
+      </svg>
+    </div>
+    <div class="system-brand"><span>UN ESPACIO PARA NUESTRA GENTE</span><strong>NUESTRA FLORIDABLANCA</strong><em>Floridablanca, nuestra casa</em><small>Escuchar · Compartir · Acompañar</small></div>
+    <div class="floridablanca-brand floridablanca-panoramic-brand" aria-label="División territorial de Floridablanca, Santander">
+      <img class="floridablanca-panoramic-image" src="assets/mapa-floridablanca-comunas.png" alt="Plano de las comunas de Floridablanca">
+    </div>
+    <div class="datetime"><span id="liveDate"></span><span id="liveTime"></span></div>
+  </header>
+
+  <div class="mobile-topbar" id="mobileTopbar">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <div class="mobile-topbar-title"><strong>Nuestra Floridablanca</strong><small>Menú de trabajo</small></div>
+  </div>
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="nav-btn active" data-view="dashboard">⌂ <span>Tablero</span></button>
+      <button class="nav-btn" data-view="needs">◆ <span>Necesidades</span></button>
+      <button class="nav-btn" data-view="leaders">♟ <span>Líderes y simpatizantes</span></button>
+      <button class="nav-btn" data-view="projects">▣ <span>Compromisos futuros</span></button>
+      <button class="nav-btn" data-view="actions">✓ <span>Gestión y seguimiento</span></button>
+      <button class="nav-btn" data-view="community">▤ <span>Formulario comunitario</span></button>
+      <button class="nav-btn" data-view="reports">▥ <span>Inteligencia territorial</span></button>
+      <button class="nav-btn" data-view="map">◈ <span>Mapa territorial</span></button>
+      <button class="nav-btn" data-view="positioning">🌟 <span>Posicionamiento territorial</span></button>
+      <button class="nav-btn" data-view="position">📣 <span>Marco Andrés comparte</span></button>
+      <button class="nav-btn" data-view="agenda">📅 <span>Agenda de gestión</span></button>
+      <button class="nav-btn" data-view="dossier">🧭 <span>Expediente 360°</span></button>
+      <button class="nav-btn" data-view="communications">📲 <span>Comunicaciones WhatsApp</span></button>
+      <button class="nav-btn" type="button" id="petitionCenterNav">📄 <span>Derechos de petición</span></button>
+      <button class="nav-btn" data-view="directory">🏢 <span>Directorio institucional</span></button>
+      <button class="nav-btn" data-view="settings">▰ <span>Documentos</span></button>
+      <button class="nav-btn" data-view="settings">⚙ <span>Configuración</span></button>
+      <div class="side-spacer"></div>
+      <div class="floridablanca-dream"><div class="church">♜</div><span>Construyendo juntos</span><em>Floridablanca</em><strong>nuestra casa</strong></div>
+      <div class="side-actions"><button id="installBtn" class="ghost hidden">Instalar app</button><button id="backupBtn" class="ghost">Exportar respaldo</button></div>
+    </aside>
+
+    <main class="main">
+      <section class="view active" id="view-dashboard">
+        <div id="kpis" class="kpi-grid"></div>
+        <div class="dashboard-panels">
+          <div class="card sector-card"><h3>Necesidades por sector</h3><div class="sector-body"><div class="donut"><span>Sin datos<br>aún</span></div><div id="sectorList"></div></div><div class="total-line">Total <strong id="totalNeeds">0</strong> necesidades</div></div>
+          <div class="card"><h3>Prioridad territorial</h3><div id="priorityBars" class="bars"></div><div class="community-callout"><b>♟</b><div><strong>Tu comunidad merece ser escuchada.</strong><span>Registramos sus necesidades para estudiar propuestas y posibles compromisos de un eventual mandato.</span></div></div></div>
+          <div class="card"><h3>Estado de las necesidades</h3><div id="statusBars" class="bars"></div></div>
+        </div>
+        <div id="birthdayDashboardPanel" class="birthday-dashboard-card"></div>
+        <div class="dashboard-lower">
+          <div class="card upcoming-card"><div><h3>Próximas acciones</h3><div id="upcoming"></div></div><button class="dark-btn" onclick="showView('actions')">Ver agenda completa</button></div>
+          <div class="card quick-card"><div><h3>Registro rápido de necesidad</h3><p>Reporta una necesidad de tu comunidad de forma rápida y sencilla.</p></div><button class="red-btn" data-open-modal="needModal">＋ Nueva necesidad</button></div>
+        </div>
+        <div class="quick-links">
+          <button onclick="showView('leaders')">♟ <span><b>Líderes y simpatizantes</b><small>Ver y gestionar líderes</small></span></button>
+          <button onclick="showView('projects')">📁 <span><b>Compromisos futuros</b><small>Propuestas condicionadas a resultar elegido</small></span></button>
+          <button onclick="showView('actions')">✓ <span><b>Gestión y seguimiento</b><small>Ver seguimientos</small></span></button>
+          <button onclick="showView('community')">▤ <span><b>Formulario comunitario</b><small>Diligenciar formulario</small></span></button>
+          <button onclick="showView('reports')">▥ <span><b>Inteligencia territorial</b><small>Analizar gestión</small></span></button>
+          <button onclick="showView('map')">⌖ <span><b>Mapa territorial</b><small>Ver mapa interactivo de Floridablanca</small></span></button>
+          <button onclick="showView('positioning')">🌟 <span><b>Posicionamiento territorial</b><small>Escuchar, gestionar, demostrar y dar a conocer</small></span></button>
+          <button onclick="showView('agenda')">📅 <span><b>Agenda de gestión</b><small>Compromisos, vencimientos y próximos pasos</small></span></button>
+          <button onclick="showView('dossier')">🧭 <span><b>Expediente 360°</b><small>Historia completa por contacto o territorio</small></span></button>
+          <button type="button" id="petitionCenterQuick">📄 <span><b>Derechos de petición</b><small>Generar y firmar PDF</small></span></button>
+          <button type="button" onclick="showView('directory')">🏢 <span><b>Directorio institucional</b><small>Municipal · Departamental · Nacional</small></span></button>
+        </div>
+        <footer class="dashboard-footer"><em>“No se trata de tener ideas, se trata de hacer que las ideas sucedan.”</em><span>●　●　●</span><span>© 2026 Nuestra Floridablanca · Marco Andrés Silva López</span><span>Versión 1.1.5 · Espacio de trabajo privado</span></footer>
+        <img id="dashboardWatermark" src="assets/marca-agua-marco-palacio-completa-v115.png?v=1.1.8" alt="" aria-hidden="true" draggable="false" loading="eager" decoding="async" />
+      </section>
+      <section class="view" id="view-needs">
+        <div class="section-title"><div><h2>Necesidades del territorio</h2><p>Registro, verificación, priorización y trazabilidad.</p></div><button class="primary" data-open-modal="needModal">+ Registrar necesidad</button></div>
+        <div class="toolbar">
+          <input id="needSearch" placeholder="Buscar por código, barrio, vereda, necesidad..." />
+          <select id="needStatusFilter"><option value="">Todos los estados</option></select>
+          <select id="needPriorityFilter"><option value="">Todas las prioridades</option></select>
+        </div>
+        <div id="needsTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-leaders">
+        <div class="section-title"><div><h2>Líderes, simpatizantes y participantes</h2><p>Un líder organiza su red; cada simpatizante pertenece a un líder. Los participantes se registran sin contarse como simpatizantes hasta que se vinculen.</p></div><div class="leaders-head-actions"><button class="magic-search-btn" type="button" onclick="openContactFinder()">🔎 BUSCAR PERSONA</button><button class="primary" data-open-modal="leaderModal">+ Nuevo contacto</button></div></div>
+        <div class="network-summary" id="networkSummary"><div class="summary-card" onclick="openNetworkSummary('leaders')"><span>Líderes <b>▼</b></span><strong id="leadersCount">0</strong></div><div class="summary-card" onclick="openNetworkSummary('supporters')"><span>Simpatizantes <b>▼</b></span><strong id="supportersCount">0</strong></div><div class="summary-card" onclick="openNetworkSummary('total')"><span>Total red <b>▼</b></span><strong id="networkTotalCount">0</strong></div><div class="summary-card" onclick="openNetworkSummary('unclassified')"><span>Participantes / pendientes <b>▼</b></span><strong id="unclassifiedCount">0</strong></div></div>
+        <section id="leaderRosterPanel" class="leader-roster" aria-label="Simpatizantes aportados por cada líder"></section>
+        <div class="contacts-toolbar">
+          <button type="button" class="contacts-authorized-count authorized-summary-btn" onclick="openNetworkSummary('authorized')"><span>Contactos autorizados para comunicaciones <b>▼</b></span><strong id="authorizedContactsCount">0</strong></button>
+          <button class="primary" type="button" id="contactsPdfBtn">📄 Generar PDF de contactos autorizados</button>
+        </div>
+        <section class="santander-contacts-summary" id="santanderContactsSummary" aria-label="Distribución departamental y por puesto de votación">
+          <div class="santander-section-heading"><div><h3>🗳️ Red territorial de Santander</h3><p>Consulte líderes y simpatizantes por municipio de vinculación, municipio de votación y puesto registrado.</p></div><span class="santander-source-tag">87 municipios · catálogo suministrado</span></div>
+          <div class="santander-summary-numbers" id="santanderContactNumbers"></div>
+          <div class="santander-filter-row"><label>Municipio<select id="santanderLeadersMunicipio"></select></label><label>Consultar por<select id="santanderLeadersGroup"><option value="territorial">Municipio de vinculación</option><option value="electoral">Municipio de votación</option></select></label><label>Buscar puesto<input type="search" id="santanderLeadersPuestoSearch" placeholder="Nombre del puesto de votación"></label></div>
+          <div class="santander-contact-results" id="santanderLeadersResults"></div>
+        </section>
+        <div id="birthdayPanel" class="birthday-panel"></div>
+        <div id="leadersTable" class="table-wrap"></div>
+      </section>
+
+
+      <section class="view" id="view-directory">
+        <div class="section-title directory-title">
+          <div><h2>🏢 Directorio Institucional</h2><p>Identifique entidades, conozca qué puede consultar y prepare mejor su ruta de gestión.</p></div>
+          <button class="primary" type="button" id="directoryGuideBtn">🔎 Orientador de entidad</button>
+        </div>
+
+        <div class="directory-levels">
+          <button type="button" class="directory-level active" data-directory-level="municipal"><b>🏘️ Municipal</b><span>Floridablanca</span></button>
+          <button type="button" class="directory-level" data-directory-level="departamental"><b>🏢 Departamental</b><span>Santander</span></button>
+          <button type="button" class="directory-level" data-directory-level="municipios"><b>🏛️ Municipios</b><span>87 de Santander</span></button>
+          <button type="button" class="directory-level" data-directory-level="nacional"><b>🇨🇴 Nacional</b><span>Gobierno Nacional</span></button>
+        </div>
+
+        <div class="card directory-search-card">
+          <div class="directory-search-row">
+            <input id="directorySearch" type="search" placeholder="Buscar por entidad o tema: vivienda, vías, salud, educación...">
+            <button type="button" class="secondary" id="directoryClear">Limpiar</button>
+          </div>
+          <div class="directory-source-actions">
+            <span id="directoryLevelDescription">Dependencias y entidades del nivel municipal.</span>
+            <button type="button" class="directory-source-btn" id="directorySourceGalleryBtn">🖼️ Ver toda la información del directorio</button>
+            <a id="directoryOriginalLink" class="directory-source-btn" href="#" target="_blank" rel="noopener" hidden>📚 Consultar directorio original</a>
+          </div>
+        </div>
+
+        <div id="directoryResults" class="directory-grid"></div>
+
+        <div class="card directory-note">
+          <strong>💡 Ruta recomendada de trabajo</strong>
+          <span>Necesidad → identificar entidades relacionadas → revisar qué puede consultarse → definir la información requerida → generar Derecho de Petición → hacer seguimiento.</span>
+          <small>La orientación ayuda a organizar la investigación. La competencia definitiva debe verificarse antes de radicar una solicitud.</small>
+        </div>
+      </section>
+
+      <section class="view" id="view-communications">
+        <div class="section-title"><div><h2>📲 Centro de Comunicaciones WhatsApp</h2><p>Prepare una comunicación y recorra, uno por uno, los contactos que autorizaron recibir información.</p></div></div>
+        <div class="card wa-center-card">
+          <div class="wa-audience-buttons">
+            <button type="button" class="secondary active" data-wa-audience="all">👥 Todos <span class="wa-audience-count">0</span></button>
+            <button type="button" class="secondary" data-wa-audience="Líder">🧭 Líderes <span class="wa-audience-count">0</span></button>
+            <button type="button" class="secondary" data-wa-audience="Simpatizante">🤝 Simpatizantes <span class="wa-audience-count">0</span></button>
+          </div>
+          <p class="wa-audience-help">Pulse un grupo para desplegar abajo todos sus contactos autorizados. Luego marque ☑️ las personas que desea incluir en el lote.</p>
+          <div class="wa-center-grid">
+            <label>Sector<select id="waSectorFilter"><option value="">Todos los sectores</option></select></label>
+            <label>Barrio<select id="waBarrioFilter"><option value="">Todos los barrios</option></select></label>
+            <label>Contacto<select id="waLeaderSearch"><option value="">Todos los contactos</option></select></label>
+          </div>
+          <div class="wa-selection-tools">
+            <div><strong>☑️ Selección de destinatarios</strong><small id="waSelectionCount">0 seleccionados · máximo 20 por lote</small></div>
+            <button class="secondary" type="button" id="waSelectVisible">Seleccionar visibles</button>
+            <button class="secondary" type="button" id="waClearSelection">Quitar selección</button>
+          </div>
+          <div id="waRecipientPicker" class="wa-recipient-picker"></div>
+          <label class="wa-message-label">Información a compartir<textarea id="waBulkMessage" rows="7" placeholder="Escriba o pegue aquí la información que desea compartir. Revísela antes de iniciar."></textarea></label>
+          <div class="wa-center-actions"><button class="primary" type="button" id="waPrepareQueue">📲 Preparar lote (máx. 20)</button><button class="secondary" type="button" id="waResetQueue">Reiniciar cola</button></div>
+          <p class="wa-privacy-note">Solo se incluyen contactos con autorización registrada y número de WhatsApp. La app no envía mensajes automáticamente: abre WhatsApp con el texto preparado para que usted revise y pulse Enviar.</p>
+        </div>
+        <div id="waQueueSummary" class="wa-queue-summary"></div>
+        <div id="waQueueList" class="wa-queue-list"></div>
+      </section>
+
+      <section class="view" id="view-projects">
+        <div class="section-title"><div><h2>Compromisos para un eventual mandato</h2><p>Registre lo que Marco propone impulsar únicamente si resulta elegido. Relacione cada propuesta con una necesidad territorial, sin presentarla como proyecto aprobado o en ejecución.</p></div><button class="primary" data-open-modal="campaignCommitmentModal">+ Nuevo compromiso futuro</button></div>
+        <div class="future-commitment-notice"><strong>Compromisos condicionados</strong><p>Estas son propuestas de candidatura. Su eventual gestión dependerá de resultar elegido, de las competencias legales del cargo, de los estudios de viabilidad, de la planeación y de la disponibilidad presupuestal. No son obras contratadas, financiadas ni garantizadas.</p></div>
+        <div id="projectsTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-actions">
+        <div class="section-title"><div><h2>Gestión y seguimiento</h2><p>Necesidad + responsable + próxima acción + fecha = gestión.</p></div><button class="primary" data-open-modal="actionModal">+ Registrar gestión</button></div>
+        <div id="actionsTable" class="table-wrap"></div>
+      </section>
+
+      <section class="view" id="view-agenda">
+        <div class="section-title"><div><h2>📅 Agenda de gestión y compromisos</h2><p>Lo que debemos hacer, lo que está próximo y lo que no puede quedar olvidado.</p></div><button class="primary" type="button" id="newCommitmentBtn">+ Nuevo compromiso</button></div>
+        <div id="agendaKpis" class="agenda-kpis"></div>
+        <div class="card agenda-card"><div class="agenda-toolbar"><div><h3>Agenda operativa</h3><small>Integra próximas gestiones y compromisos adquiridos.</small></div><select id="agendaFilter"><option value="all">Todos los pendientes</option><option value="overdue">Vencidos</option><option value="week">Próximos 7 días</option><option value="commit">Compromisos</option><option value="action">Gestiones programadas</option></select></div><div id="agendaList"></div></div>
+        <div class="card agenda-card"><div class="agenda-toolbar"><div><h3>🤝 Memoria de compromisos</h3><small>Qué acordamos → qué gestionamos → qué cumplimos.</small></div></div><div id="commitmentsTable" class="table-wrap"></div></div>
+      </section>
+
+
+      <section class="view" id="view-dossier">
+        <div class="section-title"><div><h2>🧭 Expediente Territorial 360°</h2><p>Una sola vista para comprender la historia completa de una persona o de un territorio.</p></div><button class="primary" type="button" id="dossierPrintBtn">🖨️ Imprimir expediente</button></div>
+        <div class="card dossier-selector">
+          <div class="dossier-mode">
+            <button type="button" class="dossier-mode-btn active" data-dossier-mode="contact">👤 Por contacto</button>
+            <button type="button" class="dossier-mode-btn" data-dossier-mode="territory">🏘️ Por territorio</button>
+          </div>
+          <div class="dossier-picker">
+            <label id="dossierContactLabel">Contacto<select id="dossierContactSelect"><option value="">Seleccione un contacto</option></select></label>
+            <label id="dossierTerritoryLabel" class="hidden">Territorio<select id="dossierTerritorySelect"><option value="">Seleccione un territorio</option></select></label>
+          </div>
+        </div>
+        <div id="dossierEmpty" class="card dossier-empty"><strong>Seleccione un contacto o territorio.</strong><span>La Matriz reunirá necesidades, compromisos futuros, proyectos anteriores, gestiones, empresas y Derechos de Petición vinculados.</span></div>
+        <div id="dossierContent" class="hidden">
+          <div id="dossierHero" class="dossier-hero"></div>
+          <div id="dossierKpis" class="dossier-kpis"></div>
+          <div class="dossier-grid">
+            <div class="card dossier-panel"><div class="dossier-panel-head"><h3>🕘 Línea de tiempo</h3><small>Historia cronológica de la gestión.</small></div><div id="dossierTimeline" class="dossier-timeline"></div></div>
+            <div class="card dossier-panel"><div class="dossier-panel-head"><h3>📌 Estado actual</h3><small>Lo que está abierto, cumplido o requiere seguimiento.</small></div><div id="dossierStatus"></div></div>
+          </div>
+          <div class="card dossier-panel"><div class="dossier-panel-head"><h3>🔗 Relaciones del expediente</h3><small>Todos los registros conectados con esta persona o territorio.</small></div><div id="dossierRelations"></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-community">
+        <div class="section-title"><div><h2>Formulario comunitario</h2><p>Versión sencilla para presidentes de JAC, ediles y líderes.</p></div></div>
+        <form id="communityForm" class="card form-grid">
+          <h3 class="span-2">¿Qué necesita su comunidad?</h3>
+          <label>Barrio / Vereda / Sector<input name="territory" required></label>
+          <label>Vereda<select name="vereda" id="communityVereda"><option value="">Sin asignar / no aplica</option></select></label>
+          <label>Comuna urbana<select name="comuna" class="flori-comuna-select"><option value="">Sin comuna asignada</option></select></label>
+          <label>Comuna / Corregimiento<input name="zone"></label>
+          <label>Líder / JAC / Edil<select name="leaderId" id="communityLeader" required><option value="">Seleccione un líder registrado</option></select></label>
+          <label>Calidad<input name="role" id="communityRole" readonly></label>
+          <label>Teléfono / WhatsApp<input name="phone" id="communityPhone" readonly></label>
+          <label>Sector<select name="sector" id="communitySector"></select></label>
+          <label class="span-2">Necesidad o problema<textarea name="title" required></textarea></label>
+          <label class="span-2">Ubicación específica<input name="location"></label>
+          <label>¿Desde hace cuánto existe?<input name="age"></label>
+          <label>¿A quiénes afecta?<input name="affected"></label>
+          <label class="span-2">¿Por qué considera importante solucionarlo?<textarea name="importance"></textarea></label>
+          <label class="span-2">¿Existe proyecto, estudio, diseño o radicado relacionado?<textarea name="existingProject"></textarea></label>
+          <label class="span-2">Gestiones previas / respuestas recibidas<textarea name="previous"></textarea></label>
+          <label>Prioridad percibida<select name="priority"><option>Urgente</option><option>Alta</option><option selected>Media</option><option>Baja</option></select></label>
+          <label>Teléfono de contacto<input name="contactPhone"></label>
+          <section class="span-2 community-photo-panel" id="communityPhotoPanel">
+            <div class="community-photo-head"><div><strong>📷 Imágenes de la necesidad de la comunidad</strong><small>Registre evidencia visual del estado actual. Estas fotografías quedarán asociadas como evidencia inicial de la necesidad.</small></div><span>Compresión automática</span></div>
+            <label class="community-photo-note">Descripción opcional de las imágenes<input type="text" id="communityPhotoNote" placeholder="Ej.: Estado actual de la vía, fuga de agua, luminaria dañada"></label>
+            <div class="community-photo-actions">
+              <label class="photo-button">📷 Tomar foto<input class="community-photo-input" type="file" accept="image/*" capture="environment"></label>
+              <label class="photo-button secondary-photo">🖼️ Galería<input class="community-photo-input" type="file" accept="image/*" multiple></label>
+            </div>
+            <div class="photo-gallery" id="communityPhotoGallery"><div class="photo-empty">Aún no hay imágenes de la necesidad.</div></div>
+          </section>
+          <div class="span-2 note">El registro de una necesidad no constituye compromiso de ejecución, financiación o solución. Su finalidad es organizar información territorial para análisis y gestión.</div>
+          <div class="span-2 form-actions"><button class="primary" type="submit">Guardar en la Matriz</button><button type="reset" class="secondary">Limpiar</button></div>
+        </form>
+      </section>
+
+      <section class="view" id="view-map">
+        <div class="section-title"><div><h2>🗺️ Mapa territorial interactivo de Floridablanca</h2><p>Consulte las veredas rurales, los barrios urbanos y las ocho comunas. Mapas aportados como referencia cartográfica de 2016.</p></div></div>
+        <div class="map-tabs" role="tablist" aria-label="Vistas del mapa territorial">
+          <button type="button" class="map-tab-btn active" data-map-tab="general" aria-selected="true">Mapa general</button>
+          <button type="button" class="map-tab-btn" data-map-tab="urbano" aria-selected="false">Floridablanca urbano · barrios</button>
+          <button type="button" class="map-tab-btn" data-map-tab="comunas" aria-selected="false">Ocho comunas</button>
+          <button type="button" class="map-tab-btn" data-map-tab="santander" aria-selected="false">🗳️ Santander · 87 municipios</button>
+        </div>
+
+        <div class="map-tab-panel active" id="mapTabGeneral">
+          <div class="map-communications-summary">
+            <div><span>Contactos autorizados en todo Floridablanca</span><strong id="mapGlobalAuthorized">0</strong></div>
+            <div><span>Contactos autorizados en zona seleccionada</span><strong id="mapSelectedAuthorized">—</strong></div>
+            <div><span>Registros sin vereda asignada</span><strong id="mapUnassignedCount">0</strong></div>
+            <small>Los contadores incluyen únicamente contactos con “¿Autoriza recibir comunicaciones?” = Sí.</small>
+          </div>
+          <div class="map-layout">
+            <div class="card territorial-map-card">
+              <div class="map-toolbar"><strong>Mapa geográfico de Floridablanca</strong><span>Mapa base incorporado del documento suministrado · áreas táctiles de consulta</span></div>
+              <div class="territorial-map-stage" id="territorialMapStage">
+                <img src="assets/mapa-floridablanca-rural.png" alt="Mapa geográfico de Floridablanca" class="territorial-map-image">
+                <div id="territorialHotspots" class="territorial-hotspots"></div>
+                <div class="map-global-total-card" aria-live="polite">
+                  <span>Total municipio</span>
+                  <strong id="mapGlobalAuthorizedOverlay">0</strong>
+                  <small>Contactos autorizados</small>
+                </div>
+              </div>
+              <div class="map-help">👆 Toque el nombre de una vereda para consultar sus registros. La zona café claro de La Judía corresponde a la vereda Helechales y ya tiene su marcador. Los puntos son referencias visuales, no delimitaciones GIS.</div>
+              <details class="rural-extra-index" id="ruralExtraIndex"><summary>📚 Consultar asentamientos rurales del catálogo municipal</summary><div id="ruralExtraList"></div></details>
+            </div>
+            <aside class="card territory-data-panel" id="territoryDataPanel">
+              <div class="territory-empty"><div class="territory-empty-icon">⌖</div><h3>Seleccione un territorio</h3><p>Aquí aparecerán contactos autorizados, necesidades, seguimientos, compromisos futuros, registros previos y Derechos de Petición.</p></div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="map-tab-panel" id="mapTabUrbano">
+          <div class="map-layout urban-tactile-layout">
+            <div class="card urban-map-card">
+              <div class="map-toolbar urban-toolbar"><strong>🏘️ Mapa táctil de barrios de Floridablanca</strong><span>Plano de referencia · 2016</span></div>
+              <div class="urban-map-actions">
+                <a class="primary urban-map-link" href="assets/mapa-floridablanca-barrios.png" target="_blank" rel="noopener">🖼️ Abrir mapa original</a>
+                <button class="secondary" type="button" id="urbanMapZoomBtn">🔎 Ampliar plano</button>
+                <button class="secondary" type="button" id="urbanMapShowSavedPins">👁️ Mostrar otros puntos guardados</button>
+                <button class="secondary" type="button" id="urbanMapClear">🧹 Limpiar mapa</button>
+              </div>
+              <div class="urban-map-pin-tools">
+                <span id="urbanMapPinStatus" aria-live="polite">👆 Seleccione un barrio desde el directorio: el mapa lo señalará y abrirá su ficha con la información guardada.</span>
+                <button type="button" class="secondary" id="urbanMapPlacePin" disabled>📍 Corregir ubicación</button>
+                <button type="button" class="secondary" id="urbanMapResetPin" title="Borra solo la ubicación manual de este barrio, no sus registros" hidden>↩ Quitar ubicación manual</button>
+              </div>
+              <div class="urban-map-stage" id="urbanMapStage">
+                <div class="urban-map-sheet urban-map-touch-ready" id="urbanMapSheet">
+                  <img src="assets/mapa-floridablanca-barrios.png?v=1.0.11" alt="Plano de barrios de Floridablanca. Toque el sitio donde se encuentra un barrio para seleccionarlo." class="urban-map-image" id="urbanMapImage" loading="eager" decoding="async">
+                  <div class="urban-map-all-pins" id="urbanMapAllPins"></div>
+                  <button type="button" class="urban-map-marker" id="urbanMapPin" hidden aria-label="Abrir información del barrio"><span>📍</span></button>
+                  <div class="urban-map-focus-tag" id="urbanMapFocusTag" hidden></div>
+                  <div class="urban-map-popup" id="urbanMapPopover" hidden></div>
+                  <div class="urban-tap-picker" id="urbanTapPicker" hidden>
+                    <strong>🏘️ ¿Qué barrio tocó?</strong>
+                    <input type="search" id="urbanTapSearch" placeholder="Escriba el nombre del barrio" autocomplete="off" aria-label="Buscar barrio en el mapa">
+                    <div class="urban-tap-results" id="urbanTapResults"></div>
+                    <button type="button" class="secondary" id="urbanTapCancel">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+              <div id="urbanMapImageError" class="urban-map-image-error" hidden role="alert"><strong>⚠️ El plano de barrios no se cargó.</strong><span>Puede volver a cargar el plano sin perder la información del barrio seleccionado.</span><button type="button" class="secondary" id="urbanMapReloadImage">🔄 Reintentar cargar plano</button></div>
+              <div id="urbanMapPending" class="urban-map-pending" aria-live="polite"></div>
+              <div class="map-help">🧹 El plano se abre limpio y muestra únicamente el lugar seleccionado. «Limpiar mapa» retira la selección de la vista, sin borrar registros ni ubicaciones guardadas. Si quiere revisar los otros puntos, pulse «Mostrar otros puntos guardados». Para precisar una ubicación orientativa, toque «Precisar ubicación».</div>
+            </div>
+            <aside class="card territory-data-panel urban-map-details-aside">
+              <h3>📋 Información del barrio seleccionado</h3>
+              <div class="urban-barrio-selection"><strong id="urbanSelectedName">Seleccione un barrio</strong><button type="button" class="primary" id="urbanNewNeed" disabled>+ Registrar necesidad</button></div>
+              <div id="urbanBarrioDetails"><div class="urban-empty"><strong>Toque un barrio</strong><p>Verá sus líderes, simpatizantes, necesidades, seguimientos y compromisos futuros o registros previos.</p></div></div>
+            </aside>
+          </div>
+          <div class="card urban-registry-card">
+            <div class="urban-registry-head"><div><h3>🏘️ Directorio territorial ampliado</h3><p>Escoja cualquier barrio, conjunto o sector: aparecerá señalado en el mapa superior y se abrirá su ficha con necesidades, personas, proyectos y gestiones. Los puntos de referencia son aproximados y se pueden corregir.</p></div><span class="urban-version" id="urbanCatalogVersion">Referencia municipal · 2016</span></div>
+            <div class="urban-stats" id="urbanGlobalStats"></div>
+            <div class="urban-barrio-controls"><label>Seleccione un lugar<select id="urbanBarrioSelect"><option value="">Seleccione un barrio o sector...</option></select></label><label>Filtrar por comuna<select id="urbanComunaFilter"><option value="">Todas las comunas y sector rural</option><option value="1">Comuna 1</option><option value="2">Comuna 2</option><option value="3">Comuna 3</option><option value="4">Comuna 4</option><option value="5">Comuna 5</option><option value="6">Comuna 6</option><option value="7">Comuna 7</option><option value="8">Comuna 8</option><option value="rural">Ruitoque Condominio · rural</option><option value="sin-clasificar">Referencias pendientes de clasificación</option></select></label><label>Buscar por nombre<input id="urbanBarrioSearch" type="search" placeholder="Ej.: Altos de Cañaveral"></label></div>
+            <div id="urbanChosenBanner" class="urban-chosen-banner" hidden aria-live="polite"></div>
+            <div class="urban-barrio-list-head"><strong>Barrios, conjuntos, sectores y asentamientos</strong><small id="urbanBarrioListCount"></small></div>
+            <div class="urban-barrio-list" id="urbanBarrioList"></div>
+            <button type="button" class="secondary urban-more-btn" id="urbanBarrioMore" hidden>Mostrar más lugares</button>
+            <div class="urban-source-notice">Fuente: Secretaría de Planeación de Floridablanca, división político-administrativa de 2016, reproducida en las tablas 1 y 2 del Plan de Desarrollo Municipal 2024–2027. Los nombres no reemplazan coordenadas ni delimitaciones catastrales.</div>
+            <div class="urban-missing" id="urbanMissing"></div>
+            <datalist id="urbanBarrioSuggestions"></datalist>
+          </div>
+        </div>
+        <div class="map-tab-panel" id="mapTabComunas">
+          <div class="map-layout">
+            <div class="card territorial-map-card">
+              <div class="map-toolbar"><strong>División administrativa urbana · comunas</strong><a class="primary urban-map-link" href="assets/mapa-floridablanca-comunas.png" target="_blank" rel="noopener">🖼️ Abrir mapa</a></div>
+              <div class="territorial-map-stage">
+                <img src="assets/mapa-floridablanca-comunas.png" class="territorial-map-image" alt="Plano de las ocho comunas de Floridablanca">
+                <div id="floriComunaHotspots" class="territorial-hotspots"></div>
+              </div>
+              <div class="map-help">Las comunas se seleccionan mediante marcadores orientativos. Registre la comuna en la ficha de cada persona o necesidad para que aparezca en esta consulta.</div>
+            </div>
+            <aside class="card territory-data-panel" id="floriComunaPanel"><div class="territory-empty"><h3>Seleccione una comuna</h3><p>Verá contactos autorizados, necesidades y compromisos futuros o registros anteriores asociados.</p></div></aside>
+          </div>
+        </div>
+        <div class="map-tab-panel" id="mapTabSantander">
+          <div class="santander-map-intro"><div><h3>Mapa departamental de Santander</h3><p>Seleccione cualquiera de sus 87 municipios para consultar líderes y simpatizantes registrados, junto con los puestos de votación del listado aportado.</p></div><div class="santander-map-stats" id="santanderMapStats"></div></div>
+          <div class="santander-map-controls"><label>Municipio<select id="santanderMapMunicipio"><option value="">Seleccione un municipio</option></select></label><label>Buscar municipio<input id="santanderMunicipioSearch" type="search" placeholder="Ej. Socorro, Girón, San Gil"></label><button type="button" class="secondary" id="santanderMapMarkersBtn" aria-pressed="false">Mostrar puntos de referencia</button><button type="button" class="secondary" id="santanderMapClearBtn">Limpiar mapa</button></div>
+          <div class="santander-map-layout">
+            <div class="card santander-map-card"><div class="santander-map-stage" id="santanderMapStage"><img src="assets/mapa-santander.jpg" alt="Mapa suministrado del departamento de Santander con nombres de municipios" class="santander-map-image"><div class="santander-map-markers" id="santanderMapMarkers"></div></div><p class="santander-map-note">Mapa gráfico aportado como referencia. Los puntos, cuando se activan, son aproximados: no representan límites oficiales ni una georreferenciación catastral.</p></div>
+            <aside class="card santander-map-detail" id="santanderMapDetail"><div class="santander-empty"><h3>Elija un municipio</h3><p>Se mostrarán los contactos registrados, sus puestos de votación y los totales de ese municipio.</p></div></aside>
+          </div>
+          <div class="card santander-municipios-directory"><div class="santander-section-heading"><div><h3>Directorio de municipios</h3><p>Puede seleccionar el municipio desde esta lista o desde el buscador anterior.</p></div><span id="santanderMunicipiosVisible"></span></div><div class="santander-municipio-chips" id="santanderMunicipiosChips"></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-positioning">
+        <div class="section-title"><div><h2>🌟 Centro de Posicionamiento Territorial</h2><p>Conocer el territorio, escuchar sus comunidades, organizar la gestión, demostrar resultados y comunicar lo realizado.</p></div></div>
+        <div id="footprintKpis" class="positioning-kpis"></div>
+        <div class="positioning-grid">
+          <div class="card positioning-pillar"><span class="pillar-icon">👂</span><h3>Escuchar</h3><p>Necesidades, comunidades, empresas y actores del territorio.</p><button type="button" data-pos-view="needs">Ver necesidades</button></div>
+          <div class="card positioning-pillar"><span class="pillar-icon">🤝</span><h3>Dar seguimiento</h3><p>Seguimiento de necesidades, compromisos futuros condicionados y derechos de petición.</p><button type="button" data-pos-view="actions">Ver seguimiento</button></div>
+          <div class="card positioning-pillar"><span class="pillar-icon">✅</span><h3>Demostrar</h3><p>Resultados, necesidades solucionadas y memoria verificable de gestión.</p><button type="button" data-pos-filter="results">Ver resultados</button></div>
+          <div class="card positioning-pillar"><span class="pillar-icon">📣</span><h3>Dar a conocer</h3><p>Convierta la gestión documentada en información pública clara y verificable.</p><button type="button" data-pos-filter="stories">Ver historias</button></div>
+        </div>
+        <div class="card positioning-hub">
+          <div class="positioning-head"><div><h3>📣 Centro de Posicionamiento Territorial</h3><small>La información acumulada por la Matriz alimenta diferentes historias públicas. Revise siempre el contenido y las autorizaciones antes de difundir.</small></div></div>
+          <div class="positioning-channels">
+            <button type="button" class="positioning-channel" data-pos-filter="stories"><span>🏘️</span><b>Historias del territorio</b><small>Una comunidad, una necesidad y lo que se está haciendo.</small></button>
+            <button type="button" class="positioning-channel" data-pos-filter="results"><span>✅</span><b>Gestión que produce resultados</b><small>Problema → gestión → resultado → evidencia.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="leaders"><span>👥</span><b>Gente que construye Floridablanca</b><small>Organizaciones y personas que aportan al municipio.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="map"><span>📍</span><b>Conociendo mi territorio</b><small>Veredas, barrios, problemáticas y oportunidades.</small></button>
+            <button type="button" class="positioning-channel" data-pos-proposal><span>💡</span><b>Floridablanca puede hacerlo mejor</b><small>Documente observaciones y propuestas públicas sobre el territorio.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="intelligence"><span>📊</span><b>Lo que estamos aprendiendo de Floridablanca</b><small>Información agregada sin exponer datos privados.</small></button>
+            <button type="button" class="positioning-channel" data-pos-view="position"><span>📣</span><b>Marco Andrés comparte</b><small>Reflexiones y publicaciones sobre temas de interés.</small></button>
+          </div>
+        </div>
+        <div class="card positioning-proposal hidden" id="positioningProposal">
+          <div class="positioning-head"><div><h3>💡 Floridablanca puede hacerlo mejor</h3><small>Banco privado de observaciones y propuestas. El contenido queda editable y no se publica automáticamente.</small></div><button type="button" class="secondary" id="positioningProposalClose">Cerrar</button></div>
+          <div class="positioning-proposal-grid">
+            <label>Título<input id="proposalTitle" placeholder="Ej.: Recuperación del espacio público"></label>
+            <label>Territorio<input id="proposalTerritory" placeholder="Vereda, barrio o sector"></label>
+            <label class="span-2">Situación observada<textarea id="proposalObservation" rows="3" placeholder="Describa hechos verificables y el contexto observado."></textarea></label>
+            <label class="span-2">Propuesta<textarea id="proposalIdea" rows="4" placeholder="Describa una alternativa concreta, responsable y verificable."></textarea></label>
+          </div>
+          <div class="positioning-actions"><button type="button" class="primary" id="positioningProposalSave">💾 Guardar propuesta</button><button type="button" class="secondary" id="positioningProposalCopy">📋 Copiar borrador</button></div>
+          <div id="positioningProposalList" class="positioning-proposal-list"></div>
+        </div>
+        <div class="card footprint-card"><div class="positioning-head"><div><h3>📍 Huella territorial</h3><small>Mide actividad y presencia de gestión registrada, no preferencias electorales.</small></div><select id="positioningTerritory"><option value="">Todos los territorios</option></select></div><div id="territoryFootprint"></div></div>
+        <div class="card positioning-content"><div class="positioning-head"><div><h3>📣 Historias de gestión</h3><small>Seleccione una necesidad para preparar un resumen factual a partir de los datos ya registrados.</small></div><select id="positioningStatus"><option value="all">Todas</option><option value="results">Con resultado / solucionadas</option><option value="active">En gestión</option></select></div><div id="positioningStories"></div></div>
+        <div class="card positioning-draft hidden" id="positioningDraft"><div class="positioning-head"><div><h3>Vista previa informativa</h3><small>Revise y edite el texto antes de publicarlo.</small></div><button type="button" class="secondary" id="positioningCloseDraft">Cerrar</button></div><textarea id="positioningDraftText" rows="10"></textarea><div class="positioning-actions"><button type="button" class="primary" id="positioningCopy">📋 Copiar texto</button><button type="button" class="secondary" id="positioningGoPosition">📣 Abrir comentarios</button></div></div>
+      </section>
+
+      <section class="view" id="view-position">
+        <div class="section-title"><div><h2>📣 Marco Andrés comparte</h2><p>Comparta reflexiones, reconocimientos y comentarios sobre temas de interés en una tarjeta para redes sociales.</p></div></div>
+        <div class="position-grid">
+          <form id="positionForm" class="card position-form position-simple-form">
+            <div class="position-simple-intro"><span class="position-step">1</span><div><h3>¿Sobre qué quiere hablar?</h3><p>Puede ser una noticia o un tema general: salud, deporte, educación, seguridad, vías o cualquier asunto de interés.</p></div></div>
+            <label>El tema<input name="topic" id="positionTopic" required maxlength="130" placeholder="Ej.: El estado de las vías en Floridablanca"></label>
+            <label>¿Qué quiere expresar? <small>(opcional, pero recomendado)</small><textarea name="angle" rows="3" maxlength="1100" placeholder="Ej.: Me preocupa que los vecinos sigan esperando soluciones. Quiero reconocer a quienes proponen alternativas."></textarea></label>
+            <div class="position-main-buttons"><button type="button" class="primary" id="positionDraft">✨ Preparar comentario</button><button type="button" class="secondary" id="positionAI">✍️ Mejorar con ChatGPT</button></div>
+            <p class="position-honesty">El primer botón crea un borrador local sin consultar noticias. «Mejorar con ChatGPT» prepara una consulta para la IA; usted revisa el resultado antes de publicarlo.</p>
+            <div id="positionAIPanel" class="position-ai-panel hidden"><strong>Su consulta para ChatGPT está lista</strong><p>1. Copie el texto. 2. Abra ChatGPT y péguelo. 3. Regrese aquí y pegue el titular y el comentario completo. La aplicación los organizará en una sola tarjeta editorial.</p><textarea id="positionAIPrompt" rows="7" readonly></textarea><div class="position-main-buttons"><button type="button" id="positionAICopy" class="secondary">📋 Copiar consulta</button><a class="position-ai-open" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Abrir ChatGPT ↗</a></div></div>
+            <details class="position-more"><summary>📰 ¿Se trata de una noticia? Añadir enlace o ámbito (opcional)</summary><div class="position-two"><label>Ámbito<select name="scope"><option>General</option><option>Floridablanca</option><option>Santander</option><option>Colombia</option></select></label><label>Fecha de la noticia<input name="newsDate" type="date"></label></div><label>Enlace de referencia<input name="sourceUrl" type="url" placeholder="https://..."></label><label>Medio o fuente<input name="source" placeholder="Ej.: Vanguardia"></label></details>
+            <div class="position-editor hidden" id="positionEditor"><div class="position-simple-intro"><span class="position-step">2</span><div><h3>Revise su comentario</h3><p><strong>Todo el comentario aparecerá en una sola hoja.</strong> El texto se justifica en dos columnas. Al guardarlo, también se conservará su fotografía.</p></div></div><label>Titular del tema<input name="title" maxlength="110" placeholder="Ej.: Floridablanca, 209 años de historia y orgullo"></label><label>Comentario completo<textarea name="opinion" rows="11" maxlength="10000" placeholder="Escriba o pegue aquí su comentario completo, con sus párrafos."></textarea></label><input type="hidden" name="cardText" value=""><label>Fotografía del tema <small>(opcional; se conserva al guardar el comentario)</small><input id="positionImage" type="file" accept="image/*"></label><div class="position-format-row"><span>Imagen para</span><label><input type="radio" name="format" value="post" checked> Tarjeta editorial</label><label><input type="radio" name="format" value="story"> Historia vertical</label></div><div class="form-actions"><button class="primary" type="submit">🎨 Ver mi tarjeta</button><button class="secondary" type="button" id="positionSave">💾 Guardar comentario y foto</button><button class="secondary" type="button" id="positionClear">Nuevo comentario</button></div><small class="position-fact-note">Antes de publicar una afirmación concreta, confirme cifras, citas y hechos en fuentes confiables. La aplicación no verifica noticias automáticamente.</small></div>
+          </form>
+          <div class="card position-preview-card">
+            <div class="position-preview-head"><h3>Su comentario en una sola hoja</h3><small>Tarjeta con titular del tema, fotografía completa, texto y firma de Marco Andrés Silva López.</small></div>
+            <div class="position-canvas-wrap"><canvas id="positionCanvas" width="1080" height="1350"></canvas></div>
+            <div class="position-page-nav hidden" id="positionCardPager"><button type="button" class="secondary" id="positionPrevCard">‹ Anterior</button><strong id="positionCardCount">Una sola hoja</strong><button type="button" class="secondary" id="positionNextCard">Siguiente ›</button></div>
+            <p class="position-page-note" id="positionCardNote">El comentario aparece completo en una sola imagen. Para compartirlo, procure que tenga entre 150 y 220 palabras.</p>
+            <div class="position-actions">
+              <button class="primary" id="positionShare" type="button">📤 Compartir hoja editorial</button>
+              <button class="secondary" id="positionDownload" type="button">⬇ Guardar imagen</button>
+              <button class="secondary" id="positionDownloadPdf" type="button">📄 Guardar PDF</button>
+              <button class="secondary" id="positionCopyText" type="button">📋 Copiar comentario completo</button>
+              <button class="position-wa" id="positionContacts" type="button">👥 Enviar por WhatsApp</button>
+            </div>
+          </div>
+        </div>
+        <div class="card position-archive-card"><div class="position-archive-head"><div><h3>🗂️ Comentarios guardados</h3><p>También encontrará aquí sus publicaciones anteriores, ahora con la presentación actual.</p></div><strong id="positionArchiveCount">0</strong></div><p class="position-archive-guide">Toque el título o <b>Ver tarjeta actualizada</b> para recuperar el texto y la fotografía. También puede abrirla para editarla.</p><div id="positionArchiveStatus" class="position-archive-status hidden" role="status" aria-live="polite"></div><div id="positionArchive"></div></div>
+        <div class="card position-contacts-card hidden" id="positionContactsPanel"><div class="position-archive-head"><div><h3>Contactos autorizados</h3><p>Seleccione un contacto para abrir WhatsApp con el mensaje preparado. La app no realiza envíos automáticos.</p></div><button type="button" class="secondary" id="positionContactsClose">Cerrar</button></div><div class="position-contact-filter"><label>Filtrar por vereda<select id="positionVeredaFilter"><option value="">Todas</option></select></label></div><div id="positionContactsList"></div></div>
+      </section>
+
+      <section class="view" id="view-stories">
+        <div class="section-title"><div><h2>🏢 Contando tu historia</h2><p>Empresas y emprendimientos que generan progreso, empleo y oportunidades para Floridablanca.</p></div><button class="primary" type="button" id="businessNewBtn">+ Registrar empresa</button></div>
+        <div id="businessKpis" class="business-kpis"></div>
+        <div class="card business-directory-tools">
+          <div><h3>Directorio empresarial</h3><p>Conozca quiénes producen, emplean, sirven y construyen futuro en el municipio.</p></div>
+          <div class="business-filter-grid"><input id="businessSearch" type="search" placeholder="Buscar empresa, sector, barrio o vereda..."><select id="businessSectorFilter"><option value="">Todos los sectores</option></select><select id="businessTerritoryFilter"><option value="">Todos los territorios</option></select></div>
+        </div>
+        <div id="businessDirectory" class="business-directory"></div>
+        <div class="card business-purpose-note"><strong>Mapa de capacidades productivas de Floridablanca</strong><span>Las empresas con autorización de difusión también se relacionan con el Mapa Territorial, para mostrar capacidades económicas junto con las necesidades y gestiones de cada zona.</span></div>
+      </section>
+
+      <section class="view" id="view-reports">
+        <div class="section-title"><div><h2>📊 Inteligencia territorial</h2><p>Diagnóstico, seguimiento y resultados construidos con la información real de la Matriz.</p></div></div>
+        <div id="intelKpis" class="intel-kpis"></div>
+        <div class="intel-grid">
+          <div class="card intel-card">
+            <h3>📊 Diagnóstico territorial de Floridablanca</h3>
+            <p>Necesidades por sector, prioridad y estado.</p>
+            <div id="intelDiagnosis"></div>
+            <button class="primary" id="intelDiagnosisPdf">Generar diagnóstico / imprimir</button>
+          </div>
+          <div class="card intel-card">
+            <h3>🗺️ Análisis por barrio / vereda</h3>
+            <p>Seleccione un territorio para conocer necesidades, líderes, proyectos y gestiones.</p>
+            <select id="intelTerritorySelect"></select>
+            <div id="intelTerritory"></div>
+            <button class="primary" id="intelTerritoryPdf">Generar ficha territorial</button>
+          </div>
+        </div>
+        <div class="card intel-card intel-wide">
+          <h3>📈 Gestión y resultados</h3>
+          <p>Ruta de avance de las necesidades registradas.</p>
+          <div id="intelManagement"></div>
+        </div>
+        <div class="card intel-card intel-wide">
+          <h3>📄 Informes ejecutivos</h3>
+          <div class="intel-actions">
+            <button class="primary" id="intelManagementPdf">Generar Informe de Gestión</button>
+            <button class="primary" id="exportCsv">Exportar necesidades CSV</button>
+          </div>
+        </div>
+        <div style="display:none"><select id="territoryReport"></select><button id="printDiagnosis"></button><button id="printTerritory"></button></div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="section-title"><div><h2>Configuración y respaldo</h2><p>Los datos se guardan localmente en este dispositivo.</p></div></div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Centro de respaldos y traslado de dispositivos</h3>
+            <p>Exporte registros, PDF archivados y fotografías en un solo <strong>JSON privado</strong>. Para trabajar desde iPhone, iPad y computador, transfiera ese archivo por un medio privado e impórtelo en cada dispositivo. <strong>No suba el JSON a GitHub.</strong></p>
+            <p><strong>Para entregar la aplicación:</strong> publique solamente los archivos del programa. Luego exporte el respaldo desde este navegador e impórtelo en la dirección de GitHub Pages. Repita la importación en los demás dispositivos.</p>
+            <p><strong>Importante:</strong> esta importación agrega elementos faltantes pero no sobrescribe los que ya tienen el mismo identificador. Si edita un mismo contacto en dos equipos, esos cambios no se sincronizarán automáticamente. Trabaje con un dispositivo principal y haga respaldos frecuentes.</p>
+            <label class="portable-backup-sig"><input type="checkbox" id="backupIncludeSignature"> Incluir firma escaneada privada en la exportación (solo con autorización)</label>
+            <div class="button-row"><button class="primary" id="exportJson">⬇ Exportar respaldo integral</button><label class="file-button">📂 Seleccionar JSON para importar<input type="file" id="importJson" accept="application/json,.json"></label></div>
+            <div class="portable-backup-status" id="portableBackupStatus" role="status">Respaldo integral listo para trasladar datos entre dispositivos.</div>
+            <div class="portable-backup-preview" id="portableBackupPreview" hidden><strong>Vista previa del archivo seleccionado</strong><div id="portableBackupFile"></div><p id="portableBackupDetails"></p><p><strong>Importación segura:</strong> suma registros faltantes, conserva los actuales. Los documentos con el mismo ID nunca se reemplazan.</p><div class="button-row"><button class="primary" type="button" id="portableBackupImport">✓ Fusionar respaldo</button><button class="secondary" type="button" id="portableBackupCancel">Cancelar</button></div></div>
+            <button type="button" id="portableBackupReload" class="secondary" hidden>↻ Recargar aplicación para mostrar datos restaurados</button>
+            <small class="portable-backup-note">El respaldo puede contener información personal, PDF y fotografías. Consérvelo fuera de carpetas públicas. Los archivos generados únicamente para descargar y no archivados en la app no pueden recuperarse con el respaldo.</small>
+          </div>
+          <div class="card">
+            <h3>Datos de la organización</h3>
+            <label>Nombre del sistema<input id="orgName"></label>
+            <label>Responsable / equipo<input id="orgTeam"></label>
+            <button class="primary" id="saveSettings">Guardar configuración</button>
+          </div>
+        </div>
+        <div class="card danger-zone"><h3>Zona de mantenimiento</h3><button class="danger" id="clearData">Borrar todos los datos locales</button></div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+
+  <!-- Modal Necesidad -->
+  <div class="modal" id="needModal"><div class="modal-card"><div class="modal-head"><h3>Registrar necesidad <small style="font-size:10px;color:#68809a">Territorio v1.4.16</small></h3><button data-close>×</button></div><form id="needForm" class="form-grid">
+    <section class="span-2 need-geo-box" id="needGeoBox">
+      <div class="need-geo-head"><div><strong>📍 Ubicación territorial vinculada</strong><p>Use los mismos nombres de barrios, sectores territoriales y veredas de las bases y de los mapas.</p></div><span>Sincronizado · v1.4.16</span></div>
+      <div class="need-geo-grid">
+        <label>Área de la necesidad<select id="needGeoType"><option value="urban">Floridablanca urbano · barrio</option><option value="rural">Floridablanca rural · vereda</option><option value="pending">Ubicación por identificar</option></select></label>
+        <label id="needGeoSectorLabel">Sector territorial de la base<select id="needGeoSector"><option value="">Todos / no identificado</option></select></label>
+        <label id="needGeoBarrioLabel">Barrio urbano (base + plano + registros)<select id="needGeoBarrio"><option value="">Seleccione un barrio...</option></select></label>
+        <label id="needGeoCustomLabel" hidden>Nombre de barrio nuevo<input id="needGeoCustom" placeholder="Barrio no incluido en la base" autocomplete="off"></label>
+      </div>
+      <div class="need-geo-actions"><button type="button" id="needGeoFindPeople" class="secondary">👥 Buscar reportantes de este barrio</button><button type="button" id="needGeoOpenMap" class="secondary">🗺️ Ver barrio en el mapa</button></div>
+      <div class="need-geo-status" id="needGeoStatus" aria-live="polite">Seleccione el barrio de la necesidad.</div>
+    </section>
+    <label id="needTerritoryLabel">Territorio registrado en la Matriz<input name="territory" id="needTerritory" required readonly placeholder="Se completará al escoger el barrio o vereda"></label>
+    <label>Comuna urbana (si aplica)<select name="comuna" class="flori-comuna-select"><option value="">Sin comuna asignada</option></select></label>
+    <label id="needVeredaLabel">Vereda<select name="vereda" id="needVereda"><option value="">Sin asignar / no aplica</option></select></label>
+    <input type="hidden" name="barrio" id="needBarrioUrbano">
+    <input type="hidden" name="sectorTerritorial" id="needSectorTerritorial">
+    <label class="span-2">Zona / Comuna / Corregimiento (opcional)<input name="zone" placeholder="Solo si aplica; no reemplaza el barrio o la vereda"></label>
+    <label class="span-2">Necesidad<input name="title" required></label>
+    <label>Área temática de la necesidad<select name="sector" id="needSector"></select></label>
+    <label>Prioridad<select name="priority" id="needPriority"></select></label>
+    <label>Estado<select name="status" id="needStatus"></select></label>
+    <label>Nivel de madurez<select name="maturity" id="needMaturity"></select></label>
+    <label>Reportado por (líder o participante)<select name="leaderId" id="needLeader"></select></label>
+    <label>Entidad competente<input name="competentEntity" list="needEntityOptions" placeholder="Escriba o seleccione del Directorio institucional"><datalist id="needEntityOptions"></datalist></label>
+    <label class="span-2">Ubicación / referencia<input name="location"></label>
+    <label class="span-2">Descripción<textarea name="description"></textarea></label>
+    <label>Afectados / beneficiarios<input name="affected"></label>
+    <label>Antigüedad del problema<input name="age"></label>
+    <label class="span-2">Evidencias / documentos / radicados<textarea name="evidence"></textarea></label>
+
+    <section class="span-2 photo-followup-panel" id="photoFollowupPanel">
+      <div class="photo-panel-head">
+        <div><h4>📷 Seguimiento fotográfico</h4><p>Documente visualmente la necesidad: <strong>ANTES → SEGUIMIENTO → DESPUÉS</strong>.</p></div>
+        <span>Compresión automática</span>
+      </div>
+
+      <div class="photo-phase">
+        <div class="photo-phase-title"><strong>1. ANTES · Evidencia inicial</strong><small>Estado de la necesidad al momento de identificarla.</small></div>
+        <input type="text" id="photoBeforeNote" placeholder="Descripción opcional. Ej.: Estado inicial de la vía">
+        <div class="photo-buttons">
+          <label class="photo-button">📷 Tomar foto<input class="photo-input" type="file" accept="image/*" capture="environment" data-phase="before"></label>
+          <label class="photo-button secondary-photo">🖼️ Galería<input class="photo-input" type="file" accept="image/*" multiple data-phase="before"></label>
+        </div>
+        <div class="photo-gallery" id="beforeGallery"><div class="photo-empty">Aún no hay fotografías iniciales.</div></div>
+      </div>
+
+      <div class="photo-phase">
+        <div class="photo-phase-title"><strong>2. SEGUIMIENTO · Evolución</strong><small>Visitas, intervenciones o avances.</small></div>
+        <div class="photo-meta-grid"><input type="date" id="photoFollowDate"><input type="text" id="photoFollowNote" placeholder="Ej.: Visita técnica / obra en ejecución"></div>
+        <div class="photo-buttons">
+          <label class="photo-button">📷 Tomar foto<input class="photo-input" type="file" accept="image/*" capture="environment" data-phase="followup"></label>
+          <label class="photo-button secondary-photo">🖼️ Galería<input class="photo-input" type="file" accept="image/*" multiple data-phase="followup"></label>
+        </div>
+        <div class="photo-gallery" id="followupGallery"><div class="photo-empty">Aún no hay fotografías de seguimiento.</div></div>
+      </div>
+
+      <div class="photo-phase">
+        <div class="photo-phase-title"><strong>3. DESPUÉS · Resultado final</strong><small>Resultado cuando la necesidad haya sido atendida.</small></div>
+        <input type="text" id="photoAfterNote" placeholder="Descripción opcional. Ej.: Intervención terminada">
+        <div class="photo-buttons">
+          <label class="photo-button">📷 Tomar foto<input class="photo-input" type="file" accept="image/*" capture="environment" data-phase="after"></label>
+          <label class="photo-button secondary-photo">🖼️ Galería<input class="photo-input" type="file" accept="image/*" multiple data-phase="after"></label>
+        </div>
+        <div class="photo-gallery" id="afterGallery"><div class="photo-empty">Aún no hay fotografías finales.</div></div>
+      </div>
+      <div class="photo-warning" id="photoSolvedWarning">Al marcar una necesidad como <strong>Solucionada</strong>, procure registrar evidencia del <strong>DESPUÉS</strong>.</div>
+    </section>
+
+    <label class="span-2">Próxima acción<input name="nextAction"></label>
+    <label>Responsable<input name="responsible"></label>
+    <label>Fecha de seguimiento<input type="date" name="followUp"></label>
+    <input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary" type="submit">Guardar</button><button class="petition-need-action" id="needPetitionBtn" type="button">📄 Generar Derecho de Petición</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Modal líder -->
+  <div class="modal" id="contactFinderModal"><div class="modal-card contact-finder-card"><div class="modal-head"><div><h3>🔎 Buscar persona</h3><small>Encuentre rápidamente un líder o simpatizante.</small></div><button type="button" onclick="closeContactFinder()">×</button></div><div class="contact-finder-body"><div class="contact-search-box"><span>🔎</span><input id="contactFinderInput" type="search" autocomplete="off" placeholder="Escriba nombre, WhatsApp o territorio..." oninput="renderContactFinder(this.value)" /></div><div class="contact-finder-hint">Puede escribir solo una parte del nombre. Ejemplo: <strong>Miguel</strong>.</div><div id="contactFinderResults" class="contact-finder-results"></div></div></div></div>
+  <div class="modal" id="leaderModal"><div class="modal-card"><div class="modal-head"><h3>Registrar líder, simpatizante o participante</h3><button data-close>×</button></div><form id="leaderForm" class="form-grid">
+    <label>Nombre<input name="name" required></label><label>Número de cédula<input name="cedula" inputmode="numeric" autocomplete="off" placeholder="Ej. 1098765432"></label>
+    <div class="span-2 contact-quick-type"><strong>¿Cómo se vincula esta persona?</strong><div class="contact-quick-buttons"><button type="button" data-leader-type="Líder">🧭 Líder</button><button type="button" data-leader-type="Simpatizante">🤝 Simpatizante</button><button type="button" data-leader-type="Participante">👤 Participante</button></div><small id="contactTypeHelp">Líder: coordina personas. Simpatizante: está ligado a un líder y cuenta como su aporte. Participante: asistió o tuvo contacto, pero no forma parte de la red de simpatizantes.</small></div>
+    <label>Tipo de contacto<select name="contactType" id="contactType" required><option value="">Seleccione...</option><option value="Líder">Líder (coordina su red)</option><option value="Simpatizante">Simpatizante (vinculado a un líder)</option><option value="Participante">Participante (sin vínculo de simpatizante)</option></select></label>
+    <label id="parentLeaderField" class="hidden">Líder que aporta a este simpatizante <select name="parentLeaderId" id="parentLeaderId"><option value="">Seleccione un líder obligatorio...</option></select><small>Se sumará al conteo de este líder. Registre primero al líder si no aparece.</small></label>
+    <label>Calidad / rol<select name="role" id="leaderRole" aria-label="Seleccione calidad o rol"><option value="">Seleccione un rol...</option>
+      <optgroup label="Juntas y liderazgo comunitario"><option>Presidente(a) de Junta de Acción Comunal</option><option>Vicepresidente(a) de Junta de Acción Comunal</option><option>Secretario(a) de Junta de Acción Comunal</option><option>Tesorero(a) de Junta de Acción Comunal</option><option>Fiscal de Junta de Acción Comunal</option><option>Miembro de Junta de Acción Comunal</option><option>Presidente(a) de Junta Administradora Local</option><option>Edil</option><option>Exedil</option><option>Líder comunal</option><option>Líder barrial</option><option>Líder veredal</option><option>Líder social</option><option>Líder comunitario</option><option>Líder juvenil</option><option>Líder deportivo</option><option>Líder cultural</option><option>Líder ambiental</option><option>Líder religioso</option><option>Veedor(a) ciudadano(a)</option><option>Representante de asociación de vecinos</option></optgroup>
+      <optgroup label="Cargos públicos y representación política"><option>Concejal(a) actual</option><option>Exconcejal(a)</option><option>Candidato(a) al Concejo</option><option>Diputado(a) actual</option><option>Exdiputado(a)</option><option>Candidato(a) a la Asamblea</option><option>Representante a la Cámara actual</option><option>Exrepresentante a la Cámara</option><option>Candidato(a) a la Cámara</option><option>Senador(a) actual</option><option>Exsenador(a)</option><option>Candidato(a) al Senado</option><option>Alcalde(sa) actual</option><option>Exalcalde(sa)</option><option>Candidato(a) a la Alcaldía</option><option>Gobernador(a) actual</option><option>Exgobernador(a)</option><option>Candidato(a) a la Gobernación</option><option>Servidor(a) público(a)</option><option>Exservidor(a) público(a)</option><option>Asesor(a) político(a)</option><option>Coordinador(a) territorial</option></optgroup>
+      <optgroup label="Trabajo, gremios y ocupaciones"><option>Empresario(a)</option><option>Comerciante</option><option>Emprendedor(a)</option><option>Agricultor(a)</option><option>Campesino(a)</option><option>Ganadero(a)</option><option>Transportador(a)</option><option>Docente</option><option>Rector(a)</option><option>Profesional independiente</option><option>Trabajador(a) independiente</option><option>Empleado(a)</option><option>Pensionado(a)</option><option>Estudiante</option><option>Representante gremial</option><option>Representante sindical</option><option>Representante del sector salud</option><option>Representante del sector educativo</option><option>Artista</option><option>Deportista</option><option>Líder empresarial</option></optgroup>
+      <optgroup label="Hogar y comunidad"><option>Madre cabeza de familia</option><option>Padre cabeza de familia</option><option>Cuidador(a) familiar</option><option>Ama de casa</option><option>Adulto(a) mayor</option><option>Representante de padres de familia</option><option>Representante estudiantil</option><option>Representante de organización social</option><option>Voluntario(a) comunitario(a)</option><option>Ciudadano(a) de la comunidad</option></optgroup>
+      <option value="__otro__">Otro rol (especificar)...</option>
+    </select></label>
+    <label id="roleOtherField" class="hidden">Especifique otro rol<input name="roleOther" id="leaderRoleOther" placeholder="Escriba el rol que no figura en la lista"></label>
+    <label>Tipo de organización<select name="organizationType" id="leaderOrganizationType"><option value="">Seleccione categoría...</option><option>Junta de Acción Comunal (JAC)</option><option>Junta Administradora Local (JAL)</option><option>Asociación comunitaria</option><option>Asociación de vecinos</option><option>Organización social</option><option>Fundación / ONG</option><option>Organización de mujeres</option><option>Organización juvenil</option><option>Organización de adultos mayores</option><option>Organización empresarial</option><option>Gremio o asociación económica</option><option>Organización religiosa</option><option>Institución educativa</option><option>Entidad pública</option><option>Organización deportiva</option><option>Organización cultural</option><option>Grupo ambiental</option><option>Partido o movimiento político</option><option>Independiente / sin organización</option><option>Otra organización</option></select></label>
+    <label>Nombre de la comunidad u organización<input name="organization" placeholder="Nombre específico, si aplica"></label>
+    <div class="span-2 santander-form-divider"><strong>🗳️ Ubicación municipal y electoral</strong><small>Indique el municipio al que pertenece el contacto y, si lo conoce, dónde tiene registrado su puesto de votación. No son resultados ni compromisos de voto.</small></div>
+    <label>Municipio de vinculación en Santander<select name="municipio" id="leaderMunicipio"><option value="">Sin municipio asignado</option></select></label>
+    <label>Municipio donde vota<select name="municipioVotacion" id="leaderMunicipioVotacion"><option value="">Sin informar</option></select></label>
+    <label>Territorio / sector de referencia<input name="territory" list="contactTerritorySuggestions" placeholder="Seleccione una sugerencia o escriba otro sector"><datalist id="contactTerritorySuggestions"></datalist></label>
+    <label>Tipo de zona<select name="zoneType" id="leaderZoneType"><option value="">Seleccione...</option><option>Urbana</option><option>Rural</option><option>Barrio</option><option>Conjunto residencial</option><option>Urbanización</option><option>Vereda</option><option>Corregimiento</option><option>Centro poblado</option><option>Asentamiento</option><option>Otro sector territorial</option></select></label>
+    <label>Comuna urbana<select name="comuna" class="flori-comuna-select"><option value="">Sin comuna asignada</option></select></label>
+    <label>Vereda<select name="vereda" id="leaderVereda"><option value="">Sin asignar / no aplica</option></select></label><label>Teléfono<input name="phone"></label>
+    <label>WhatsApp<input name="whatsapp" inputmode="tel" placeholder="Ej. 3001234567"></label><label>Correo<input type="email" name="email"></label>
+    <label>🎂 Fecha de nacimiento<input type="date" name="birthDate"></label><label>¿Autoriza recibir comunicaciones?<select name="communicationsConsent"><option value="Pendiente">Pendiente</option><option value="Sí">Sí</option><option value="No">No</option></select></label><label>Fecha de última comunicación<input type="date" name="lastCommunication"></label>
+    <label>Canal preferido<select name="preferredChannel"><option value="WhatsApp">WhatsApp</option><option value="Teléfono">Teléfono</option><option value="Correo">Correo</option><option value="Presencial">Presencial</option><option value="Otro">Otro</option></select></label><label class="span-2">Notas<textarea name="notes"></textarea></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Compromisos condicionados: separados de los proyectos históricos -->
+  <div class="modal" id="campaignCommitmentModal"><div class="modal-card"><div class="modal-head"><h3>Registrar compromiso para un eventual mandato</h3><button data-close>×</button></div>
+    <form id="campaignCommitmentForm" class="form-grid">
+      <div class="span-2 future-commitment-notice"><strong>Si Marco resulta elegido</strong><p>La propuesta quedará identificada expresamente como condicionada a la elección y a su viabilidad legal, técnica y presupuestal.</p></div>
+      <label class="span-2">Nombre del compromiso propuesto<input name="name" required placeholder="Ej. Impulsar el diagnóstico de la vía del sector"></label>
+      <label>Municipio / territorio<input name="territory" placeholder="Barrio, vereda o municipio"></label>
+      <label>Vereda<select name="vereda" id="campaignCommitmentVereda"><option value="">Sin asignar / no aplica</option></select></label>
+      <label>Área o sector<select name="sector" id="campaignCommitmentSector"></select></label>
+      <label>Necesidad comunitaria vinculada<select name="needId" id="campaignCommitmentNeed"></select></label>
+      <label class="span-2">Alcance del compromiso que se estudiaría impulsar<textarea name="scope" rows="3" required placeholder="Explique qué se buscaría hacer, sin afirmar que la obra ya esté aprobada."></textarea></label>
+      <label>Estado de preparación<select name="status"><option>Propuesta en estudio</option><option>En revisión de viabilidad</option><option>Propuesta priorizada para consideración</option><option>Compromiso programático condicionado</option><option>Requiere reformulación</option><option>No viable por ahora</option></select></label>
+      <label>Horizonte tentativo<select name="timeframe"><option value="">Por definir</option><option>Inicio de eventual mandato</option><option>Primer año del eventual mandato</option><option>Durante el eventual mandato</option><option>Depende de estudios y financiación</option></select></label>
+      <label>Entidad competente por confirmar<input name="entity" placeholder="Sin atribuir aprobaciones ni financiación"></label>
+      <label>Valor preliminar, si se conoce (COP)<input type="number" min="0" step="1000" name="value" placeholder="Opcional, no constituye financiación"></label>
+      <label class="span-2">Condiciones, estudios y observaciones pendientes<textarea name="notes" rows="3" placeholder="Competencia, recursos, fuentes de información, restricciones..."></textarea></label>
+      <input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar compromiso futuro</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+    </form>
+  </div></div>
+
+  <!-- Modal para consultar y actualizar proyectos registrados en versiones anteriores -->
+  <div class="modal" id="projectModal"><div class="modal-card"><div class="modal-head"><h3>Registrar proyecto</h3><button data-close>×</button></div><form id="projectForm" class="form-grid">
+    <label class="span-2">Nombre del proyecto<input name="name" required></label><label>Territorio<input name="territory"></label><label>Vereda<select name="vereda" id="projectVereda"><option value="">Sin asignar / no aplica</option></select></label><label>Sector<select name="sector" id="projectSector"></select></label>
+    <label>Entidad formuladora<input name="formulator"></label><label>Entidad nacional / competente<input name="entity"></label>
+    <label>Radicado<input name="radicado"></label><label>Fecha radicación<input type="date" name="radicadoDate"></label>
+    <label>Valor total<input type="number" min="0" step="1000" name="value"></label><label>Financiación requerida<input type="number" min="0" step="1000" name="funding"></label>
+    <label>Estado<select name="status"><option>En estructuración</option><option>Proyecto estructurado</option><option>Radicado</option><option>En evaluación</option><option>Viable</option><option>Viable - buscando financiación</option><option>Financiado</option><option>En ejecución</option><option>Ejecutado</option><option>Archivado</option></select></label>
+    <label>Necesidad vinculada<select name="needId" id="projectNeed"></select></label>
+    <label class="span-2">Observaciones / requisitos pendientes<textarea name="notes"></textarea></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Modal gestión -->
+  <div class="modal" id="actionModal"><div class="modal-card"><div class="modal-head"><h3>Registrar gestión</h3><button data-close>×</button></div><form id="actionForm" class="form-grid">
+    <label>Necesidad<select name="needId" id="actionNeed"></select></label><label>Proyecto previo o compromiso futuro<select name="projectId" id="actionProject"></select></label>
+    <label>Vereda<select name="vereda" id="actionVereda"><option value="">Sin asignar / no aplica</option></select></label>
+    <label>Fecha<input type="date" name="date" required></label><label>Tipo<select name="type"><option>Visita técnica</option><option>Reunión comunitaria</option><option>Mesa técnica</option><option>Oficio / radicado</option><option>Seguimiento</option><option>Gestión ante entidad</option><option>Subsanación</option><option>Otro</option></select></label>
+    <label class="span-2">Actuación realizada<textarea name="description" required></textarea></label><label>Responsable<input name="responsible"></label><label>Próxima fecha<input type="date" name="nextDate"></label>
+    <label class="span-2">Próxima acción<input name="nextAction"></label><input type="hidden" name="id"><div class="span-2 form-actions"><button class="primary">Guardar</button><button class="secondary" type="button" data-close>Cancelar</button></div>
+  </form></div></div>
+
+  <!-- Centro de Derechos de Petición -->
+  <div class="modal" id="petitionCenterModal"><div class="modal-card petition-center-card">
+    <div class="modal-head"><div><h3>Derechos de Petición</h3><p class="petition-subtitle">Seleccione una necesidad registrada para preparar, firmar y generar su PDF.</p></div><button type="button" data-petition-center-close>×</button></div>
+    <div class="petition-center-help"><strong>Nuevo Derecho de Petición:</strong> seleccione una necesidad registrada y pulse <strong>Crear nuevo</strong>. Los documentos ya generados continúan disponibles en el Archivo de PDFs.</div>
+    <div class="petition-new-row"><select id="petitionNewNeedSelect" aria-label="Necesidad para nuevo Derecho de Petición"><option value="">Seleccione una necesidad...</option></select><button class="primary" id="newPetitionBtn" type="button">＋ Nuevo Derecho de Petición</button><button class="primary batch-main-btn" id="newPetitionBatchBtn" type="button">☑️ Generar para varios destinatarios</button><button class="secondary" id="newIvanFreeRequestBtn" type="button">✍️ Solicitud de Marco Andrés Silva López (sin necesidad registrada)</button></div>
+    <div class="petition-center-label"><strong>Necesidades registradas</strong><small>También puede generar el documento directamente desde cualquiera de estas necesidades.</small></div>
+    <div id="petitionCenterList" class="petition-center-list"></div>
+    <div class="form-actions petition-center-actions"><button class="petition-archive-open" id="openPetitionArchive" type="button">🗃️ Archivo de PDFs <span id="petitionArchiveCount">0</span></button><button class="secondary" type="button" data-petition-center-close>Cerrar</button></div>
+  </div></div>
+
+  <!-- Archivo documental de Derechos de Petición -->
+  <div class="modal" id="petitionArchiveModal"><div class="modal-card petition-archive-card">
+    <div class="modal-head"><div><h3>Archivo de Derechos de Petición</h3><p class="petition-subtitle">Los PDFs generados quedan guardados en este dispositivo y vinculados a su necesidad.</p></div><button type="button" data-petition-archive-close>×</button></div>
+    <div class="petition-archive-filters">
+      <div class="petition-filter-main"><label>🔎 Buscar documento<input id="petitionArchiveSearch" type="search" placeholder="Necesidad, destinatario, entidad, asunto o radicado..."></label><span id="petitionArchiveSummary">0 documentos</span></div>
+      <div class="petition-filter-grid">
+        <label>Destinatario<select id="petitionArchiveRecipient"><option value="">Todos los destinatarios</option></select></label>
+        <label>Entidad<select id="petitionArchiveEntity"><option value="">Todas las entidades</option></select></label>
+        <label>Estado<select id="petitionArchiveStatus"><option value="">Todos</option><option value="pending">Pendiente de radicado</option><option value="assigned">Radicado registrado</option><option value="prepared">Preparado para enviar</option><option value="sent">Enviado confirmado</option></select></label>
+        <label>Desde<input id="petitionArchiveFrom" type="date"></label>
+        <label>Hasta<input id="petitionArchiveTo" type="date"></label>
+        <button class="secondary" id="petitionArchiveClear" type="button">↺ Limpiar filtros</button>
+      </div>
+    </div>
+    <div class="petition-center-help"><strong>PDF original:</strong> «Abrir original» conserva el documento tal como fue generado. Para aplicar el diseño nuevo a uno antiguo, pulse <strong>«CREAR NUEVO PDF con el diseño aprobado»</strong>: se abre el formulario con los datos disponibles, incluso cuando solo existe una copia visual. Debe revisar y completar el contenido y firmar nuevamente. La nueva versión queda archivada por separado; los radicados y envíos anteriores no se transfieren.</div>
+    <div id="petitionArchiveList" class="petition-archive-list"></div>
+    <div class="form-actions"><button class="secondary" type="button" data-petition-archive-close>Cerrar</button></div>
+  </div></div>
+
+  <!-- Envío trazable de Derechos de Petición -->
+  <div class="modal" id="petitionSendModal"><div class="modal-card petition-send-card">
+    <div class="modal-head"><div><h3>📤 Preparar envío del Derecho de Petición</h3><p class="petition-subtitle">Defina el correo de destino. La aplicación prepara el mensaje; el envío real se realiza desde su correo.</p></div><button type="button" data-petition-send-close>×</button></div>
+    <div class="rep-send-warning"><strong>Importante:</strong> pulsar “Preparar correo” no significa que el documento haya sido enviado. El PDF se descarga para adjuntarlo y su aplicación de correo se abre con destinatario, asunto y mensaje preparados.</div>
+    <div class="form-grid">
+      <label class="span-2">Documento<input id="petitionSendDocument" readonly></label>
+      <label class="span-2">Correo del destinatario<input id="petitionSendEmail" type="email" placeholder="correo@entidad.gov.co"></label>
+      <label class="span-2">Asunto<input id="petitionSendSubject"></label>
+      <label class="span-2">Mensaje<textarea id="petitionSendMessage" rows="5"></textarea></label>
+    </div>
+    <div class="rep-send-status" id="petitionSendStatus"></div>
+    <div class="form-actions">
+      <button class="primary" type="button" id="petitionPrepareEmail">📎 Preparar correo + PDF</button>
+      <button class="secondary" type="button" id="petitionConfirmSent">✓ Confirmar que ya lo envié</button>
+      <button class="secondary" type="button" data-petition-send-close>Cancelar</button>
+    </div>
+  </div></div>
+
+  <!-- Modal Derecho de Petición -->
+  <div class="modal" id="petitionModal"><div class="modal-card petition-modal-card">
+    <div class="modal-head"><div><h3>Generar documento</h3><p class="petition-subtitle" id="petitionNeedSummary"></p></div><button type="button" data-petition-close>×</button></div>
+    <form id="petitionForm" class="form-grid petition-form">
+      <input type="hidden" name="needId">
+      <label class="span-2">Vereda vinculada<input name="vereda" id="petitionVereda" readonly placeholder="Sin vereda asignada"></label>
+      <div class="span-2 batch-recipient-panel">
+        <div><strong>📚 Destinatarios desde el Directorio Institucional</strong><small>Seleccione una o varias entidades. Se generará un PDF independiente para cada destinatario.</small></div>
+        <button type="button" class="secondary" data-batch-open="petition">☑️ Seleccionar varios destinatarios</button>
+        <span class="batch-count" id="petitionBatchCount">Sin selección múltiple</span>
+      </div>
+      <div class="span-2 petition-form-section">Datos de la persona destinataria</div>
+      <label>Nombre de la persona destinataria<input name="recipientName" required placeholder="Ej.: Juan Pérez Gómez"></label>
+      <label>Cargo / dependencia<input name="recipientRole" placeholder="Ej.: Coordinador de Redes"></label>
+      <label>Entidad donde trabaja<input name="entity" required placeholder="Ej.: Acueducto Metropolitano de Bucaramanga"></label>
+      <label>Correo de la persona destinataria<input type="email" name="recipientEmail" placeholder="Ej.: funcionario@entidad.gov.co"></label>
+      <label class="span-2">Celular / WhatsApp de la persona destinataria<input name="recipientPhone" inputmode="tel" placeholder="Ej.: 300 000 0000"></label>
+      <label class="span-2">Dirección física de la entidad / destinatario<input name="recipientAddress" placeholder="Se completa desde el Directorio, si está disponible"></label>
+      <div id="petitionRecipientPrefillStatus" class="span-2 petition-prefill-status" role="status" aria-live="polite" hidden></div>
+      <div class="span-2 petition-form-section">Tipo de documento y firmante</div>
+      <label class="span-2">Tipo de documento<select name="documentType" id="petitionDocumentType"><option value="peticion">Derecho de petición</option><option value="solicitud">Solicitud formal</option></select></label>
+      <label class="span-2">¿Quién presenta y firma este documento?<select name="signerMode" id="petitionSignerMode"><option value="personal">Peticionario / solicitante (firma propia en pantalla o cargada)</option><option value="marco_touch">Marco Andrés Silva López — firmar ahora en pantalla (táctil)</option><option value="ivan">Marco Andrés Silva López — usar firma escaneada autorizada</option></select></label>
+      <div class="span-2 petition-form-section">Datos de quien presenta el documento</div>
+      <label>Nombre del peticionario<input name="petitionerName" required></label>
+      <label>Cédula / identificación<input name="petitionerId" required></label>
+      <label>Dirección para notificaciones<input name="address"></label>
+      <label>Teléfono<input name="phone" inputmode="tel"></label>
+      <label class="span-2">Correo electrónico<input type="email" name="email" required></label>
+      <label class="span-2">Asunto<input name="subject" required></label>
+      <label class="span-2">Hechos<textarea name="facts" class="petition-textarea" required></textarea></label>
+      <label class="span-2">Peticiones concretas<textarea name="requests" class="petition-textarea" required></textarea></label>
+      <label class="span-2">Anexos / evidencias<textarea name="attachments" placeholder="Ej.: Fotografías del sector; copia de radicado anterior..."></textarea></label>
+      <div class="span-2 petition-ivan-sign" id="petitionIvanSignPanel" hidden>
+        <strong>✍️ Firma escaneada de Marco Andrés Silva López</strong>
+        <p>La firma se guarda <strong>solo en este navegador/dispositivo</strong>. Regístrela una vez usando la imagen entregada por su titular. No se incluye en los archivos públicos de la aplicación.</p>
+        <div class="petition-ivan-actions"><label class="secondary petition-upload-sign">📁 Registrar / actualizar firma de Marco Andrés Silva López<input id="ivanSignatureFile" type="file" accept="image/png,image/jpeg,image/webp"></label><button type="button" class="secondary" id="ivanSignatureRemove">Eliminar firma registrada</button></div>
+        <div id="ivanSignatureStatus" class="petition-ivan-status" role="status">Consultando firma local...</div>
+        <img id="ivanSignaturePreview" class="petition-ivan-preview" alt="Vista previa de la firma escaneada registrada" hidden>
+        <label class="petition-ivan-consent"><input type="checkbox" id="ivanSignatureAuthorized"> Confirmo que Marco Andrés Silva López autorizó el uso de su firma para este documento específico.</label>
+        <small>La imagen constituye una firma escaneada insertada en el PDF; no es una firma digital criptográfica certificada.</small>
+      </div>
+      <div class="span-2 petition-sign-box" id="petitionPersonalSignPanel">
+        <div class="petition-sign-head"><div><strong id="petitionSignCanvasTitle">Firma del peticionario</strong><small id="petitionSignCanvasHint">Firme en pantalla con el dedo, lápiz táctil o mouse, o cargue una imagen de firma escaneada.</small></div><button type="button" class="secondary petition-clear-sign">Limpiar firma</button></div>
+        <div class="petition-sign-options">
+          <span class="petition-sign-option active" id="petitionScreenSignLabel">✍️ Firma en pantalla</span>
+          <label class="secondary petition-upload-sign" id="petitionPersonalSignatureUploadLabel">🖼️ Cargar firma escaneada<input id="petitionSignatureUpload" type="file" accept="image/png,image/jpeg,image/webp"></label>
+          <span id="petitionSignatureFileName" class="petition-sign-file"></span>
+        </div>
+        <canvas id="petitionSignature" width="760" height="190" aria-label="Espacio táctil para dibujar la firma en el documento"></canvas>
+        <label id="petitionMarcoTouchConsentLabel" class="petition-ivan-consent petition-touch-consent" hidden><input type="checkbox" id="petitionMarcoTouchConsent"> Confirmo que Marco Andrés Silva López está firmando este documento o autorizó expresamente la incorporación de su firma manuscrita capturada en pantalla a este documento específico.</label>
+        <p class="petition-legal-note">La firma capturada es una <strong>firma manuscrita electrónica insertada en el PDF</strong>. No corresponde por sí sola a una firma digital criptográfica certificada.</p>
+      </div>
+      <div class="span-2 petition-track-grid">
+        <label>Número de radicado (opcional)<input name="radicado"></label>
+        <label>Fecha de radicación (opcional)<input type="date" name="radicadoDate"></label>
+      </div>
+      <div class="span-2 petition-preview-note">Para derechos de petición se aplica el artículo 23 de la Constitución Política y la Ley 1755 de 2015. Para solicitudes generales, revise su contenido y destinatario. Las firmas de Marco, tanto la dibujada ahora en pantalla como la escaneada, solo se incorporan con autorización expresa para cada documento.</div>
+      <div class="span-2 form-actions petition-actions"><button class="primary" type="submit">📄 Generar PDF firmado</button><button class="petition-whatsapp" type="button" id="sharePetitionWhatsApp">🟢 Compartir PDF por WhatsApp</button><button class="secondary" type="button" data-petition-close>Cancelar</button></div>
+    </form>
+  </div></div>
+
+
+
+  <!-- Plantilla congresional excluida hasta su nueva autorización. -->
+
+  <div class="modal" id="directoryEntityModal"><div class="modal-card directory-modal-card">
+    <div class="modal-head"><div><h3 id="directoryEntityName">Entidad</h3><p class="petition-subtitle" id="directoryEntityLevel"></p></div><button type="button" data-directory-entity-close>×</button></div>
+    <div id="directoryEntityBody"></div>
+    <div class="form-actions directory-modal-actions">
+      <button class="primary" type="button" id="directoryPetitionBtn">📄 Ir a Derechos de Petición</button>
+      <button class="secondary" type="button" data-directory-entity-close>Cerrar</button>
+    </div>
+  </div></div>
+
+
+  <div class="modal" id="directorySourceModal"><div class="modal-card directory-source-modal-card">
+    <div class="modal-head"><div><h3 id="directorySourceTitle">📚 Directorio institucional completo</h3><p class="petition-subtitle" id="directorySourceSubtitle">Fuente documental suministrada.</p></div><button type="button" data-directory-source-close>×</button></div>
+    <div class="directory-source-help">Aquí se muestran las páginas del archivo original para conservar <strong>toda la información suministrada</strong>. Use la ficha estructurada de cada entidad para abrir enlaces, escribir al correo institucional o llevar los datos al Derecho de Petición.</div>
+    <div id="directorySourcePages" class="directory-source-pages"></div>
+    <div class="form-actions"><a id="directorySourceDownload" class="secondary directory-source-download" target="_blank" rel="noopener">📚 Abrir archivo original</a><button class="secondary" type="button" data-directory-source-close>Cerrar</button></div>
+  </div></div>
+  <div class="modal" id="directoryGuideModal"><div class="modal-card directory-guide-card">
+    <div class="modal-head"><div><h3>🔎 Orientador de entidad</h3><p class="petition-subtitle">Describa qué necesita investigar y consulte entidades relacionadas.</p></div><button type="button" data-directory-guide-close>×</button></div>
+    <label class="directory-guide-label">¿Qué necesita investigar?
+      <textarea id="directoryGuideText" rows="5" placeholder="Ejemplo: Quiero saber si existe un proyecto para mejorar una vía rural de Floridablanca."></textarea>
+    </label>
+    <div class="form-actions"><button class="primary" type="button" id="directoryGuideSearch">🔎 Buscar entidades relacionadas</button><button class="secondary" type="button" data-directory-guide-close>Cerrar</button></div>
+    <div id="directoryGuideResults" class="directory-guide-results"></div>
+  </div></div>
+
+  <!-- Distribución selectiva de tarjetas por WhatsApp -->
+  <div class="modal" id="cardMassShareModal"><div class="modal-card card-mass-share-card">
+    <div class="modal-head"><div><h3 id="cardMassShareTitle">📲 Enviar tarjeta por WhatsApp</h3><p class="petition-subtitle">Seleccione destinatarios autorizados. Máximo 20 por lote.</p></div><button type="button" id="cardMassShareClose">×</button></div>
+    <div class="wa-audience-buttons card-share-audiences">
+      <button type="button" class="secondary active" data-card-audience="all">👥 Todos <span class="wa-audience-count">0</span></button>
+      <button type="button" class="secondary" data-card-audience="Líder">🧭 Líderes <span class="wa-audience-count">0</span></button>
+      <button type="button" class="secondary" data-card-audience="Simpatizante">🤝 Simpatizantes <span class="wa-audience-count">0</span></button>
+    </div>
+    <div class="card-share-tools"><button type="button" class="secondary" id="cardShareSelectVisible">Seleccionar visibles</button><button type="button" class="secondary" id="cardShareClear">Quitar selección</button><strong id="cardShareCount">0 seleccionados · máximo 20</strong></div>
+    <div id="cardShareRecipients" class="wa-recipient-picker"></div>
+    <label>Mensaje que acompañará la tarjeta<textarea id="cardShareMessage" rows="4"></textarea></label>
+    <div class="card-share-image-note"><strong>🖼️ Tarjeta preparada</strong><span>Guarde o comparta la imagen y adjúntela en WhatsApp. La app prepara cada conversación y controla el lote.</span></div>
+    <div class="form-actions"><button type="button" class="secondary" id="cardShareImage">📤 Compartir / guardar tarjeta</button><button type="button" class="primary" id="cardSharePrepare">📲 Preparar lote</button></div>
+    <div id="cardShareQueue" class="card-share-queue"></div>
+  </div></div>
+
+  <!-- Modal cumpleaños -->
+  <div class="modal" id="birthdayModal"><div class="modal-card birthday-modal-card">
+    <div class="modal-head"><div><h3>🎂 Felicitación de cumpleaños</h3><p class="petition-subtitle" id="birthdayPersonSummary"></p></div><button type="button" id="birthdayClose">×</button></div>
+    <div class="card-studio-box"><strong>🎨 Seleccione diseño</strong><div class="card-template-options" id="birthdayTemplates"><label><input type="radio" name="birthdayTemplate" value="1" checked> Diseño 1</label><label><input type="radio" name="birthdayTemplate" value="2"> Diseño 2</label><label><input type="radio" name="birthdayTemplate" value="3"> Diseño 3</label><label><input type="radio" name="birthdayTemplate" value="4"> Diseño 4</label></div><label>✏️ Texto de la tarjeta<textarea id="birthdayCardText" rows="4"></textarea></label><button type="button" class="secondary" id="birthdayRestoreText">↩ Restaurar texto sugerido</button></div>
+    <div class="birthday-preview"><canvas id="birthdayCardCanvas" width="1080" height="1536"></canvas></div>
+    <p class="birthday-note">La tarjeta se prepara para contactos con autorización registrada para recibir comunicaciones. Revise el mensaje antes de compartirlo.</p>
+    <div class="birthday-modal-actions"><button class="primary" type="button" id="birthdayShare">💌 Compartir tarjeta</button><button class="birthday-wa" type="button" id="birthdayWhatsApp">🟢 Felicitar por WhatsApp</button><button class="secondary" type="button" id="birthdayMassWhatsApp">👥 Enviar a varios</button><button class="secondary" type="button" id="birthdayDownload">⬇ Guardar imagen</button><button class="secondary" type="button" id="birthdayDownloadPdf">📄 Guardar PDF</button></div>
+  </div></div>
+
+  <!-- Consulta rápida de consolidados -->
+  <div class="modal" id="networkSummaryModal"><div class="modal-card network-summary-modal-card">
+    <div class="modal-head"><div><h3 id="networkSummaryTitle">Consulta de red</h3><p class="petition-subtitle" id="networkSummarySubtitle"></p></div><button type="button" onclick="closeNetworkSummary()">×</button></div>
+    <div id="networkSummaryList" class="network-summary-list"></div>
+  </div></div>
+
+
+  <!-- Selector múltiple de destinatarios del Directorio Institucional -->
+  <div class="modal" id="batchRecipientModal"><div class="modal-card batch-recipient-card">
+    <div class="modal-head"><div><h3>☑️ Seleccionar destinatarios</h3><p class="petition-subtitle">Puede combinar entidades de cualquiera de los cuatro niveles del Directorio Institucional.</p></div><button type="button" data-batch-close>×</button></div>
+    <div class="batch-tabs">
+      <button type="button" data-batch-level="municipal" class="active">🏘️ Municipal</button>
+      <button type="button" data-batch-level="departamental">🏢 Departamental</button>
+      <button type="button" data-batch-level="municipios">🏛️ 87 Municipios</button>
+      <button type="button" data-batch-level="nacional">🇨🇴 Nacional</button>
+    </div>
+    <div class="batch-tools"><input id="batchRecipientSearch" placeholder="🔎 Buscar entidad, correo, municipio..."><button type="button" class="secondary" id="batchSelectVisible">Seleccionar visibles</button><button type="button" class="secondary" id="batchClear">Limpiar</button></div>
+    <div class="batch-summary"><strong id="batchRecipientCount">0 destinatarios seleccionados</strong><span>Se generará un documento individual por cada selección.</span></div>
+    <div id="batchRecipientList" class="batch-recipient-list"></div>
+    <div class="form-actions"><button type="button" class="primary" id="batchApply">✓ Usar selección</button><button type="button" class="secondary" data-batch-close>Cancelar</button></div>
+  </div></div>
+
+
+  <!-- Vista de simpatizantes de cada líder y asignación múltiple de contactos ya existentes -->
+  <div class="modal" id="leaderNetworkModal"><div class="modal-card leader-network-modal-card">
+    <div class="modal-head"><div><h3 id="leaderNetworkTitle">Simpatizantes por líder</h3><small id="leaderNetworkSubtitle">Seleccione los contactos relacionados.</small></div><button type="button" onclick="closeLeaderNetwork()" aria-label="Cerrar">×</button></div>
+    <div class="leader-network-tabs"><button type="button" id="leaderNetworkViewBtn" onclick="switchLeaderNetworkMode('view')">👥 Ver simpatizantes</button><button type="button" id="leaderNetworkAssignBtn" onclick="switchLeaderNetworkMode('assign')">＋ Vincular existentes</button></div>
+    <label class="leader-network-search-label">Buscar contacto<input type="search" id="leaderNetworkSearch" placeholder="Nombre, sector, barrio o WhatsApp" oninput="renderLeaderNetworkModal()"></label>
+    <div id="leaderNetworkList" class="leader-network-list"></div>
+    <div id="leaderNetworkAssignTools" class="leader-network-assign-tools hidden"><span id="leaderNetworkAssignCount">0 seleccionados</span><button type="button" class="primary" onclick="saveLeaderNetworkLinks()">✓ Guardar vinculaciones</button></div>
+    <div class="leader-network-bottom"><button type="button" class="secondary" onclick="openNewSupporterUnderLeader()">＋ Registrar simpatizante nuevo</button><button type="button" class="secondary" onclick="closeLeaderNetwork()">Cerrar</button></div>
+  </div></div>
+
+  <!-- Clasificación individual de contactos ya registrados, disponible desde todos los consolidados -->
+  <div class="modal" id="contactClassificationModal"><div class="modal-card contact-classification-modal-card">
+    <div class="modal-head"><div><h3>🧭 Clasificar contacto</h3><p class="petition-subtitle">Seleccione Líder o Simpatizante y guarde su elección.</p></div><button type="button" onclick="closeContactClassification()" aria-label="Cerrar">×</button></div>
+    <div class="classification-person"><strong id="classifyContactName">Contacto</strong><span id="classifyContactTerritory"></span></div>
+    <input type="hidden" id="classifyContactId">
+    <div class="classification-options">
+      <button type="button" data-classification-choice="Líder" onclick="setContactClassificationChoice('Líder')">🧭 <b>Líder</b><small>Persona que coordina o representa una comunidad</small></button>
+      <button type="button" data-classification-choice="Simpatizante" onclick="setContactClassificationChoice('Simpatizante')">🤝 <b>Simpatizante</b><small>Contacto registrado bajo esta condición</small></button>
+    </div>
+    <label id="classifyParentField" class="classification-parent hidden">Líder que tiene a cargo este simpatizante
+      <select id="classifyParentLeader"><option value="">Sin líder asociado</option></select>
+      <small>Seleccione un líder para contarlo en su red. Si no lo tiene identificado, quedará en «Sin líder asignado».</small>
+    </label>
+    <p class="classification-save-note">Solo se modifica la clasificación y, si lo selecciona, el líder relacionado. Los demás datos y la autorización de comunicaciones se conservan.</p>
+    <div class="form-actions"><button class="primary" type="button" onclick="saveContactClassification()">✓ Guardar clasificación</button><button class="secondary" type="button" onclick="closeContactClassification()">Cancelar</button></div>
+  </div></div>
+  <div class="modal" id="urbanMapModal" aria-hidden="true"><div class="modal-card urban-map-modal-card"><div class="modal-head"><h3>Mapa táctil de barrios de Floridablanca</h3><button data-close>×</button></div>
+    <div class="urban-map-modal-body"><div class="urban-map-sheet urban-map-touch-ready" id="urbanZoomSheet">
+      <img src="assets/mapa-floridablanca-barrios.png?v=1.0.11" alt="Mapa urbano ampliado de Floridablanca" class="urban-map-modal-image" id="urbanZoomImage" loading="eager" decoding="async">
+      <div class="urban-map-all-pins" id="urbanZoomAllPins"></div>
+      <button type="button" class="urban-map-marker" id="urbanZoomPin" hidden aria-label="Abrir información del barrio"><span>📍</span></button>
+      <div class="urban-map-focus-tag" id="urbanZoomFocusTag" hidden></div>
+      <div class="urban-map-popup" id="urbanZoomPopover" hidden></div>
+      <div class="urban-tap-picker" id="urbanZoomTapPicker" hidden><strong>🏘️ ¿Qué barrio tocó?</strong><input type="search" id="urbanZoomTapSearch" placeholder="Escriba el nombre del barrio" aria-label="Buscar barrio en mapa ampliado"><div class="urban-tap-results" id="urbanZoomTapResults"></div><button type="button" class="secondary" id="urbanZoomTapCancel">Cancelar</button></div>
+    </div></div>
+    <div class="urban-map-modal-actions"><a class="primary urban-map-link" href="assets/mapa-floridablanca-barrios.png" target="_blank" rel="noopener">🖼️ Abrir mapa original</a></div></div></div>
+
+  <script src="catalogo-floridablanca-v103.js?v=1.0.3"></script>
+  <script src="territorio-floridablanca.js?v=1.0.3"></script>
+  <script src="ubicaciones-floridablanca-v104.js?v=1.0.4"></script>
+  <script src="binary-storage-v1419.js?v=1.4.19"></script>
+  <script src="app.js?v=1.0.24"></script>
+  <script src="leader-network-v1412.js?v=1.4.12"></script>
+  <script src="photos.js?v=1.4.19"></script>
+  <script src="pdf-portable-v1418.js?v=1.0.35"></script>
+  <script src="petition.js?v=1.0.35"></script>
+  <script src="contacts.js?v=1.0.24"></script>
+  <script src="card-mass-share.js?v=1.4.22"></script>
+  <script src="pdf-canvas-floridablanca-v110.js?v=1.0.10"></script>
+  <script src="birthdays.js?v=1.0.24"></script>
+  <script src="territory-link.js?v=1.0.9"></script>
+  <script src="intelligence.js?v=1.0.24"></script>
+  <script src="map.js?v=1.0.9"></script>
+  <script src="direct-card-actions.js?v=1.0.24"></script>
+  <script src="position-simple-v1424.js?v=1.0.24"></script>
+  <script src="stories.js?v=1.4.19"></script>
+  <script src="agenda.js?v=1.3.22"></script>
+  <script src="dossier.js?v=1.0.24"></script>
+  <script src="positioning.js?v=1.3.25"></script>
+  <script src="territorial-db.js?v=1.4.16-publica-1"></script>
+  <script src="need-contacts-v1410.js?v=1.4.10"></script>
+  <script src="communications.js?v=1.4.11"></script>
+  <script src="responsive.js?v=1.3.36"></script>
+  <!-- La gestión congresional específica se reserva a un representante autorizado. -->
+  <script src="institutional-directory.js?v=1.0.26"></script>
+  <script src="batch-recipients.js?v=1.0.26"></script>
+  <script src="urban-neighborhoods-v1414.js?v=1.0.11"></script>
+  <script src="need-territory-v1416.js?v=1.4.16"></script>
+  <script src="respaldo-integral-v1417.js?v=1.1.0"></script>
+  <script src="floridablanca-comunas.js?v=1.0"></script>
+  <script src="santander-puestos-v107.js?v=1.0.7"></script>
+  <script src="santander-electoral-v107.js?v=1.0.7"></script>
+  <script src="contact-categories-v108.js?v=1.0.8"></script>
+</body>
+</html>

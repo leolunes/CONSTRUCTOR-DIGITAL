@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <!-- Tratamiento paisajístico ornamental, no cartografía ni imagen oficial. -->
+  <path d="M0 169 65 136 136 159 212 117 290 148 377 99 454 144 513 113 578 151 653 123 731 146 826 102 904 147 986 108 1073 141 1165 111 1250 157 1357 110 1460 153 1542 119 1600 149V220H0Z" fill="#2d9870" opacity=".31"/>
+  <path d="M0 190 92 158 174 181 251 156 342 175 424 144 493 174 590 153 674 176 758 159 858 181 953 142 1021 175 1125 152 1221 187 1327 147 1420 181 1536 153 1600 179V220H0Z" fill="#043d2c" opacity=".32"/>
+  <g fill="#a8d7ae" opacity=".22">
+    <path d="M140 174v-19h12v-9h8v9h11v19ZM176 174v-25h10v-5h5v5h11v25ZM214 174v-13h15v-10h13v23ZM251 174v-23h10v-16h7v16h9v23ZM283 174v-18h18v-7h7v25ZM318 174v-36h8v-7h4v7h9v36ZM342 174v-25h16v-8h6v33ZM380 174v-16h20v-12h6v28Z"/>
+    <path d="M535 182v-19h12v-9h8v9h11v19ZM570 182v-31h14v-15h6v46ZM600 182v-17h12v-11h9v28ZM627 182v-25h10v-8h7v33ZM651 182v-13h18v-11h7v24ZM694 182v-31h11v-14h8v45Z"/>
+    <path d="M1104 182v-18h14v-10h6v28ZM1131 182v-35h10v-8h7v43ZM1152 182v-22h21v-13h8v35ZM1192 182v-26h13v-12h7v38ZM1221 182v-15h20v-6h7v21ZM1257 182v-29h12v-11h6v40Z"/>
+  </g>
+  <g fill="none" stroke="#b0e0ba" stroke-width="2" opacity=".20">
+    <path d="M1460 157c22-27 45-52 72-80M1458 160l92-68"/>
+    <path d="M1504 103c6-3 13-3 19 0l-3 13h-12z" fill="#b0e0ba"/>
+    <path d="M1410 160c18-16 36-26 55-38"/>
+  </g>
+</svg>

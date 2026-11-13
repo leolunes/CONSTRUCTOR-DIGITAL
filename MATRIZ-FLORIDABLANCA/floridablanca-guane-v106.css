@@ -1,0 +1,494 @@
+/*
+ * MATRIZ FLORIDABLANCA 1.0.6 — identidad Verde Guane.
+ * Esta hoja es deliberadamente independiente de styles.css: modifica únicamente
+ * la presentación. No cambia datos, mapas, formularios, PDF ni almacenamiento.
+ * Inspiración: campo verde de la bandera municipal y su Sol Guane.
+ */
+
+body.florida-guane {
+  --navy:#075b3d;
+  --navy2:#023b2b;
+  --navy3:#0b7550;
+  --yellow:#e9b940;
+  --blue:#117d52;
+  --green:#12865b;
+  --ink:#18382d;
+  --muted:#64766e;
+  --line:#dce7dc;
+  --bg:#f5f8f2;
+  --guane-deep:#043f2c;
+  --guane-forest:#075739;
+  --guane-leaf:#15865b;
+  --guane-gold:#e8b93f;
+  --guane-cream:#f8faf5;
+  --guane-shadow:0 5px 18px rgba(20,61,40,.09);
+  background:#f4f8f2;
+  color:var(--ink);
+}
+
+/* Franja institucional principal. */
+body.florida-guane .brand-header {
+  position:relative!important;
+  isolation:isolate;
+  background:
+    linear-gradient(90deg,rgba(1,62,42,.22),rgba(1,76,48,.16)),
+    linear-gradient(180deg,rgba(2,80,53,.00) 44%,rgba(0,43,28,.42)),
+    url('assets/floridablanca-header-landscape.svg') center bottom / cover no-repeat,
+    linear-gradient(110deg,#03442f,#076344 51%,#02442f)!important;
+  border-bottom:3px solid var(--guane-gold)!important;
+  color:#fff;
+  overflow:hidden!important;
+}
+body.florida-guane .brand-header:before,
+body.florida-guane .brand-header:after {display:none!important;}
+body.florida-guane .guane-sun-mark {
+  position:absolute;
+  left:35%;top:49%;
+  transform:translate(-50%,-50%);
+  width:115px;height:115px;
+  color:var(--guane-gold);
+  filter:drop-shadow(0 3px 9px rgba(0,26,17,.18));
+  pointer-events:none;
+  z-index:3;
+}
+body.florida-guane .guane-sun-mark svg {display:block;width:100%;height:100%;}
+
+body.florida-guane .brand-header .ivan-only-brand {
+  z-index:4;
+  min-width:0;
+}
+body.florida-guane .brand-header .ivan-main {
+  background:transparent!important;
+  box-shadow:none!important;
+  border:none!important;
+  border-radius:0!important;
+  padding:0!important;
+  gap:16px!important;
+  max-width:100%!important;
+}
+body.florida-guane .brand-header .ivan-main:before,
+body.florida-guane .brand-header .ivan-main:after {display:none!important;}
+body.florida-guane .brand-header .ivan-main .ivan-photo {
+  width:104px!important;height:104px!important;
+  object-fit:cover;
+  border:3px solid var(--guane-gold)!important;
+  box-shadow:0 0 0 4px rgba(250,255,242,.13),0 8px 18px rgba(0,32,20,.22)!important;
+}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:0!important;
+  min-width:0!important;
+  flex:1;
+  line-height:1.12;
+}
+body.florida-guane .brand-header .ivan-name {line-height:1.04;}
+body.florida-guane .brand-header .ivan-name strong {
+  font-size:25px!important;
+  line-height:1.02;
+  letter-spacing:.015em;
+  text-shadow:0 2px 5px rgba(0,0,0,.16)!important;
+}
+body.florida-guane .brand-header .ivan-name b {
+  font-size:32px!important;
+  line-height:1;
+  color:#f4c94f;
+  margin-top:3px!important;
+  text-shadow:0 2px 5px rgba(0,0,0,.18)!important;
+}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy span {
+  display:block;
+  font-size:12px!important;
+  line-height:1.3;
+  margin-top:4px!important;
+  color:#fff!important;
+  white-space:normal;
+}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy small {
+  display:block;
+  font-family:Georgia,serif;
+  font-style:italic;
+  font-weight:700;
+  font-size:16px!important;
+  color:#f1d477;
+  margin-top:0!important;
+}
+body.florida-guane .brand-header .system-brand {
+  position:relative!important;
+  z-index:4!important;
+  left:auto!important;top:auto!important;
+  transform:none!important;
+  justify-self:center!important;
+  align-self:center!important;
+  width:100%!important;
+  max-width:none!important;
+  text-align:center!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:0 4px!important;
+}
+body.florida-guane .brand-header .system-brand>span {
+  font-size:16px!important;
+  font-weight:800;
+  line-height:1.05!important;
+  letter-spacing:.06em!important;
+}
+body.florida-guane .brand-header .system-brand>strong {
+  font-size:34px!important;
+  font-weight:900;
+  line-height:1.02!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap;
+  text-shadow:0 3px 8px rgba(0,0,0,.15)!important;
+}
+body.florida-guane .brand-header .system-brand>em {
+  font-size:29px!important;
+  color:#f5c850!important;
+  line-height:1!important;
+  margin-top:2px!important;
+  white-space:nowrap;
+  text-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+body.florida-guane .brand-header .system-brand>em:before,
+body.florida-guane .brand-header .system-brand>em:after {
+  background:var(--guane-gold)!important;
+  height:2px!important;
+  width:30px!important;
+  margin:0 9px 7px!important;
+}
+body.florida-guane .brand-header .system-brand>small {
+  font-size:10px!important;
+  letter-spacing:.01em!important;
+  line-height:1.3!important;
+  margin-top:6px!important;
+  color:#e7f4e9;
+}
+body.florida-guane .brand-header .floridablanca-panoramic-brand {
+  background:#e8f1e5!important;
+  border-left:5px solid var(--guane-gold)!important;
+  border-radius:44% 0 0 44%!important;
+  transform:none!important;
+  width:100%!important;
+  overflow:hidden!important;
+}
+body.florida-guane .brand-header .floridablanca-panoramic-brand:after {
+  background:linear-gradient(90deg,rgba(3,70,44,.06),rgba(3,65,40,.04))!important;
+}
+body.florida-guane .brand-header .datetime {
+  right:12px!important;bottom:5px!important;
+  background:rgba(1,56,39,.93)!important;
+  border:1px solid rgba(239,196,74,.60)!important;
+  box-shadow:0 4px 13px rgba(0,33,18,.22);
+}
+body.florida-guane .brand-header .datetime span {border-color:rgba(240,200,80,.26);}
+
+/* Área general: verde bosque, crema y superficies claras. */
+body.florida-guane .app-shell {grid-template-columns:220px minmax(0,1fr);}
+body.florida-guane .sidebar {
+  background:linear-gradient(174deg,#034c34 0%,#03402d 54%,#043724 100%)!important;
+  border-right:1px solid rgba(233,194,82,.23);
+  padding:13px 10px 18px;
+  gap:4px;
+}
+body.florida-guane .nav-btn {
+  color:#f5faf4;
+  font-size:13px;
+  border-radius:10px;
+  padding:11px 12px;
+  transition:background .15s ease,box-shadow .15s ease,color .15s ease;
+}
+body.florida-guane .nav-btn.active,
+body.florida-guane .nav-btn:hover {
+  color:#173c2c;
+  background:linear-gradient(135deg,#f5cc60,#eab43d)!important;
+  box-shadow:0 3px 9px rgba(0,26,15,.16);
+}
+body.florida-guane .nav-btn:focus-visible,
+body.florida-guane button:focus-visible {
+  outline:3px solid #e2b443;
+  outline-offset:2px;
+}
+body.florida-guane .floridablanca-dream {
+  background:rgba(2,45,28,.20);
+  border:1px solid rgba(230,191,74,.28);
+}
+body.florida-guane .floridablanca-dream em {color:#f5cb57;}
+body.florida-guane .ghost {border-color:rgba(239,201,86,.29);}
+body.florida-guane .main {
+  background:#f6f9f4!important;
+  padding:14px;
+  min-height:calc(100vh - 160px);
+}
+body.florida-guane .card,
+body.florida-guane .section-title,
+body.florida-guane .table-wrap,
+body.florida-guane .toolbar {
+  border:1px solid #e1e9df;
+  box-shadow:var(--guane-shadow);
+}
+body.florida-guane .section-title h2,
+body.florida-guane .card h3 {color:#194735;}
+body.florida-guane input:focus,
+body.florida-guane select:focus,
+body.florida-guane textarea:focus {outline:2px solid rgba(21,134,91,.35);outline-offset:1px;}
+body.florida-guane .primary,
+body.florida-guane .dark-btn,
+body.florida-guane .birthday-dashboard-button,
+body.florida-guane .birthday-dashboard-head>button {
+  background:linear-gradient(140deg,#08734d,#045335)!important;
+  color:#fff!important;
+  box-shadow:0 3px 9px rgba(10,95,58,.16);
+}
+body.florida-guane .secondary,
+body.florida-guane .file-button {background:#edf5ec;color:#23543e;}
+body.florida-guane .red-btn {
+  background:linear-gradient(140deg,#f5c955,#e9b239)!important;
+  color:#213d2a!important;
+  box-shadow:0 3px 9px rgba(141,98,12,.15);
+}
+body.florida-guane .bar-fill,
+body.florida-guane .intel-track i {background:linear-gradient(90deg,#0b7750,#45a873);}
+body.florida-guane .community-callout {background:#eef6ec;border-left:3px solid var(--guane-gold);}
+body.florida-guane .community-callout>b {color:#137f55;}
+body.florida-guane .toast {background:var(--guane-deep);}
+body.florida-guane .dashboard-footer {color:#496b5a;}
+
+/* Tarjetas de los seis indicadores, sobre blanco y con una sola identidad. */
+body.florida-guane #view-dashboard .kpi-grid {
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:11px;
+  margin-bottom:14px;
+}
+body.florida-guane #view-dashboard .kpi {
+  height:135px;
+  min-width:0;
+  padding:13px 11px 9px;
+  display:grid;
+  grid-template-columns:43px minmax(0,1fr);
+  grid-template-rows:minmax(0,1fr) 27px;
+  align-items:center;
+  gap:8px;
+  background:#fff!important;
+  color:var(--guane-deep);
+  border:1px solid #dfe8df;
+  border-radius:13px;
+  box-shadow:var(--guane-shadow);
+}
+body.florida-guane #view-dashboard .kpi .ico {
+  display:grid;
+  place-items:center;
+  width:43px;height:43px;
+  border-radius:50%;
+  color:#fff;
+  background:linear-gradient(155deg,#159667,#04613f);
+  font-size:24px;
+  line-height:1;
+  box-shadow:0 3px 8px rgba(13,106,65,.17);
+}
+body.florida-guane #view-dashboard .kpi>div:nth-child(2) {
+  border-left:2px solid var(--guane-gold);
+  padding-left:9px;
+  min-width:0;
+}
+body.florida-guane #view-dashboard .kpi .n {
+  font-size:30px;
+  line-height:1.03;
+  font-weight:900;
+  color:var(--guane-deep);
+}
+body.florida-guane #view-dashboard .kpi .l {
+  font-size:12px;
+  line-height:1.15;
+  font-weight:800;
+  color:#223b31;
+}
+body.florida-guane #view-dashboard .kpi .kpi-link {
+  grid-column:1/-1;
+  margin:0;
+  padding:4px 8px;
+  min-height:26px;
+  border-radius:7px;
+  background:#e4f0e4;
+  color:#23573c;
+  font-weight:800;
+  font-size:11px;
+}
+body.florida-guane #view-dashboard .dashboard-panels {gap:11px;}
+body.florida-guane #view-dashboard .dashboard-panels>.card {min-width:0;}
+body.florida-guane #view-dashboard .dashboard-panels .card>h3 {
+  position:relative;
+  display:inline-block;
+  padding-bottom:9px;
+  margin-bottom:12px;
+  font-size:17px;
+}
+body.florida-guane #view-dashboard .dashboard-panels .card>h3:after {
+  content:"";
+  position:absolute;
+  left:0;bottom:2px;
+  height:2px;width:100%;
+  background:var(--guane-gold);
+}
+body.florida-guane #view-dashboard .donut {border-color:#eaf0e9;}
+body.florida-guane #view-dashboard .birthday-dashboard-card {
+  border:1px solid #e0e9dd;
+  border-left:5px solid var(--guane-gold);
+  box-shadow:var(--guane-shadow);
+  margin-top:11px;
+}
+body.florida-guane #view-dashboard .dashboard-lower {gap:11px;}
+body.florida-guane #view-dashboard .quick-links {gap:9px;}
+body.florida-guane #view-dashboard .quick-links button {
+  min-width:0;
+  min-height:77px;
+  background:#fff!important;
+  border:1px solid #dce8dd;
+  box-shadow:0 2px 9px rgba(25,65,41,.06);
+  transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
+}
+body.florida-guane #view-dashboard .quick-links button:hover {
+  transform:translateY(-1px);
+  border-color:#9ebea9;
+  box-shadow:0 5px 14px rgba(22,91,49,.12);
+}
+body.florida-guane #view-dashboard .quick-links b {color:#174a34;}
+body.florida-guane #view-dashboard .quick-links small {color:#5c7866;}
+
+/* Coherencia visual en los demás módulos, sin alterar sus elementos de estado. */
+body.florida-guane .network-summary>div,
+body.florida-guane .urban-stats>div,
+body.florida-guane .urban-detail-kpis>div,
+body.florida-guane .territory-mini-kpi,
+body.florida-guane .intel-mini {background:#f1f7f1;border-color:#d5e6d7;}
+body.florida-guane .network-summary strong,
+body.florida-guane .contacts-authorized-count strong,
+body.florida-guane .map-global-total-card,
+body.florida-guane .map-communications-summary>div,
+body.florida-guane .intel-kpi {background:linear-gradient(145deg,#08734e,#034b32);}
+body.florida-guane .map-hotspot,
+body.florida-guane .urban-map-pinpoint {background:#075b3d;}
+body.florida-guane .map-hotspot.active,
+body.florida-guane .map-hotspot:hover,
+body.florida-guane .map-hotspot:focus {background:#ba8a21;}
+body.florida-guane .map-hotspot.floridablanca {background:#08714b;}
+body.florida-guane .map-global-total-card {border-color:rgba(233,192,70,.55);}
+body.florida-guane .map-help,
+body.florida-guane .map-source-note,
+body.florida-guane .urban-map-help {background-color:#f0f7ed;color:#345d44;}
+body.florida-guane .urban-stats strong,
+body.florida-guane .urban-detail-kpis strong,
+body.florida-guane .territory-mini-kpi strong {color:#0b6140;}
+body.florida-guane .urban-map-details-aside>h3,
+body.florida-guane .territory-panel-head h3,
+body.florida-guane .directory-title h2 {color:#145638;}
+body.florida-guane .directory-level.active {background:#075c3e;border-color:#075c3e;}
+body.florida-guane .position-step {background:#086747;}
+body.florida-guane .position-ai-open {background:#07583b;}
+body.florida-guane .mobile-topbar {background:#064831;border-bottom-color:#ab8a39;}
+body.florida-guane .mobile-topbar-title small {color:#cee5d3;}
+
+/* Tablet: header simplificado, tarjetas en filas de tres y menú lateral desplegable. */
+@media (min-width:1101px) {
+  body.florida-guane .brand-header {
+    display:grid!important;
+    grid-template-columns:minmax(290px,31%) minmax(395px,1fr) minmax(230px,22%)!important;
+    gap:12px!important;
+    min-height:170px!important;
+    padding:14px 18px 25px!important;
+  }
+  body.florida-guane .brand-header .ivan-only-brand {grid-column:1!important;justify-self:start!important;}
+  body.florida-guane .brand-header .system-brand {grid-column:2!important;}
+  body.florida-guane .brand-header .floridablanca-brand {grid-column:3!important;}
+}
+@media (min-width:1101px) and (max-width:1390px) {
+  body.florida-guane .brand-header {grid-template-columns:minmax(265px,30%) minmax(390px,1fr) minmax(190px,19%)!important;gap:8px!important;}
+  body.florida-guane .brand-header .ivan-main .ivan-photo {width:86px!important;height:86px!important;}
+  body.florida-guane .brand-header .ivan-name strong {font-size:20px!important;}
+  body.florida-guane .brand-header .ivan-name b {font-size:25px!important;}
+  body.florida-guane .brand-header .system-brand>strong {font-size:29px!important;}
+  body.florida-guane .brand-header .system-brand>em {font-size:26px!important;}
+  body.florida-guane .guane-sun-mark {width:82px;height:82px;left:31%;}
+}
+@media (min-width:1101px) and (max-width:1179px) {
+  body.florida-guane #view-dashboard .kpi-grid {grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media (min-width:1400px) and (max-width:1679px) {
+  body.florida-guane .guane-sun-mark {left:31.5%;width:94px;height:94px;}
+  body.florida-guane .brand-header .system-brand>strong {font-size:31px!important;}
+}
+@media (min-width:1680px) {
+  body.florida-guane .brand-header {min-height:185px!important;}
+  body.florida-guane .brand-header .ivan-main .ivan-photo {width:122px!important;height:122px!important;}
+  body.florida-guane .brand-header .ivan-name strong {font-size:30px!important;}
+  body.florida-guane .brand-header .ivan-name b {font-size:39px!important;}
+  body.florida-guane .brand-header .system-brand>strong {font-size:42px!important;}
+  body.florida-guane .brand-header .system-brand>em {font-size:35px!important;}
+}
+@media (max-width:1100px) {
+  body.florida-guane .app-shell {display:block;}
+  body.florida-guane .sidebar {width:min(330px,86vw);}
+  body.florida-guane .main {padding:11px;}
+  body.florida-guane .guane-sun-mark {display:none;}
+  body.florida-guane #view-dashboard .kpi-grid {grid-template-columns:repeat(3,minmax(0,1fr));}
+  body.florida-guane .brand-header .system-brand>strong {font-size:24px!important;}
+  body.florida-guane .brand-header .system-brand>em {font-size:23px!important;}
+  body.florida-guane .brand-header .system-brand>span {font-size:12px!important;}
+  body.florida-guane .brand-header .system-brand>small {font-size:8px!important;}
+}
+@media (min-width:701px) and (max-width:1100px) {
+  body.florida-guane .brand-header {
+    grid-template-columns:minmax(205px,33%) 1fr!important;
+    min-height:126px!important;
+    padding:12px 15px 17px!important;
+  }
+  body.florida-guane .brand-header .ivan-main .ivan-photo {width:74px!important;height:74px!important;}
+  body.florida-guane .brand-header .ivan-main .ivan-brand-copy {display:flex!important;}
+  body.florida-guane .brand-header .ivan-name strong {font-size:17px!important;}
+  body.florida-guane .brand-header .ivan-name b {font-size:19px!important;}
+  body.florida-guane .brand-header .ivan-main .ivan-brand-copy span {font-size:9px!important;}
+  body.florida-guane .brand-header .ivan-main .ivan-brand-copy small {font-size:12px!important;}
+  body.florida-guane .brand-header .system-brand {grid-column:2;}
+  body.florida-guane .brand-header .floridablanca-brand {display:none!important;}
+}
+@media (max-width:700px) {
+  body.florida-guane .brand-header {
+    min-height:102px!important;
+    height:auto!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 64px!important;
+    gap:10px!important;
+    padding:14px 13px!important;
+  }
+  body.florida-guane .brand-header .system-brand {
+    grid-column:1!important;
+    grid-row:1;
+    align-items:flex-start!important;
+    text-align:left!important;
+    padding:0!important;
+  }
+  body.florida-guane .brand-header .system-brand>strong {font-size:20px!important;white-space:normal;}
+  body.florida-guane .brand-header .system-brand>em {font-size:20px!important;white-space:normal;}
+  body.florida-guane .brand-header .system-brand>em:before,
+  body.florida-guane .brand-header .system-brand>em:after {display:none!important;}
+  body.florida-guane .brand-header .system-brand>small {font-size:8px!important;line-height:1.35!important;}
+  body.florida-guane .brand-header .ivan-only-brand {
+    grid-column:2!important;
+    grid-row:1;
+    display:flex!important;
+    align-items:center!important;
+  }
+  body.florida-guane .brand-header .ivan-main .ivan-photo {width:58px!important;height:58px!important;}
+  body.florida-guane .brand-header .ivan-main .ivan-brand-copy {display:none!important;}
+  body.florida-guane #view-dashboard .kpi-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  body.florida-guane #view-dashboard .kpi {height:118px;padding:10px 8px 8px;grid-template-columns:33px minmax(0,1fr);gap:6px;}
+  body.florida-guane #view-dashboard .kpi .ico {width:32px;height:32px;font-size:19px;}
+  body.florida-guane #view-dashboard .kpi .n {font-size:24px;}
+  body.florida-guane #view-dashboard .kpi .l {font-size:10px;}
+  body.florida-guane #view-dashboard .dashboard-panels .card>h3 {font-size:15px;}
+  body.florida-guane .main {padding:8px;}
+}
+@media print {
+  body.florida-guane .guane-sun-mark {display:none!important;}
+  body.florida-guane .main {background:#fff!important;}
+}

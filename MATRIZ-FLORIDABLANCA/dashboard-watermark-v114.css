@@ -1,0 +1,63 @@
+/* Nuestra Floridablanca v1.1.4 — agua visible sin atravesar las letras.
+   La imagen se coloca DEBAJO de los paneles, y los paneles adoptan una
+   transparencia controlada; se mantienen todas las acciones y PDFs intactos. */
+body.florida-guane #view-dashboard.active {
+  position:relative !important;
+  isolation:isolate !important;
+  background:transparent !important;
+}
+body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+  display:block !important;
+  position:absolute !important;
+  left:50% !important;
+  top:31% !important;
+  transform:translate(-50%,-50%) !important;
+  width:104% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  z-index:0 !important;
+  opacity:.46 !important;
+  mix-blend-mode:multiply !important;
+  filter:saturate(.82) !important;
+  pointer-events:none !important;
+  user-select:none !important;
+  -webkit-user-select:none !important;
+}
+body.florida-guane #view-dashboard.active > :not(#dashboardWatermark) {
+  position:relative !important;
+  z-index:1 !important;
+}
+/* El efecto de agua se deja tras las superficies, no por encima del texto. */
+body.florida-guane #view-dashboard.active .kpi,
+body.florida-guane #view-dashboard.active .dashboard-panels .card,
+body.florida-guane #view-dashboard.active .birthday-dashboard-card,
+body.florida-guane #view-dashboard.active .dashboard-lower .card,
+body.florida-guane #view-dashboard.active .quick-links button {
+  background-color:rgba(255,255,255,.81) !important;
+}
+/* La identidad se atenúa automáticamente en pantallas pequeñas. */
+@media (max-width:1100px){
+  body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+    width:116% !important;
+    opacity:.40 !important;
+  }
+}
+@media (max-width:680px){
+  body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+    width:145% !important;
+    opacity:.28 !important;
+  }
+  body.florida-guane #view-dashboard.active .kpi,
+  body.florida-guane #view-dashboard.active .dashboard-panels .card,
+  body.florida-guane #view-dashboard.active .birthday-dashboard-card,
+  body.florida-guane #view-dashboard.active .dashboard-lower .card,
+  body.florida-guane #view-dashboard.active .quick-links button {
+    background-color:rgba(255,255,255,.92) !important;
+  }
+}
+@media print {
+  body.florida-guane #view-dashboard.active > img#dashboardWatermark {display:none !important;}
+}

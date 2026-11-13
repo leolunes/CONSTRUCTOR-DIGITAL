@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="180" viewBox="0 0 600 180" role="img" aria-label="Marco Andrés Silva López. Floridablanca, nuestra casa">
+  <rect width="600" height="180" rx="20" fill="#075638"/>
+  <rect width="12" height="180" rx="4" fill="#f2c14e"/>
+  <text x="36" y="67" fill="#fff" font-family="Arial,sans-serif" font-weight="800" font-size="43">MARCO ANDRÉS</text>
+  <text x="36" y="117" fill="#f2c14e" font-family="Arial,sans-serif" font-weight="800" font-size="43">SILVA LÓPEZ</text>
+  <text x="38" y="151" fill="#eaf4e9" font-family="Georgia,serif" font-style="italic" font-size="23">Floridablanca, nuestra casa</text>
+</svg>

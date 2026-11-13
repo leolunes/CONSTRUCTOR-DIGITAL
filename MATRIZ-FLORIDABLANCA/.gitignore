@@ -1,0 +1,14 @@
+# Nunca subir respaldos o registros privados
+*RESPALDO*.json
+*respaldo*.json
+*BACKUP*.json
+*backup*.json
+datos-privados/
+private-data/
+*.sqlite
+*.db
+*.key
+*.pem
+*.zip
+.DS_Store
+Thumbs.db

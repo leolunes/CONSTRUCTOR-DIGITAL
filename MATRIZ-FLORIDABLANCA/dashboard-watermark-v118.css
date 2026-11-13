@@ -1,0 +1,54 @@
+/* Nuestra Floridablanca 1.1.8: composición INTEGRA sobre TODO el tablero.
+   El usuario desea Marco + Palacio completos, centrados y visibles incluso
+   cuando atraviesen paneles, sin recortarlos por tarjetas ni apartarlos. */
+body.florida-guane #view-dashboard.active {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+}
+body.florida-guane #view-dashboard.active::before,
+body.florida-guane #view-dashboard.active::after {
+  content: none !important;
+  display: none !important;
+}
+body.florida-guane #view-dashboard.active > img#dashboardWatermark {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  transform: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  opacity: .44 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+/* Los paneles conservan toda su opacidad y funcionamiento; la marca va por encima. */
+body.florida-guane #view-dashboard.active > :not(#dashboardWatermark) {
+  position: relative !important;
+  z-index: 1 !important;
+}
+body.florida-guane #view-dashboard.active .kpi,
+body.florida-guane #view-dashboard.active .dashboard-panels .card,
+body.florida-guane #view-dashboard.active .birthday-dashboard-card,
+body.florida-guane #view-dashboard.active .dashboard-lower .card,
+body.florida-guane #view-dashboard.active .quick-links button {
+  background-color: rgba(255,255,255,.98) !important;
+}
+@media (max-width: 850px) {
+ body.florida-guane #view-dashboard.active > img#dashboardWatermark { opacity: .40 !important; }
+}
+@media (max-width: 600px) {
+ body.florida-guane #view-dashboard.active > img#dashboardWatermark { opacity: .36 !important; }
+}
+@media print { body.florida-guane #view-dashboard.active > img#dashboardWatermark { display:none!important; } }

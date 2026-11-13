@@ -1,0 +1,30 @@
+/* v1.0.24 · Identidad cercana de Marco Andrés, sin alterar funcionamiento. */
+body.florida-guane .brand-header .system-brand>span{
+  font-size:clamp(10px,.90vw,15px)!important; letter-spacing:.07em!important;
+}
+body.florida-guane .brand-header .system-brand>strong{
+  font-size:clamp(19px,2.3vw,36px)!important; white-space:normal!important;
+  max-width:100%; line-height:1.05!important;
+}
+body.florida-guane .brand-header .system-brand>em{
+  font-size:clamp(17px,1.85vw,27px)!important; white-space:normal!important;
+}
+body.florida-guane .brand-header .system-brand>small{
+  font-size:clamp(9px,.73vw,13px)!important;
+}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy span{
+  color:#f4d078!important; font-weight:700!important; font-family:Georgia,serif;
+  font-size:clamp(11px,1.08vw,17px)!important; font-style:italic;
+}
+body.florida-guane .brand-header .ivan-main .ivan-brand-copy small{
+  color:#e4f1e8!important; font-size:clamp(9px,.78vw,13px)!important;
+  font-style:normal!important; font-family:inherit!important; letter-spacing:.025em;
+}
+@media(max-width:1100px){
+ body.florida-guane .brand-header .system-brand>strong{font-size:clamp(17px,2.9vw,28px)!important;}
+ body.florida-guane .brand-header .system-brand>em{font-size:clamp(15px,2.2vw,22px)!important;}
+}
+@media(max-width:700px){
+ body.florida-guane .brand-header .ivan-main .ivan-brand-copy span{font-size:11px!important;}
+ body.florida-guane .brand-header .ivan-main .ivan-brand-copy small{font-size:9px!important;}
+}

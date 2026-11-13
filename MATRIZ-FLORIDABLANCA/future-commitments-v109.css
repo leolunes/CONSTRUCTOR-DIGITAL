@@ -1,0 +1,13 @@
+/* v1.0.9 — Propuestas futuras claramente diferenciadas de proyectos históricos. */
+.future-commitment-notice{border:1px solid #b7d9c7;border-left:5px solid #11824e;background:linear-gradient(110deg,#eafaf1,#fffdf0);border-radius:10px;padding:14px 18px;margin:0 0 16px;color:#195338;line-height:1.55}
+.future-commitment-notice strong{display:block;font-size:15px;color:#09663e;margin-bottom:4px}
+.future-commitment-notice p{margin:0;font-size:12px}
+#campaignCommitmentModal .future-commitment-notice{margin:0 0 5px;padding:12px 14px}
+#view-projects .future-condition{display:block;font-size:10px;margin-top:5px;color:#0f6744;font-weight:700}
+#view-projects .future-scope-row td{font-size:12px;line-height:1.6;background:#f4faf6;color:#22513c;padding-top:7px;padding-bottom:10px}
+#view-projects .future-scope-row .muted{color:#66796b}
+#view-projects .legacy-projects{margin-top:18px;border:1px solid #d6e3da;border-radius:10px;overflow:hidden;background:#fff}
+#view-projects .legacy-projects summary{cursor:pointer;background:#edf4ef;color:#245442;padding:14px 16px;font-size:13px;font-weight:800}
+#view-projects .legacy-projects p{font-size:12px;color:#51685b;line-height:1.55;padding:8px 16px;margin:0}
+#view-projects .legacy-projects table{width:100%}
+@media(max-width:780px){#view-projects .future-commitment-notice{padding:12px}#campaignCommitmentModal .future-commitment-notice{margin-bottom:10px}}
